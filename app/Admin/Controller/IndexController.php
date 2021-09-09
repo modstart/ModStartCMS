@@ -12,6 +12,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Layout\Row;
 use Module\AdminManager\Widget\ServerInfoWidget;
+use Module\Cms\Widget\CmsInfoWidget;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 
 class IndexController extends Controller
@@ -24,6 +25,7 @@ class IndexController extends Controller
                 AdminWidgetDashboard::callIcon($row);
             }));
         AdminWidgetDashboard::call($page);
+        $page->append(new CmsInfoWidget());
         $page->append(new ServerInfoWidget());
         return $page;
     }
