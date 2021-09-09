@@ -1,6 +1,6 @@
 // vue 依赖已经在 webpack 中去除，需要外部引入
 import Vue from 'vue'
-import {StrUtil, UrlUtil} from './../svue/lib/util'
+import {StrUtil, UrlUtil, HtmlUtil} from './../svue/lib/util'
 
 const Dialog = window.api.dialog
 const Base = window.api.base
@@ -26,6 +26,17 @@ Vue.prototype.$onCopySuccess = () => {
 }
 Vue.prototype.$onCopyError = () => {
     Dialog.tipError((window.lang && window.lang['Copy Fail']) ? window.lang['Copy Fail'] : 'Copy Fail')
+}
+
+Vue.prototype.$highlight = (words, query) =>{
+    words = HtmlUtil.specialchars(words)
+    if (!query) {
+        return words
+    }
+    const iQuery = new RegExp(query, "ig");
+    return words.toString().replace(iQuery, function (matchedTxt, a, b) {
+        return ('<span data-highlight class="tw-text-red-500">' + matchedTxt + '</span>');
+    });
 }
 
 import routie from 'webix-routie'

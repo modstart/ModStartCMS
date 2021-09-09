@@ -20,7 +20,11 @@ class AdminMenu
             if ($item instanceof \Closure) {
                 $item = call_user_func($item);
             }
-            $menu = array_merge($menu, $item);
+            if (isset($item['title'])) {
+                $menu = array_merge($menu, [$item]);
+            } else {
+                $menu = array_merge($menu, $item);
+            }
         }
         return $menu;
     }

@@ -4,6 +4,11 @@
             <i class="iconfont icon-warning"></i>
             应用可在线安装、卸载、禁用、启用、配置、升级插件，插件升级前请做好备份。
         </div>
+        <div v-if="!memberUser.id" class="ub-alert ub-alert-danger">
+            <i class="iconfont icon-warning"></i>
+            您还没有登录，登录后才能从模块市场安装、升级模块
+            <a href="javascript:;" @click="doMemberLoginShow()">立即登录</a>
+        </div>
         <div class="tw-bg-white tw-rounded">
             <el-tabs v-model="search.tab" style="height:45px;">
                 <el-tab-pane name="store">
@@ -85,6 +90,7 @@
                                 <div class="tw-w-28 tw-float-left" style="margin-left:-6rem;">
                                     <a v-if="module.url"
                                        :href="module.url"
+                                       target="_blank"
                                        class="ub-cover-3-2 tw-shadow tw-w-28 tw-rounded"
                                        :style="{'background-image':'url('+module.cover+')'}"></a>
                                     <div v-else
@@ -97,7 +103,7 @@
                                     <a :href="module.url" target="_blank"
                                        class="tw-font-bold tw-text-gray-700 ub-text-truncate tw-block">
                                         <span v-if="module._isLocal" class="ub-tag primary sm ub-bg-a">本地插件</span>
-                                        <span class="pb-search-keywords">{{module.title}}</span>
+                                        <span v-html="$highlight(module.title,search.keywords)"></span>
                                     </a>
                                     <div>
                                     <span v-if="!module.isFee && !module._isLocal"
@@ -107,9 +113,9 @@
                                             <span v-else-if="module.priceSuperEnable">￥{{module.priceSuper}}</span>
                                         </div>
                                     </div>
-                                    <div class="tw-text-gray-400 tw-text-sm tw-mt-2 pb-search-keywords" style="height:2rem;overflow:auto;">
-                                        {{module.description}}
-                                    </div>
+                                    <div class="tw-text-gray-400 tw-text-sm tw-mt-2"
+                                         style="height:2rem;overflow:auto;"
+                                         v-html="$highlight(module.description,search.keywords)"></div>
                                 </div>
                             </div>
                             <div v-if="!module._isSystem"
@@ -149,22 +155,27 @@
                             </div>
                             <div v-else
                                  class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
-                                <div class="ub-text-muted">
+                                <span class="ub-text-muted">
                                     系统模块不能动态配置
-                                </div>
+                                </span>
+                                <a v-if="module._isInstalled && !module._isLocal && module.latestVersion && module.latestVersion!==module._localVersion"
+                                   @click="doUpgrade(module)"
+                                   href="javascript:;" class="ub-text-warning tw-mr-4">
+                                    <i class="iconfont icon-direction-up"></i> 升级
+                                </a>
                             </div>
                             <div class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
                                 <div class="ub-text-muted" v-if="module._isLocal">
-                                    标识：<span class="pb-search-keywords">{{module.name}}</span>，
-                                    版本 V{{module._localVersion}}
+                                    标识：<span v-html="$highlight(module.name,search.keywords)"></span>，
+                                    版本V{{module._localVersion}}
                                 </div>
                                 <div class="ub-text-muted" v-else-if="module._isInstalled">
-                                    标识：<span class="pb-search-keywords">{{module.name}}</span>，
-                                    已安装 V{{module._localVersion}} 版，最新版 V{{module.latestVersion}}
+                                    标识：<span v-html="$highlight(module.name,search.keywords)"></span>，
+                                    已安装V{{module._localVersion}}，最新版V{{module.latestVersion}}
                                 </div>
                                 <div class="ub-text-muted" v-else>
-                                    标识：<span class="pb-search-keywords">{{module.name}}</span>，
-                                    最新版 V{{module.latestVersion}}
+                                    标识：<span v-html="$highlight(module.name,search.keywords)"></span>，
+                                    最新版V{{module.latestVersion}}
                                 </div>
                             </div>
                         </div>
@@ -201,12 +212,12 @@
                             <div class="label">验证码</div>
                             <div class="field">
                                 <div class="row no-gutters">
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <input type="text" class="form" v-model="memberLoginInfo.captcha"
                                                autocomplete="off"
                                                placeholder="图片验证码"/>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <img class="captcha" title="刷新验证" :src="memberLoginCaptchaImage"
                                              @click="doMemberLoginCaptchaRefresh()"/>
                                     </div>
@@ -218,6 +229,11 @@
                                 <button type="submit" class="btn btn-primary btn-block" @click="doMemberLoginSubmit()">
                                     登录
                                 </button>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="field">
+                                还没有账号？<a href="https://modstart.com" target="_blank">立即注册</a>
                             </div>
                         </div>
                     </div>
@@ -351,12 +367,6 @@
                     }
                     return true
                 })
-                if (this.search.keywords) {
-                    this.$nextTick(() => {
-                        $('.pb-search-keywords').unmark();
-                        $('.pb-search-keywords').mark(this.search.keywords, {});
-                    })
-                }
                 return results
             }
         },
@@ -404,8 +414,8 @@
                 this.$dialog.confirm('确认退出？', () => {
                     this.storeApiToken = ''
                     Storage.set('storeApiToken', '')
-                    this.doLoadStoreMember()
                     this.memberUserShow = false
+                    this.doLoadStore()
                 })
             },
             doMemberLoginSubmit() {
@@ -429,7 +439,9 @@
                 if (this.memberUser.id > 0) {
                     this.memberUserShow = true
                 } else {
+                    this.$dialog.loadingOn()
                     this.doMemberLoginCaptchaRefresh(() => {
+                        this.$dialog.loadingOff()
                         this.memberUserShow = true
                     })
                 }

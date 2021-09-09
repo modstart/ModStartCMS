@@ -147,8 +147,7 @@ class ModuleStoreController extends Controller
         $version = $dataInput->getTrimString('version');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
-        BizException::throwsIf('系统模块不能动态配置', ModuleManager::isSystemModule($module));
-        switch ($step) {
+                switch ($step) {
             case 'installModule':
                 $ret = ModuleManager::install($module);
                 BizException::throwsIfResponseError($ret);
