@@ -19,14 +19,3 @@ Route::group(
 });
 
 
-Route::group(
-    [
-        'namespace' => '\App\Web\Controller',
-        'middleware' => [
-            \Module\Vendor\Middleware\StatelessRouteMiddleware::class,
-        ]
-    ], function () {
-
-    Route::match(['get', 'post'], 'license-logo.png', 'LicenseLogoController@index');
-
-});
