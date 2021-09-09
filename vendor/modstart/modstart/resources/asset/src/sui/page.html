@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Brick UI Preview</title>
+    <link rel="stylesheet" href="./js/base.css">
+    <link rel="stylesheet" href="./js/iconfont/iconfont.css">
+    <link rel="stylesheet/less" type="text/css" href="./base/style.less"/>
+    <link rel="stylesheet/less" type="text/css" href="./bricks/component/panel/panel.less"/>
+    <script src="./js/echarts.min.js"></script>
+    <style type="text/css">
+        #page-container {
+        }
+
+        .ub-container {
+            max-width: 1000px !important;
+        }
+
+        .block-breaker {
+            height: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px dashed #CCC;
+        }
+
+        .block-selector {
+            display: block;
+            background: #FFF;
+            margin: 10px;
+            line-height: 50px;
+            color: #333;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        .block-placeholder {
+            background: #EEE;
+            border-radius: 3px;
+            margin: 10px 0;
+            padding: 10px;
+            color: #999;
+        }
+
+        #page-dom-tool {
+            border: 1px solid red;
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 0, 0, 0.2);
+            display: none;
+        }
+
+        #page-dom-tool .btn-box {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        #page-dom-tool .btn-box .btn {
+            line-height: 20px;
+            height: 20px;
+            display: block;
+            padding: 0 5px;
+            font-size: 12px;
+            border-radius: 3px;
+            border: 1px solid red;
+        }
+
+        #page-dom-tool .btn-box .btn i {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div id="page-container">
+</div>
+<div id="page-dom-tool">
+    <div class="btn-box">
+        <a class="btn" data-copy-html href="javascript:;"><i class="iconfont icon-copy"></i></a>
+    </div>
+</div>
+<script src="js/jquery.js"></script>
+<script>
+    var less = {
+        poll: 3000,
+        logLevel: 2
+    }
+</script>
+<script src="js/less.js"></script>
+<script src="js/holder.min.js"></script>
+<script src="js/clipboard.min.js"></script>
+<script src="js/notify.min.js"></script>
+<script src="js/baiduTemplate.js"></script>
+<script src="js/randomEn.js"></script>
+<script>
+    $(function () {
+        var page = window.location.search.substring(5);
+        baidu.template.LEFT_DELIMITER = '<?'
+        baidu.template.RIGHT_DELIMITER = '?>'
+        const randomZH = function (len) {
+            let words = []
+            while (words.length < len) {
+                eval('words.push("\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16) + '");')
+            }
+            return words.join('')
+        }
+        const randomNum = function (min, max) {
+            min = parseInt(min)
+            max = parseInt(max)
+            return parseInt(Math.random() * (max - min) + min)
+        }
+        window.randomNum = randomNum
+        const randomEn = function (len) {
+            let words = []
+            while (words.join(' ').length < len) {
+                let word = randomEnWord()
+                words.push(word.substr(0, 1).toUpperCase() + word.substr(1))
+            }
+            return words.join(' ')
+        }
+        const processHtml = function (html, param) {
+            param = param || {
+                seq: 0
+            }
+            html = html.replace(/\{ZH,(\d+),(\d+)\}/g, function (v, s1, s2) {
+                return randomZH(randomNum(s1, s2))
+            })
+            html = html.replace(/\{EN,(\d+),(\d+)\}/g, function (v, s1, s2) {
+                return randomEn(randomNum(s1, s2))
+            })
+            html = html.replace(/\{NUM,(\d+),(\d+)\}/g, function (v, s1, s2) {
+                return randomNum(s1, s2)
+            })
+            html = html.replace(/\{SEQ\}/g, function (v, s1, s2) {
+                return param.seq
+            })
+            return html
+        }
+        let pageHtmlLength = null
+        const setPageHtml = function (html) {
+            console.log('setPageHtml', 'html.length=' + html.length)
+            pageHtmlLength = html.length
+            let scripts = []
+            html = html.replace(/<script>[\s\S]*?<\/script>/g, function (o) {
+                // console.log('html script', o)
+                scripts.push(o)
+                return ''
+            })
+            let $html = $('<div>' + html + '</div>')
+            let times = 0;
+            while (times++ < 999 && $html.find('[data-repeat]:first').length > 0) {
+                $html.find('[data-repeat]:last').each(function (i, o) {
+                    let itemHtml = o.outerHTML
+                    // console.log('DataRepeatProcess', itemHtml)
+                    let $item = $(itemHtml)
+                    let repeatCount = parseInt($item.attr('data-repeat'))
+                    $item.removeAttr('data-repeat')
+                    itemHtml = $item[0].outerHTML
+                    let $items = $('<div></div>');
+                    for (let i = 0; i < repeatCount; i++) {
+                        $items.append(processHtml(itemHtml, {
+                            seq: i + 1
+                        }))
+                    }
+                    $(o).replaceWith($items.html())
+                })
+            }
+            $('#page-container').html(processHtml($html.html())).append(scripts.join(''))
+        }
+        let watchPageHtml = function () {
+            $.get("bricks/" + page + ".html", {}, function (html) {
+                if (pageHtmlLength !== html.length) {
+                    setPageHtml(html)
+                }
+                setTimeout(watchPageHtml, 5000)
+            }).fail(function (html) {
+                setTimeout(watchPageHtml, 5000)
+            })
+        }
+        watchPageHtml()
+        let lessProcessTimer = null
+        let lessProcessFirst = true
+        const lessProcess = function () {
+            if (lessProcessTimer) {
+                if (!lessProcessFirst) {
+                    clearTimeout(lessProcessTimer)
+                }
+                lessProcessTimer = null
+            }
+            lessProcessTimer = setTimeout(function () {
+                lessProcessFirst = false
+                // console.log('LessProcessed');
+                less.registerStylesheets().then(function () {
+                    less.refresh(true).then(function () {
+                        $('[data-src],[data-background-src]')
+                            .filter('[data-holder-rendered!=true]')
+                            .each(function (i, o) {
+                                switch (o.tagName) {
+                                    case 'IMG':
+                                    case 'A':
+                                    case 'DIV':
+                                    case 'SPAN':
+                                        Holder.run({
+                                            mode: 'background',
+                                            theme: 'gray',
+                                            domain: "placeholder",
+                                            images: o,
+                                            size: 12,
+                                            font: "Monaco",
+                                            fontweight: "normal",
+                                            outline: 'yes',
+                                            bgnodes: [o],
+                                            noBackgroundSize: true,
+                                        })
+                                        break
+                                    default:
+                                        console.warn('ProcessPlaceholder.Error', o.tagName, o.outerHTML)
+                                        break
+                                }
+                            });
+                    })
+                })
+
+            }, lessProcessFirst ? 0 : 500)
+        }
+        $('body').on('DOMSubtreeModified', lessProcess);
+        less.watch()
+        window.DelayExecute = function (delay, cb) {
+            setTimeout(function () {
+                cb()
+            }, delay);
+        }
+
+        let toolHtmlSelector = '#page-dom-tool'
+        let toolHtmlHideTimer = null
+        let $toolHtml = $(toolHtmlSelector)
+        let toolLastElement = null
+        let clipboard = new ClipboardJS($toolHtml.find('[data-copy-html]')[0], {
+            text: function (trigger) {
+                if (!toolLastElement) {
+                    return '[ERROR]'
+                }
+                return toolLastElement.outerHTML
+            }
+        })
+        $.notify.defaults({
+            showDuration: 10,
+            hideDuration: 10
+        })
+        clipboard.on('success', function (e) {
+            $toolHtml.find('[data-copy-html]').notify("复制成功", 'success')
+        })
+        $toolHtml.on('click', function () {
+            setTimeout(function () {
+                $toolHtml.hide()
+            }, 3000)
+        })
+        $(document).on('mousemove', function (e) {
+            if (!e.metaKey) {
+                return
+            }
+            let elements = document.elementsFromPoint(e.clientX, e.clientY)
+            let element = null, isTool = false
+            for (let one of elements) {
+                let $one = $(one)
+                if ($one.closest(toolHtmlSelector).length > 0) {
+                    isTool = true
+                    continue
+                }
+                element = one
+                break
+            }
+            if (!element || toolLastElement === element && isTool) {
+                return
+            }
+            toolLastElement = element
+            let pos = element.getBoundingClientRect()
+            $toolHtml.css({
+                top: (pos.y + window.scrollY) + 'px',
+                left: pos.x + 'px',
+                width: pos.width + 'px',
+                height: pos.height + 'px',
+            }).show()
+            if (toolHtmlHideTimer) {
+                clearTimeout(toolHtmlHideTimer)
+            }
+            toolHtmlHideTimer = setTimeout(() => {
+                $toolHtml.hide()
+            }, 5000)
+        })
+
+    });
+</script>
+</body>
+</html>

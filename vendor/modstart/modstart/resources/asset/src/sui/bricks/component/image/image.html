@@ -1,0 +1,106 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/image/image.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/image/viewer.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/misc/cover.less"/>
+<script src="./bricks/component/image/viewer.min.js"></script>
+
+<div class="ub-container">
+    <div class="block-breaker"></div>
+    <div class="ub-panel">
+        <div class="head">
+            <div class="title">图片列表展示</div>
+        </div>
+        <div class="body">
+            <div class="ub-image-list">
+                <div class="row">
+                    <div class="col-2" data-repeat="5">
+                        <a class="item" href="javascript:;">
+                            <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500">
+                                <img data-preview-image="./js/img/avatar.png"/>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                new Viewer($('.ub-image-list')[0], {
+                    url: 'data-preview-image'
+                })
+            });
+        </script>
+    </div>
+    <div class="block-breaker"></div>
+    <div class="ub-panel">
+        <div class="head">
+            <div class="title">单张图片</div>
+        </div>
+        <div class="body">
+            <div style="max-width:3rem;">
+                <div class="ub-image">
+                    <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500">
+                        <img data-preview-image="./js/img/avatar.png"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                new Viewer($('.ub-image')[0], {
+                    url: 'data-preview-image'
+                })
+            });
+        </script>
+    </div>
+    <div class="block-breaker"></div>
+    <div class="ub-panel">
+        <div class="head">
+            <div class="title">图片输入框</div>
+        </div>
+        <div class="body">
+            <div class="ub-image-selector">
+                <div class="tools">
+                    <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
+                    <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
+                    <a href="javascript:;" class="action add" data-add><i class="iconfont icon-plus"></i></a>
+                </div>
+                <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500"></div>
+            </div>
+            <div class="ub-image-selector has-value">
+                <div class="tools">
+                    <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
+                    <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
+                    <a href="javascript:;" class="action add" data-add><i class="iconfont icon-plus"></i></a>
+                </div>
+                <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500"></div>
+            </div>
+        </div>
+    </div>
+    <div class="block-breaker"></div>
+    <div class="ub-panel">
+        <div class="head">
+            <div class="title">图片输入框（多张）</div>
+        </div>
+        <div class="body">
+            <div class="ub-images-selector">
+                <div class="item">
+                    <div class="tools">
+                        <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
+                        <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
+                    </div>
+                    <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500"></div>
+                </div>
+                <div class="item">
+                    <div class="tools">
+                        <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
+                        <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
+                    </div>
+                    <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500"></div>
+                </div>
+                <div class="item add">
+                    <a href="javascript:;" class="action add" data-add><i class="iconfont icon-plus"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

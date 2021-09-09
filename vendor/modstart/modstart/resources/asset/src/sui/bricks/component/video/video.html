@@ -1,0 +1,55 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/video/video-js.less" />
+<script src="./bricks/component/video/video-js.js"></script>
+
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/video/video.less" />
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/header/header.less" />
+
+<div class="ub-container">
+
+    <div class="ub-video">
+        <div class="player">
+            <video id="player"
+                   class="video-js"
+                   controls
+                   preload="auto"
+                   poster="//vjs.zencdn.net/v/oceans.png"
+                   data-setup='{}'>
+                <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+                <p class="vjs-no-js">
+                    当前浏览器不支持JavaScript
+                </p>
+            </video>
+            <script>
+                $(function () {
+                    var options = {};
+                    var player = window.api.videojs('player', options, function onPlayerReady() {
+                        this.play();
+                        this.on('ended', function() {});
+                    });
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="margin-top">
+        <div class="ub-video-info">
+            <h1>视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题</h1>
+            <div class="stat">
+                <a href="#">分类A</a>
+                <a href="#">
+                    <i class="iconfont icon-play"></i>
+                    333
+                </a>
+                <a href="#">
+                    <i class="iconfont icon-thumb-up"></i>
+                    333
+                </a>
+            </div>
+            <div class="summary">
+                视频介绍视频介绍视频介绍视频介绍视频介绍视频介绍视频介绍
+            </div>
+        </div>
+    </div>
+
+</div>
+

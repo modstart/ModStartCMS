@@ -1,0 +1,187 @@
+import axios from 'axios'
+import {Message} from 'element-ui'
+import Cookies from 'js-cookie'
+
+let apiRequest = null, apiStore = null
+
+const init = (store) => {
+    if (null !== apiRequest) {
+        return
+    }
+    apiStore = store
+    apiRequest = axios.create({
+        baseURL: apiStore ? apiStore.state.api.baseUrl : '',
+        timeout: 60 * 1000
+    })
+    apiRequest.interceptors.request.use(
+        config => {
+            if (apiStore) {
+                let token = Cookies.get(apiStore.state.api.tokenKey)
+                if (token) {
+                    config.headers[apiStore.state.api.tokenKey] = token
+                }
+                // let additionalSendHeaders = Storage.getObject('ADDITIONAL_HEADERS', {})
+                // for (let k in additionalSendHeaders) {
+                //     config.headers[k] = additionalSendHeaders[k]
+                // }
+            }
+            return config
+        },
+        error => {
+            Promise.reject(error)
+        }
+    )
+    apiRequest.interceptors.response.use(
+        response => {
+            if (apiStore) {
+                try {
+                    if (response.headers[apiStore.state.api.tokenKey]) {
+                        apiStore.commit('SET_API_TOKEN', response.headers[apiStore.state.api.tokenKey])
+                    }
+                } catch (e) {
+                }
+            }
+            return response.data
+        },
+        error => {
+            return Promise.reject(error)
+        }
+    )
+}
+
+const processResponse = (res, failCB, successCB) => {
+    if (typeof (res) === 'string' || !('code' in res)) {
+        processResponse({code: -1, msg: '请求失败(2):' + res}, failCB, successCB)
+        console.error('error -> ', typeof (res), res)
+        return
+    }
+    if (res.code) {
+        let processed = false
+        if (apiStore) {
+            for (let processor of apiStore.state.api.codeProcessors) {
+                if (processor.code === res.code) {
+                    const result = processor.callback.call(null, res)
+                    if (result === true) {
+                        processed = true
+                    }
+                }
+            }
+        }
+        if (!processed) {
+            if (!failCB(res)) {
+                Message({
+                    message: res.msg,
+                    type: 'error',
+                    duration: 5 * 1000
+                })
+            }
+        }
+    } else {
+        if (successCB(res)) {
+            Message({
+                message: res.msg,
+                type: 'success',
+                duration: 5 * 1000
+            })
+        }
+    }
+}
+
+const defaultFailCallback = function (res) {
+    Message({
+        message: res.msg,
+        type: 'error',
+        duration: 5 * 1000
+    })
+    return true
+}
+
+const defaultSuccessCallback = function (res) {
+    if (res.msg) {
+        Message({
+            message: res.msg,
+            type: 'success',
+            duration: 5 * 1000
+        })
+    }
+}
+
+const defaultErrorCatcher = function (err, failCB) {
+    failCB({code: -1, msg: '请求失败(1):' + err})
+    console.error('api -> ', err)
+}
+
+/**
+ *
+ * @param url
+ * @param param
+ * @param successCallback : 如果需要系统默认处理   返回 true
+ * @param failCallback    : 如果不需要系统默认处理 返回 true
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+// const postForm = (url, param, successCallback, failCallback) => {
+//     const failCB = failCallback || defaultFailCallback
+//     const successCB = successCallback || defaultSuccessCallback
+//     const post = new FormData()
+//     if (param) {
+//         Object.keys(param).forEach((i) => {
+//             post.append(i, param[i])
+//         })
+//     }
+//     return apiRequest.post(url, post)
+//         .then(res => processResponse(res, failCB, successCB))
+//         .catch(err => defaultErrorCatcher(err, failCB))
+// }
+
+/**
+ *
+ * @param url
+ * @param param
+ * @param successCallback : 如果需要系统默认处理   返回 true
+ * @param failCallback    : 如果不需要系统默认处理 返回 true
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+const post = (url, param, successCallback, failCallback) => {
+    const failCB = failCallback || defaultFailCallback
+    const successCB = successCallback || defaultSuccessCallback
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    return apiRequest.post(url, JSON.stringify(param), config)
+        .then(res => processResponse(res, failCB, successCB))
+        .catch(err => defaultErrorCatcher(err, failCB))
+}
+
+const Api = {
+    init,
+    // get,
+    post,
+    // postJson,
+    // setApiBaseUrl,
+    // getApiTokenKey,
+    // setApiTokenKey
+}
+//
+// /**
+//  *
+//  * @param url
+//  * @param param
+//  * @param successCallback : 如果需要系统默认处理   返回 true
+//  * @param failCallback    : 如果不需要系统默认处理 返回 true
+//  * @returns {Promise<AxiosResponse<any>>}
+//  */
+// const get = (url, param, successCallback, failCallback) => {
+//     const failCB = failCallback || defaultFailCallback
+//     const successCB = successCallback || defaultSuccessCallback
+//     return apiRequest.get(url, {
+//         params: param
+//     })
+//         .then(res => processResponse(res, failCB, successCB))
+//         .catch(err => defaultErrorCatcher(err, failCB))
+// }
+
+export {
+    Api
+}

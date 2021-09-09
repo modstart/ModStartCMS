@@ -1,0 +1,268 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/menu/menu.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/header/header.less"/>
+
+<!--ub-header-c start-->
+<header class="ub-header-c">
+    <div class="menu">
+        <a href="javascript:;" class="item-icon" data-repeat="3">
+            <div class="icon">
+                <i class="iconfont icon-home"></i>
+            </div>
+            <div class="text">导航{SEQ}</div>
+        </a>
+        <a class="item" href="#">
+            <i class="iconfont icon-user"></i>
+            登录
+        </a>
+    </div>
+    <div class="logo">
+        <a class="logo-link" href="#">
+            <img class="logo-image" data-src="placeholder/400x100"/>
+        </a>
+    </div>
+    <div class="search">
+        <div class="box">
+            <form action="#" method="get">
+                <input class="input" type="text" name="keyword" placeholder="搜索内容"/>
+                <button class="submit" type="submit">
+                    <i class="iconfont icon-search"></i>
+                    搜索
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="menu-mask" onclick="$(this).closest('.ub-header-c').removeClass('show')"></div>
+    <a class="menu-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-c').toggleClass('show')">
+        <i class="show iconfont icon-list"></i>
+        <i class="close iconfont icon-close"></i>
+    </a>
+    <div class="search-mask" onclick="$(this).closest('.ub-header-c').removeClass('show-search')"></div>
+    <a class="search-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-c').toggleClass('show-search')">
+        <i class="show iconfont icon-search"></i>
+        <i class="close iconfont icon-close"></i>
+    </a>
+</header>
+<div class="ub-header-c-placeholder"></div>
+<!--ub-header-c end-->
+
+<div class="ub-menu-layout">
+    <a class="toggle" href="javascript:;" onclick="$('body').toggleClass('ub-menu-layout-shrink')">
+        <i class="iconfont icon-list"></i>
+    </a>
+    <div class="body">
+        <a class="item item-main active" href="javascript:;">
+            <i class="icon iconfont icon-home"></i>
+            <span class="text">首页</span>
+        </a>
+        <a class="item item-main" href="javascript:;" data-repeat="3">
+            <i class="icon iconfont icon-home"></i>
+            <span class="text">导航{SEQ}</span>
+        </a>
+        <div class="item-title">频道</div>
+        <a class="item" href="javascript:;" data-repeat="10">
+            <i class="icon iconfont icon-home"></i>
+            <span class="text">导航{SEQ}</span>
+        </a>
+        <div class="foot">
+            <div class="link">
+                <a href="javascript:;" data-repeat="6">关于我们</a>
+            </div>
+            <div class="copy">
+                <a href="https://beian.miit.gov.cn/" target="_blank">[备案号]</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ub-menu-layout-container">
+    <div style="padding:1rem;">
+        <div class="row">
+            <div class="col-4">
+                <div class="ub-panel">
+                    <div class="head">
+                        <div class="title">自适应页面菜单 page-menu（切换显示效果）</div>
+                    </div>
+                    <div class="body">
+                        <div class="ub-menu page-menu">
+                            <div class="title">标题1</div>
+                            <div class="items">
+                                <a class="active" href="#">标题1-1</a>
+                                <a href="#">标题1-2</a>
+                            </div>
+                            <div class="title">标题2</div>
+                            <div class="items">
+                                <a href="#">标题2-1</a>
+                                <a href="#">标题2-2</a>
+                            </div>
+                            <div class="title">标题3</div>
+                            <div class="items">
+                                <a href="#">标题3-1</a>
+                                <a href="#">标题3-2</a>
+                            </div>
+                            <a class="page-menu-toggle" href="javascript:;"
+                               onclick="$('body').toggleClass('ub-menu-page-show')">
+                                <i class="icon iconfont icon-list"></i>
+                            </a>
+                        </div>
+                        <script>
+                            $(function () {
+                                var $menu = $('.ub-menu.page-menu');
+                                $menu.find('.items .active').parent().show();
+                                $menu.find('.title').on('click', function () {
+                                    var $next = $(this).next();
+                                    $next.is(':visible') ? $next.slideUp() : $next.slideDown();
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ub-panel">
+                    <div class="head">
+                        <div class="title">多级菜单</div>
+                    </div>
+                    <div class="body">
+                        <div class="ub-menu demo-b">
+                            <div class="title">标题1</div>
+                            <div class="items">
+                                <a class="active" href="#">标题1-1</a>
+                                <a href="#">标题1-2</a>
+                            </div>
+                            <div class="title">标题2</div>
+                            <div class="items">
+                                <a href="#">标题2-1</a>
+                                <a href="#">标题2-2</a>
+                            </div>
+                            <div class="title">标题3</div>
+                            <div class="items">
+                                <a href="#">标题3-1</a>
+                                <a href="#">标题3-2</a>
+                            </div>
+                        </div>
+                        <script>
+                            $(function () {
+                                var $menu = $('.ub-menu.demo-b');
+                                $menu.find('.items .active').parent().show();
+                                $menu.find('.title').on('click', function () {
+                                    var $next = $(this).next();
+                                    $next.is(':visible') ? $next.slideUp() : $next.slideDown();
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ub-panel">
+                    <div class="head">
+                        <div class="title">简单水平滚动菜单</div>
+                    </div>
+                    <div class="body">
+                        <div class="ub-menu simple">
+                            <a class="title" href="javascript:;">菜单</a>
+                            <a class="title" href="javascript:;" data-repeat="5">标题1</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ub-panel">
+                    <div class="head">
+                        <div class="title">多级菜单</div>
+                    </div>
+                    <div class="body">
+                        <div class="ub-menu-tree">
+                            <div class="item" data-repeat="2">
+                                <a class="title" href="javascript:;">菜单 {ZH,1,1}</a>
+                                <div class="group">
+                                    <div class="item" data-repeat="2">
+                                        <a class="title" href="javascript:;">菜单 {ZH,2,2}</a>
+                                    </div>
+                                    <div class="item" data-repeat="2">
+                                        <a class="title" href="javascript:;">菜单 {ZH,3,3}</a>
+                                        <div class="group">
+                                            <div class="item" data-repeat="2">
+                                                <a class="title" href="javascript:;">菜单 {ZH,40,400}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $(function () {
+                                $('.ub-menu-tree').each(function (i, o) {
+                                    $(o).find('.title')
+                                        .each(function (i, o) {
+                                            if ($(o).next().is('.group')) $(o).addClass('has-group');
+                                        })
+                                        .on('click', function () {
+                                            if ($(this).is('.has-group')) {
+                                                $(this).toggleClass('open');
+                                                return false;
+                                            }
+                                        });
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ub-panel">
+                    <div class="head">
+                        <div class="title">自适应菜单（用户中心）</div>
+                    </div>
+                    <div class="body">
+                        <div class="ub-menu nav-menu">
+                            <div class="title">标题1</div>
+                            <div class="items">
+                                <a class="active" href="#">标题1-1</a>
+                                <a href="#">标题1-2</a>
+                            </div>
+                            <div class="title">标题2</div>
+                            <div class="items">
+                                <a href="#">标题2-1</a>
+                                <a href="#">标题2-2</a>
+                            </div>
+                            <div class="title">标题3</div>
+                            <div class="items">
+                                <a href="#">标题3-1</a>
+                                <a href="#">标题3-2</a>
+                            </div>
+                            <a class="page-menu-toggle" href="javascript:;"
+                               onclick="$('body').toggleClass('ub-menu-page-show')">
+                                <i class="icon iconfont icon-list"></i>
+                            </a>
+                        </div>
+                        <script>
+                            $(function () {
+                                var $menu = $('.ub-menu.nav-menu');
+                                if($(window).width()>600){
+                                    $menu.find('.items').addClass('open');
+                                }else{
+                                    $menu.find('.title').on('click',function () {
+                                        $menu.find('.items').removeClass('open');
+                                        $(this).next().addClass('open')
+                                            .css('left',$(this).offset().left+'px')
+                                            .css('width',$(this).width()+'px');
+                                        return false;
+                                    });
+                                    $(document).on('click',function(){
+                                        $menu.find('.items').removeClass('open');
+                                    });
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-placeholder">
+            <p data-repeat="20">话说天下大势，合久必分，分久必合。</p>
+        </div>
+    </div>
+</div>
+
+

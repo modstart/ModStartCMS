@@ -1,0 +1,188 @@
+<?php
+
+namespace ModStart\Core\Input;
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+
+class Request
+{
+
+    
+    public static function path()
+    {
+        return \Illuminate\Support\Facades\Request::path();
+    }
+
+    
+    public static function basePath()
+    {
+        static $path = null;
+        if (null !== $path) {
+            return $path;
+        }
+        $path = \Illuminate\Support\Facades\Request::path();
+        if (empty($path)) {
+            $path = '/';
+        } else if (!Str::startsWith($path, '/')) {
+            $path = '/' . $path;
+        }
+        return $path;
+    }
+
+    
+    public static function basePathWithQueries()
+    {
+        $url = self::basePath();
+        if ($queryString = \Illuminate\Support\Facades\Request::getQueryString()) {
+            $url .= "?" . $queryString;
+        }
+        return $url;
+    }
+
+    
+    public static function currentPageUrl()
+    {
+        if (\Illuminate\Support\Facades\Request::ajax()) {
+            $redirect = \Illuminate\Support\Facades\Request::server('HTTP_REFERER');
+        } else {
+            $redirect = \Illuminate\Support\Facades\Request::fullUrl();
+        }
+        return self::fixUrlSubdir($redirect);
+    }
+
+    
+    public static function currentPageUrlWithOutQueries()
+    {
+        return self::fixUrlSubdir(\Illuminate\Support\Facades\Request::url());
+    }
+
+    private static function fixUrlSubdir($url)
+    {
+        $subdirUrl = config('modstart.subdirUrl');
+        if ($subdirUrl) {
+            return str_replace(self::domainUrl(), rtrim($subdirUrl, '/'), $url);
+        }
+        return $url;
+    }
+
+    public static function mergeQueries($pair = [])
+    {
+        $gets = (!empty($_GET) && is_array($_GET)) ? $_GET : [];
+        foreach ($pair as $k => $v) {
+            $gets[$k] = $v;
+        }
+
+        $urls = [];
+        foreach ($gets as $k => $v) {
+            if (null === $v) {
+                continue;
+            }
+            if (is_array($v)) {
+                $v = $v[0];
+            } else {
+                $v = urlencode($v);
+            }
+            $urls[] = "$k=" . $v;
+        }
+
+        return join('&', $urls);
+    }
+
+    public static function domain()
+    {
+        return \Illuminate\Support\Facades\Request::server('HTTP_HOST');
+    }
+
+    public static function isSecurity()
+    {
+        return \Illuminate\Support\Facades\Request::secure();
+    }
+
+    public static function schema()
+    {
+        static $schema = null;
+        if (null === $schema) {
+            if (\Illuminate\Support\Facades\Request::secure()) {
+                $schema = 'https';
+            } else {
+                $schema = 'http';
+            }
+        }
+        return $schema;
+    }
+
+    
+    public static function domainUrl($subdirFix = false)
+    {
+        $url = self::schema() . '://' . self::domain();
+        if ($subdirFix) {
+            return self::fixUrlSubdir($url);
+        }
+        return $url;
+    }
+
+    public static function isPost()
+    {
+        return \Illuminate\Support\Facades\Request::isMethod('post');
+    }
+
+    
+    public static function instance()
+    {
+        return \Illuminate\Support\Facades\Request::instance();
+    }
+
+    public static function getControllerAction()
+    {
+        $routeAction = Route::currentRouteAction();
+        $pieces = explode('@', $routeAction);
+        if (isset($pieces[0])) {
+            $controller = $pieces[0];
+        } else {
+            $controller = null;
+        }
+        if (isset($pieces[1])) {
+            $action = $pieces[1];
+        } else {
+            $action = null;
+        }
+        if (empty($controller)) {
+            return [null, null];
+        }
+        if (!Str::startsWith($controller, '\\')) {
+            $controller = '\\' . $controller;
+        }
+        return [$controller, $action];
+    }
+
+    public static function headerGet($key, $defaultValue = null)
+    {
+        return self::instance()->header($key, $defaultValue);
+    }
+
+    public static function headerSet($key, $value)
+    {
+        self::instance()->headers->set($key, $value);
+    }
+
+    public static function headerReferer()
+    {
+        return self::headerGet('referer');
+    }
+
+    public static function headers()
+    {
+        return self::instance()->headers->all();
+    }
+
+    public static function ip()
+    {
+        return self::instance()->ip();
+    }
+
+    public static function server($name)
+    {
+        return self::instance()->server($name);
+    }
+}

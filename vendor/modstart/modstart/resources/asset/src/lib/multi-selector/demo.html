@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=320, minimum-scale=0.5, maximum-scale=5, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <title>Demo</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/uikit/2.25.0/css/uikit.css"/>
+    <style type="text/css">input[type="text"]{width:5em;font-size:10px;padding:2px;}</style>
+</head>
+<body>
+
+<div style="padding:20px;" class="uk-form">
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">说明</h3>
+        <div>
+            所有的文本框都可以用 input[type=hidden] 来替换来配合表单提交
+        </div>
+    </div>
+    <hr>
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">静态数据</h3>
+        <div>
+            <div class="multi-selector-demo-static">
+                <div data-select></div>
+                <input type="text" name="xxx" data-value value="">
+                <input type="text" name="xxx" data-value data-level="1">
+                <input type="text" name="xxx" data-value data-level="2">
+                <input type="text" name="xxx" data-title value="">
+                <input type="text" name="xxx" data-title data-level="1">
+                <input type="text" name="xxx" data-title data-level="2">
+                <input type="text" name="xxx" data-title data-level="3">
+                <input type="text" name="xxx" data-title data-level="4">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">静态数据初始化(使用title)</h3>
+        <div>
+            <div class="multi-selector-demo-static-init">
+                <div data-select></div>
+                <input type="text" name="xxx" data-value value="">
+                <input type="text" name="xxx" data-value data-level="1">
+                <input type="text" name="xxx" data-value data-level="2">
+                <input type="text" name="xxx" data-title value="分类1,分类1-2,分类1-2-2">
+                <input type="text" name="xxx" data-title data-level="1">
+                <input type="text" name="xxx" data-title data-level="2">
+                <input type="text" name="xxx" data-title data-level="3">
+                <input type="text" name="xxx" data-title data-level="4">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">静态数据初始化(使用id)</h3>
+        <div>
+            <div class="multi-selector-demo-static-init-id">
+                <div data-select></div>
+                <input type="text" name="xxx" data-value value="1,4,8">
+                <input type="text" name="xxx" data-value data-level="1">
+                <input type="text" name="xxx" data-value data-level="2">
+                <input type="text" name="xxx" data-title value="">
+                <input type="text" name="xxx" data-title data-level="1">
+                <input type="text" name="xxx" data-title data-level="2">
+                <input type="text" name="xxx" data-title data-level="3">
+                <input type="text" name="xxx" data-title data-level="4">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">动态数据</h3>
+        <div>
+            <div>
+                <div class="multi-selector-demo-dynamic">
+                    <div data-select></div>
+                    <input type="text" name="xxx" data-value value="">
+                    <input type="text" name="xxx" data-value data-level="1">
+                    <input type="text" name="xxx" data-value data-level="2">
+                    <input type="text" name="xxx" data-title value="">
+                    <input type="text" name="xxx" data-title data-level="1">
+                    <input type="text" name="xxx" data-title data-level="2">
+                    <input type="text" name="xxx" data-title data-level="3">
+                    <input type="text" name="xxx" data-title data-level="4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">动态数据初始化(使用title)</h3>
+        <div>
+            <div>
+                <div class="multi-selector-demo-dynamic-init">
+                    <div data-select></div>
+                    <input type="text" name="xxx" data-value value="">
+                    <input type="text" name="xxx" data-value data-level="1">
+                    <input type="text" name="xxx" data-value data-level="2">
+                    <input type="text" name="xxx" data-title value="分类1,分类1-2,分类1-2-2">
+                    <input type="text" name="xxx" data-title data-level="1">
+                    <input type="text" name="xxx" data-title data-level="2">
+                    <input type="text" name="xxx" data-title data-level="3">
+                    <input type="text" name="xxx" data-title data-level="4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">动态数据初始化(使用id)</h3>
+        <div>
+            <div>
+                <div class="multi-selector-demo-dynamic-init-id">
+                    <div data-select></div>
+                    <input type="text" name="xxx" data-value value="1,4,8">
+                    <input type="text" name="xxx" data-value data-level="1">
+                    <input type="text" name="xxx" data-value data-level="2">
+                    <input type="text" name="xxx" data-title value="">
+                    <input type="text" name="xxx" data-title data-level="1">
+                    <input type="text" name="xxx" data-title data-level="2">
+                    <input type="text" name="xxx" data-title data-level="3">
+                    <input type="text" name="xxx" data-title data-level="4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">中国地区</h3>
+        <div>
+            <div>
+                <div class="multi-selector-demo-china-area">
+                    <div data-select></div>
+                    <input type="text" name="area" data-title value="">
+                    <input type="text" name="province" data-title data-level="1">
+                    <input type="text" name="city" data-title data-level="2">
+                    <input type="text" name="district" data-title data-level="3">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+<script src="http://cdn.bootcss.com/uikit/2.25.0/js/uikit.js"></script>
+
+<script src="./multi-selector.js"></script>
+<script>
+    $(function () {
+
+        var testData = [
+            {"id": 1, "pid": 0, "title": "分类1",'sort':1},
+            {"id": 2, "pid": 0, "title": "分类2",'sort':1},
+            {"id": 3, "pid": 1, "title": "分类1-1",'sort':1},
+            {"id": 4, "pid": 1, "title": "分类1-2",'sort':1},
+            {"id": 5, "pid": 2, "title": "分类2-1",'sort':1},
+            {"id": 6, "pid": 2, "title": "分类2-2",'sort':1},
+            {"id": 7, "pid": 4, "title": "分类1-2-1",'sort':1},
+            {"id": 8, "pid": 4, "title": "分类1-2-2",'sort':1},
+            {"id": 9, "pid": 4, "title": "分类1-2-3",'sort':1},
+            {"id": 10, "pid": 5, "title": "分类2-1-1",'sort':1}
+        ];
+
+        // 静态
+        new MultiSelector({
+            container:'.multi-selector-demo-static',
+            data: testData
+        });
+        new MultiSelector({
+            container:'.multi-selector-demo-static-init',
+            data: testData
+        });
+        new MultiSelector({
+            container:'.multi-selector-demo-static-init-id',
+            data: testData
+        });
+
+        // 动态
+        new MultiSelector({
+            container:'.multi-selector-demo-dynamic',
+            dynamic:true,
+            server: './demo-response.json'
+        });
+        new MultiSelector({
+            container:'.multi-selector-demo-dynamic-init',
+            dynamic:true,
+            server: './demo-response.json'
+        });
+        new MultiSelector({
+            container:'.multi-selector-demo-dynamic-init-id',
+            dynamic:true,
+            server: './demo-response.json'
+        });
+
+        // 中国地区
+
+
+        $.get('./demo.json',{},function(chinaAreaJson){
+            new MultiSelector({
+                container:'.multi-selector-demo-china-area',
+                data:chinaAreaJson
+            });
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

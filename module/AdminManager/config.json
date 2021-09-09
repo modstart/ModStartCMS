@@ -1,0 +1,10 @@
+{
+  "name": "AdminManager",
+  "require": [
+    "Vendor"
+  ],
+  "title": "管理员管理",
+  "version": "1.0.0",
+  "author": "官方",
+  "description": "提供管理员角色、管理员、管理日志功能"
+}

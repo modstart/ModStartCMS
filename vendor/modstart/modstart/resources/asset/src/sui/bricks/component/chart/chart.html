@@ -1,0 +1,250 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/chart/chart.less"/>
+<script>
+    window._chart = {
+        init(id, option) {
+            setTimeout(function () {
+                var chart = echarts.init(document.getElementById(id))
+                chart.setOption(option)
+            }, 1000)
+        },
+        getDatetimeX(length) {
+            length = length || 10
+            var data = []
+            for (let t = (new Date()).getTime(); data.length < length; t += 24 * 3600 * 1000) {
+                data.push((new Date(t)).toJSON().replace(/\.\d{3}Z/g, '').replace('T', ' '))
+            }
+            return data
+        },
+        getValueY(min, max, length) {
+            length = length || 10
+            var data = []
+            for (; data.length < length;) {
+                data.push(window.randomNum(min, max))
+            }
+            return data
+        }
+    }
+</script>
+
+
+<div class="ub-container">
+    <div class="block-breaker"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="ub-panel">
+                <div class="head">
+                    <div class="title">
+                        折线
+                    </div>
+                </div>
+                <div class="body">
+                    <div id="chart1" style="height:300px;"></div>
+                    <script>
+                        (function () {
+                            window._chart.init('chart1', {
+                                grid: {
+                                    top: '5%',
+                                    right: '1%',
+                                    left: '1%',
+                                    bottom: '10%',
+                                    containLabel: true
+                                },
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    data: window._chart.getDatetimeX(),
+                                    axisLabel: {
+                                        formatter: (value, index) => {
+                                            const d = (new Date(value))
+                                            return (d.getMonth() + 1) + '-' + d.getDate()
+                                        }
+                                    }
+                                },
+                                yAxis: {
+                                    type: 'value',
+                                    minInterval: 1
+                                },
+                                series: [{
+                                    name: '数量',
+                                    data: window._chart.getValueY(10, 100),
+                                    type: 'line',
+                                    smooth: true,
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#4F7FF3',
+                                            lineStyle: {
+                                                color: '#4F7FF3'
+                                            }
+                                        }
+                                    }
+                                }]
+                            })
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ub-panel">
+                <div class="head">
+                    <div class="title">
+                        多条折线
+                    </div>
+                </div>
+                <div class="body">
+                    <div id="chart4" style="height:300px;"></div>
+                    <script>
+                        (function () {
+                            window._chart.init('chart4', {
+                                tooltip: {
+                                    trigger: 'axis',
+                                },
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                grid: {
+                                    top: '5%',
+                                    right: '2%',
+                                    left: '1%',
+                                    bottom: '10%',
+                                    containLabel: true
+                                },
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        data: window._chart.getDatetimeX(),
+                                        axisLabel: {
+                                            formatter: (value, index) => {
+                                                const d = (new Date(value))
+                                                return (d.getMonth() + 1) + '-' + d.getDate()
+                                            }
+                                        }
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value',
+                                        minInterval: 1
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name: '成功',
+                                        type: 'line',
+                                        data: window._chart.getValueY(10, 100),
+                                        smooth: true,
+                                        itemStyle: {
+                                            normal: {
+                                                color: '#4F7FF3',
+                                                lineStyle: {
+                                                    color: '#4F7FF3'
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name: '失败',
+                                        type: 'line',
+                                        data: window._chart.getValueY(10, 100),
+                                        smooth: true,
+                                        itemStyle: {
+                                            normal: {
+                                                color: '#bd2130',
+                                                lineStyle: {
+                                                    color: '#bd2130'
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            })
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ub-panel">
+                <div class="head">
+                    <div class="title">
+                        饼图
+                    </div>
+                </div>
+                <div class="body">
+                    <div id="chart2" style="height:300px;"></div>
+                    <script>
+                        (function () {
+                            var data = [
+                                {value: 335, name: '直接访问'},
+                                {value: 310, name: '邮件营销'},
+                                {value: 234, name: '联盟广告'},
+                                {value: 135, name: '视频广告'},
+                                {value: 1548, name: '搜索引擎'}
+                            ];
+                            window._chart.init('chart2', {
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                legend: {
+                                    orient: 'vertical',
+                                    left: 'left',
+                                    data: data.map(o => o.name),
+                                },
+                                series: [
+                                    {
+                                        name: '数量',
+                                        type: 'pie',
+                                        radius: '55%',
+                                        center: ['50%', '60%'],
+                                        data: data,
+                                        itemStyle: {
+                                            emphasis: {
+                                                shadowBlur: 10,
+                                                shadowOffsetX: 0,
+                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                            }
+                                        }
+                                    }
+                                ]
+                            })
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ub-panel">
+                <div class="head">
+                    <div class="title">
+                        仪表盘
+                    </div>
+                </div>
+                <div class="body">
+                    <div id="chart3" style="height:300px;"></div>
+                    <script>
+                        (function () {
+                            var data = [{value: 88, name: '已使用'}]
+                            window._chart.init('chart3', {
+                                tooltip: {
+                                    formatter: "{a} <br/>{b} : {c}%"
+                                },
+                                series: [
+                                    {
+                                        name: '使用量',
+                                        type: 'gauge',
+                                        detail: {formatter: '{value}%'},
+                                        data: data
+                                    }
+                                ]
+                            })
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

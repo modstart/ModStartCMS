@@ -1,0 +1,44 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/header/header.less"/>
+
+<header class="ub-header-c">
+    <div class="menu">
+        <a href="javascript:;" class="item-icon" data-repeat="3">
+            <div class="icon"><i class="iconfont icon-home"></i></div>
+            <div class="text">导航{SEQ}</div>
+        </a>
+        <a class="item" href="#">
+            <i class="iconfont icon-user"></i>
+            登录
+        </a>
+    </div>
+    <div class="logo">
+        <a class="logo-link" href="#">
+            <img class="logo-image" data-src="placeholder/400x100"/>
+        </a>
+    </div>
+    <div class="search">
+        <div class="box">
+            <form action="#" method="get">
+                <input class="input" type="text" name="keyword" placeholder="搜索内容"/>
+                <button class="submit" type="submit"><i class="iconfont icon-search"></i> 搜索</button>
+            </form>
+        </div>
+    </div>
+    <div class="menu-mask" onclick="$(this).closest('.ub-header-c').removeClass('show')"></div>
+    <a class="menu-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-c').toggleClass('show')">
+        <i class="show iconfont icon-list"></i>
+        <i class="close iconfont icon-close"></i>
+    </a>
+    <div class="search-mask" onclick="$(this).closest('.ub-header-c').removeClass('show-search')"></div>
+    <a class="search-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-c').toggleClass('show-search')">
+        <i class="show iconfont icon-search"></i>
+        <i class="close iconfont icon-close"></i>
+    </a>
+</header>
+<div class="ub-header-c-placeholder"></div>
+
+<div class="ub-container">
+    <div class="block-placeholder">
+        <p data-repeat="20">话说天下大势，合久必分，分久必合。</p>
+    </div>
+</div>

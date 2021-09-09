@@ -1,0 +1,32 @@
+<?php
+
+namespace ModStart\Command;
+
+use Illuminate\Console\Command;
+use ModStart\Core\Input\Response;
+use ModStart\Module\ModuleManager;
+
+class ModuleInstallAllCommand extends Command
+{
+    protected $signature = 'modstart:module-install-all';
+
+    public function handle()
+    {
+        $this->info("ModuleInstallAll\n");
+        foreach (ModuleManager::listAllInstalledModulesInRequiredOrder() as $module) {
+            if (!ModuleManager::isExists($module)) {
+                continue;
+            }
+            $ret = ModuleManager::install($module);
+            $this->warn(">>> Module $module");
+            if (Response::isSuccess($ret)) {
+                $this->info($ret['data']['output']);
+            } else {
+                $this->error($ret['msg']);
+            }
+            $this->info("");
+        }
+        $this->warn("ModuleInstallAll Run Finished");
+    }
+
+}

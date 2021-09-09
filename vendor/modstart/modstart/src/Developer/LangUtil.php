@@ -1,0 +1,41 @@
+<?php
+
+
+namespace ModStart\Developer;
+
+
+class LangUtil
+{
+    public static function extractFileLangScripts($file)
+    {
+        $file = base_path($file);
+        if (!file_exists($file)) {
+            return '';
+        }
+        $content = file_get_contents($file);
+        preg_match_all('/L\\((([^()]*|\\([^()]*\\))*)\\)/', $content, $mat);
+        if (!empty($mat[1])) {
+            $langs = [];
+            foreach ($mat[0] as $item) {
+                if (preg_match('/^L\\([\'|"](.*?)[\'|"].*?\\)/', $item, $mat1)) {
+                    $langs[$mat1[1]] = L($mat1[1]);
+                }
+            }
+            ksort($langs);
+            return "\n{!! \ModStart\Developer\LangUtil::langScriptPrepare(" . json_encode(array_keys($langs), JSON_PRETTY_PRINT) . ") !!}";
+        }
+        return '';
+    }
+
+    public static function langScriptPrepare($langs)
+    {
+        $script = [];
+        $script[] = "\n(function(){";
+        $script[] = "  window.lang = window.lang||{};";
+        foreach ($langs as $l) {
+            $script[] = "  window.lang[" . json_encode($l) . "]=" . json_encode(L($l), JSON_UNESCAPED_UNICODE) . ";";
+        }
+        $script[] = "})();";
+        return join("\n", $script);
+    }
+}

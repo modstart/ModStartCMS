@@ -1,0 +1,32 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/modal/modal.less" />
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/html/html.less" />
+
+<div class="ub-container">
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-modal" aria-hidden="false">
+        <div class="ub-modal-dialog">
+            <a href="javascript:" class="ub-modal-close" onclick="$(this).closest('.ub-modal').removeClass('ub-open');"><i class="iconfont icon-close"></i></a>
+            <div class="ub-modal-head">
+                <div class="title">标题</div>
+            </div>
+            <div class="ub-modal-body">
+                <div class="ub-html">
+                    <p data-repeat="10">{ZH,20,40}</p>
+                </div>
+            </div>
+            <div class="ub-modal-foot">
+                <button class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $('.ub-modal').addClass('ub-open');
+            },1000);
+        });
+    </script>
+
+</div>

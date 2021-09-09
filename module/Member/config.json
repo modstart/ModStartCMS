@@ -1,0 +1,14 @@
+{
+  "name": "Member",
+  "title": "通用用户系统",
+  "require": [
+    "Vendor"
+  ],
+  "version": "1.0.0",
+  "author": "官方",
+  "description": "提供基础的用户管理服务",
+  "providers": [
+  ],
+  "config": {
+  }
+}

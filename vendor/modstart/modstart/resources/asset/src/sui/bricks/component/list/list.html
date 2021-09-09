@@ -1,0 +1,586 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/list/list.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/misc/cover.less"/>
+<link rel="stylesheet/less" type="text/css" href="./base/component/animate.less"/>
+
+
+<div class="ub-container">
+
+    <div class="ub-list-head-tools">
+        <div class="item" onclick="$(this).parent().find('.item').removeClass('open');$(this).addClass('open')">
+            <div class="item-drawer">
+                <div class="item-drawer-title">
+                    <div class="text">自定义内容</div>
+                    <div class="icon iconfont">&#xe651;</div>
+                </div>
+                <div class="item-drawer-mask">
+                    <div class="item-drawer-content">
+                        <div class="item-drawer-content-body">
+                            <div style="height:100px;background:#EEE;line-height:100px;">
+                                自定义筛选内容
+                            </div>
+                        </div>
+                        <div class="item-drawer-content-foot">
+                            <button class="btn btn-lg">清空</button>
+                            <button class="btn btn-lg btn-primary">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" onclick="$(this).parent().find('.item').removeClass('open');$(this).addClass('open')">
+            <div class="item-drawer">
+                <div class="item-drawer-title">
+                    <div class="text">自定义内容</div>
+                    <div class="icon iconfont">&#xe651;</div>
+                </div>
+                <div class="item-drawer-mask">
+                    <div class="item-drawer-content">
+                        <div class="item-drawer-content-body">
+                            <div style="height:800px;background:#EEE;line-height:200px;">
+                                自定义筛选内容
+                            </div>
+
+                        </div>
+                        <div class="item-drawer-content-foot">
+                            <button class="btn btn-lg">清空</button>
+                            <button class="btn btn-lg btn-primary">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" onclick="$(this).parent().find('.item').removeClass('open');$(this).addClass('open')">
+            <div class="item-drawer">
+                <div class="item-drawer-title">
+                    <div class="text">排序</div>
+                    <div class="icon iconfont">&#xe651;</div>
+                </div>
+                <div class="item-drawer-mask">
+                    <div class="item-drawer-content no-foot">
+                        <div class="item-drawer-content-body">
+                            <div class="item-drawer-content-body-list">
+                                <div class="item-drawer-content-body-item active">
+                                    <view class="checked iconfont">&#xe7be;</view>
+                                    <div class="text">默认排序</div>
+                                </div>
+                                <div class="item-drawer-content-body-item">
+                                    <view class="checked iconfont">&#xe7be;</view>
+                                    <div class="text">距离最近</div>
+                                </div>
+                                <div class="item-drawer-content-body-item">
+                                    <view class="checked iconfont">&#xe7be;</view>
+                                    <div class="text">评价最好</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ub-list-head-tools-placeholder"></div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list ub-panel">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                标题+图标+描述 item-a
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-3 col-12" data-repeat="8">
+                    <div class="item-a">
+                        <a class="icon" href="#">
+                            <img data-src="placeholder/200x200"/>
+                        </a>
+                        <a class="title" href="#">标题标题</a>
+                        <div class="summary">
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-container-row">
+        <div class="row">
+            <div class="col-md-4 col-12" data-repeat="3">
+                <div class="ub-list">
+                    <div class="head">
+                        <div class="more">
+                            <a href="#">更多</a>
+                        </div>
+                        <div class="title">
+                            标题按钮 item-b
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <a class="item-b" href="#">阿萨德法师打发斯蒂芬</a>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <a class="item-b" href="#">阿萨德法师打发斯蒂芬</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-breaker"></div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="ub-list">
+                <div class="head">
+                    <div class="more">
+                        <a href="#">更多</a>
+                    </div>
+                    <div class="title">
+                        文本链接 item-c
+                    </div>
+                </div>
+                <div class="body">
+                    <a class="item-c" data-repeat="5" href="#">阿斯顿发送到发送到发送到分</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="ub-list">
+                <div class="head">
+                    <div class="more">
+                        <a href="#">更多</a>
+                    </div>
+                    <div class="title">
+                        文本链接 item-l
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="item-l" data-repeat="5">
+                        <div class="right">{NUM,100,99999}热度</div>
+                        <span class="seq">{SEQ}</span>
+                        <a class="title" href="#">{ZH,10,100}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="ub-list ub-panel">
+                <div class="head">
+                    <div class="more">
+                        <a href="#">更多</a>
+                    </div>
+                    <div class="title">
+                        文本链接 item-m
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="row">
+                        <div class="col-4" data-repeat="15">
+                            <a class="item-m" href="#">{ZH,3,8}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                列表 item-d
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-12 col-12" data-repeat="3">
+                    <div class="item-d">
+                        <a class="title" href="#">标题标题</a>
+                        <div class="attr">
+                            分类：
+                            <a href="#">哈哈</a>
+                        </div>
+                        <div class="summary">
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                标题对对对
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-3 col-12" data-repeat="4">
+                    <div class="item-e">
+                        <a class="cover" href="#" style="background-image:url(/placeholder/200x200)"></a>
+                        <a class="title" href="#">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</a>
+                        <div class="summary">
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                列表 item-f
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="item-f" data-repeat="3">
+                        <div class="date">
+                            <div class="day">9</div>
+                            <div class="month">9月</div>
+                        </div>
+                        <a class="title" href="#">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</a>
+                        <div class="summary">
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                            阿斯顿发送到发送到发送到分
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                文章列表 item-video
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <a class="item-video" href="#">
+                        <img style="width:100%;" data-src="placeholder/200x50"/>
+                        <div class="mask">
+                            <div class="box">
+                                <i class="iconfont icon-play"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-breaker"></div>
+
+    <div class="ub-list no-bg">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                文章列表 item-video-cover
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-3 col-6" data-repeat="8">
+                    <div class="item-video-cover">
+                        <a class="cover" href="#" style="background-image:url(/placeholder/600x400)"></a>
+                        <a class="title" href="#">标题标题标题标题标题标题标题标题标题标题</a>
+                        <div class="category">
+                            <div class="stat">
+                                <a href="#">
+                                    <i class="iconfont icon-play"></i>
+                                    333
+                                </a>
+                                <a href="#">
+                                    <i class="iconfont icon-thumb-up"></i>
+                                    333
+                                </a>
+                            </div>
+                            <a href="#">分类A</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-breaker"></div>
+
+    <div class="ub-list no-bg">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                文章列表 item-video-cover-a
+            </div>
+        </div>
+        <div class="body" style="margin-left:-1rem;margin-right:-1rem;">
+            <div class="row">
+                <div class="col-md-3 col-6" data-repeat="8">
+                    <div class="item-video-cover-a">
+                        <a class="cover ub-cover-4-3" href="#" style="background-image:url(/placeholder/600x400)">
+                            <span class="time">21:22</span>
+                        </a>
+                        <a class="user" href="#">
+                            <div class="avatar">
+                                <img class="image" data-src="placeholder/100x100">
+                            </div>
+                            <span class="name">
+                                {ZH,3,10}
+                            </span>
+                        </a>
+                        <a class="title" href="#">标题标题标题标题标题标题标题标题标题标题</a>
+                        <div class="info">
+                            {NUM,100,100000}次观看
+                            ·
+                            一个月前
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                标题对对对
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-3 col-12" data-repeat="8">
+                    <a class="item-g" href="#">
+                        <div class="icon">
+                            <img data-src="placeholder/200x200"/>
+                        </div>
+                        <div class="title">标题标题</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                标题对对对
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-3 col-12" data-repeat="8">
+                    <a class="item-h" href="#">
+                        <div class="icon">
+                            <img data-src="placeholder/200x200"/>
+                        </div>
+                        <div class="title">标题标题</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                标题对对对
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-3 col-12" data-repeat="8">
+                    <a class="item-i" href="#">
+                        <div class="icon">
+                            <img data-src="placeholder/200x200"/>
+                        </div>
+                        <div class="title">标题标题</div>
+                        <span class="desc">描述描述描述描述描述描述描述描述描述描述</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                多内容
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-3 col-12" data-repeat="4">
+                    <a href="javascript:;" class="item-j">
+                        <div class="status">
+                            状态1
+                        </div>
+                        <div class="title">标题标题</div>
+                        <div class="attr">
+                            <div class="line">
+                                <i class="icon iconfont icon-home"></i>
+                                时间
+                            </div>
+                            <div class="line">
+                                <i class="icon iconfont icon-home"></i>
+                                时间
+                            </div>
+                            <div class="line">
+                                <i class="icon iconfont icon-home"></i>
+                                时间
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-list">
+        <div class="head">
+            <div class="more">
+                <a href="#">更多</a>
+            </div>
+            <div class="title">
+                列表 item-k
+            </div>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-md-12 col-12" data-repeat="3">
+                    <div class="item-k">
+                        <a class="image" href="#">
+                            <div class="cover ub-cover-4-3" style="background-image:url(/placeholder/400x300)"></div>
+                        </a>
+                        <a class="title" href="#">标题标题</a>
+                        <div class="summary">
+                            {ZH,300,400}
+                        </div>
+                        <div class="info">
+                            <div class="left">
+                                分类：
+                                <a href="#">哈哈</a>
+                            </div>
+                            <div class="right">
+                                <i class="iconfont icon-time"></i>
+                                一年前
+                                &nbsp;
+                                <i class="iconfont icon-eye"></i>
+                                1111
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12" data-repeat="3">
+                    <div class="item-k item-k-a">
+                        <a class="image" href="#">
+                            <div class="cover ub-cover-1-1" style="background-image:url(/placeholder/400x400)"></div>
+                        </a>
+                        <a class="title" href="#">标题标题</a>
+                        <div class="info">
+                            <div class="left">
+                                分类：
+                                <a href="#">哈哈</a>
+                            </div>
+                            <div class="right">
+                                <i class="iconfont icon-time"></i>
+                                一年前
+                                &nbsp;
+                                <i class="iconfont icon-eye"></i>
+                                1111
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12" data-repeat="3">
+                    <div class="item-k item-k-b">
+                        <div class="right">
+                            <a href="javascript:;" class="btn btn-primary-line btn-sm btn-round">订阅</a>
+                        </div>
+                        <a class="image" href="#">
+                            <div class="cover circle ub-cover-1-1" style="background-image:url(/placeholder/400x400)"></div>
+                        </a>
+                        <a class="title" href="#">
+                            标题标题
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+</div>

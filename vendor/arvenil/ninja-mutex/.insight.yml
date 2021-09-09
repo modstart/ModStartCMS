@@ -1,0 +1,7 @@
+pre_composer_script: |
+    ./tests/insight/memcache-setup.sh
+    ./tests/insight/memcached-setup.sh
+
+php_ini: |
+    extension=memcache.so
+    extension=memcached.so

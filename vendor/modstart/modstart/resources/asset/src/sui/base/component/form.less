@@ -1,0 +1,362 @@
+input,
+select,
+textarea {
+  /* 1 */
+  box-sizing: border-box;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+  border-radius: 0.15rem;
+  /* 4 */
+  font: inherit;
+  color: inherit;
+}
+
+/*
+ * Address inconsistent `text-transform` inheritance which is only inherit in Firefox
+ */
+select {
+  text-transform: none;
+}
+
+/*
+ * 1. Correct `font` properties not being inherited.
+ * 2. Don't inherit the `font-weight` and use `bold` instead.
+ * NOTE: Both declarations don't work in Chrome, Safari and Opera.
+ */
+optgroup {
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  font-weight: bold;
+}
+
+/*
+ * Removes inner padding and border in Firefox 4+.
+ */
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/*
+ * Removes excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  padding: 0;
+}
+
+/*
+ * Improves consistency of cursor style for clickable elements
+ */
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+
+/*
+ * Remove default style in iOS.
+ */
+textarea,
+input:not([type]),
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="number"],
+input[type="datetime"] {
+  -webkit-appearance: none;
+}
+
+/*
+ * Remove inner padding and search cancel button in Chrome, Safari and Opera on OS X.
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * 1. Remove default vertical scrollbar in IE 8/9/10/11.
+ * 2. Improve readability and alignment in all browsers.
+ */
+textarea {
+  /* 1 */
+  overflow: auto;
+  /* 2 */
+  vertical-align: top;
+}
+
+/*
+ * Removes placeholder transparency in Firefox.
+ */
+::-moz-placeholder {
+  opacity: 1;
+}
+
+/*
+ * Removes `box-shadow` for invalid controls in Firefox.
+ */
+:invalid {
+  box-shadow: none;
+}
+
+/*
+ * Vertical alignment
+ */
+input:not([type="radio"]):not([type="checkbox"]),
+select {
+  vertical-align: middle;
+}
+
+/* Style
+ ========================================================================== */
+/*
+ * Remove margin from the last-child
+ */
+//> :last-child {
+//  margin-bottom: 0;
+//}
+
+/*
+ * Controls
+ * Except for `range`, `radio`, `checkbox`, `file`, `submit`, `reset`, `button` and `image`
+ * 1. Must be `height` because `min-height` is not working in OSX
+ * 2. Responsiveness: Sets a maximum width relative to the parent to scale on narrower viewports
+ * 3. Vertical `padding` needed for `select` elements in Firefox
+ * 4. Style
+ */
+select,
+textarea,
+input:not([type]),
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+  /* 1 */
+  // height: 1.5rem;
+  /* 2 */
+  max-width: 100%;
+  /* 3 */
+  padding: 0.2rem 0.3rem;
+  /* 4 */
+  border: 0.05rem solid #dddddd;
+  background: #ffffff;
+  color: #444444;
+  -webkit-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+}
+
+select:focus,
+textarea:focus,
+input:not([type]):focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus {
+  border-color: #99baca;
+  outline: 0;
+  background: #f5fbfe;
+  color: #444444;
+}
+
+select:disabled,
+textarea:disabled,
+input:not([type]):disabled,
+input[type="text"]:disabled,
+input[type="password"]:disabled,
+input[type="datetime"]:disabled,
+input[type="datetime-local"]:disabled,
+input[type="date"]:disabled,
+input[type="month"]:disabled,
+input[type="time"]:disabled,
+input[type="week"]:disabled,
+input[type="number"]:disabled,
+input[type="email"]:disabled,
+input[type="url"]:disabled,
+input[type="search"]:disabled,
+input[type="tel"]:disabled,
+input[type="color"]:disabled {
+  border-color: #dddddd;
+  background-color: #f5f5f5;
+  color: #999999;
+}
+
+select:read-only,
+textarea:read-only,
+input[type="text"]:read-only,
+input[type="password"]:read-only,
+input[type="datetime"]:read-only,
+input[type="datetime-local"]:read-only,
+input[type="date"]:read-only,
+input[type="month"]:read-only,
+input[type="time"]:read-only,
+input[type="week"]:read-only,
+input[type="number"]:read-only,
+input[type="email"]:read-only,
+input[type="url"]:read-only,
+input[type="search"]:read-only,
+input[type="tel"]:read-only,
+input[type="color"]:read-only {
+  border-color: #dddddd;
+  background-color: #f5f5f5;
+  color: #666666;
+}
+
+/*
+ * Placeholder
+ */
+:-ms-input-placeholder {
+  color: #999999 !important;
+}
+
+::-moz-placeholder {
+  color: #999999;
+}
+
+::-webkit-input-placeholder {
+  color: #999999;
+}
+
+:disabled:-ms-input-placeholder {
+  color: #999999 !important;
+}
+
+:disabled::-moz-placeholder {
+  color: #999999;
+}
+
+:disabled::-webkit-input-placeholder {
+  color: #999999;
+}
+
+/*
+ * Legend
+ * 1. Behave like block element
+ * 2. Correct `color` not being inherited in IE 8/9/10/11.
+ * 3. Remove padding
+ * 4. `margin-bottom` is not working in Safari and Opera.
+ *    Using `padding` and :after instead to create the border
+ * 5. Style
+ */
+legend {
+  /* 1 */
+  width: 100%;
+  /* 2 */
+  border: 0;
+  /* 3 */
+  padding: 0;
+  /* 4 */
+  padding-bottom: 0.75rem;
+  /* 5 */
+  font-size: 0.9rem;
+  line-height: 1.5rem;
+}
+
+/*
+ * 1. Fixes IE9
+ */
+legend:after {
+  content: "";
+  display: block;
+  border-bottom: 0.05rem solid #dddddd;
+  /* 1 */
+  width: 100%;
+}
+
+/* Size modifiers
+ * Higher specificity needed to override defaults
+ ========================================================================== */
+select.form,
+textarea.form,
+input[type].form,
+input:not([type]).form {
+  height: 1.45rem;
+  padding: 0.15rem 0.15rem;
+  font-size: 0.6rem;
+}
+
+select.form-sm,
+textarea.form-sm,
+input[type].form-sm,
+input:not([type]).form-sm {
+  height: 1.25rem;
+  padding: 0.15rem 0.15rem;
+  font-size: 0.6rem;
+}
+
+select.form-lg,
+textarea.form-lg,
+input[type].form-lg,
+input:not([type]).form-lg {
+  height: 2rem;
+  padding: 0.4rem 0.3rem;
+  font-size: 0.8rem;
+}
+
+/* Reset height
+ * Must be after size modifiers
+ ========================================================================== */
+textarea,
+select[multiple],
+select[size] {
+  height: auto;
+}
+
+textarea::-webkit-input-placeholder, input::-webkit-input-placeholder {
+  color: var(--color-input-placeholder);
+}
+
+textarea::-webkit-input-placeholder, input:-moz-placeholder {
+  color: var(--color-input-placeholder);
+}
+
+textarea::-webkit-input-placeholder, input::-moz-placeholder {
+  color: var(--color-input-placeholder);
+}
+
+textarea::-webkit-input-placeholder, input:-ms-input-placeholder {
+  color: var(--color-input-placeholder);
+}

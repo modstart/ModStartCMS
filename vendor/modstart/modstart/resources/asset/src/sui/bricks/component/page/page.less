@@ -1,0 +1,157 @@
+
+.ub-page {
+  .pages {
+    text-align: center;
+    padding: 1em 0;
+
+    a, span, input, button {
+      display: inline-block;
+      line-height: 1.5rem;
+      min-width: 1.5rem;
+      text-align: center;
+      padding: 0 0.25rem;
+      color: #666;
+      margin: 0 0.25rem 0.25rem 0.25rem;
+      vertical-align: bottom;
+      border-radius: 0.1rem;
+      text-decoration: none;
+      background: #FFF;
+    }
+
+    a.page:hover {
+      color: var(--color-primary);
+    }
+
+    span.current {
+      color: #FFF;
+      background: var(--color-primary);
+    }
+
+    span.more {
+      background: transparent;
+      color: inherit;
+    }
+
+    .jumpBox {
+      position: relative;
+      border: 0.05rem solid #CCC;
+      border-radius: 0.1rem;
+      padding: 0;
+
+      input {
+        width: 4em;
+        line-height: 1rem;
+        outline: none;
+        margin: 0;
+        float: left;
+        border: none;
+        text-align: center;
+        height: 1rem;
+      }
+
+      button {
+        width: 4em;
+        background: #FFF;
+        margin: 0;
+        right: 0;
+        float: left;
+        border: none;
+        border-left: 0.05rem dotted #CCC;
+        outline: none;
+      }
+    }
+  }
+}
+
+.ub-paginate-mobile {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  position: relative;
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ub-paginate-mobile__btn {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  width: 30%;
+  height: 30px;
+  line-height: 30px;
+  font-size: var(--font-size);
+  position: relative;
+  background-color: #EEE;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #EEE;
+  /* #ifdef H5 */
+  cursor: pointer;
+  /* #endif */
+  border-radius: 0.2rem;
+}
+
+.ub-paginate-mobile__child-btn {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  font-size: var(--font-size);
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.ub-paginate-mobile__num {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  line-height: 30px;
+  font-size: var(--font-size);
+  color: #111;
+}
+
+.ub-paginate-mobile__num-page {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  flex-direction: row;
+}
+
+.ub-paginate-mobile__num-page-text {
+  font-size: var(--font-size);
+
+  &.current {
+    color: var(--color-primary);
+  }
+}
+
+.ub-paginate-mobile--enabled {
+  color: #333333;
+  opacity: 1;
+}
+
+.ub-paginate-mobile--disabled {
+  opacity: 0.3;
+  color: #999;
+  /* #ifdef H5 */
+  cursor: not-allowed;
+  /* #endif */
+}
+
+.ub-paginate-mobile--hover {
+  color: #FFF;
+  background-color: var(--color-primary);
+}

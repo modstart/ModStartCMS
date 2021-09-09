@@ -1,0 +1,64 @@
+
+.ub-panel {
+  background: #FFF;
+  border-radius: var(--size-radius);
+  margin-bottom: var(--size-margin);
+
+  &.border-top {
+    border-top: 2px solid var(--color-primary);
+
+    .head {
+      border-bottom: 1px solid #EEE;
+
+      .title {
+        border-left: none;
+        padding-left: 0;
+      }
+    }
+  }
+
+  &.margin-top {
+    margin-top: 1rem;
+  }
+
+  &.transparent {
+    background: transparent;
+
+    .head {
+      padding: 0 0 0.5rem 0;
+    }
+
+    .body {
+      padding: 0.5rem 0 0 0;
+    }
+  }
+
+  .head {
+    padding: 0.5rem;
+
+    .more {
+      float: right;
+    }
+
+    .title {
+      border-left: 0.2rem solid var(--color-primary);
+      display: inline-block;
+      line-height: 1rem;
+      font-size: var(--font-size);
+      padding: 0 0 0 0.5rem;
+
+      .ub-breadcrumb {
+        height: 1rem;
+
+        a {
+          line-height: 1rem;
+        }
+      }
+    }
+  }
+
+  .body {
+    margin-top: -0.5rem;
+    padding: 0.5rem;
+  }
+}

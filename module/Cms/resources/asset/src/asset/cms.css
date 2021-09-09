@@ -1,0 +1,24 @@
+[data-topic-follow-item] [data-action],
+[data-post-like-item] [data-action] {
+  display: none;
+}
+[data-topic-follow-item][data-status=is_follow] [data-action="unfollow"],
+[data-post-like-item][data-status=is_follow] [data-action="unfollow"],
+[data-topic-follow-item][data-status=is_like] [data-action="unfollow"],
+[data-post-like-item][data-status=is_like] [data-action="unfollow"],
+[data-topic-follow-item][data-status=is_follow] [data-action="unlike"],
+[data-post-like-item][data-status=is_follow] [data-action="unlike"],
+[data-topic-follow-item][data-status=is_like] [data-action="unlike"],
+[data-post-like-item][data-status=is_like] [data-action="unlike"] {
+  display: inline-block;
+}
+[data-topic-follow-item][data-status=not_follow] [data-action="follow"],
+[data-post-like-item][data-status=not_follow] [data-action="follow"],
+[data-topic-follow-item][data-status=not_like] [data-action="follow"],
+[data-post-like-item][data-status=not_like] [data-action="follow"],
+[data-topic-follow-item][data-status=not_follow] [data-action="like"],
+[data-post-like-item][data-status=not_follow] [data-action="like"],
+[data-topic-follow-item][data-status=not_like] [data-action="like"],
+[data-post-like-item][data-status=not_like] [data-action="like"] {
+  display: inline-block;
+}

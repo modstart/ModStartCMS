@@ -1,0 +1,1 @@
+@extends('modstart::core.msg.500')

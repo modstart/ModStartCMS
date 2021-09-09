@@ -1,0 +1,18 @@
+{
+  "name": "Article",
+  "require": [
+    "Vendor"
+  ],
+  "title": "通用文章",
+  "version": "1.0.0",
+  "author": "官方",
+  "description": "提供多位置、单页文章基础管理功能",
+  "config": {
+    "position": [
+      [
+        "keyValueList",
+        "位置"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+<div class="line" id="{{$id}}">
+    <div class="label">
+        {!! str_contains($rules,'required')?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
+        {{$label}}:
+    </div>
+    <div class="field">
+        <input type="text"
+               {{$readonly?'readonly':''}}
+               class="form"
+               name="{{$name}}"
+               placeholder="{{$placeholder}}"
+               style="width:50%;"
+               value="{{$value}}" />
+        <a href="javascript:;" class="btn" id="{{$name}}Selector"><i class="iconfont icon-list-alt"></i></a>
+        @if(!empty($help))
+            <div class="help">{!! $help !!}</div>
+        @endif
+    </div>
+</div>
+<script>
+    $(function () {
+        var $field = $('#{{$id}}');
+        var $selector = $('#{{$name}}Selector');
+        $selector.on('click', function () {
+            window.__selectorDialog = new window.api.selectorDialog({
+                server: {!! json_encode($server) !!},
+                callback: (items) => {
+                    // console.log('doSelect', items)
+                    if (items.length > 0) {
+                        $field.find('[name={{$name}}]').val(items[0].link);
+                    }
+                }
+            }).show();
+        });
+    });
+</script>

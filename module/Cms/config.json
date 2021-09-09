@@ -1,0 +1,16 @@
+{
+  "name": "Cms",
+  "title": "通用内容管理系统",
+  "require": [
+    "Vendor",
+    "Member"
+  ],
+  "version": "1.0.0",
+  "author": "ModStart",
+  "description": "提供自适应的内容管理系统",
+  "providers": [
+    "Module\\Cms\\Provider\\ModuleServiceProvider"
+  ],
+  "config": {
+  }
+}

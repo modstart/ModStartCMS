@@ -1,0 +1,29 @@
+language: php
+
+php:
+ - 5.3
+ - 5.4
+ - 5.5
+ - 5.6
+ - hhvm
+
+addons:
+    code_climate:
+        repo_token:
+            secure: "F0tPpoTZPMJkyQsElb2UKekfAcvE4P7/kAfW6/9sUF3jgNaRfob0kAyXAxf99n09+M5fI8VlFC0OEpmKGHUXez9EFMAqFeZ85eMePvXOX6EmloCPUY3LcX0tGefFQn402tSZCMdIzXwsjTYe5Ku4bGsH+etXRViX+teZmct7BBQ="
+
+services:
+ - memcached
+ - redis-server
+
+before_script:
+ - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then cat .travis.php.ini >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; echo "Loading additional config for version $TRAVIS_PHP_VERSION" ; fi
+ - ./tests/travis/composer-setup.sh
+ - ./tests/travis/mysql-setup.sh
+
+script: phpunit
+
+after_script:
+  - vendor/bin/ocular code-coverage:upload --format=php-clover build/logs/clover.xml
+  - vendor/bin/test-reporter --stdout > codeclimate.json
+  - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"

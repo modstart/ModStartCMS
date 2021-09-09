@@ -1,0 +1,111 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/page/panel/panel.less"/>
+
+<div class="ub-panel-frame">
+    <a href="javascript:;" class="left-menu-shrink"
+       onclick="$(this).closest('.ub-panel-frame').toggleClass('left-toggle')"></a>
+    <div class="left">
+        <div class="logo">
+            <i class="icon iconfont icon-home"></i>
+            <span class="text">后台名称</span>
+        </div>
+        <div class="menu">
+            <div class="menu-item active">
+                <a href="#" class="title">
+                    <i class="arrow"></i>
+                    <i class="icon iconfont icon-home"></i>
+                    <span class="text">系统概况</span>
+                </a>
+            </div>
+            <div class="menu-item" data-repeat="5">
+                <a href="javascript:;" class="title" onclick="$(this).toggleClass('open')">
+                    <i class="arrow"></i>
+                    <i class="icon iconfont icon-home"></i>
+                    <span class="text">分类1分类1分类1</span>
+                </a>
+                <div class="children">
+                    <div class="menu-item">
+                        <a class="title" href="javascript:;" onclick="$(this).toggleClass('open')">
+                            <i class="arrow"></i>
+                            <span class="text">分类1-1</span>
+                        </a>
+                        <div class="children">
+                            <div class="menu-item">
+                                <a class="title" href="#">
+                                    <span class="text">分类1-1-1</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="title" href="#">
+                                    <span class="text">分类1-1-2</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <a class="title" href="javascript:;" onclick="$(this).toggleClass('open')">
+                            <i class="arrow"></i>
+                            <span class="text">分类1</span>
+                        </a>
+                        <div class="children">
+                            <div class="menu-item">
+                                <a class="title" href="#">
+                                    <span class="text">分类1</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="title" href="#">
+                                    <span class="text">分类1</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="top">
+            <a href="javascript:;" class="right-menu-trigger">
+                <i class="iconfont icon-list"></i>
+            </a>
+            <div class="menu-right">
+                <div class="menu-item">
+                    <a class="title" href="javascript:;">快捷操作</a>
+                    <div class="dropdown">
+                        <a class="dropdown-item" href="javascript:;">清除缓存</a>
+                        <a class="dropdown-item" href="javascript:;">访问首页</a>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <a class="title" href="javascript:;">admin</a>
+                    <div class="dropdown">
+                        <a class="dropdown-item" href="javascript:;">修改密码</a>
+                        <a class="dropdown-item" href="javascript:;">退出登录</a>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" class="left-trigger"
+               onclick="$(this).closest('.ub-panel-frame').toggleClass('left-toggle')">
+                <i class="iconfont icon-list"></i>
+            </a>
+            <div class="menu">
+                <a href="#" class="active">
+                    链接
+                </a>
+                <a href="#">
+                    链接
+                </a>
+            </div>
+        </div>
+        <div class="content fixed">
+            <div>
+                <p data-repeat="20">
+                    内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+            </div>
+        </div>
+        <div class="content-fixed-bottom-toolbox-placeholder"></div>
+        <div class="content-fixed-bottom-toolbox">
+            <button class="btn btn-primary">提交</button>
+        </div>
+    </div>
+</div>

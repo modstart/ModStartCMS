@@ -1,0 +1,107 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/search/search.less" />
+
+<div class="ub-container">
+    <div class="ub-search-block">
+        <div class="title">
+            Brick UI 搜索中心
+        </div>
+        <div class="form">
+            <form action="?" method="get">
+                <div class="box">
+                    <input type="text" name="keyword" class="form form-lg" placeholder="输入关键词搜索" />
+                    <button type="submit" class="btn btn-lg"><i class="iconfont icon-search"></i> 搜索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-search-mobile-bar">
+        <div class="left">
+            <a class="item" href="#">
+                <i class="icon iconfont icon-home"></i>
+            </a>
+        </div>
+        <div class="center">
+            <div class="box">
+                <i class="icon iconfont icon-search"></i>
+                <input type="text" class="input" />
+            </div>
+        </div>
+        <div class="right">
+            <a class="item" href="#">
+                <i class="icon iconfont icon-home"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-search-mobile-bar">
+        <div class="left">
+            <a class="item" href="#">
+                <i class="icon iconfont icon-left"></i>
+            </a>
+        </div>
+        <div class="center">
+            <div class="box">
+                <i class="icon iconfont icon-search"></i>
+                <input type="text" class="input" />
+            </div>
+        </div>
+        <div class="right">
+            <a class="item" href="#">
+                取消
+            </a>
+        </div>
+    </div>
+    <div class="ub-panel">
+        <div class="head">
+            <div class="more">
+                <a href="#" class="item">
+                    <i class="iconfont icon-trash"></i>
+                </a>
+            </div>
+            <div class="title">搜索历史</div>
+        </div>
+        <div class="body ub-search-history">
+            <div class="item" data-repeat="10">
+                <i class="time iconfont icon-time"></i>
+                <a class="text" href="javascript:;">{ZH,3,10}</a>
+                <a class="remove" href="">
+                    <i class="icon iconfont icon-close"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-search-result">
+        搜索 <span class="keyword">张三</span> ，共找到 <span class="count">10</span> 条记录
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-search-block-a">
+        <input class="input" type="text" placeholder="搜索 内容" id="keyword" onkeypress="if(event.keyCode===13){window.location.href='/search/question?keywords='+window.api.util.urlencode($(this).val());}" />
+        <a class="search-btn" href="javascript:;"
+           onclick="window.location.href='/search/question?keywords='+window.api.util.urlencode($(this).prev().val());">
+            <span class="iconfont icon-search"></span>
+            搜索
+        </a>
+    </div>
+
+    <div class="block-breaker"></div>
+
+    <div class="ub-search-block-a mini">
+        <input class="input" type="text" placeholder="搜索 内容" id="keyword" onkeypress="if(event.keyCode===13){window.location.href='/search/question?keywords='+window.api.util.urlencode($(this).val());}" />
+        <a class="search-btn" href="javascript:;"
+           onclick="window.location.href='/search/question?keywords='+window.api.util.urlencode($(this).prev().val());">
+            <span class="iconfont icon-search"></span>
+            搜索
+        </a>
+    </div>
+
+</div>

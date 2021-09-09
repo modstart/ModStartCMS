@@ -1,0 +1,63 @@
+.pb-member-vip {
+  padding: 1rem;
+
+  .vip-current {
+    padding: 0.5rem;
+  }
+
+  .vip-list {
+    text-align: center;
+    overflow: hidden;
+
+    .item {
+      margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+      text-align: center;
+      background: #fff;
+      box-shadow: 0 0 8px 0 #e5e5e5;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 3px solid #fff;
+      padding: 1rem 0;
+      display: block;
+
+      &.active {
+        border: 3px solid var(--color-primary);
+      }
+
+      .title {
+        font-size: var(--font-size-large,1rem);
+      }
+
+      .price {
+        color: #e9bd6c;
+        font-size: var(--font-size-large,1rem);
+        padding: 20px 0;
+      }
+
+      .content {
+        text-align: left;
+        padding: 0.5rem;
+        font-size: var(--font-size-small);
+
+        p {
+          line-height: 2em;
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .pay-price {
+    padding: 0.5rem 0.5rem;
+  }
+
+
+  .pay-submit {
+    padding: 0.5rem;
+
+    a {
+      color: #FFF;
+    }
+  }
+}

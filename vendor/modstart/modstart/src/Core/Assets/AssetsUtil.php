@@ -1,0 +1,94 @@
+<?php
+
+namespace ModStart\Core\Assets;
+
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
+
+class AssetsUtil
+{
+    public static function cdn()
+    {
+        return app('assetPathDriver')->getCDN('');
+    }
+
+    public static function fix($path, $hash = true)
+    {
+        if (empty($path)) {
+            return $path;
+        }
+        if (Str::startsWith($path, 'http://') || Str::startsWith($path, 'https://') || Str::startsWith($path, '//')) {
+            return $path;
+        }
+        if (Str::startsWith($path, '/')) {
+            $path = substr($path, 1);
+        }
+        $url = app('assetPathDriver')->getCDN($path);
+        if ($hash) {
+            $url .= app('assetPathDriver')->getPathWithHash($path);
+        } else {
+            $url .= $path;
+        }
+        return $url;
+    }
+
+    public static function fixOrDefault($path, $default)
+    {
+        if (empty($path)) {
+            return self::fix($default);
+        }
+        return self::fix($path);
+    }
+
+    public static function url($file)
+    {
+        return app('assetPathDriver')->getCDN($file) . app('assetPathDriver')->getPathWithHash($file);
+    }
+
+    public static function fixCurrentDomain($path)
+    {
+        if (Str::startsWith($path, 'http://') || Str::startsWith($path, 'https://')) {
+            return $path;
+        }
+        if (!Str::startsWith($path, '/')) {
+            $path = '/' . $path;
+        }
+        if (Request::secure()) {
+            $schema = 'https';
+        } else {
+            $schema = 'http';
+        }
+        if (Str::startsWith($path, '//')) {
+            return $schema . ':' . $path;
+        }
+        return $schema . '://' . Request::server('HTTP_HOST') . $path;
+    }
+
+    public static function fixFull($path, $hash = true)
+    {
+        if (empty($path)) {
+            return $path;
+        }
+        $path = self::fix($path, $hash);
+        if (Str::startsWith($path, 'http://') || Str::startsWith($path, 'https://')) {
+            return $path;
+        }
+        if (Request::secure()) {
+            $schema = 'https';
+        } else {
+            $schema = 'http';
+        }
+        if (Str::startsWith($path, '//')) {
+            return $schema . ':' . $path;
+        }
+        return $schema . '://' . Request::server('HTTP_HOST') . $path;
+    }
+
+    public static function fixFullOrDefault($path, $default = null)
+    {
+        if (empty($path)) {
+            return self::fixFull($default);
+        }
+        return self::fixFull($path);
+    }
+}

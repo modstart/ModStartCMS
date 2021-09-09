@@ -1,0 +1,48 @@
+.ub-cover-1-1, .ub-cover-3-1, .ub-cover-4-1, .ub-cover-4-3, .ub-cover-3-2, .ub-cover-2-1, .ub-cover-5-3 {
+  display: block;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  &:after {
+    content: '';
+    display: block;
+  }
+
+  &.contain {
+    background-size: contain;
+  }
+
+  &.circle {
+    border-radius: 50%;
+  }
+}
+
+.ub-cover-1-1:after {
+  margin-top: 100%;
+}
+
+.ub-cover-3-1:after {
+  margin-top: 33.33%;
+}
+
+.ub-cover-4-1:after {
+  margin-top: 25%;
+}
+
+.ub-cover-4-3:after {
+  margin-top: 75%;
+}
+
+.ub-cover-3-2:after {
+  margin-top: 66.66%;
+}
+
+.ub-cover-2-1:after {
+  margin-top: 50%;
+}
+
+.ub-cover-5-3:after {
+  margin-top: 60%;
+}

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Brick UI - 加速网站前端开发</title>
+    <link rel="stylesheet" href="./js/base.css">
+    <link rel="stylesheet" href="./js/iconfont/iconfont.css">
+    <link rel="stylesheet/less" type="text/css" href="./base/style.less"/>
+    <link rel="stylesheet/less" type="text/css" href="./bricks/page/panel/panel.less"/>
+    <link rel="stylesheet/less" type="text/css" href="./bricks/component/page-preview/page-preview.less">
+    <script src="js/jquery.js"></script>
+    <script>
+        var less = {
+            logLevel: 2
+        }
+    </script>
+    <script src="js/less.js"></script>
+    <script src="bricks/component/page-preview/page-preview.js"></script>
+    <style type="text/css">
+        #demoPanel .left .menu .items {
+            overflow: hidden;
+            padding-left: 0px;
+        }
+        #demoPanel .left .menu .items a {
+            width: 50%;
+            min-width: fit-content;
+            min-width: -webkit-fit-content;
+            min-width: -moz-fit-content;
+            display: block;
+            float: left;
+            font-size: 12px;
+            line-height: 20px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding: 0 5px;
+            font-family: Consolas, monospace, serif;
+            color:#EEE;
+            border-bottom:1px dashed #999;
+        }
+
+        #demoPanel .left .menu .items a.active {
+            color: #e4e40b;
+        }
+    </style>
+</head>
+<body>
+<div class="ub-panel-frame" id="demoPanel">
+    <div class="left">
+        <div class="logo">
+            Brick UI
+        </div>
+        <div class="menu">
+            <div class="menu-item">
+                <a href="javascript:;" class="title">通用组件</a>
+                <div class="items">
+                    <a href="page.html?url=component/base/base" target="main">Base</a>
+                    <a href="page.html?url=component/header/header" target="main">Header</a>
+                    <a href="page.html?url=component/footer/footer" target="main">Footer</a>
+                    <a href="page.html?url=component/nav/nav" target="main">Nav</a>
+                    <a href="page.html?url=component/menu/menu" target="main">Menu</a>
+                    <a href="page.html?url=component/list/list" target="main">List</a>
+                    <a href="page.html?url=component/search/search" target="main">Search</a>
+                    <a href="page.html?url=component/article/article" target="main">Article</a>
+                    <a href="page.html?url=component/page/page" target="main">Paginate</a>
+                    <a href="page.html?url=component/banner/banner" target="main">Banner</a>
+                    <a href="page.html?url=component/panel/panel" target="main">Panel</a>
+                    <a href="page.html?url=component/video/video" target="main">Video</a>
+                    <a href="page.html?url=component/form/form" target="main">Form</a>
+                    <a href="page.html?url=component/lister/lister" target="main">Lister</a>
+                    <a href="page.html?url=component/tag/tag" target="main">Tag</a>
+                    <a href="page.html?url=component/bar/bar" target="main">Bar</a>
+                    <a href="page.html?url=component/image/image" target="main">Image</a>
+                    <a href="page.html?url=component/comment/comment" target="main">Comment</a>
+                    <a href="page.html?url=component/html/html" target="main">Html</a>
+                    <a href="page.html?url=component/dashboard/dashboard" target="main">Dashboard</a>
+                    <a href="page.html?url=component/chart/chart" target="main">Chart</a>
+                    <a href="page.html?url=component/i18n/i18n" target="main">I18N</a>
+                    <a href="page.html?url=component/misc/misc" target="main">Misc</a>
+                    <a href="page.html?url=component/modal/modal" target="main">Modal</a>
+                    <a href="js/iconfont/demo_index.html" target="main">Iconfont</a>
+                </div>
+            </div>
+            <div class="menu-item">
+                <a href="javascript:;" class="title">业务组件</a>
+                <div class="items">
+                    <a href="page.html?url=page/account/login" target="main">Account/Login</a>
+                    <a href="page.html?url=page/panel/framePC" target="main">Panel/FramePC</a>
+                    <a href="page.html?url=page/panel/frameDialog" target="main">Panel/FrameDialog</a>
+                    <a href="page.html?url=page/member/memberPC" target="main">Member/MemberPC</a>
+                    <a href="page.html?url=page/member/memberM" target="main">Member/MemberM</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="top">
+            <div class="menu" id="ubPreviewSwitch">
+                <a data-page-preview-type="pc" class="active" href="javascript:;">
+                    <i class="iconfont icon-pc"></i>
+                    PC版
+                </a>
+                <a data-page-preview-type="mobile" href="javascript:;">
+                    <i class="iconfont icon-phone"></i>
+                    手机版
+                </a>
+                <a data-page-preview-type="window" href="javascript:;">
+                    <i class="iconfont icon-link-alt"></i>
+                    新窗口打开
+                </a>
+            </div>
+        </div>
+        <div class="content fixed">
+
+            <div class="ub-page-preview" data-ub-page-preview>
+                <div class="iframe">
+                    <iframe id="main" name="main" src="page.html?url=component/base/base" frameborder="0"></iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="bricks/component/page-preview/page-preview-starter.js"></script>
+<script>
+    $(function () {
+        var $types = $('[data-page-preview-type]');
+        var $iframe = $('[data-ub-page-preview] .iframe');
+        $types.on('click', function () {
+            var type = $(this).attr('data-page-preview-type');
+            if ('window' === type) {
+                var url = $('#main').get(0).contentWindow.location.href;
+                var a = document.createElement("a");
+                a.setAttribute("href", url);
+                a.setAttribute("target", "_blank");
+                document.body.appendChild(a);
+                a.click();
+                a.parentNode.removeChild(a);
+                return false;
+            }
+            $types.removeClass('active');
+            $(this).addClass('active');
+            $iframe.removeClass('pc').removeClass('mobile').addClass(type);
+            return false;
+        });
+        setTimeout(function () {
+            const menuWidth = $('#demoPanel .left .menu .items:first').width()
+            const $menuItemList = $('#demoPanel .left .menu .items a')
+            $menuItemList.on('click', function () {
+                $menuItemList.removeClass('active')
+                $(this).addClass('active')
+            })
+            $menuItemList.each(function (i, o) {
+                // console.log(o, menuWidth, $(o).width())
+                if ($(o).width() > menuWidth / 2) {
+                    $(o).css('width', '100%')
+                }
+            })
+        }, 1000)
+    });
+</script>
+</body>
+</html>

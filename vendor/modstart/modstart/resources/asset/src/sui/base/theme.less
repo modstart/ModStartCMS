@@ -1,0 +1,34 @@
+@color-primary: #3555CC;
+@color-primary-light: lighten(@color-primary, 5%);
+@color-primary-dark: darken(@color-primary, 5%);
+
+:root, page {
+  --color-primary: var(--theme-color-primary, @color-primary);
+  --color-primary-light: var(--theme-color-primary-light, @color-primary-light);
+  --color-primary-dark: var(--theme-color-primary-dark, @color-primary-dark);
+  --color-success: var(--theme-color-success, #28a745);
+  --color-success-dark: var(--theme-color-success-dark, #1e7e34);
+  --color-warning: var(--theme-color-warning, #fd7e14);
+  --color-warning-dark: var(--theme-color-warning-dark, #dc6502);
+  --color-danger: var(--theme-color-danger, #dc3545);
+  --color-danger-dark: var(--theme-color-danger-dark, #bd2130);
+  --color-link: var(--theme-color-link, #007bff);
+  --color-link-light: var(--theme-color-link-light, #0062cc);
+  --color-link-dark: var(--theme-color-link-dark, #3395ff);
+  --color-default: var(--theme-color-default, #F7F7F7);
+  --color-input-placeholder: var(--theme-color-input-placeholder, #C4CFDB);
+
+  --size-radius: var(--theme-size-radius, 0.25rem);
+  --size-margin: var(--theme-size-margin, 0.5rem);
+  --size-margin-lg: var(--theme-size-margin-lg, 2rem);
+  --size-margin-1-2: var(--theme-size-margin-1-2, 0.25rem);
+  --size-margin-1-2-negative: var(--theme-size-margin-1-2-negative, -0.25rem);
+
+  --font-size-root: var(--theme-font-size-root, 20px);
+  --font-size: var(--theme-font-size, 0.65rem);
+  --font-size-medium: var(--theme-font-size, 0.8rem);
+  --font-size-large: var(--theme-font-size-large, 1rem);
+  --font-size-small: var(--theme-font-size-small, 0.6rem);
+
+  --container-width: var(--theme-container-width, 55rem);
+}

@@ -1,0 +1,134 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/page/member/member.less"/>
+
+<div class="ub-container">
+
+    <div class="block-breaker"></div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="ub-menu">
+                <div class="title">标题1</div>
+                <div class="items">
+                    <a class="active" href="#">标题1-1</a>
+                    <a href="#">标题1-2</a>
+                </div>
+                <div class="title">标题2</div>
+                <div class="items">
+                    <a href="#">标题2-1</a>
+                    <a href="#">标题2-2</a>
+                </div>
+                <div class="title">标题3</div>
+                <div class="items">
+                    <a href="#">标题3-1</a>
+                    <a href="#">标题3-2</a>
+                </div>
+            </div>
+            <script>
+                $(function () {
+                    var $menu = $('.ub-menu');
+                    $menu.find('.items .active').parent().show();
+                    $menu.find('.title').on('click',function () {
+                        var $next = $(this).next();
+                        $next.is(':visible')?$next.slideUp():$next.slideDown();
+                    });
+                });
+            </script>
+        </div>
+        <div class="col-md-10">
+
+            <div class="ub-panel">
+                <div class="head">
+                    <div class="title">
+                        修改头像
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="ub-member-avatar">
+                        <div class="preview">
+                            <div class="avatar-big">
+                                <img data-src="placeholder/200x200" />
+                            </div>
+                            <div class="avatar-small">
+                                <img data-src="placeholder/200x200" />
+                            </div>
+                            <div class="avatar-small-round">
+                                <img data-src="placeholder/200x200" />
+                            </div>
+                        </div>
+                        <div class="edit">
+                            <a href="javascript:;" class="btn">立即修改</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ub-panel">
+                <div class="head">
+                    <div class="more">
+                        <a href="#">更多</a>
+                    </div>
+                    <div class="title">
+                        表单
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="ub-form">
+                        <form action="?" method="post" data-ajax-form>
+                            <div class="line">
+                                <div class="label">原始密码：</div>
+                                <div class="field">
+                                    <input type="password" class="form" style="width:20em;" name="passwordOld" />
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="label">新密码：</div>
+                                <div class="field">
+                                    <input type="password" class="form" style="width:20em;" name="passwordOld" />
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="label">重复密码：</div>
+                                <div class="field">
+                                    <input type="password" class="form" style="width:20em;" name="passwordOld" />
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="label">选项：</div>
+                                <div class="field">
+                                    <label class="form">
+                                        <input type="radio" name="alipay" />
+                                        选项1111
+                                    </label>
+                                    <label class="form">
+                                        <input type="radio" name="wechat" />
+                                        选项1111
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="label">选项：</div>
+                                <div class="field">
+                                    <label class="form">
+                                        <input type="checkbox" name="alipay" />
+                                        选项1111
+                                    </label>
+                                    <label class="form">
+                                        <input type="checkbox" name="wechat" />
+                                        选项1111
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="label">&nbsp;</div>
+                                <div class="field">
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

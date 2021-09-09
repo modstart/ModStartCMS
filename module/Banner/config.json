@@ -1,0 +1,18 @@
+{
+  "name": "Banner",
+  "require": [
+    "Vendor"
+  ],
+  "title": "通用轮播管理",
+  "version": "1.0.0",
+  "author": "官方",
+  "description": "提供多位置轮播图片基础管理功能",
+  "config": {
+    "position": [
+      [
+        "keyValueList",
+        "位置"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,239 @@
+.ub-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1010;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+  touch-action: cross-slide-y pinch-zoom double-tap-zoom;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/*
+ * Open state
+ */
+.ub-modal.ub-open {
+  opacity: 1;
+  display: block;
+}
+
+.ub-modal.ub-hidden{
+  display: block;
+  visibility: hidden;
+}
+
+.ub-modal.ub-hidden.ub-open{
+  visibility: visible;
+}
+
+///*
+// * Prevents duplicated scrollbar caused by 4.
+// */
+//.ub-modal-page,
+//.ub-modal-page body {
+//  overflow: hidden;
+//}
+///* Sub-object: `ub-modal-dialog`
+// ========================================================================== */
+.ub-modal-dialog {
+  position: relative;
+  box-sizing: border-box;
+  margin: 2.5rem auto;
+  padding: 0.5rem;
+  width: 30rem;
+  max-width: 100%;
+  max-width: calc(100% - 1rem);
+  background: #fff;
+  opacity: 0;
+  -webkit-transform: translateY(-100px);
+  transform: translateY(-100px);
+  -webkit-transition: opacity 0.3s linear, -webkit-transform 0.3s ease-out;
+  transition: opacity 0.3s linear, transform 0.3s ease-out;
+  border-radius: 3px;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+///* Phone landscape and smaller */
+@media (max-width: 800px) {
+  .ub-modal-dialog {
+    width: auto;
+    margin: 0.5rem auto;
+  }
+}
+
+/*
+ * Open state
+ */
+.ub-open .ub-modal-dialog {
+  /* 4 */
+  opacity: 1;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+///*
+// * Remove margin from the last-child
+// */
+//.ub-modal-dialog > :not([class*='ub-modal-']):last-child {
+//  margin-bottom: 0;
+//}
+.ub-modal-dialog > .ub-modal-close {
+  margin: -0rem -0rem 0 0;
+  float: right;
+  color: #999;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.ub-modal-dialog {
+  & > .ub-modal-head {
+    border-bottom: 1px solid #EEE;
+    padding: 0 0 0.5rem 0;
+  }
+
+  & > .ub-modal-body {
+    padding: 0.5rem 0;
+  }
+
+  & > .ub-modal-foot {
+    padding: 0.5rem 0 0 0;
+    text-align: right;
+    border-top: 1px solid #EEE;
+  }
+}
+
+///*
+// * Remove margin from adjacent element
+// */
+//.ub-modal-dialog > .ub-close:first-child + :not([class*='ub-modal-']) {
+//  margin-top: 0;
+//}
+///* Modifier: `ub-modal-dialog-lightbox`
+// ========================================================================== */
+//.ub-modal-dialog-lightbox {
+//  margin: 15px auto;
+//  padding: 0;
+//  max-width: 95%;
+//  max-width: calc(100% - 30px);
+//  min-height: 2.5rem;
+//  border-radius: 0;
+//}
+///*
+// * Close button
+// */
+//.ub-modal-dialog-lightbox > .ub-close:first-child {
+//  position: absolute;
+//  top: -12px;
+//  right: -12px;
+//  margin: 0;
+//  float: none;
+//}
+///* Phone landscape and smaller */
+//@media (max-width: 767px) {
+//  .ub-modal-dialog-lightbox > .ub-close:first-child {
+//    top: -7px;
+//    right: -7px;
+//  }
+//}
+///* Modifier: `ub-modal-dialog-blank`
+// ========================================================================== */
+//.ub-modal-dialog-blank {
+//  margin: 0;
+//  padding: 0;
+//  width: 100%;
+//  max-width: 100%;
+//  -webkit-transition: opacity 0.3s linear;
+//  transition: opacity 0.3s linear;
+//}
+///*
+//* Close button
+//*/
+//.ub-modal-dialog-blank > .ub-close:first-child {
+//  position: absolute;
+//  top: 1rem;
+//  right: 1rem;
+//  z-index: 1;
+//  margin: 0;
+//  float: none;
+//}
+///* Modifier: `ub-modal-dialog-large`
+// ========================================================================== */
+///* Tablet and bigger */
+//@media (min-width: 768px) {
+//  .ub-modal-dialog-large {
+//    width: 930px;
+//  }
+//}
+///* Large screen and bigger */
+//@media (min-width: 121rem) {
+//  .ub-modal-dialog-large {
+//    width: 1130px;
+//  }
+//}
+///* Sub-Object: `ub-modal-header` and `ub-modal-footer`
+// ========================================================================== */
+//.ub-modal-header {
+//  margin-bottom: 0.5rem;
+//  margin: -1rem -1rem 0.5rem -1rem;
+//  padding: 1rem;
+//  border-bottom: 1px solid #EEE;
+//  border-radius: 3px 3px 0 0;
+//  background: #fafafa;
+//}
+//.ub-modal-footer {
+//  margin-top: 0.5rem;
+//  margin: 0.5rem -1rem -1rem -1rem;
+//  padding: 1rem;
+//  border-top: 1px solid #EEE;
+//  border-radius: 0 0 3px 3px;
+//  background: #fafafa;
+//}
+///*
+// * Remove margin from the last-child
+// */
+//.ub-modal-header > :last-child,
+//.ub-modal-footer > :last-child {
+//  margin-bottom: 0;
+//}
+///* Sub-Object: `ub-modal-caption`
+// ========================================================================== */
+//.ub-modal-caption {
+//  position: absolute;
+//  left: 0;
+//  right: 0;
+//  bottom: -1rem;
+//  margin-bottom: -0.5rem;
+//  color: #fff;
+//  text-align: center;
+//  overflow: hidden;
+//  text-overflow: ellipsis;
+//  white-space: nowrap;
+//}
+///* Sub-Object: `ub-modal-spinner`
+// ========================================================================== */
+//.ub-modal-spinner {
+//  position: absolute;
+//  top: 50%;
+//  left: 50%;
+//  -webkit-transform: translate(-50%, -50%);
+//  transform: translate(-50%, -50%);
+//  font-size: 25px;
+//  color: #ddd;
+//}
+//.ub-modal-spinner:after {
+//  content: "\f110";
+//  display: block;
+//  font-family: FontAwesome;
+//  -webkit-animation: ub-rotate 2s infinite linear;
+//  animation: ub-rotate 2s infinite linear;
+//}
