@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Module\Vendor\Placeholder;
+namespace Module\Vendor\Web\Controller;
 
 
 use Illuminate\Routing\Controller;

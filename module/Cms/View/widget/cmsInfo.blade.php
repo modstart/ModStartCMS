@@ -6,7 +6,7 @@
             <b>V{{\App\Constant\AppConstant::VERSION}}</b>
             ，
             获取最新代码请访问
-            <a href="https://modstart.com">modstart.com</a>。
+            <a href="https://modstart.com" target="_blank">modstart.com</a>
         </div>
     </div>
 </div>

@@ -10,46 +10,53 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                value="{{$value}}"/>
-        <div id="{{$name}}Selector" class="ub-image-selector @if(in_array($uploadMode,['uploadDirectRaw','uploadDirect'])) raw-mode @endif @if(!empty($value)) has-value @endif">
-            <div class="tools">
-                <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
-                <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
-                @if(!$uploadMode)
-                    <a href="javascript:;" class="action add" data-add><i class="iconfont icon-plus"></i></a>
+        <div id="{{$name}}Selector">
+            <div class="ub-image-selector @if(!empty($value)) has-value @endif" style="vertical-align:bottom;">
+                <div class="tools">
+                    <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
+                    <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
+                </div>
+                @if(!empty($value))
+                    <div class="cover ub-cover-1-1 contain" style="background-image:url({{$value}});"></div>
+                @else
+                    <div class="cover ub-cover-1-1 contain"
+                         style="background-image:url(@asset('asset/image/none.png'));"></div>
                 @endif
             </div>
-            @if(!empty($value))
-                <div class="cover ub-cover-1-1 contain" style="background-image:url({{$value}});"></div>
-            @else
-                <div class="cover ub-cover-1-1 contain"
-                     style="background-image:url(@asset('asset/image/none.png'));"></div>
-            @endif
-            @if(in_array($uploadMode,['uploadDirectRaw','uploadDirect']))
-                {!! \ModStart\ModStart::js('asset/common/uploadButton.js') !!}
-                <div id="{{$id}}Uploader" class="uploader"></div>
+            <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.35rem;vertical-align:bottom;line-height:1.35rem;"></div>
+            @if($mode=='default')
+                <a href="javascript:;" class="btn" data-gallery style="display:inline-block;vertical-align:bottom;">
+                    <i class="iconfont icon-category"></i>
+                    {{L('Image Gallery')}}
+                </a>
             @endif
         </div>
+        {!! \ModStart\ModStart::js('asset/common/uploadButton.js') !!}
         <script>
             $(function () {
                 var $field = $('#{{$id}}');
-                var $selector = $('#{{$name}}Selector');
-
+                var $selector = $('#{{$name}}Selector .ub-image-selector');
+                var $gallery = $('#{{$name}}Selector [data-gallery]')
                 function setValue(path) {
                     $field.find('[name="{{$name}}"]').val(path);
                     if (path) {
                         $selector.find('.cover').css('backgroundImage', "url(" + path + ")");
                         $selector.addClass('has-value');
                     } else {
-                        $selector.find('.cover').css('backgroundImage', "url(@asset('asset/image/none.png'))");
+                        $selector.find('.cover').css('backgroundImage', "url( @asset('asset/image/none.png') )");
                         $selector.removeClass('has-value');
                     }
                 }
-
-                @if(in_array($uploadMode,['uploadDirectRaw','uploadDirect']))
+                $selector.find('.tools .close').on('click', function () {
+                    setValue('');
+                });
+                $selector.find('.tools .preview').on('click', function () {
+                    window.api.dialog.preview($field.find('[name="{{$name}}"]').val());
+                });
                 window.api.uploadButton('#{{$id}}Uploader', {
-                    text: '<div style="padding:0;background:transparent;width:3rem;height:3rem;"><span class="iconfont icon-plus" style="display:inline-block;background:transparent;width:3rem;height:3rem;line-height:3rem;"></span></div>',
+                    text: '<a href="javascript:;" class="btn" style="display:inline-block;vertical-align:bottom;"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
                     swf: "@asset('asset/vendor/webuploader/Uploader.swf')",
-                    server: "{{$server}}?action={{$uploadMode}}",
+                    server: "{{$server}}?action={{$mode=='raw'?'uploadDirectRaw':'uploadDirect'}}",
                     extensions: window.__dataConfig.category.image.extensions.join(','),
                     sizeLimit: window.__dataConfig.category.image.maxSize,
                     chunkSize: window.__dataConfig.chunkSize,
@@ -61,24 +68,18 @@
                     finish: function () {
                     }
                 });
-                @else
-                $selector.find('.tools .add').on('click', function () {
-                    window.__selectorDialog = new window.api.selectorDialog({
-                        server: '{{$server}}',
-                        callback: function (items) {
-                            if (items.length > 0) {
-                                setValue(items[0].path);
+                @if($mode=='default')
+                    $gallery.on('click', function () {
+                        window.__selectorDialog = new window.api.selectorDialog({
+                            server: '{{$server}}',
+                            callback: function (items) {
+                                if (items.length > 0) {
+                                    setValue(items[0].path);
+                                }
                             }
-                        }
-                    }).show();
-                });
+                        }).show();
+                    });
                 @endif
-                $selector.find('.tools .close').on('click', function () {
-                    setValue('');
-                });
-                $selector.find('.tools .preview').on('click', function () {
-                    window.api.dialog.preview($field.find('[name="{{$name}}"]').val());
-                });
             });
         </script>
         @if(!empty($help))

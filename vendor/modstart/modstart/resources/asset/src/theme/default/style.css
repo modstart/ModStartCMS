@@ -20014,12 +20014,15 @@ input:-ms-input-placeholder {
   .ub-menu.nav-menu {
     display: flex;
     margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow-x: auto;
   }
   .ub-menu.nav-menu .title {
     display: inline-block;
     padding: 0 0.2rem;
     flex-grow: 1;
     text-align: center;
+    min-width: 5rem;
   }
   .ub-menu.nav-menu .items.open {
     display: block;
@@ -21936,50 +21939,36 @@ html {
   background-color: var(--color-primary, #419488);
   border-color: var(--color-primary, #419488);
 }
-.ub-image-selector.raw-mode {
+.ub-upload-button {
   overflow: hidden;
+  position: relative;
 }
-.ub-image-selector.raw-mode .uploader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: transparent;
+.ub-upload-button .webuploader-pick {
+  display: inline-block;
 }
-.ub-image-selector.raw-mode.has-value:hover .tools {
-  display: block;
+.ub-upload-button .webuploader-container {
+  display: inline-block;
 }
-.ub-image-selector.raw-mode.has-value:hover .uploader {
-  left: -3rem;
-}
-.ub-image-selector.raw-mode.has-value .uploader {
-  left: -3rem;
-}
-.ub-image-selector.raw-mode:hover .tools {
-  display: none;
-}
-.ub-image-selector.raw-mode:hover .uploader {
-  left: 0rem;
-}
-.ub-image-selector.raw-mode .webuploader-list {
+.ub-upload-button .webuploader-list {
   position: absolute;
   bottom: 1px;
   left: 0;
   right: 0;
 }
-.ub-image-selector.raw-mode .webuploader-list > li {
+.ub-upload-button .webuploader-list > li {
   padding: 0;
   border: 0;
 }
-.ub-image-selector.raw-mode .webuploader-list > li .progress-box {
+.ub-upload-button .webuploader-list > li .progress-box {
   height: 2px;
   border: none;
 }
-.ub-image-selector.raw-mode .webuploader-list > li .progress-box .progress-bar {
+.ub-upload-button .webuploader-list > li .progress-box .progress-bar {
   background-color: var(--color-primary);
   height: 2px;
   border-radius: 2px;
 }
-.ub-image-selector.raw-mode .webuploader-list > li .progress-info {
+.ub-upload-button .webuploader-list > li .progress-info {
   display: none;
 }
 @media screen and (max-width: 40rem) {

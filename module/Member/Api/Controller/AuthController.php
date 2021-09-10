@@ -8,24 +8,23 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Mews\Captcha\Facades\Captcha;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
-use ModStart\Core\Type\TypeUtil;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\TimeUtil;
 use ModStart\Module\ModuleBaseController;
+use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserLoginedEvent;
 use Module\Member\Events\MemberUserPasswordResetedEvent;
 use Module\Member\Events\MemberUserRegisteredEvent;
+use Module\Member\Oauth\AbstractOauth;
 use Module\Member\Util\MemberUtil;
 use Module\Vendor\Email\MailSendJob;
-use Module\Vendor\Oauth\OauthType;
-use Module\Vendor\Oauth\OauthUtil;
 use Module\Vendor\Session\SessionUtil;
 use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
-use Overtrue\Socialite\SocialiteManager;
 
 
 
@@ -41,121 +40,22 @@ use Overtrue\Socialite\SocialiteManager;
 
 class AuthController extends ModuleBaseController
 {
-    private function getOauthConfig($type, $callback = null)
-    {
-        $config = [
-            'clientId' => null,
-            'clientSecret' => null,
-            'callback' => $callback,
-            'proxy' => null,
-        ];
-        switch ($type) {
-            case OauthType::WECHAT_MOBILE:
-                if (!OauthUtil::isWechatMobileEnable()) {
-                    return null;
-                }
-                $config['clientId'] = modstart_config()->getWithEnv('oauthWechatMobileAppId');
-                $config['clientSecret'] = modstart_config()->getWithEnv('oauthWechatMobileAppSecret');
-                $config['proxy'] = modstart_config()->getWithEnv('oauthWechatMobileProxy');
-                return $config;
-            case OauthType::QQ:
-                if (!OauthUtil::isQQEnable()) {
-                    return null;
-                }
-                $config['clientId'] = modstart_config()->getWithEnv('oauthQQKey');
-                $config['clientSecret'] = modstart_config()->getWithEnv('oauthQQAppSecret');
-                $config['proxy'] = modstart_config()->getWithEnv('oauthQQProxy');
-                return $config;
-            case OauthType::WEIBO:
-                if (!OauthUtil::isWeiboEnable()) {
-                    return null;
-                }
-                $config['clientId'] = modstart_config()->getWithEnv('oauthWeiboKey');
-                $config['clientSecret'] = modstart_config()->getWithEnv('oauthWeiboAppSecret');
-                $config['proxy'] = modstart_config()->getWithEnv('oauthWeiboProxy');
-                return $config;
-            case OauthType::WECHAT:
-                if (!OauthUtil::isWechatEnable()) {
-                    return null;
-                }
-                $config['clientId'] = modstart_config()->getWithEnv('oauthWechatAppId');
-                $config['clientSecret'] = modstart_config()->getWithEnv('oauthWechatAppSecret');
-                $config['proxy'] = modstart_config()->getWithEnv('oauthWechatProxy');
-                return $config;
-        }
-        return null;
-    }
-
-    
-    private function getOauthInstance($oauthType, $config)
-    {
-        $supportMap = [
-            OauthType::QQ => 'qq',
-            OauthType::WEIBO => 'weibo',
-            OauthType::WECHAT => 'wechat',
-            OauthType::WECHAT_MOBILE => 'wechat',
-        ];
-        if (empty($supportMap[$oauthType])) {
-            return null;
-        }
-        $config = [
-            $supportMap[$oauthType] => [
-                'client_id' => $config['clientId'],
-                'client_secret' => $config['clientSecret'],
-                'redirect' => $config['callback'],
-            ]
-        ];
-        switch ($oauthType) {
-            case OauthType::WECHAT:
-                break;
-        }
-        $socialite = new SocialiteManager($config);
-        return $socialite->create($supportMap[$oauthType]);
-    }
-
     public function oauthTryLogin($oauthType = null)
     {
-        $input = InputPackage::buildFromInput();
-        $type = $input->getType('type', OauthType::class, $oauthType);
         $oauthUserInfo = Session::get('oauthUserInfo', []);
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');
         }
-        $openid = $oauthUserInfo['openid'];
-        switch ($type) {
-            case OauthType::QQ:
-            case OauthType::WEIBO:
-                $memberUserId = MemberUtil::getIdByOauthAndCheck($type, $openid);
-                if ($memberUserId) {
-                    Session::put('memberUserId', $memberUserId);
-                    Session::forget('oauthUserInfo');
-                    return Response::generate(0, null, [
-                        'memberUserId' => $memberUserId,
-                    ]);
-                }
-                break;
-            case OauthType::WECHAT_MOBILE:
-            case OauthType::WECHAT:
-                if (!empty($oauthUserInfo['unionid'])) {
-                                        $memberUserId = MemberUtil::getIdByOauthAndCheck(OauthType::WECHAT_UNION, $oauthUserInfo['unionid']);
-                    if ($memberUserId) {
-                        MemberUtil::putOauth($memberUserId, $type, $openid);
-                        Session::put('memberUserId', $memberUserId);
-                        Session::forget('oauthUserInfo');
-                        return Response::generate(0, null, [
-                            'memberUserId' => $memberUserId,
-                        ]);
-                    }
-                }
-                $memberUserId = MemberUtil::getIdByOauthAndCheck($type, $openid);
-                if ($memberUserId) {
-                    Session::put('memberUserId', $memberUserId);
-                    Session::forget('oauthUserInfo');
-                    return Response::generate(0, null, [
-                        'memberUserId' => $memberUserId,
-                    ]);
-                }
-                break;
+        
+        $oauth = MemberOauth::get($oauthType);
+        $ret = $oauth->processTryLogin([
+            'userInfo' => $oauthUserInfo,
+        ]);
+        BizException::throwsIfResponseError($ret);
+        if ($ret['data']['memberUserId'] > 0) {
+            Session::put('memberUserId', $ret['data']['memberUserId']);
+            Session::forget('oauthUserInfo');
+            return Response::generateSuccessData(['memberUserId' => $ret['data']['memberUserId']]);
         }
         return Response::generate(0, null, [
             'memberUserId' => 0,
@@ -171,66 +71,26 @@ class AuthController extends ModuleBaseController
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');
         }
-        $openid = $oauthUserInfo['openid'];
+        
+        $oauth = MemberOauth::get($oauthType);
                 $loginedMemberUserId = Session::get('memberUserId', 0);
         if ($loginedMemberUserId > 0) {
-            switch ($type) {
-                case OauthType::WECHAT_MOBILE:
-                case OauthType::WECHAT:
-                    if (!empty($oauthUserInfo['unionid'])) {
-                                                $memberUserId = MemberUtil::getIdByOauthAndCheck(OauthType::WECHAT_UNION, $oauthUserInfo['unionid']);
-                        if ($memberUserId && $loginedMemberUserId != $memberUserId) {
-                            MemberUtil::forgetOauth(OauthType::WECHAT_UNION, $oauthUserInfo['unionid']);
-                        }
-                        MemberUtil::putOauth($loginedMemberUserId, OauthType::WECHAT_UNION, $oauthUserInfo['unionid']);
-                    }
-                    $memberUserId = MemberUtil::getIdByOauthAndCheck($type, $openid);
-                    if ($memberUserId && $loginedMemberUserId != $memberUserId) {
-                        MemberUtil::forgetOauth($type, $openid);
-                    }
-                    MemberUtil::putOauth($loginedMemberUserId, $type, $openid);
-                    break;
-                case OauthType::QQ:
-                case OauthType::WEIBO:
-                    $memberUserId = MemberUtil::getIdByOauthAndCheck($type, $openid);
-                    if ($memberUserId && $loginedMemberUserId != $memberUserId) {
-                        MemberUtil::forgetOauth($type, $openid);
-                    }
-                    MemberUtil::putOauth($loginedMemberUserId, $type, $openid);
-                    break;
-            }
+            $ret = $oauth->processBindToUser([
+                'memberUserId' => $loginedMemberUserId,
+                'userInfo' => $oauthUserInfo,
+            ]);
+            BizException::throwsIfResponseError($ret);
             Session::forget('oauthUserInfo');
             return Response::generate(0, null, null, $redirect);
         }
-
-                switch ($type) {
-            case OauthType::WECHAT_MOBILE:
-            case OauthType::WECHAT:
-                if (!empty($oauthUserInfo['unionid'])) {
-                                        $memberUserId = MemberUtil::getIdByOauthAndCheck(OauthType::WECHAT_UNION, $oauthUserInfo['unionid']);
-                    if ($memberUserId) {
-                        MemberUtil::putOauth($memberUserId, $type, $openid);
-                        Session::put('memberUserId', $memberUserId);
-                        Session::forget('oauthUserInfo');
-                        return Response::generateSuccess();
-                    }
-                }
-                $memberUserId = MemberUtil::getIdByOauthAndCheck($type, $openid);
-                if ($memberUserId) {
-                    Session::put('memberUserId', $memberUserId);
-                    Session::forget('oauthUserInfo');
-                    return Response::generateSuccess();
-                }
-                break;
-            case OauthType::QQ:
-            case OauthType::WEIBO:
-                $memberUserId = MemberUtil::getIdByOauthAndCheck($type, $openid);
-                if ($memberUserId) {
-                    Session::put('memberUserId', $memberUserId);
-                    Session::forget('oauthUserInfo');
-                    return Response::generate(0, null);
-                }
-                break;
+        $ret = $oauth->processTryLogin([
+            'userInfo' => $oauthUserInfo,
+        ]);
+        BizException::throwsIfResponseError($ret);
+        if ($ret['data']['memberUserId'] > 0) {
+            Session::put('memberUserId', $ret['data']['memberUserId']);
+            Session::forget('oauthUserInfo');
+            return Response::generateSuccessData(['memberUserId' => $ret['data']['memberUserId']]);
         }
         if (modstart_config()->getWithEnv('registerDisable', false)) {
             return Response::generate(-1, '用户注册已禁用');
@@ -241,23 +101,12 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, $ret['msg']);
         }
         $memberUserId = $ret['data']['id'];
+        $ret = $oauth->processBindToUser([
+            'memberUserId' => $memberUserId,
+            'userInfo' => $oauthUserInfo,
+        ]);
+        BizException::throwsIfResponseError($ret);
         Event::fire(new MemberUserRegisteredEvent($memberUserId));
-        switch ($type) {
-            case OauthType::WECHAT_MOBILE:
-            case OauthType::WECHAT:
-                if (!empty($oauthUserInfo['unionid'])) {
-                    MemberUtil::putOauth($memberUserId, OauthType::WECHAT_UNION, $oauthUserInfo['unionid']);
-                }
-                MemberUtil::putOauth($memberUserId, $type, $openid);
-                break;
-            case OauthType::QQ:
-            case OauthType::WEIBO:
-                MemberUtil::putOauth($memberUserId, $type, $openid);
-                break;
-            default:
-                return Response::generate(-1, 'oauthType error');
-        }
-
         if (!empty($oauthUserInfo['avatar'])) {
             $avatarExt = FileUtil::extension($oauthUserInfo['avatar']);
             $avatar = CurlUtil::getRaw($oauthUserInfo['avatar']);
@@ -286,41 +135,17 @@ class AuthController extends ModuleBaseController
         if (empty($code)) {
             return Response::generate(-1, '登录失败(code为空)', null, '/');
         }
-        $config = $this->getOauthConfig($oauthType, $callback);
-        if (empty($config)) {
-            return Response::generate(-1, '授权登录配置错误', null, '/');
-        }
-        $socialite = $this->getOauthInstance($oauthType, $config);
-        if (!$socialite) {
-            return Response::generateError('当前授权登录方式暂不支持 : ' . $oauthType);
-        }
-        if ($config['proxy']) {
-            $socialite->redirect($config['proxy']);
-        }
-        $openid = null;
-        try {
-            $user = $socialite->userFromCode($code);
-            $openid = $user->getId();
-        } catch (\Exception $e) {
-            $msg = $e->getMessage();
-            return Response::generateError('登录失败(' . $msg . ')', null, '/');
-        }
-        if (empty($openid)) {
-            return Response::generate(-1, '登录失败(openid=' . $openid . ')', null, '/');
-        }
-        $raw = $user->getRaw();
-        $userInfo = [
-            'username' => $user->getName(),
-            'avatar' => $user->getAvatar(),
-            'openid' => $openid,
-            'unionid' => !empty($raw['unionid']) ? $raw['unionid'] : null,
-        ];
-        if (empty($userInfo)) {
-            return Response::generate(-1, '获取用户信息失败');
-        }
+        
+        $oauth = MemberOauth::get($oauthType);
+        $ret = $oauth->processLogin([
+            'code' => $code,
+            'callback' => $callback,
+        ]);
+        BizException::throwsIfResponseError($ret);
+        $userInfo = $ret['data']['userInfo'];
         $view = $input->getBoolean('view', false);
         if ($view) {
-            Session::put('oauthViewOpenId_' . $oauthType, $openid);
+            Session::put('oauthViewOpenId_' . $oauthType, $userInfo['data']['openid']);
             return Response::generateSuccess();
         }
         Session::put('oauthUserInfo', $userInfo);
@@ -339,32 +164,15 @@ class AuthController extends ModuleBaseController
             $callback = $input->getTrimString('callback', 'NO_CALLBACK');
         }
         $silence = $input->getBoolean('silence', false);
-        $config = $this->getOauthConfig($oauthType, $callback);
-        if (empty($config)) {
-            return Response::generate(-1, '授权登录配置错误');
-        }
-        if (empty($config['clientId']) || empty($config['clientSecret'])) {
-            return Response::generateError('请配置授权' . TypeUtil::name(OauthType::class, $oauthType) . '登录信息');
-        }
-        $socialite = $this->getOauthInstance($oauthType, $config);
-        if (!$socialite) {
-            return Response::generateError('当前授权登录方式暂不支持 : ' . $oauthType);
-        }
-        switch ($oauthType) {
-            case OauthType::WECHAT_MOBILE:
-                if ($silence) {
-                    $socialite->scopes(['snsapi_base']);
-                } else {
-                    $socialite->scopes(['snsapi_userinfo']);
-                }
-                break;
-        }
-        $url = $socialite->redirect();
-        if ($config['proxy']) {
-            $url = $config['proxy'] . '?_proxy=' . urlencode($url);
-        }
+        
+        $oauth = MemberOauth::get($oauthType);
+        $ret = $oauth->processRedirect([
+            'callback' => $callback,
+            'silence' => $silence,
+        ]);
+        BizException::throwsIfResponseError($ret);
         return Response::generate(0, 'ok', [
-            'redirect' => $url,
+            'redirect' => $ret['data']['redirect'],
         ]);
     }
 

@@ -44,56 +44,10 @@ class ConfigController extends Controller
         return $builder->perform();
     }
 
-    public function oauthWechatMobile(AdminConfigBuilder $builder)
+    public function credit(AdminConfigBuilder $builder)
     {
-        $builder->pageTitle('微信手机授权登录');
-        $builder->switch('oauthWechatMobileEnable', '开启微信授权登录');
-        $builder->text('oauthWechatMobileAppId', 'AppId');
-        $builder->text('oauthWechatMobileAppSecret', 'AppSecret');
-        $builder->text('oauthWechatMobileProxy', '授权回调域名代理')->help('如不清楚此参数意义，请留空');
-        $builder->formClass('wide');
-        return $builder->perform();
-    }
-
-    public function oauthWechat(AdminConfigBuilder $builder)
-    {
-        $builder->pageTitle('微信PC扫码登录');
-        $builder->switch('oauthWechatEnable', '开启微信授权登录');
-        $builder->text('oauthWechatAppId', 'AppId');
-        $builder->text('oauthWechatAppSecret', 'AppSecret');
-        $builder->text('oauthWechatProxy', '授权回调域名代理')->help('如不清楚此参数意义，请留空');
-        $builder->formClass('wide');
-        return $builder->perform();
-    }
-
-    public function oauthWechatMiniProgram(AdminConfigBuilder $builder)
-    {
-        $builder->pageTitle('微信小程序登录');
-        $builder->switch('oauthWechatMiniProgramEnable', '开启微信小程序登录');
-        $builder->text('oauthWechatMiniProgramAppId', 'AppId');
-        $builder->text('oauthWechatMiniProgramAppSecret', 'AppSecret');
-        $builder->formClass('wide');
-        return $builder->perform();
-    }
-
-    public function oauthQQ(AdminConfigBuilder $builder)
-    {
-        $builder->pageTitle('QQ授权登录');
-        $builder->switch('oauthQQEnable', '开启QQ授权登录')->help('回调地址请填写 <code>' . Request::domainUrl(true) . '/oauth_callback_qq</code>');
-        $builder->text('oauthQQKey', 'APP ID');
-        $builder->text('oauthQQAppSecret', 'APP KEY');
-        $builder->text('oauthQQAppSecretProxy', '授权回调域名代理')->help('如不清楚此参数意义，请留空');
-        $builder->formClass('wide');
-        return $builder->perform();
-    }
-
-    public function oauthWeibo(AdminConfigBuilder $builder)
-    {
-        $builder->pageTitle('微博授权登录');
-        $builder->switch('oauthWeiboEnable', '开启微博授权登录')->help('回调地址请填写 <code>' . Request::domainUrl(true) . '/oauth_callback_weibo</code>');
-        $builder->text('oauthWeiboKey', 'Key');
-        $builder->text('oauthWeiboAppSecret', 'AppSecret');
-        $builder->text('oauthWeiboProxy', '授权回调域名代理')->help('如不清楚此参数意义，请留空');
+        $builder->pageTitle('积分设置');
+        $builder->switch('Member_CreditEnable', '启用积分功能');
         $builder->formClass('wide');
         return $builder->perform();
     }
@@ -101,7 +55,8 @@ class ConfigController extends Controller
     public function money(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('用户资金设置');
-        if (ModuleManager::getModuleConfigBoolean('Member', 'moneyCashEnable', false)) {
+        $builder->switch('Member_MoneyEnable', '启用钱包功能');
+        if (ModuleManager::getModuleConfig('Member', 'moneyEnable', false)) {
             $builder->switch('Member_MoneyCashEnable', '开启用户提现')->when('=', 1, function (Form $form) {
                 $form->number('Member_MoneyCashMin', '最小提现金额')->help('默认为 100');
                 $form->number('Member_MoneyCashTaxRate', '用户提现手续费')->help('如 1.00 表示手续费为 1.00%');

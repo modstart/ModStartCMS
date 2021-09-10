@@ -123,13 +123,13 @@
                                 <div class="tw-float-right" v-if="module._isInstalled">
                                     <a v-if="module._isInstalled && module._hasConfig" href="javascript:;"
                                        @click="doConfig(module)">
-                                        <i class="iconfont icon-cog"></i> 配置
+                                        <i class="iconfont icon-cog"></i>配置
                                     </a>
                                 </div>
                                 <a v-if="!module._isInstalled" href="javascript:;" @click="doInstall(module)"
                                    class="tw-mr-4"
                                 >
-                                    <i class="iconfont icon-plus"></i> 安装
+                                    <i class="iconfont icon-plus"></i>安装
                                 </a>
                                 <a v-if="module._isInstalled && !module._isLocal && module.latestVersion!==module._localVersion"
                                    @click="doUpgrade(module)"
@@ -139,18 +139,18 @@
                                 <a v-if="module._isInstalled && module._isEnabled" href="javascript:;"
                                    @click="doDisable(module)"
                                    class="ub-text-danger tw-mr-4">
-                                    <i class="iconfont icon-pause"></i> 禁用
+                                    <i class="iconfont icon-pause"></i>禁用
                                 </a>
                                 <a v-if="module._isInstalled && !module._isEnabled" href="javascript:;"
                                    class="tw-mr-4"
                                    @click="doEnable(module)"
                                 >
-                                    <i class="iconfont icon-play"></i> 启用
+                                    <i class="iconfont icon-play"></i>启用
                                 </a>
                                 <a v-if="module._isInstalled && !module._isEnabled" href="javascript:;"
                                    @click="doUninstall(module)"
                                    class="ub-text-danger tw-mr-4">
-                                    <i class="iconfont icon-trash"></i> 卸载
+                                    <i class="iconfont icon-trash"></i>卸载
                                 </a>
                             </div>
                             <div v-else
@@ -158,25 +158,25 @@
                                 <span class="ub-text-muted">
                                     系统模块不能动态配置
                                 </span>
-                                <a v-if="module._isInstalled && !module._isLocal && module.latestVersion && module.latestVersion!==module._localVersion"
+                                <a v-if="module._isInstalled && !module._isLocal && module.latestVersion && versionCompare(module.latestVersion,module._localVersion)>0"
                                    @click="doUpgrade(module)"
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
-                                    <i class="iconfont icon-direction-up"></i> 升级
+                                    <i class="iconfont icon-direction-up"></i>升级
                                 </a>
                             </div>
                             <div class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
-                                <div class="ub-text-muted" v-if="module._isLocal">
-                                    标识：<span v-html="$highlight(module.name,search.keywords)"></span>，
+                                <div class="ub-text-muted tw-inline-block"><i class="iconfont icon-tag"></i><span
+                                        v-html="$highlight(module.name,search.keywords)"></span></div>
+                                <span class="ub-text-muted">|</span>
+                                <span class="ub-text-muted" v-if="module._isLocal">
                                     版本V{{module._localVersion}}
-                                </div>
-                                <div class="ub-text-muted" v-else-if="module._isInstalled">
-                                    标识：<span v-html="$highlight(module.name,search.keywords)"></span>，
+                                </span>
+                                <span class="ub-text-muted" v-else-if="module._isInstalled">
                                     已安装V{{module._localVersion}}，最新版V{{module.latestVersion}}
-                                </div>
-                                <div class="ub-text-muted" v-else>
-                                    标识：<span v-html="$highlight(module.name,search.keywords)"></span>，
+                                </span>
+                                <span class="ub-text-muted" v-else>
                                     最新版V{{module.latestVersion}}
-                                </div>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -222,6 +222,15 @@
                                              @click="doMemberLoginCaptchaRefresh()"/>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="field">
+                                <el-checkbox v-model="memberLoginInfo.agree">
+                                    同意
+                                    <a target="_blank" href="https://modstart.com/article/module_agreement">《ModStart模块协议》</a>
+                                    <a target="_blank" href="https://modstart.com/article/disclaimer">《免责声明》</a>
+                                </el-checkbox>
                             </div>
                         </div>
                         <div class="line">
@@ -314,6 +323,7 @@
                     username: '',
                     password: '',
                     captcha: '',
+                    agree: false,
                 },
                 storeApiToken: Storage.get('storeApiToken', ''),
                 memberUser: {
@@ -378,6 +388,17 @@
             }, 1000)
         },
         methods: {
+            versionCompare(left, right) {
+                let a = left.split('.'), b = right.split('.')
+                for (let i = 0, len = Math.max(a.length, b.length); i < len; i++) {
+                    if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
+                        return 1;
+                    } else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
+                        return -1;
+                    }
+                }
+                return 0;
+            },
             doStoreRequest(url, data, cbSuccess, cbError) {
                 const cbErrorDefault = (res) => {
                     this.$dialog.tipError(res.msg)
@@ -419,6 +440,10 @@
                 })
             },
             doMemberLoginSubmit() {
+                if (!this.memberLoginInfo.agree) {
+                    this.$dialog.tipError('请先同意使用协议')
+                    return
+                }
                 this.$dialog.loadingOn()
                 this.doStoreRequest('store/login', this.memberLoginInfo, res => {
                     this.$dialog.loadingOff()

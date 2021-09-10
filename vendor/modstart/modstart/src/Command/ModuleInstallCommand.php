@@ -13,7 +13,8 @@ use ModStart\Module\ModuleManager;
 
 class ModuleInstallCommand extends Command
 {
-    protected $signature = 'modstart:module-install {module}';
+    protected $signature = 'modstart:module-install {module} {--force}';
+
 
     public function handle()
     {
@@ -96,13 +97,14 @@ class ModuleInstallCommand extends Command
 
     private function publishAsset($module)
     {
+        $force = $this->option('force');
         $fs = $this->laravel['files'];
         $from = ModuleManager::path($module, 'Asset') . '/';
         if (!file_exists($from)) {
             return;
         }
         $to = public_path("vendor/$module/");
-        if (file_exists($to)) {
+        if (file_exists($to) && !$force) {
             $this->info("Module Asset Publish : Ignore");
             return;
         }

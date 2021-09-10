@@ -106,67 +106,41 @@ body, html {
   border-color: var(--color-primary, #419488);
 }
 
-.ub-image-selector {
-  &.raw-mode {
-    overflow: hidden;
+.ub-upload-button {
+  overflow: hidden;
+  position: relative;
 
-    .uploader {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: transparent;
-    }
+  .webuploader-pick {
+    display: inline-block;
+  }
 
-    &.has-value {
-      &:hover {
-        .tools {
-          display: block;
-        }
+  .webuploader-container {
+    display: inline-block;
+  }
 
-        .uploader {
-          left: -3rem;
-        }
-      }
+  .webuploader-list {
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    right: 0;
 
-      .uploader {
-        left: -3rem;
-      }
-    }
+    & > li {
+      padding: 0;
+      border: 0;
 
-    &:hover {
-      .tools {
-        display: none;
-      }
+      .progress-box {
+        height: 2px;
+        border: none;
 
-      .uploader {
-        left: 0rem;
-      }
-    }
-
-    .webuploader-list {
-      position: absolute;
-      bottom: 1px;
-      left: 0;
-      right: 0;
-
-      & > li {
-        padding: 0;
-        border: 0;
-
-        .progress-box {
+        .progress-bar {
+          background-color: var(--color-primary);
           height: 2px;
-          border: none;
-
-          .progress-bar {
-            background-color: var(--color-primary);
-            height: 2px;
-            border-radius: 2px;
-          }
+          border-radius: 2px;
         }
+      }
 
-        .progress-info {
-          display: none;
-        }
+      .progress-info {
+        display: none;
       }
     }
   }

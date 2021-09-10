@@ -165,8 +165,8 @@ class AdminPermission
     {
         $menu = AdminConfig::get('menu', []);
         $moduleMenu = AdminMenu::get();
-        $menuAll = array_merge($menu, $moduleMenu);
-        $menu = self::mergeMenu($menuAll, '', 1, $filter);
+                $menuAll = array_merge($menu, $moduleMenu);
+                $menu = self::mergeMenu($menuAll, '', 1, $filter);
                 return $menu;
     }
 

@@ -5,12 +5,8 @@
 $router->match(['get', 'post'], 'member/config/setting', 'ConfigController@setting');
 $router->match(['get', 'post'], 'member/config/agreement', 'ConfigController@agreement');
 $router->match(['get', 'post'], 'member/config/vip', 'ConfigController@vip');
-$router->match(['get', 'post'], 'member/config/oauth_wechat_mobile', 'ConfigController@oauthWechatMobile');
-$router->match(['get', 'post'], 'member/config/oauth_wechat', 'ConfigController@oauthWechat');
-$router->match(['get', 'post'], 'member/config/oauth_wechat_mini_program', 'ConfigController@oauthWechatMiniProgram');
-$router->match(['get', 'post'], 'member/config/oauth_qq', 'ConfigController@oauthQq');
-$router->match(['get', 'post'], 'member/config/oauth_weibo', 'ConfigController@oauthWeibo');
 $router->match(['get', 'post'], 'member/config/money', 'ConfigController@money');
+$router->match(['get', 'post'], 'member/config/credit', 'ConfigController@credit');
 
 $router->match(['get', 'post'], 'member/dashboard', 'MemberDashboardController@index');
 

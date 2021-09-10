@@ -3,8 +3,6 @@
 
 namespace Module\Vendor\Tecmz;
 
-use ModStart\Core\Input\InputPackage;
-
 class TecmzUtil
 {
     public static function url()
@@ -13,7 +11,7 @@ class TecmzUtil
     }
 
     
-    private static function instance($configPrefix)
+    public static function instance($configPrefix)
     {
         $config = modstart_config();
         return Tecmz::instance($config->getWithEnv("${configPrefix}AppId"), $config->getWithEnv("${configPrefix}AppSecret"));
@@ -68,42 +66,6 @@ class TecmzUtil
             return [];
         }
         return $ret['data']['list'];
-    }
-
-    public static function captchaIsEnable()
-    {
-        return !!modstart_config('softApiCaptchaEnable', false);
-    }
-
-    public static function captchaScript()
-    {
-        return '<script src="https://api.tecmz.com/lib/captcha/base-1.0.0.js?20200410"></script>';
-    }
-
-    public static function captchaAppId()
-    {
-        return modstart_config('softApiCaptchaAppId');
-    }
-
-    public static function captchaVerify()
-    {
-        $input = InputPackage::buildFromInput();
-        return self::instance('softApiCaptcha')->captchaVerify(
-            $input->getTrimString('action'),
-            $input->getTrimString('key'),
-            $input->getTrimString('data'),
-            $input->getTrimString('runtime'),
-            $input->getTrimString('types')
-        );
-    }
-
-    public static function captchaValidate($captchaKey)
-    {
-        $ret = self::instance('softApiCaptcha')->captchaValidate($captchaKey);
-        if ($ret['code']) {
-            return false;
-        }
-        return true;
     }
 
 }

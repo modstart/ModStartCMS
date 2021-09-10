@@ -6,15 +6,15 @@ namespace ModStart\Field;
 
 class Image extends AbstractField
 {
-    const MODE_UPLOAD_DIRECT = 'uploadDirect';
-    const MODE_UPLOAD_DIRECT_RAW = 'uploadDirectRaw';
+    const MODE_DEFAULT = 'default';
+    const MODE_RAW = 'raw';
 
     protected $width = 80;
 
     protected function setup()
     {
         $this->addVariables([
-            'uploadMode' => null,
+            'mode' => self::MODE_DEFAULT,
             'server' => modstart_admin_url('data/file_manager/image'),
         ]);
     }
@@ -26,9 +26,9 @@ class Image extends AbstractField
     }
 
     
-    public function uploadMode($uploadMode)
+    public function mode($mode)
     {
-        $this->addVariables(['uploadMode' => $uploadMode]);
+        $this->addVariables(['mode' => $mode]);
         return $this;
     }
 }

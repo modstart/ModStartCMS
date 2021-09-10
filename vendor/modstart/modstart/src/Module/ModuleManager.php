@@ -9,7 +9,6 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\VersionUtil;
-use ModStart\ModStart;
 
 class ModuleManager
 {
@@ -50,10 +49,22 @@ class ModuleManager
         }
     }
 
-    
-    public static function install($module)
+    public static function clean($module)
     {
-        return self::callCommand('modstart:module-install', ['module' => $module]);
+        $path = self::path($module);
+        if (file_exists($path)) {
+            FileUtil::rm($path, true);
+        }
+    }
+
+    
+    public static function install($module, $force = false)
+    {
+        $param = ['module' => $module];
+        if ($force) {
+            $param['--force'] = true;
+        }
+        return self::callCommand('modstart:module-install', $param);
     }
 
     
@@ -240,7 +251,8 @@ class ModuleManager
                 $allPassed = true;
                 if (!empty($moduleInfoMap[$module])) {
                     foreach ($moduleInfoMap[$module] as $requireModule) {
-                        if (!in_array($requireModule, $orderedModules)) {
+                        list($m, $v) = VersionUtil::parse($requireModule);
+                        if (!in_array($m, $orderedModules)) {
                             $allPassed = false;
                         }
                     }

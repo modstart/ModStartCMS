@@ -13,20 +13,13 @@ class Images extends AbstractField
     protected function setup()
     {
         $this->addVariables([
-            'server' => modstart_admin_url('data/file_manager'),
+            'server' => modstart_admin_url('data/file_manager/image'),
         ]);
     }
 
     public function server($server)
     {
         $this->addVariables(['server' => $server]);
-        return $this;
-    }
-
-    
-    public function uploadMode($uploadMode)
-    {
-        $this->addVariables(['uploadMode' => $uploadMode]);
         return $this;
     }
 

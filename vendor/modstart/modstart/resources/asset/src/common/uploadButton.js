@@ -82,7 +82,7 @@ var UploadButton = function (selector, option) {
         var me = this;
         var $me = $(this);
 
-        $me.html('<div style="display:block;padding:0;margin:0;"><div class="picker">' + opt.text + '</div><ul class="webuploader-list"></ul></div>');
+        $me.html('<div style="padding:0;margin:0;display:inline-block;"><div class="picker">' + opt.text + '</div><ul class="webuploader-list"></ul></div>');
 
         var $list = $me.find('.webuploader-list');
 

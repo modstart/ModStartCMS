@@ -3,9 +3,6 @@
 
 namespace ModStart\Core\Util;
 
-
-use ModStart\Core\Exception\BizException;
-
 class VersionUtil
 {
     
@@ -15,16 +12,24 @@ class VersionUtil
             return true;
         }
         $support = ['>=', '<=', '==', '>', '<'];
-        $operator = '>=';
-        $found = false;
+        $operator = '==';
         foreach ($support as $item) {
             if (starts_with($targetVersionWithOperator, $item)) {
                 $operator = $item;
                 $targetVersionWithOperator = substr($targetVersionWithOperator, strlen($item));
-                $found = true;
+                break;
             }
         }
-        BizException::throwsIf('Version Compare Failed', !$found);
         return version_compare($version, $targetVersionWithOperator, $operator);
+    }
+
+    
+    public static function parse($nameVersion)
+    {
+        $pcs = explode(':', $nameVersion);
+        if (count($pcs) == 1) {
+            return [$pcs[0], '*'];
+        }
+        return [$pcs[0], $pcs[1]];
     }
 }

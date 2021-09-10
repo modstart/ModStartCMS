@@ -10,6 +10,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
+use ModStart\Module\ModuleManager;
 use Module\Member\Config\MemberMenu;
 use Module\Member\Listener\MemberVipPayListener;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
@@ -20,10 +21,23 @@ class ModuleServiceProvider extends ServiceProvider
     
     public function boot(Dispatcher $events)
     {
-        ModuleClassLoader::addNamespace('Overtrue\\Socialite', __DIR__ . '/../SDK/socialite/src');
-
         MemberMenu::register(function () {
             return [
+                [
+                    'icon' => 'details',
+                    'title' => '资产',
+                    'sort' => 900,
+                    'children' => [
+                        modstart_config('Member_MoneyEnable', false) ? [
+                            'title' => '我的钱包',
+                            'url' => modstart_web_url('member_money'),
+                        ] : null,
+                        modstart_config('Member_CreditEnable', false) ? [
+                            'title' => '我的积分',
+                            'url' => modstart_web_url('member_credit'),
+                        ] : null,
+                    ],
+                ],
                 [
                     'icon' => 'user',
                     'title' => '我的',
@@ -61,6 +75,8 @@ class ModuleServiceProvider extends ServiceProvider
             return AdminWidgetLink::build('会员', [
                 ['注册', modstart_web_url('register')],
                 ['登录', modstart_web_url('login')],
+                ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? ['用户钱包', modstart_web_url('member_money')] : null,
+                ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? ['用户积分', modstart_web_url('login')] : null,
             ]);
         });
 
@@ -81,6 +97,16 @@ class ModuleServiceProvider extends ServiceProvider
                             'title' => '用户管理',
                             'url' => '\Module\Member\Admin\Controller\MemberController@index',
                         ],
+                        ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ?
+                            [
+                                'title' => '会员VIP订单',
+                                'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
+                            ] : null,
+                        ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ?
+                            [
+                                'title' => '资金提现申请',
+                                'url' => '\Module\Member\Admin\Controller\MemberMoneyCashController@index',
+                            ] : null,
                     ]
                 ],
                 [
@@ -99,14 +125,22 @@ class ModuleServiceProvider extends ServiceProvider
                                     'title' => '用户协议',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@agreement',
                                 ],
-                                [
-                                    'title' => '微信授权登录',
-                                    'url' => '\Module\Member\Admin\Controller\ConfigController@oauthWechatMobile',
-                                ],
-                                [
-                                    'title' => '微信扫码登录',
-                                    'url' => '\Module\Member\Admin\Controller\ConfigController@oauthWechat',
-                                ],
+                                ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? [
+                                    'title' => '资金设置',
+                                    'url' => '\Module\Member\Admin\Controller\ConfigController@money',
+                                ] : null,
+                                ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [
+                                    'title' => '积分设置',
+                                    'url' => '\Module\Member\Admin\Controller\ConfigController@credit',
+                                ] : null,
+                                ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? [
+                                    'title' => 'VIP设置',
+                                    'url' => '\Module\Member\Admin\Controller\ConfigController@vip',
+                                ] : null,
+                                ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? [
+                                    'title' => 'VIP等级',
+                                    'url' => '\Module\Member\Admin\Controller\MemberVipSetController@index',
+                                ] : null,
                             ]
                         ],
                     ]

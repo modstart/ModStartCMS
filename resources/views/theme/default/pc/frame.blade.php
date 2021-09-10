@@ -7,7 +7,6 @@
 
 @section('headAppend')
     @parent
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_2493283_ome1go9256h.css">
     <link rel="stylesheet" href="{{\ModStart\Core\Assets\AssetsUtil::fix('theme/'.modstart_config('siteTemplate','default').'/css/style.css')}}"/>
     <style type="text/css">
         @if(modstart_config('sitePrimaryColor',null))

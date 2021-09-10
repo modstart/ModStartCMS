@@ -5,6 +5,7 @@ namespace Module\ModuleStore\Admin\Controller;
 
 
 use Illuminate\Routing\Controller;
+use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Core\Exception\BizException;
@@ -61,6 +62,7 @@ class ModuleStoreController extends Controller
 
     public function disable()
     {
+        AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $step = $input->getTrimString('step');
         $dataInput = $input->getJsonAsInput('data');
@@ -80,6 +82,7 @@ class ModuleStoreController extends Controller
 
     public function enable()
     {
+        AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $step = $input->getTrimString('step');
         $dataInput = $input->getJsonAsInput('data');
@@ -99,6 +102,7 @@ class ModuleStoreController extends Controller
 
     public function uninstall()
     {
+        AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $step = $input->getTrimString('step');
         $dataInput = $input->getJsonAsInput('data');
@@ -138,6 +142,7 @@ class ModuleStoreController extends Controller
 
     public function upgrade()
     {
+        AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $token = $input->getTrimString('token');
         $step = $input->getTrimString('step');
@@ -149,7 +154,7 @@ class ModuleStoreController extends Controller
         BizException::throwsIfEmpty('version为空', $version);
                 switch ($step) {
             case 'installModule':
-                $ret = ModuleManager::install($module);
+                $ret = ModuleManager::install($module, true);
                 BizException::throwsIfResponseError($ret);
                 $ret = ModuleManager::enable($module);
                 BizException::throwsIfResponseError($ret);
@@ -163,14 +168,14 @@ class ModuleStoreController extends Controller
                 BizException::throwsIfEmpty('licenseKey为空', $licenseKey);
                 $ret = ModuleStoreUtil::unpackModule($module, $package, $licenseKey);
                 BizException::throwsIfResponseError($ret);
-                return $this->doNext('install', 'installModule', [
+                return $this->doNext('upgrade', 'installModule', [
                     '<span class="ub-text-success">模块解压完成</span>',
                     '<span class="ub-text-default">开始安装...</span>',
                 ]);
             case 'downloadPackage':
                 $ret = ModuleStoreUtil::downloadPackage($token, $module, $version);
                 BizException::throwsIfResponseError($ret);
-                return $this->doNext('install', 'unpackPackage', [
+                return $this->doNext('upgrade', 'unpackPackage', [
                     '<span class="ub-text-success">获取安装包完成，大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
                     '<span class="ub-text-default">开始解压安装包...</span>'
                 ], [
@@ -178,7 +183,7 @@ class ModuleStoreController extends Controller
                     'licenseKey' => $ret['data']['licenseKey'],
                 ]);
             default:
-                return $this->doNext('install', 'downloadPackage', [
+                return $this->doNext('upgrade', 'downloadPackage', [
                     '<span class="ub-text-success">开始升级到远程模块 ' . $module . ' V' . $version . '</span>',
                     '<span class="ub-text-default">开始获取模块安装包...</span>'
                 ]);
@@ -187,6 +192,7 @@ class ModuleStoreController extends Controller
 
     public function install()
     {
+        AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $token = $input->getTrimString('token');
         $step = $input->getTrimString('step');
@@ -201,7 +207,7 @@ class ModuleStoreController extends Controller
         if ($isLocal) {
             switch ($step) {
                 case 'installModule':
-                    $ret = ModuleManager::install($module);
+                    $ret = ModuleManager::install($module, true);
                     BizException::throwsIfResponseError($ret);
                     $ret = ModuleManager::enable($module);
                     BizException::throwsIfResponseError($ret);
@@ -217,8 +223,11 @@ class ModuleStoreController extends Controller
         } else {
             switch ($step) {
                 case 'installModule':
-                    $ret = ModuleManager::install($module);
-                    BizException::throwsIfResponseError($ret);
+                    $ret = ModuleManager::install($module, true);
+                    if (Response::isError($ret)) {
+                        ModuleManager::clean($module);
+                        BizException::throws($ret['msg']);
+                    }
                     $ret = ModuleManager::enable($module);
                     BizException::throwsIfResponseError($ret);
                     return $this->doFinish([

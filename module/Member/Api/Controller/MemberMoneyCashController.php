@@ -37,8 +37,7 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
 
     public function submit()
     {
-        if (!ModuleManager::getModuleConfigBoolean('Member', 'moneyCashEnable', false)
-            || !modstart_config('Member_MoneyCashEnable', false)) {
+        if (!modstart_config('Member_MoneyCashEnable', false)) {
             return Response::generateError('功能未开启');
         }
         $input = InputPackage::buildFromInput();

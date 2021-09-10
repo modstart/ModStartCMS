@@ -4,11 +4,29 @@
   "require": [
     "Vendor"
   ],
-  "version": "1.0.0",
+  "version": "1.2.0",
   "author": "官方",
   "description": "提供基础的用户管理服务",
   "providers": [
   ],
   "config": {
+    "moneyEnable": [
+      [
+        "switch",
+        "启用钱包"
+      ]
+    ],
+    "creditEnable": [
+      [
+        "switch",
+        "启用资金"
+      ]
+    ],
+    "vipEnable": [
+      [
+        "switch",
+        "启用VIP"
+      ]
+    ]
   }
 }
