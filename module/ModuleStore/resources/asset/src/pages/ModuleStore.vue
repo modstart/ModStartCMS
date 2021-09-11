@@ -1,13 +1,17 @@
 <template>
     <div>
+        <div v-if="storeConfig.disable" class="ub-alert ub-alert-danger">
+            <i class="iconfont icon-close-o"></i>
+            当前环境禁止「模块管理」相关操作
+        </div>
         <div class="ub-alert ub-alert-warning">
             <i class="iconfont icon-warning"></i>
-            应用可在线安装、卸载、禁用、启用、配置、升级插件，插件升级前请做好备份。
+            为了系统安全，模块在线 <b>安装</b>、<b>卸载</b>、<b>升级</b> 前请做好代码和数据备份
         </div>
-        <div v-if="!memberUser.id" class="ub-alert ub-alert-danger">
+        <div v-if="!memberUser.id" class="ub-alert ub-alert-warning">
             <i class="iconfont icon-warning"></i>
             您还没有登录，登录后才能从模块市场安装、升级模块
-            <a href="javascript:;" @click="doMemberLoginShow()">立即登录</a>
+            <a href="javascript:;" @click="doMemberLoginShow()"><i class="iconfont icon-user"></i>立即登录</a>
         </div>
         <div class="tw-bg-white tw-rounded">
             <el-tabs v-model="search.tab" style="height:45px;">
@@ -333,6 +337,9 @@
                 },
                 categories: [],
                 modules: [],
+                storeConfig: {
+                    disable: false,
+                },
             }
         },
         computed: {
@@ -496,6 +503,7 @@
                     this.loading = false
                     this.categories = res.data.categories
                     this.modules = res.data.modules
+                    this.storeConfig = res.data.storeConfig
                 })
             },
             doCommand(command, data, step, title) {

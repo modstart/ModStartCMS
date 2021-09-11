@@ -22,6 +22,9 @@ class ModuleStoreUtil
 
     public static function all()
     {
+        $storeConfig = [
+            'disable' => config('env.MS_MODULE_STORE_DISABLE', false),
+        ];
         $remoteModuleResult = self::remoteModuleData();
         $categories = [];
         if (!empty($remoteModuleResult['data']['categories'])) {
@@ -73,6 +76,7 @@ class ModuleStoreUtil
             }
         }
         return [
+            'storeConfig' => $storeConfig,
             'categories' => $categories,
             'modules' => array_values($modules),
         ];
