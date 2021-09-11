@@ -70,6 +70,7 @@ class ModuleStoreController extends Controller
         $version = $dataInput->getTrimString('version');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
+        BizException::throwsIf('当前环境禁止操作模块管理相关功能', config('env.MS_MODULE_STORE_DISABLE', false));
         switch ($step) {
             default:
                 $ret = ModuleManager::disable($module);
@@ -90,6 +91,8 @@ class ModuleStoreController extends Controller
         $version = $dataInput->getTrimString('version');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
+        BizException::throwsIf('当前环境禁止操作模块管理相关功能', config('env.MS_MODULE_STORE_DISABLE', false));
+
         switch ($step) {
             default:
                 $ret = ModuleManager::enable($module);
@@ -112,6 +115,8 @@ class ModuleStoreController extends Controller
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
         BizException::throwsIf('系统模块不能动态配置', ModuleManager::isSystemModule($module));
+        BizException::throwsIf('当前环境禁止操作模块管理相关功能', config('env.MS_MODULE_STORE_DISABLE', false));
+
         if ($isLocal) {
             switch ($step) {
                 default:
@@ -152,7 +157,9 @@ class ModuleStoreController extends Controller
         $version = $dataInput->getTrimString('version');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
-                switch ($step) {
+        BizException::throwsIf('当前环境禁止操作模块管理相关功能', config('env.MS_MODULE_STORE_DISABLE', false));
+
+        switch ($step) {
             case 'installModule':
                 $ret = ModuleManager::install($module, true);
                 BizException::throwsIfResponseError($ret);
@@ -204,6 +211,8 @@ class ModuleStoreController extends Controller
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
         BizException::throwsIf('系统模块不能动态配置', ModuleManager::isSystemModule($module));
+        BizException::throwsIf('当前环境禁止操作模块管理相关功能', config('env.MS_MODULE_STORE_DISABLE', false));
+
         if ($isLocal) {
             switch ($step) {
                 case 'installModule':
@@ -287,6 +296,7 @@ class ModuleStoreController extends Controller
             }
         }
         return $builder->perform(RepositoryUtil::itemFromArray($moduleInfo['config']), function (Form $form) use ($module) {
+            BizException::throwsIf('当前环境禁止操作模块管理相关功能', config('env.MS_MODULE_STORE_DISABLE', false));
             ModuleManager::saveUserInstalledModuleConfig($module, $form->dataForming());
             return Response::generate(0, '保存成功', null, CRUDUtil::jsDialogClose());
         });

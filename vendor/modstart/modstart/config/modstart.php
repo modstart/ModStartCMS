@@ -34,7 +34,7 @@ return [
 
     'asset' => [
         'driver' => \ModStart\Core\Assets\Driver\LocalAssetsPath::class,
-        'cdn' => '/',
+        'cdn' => env('CDN_URL', '/'),
         'image_none' => '',
     ],
 

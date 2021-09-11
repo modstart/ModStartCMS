@@ -85,9 +85,11 @@
                                 @foreach($channelTree as $channelGroup)
                                     <a class="group-title" href="{{modstart_web_url('channel/'.$channelGroup['alias'])}}">{{$channelGroup['title']}}</a>
                                     <div class="group-list">
-                                        @foreach($channelGroup['_child'] as $channel)
-                                        <a class="item" href="{{modstart_web_url('channel/'.$channel['alias'])}}">{{$channel['title']}}</a>
-                                        @endforeach
+                                        @if(!empty($channelGroup['_child']))
+                                            @foreach($channelGroup['_child'] as $channel)
+                                            <a class="item" href="{{modstart_web_url('channel/'.$channel['alias'])}}">{{$channel['title']}}</a>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>
