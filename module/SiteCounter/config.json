@@ -1,0 +1,14 @@
+{
+  "name": "SiteCounter",
+  "title": "网站统计设置",
+  "require": [
+    "Vendor"
+  ],
+  "version": "1.0.0",
+  "author": "ModStart",
+  "description": "提供基于head和body的统计代码配置",
+  "providers": [
+  ],
+  "config": {
+  }
+}

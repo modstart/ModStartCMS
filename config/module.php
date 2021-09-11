@@ -43,6 +43,9 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+        'SiteCounter' => [
+            'enable' => true,
+        ],
 //        'Ad' => [
 //            'enable' => true,
 //            'config' => [
