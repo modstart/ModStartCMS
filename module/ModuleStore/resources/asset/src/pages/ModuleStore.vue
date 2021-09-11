@@ -6,7 +6,7 @@
         </div>
         <div class="ub-alert ub-alert-warning">
             <i class="iconfont icon-warning"></i>
-            为了系统安全，模块在线 <b>安装</b>、<b>卸载</b>、<b>升级</b> 前请做好代码和数据备份
+            为了系统和数据安全，在线 <b>安装</b>、<b>卸载</b>、<b>升级</b> 模块前请做好代码和数据备份
         </div>
         <div v-if="!memberUser.id" class="ub-alert ub-alert-warning">
             <i class="iconfont icon-warning"></i>
