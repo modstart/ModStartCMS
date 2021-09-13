@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td class="tw-font-bold">
-                    ModStart
+                    ModStart核心
                 </td>
                 <td>
                     V{{\ModStart\ModStart::$version}}

@@ -94,7 +94,7 @@ return [
     'New Path' => '新路径',
     'Current Path' => '当前路径',
     'Depend on' => '依赖',
-    'Module %s:%s depend on ModStart:%s, install fail' => '模块 %s:%s 依赖 ModStart:%s，安装失败',
+    'Module %s:%s depend on ModStart:%s, install fail' => '模块 %s:%s 依赖 ModStart核心:%s，安装失败',
     'Module %s:%s depend on %s:%s, install fail' => '模块%s:%s依赖%s:%s，安装失败',
     'Module %s depend on %s, uninstall fail' => '模块%s依赖%s，卸载失败',
     'File extension %s not permit' => '文件后缀%s不允许',
