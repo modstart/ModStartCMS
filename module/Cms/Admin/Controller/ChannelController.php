@@ -22,7 +22,7 @@ class ChannelController extends Controller
                 
                 $builder->id('id', 'ID');
                 $builder->text('title', '名称')->required();
-                $builder->text('alias', '别名')->required()->help('可以通过URL访问 channel/{alias}')->ruleUnique('cms_channel');
+                $builder->text('alias', '别名')->required()->help('字母数字下划线，可以通过URL访问 channel/{alias}')->ruleUnique('cms_channel');
                 $builder->image('cover', '封面');
                 $builder->textarea('description', '描述');
                 $builder->switch('pushEnable', '允许投稿')->width(100);
