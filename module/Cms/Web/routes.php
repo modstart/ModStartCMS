@@ -18,7 +18,7 @@ $router->group([
     $router->match(['get', 'post'], 'writer/post', 'WriterController@post');
     $router->match(['get', 'post'], 'writer/post_edit', 'WriterController@postEdit');
 
-    $router->match(['get', 'post'], 'channel/{alias}', 'ChannelController@index');
+    $router->match(['get', 'post'], 'channel/{alias_url}', 'ChannelController@index');
     $router->match(['get', 'post'], 'p/{alias}', 'PostController@show');
 
 });
