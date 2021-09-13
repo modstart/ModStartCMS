@@ -106,11 +106,13 @@
 
     </div>
 
+    @if(0)
     <div class="ub-container margin-top" style="max-width:35rem;">
         <div>
             @include('module::MemberComment.View.pc.public.comment',['biz'=>'post','bizId'=>$post['id']])
         </div>
     </div>
+    @endif
 
 @endsection
 

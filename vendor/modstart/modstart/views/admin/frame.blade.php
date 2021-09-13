@@ -12,6 +12,12 @@
         window.__msAdminRoot = "{{modstart_admin_url(null)}}";
         window.__selectorDialogServer = "{{modstart_admin_url('data/file_manager')}}";
     </script>
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageHeadAppend',$this); !!}
+@endsection
+
+@section('bodyAppend')
+    @parent
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageBodyAppend',$this); !!}
 @endsection
 
 @section('body')

@@ -17,6 +17,8 @@ module.exports = function (dirname) {
     const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
     const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
     const WebpackShellPlugin = require('webpack-shell-plugin');
+    const WebpackDynamicPublicPathPlugin = require("webpack-dynamic-public-path");
+
     const glob = require("glob");
     const UglifyJS = require("uglify-js");
     // const files = glob.readDirSync('*.js', {});
@@ -50,13 +52,16 @@ module.exports = function (dirname) {
         output: {
             path: path.resolve(config.dist),
             filename: '[name].js',
-            publicPath: config.cdn + '/',
+            publicPath: 'publicPathPlaceholder',
             chunkFilename: 'entry-chunk-[id]-[hash:8].js',
         },
         performance: {
             hints: false
         },
         plugins: [
+            new WebpackDynamicPublicPathPlugin({
+                externalPublicPath: "window.__msCDN+'" + config.cdn.substring(1) + "/'"
+            }),
             new WebpackShellPlugin({
                 onBuildStart: [
                     files.length > 0 ? 'rm -rv ' + files.join(' ') : 'pwd',
@@ -221,7 +226,7 @@ module.exports = function (dirname) {
                 output: {
                     path: path.resolve(config.distAsset),
                     filename: '[name].js',
-                    publicPath: config.cdn + '/',
+                    publicPath: 'publicPathPlaceholder',
                     chunkFilename: 'entry-chunk-[id]-[hash:8].js',
                 },
             }))

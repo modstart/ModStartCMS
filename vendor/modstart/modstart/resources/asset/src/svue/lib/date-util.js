@@ -1,4 +1,7 @@
 let date = require('date-and-time')
+if (date.default) {
+    date = date.default
+}
 if (!date.format) {
     date = date.format
 }

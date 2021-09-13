@@ -32,7 +32,7 @@
                 $cropper.cropper('zoom', 0.1);
             });
             $('#avatarSave').on('click', function () {
-                var image = $cropper.cropper('getCroppedCanvas').toDataURL('image/jpeg');
+                var image = $cropper.cropper('getCroppedCanvas').toDataURL('image/png');
                 window.api.dialog.loadingOn();
                 $.post('?', {type: 'cropper', avatar: image}, function (res) {
                     window.api.dialog.loadingOff();
