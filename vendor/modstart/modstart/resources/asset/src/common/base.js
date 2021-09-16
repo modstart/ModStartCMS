@@ -31,8 +31,9 @@ const MS = {
     dialog:Dialog,
     util:Util,
     api:{
+        defaultCallback: Base.defaultFormCallback,
         post:Base.post
-    }
+    },
 }
 
 window.api = window.api || {}

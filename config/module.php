@@ -46,11 +46,5 @@ return [
         'SiteCounter' => [
             'enable' => true,
         ],
-//        'Ad' => [
-//            'enable' => true,
-//            'config' => [
-//                'position' => '[{"k":"home","v":"首页右侧"}]',
-//            ]
-//        ],
     ],
 ];

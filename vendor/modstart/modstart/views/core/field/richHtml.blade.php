@@ -15,7 +15,7 @@
 <script>
     $(function () {
         window.api.editor.basic('{{$name}}', {
-            server: "{{modstart_admin_url('data/ueditor')}}",
+            server: "{{$server}}",
             ready: function () {
                 // console.log('ready');
             }

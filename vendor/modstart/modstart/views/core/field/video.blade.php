@@ -55,7 +55,17 @@
                     showFileQueue: true,
                     fileNumLimit: 1,
                     callback: function (file, me) {
-                        setValue(file.fullPath);
+                        MS.api.post("{{$server}}", {
+                            action: "{{$mode=='raw'?'saveRaw':'save'}}",
+                            path: file.path,
+                            name: file.name,
+                            size: file.size,
+                            categoryId: 0
+                        }, function(res){
+                            MS.api.defaultCallback(res,{success:function(res){
+                                setValue(res.data.fullPath);
+                            }});
+                        });
                     },
                     finish: function () {
                     }

@@ -180,3 +180,7 @@ var UploadButton = function (selector, option) {
 };
 
 window.api.uploadButton = UploadButton
+
+MS.uploadButton = {
+
+}

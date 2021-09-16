@@ -35,7 +35,7 @@ class MemberMessageController extends ModuleBaseController implements MemberLogi
             $grid->datetime('created_at', '时间');
             $grid->richHtml('content', '内容')->hookRendering(function (AbstractField $field, $item, $index) {
                 return "<div style='word-break:break-all;'>{$item->content}</div>";
-            })->listable(true);
+            })->listable(true)->server(modstart_web_url('member_data/ueditor'));
             $grid->type('status', '状态')->type(MemberMessageStatus::class)->width(80);
             $grid->repositoryFilter(function (RepositoryFilter $filter) {
                 $filter->where(['userId' => MemberUser::id()]);

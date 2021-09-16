@@ -32,6 +32,7 @@ class DataController extends Controller
                         case 'init':
                         case 'upload':
                         case 'save':
+                        case 'saveRaw':
                         case 'uploadAndSaveBase64':
                         case 'uploadDirect':
                         case 'uploadDirectRaw':

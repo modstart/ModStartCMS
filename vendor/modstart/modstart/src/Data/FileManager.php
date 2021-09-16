@@ -51,6 +51,7 @@ class FileManager
             case 'init':
             case 'upload':
             case 'save':
+            case 'saveRaw':
             case 'fileEdit':
             case 'fileDelete':
             case 'uploadAndSaveBase64':
@@ -189,7 +190,26 @@ class FileManager
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
-        return Response::jsonSuccessData(ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']));
+        return Response::jsonSuccessData([
+            'data' => ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']),
+            'fullPath' => $ret['data']['fullPath'],
+        ]);
+    }
+
+    private static function saveRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    {
+        $path = $input->getTrimString('path');
+        $categoryId = max($input->getInteger('categoryId'), 0);
+        BizException::throwsIfEmpty('path empty', $path);
+        $ret = DataManager::storeTempDataByPath($path, $option);
+        if ($ret['code']) {
+            return Response::jsonError($ret['msg']);
+        }
+        $data = $ret['data']['data'];
+        return Response::jsonSuccessData([
+            'data' => ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']),
+            'fullPath' => $ret['data']['fullPath'],
+        ]);
     }
 
     private static function uploadExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)

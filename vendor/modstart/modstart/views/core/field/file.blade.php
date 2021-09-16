@@ -48,14 +48,24 @@
                 window.api.uploadButton('#{{$id}}Uploader', {
                     text: '<a href="javascript:;" class="btn" style="display:inline-block;vertical-align:bottom;"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
                     swf: "@asset('asset/vendor/webuploader/Uploader.swf')",
-                    server: "{{$server}}?action={{$mode=='raw'?'uploadDirectRaw':'uploadDirect'}}",
+                    server: "{{$server}}",
                     extensions: window.__dataConfig.category.file.extensions.join(','),
                     sizeLimit: window.__dataConfig.category.file.maxSize,
                     chunkSize: window.__dataConfig.chunkSize,
                     showFileQueue: true,
                     fileNumLimit: 1,
                     callback: function (file, me) {
-                        setValue(file.fullPath);
+                        MS.api.post("{{$server}}", {
+                            action: "{{$mode=='raw'?'saveRaw':'save'}}",
+                            path: file.path,
+                            name: file.name,
+                            size: file.size,
+                            categoryId: 0
+                        }, function(res){
+                            MS.api.defaultCallback(res,{success:function(res){
+                                setValue(res.data.fullPath);
+                            }});
+                        });
                     },
                     finish: function () {
                     }
