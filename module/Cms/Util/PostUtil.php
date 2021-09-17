@@ -71,6 +71,17 @@ class PostUtil
         return $paginateData;
     }
 
+    public static function isLiked($memberUserId, $postId)
+    {
+        $data = [
+            'postId' => $postId,
+            'memberUserId' => $memberUserId,
+        ];
+        if (ModelUtil::exists('cms_post_like', $data)) {
+            return true;
+        }
+        return false;
+    }
 
 
 

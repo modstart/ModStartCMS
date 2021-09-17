@@ -17,5 +17,5 @@
             id:{{\ModStart\Core\Util\CRUDUtil::id()}}
         };
     </script>
-    <script src="@asset('vendor/Cms/entry/writerPostEdit.js'){{time()}}"></script>
+    <script src="@asset('vendor/Cms/entry/writerPostEdit.js')"></script>
 @endsection

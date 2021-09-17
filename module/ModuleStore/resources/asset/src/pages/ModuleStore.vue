@@ -126,32 +126,37 @@
                                  class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
                                 <div class="tw-float-right" v-if="module._isInstalled">
                                     <a v-if="module._isInstalled && module._hasConfig" href="javascript:;"
+                                       :data-tk-event="'ModuleStore,Config,'+module.name"
                                        @click="doConfig(module)">
                                         <i class="iconfont icon-cog"></i>配置
                                     </a>
                                 </div>
                                 <a v-if="!module._isInstalled" href="javascript:;" @click="doInstall(module)"
-                                   class="tw-mr-4"
+                                   class="tw-mr-4" :data-tk-event="'ModuleStore,Install,'+module.name"
                                 >
                                     <i class="iconfont icon-plus"></i>安装
                                 </a>
                                 <a v-if="module._isInstalled && !module._isLocal && module.latestVersion!==module._localVersion"
                                    @click="doUpgrade(module)"
+                                   :data-tk-event="'ModuleStore,Upgrade,'+module.name"
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
                                     <i class="iconfont icon-direction-up"></i> 升级
                                 </a>
                                 <a v-if="module._isInstalled && module._isEnabled" href="javascript:;"
                                    @click="doDisable(module)"
+                                   :data-tk-event="'ModuleStore,Disable,'+module.name"
                                    class="ub-text-danger tw-mr-4">
                                     <i class="iconfont icon-pause"></i>禁用
                                 </a>
                                 <a v-if="module._isInstalled && !module._isEnabled" href="javascript:;"
                                    class="tw-mr-4"
+                                   :data-tk-event="'ModuleStore,Enable,'+module.name"
                                    @click="doEnable(module)"
                                 >
                                     <i class="iconfont icon-play"></i>启用
                                 </a>
                                 <a v-if="module._isInstalled && !module._isEnabled" href="javascript:;"
+                                   :data-tk-event="'ModuleStore,Uninstall,'+module.name"
                                    @click="doUninstall(module)"
                                    class="ub-text-danger tw-mr-4">
                                     <i class="iconfont icon-trash"></i>卸载
@@ -163,6 +168,7 @@
                                     系统模块不能动态配置
                                 </span>
                                 <a v-if="module._isInstalled && !module._isLocal && module.latestVersion && versionCompare(module.latestVersion,module._localVersion)>0"
+                                   :data-tk-event="'ModuleStore,UpgradeSystem,'+module.name"
                                    @click="doUpgrade(module)"
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
                                     <i class="iconfont icon-direction-up"></i>升级
