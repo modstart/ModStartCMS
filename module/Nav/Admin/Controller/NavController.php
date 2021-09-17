@@ -10,6 +10,7 @@ use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
+use Module\Nav\Type\NavOpenType;
 use Module\Nav\Type\NavPosition;
 use Module\Nav\Util\NavUtil;
 
@@ -27,6 +28,7 @@ class NavController extends Controller
                 $builder->select('position', '位置')->optionType(NavPosition::class);
                 $builder->text('name', '名称');
                 $builder->link('link', '链接');
+                $builder->radio('openType', '打开方式')->optionType(NavOpenType::class)->defaultValue(NavOpenType::CURRENT_WINDOW);
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })
@@ -37,6 +39,7 @@ class NavController extends Controller
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)
             ->title('导航')
+            ->dialogSizeSmall()
             ->hookSaved(function (Form $form) {
                 NavUtil::clearCache();
             });

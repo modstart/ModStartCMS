@@ -28,7 +28,7 @@
         <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>
         <div class="nav">
             @foreach(\Module\Nav\Util\NavUtil::listByPositionWithCache('head') as $nav)
-                <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}">{{$nav['name']}}</a>
+                <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue(empty($nav['openType'])?null:$nav['openType'])}}>{{$nav['name']}}</a>
             @endforeach
         </div>
         <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">
