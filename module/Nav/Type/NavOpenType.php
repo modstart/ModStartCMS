@@ -19,9 +19,15 @@ class NavOpenType implements BaseType
         ];
     }
 
-    public static function getBlankAttributeFromValue($value)
+    public static function getBlankAttributeFromValue($nav)
     {
-        switch ($value) {
+        if (empty($nav)) {
+            return '';
+        }
+        if (is_array($nav)) {
+            $nav = isset($nav['openType']) ? $nav['openType'] : null;
+        }
+        switch ($nav) {
             case self::NEW_BLANK:
                 return 'target="_blank"';
         }
