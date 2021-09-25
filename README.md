@@ -1,6 +1,24 @@
-## 简介
 
-`ModStart` 是一个基于 `Laravel` 模块化组织的后台系统框架，很少的代码即可快速构建出一个功能完善的后台系统。其中模块市场包含了丰富则模块，开箱即用，让开发者能够从冗长的代码中提效，对后端开发者非常友好。
+<p align="center">
+  <a href="https://modstart.com">
+    <img src="https://ms-assets.modstart.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="layui" width="360">
+  </a>
+</p>
+<p align="center">
+  一个模块式的快速开发框架
+</p>
+
+<p align="center">  
+  <a href="https://github.com/modstart/ModStartCMS" target="_blank">
+    <img alt="GitHub" src="https://img.shields.io/github/license/modstart/ModStartCMS">
+  </a>
+  <a href="https://github.com/modstart/ModStartCMS" target="_blank">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/modstart/ModStartCMS">
+  </a>
+</p>
+
+
+`ModStart` 是一个基于 `Laravel` 模块化的后台系统框架，很少的代码即可快速构建出一个功能完善的后台系统。其中模块市场包含了丰富则模块，开箱即用，让开发者能够从冗长的代码中提效，对后端开发者非常友好。
 
 
 - [官方网站](https://modstart.com)
@@ -8,6 +26,8 @@
 - [模块市场](https://modstart.com/store)
 - [源码地址 / 码云](https://gitee.com/modstart/ModStartCMS)
 - [源码地址 / GitHub](https://github.com/modstart/ModStartCMS)
+
+## 基础介绍
 
 ### 技术栈
 
@@ -18,7 +38,7 @@
 - [jQuery](http://jquery.com)
 - ...
 
-### 特性
+### 系统特性
 
 - 简洁优雅、灵活可扩展
 - 后台RBAC权限管理
@@ -28,30 +48,13 @@
 - 内置文件上传，无需繁琐的开发
 - 模块市场，只需在管理页面点击鼠标即可完成插件的安装、更新和卸载等操作
 
-### 交流
-
-- QQ群：467107293
-- 模块开发者QQ群：361233906
-
-### 加入我们
-
-如果您对这个项目感兴趣，非常欢迎加入项目开发团队，参与这个项目的功能维护与开发。
-
-欢迎任何形式的贡献（包括但不限于以下）：
-
-- 贡献代码
-- 完善文档
-- 撰写教程
-- 完善注释
-- ...
-
 ### 版本策略
 
 ModStart 的版本发行将会参考主流 web 框架的发行策略，尽量降低版本升级带来的影响，最大程度的考虑兼容性问题，小版本的升级将尽量不改动任何功能接口；同时我们也将会提供更新日志，详细说明新版本的改动以及可能造成的影响。
 
 对于小版本的发行，开发者可以放心的升级，基本不用担心代码兼容性问题。只有像从 v2.0.0 到 v3.0.0 这样的大版本升级才可能会有兼容性问题，小版本则基本是完全兼容的（小版本升级也可能会有不兼容的情况，但几率很小）。
 
-## 安装
+## 系统安装
 
 ### 环境要求
 
@@ -139,7 +142,7 @@ server {
 
 
 
-## 快速开始
+## 快速开发
 
 
 
@@ -245,21 +248,36 @@ AdminMenu::register(function () {
 这样一个简单的增删改查页面就开发完成了
 
 
-
 ## 开发前必读
 
 ### 开发前的配置
 
 开发环境请打开 debug 模式（即在 `.env` 文件中设置 `APP_DEBUG=true` ）
 
-### 公共样式
 
-`ModStart` 使用了一些基础样式对页面进行布局，既简单又强大，开始开发前需要对此有所了解。
+## 交流
 
-公共样式对编写页面组件非常有帮助，能显著提高开发效率，建议编写组件前先查阅一遍文档。
+### 加入我们
 
+如果您对这个项目感兴趣，非常欢迎加入项目开发团队，参与这个项目的功能维护与开发。
 
-## LICENSE
+欢迎任何形式的贡献（包括但不限于以下）：
 
-Apache 2.0
+- 贡献代码
+- 完善文档
+- 撰写教程
+- 完善注释
+- ...
 
+### 微信交流群
+
+<p>
+    <img width="200" src="https://ms-assets.modstart.com/data/image/2021/09/25/29167_je52_5650.png" />
+</p>
+
+### QQ交流群
+
+**QQ交流群：467107293**
+<p>
+    <img width="200" src="https://ms-assets.modstart.com/data/image/2021/09/25/29009_zsm8_2437.png" />
+</p>
