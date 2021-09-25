@@ -35,13 +35,13 @@ class NavController extends Controller
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('position', '位置')->select(NavPosition::class);
             })
+            ->hookChanged(function (Form $form) {
+                NavUtil::clearCache();
+            })
             ->enablePagination(false)
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)
             ->title('导航')
-            ->dialogSizeSmall()
-            ->hookSaved(function (Form $form) {
-                NavUtil::clearCache();
-            });
+            ->dialogSizeSmall();
     }
 }

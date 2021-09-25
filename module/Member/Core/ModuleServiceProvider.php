@@ -28,11 +28,11 @@ class ModuleServiceProvider extends ServiceProvider
                     'title' => '资产',
                     'sort' => 900,
                     'children' => [
-                        modstart_config('Member_MoneyEnable', false) ? [
+                        ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') && modstart_config('Member_MoneyEnable', false) ? [
                             'title' => '我的钱包',
                             'url' => modstart_web_url('member_money'),
                         ] : null,
-                        modstart_config('Member_CreditEnable', false) ? [
+                        ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') && modstart_config('Member_CreditEnable', false) ? [
                             'title' => '我的积分',
                             'url' => modstart_web_url('member_credit'),
                         ] : null,
@@ -43,6 +43,10 @@ class ModuleServiceProvider extends ServiceProvider
                     'title' => '我的',
                     'sort' => 1000,
                     'children' => [
+                        ModuleManager::getModuleConfigBoolean('Member', 'addressEnable') ? [
+                            'title' => '我的地址',
+                            'url' => modstart_web_url('member_address'),
+                        ] : null,
                         [
                             'title' => '修改密码',
                             'url' => modstart_web_url('member_profile/password'),

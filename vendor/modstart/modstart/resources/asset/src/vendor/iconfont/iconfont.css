@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2778046 */
-  src: url('iconfont.woff2?t=1630675800960') format('woff2'),
-       url('iconfont.woff?t=1630675800960') format('woff'),
-       url('iconfont.ttf?t=1630675800960') format('truetype');
+  src: url('iconfont.woff2?t=1632474203013') format('woff2'),
+       url('iconfont.woff?t=1632474203013') format('woff'),
+       url('iconfont.ttf?t=1632474203013') format('truetype');
 }
 
 .iconfont {
@@ -19,10 +19,6 @@
 
 .icon-eye:before {
   content: "\e60d";
-}
-
-.icon-xiangqu:before {
-  content: "\e673";
 }
 
 .icon-comment:before {

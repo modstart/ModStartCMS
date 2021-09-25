@@ -1,5 +1,10 @@
 @extends('modstart::admin.frame')
 
+@section('bodyAppend')
+    @parent
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminLoginBodyAppend',$this); !!}
+@endsection
+
 @section('body')
     <div class="ub-admin-login">
         <div class="head">{!! L('Admin Login') !!}</div>

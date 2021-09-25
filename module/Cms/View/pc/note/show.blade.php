@@ -52,13 +52,13 @@
 
                         <div class="tw-inline-block" data-note-like-item data-alias="{{$note['alias']}}" data-status="{{$note['_isLike']?'is_like':'not_like'}}">
                             <a class="btn btn-primary btn-round" data-action="like" href="javascript:;">
-                                <i class="iconfont icon-xiangqu"></i>
+                                <i class="iconfont icon-heart-o"></i>
                                 喜欢
                                 |
                                 <span class="cnt">{{$note['likeCount']}}</span>
                             </a>
                             <a class="btn btn-round" data-action="unlike" href="javascript:;">
-                                <i class="iconfont icon-xiangqu"></i>
+                                <i class="iconfont icon-heart-o"></i>
                                 已喜欢
                                 |
                                 <span class="cnt">{{$note['likeCount']}}</span>

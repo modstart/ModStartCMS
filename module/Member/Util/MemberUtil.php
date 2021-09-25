@@ -398,8 +398,11 @@ class MemberUtil
             ModelUtil::join($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
             foreach ($records as $k => $v) {
                 $memberUser = ArrayUtil::keepKeys($v[$memberUserMergeKey], [
-                    'id', 'username', 'avatar', 'created_at', 'signature',
+                    'id', 'username', 'avatar', 'created_at', 'signature', 'nickname',
                 ]);
+                if (empty($memberUser['nickname'])) {
+                    $memberUser['nickname'] = $memberUser['username'];
+                }
                 if (empty($memberUser['avatar'])) {
                     $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.png');
                 } else {

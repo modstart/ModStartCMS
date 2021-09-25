@@ -90,7 +90,7 @@
                     <div class="body">
                         <a href="{{modstart_web_url('note_member/'.$user['id'].'/like_notes')}}"
                            class="btn btn-block {{modstart_baseurl_active(modstart_web_url('note_member/'.$user['id'].'/like_notes'),'ub-text-primary')}}">
-                            <i class="iconfont icon-heart-alt"></i>
+                            <i class="iconfont icon-heart-o"></i>
                             喜欢的文章
                         </a>
                         <a href="{{modstart_web_url('note_member/'.$user['id'].'/followed_topics')}}"

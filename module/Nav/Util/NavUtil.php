@@ -41,4 +41,5 @@ class NavUtil
             Cache::forget(self::CACHE_KEY_PREFIX . $k);
         }
     }
+
 }

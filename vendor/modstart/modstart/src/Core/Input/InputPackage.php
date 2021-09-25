@@ -156,7 +156,7 @@ class InputPackage
     public function getTrimString($key, $defaultValue = '')
     {
         if (isset($this->data[$key])) {
-            $value = trim($this->data[$key]);
+            $value = trim((string)$this->data[$key]);
             if ($value) {
                 return $value;
             }

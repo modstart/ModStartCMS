@@ -16,7 +16,7 @@ trait HasAdminGrid
     private function computeTitleGrid($subject, $langId)
     {
         $title = ($subject ? $subject . ' ' . L($langId) : L($langId));
-        return $this->pageTitle ? $this->pageTitle : $title;
+        return isset($this->pageTitle) ? $this->pageTitle : $title;
     }
 
     public function index(AdminPage $page)

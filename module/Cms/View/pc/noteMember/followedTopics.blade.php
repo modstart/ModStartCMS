@@ -5,7 +5,7 @@
 @section('noteMemberContent')
     <div class="ub-nav-tab margin-top">
         <a href="{{modstart_web_url('note_member/'.$user['id'].'/like_notes')}}">
-            <i class="iconfont icon-heart-alt"></i>
+            <i class="iconfont icon-heart-o"></i>
             喜欢的文章
         </a>
         <a href="{{modstart_web_url('note_member/'.$user['id'].'/followed_topics')}}" class="active">

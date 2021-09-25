@@ -12,9 +12,9 @@ class ModStartOpenApi
 {
     private static function listModuleRoutes()
     {
-        $modules = ModuleManager::listAllEnabledModules();
+        $modules = ModuleManager::listAllInstalledModulesInRequiredOrder(true);
         $files = [];
-        foreach ($modules as $module => $_) {
+        foreach ($modules as $module) {
             if (file_exists($file = ModuleManager::path($module, 'OpenApi/routes.php'))) {
                 $files[$module] = $file;
             }

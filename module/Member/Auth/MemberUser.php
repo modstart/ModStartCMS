@@ -20,7 +20,7 @@ class MemberUser
 
     public static function isMine($memberUserId)
     {
-        return self::id() == $memberUserId;
+        return self::id() > 0 && self::id() == $memberUserId;
     }
 
     public static function isNotMine($memberUserId)

@@ -9,4 +9,4 @@ $router->match(['get', 'post'], 'install/lock', 'InstallController@lock');
 
 $router->match(['get', 'post'], 'captcha/image', 'CahtchaController@image');
 
-$router->match(['get'], 'placeholder/{width}x{height}', '\Module\Vendor\Placeholder\PlaceholderController@index');
+$router->match(['get'], 'placeholder/{width}x{height}', '\Module\Vendor\Web\Controller\PlaceholderController@index');

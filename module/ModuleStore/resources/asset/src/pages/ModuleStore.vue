@@ -462,6 +462,9 @@
                     this.$dialog.loadingOff()
                     this.$dialog.tipSuccess('登录成功')
                     this.doLoadStoreMember()
+                    this.memberLoginInfo.username = ''
+                    this.memberLoginInfo.password = ''
+                    this.memberLoginInfo.captcha = ''
                     this.memberUserShow = false
                 }, res => {
                     this.$dialog.loadingOff()

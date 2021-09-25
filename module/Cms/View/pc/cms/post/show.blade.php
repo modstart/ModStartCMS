@@ -58,13 +58,13 @@
                         @if(0)
                         <div class="tw-inline-block" data-post-like-item data-alias="{{$post['alias']}}" data-status="{{$post['_isLike']?'is_like':'not_like'}}">
                             <a class="btn btn-primary btn-round" data-action="like" href="javascript:;">
-                                <i class="iconfont icon-xiangqu"></i>
+                                <i class="iconfont icon-heart-o"></i>
                                 喜欢
                                 |
                                 <span class="cnt">{{$post['likeCount'] or 0}}</span>
                             </a>
                             <a class="btn btn-round" data-action="unlike" href="javascript:;">
-                                <i class="iconfont icon-xiangqu"></i>
+                                <i class="iconfont icon-heart-o"></i>
                                 已喜欢
                                 |
                                 <span class="cnt">{{$post['likeCount'] or 0}}</span>

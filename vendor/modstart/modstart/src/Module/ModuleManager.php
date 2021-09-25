@@ -230,7 +230,7 @@ class ModuleManager
     }
 
     
-    public static function listAllInstalledModulesInRequiredOrder()
+    public static function listAllInstalledModulesInRequiredOrder($ignoreError = false)
     {
         $modules = self::listAllInstalledModules();
         $modules = array_keys($modules);
@@ -265,21 +265,23 @@ class ModuleManager
                 break;
             }
         }
-        if (count($modules) !== count($orderedModules)) {
-            list($inserts, $deletes) = ArrayUtil::diff($orderedModules, $modules);
-            $errors = [];
-            foreach ($inserts as $insert) {
-                $requires = $moduleInfoMap[$insert];
-                foreach ($requires as $one) {
-                    if (!in_array($one, $orderedModules)) {
-                        $errors[] = "Module <$insert> Depends On <$one>";
+        if (!$ignoreError) {
+            if (count($modules) !== count($orderedModules)) {
+                list($inserts, $deletes) = ArrayUtil::diff($orderedModules, $modules);
+                $errors = [];
+                foreach ($inserts as $insert) {
+                    $requires = $moduleInfoMap[$insert];
+                    foreach ($requires as $one) {
+                        if (!in_array($one, $orderedModules)) {
+                            $errors[] = "Module <$insert> Depends On <$one>";
+                        }
                     }
                 }
-            }
-            if (!empty($errors)) {
-                BizException::throws('Module Not Fully Installed! ' . join('; ', $errors));
-            } else {
-                BizException::throws('Module Not Fully Installed! requires ' . json_encode($modules));
+                if (!empty($errors)) {
+                    BizException::throws('Module Not Fully Installed! ' . join('; ', $errors));
+                } else {
+                    BizException::throws('Module Not Fully Installed! requires ' . json_encode($modules));
+                }
             }
         }
         return $orderedModules;

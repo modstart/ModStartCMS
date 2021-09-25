@@ -39,7 +39,7 @@
                                 <span>{{intval($note['commentCount'])}}</span>
                             </a>
                             <a href="javascript:;" class="tw-flex tw-items-center tw-text-gray-500 hover:tw-opacity-75 tw-mr-4">
-                                <i class="iconfont icon-xiangqu tw-mr-1"></i>
+                                <i class="iconfont icon-heart-o tw-mr-1"></i>
                                 <span>{{intval($note['likeCount'])}}</span>
                             </a>
                         </div>
