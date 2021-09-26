@@ -29,7 +29,7 @@ class TimeUtil
 
     public static function yesterdayEnd()
     {
-        return date('Y-m-d 00:00:00', time() - self::PERIOD_DAY);
+        return date('Y-m-d 23:59:59', time() - self::PERIOD_DAY);
     }
 
     public static function humanTimeLength($timeSeconds, $lang = 'zh')

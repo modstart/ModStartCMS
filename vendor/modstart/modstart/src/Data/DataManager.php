@@ -245,7 +245,7 @@ class DataManager
         $to = AbstractDataStorage::DATA . '/' . $dataTemp['category'] . '/' . $path;
 
         if (!$storage->has($from)) {
-            $storage->deleteTemp($dataTemp['id']);
+            $storage->repository()->deleteTempById($dataTemp['id']);
             return Response::generate(-3, 'TempPath not exists');
         }
 

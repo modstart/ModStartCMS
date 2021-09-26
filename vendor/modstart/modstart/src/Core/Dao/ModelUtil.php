@@ -70,6 +70,7 @@ class ModelUtil
         self::model($model)->where($where[0], $where[1], $where[2])->update($data);
     }
 
+    
     public static function update($model, $where, $data)
     {
         if (empty($where)) {
