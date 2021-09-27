@@ -39,4 +39,13 @@ class SiteUrlProvider
         }
     }
 
+    public static function delete($url)
+    {
+        BizException::throwsIfEmpty('SiteUrlProvider.Error -> url empty', $url);
+        foreach (self::get() as $instance) {
+            
+            $instance->delete($url);
+        }
+    }
+
 }
