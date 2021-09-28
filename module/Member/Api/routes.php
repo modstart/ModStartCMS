@@ -26,7 +26,6 @@ $router->group([
     $router->match(['get', 'post'], 'oauth/callback', 'AuthController@oauthCallback');
     $router->match(['get', 'post'], 'oauth/try_login', 'AuthController@oauthTryLogin');
     $router->match(['get', 'post'], 'oauth/bind', 'AuthController@oauthBind');
-    $router->match(['get', 'post'], 'oauth/login_wechat_mini_program', 'AuthController@loginWechatMiniProgram');
 
     $router->match(['get', 'post'], 'sso/client_prepare', 'AuthController@ssoClientPrepare');
     $router->match(['get', 'post'], 'sso/client', 'AuthController@ssoClient');

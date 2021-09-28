@@ -52,6 +52,9 @@ class ModuleUninstallCommand extends Command
             $relativePathBackup = $relativePath . '._delete_.' . $module;
             $currentFile = base_path($relativePath);
             $currentFileBackup = $currentFile . '._delete_.' . $module;
+            if (!file_exists($currentFile)) {
+                continue;
+            }
             if (
                 (!file_exists($currentFileBackup) && md5_file($currentFile) == md5_file($file['pathname']))
                 ||
@@ -59,10 +62,16 @@ class ModuleUninstallCommand extends Command
             ) {
                 unlink($currentFile);
                 if (file_exists($currentFileBackup)) {
-                    rename($currentFileBackup, $currentFile);
+                    $content = trim(file_get_contents($currentFileBackup));
+                    if ('__MODSTART_EMPTY_FILE__' == $content) {
+                        unlink($currentFileBackup);
+                        $this->info("Module Root Publish : $relativePath");
+                    } else {
+                        rename($currentFileBackup, $currentFile);
+                        $this->info("Module Root Publish : $relativePath <- $relativePathBackup");
+                    }
                 }
                 $publishFiles++;
-                $this->info("Module Root Publish : $relativePath <- $relativePathBackup");
             }
         }
         $this->info("Module Root UnPublish : $publishFiles item(s)");

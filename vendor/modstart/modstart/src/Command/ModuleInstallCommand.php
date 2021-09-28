@@ -15,7 +15,6 @@ class ModuleInstallCommand extends Command
 {
     protected $signature = 'modstart:module-install {module} {--force}';
 
-
     public function handle()
     {
         $module = $this->argument('module');
@@ -89,6 +88,9 @@ class ModuleInstallCommand extends Command
             if (!file_exists($currentFile) || md5_file($currentFile) != file_get_contents($file['pathname'])) {
                 FileUtil::ensureFilepathDir($currentFile);
                 file_put_contents($currentFile, file_get_contents($file['pathname']));
+                if (!file_exists($currentFileBackup)) {
+                    file_put_contents($currentFileBackup, '__MODSTART_EMPTY_FILE__');
+                }
                 $publishFiles++;
             }
         }

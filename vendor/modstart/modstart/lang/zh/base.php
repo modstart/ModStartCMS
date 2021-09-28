@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Default' => '默认',
     'Message' => '消息',
     'Page Redirect Soon' => '页面即将跳转',
     'Second' => '秒',
