@@ -30,7 +30,7 @@
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
     <script>
         window.__data = {
-            apiBase: '{{\Module\ModuleDeveloper\Util\ModuleDeveloperUtil::REMOTE_BASE}}',
+            apiBase: '{{\Module\ModuleStore\Util\ModuleStoreUtil::REMOTE_BASE}}',
             modstartParam: {
                 version: '{{\ModStart\ModStart::$version}}',
                 url: window.location.href
