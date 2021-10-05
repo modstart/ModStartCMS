@@ -11,8 +11,10 @@ use ModStart\Core\Util\ColorUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
 use ModStart\Module\ModuleManager;
+use ModStart\Support\Manager\FieldManager;
 use Module\Member\Config\MemberMenu;
 use Module\Member\Listener\MemberVipPayListener;
+use Module\Member\Widget\Field\MemberImage;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
 

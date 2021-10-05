@@ -10,12 +10,14 @@ use ModStart\Field\AutoRenderedFieldValue;
 
 class MemberCmsUtil
 {
+    
     public static function showFromId($memberUserId)
     {
         $memberUser = ModelUtil::getWithCache('member_user', ['id' => $memberUserId]);
         return self::show($memberUser);
     }
 
+    
     public static function show($memberUser)
     {
         if (!empty($memberUser)) {

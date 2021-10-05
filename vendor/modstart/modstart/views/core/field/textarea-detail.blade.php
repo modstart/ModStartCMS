@@ -3,6 +3,6 @@
         {{$label}}:
     </div>
     <div class="field">
-        <pre>{{$value}}</pre>
+        <div class="ub-html" style="padding:0.25rem 0;">{!! \ModStart\Core\Util\HtmlUtil::text2html($value) !!}</div>
     </div>
 </div>

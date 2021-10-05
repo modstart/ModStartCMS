@@ -36,6 +36,8 @@ $router->group([
     $router->match(['get', 'post'], 'oauth_bind_{oauthType}', 'AuthController@oauthBind');
     $router->match(['get', 'post'], 'oauth_proxy', 'AuthController@oauthProxy');
 
+    $router->match(['get', 'post'], 'member', 'MemberController@index');
+
     $router->match(['get', 'post'], 'member_profile/captcha', 'MemberProfileController@captcha');
     $router->match(['get', 'post'], 'member_profile/password', 'MemberProfileController@password');
     $router->match(['get', 'post'], 'member_profile/avatar', 'MemberProfileController@avatar');

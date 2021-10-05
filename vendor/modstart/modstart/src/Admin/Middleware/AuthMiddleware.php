@@ -41,29 +41,8 @@ class AuthMiddleware
         $adminUserId = intval(Session::get('_adminUserId', null));
         $adminUser = null;
 
-        if (empty($adminUserId)) {
-            $authAdminUserId = intval(Request::headerGet('auth-admin-user-id'));
-            $authAdminTimestamp = intval(Request::headerGet('auth-admin-timestamp'));
-            $authAdminSign = trim(Request::headerGet('auth-admin-sign'));
-            if ($authAdminUserId > 0) {
-                if ($authAdminTimestamp < time() - 1800 || $authAdminTimestamp > time() + 1800) {
-                    return Response::json(-1, "auth-admin-timestamp error");
-                }
-                $authAdminUser = Admin::get($authAdminUserId);
-                if (empty($authAdminUser)) {
-                    return Response::json(-1, "admin user not exists");
-                }
-                if (empty($authAdminUser['password']) || empty($authAdminUser['passwordSalt'])) {
-                    return Response::json(-1, "admin user forbidden");
-                }
-                $signCalc = md5("$authAdminUserId:$authAdminTimestamp:$authAdminUser[password]$authAdminUser[passwordSalt]");
-                if ($signCalc != $authAdminSign) {
-                    return Response::json(-1, 'admin user sign error');
-                }
-                $adminUserId = $authAdminUser['id'];
-                $adminUser = $authAdminUser;
-            }
-        }
+        
+        
         if ($adminUserId) {
             if (empty($adminUser)) {
                 $adminUser = Admin::get($adminUserId);
@@ -130,7 +109,20 @@ class AuthMiddleware
                     }
                 } else {
                     
-                    $checkControllerMethod = $urlController . '@index';
+                    $fallbackMethod = 'index';
+                    if (property_exists($urlController, 'PermitMethodMap')) {
+                        $map = $urlController::$PermitMethodMap;
+                        if (!empty($map[$urlMethod])) {
+                            $fallbackMethod = $map[$urlMethod];
+                        }
+                    }
+                    if (starts_with($fallbackMethod, '@')) {
+                        $checkControllerMethod = substr($fallbackMethod, 1);
+                    } else if (str_contains($fallbackMethod, '@')) {
+                        $checkControllerMethod = $fallbackMethod;
+                    } else {
+                        $checkControllerMethod = $urlController . '@' . $fallbackMethod;
+                    }
                     if (isset($rules[$checkControllerMethod])) {
                         if (empty($rules[$checkControllerMethod]['auth'])) {
                             return Response::send(-1, L('No Permission'));
