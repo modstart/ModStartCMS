@@ -18,6 +18,15 @@ class FileUtil
         return isset($mimeMap[$type]) ? $mimeMap[$type] : null;
     }
 
+    public static function write($path, $content)
+    {
+        $dir = dirname($path);
+        if (!file_exists($dir)) {
+            mkdir($dir, 0755, true);
+        }
+        file_put_contents($path, $content);
+    }
+
     public static function extension($pathname)
     {
         $ext = strtolower(pathinfo($pathname, PATHINFO_EXTENSION));

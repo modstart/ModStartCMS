@@ -40,7 +40,7 @@
                 <div class="tw-float-right">
                     <el-button style="padding:0.25rem;" :loading="memberUserLoading" @click="doMemberLoginShow()">
                         <span v-if="memberUserLoading">
-                            检测中
+                            登录中
                         </span>
                         <span v-else-if="memberUser.id>0">
                             <div v-if="memberUser.avatar" class="ub-cover-1-1 tw-rounded-full"
@@ -208,13 +208,15 @@
                         <div class="line">
                             <div class="label">用户名</div>
                             <div class="field">
-                                <input type="text" class="form" v-model="memberLoginInfo.username" placeholder="输入用户名"/>
+                                <input type="text" class="form" v-model="memberLoginInfo.username"
+                                       @keyup="doSubmitCheck" placeholder="输入用户名"/>
                             </div>
                         </div>
                         <div class="line">
                             <div class="label">密码</div>
                             <div class="field">
                                 <input type="password" class="form" v-model="memberLoginInfo.password"
+                                       @keyup="doSubmitCheck"
                                        placeholder="输入密码"/>
                             </div>
                         </div>
@@ -224,7 +226,7 @@
                                 <div class="row no-gutters">
                                     <div class="col-8">
                                         <input type="text" class="form" v-model="memberLoginInfo.captcha"
-                                               autocomplete="off"
+                                               autocomplete="off" @keyup="doSubmitCheck"
                                                placeholder="图片验证码"/>
                                     </div>
                                     <div class="col-4">
@@ -420,10 +422,13 @@
                     cbError = cbErrorDefault
                 }
                 $.ajax({
-                    // url: `http://org.demo.soft.host/api/${url}`,
-                    url: `https://modstart.com/api/${url}`,
+                    url: `${window.__data.apiBase}/api/${url}`,
                     dataType: 'jsonp',
-                    data: Object.assign(data, {api_token: this.storeApiToken}),
+                    timeout: 10 * 1000,
+                    data: Object.assign(data, {
+                        api_token: this.storeApiToken,
+                        modstartParam: JSON.stringify(window.__data.modstartParam),
+                    }),
                     success: (res) => {
                         if (res.code) {
                             if (res.code === 1002) {
@@ -451,6 +456,11 @@
                     this.memberUserShow = false
                     this.doLoadStore()
                 })
+            },
+            doSubmitCheck(e) {
+                if (e.keyCode === 13) {
+                    this.doMemberLoginSubmit()
+                }
             },
             doMemberLoginSubmit() {
                 if (!this.memberLoginInfo.agree) {

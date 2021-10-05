@@ -6,16 +6,16 @@
     @parent
     <script>
         var _hmt = _hmt || [];
-        (function() {
+        (function () {
             var hm = document.createElement("script");
             hm.src = "https://hm.baidu.com/hm.js?e3403438a2b250ca086ee44c2c5ebf72";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
-        $(function(){
-            $(document).on('click','[data-tk-event]',function () {
+        $(function () {
+            $(document).on('click', '[data-tk-event]', function () {
                 var pcs = $(this).attr('data-tk-event').split(',')
-                _hmt && _hmt.push(['_trackEvent', pcs[0],pcs[1],pcs[2]||'',pcs[3]||'']);
+                _hmt && _hmt.push(['_trackEvent', pcs[0], pcs[1], pcs[2] || '', pcs[3] || '']);
             });
         });
     </script>
@@ -29,7 +29,13 @@
     <script src="@asset('asset/vendor/vue.js')"></script>
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
     <script>
-        window.__data = {};
+        window.__data = {
+            apiBase: '{{\Module\ModuleDeveloper\Util\ModuleDeveloperUtil::REMOTE_BASE}}',
+            modstartParam: {
+                version: '{{\ModStart\ModStart::$version}}',
+                url: window.location.href
+            }
+        };
     </script>
     <script src="@asset('vendor/ModuleStore/entry/moduleStore.js')"></script>
 @endsection

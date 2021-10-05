@@ -17,6 +17,7 @@ use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\RepositoryUtil;
 use Module\ModuleStore\Util\ModuleStoreUtil;
+use function Qcloud\Cos\startWith;
 
 class ModuleStoreController extends Controller
 {
@@ -51,6 +52,9 @@ class ModuleStoreController extends Controller
         $data = array_merge($input->getJsonAsInput('data')->all(), $data);
         return Response::generateSuccessData([
             'msg' => array_map(function ($item) {
+                if (!starts_with($item, '<')) {
+                    $item = "<span class='ub-text-default'>$item</span>";
+                }
                 return '<i class="iconfont icon-hr"></i> ' . $item;
             }, $msgs),
             'command' => $command,
@@ -173,12 +177,17 @@ class ModuleStoreController extends Controller
                 BizException::throwsIfEmpty('package为空', $package);
                 $licenseKey = $dataInput->getTrimString('licenseKey');
                 BizException::throwsIfEmpty('licenseKey为空', $licenseKey);
-                $ret = ModuleStoreUtil::unpackModule($module, $package, $licenseKey);
+                try {
+                    $ret = ModuleStoreUtil::unpackModule($module, $package, $licenseKey);
+                } catch (\Exception $e) {
+                    ModuleStoreUtil::cleanDownloadedPackage($package);
+                    throw $e;
+                }
                 BizException::throwsIfResponseError($ret);
-                return $this->doNext('upgrade', 'installModule', [
+                return $this->doNext('upgrade', 'installModule', array_merge([
                     '<span class="ub-text-success">模块解压完成</span>',
                     '<span class="ub-text-default">开始安装...</span>',
-                ]);
+                ], $ret['data']));
             case 'downloadPackage':
                 $ret = ModuleStoreUtil::downloadPackage($token, $module, $version);
                 BizException::throwsIfResponseError($ret);
@@ -247,12 +256,17 @@ class ModuleStoreController extends Controller
                     BizException::throwsIfEmpty('package为空', $package);
                     $licenseKey = $dataInput->getTrimString('licenseKey');
                     BizException::throwsIfEmpty('licenseKey为空', $licenseKey);
-                    $ret = ModuleStoreUtil::unpackModule($module, $package, $licenseKey);
+                    try {
+                        $ret = ModuleStoreUtil::unpackModule($module, $package, $licenseKey);
+                    } catch (\Exception $e) {
+                        ModuleStoreUtil::cleanDownloadedPackage($package);
+                        throw $e;
+                    }
                     BizException::throwsIfResponseError($ret);
-                    return $this->doNext('install', 'installModule', [
+                    return $this->doNext('install', 'installModule', array_merge([
                         '<span class="ub-text-success">模块解压完成</span>',
                         '<span class="ub-text-default">开始安装...</span>',
-                    ]);
+                    ], $ret['data']));
                 case 'downloadPackage':
                     $ret = ModuleStoreUtil::downloadPackage($token, $module, $version);
                     BizException::throwsIfResponseError($ret);

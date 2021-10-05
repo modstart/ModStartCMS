@@ -1,7 +1,7 @@
 {
   "name": "Banner",
   "require": [
-    "Vendor"
+    "Vendor:>=1.3.0"
   ],
   "title": "通用轮播管理",
   "version": "1.0.0",

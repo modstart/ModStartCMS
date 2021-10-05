@@ -28,12 +28,6 @@
                 {!! modstart_admin_config('title','<i class="icon iconfont icon-pc"></i> <span class="text">'.L('Admin Panel').'</span>') !!}
             </a>
             <div class="menu">
-                <div class="menu-item @if(modstart_base_apth()===modstart_admin_url()) active @endif ">
-                    <a href="{{modstart_admin_url()}}" class="title">
-                        <i class="icon iconfont icon-home"></i>
-                        <span class="text">{{L('Dashboard')}}</span>
-                    </a>
-                </div>
                 @foreach(\ModStart\Admin\Auth\AdminPermission::menu($_controllerMethod) as $_v1)
                     <div class="menu-item @if(!empty($_v1['_active'])) active @endif">
                         @if(empty($_v1['children']))

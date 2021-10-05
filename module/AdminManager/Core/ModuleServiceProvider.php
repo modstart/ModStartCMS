@@ -44,14 +44,23 @@ class ModuleServiceProvider extends ServiceProvider
                         'url' => '\ModStart\Admin\Controller\ProfileController@changePassword',
                         'hide' => true,
                     ],
+                ]
+            ],
+            [
+                'title' => L('System Manage'),
+                'icon' => 'code-alt',
+                'sort' => 700,
+                'children' => [
                     [
                         'title' => L('System Manage'),
                         'rule' => 'SystemManage',
+                        'url' => '\ModStart\Admin\Controller\SystemController@index',
                         'hide' => true,
                     ],
                     [
                         'title' => L('Data File Manager View'),
                         'rule' => 'DataFileManagerView',
+                        'url' => '\ModStart\Admin\Controller\DataController@index',
                         'hide' => true,
                     ],
                     [

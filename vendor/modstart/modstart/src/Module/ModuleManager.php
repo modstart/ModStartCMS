@@ -133,6 +133,9 @@ class ModuleManager
         $files = FileUtil::listFiles(base_path('module'));
         $modules = [];
         foreach ($files as $v) {
+            if (!$v['isDir']) {
+                continue;
+            }
             if (starts_with($v['filename'], '_delete_.')) {
                 continue;
             }

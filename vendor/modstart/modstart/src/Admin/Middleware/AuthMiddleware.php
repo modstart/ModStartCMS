@@ -16,6 +16,7 @@ class AuthMiddleware
 {
     protected $authIgnores = [
         '\ModStart\Admin\Controller\AuthController',
+        '\ModStart\Admin\Controller\UtilController',
     ];
 
     
@@ -24,17 +25,17 @@ class AuthMiddleware
         $routeAction = Route::currentRouteAction();
         $pieces = explode('@', $routeAction);
         if (isset($pieces[0])) {
-            $controller = $pieces[0];
+            $urlController = $pieces[0];
         } else {
-            $controller = null;
+            $urlController = null;
         }
         if (isset($pieces[1])) {
-            $action = $pieces[1];
+            $urlMethod = $pieces[1];
         } else {
-            $action = null;
+            $urlMethod = null;
         }
-        if (!Str::startsWith($controller, '\\')) {
-            $controller = '\\' . $controller;
+        if (!Str::startsWith($urlController, '\\')) {
+            $urlController = '\\' . $urlController;
         }
 
         $adminUserId = intval(Session::get('_adminUserId', null));
@@ -46,18 +47,18 @@ class AuthMiddleware
             $authAdminSign = trim(Request::headerGet('auth-admin-sign'));
             if ($authAdminUserId > 0) {
                 if ($authAdminTimestamp < time() - 1800 || $authAdminTimestamp > time() + 1800) {
-                    return Response::send(-1, "auth-admin-timestamp error");
+                    return Response::json(-1, "auth-admin-timestamp error");
                 }
                 $authAdminUser = Admin::get($authAdminUserId);
                 if (empty($authAdminUser)) {
-                    return Response::send(-1, "admin user not exists");
+                    return Response::json(-1, "admin user not exists");
                 }
                 if (empty($authAdminUser['password']) || empty($authAdminUser['passwordSalt'])) {
-                    return Response::send(-1, "admin user forbidden");
+                    return Response::json(-1, "admin user forbidden");
                 }
                 $signCalc = md5("$authAdminUserId:$authAdminTimestamp:$authAdminUser[password]$authAdminUser[passwordSalt]");
                 if ($signCalc != $authAdminSign) {
-                    return Response::send(-1, 'admin user sign error');
+                    return Response::json(-1, 'admin user sign error');
                 }
                 $adminUserId = $authAdminUser['id'];
                 $adminUser = $authAdminUser;
@@ -69,8 +70,8 @@ class AuthMiddleware
             }
         }
 
-        $controllerMethod = $controller . '@' . $action;
-        if (!$this->isAuthIgnore($controller, $action)) {
+        $urlControllerMethod = $urlController . '@' . $urlMethod;
+        if (!$this->isAuthIgnore($urlController, $urlMethod)) {
             if ($adminUserId && !$adminUser) {
                 Session::forget('_adminUserId');
                 return Response::redirect(action('\ModStart\Admin\Controller\AuthController@login', ['redirect' => Request::currentPageUrl()]));
@@ -79,13 +80,13 @@ class AuthMiddleware
                 return Response::redirect(action('\ModStart\Admin\Controller\AuthController@login', ['redirect' => Request::currentPageUrl()]));
             }
 
-                        $rules = array_build(AdminPermission::rules(), function ($k, $v) {
-                return [$v, false];
+            $rules = array_build(AdminPermission::rules(), function ($k, $v) {
+                $v['auth'] = false;
+                return [$k, $v];
             });
-
             if (AdminPermission::isFounder($adminUserId)) {
                 foreach ($rules as $k => $v) {
-                    $rules[$k] = true;
+                    $rules[$k]['auth'] = true;
                 }
             } else {
                 $adminHasRules = Session::get('_adminHasRules', []);
@@ -103,12 +104,47 @@ class AuthMiddleware
                     Session::put('_adminHasRules', $adminHasRules);
                 }
                 foreach ($adminHasRules as $rule => $v) {
-                    $rules[$rule] = true;
+                    if (isset($rules[$rule])) {
+                        $rules[$rule]['auth'] = true;
+                    }
                 }
-                Session::put('_adminRules', $rules);
             }
-            if (isset($rules[$controllerMethod]) && !$rules[$controllerMethod]) {
-                return Response::send(-1, L('No Permission'));
+            Session::put('_adminRules', $rules);
+
+            
+            if (isset($rules[$urlControllerMethod])) {
+                if (empty($rules[$urlControllerMethod]['auth'])) {
+                    return Response::send(-1, L('No Permission'));
+                }
+            } else {
+                $controllerRuleMap = array_filter(array_build($rules, function ($k, $rule) {
+                    if (!AdminPermission::isUrlAction($rule['url'])) {
+                        return null;
+                    }
+                    return [$rule['url'], $rule['rule']];
+                }));
+                
+                if (isset($controllerRuleMap[$urlControllerMethod])) {
+                    if (empty($rules[$controllerRuleMap[$urlControllerMethod]]['auth'])) {
+                        return Response::send(-1, L('No Permission'));
+                    }
+                } else {
+                    
+                    $checkControllerMethod = $urlController . '@index';
+                    if (isset($rules[$checkControllerMethod])) {
+                        if (empty($rules[$checkControllerMethod]['auth'])) {
+                            return Response::send(-1, L('No Permission'));
+                        }
+                    } else {
+                        if (isset($controllerRuleMap[$checkControllerMethod])) {
+                            if (empty($rules[$controllerRuleMap[$checkControllerMethod]]['auth'])) {
+                                return Response::send(-1, L('No Permission'));
+                            }
+                        } else {
+                            return Response::send(-1, L('No Permission'));
+                        }
+                    }
+                }
             }
         }
 
@@ -117,7 +153,7 @@ class AuthMiddleware
 
         View::share('_adminUser', $adminUser);
         View::share('_adminUserId', $adminUserId);
-        View::share('_controllerMethod', $controllerMethod);
+        View::share('_controllerMethod', $urlControllerMethod);
 
         return $next($request);
     }

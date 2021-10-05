@@ -60,21 +60,29 @@ class AdminPermission
         return AdminConfig::get('founderId', 1);
     }
 
+    public static function isUrlAction($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+        return preg_match('/^[\w\\\\]+@[\w]+$/', $url);
+    }
+
     public static function urlToLink($url)
     {
         if (empty($url)) {
             return 'javascript:;';
         }
-        if (preg_match('/^[\w\\\\]+@[\w]+$/', $url)) {
+        if (self::isUrlAction($url)) {
             return action($url);
         }
         return $url;
     }
 
-    private static function mergeMenuTree($flaten, $prefix = '')
+    private static function mergeMenuTree($flatten, $prefix = '', $ruleMode = false)
     {
         $tree = [];
-        foreach ($flaten as $k => $v) {
+        foreach ($flatten as $k => $v) {
             if ($k === $prefix) {
                 continue;
             }
@@ -92,11 +100,15 @@ class AdminPermission
                 }
             }
             $item = $v;
-            $item['children'] = self::mergeMenuTree($flaten, $k . '^^');
+            $item['children'] = self::mergeMenuTree($flatten, $k . '^^', $ruleMode);
             if (empty($item['children'])) {
                 unset($item['children']);
             }
-            if (empty($item['children']) && empty($item['url'])) continue;
+            if (!$ruleMode) {
+                if (empty($item['children']) && empty($item['url'])) continue;
+            } else {
+                if (empty($item['children']) && empty($item['rule'])) continue;
+            }
             $tree[] = $item;
         }
                 return $tree;
@@ -108,7 +120,7 @@ class AdminPermission
         return $sort++;
     }
 
-    private static function mergeMenu($menu, $prefix = '', $level = 1, $filter = null)
+    private static function mergeMenu($menu, $prefix = '', $level = 1, $filter = null, $ruleMode = false)
     {
         if (empty($menu)) {
             return [];
@@ -149,24 +161,24 @@ class AdminPermission
             if (!isset($flatten[$k])) $flatten[$k] = $item;
             unset($flatten[$k]['children']);
             if (!empty($item['children'])) {
-                $flatten = array_merge($flatten, self::mergeMenu($item['children'], $k . '^^', $level + 1, $filter));
+                $flatten = array_merge($flatten, self::mergeMenu($item['children'], $k . '^^', $level + 1, $filter, $ruleMode));
             }
         }
         if ($level == 1) {
             uasort($flatten, function ($a, $b) {
                 return $a['sort'] - $b['sort'];
             });
-            return self::mergeMenuTree($flatten);
+            return self::mergeMenuTree($flatten, '', $ruleMode);
         }
         return $flatten;
     }
 
-    public static function menuAll(\Closure $filter = null)
+    public static function menuAll(\Closure $filter = null, $ruleMode = false)
     {
         $menu = AdminConfig::get('menu', []);
         $moduleMenu = AdminMenu::get();
                 $menuAll = array_merge($menu, $moduleMenu);
-                $menu = self::mergeMenu($menuAll, '', 1, $filter);
+                $menu = self::mergeMenu($menuAll, '', 1, $filter, $ruleMode);
                 return $menu;
     }
 
@@ -219,13 +231,11 @@ class AdminPermission
             $adminRules = Session::get('_adminRules');
             $adminUser = Session::get('_adminUser');
         }
-        if ($adminUser && $adminUser['id'] == AdminPermission::founderId()) {
-            return true;
-        }
+        
         if (!isset($adminRules[$rule])) {
-            return true;
+            return false;
         }
-                        return $adminRules[$rule] ? true : false;
+                        return $adminRules[$rule]['auth'] ? true : false;
     }
 
     public static function rules($menu = null)
@@ -233,7 +243,7 @@ class AdminPermission
         if (null === $menu) {
             $menu = AdminConfig::get('menu', []);
             $moduleMenu = AdminMenu::get();
-            $menu = self::mergeMenu(array_merge($menu, $moduleMenu));
+            $menu = self::mergeMenu(array_merge($menu, $moduleMenu), '', 1, null, true);
         }
         if (empty($menu)) {
             return [];
@@ -241,12 +251,15 @@ class AdminPermission
         $rules = [];
         foreach ($menu as $menuItem) {
             if (!empty($menuItem['rule'])) {
-                $rules[] = $menuItem['rule'];
+                $rules[$menuItem['rule']] = [
+                    'url' => isset($menuItem['url']) ? $menuItem['url'] : '',
+                    'rule' => $menuItem['rule'],
+                ];
             }
             if (!empty($menuItem['children'])) {
                 $rules = array_merge($rules, self::rules($menuItem['children']));
             }
         }
-        return array_unique($rules);
+        return $rules;
     }
 }

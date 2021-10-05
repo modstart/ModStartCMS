@@ -114,15 +114,27 @@ class ModuleStoreUtil
         ]);
     }
 
+    public static function cleanDownloadedPackage($package)
+    {
+        FileUtil::safeCleanLocalTemp($package);
+    }
+
     public static function unpackModule($module, $package, $licenseKey)
     {
+        $results = [];
         BizException::throwsIf('文件不存在 ' . $package, empty($package) || !file_exists($package));
         $moduleDir = base_path('module/' . $module);
         if (file_exists($moduleDir)) {
+            $moduleBackup = '_delete_.' . date('Ymd_His') . '.' . $module;
             BizException::throwsIf('模块目录 module/' . $module . ' 不正常，请手动删除', !is_dir($moduleDir));
-            $backupDir = base_path('module/_delete_.' . date('Ymd_His') . '.' . $module);
-            rename($moduleDir, $backupDir);
-            BizException::throwsIf('备份模块旧文件失败', !file_exists($backupDir));
+            $moduleBackupDir = base_path("module/$moduleBackup");
+            try {
+                rename($moduleDir, $moduleBackupDir);
+            } catch (\Exception $e) {
+                BizException::throws("备份模块 $module 到 $moduleBackup 失败，请确保模块 $module 中没有文件正在被使用");
+            }
+            BizException::throwsIf('备份模块旧文件失败', !file_exists($moduleBackupDir));
+            $results[] = "备份模块 $module 到 $moduleBackup";
         }
         BizException::throwsIf('模块目录 module/' . $module . ' 不正常，请手动删除', file_exists($moduleDir));
         $zipper = new Zipper();
@@ -136,8 +148,8 @@ class ModuleStoreUtil
         file_put_contents($moduleDir . '/license.json', json_encode([
             'licenseKey' => $licenseKey,
         ]));
-        @unlink($package);
-        return Response::generateSuccessData([]);
+        self::cleanDownloadedPackage($package);
+        return Response::generateSuccessData($results);
     }
 
     public static function removeModule($module, $version)
@@ -145,9 +157,14 @@ class ModuleStoreUtil
         $moduleDir = base_path('module/' . $module);
         BizException::throwsIf('模块目录不存在 ', !file_exists($moduleDir));
         BizException::throwsIf('模块目录 module/' . $module . ' 不正常，请手动删除', !is_dir($moduleDir));
-        $backupDir = base_path('module/_delete_.' . date('Ymd_His') . '.' . $module);
-        rename($moduleDir, $backupDir);
-        BizException::throwsIf('模块目录备份失败', !file_exists($backupDir));
+        $moduleBackup = '_delete_.' . date('Ymd_His') . '.' . $module;
+        $moduleBackupDir = base_path("module/$moduleBackup");
+        try {
+            rename($moduleDir, $moduleBackupDir);
+        } catch (\Exception $e) {
+            BizException::throws("移除模块 $module 到 $moduleBackup 失败，请确保模块 $module 中没有文件正在被使用");
+        }
+        BizException::throwsIf('模块目录备份失败', !file_exists($moduleBackupDir));
         return Response::generateSuccessData([]);
     }
 

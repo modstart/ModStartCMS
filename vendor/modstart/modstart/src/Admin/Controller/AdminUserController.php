@@ -69,16 +69,18 @@ class AdminUserController extends Controller
                 });
             
             $item = $form->item();
-            if ($form->isModeEdit() && !AdminPermission::isFounder($item->id)) {
-                $form->checkbox('roles', L('Roles'))->optionModel('admin_role')
-                    ->hookValueUnserialize(function ($value, AbstractField $field) {
-                        return $value->map(function ($r) {
-                            return $r['id'];
-                        });
-                    })
-                    ->hookValueSerialize(function ($value, AbstractField $field) {
-                        return ConvertUtil::toArray($value);
+            $rolesField = $form->checkbox('roles', L('Roles'))
+                ->optionModel('admin_role')
+                ->hookValueUnserialize(function ($value, AbstractField $field) {
+                    return $value->map(function ($r) {
+                        return $r['id'];
                     });
+                })
+                ->hookValueSerialize(function ($value, AbstractField $field) {
+                    return ConvertUtil::toArray($value);
+                });
+            if ($form->isModeEdit() && AdminPermission::isFounder($item->id)) {
+                $rolesField->editable(false);
             }
             $form->display('created_at', L('Created At'))->editable(true);
             $form->hookSaving(function (Form $form) {
