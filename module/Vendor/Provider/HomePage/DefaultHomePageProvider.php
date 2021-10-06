@@ -8,7 +8,7 @@ class DefaultHomePageProvider extends AbstractHomePageProvider
 {
     public function title()
     {
-        return L('Default');
+        return L('Default') . L('Home');
     }
 
     public function action()

@@ -4,6 +4,10 @@
 namespace Module\Vendor\Provider\RichContent;
 
 
+use Illuminate\Support\Facades\View;
+use ModStart\Core\Util\HtmlUtil;
+use Module\Vendor\Html\HtmlConvertUtil;
+
 class UEditorRichContentProvider extends AbstractRichContentProvider
 {
     const NAME = 'htmlUEditor';
@@ -17,5 +21,21 @@ class UEditorRichContentProvider extends AbstractRichContentProvider
     {
         return 'UEditor富文本';
     }
+
+    public function render($name, $value, $param = [])
+    {
+        return View::make('module::Vendor.View.widget.richContent.htmlUeditor', [
+            'name' => $name,
+            'value' => $value,
+            'param' => $param,
+        ])->render();
+    }
+
+    public function toHtml($value, $htmlInterceptors = null)
+    {
+        $value = HtmlUtil::filter2($value);
+        return parent::toHtml($value, $htmlInterceptors);
+    }
+
 
 }

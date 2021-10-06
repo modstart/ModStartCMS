@@ -3,7 +3,7 @@
 @section('pageFavIco'){{\ModStart\Core\Assets\AssetsUtil::fix(modstart_config('siteFavIco'))}}@endsection
 @section('pageTitle')@yield('pageTitleMain','') - {{modstart_config('siteName')}}@endsection
 @section('pageKeywords'){{modstart_config('siteKeywords')}}@endsection
-@section('pageDescription'){{modstart_config('pageDescription')}}@endsection
+@section('pageDescription'){{modstart_config('siteDescription')}}@endsection
 
 @section('headAppend')
     @parent

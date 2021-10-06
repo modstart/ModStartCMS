@@ -11,6 +11,5 @@ class Markdown extends AbstractField
         'asset/common/editorMarkdown.js',
     ];
     protected static $css = [
-        'asset/font-awesome/css/font-awesome.min.css',
     ];
 }

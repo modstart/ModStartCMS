@@ -4,6 +4,7 @@ namespace Module\Vendor\Html;
 
 use ModStart\Core\Type\BaseType;
 
+
 class HtmlType implements BaseType
 {
     const RICH_TEXT = 1;

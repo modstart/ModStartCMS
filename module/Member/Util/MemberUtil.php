@@ -20,19 +20,30 @@ class MemberUtil
         return ModelUtil::get('member_user', ['id' => $id]);
     }
 
-    public static function getBasic($id)
+    public static function getBasic($id, $keepFields = null)
     {
+        if (null === $keepFields) {
+            $keepFields = [
+                'id', 'username', 'avatar', 'created_at', 'signature', 'nickname',
+            ];
+        }
         $item = self::get($id);
         if (empty($item)) {
             return null;
         }
-        return [
-            'id' => $item['id'],
-            'username' => $item['username'],
-            'created_at' => $item['created_at'],
-            'signature' => isset($item['signature']) ? $item['signature'] : null,
-            'avatar' => AssetsUtil::fixFullOrDefault($item['avatar'], 'asset/image/avatar.png'),
-        ];
+        if (empty($item['nickname'])) {
+            $item['nickname'] = $item['username'];
+        }
+        $item['avatar'] = AssetsUtil::fixFullOrDefault($item['avatar'], 'asset/image/avatar.png');
+        $result = [];
+        foreach ($keepFields as $keepField) {
+            if (isset($item[$keepField])) {
+                $result[$keepField] = $item[$keepField];
+            } else {
+                $result[$keepField] = null;
+            }
+        }
+        return $result;
     }
 
     public static function listViewName($ids)
@@ -392,14 +403,17 @@ class MemberUtil
         ModelUtil::join($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
     }
 
-    public static function mergeMemberUserBasics(&$records, $memberUserIdKey = 'memberUserId', $memberUserMergeKey = '_memberUser')
+    public static function mergeMemberUserBasics(&$records, $memberUserIdKey = 'memberUserId', $memberUserMergeKey = '_memberUser', $keepFields = null)
     {
+        if (null === $keepFields) {
+            $keepFields = [
+                'id', 'username', 'avatar', 'created_at', 'signature', 'nickname',
+            ];
+        }
         if (is_array($records)) {
             ModelUtil::join($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
             foreach ($records as $k => $v) {
-                $memberUser = ArrayUtil::keepKeys($v[$memberUserMergeKey], [
-                    'id', 'username', 'avatar', 'created_at', 'signature', 'nickname',
-                ]);
+                $memberUser = ArrayUtil::keepKeys($v[$memberUserMergeKey], $keepFields);
                 if (empty($memberUser['nickname'])) {
                     $memberUser['nickname'] = $memberUser['username'];
                 }
@@ -413,9 +427,10 @@ class MemberUtil
         } else {
             ModelUtil::joinItems($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
             foreach ($records as $item) {
-                $memberUser = ArrayUtil::keepKeys($item->{$memberUserMergeKey}, [
-                    'id', 'username', 'avatar', 'created_at', 'signature',
-                ]);
+                $memberUser = ArrayUtil::keepKeys($item->{$memberUserMergeKey}, $keepFields);
+                if (empty($memberUser['nickname'])) {
+                    $memberUser['nickname'] = $memberUser['username'];
+                }
                 if (empty($memberUser['avatar'])) {
                     $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.png');
                 } else {

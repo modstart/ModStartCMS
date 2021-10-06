@@ -114,6 +114,10 @@ class AuthMiddleware
                         $map = $urlController::$PermitMethodMap;
                         if (!empty($map[$urlMethod])) {
                             $fallbackMethod = $map[$urlMethod];
+                        } else {
+                            if (!empty($map['*'])) {
+                                $fallbackMethod = $map['*'];
+                            }
                         }
                     }
                     if (starts_with($fallbackMethod, '@')) {

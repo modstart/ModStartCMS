@@ -8,8 +8,21 @@ use ModStart\Layout\Row;
 
 class AdminWidgetDashboard
 {
+    private static $todo = [];
     private static $icon = [];
     private static $foot = [];
+
+    public static function registerTodo($closure)
+    {
+        self::$todo[] = $closure;
+    }
+
+    public static function callTodo(Row $row)
+    {
+        foreach (self::$todo as $item) {
+            call_user_func_array($item, [$row]);
+        }
+    }
 
     public static function registerIcon($closure)
     {

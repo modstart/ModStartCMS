@@ -4,6 +4,9 @@
 namespace Module\Vendor\Provider\HomePage;
 
 
+use ModStart\Core\Exception\BizException;
+use function Qcloud\Cos\startWith;
+
 class HomePageProvider
 {
     
@@ -16,6 +19,7 @@ class HomePageProvider
         self::$instances[] = $provider;
     }
 
+    
     public static function all()
     {
         foreach (self::$instances as $k => $v) {
@@ -26,5 +30,24 @@ class HomePageProvider
             }
         }
         return self::$instances;
+    }
+
+    public static function call($contextMethod, $defaultAction)
+    {
+        $controller = $defaultAction;
+        if (modstart_config('HomePage_Enable', false)) {
+            $controller = modstart_config('HomePage_Home');
+            BizException::throwsIfEmpty('首页不存在', $controller);
+        }
+        list($c, $a) = explode('@', $controller);
+        list($contextC, $contextA) = explode('::', $contextMethod);
+        if (!starts_with($contextC, '\\')) {
+            $contextC = '\\' . $contextC;
+        }
+        if ($contextC == $c && $contextA == $a) {
+            list($c, $a) = explode('@', $defaultAction);
+        }
+        $c = app($c);
+        return app()->call([$c, $a]);
     }
 }

@@ -5,7 +5,7 @@
     "Vendor",
     "Member"
   ],
-  "version": "1.0.0",
+  "version": "1.4.0",
   "author": "ModStart",
   "description": "提供自适应的内容管理系统",
   "providers": [

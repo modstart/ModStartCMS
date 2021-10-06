@@ -51,6 +51,21 @@ class DashboardItemA extends AbstractWidget
         return $item;
     }
 
+    public static function makeIconNumberTitleDark($icon, $number, $title, $link = 'javascript:;', $color = null)
+    {
+        if (null === $color) {
+            $color = ColorUtil::randomColor();
+        }
+        $item = new DashboardItemA();
+        $item->icon = $icon;
+        $item->number = $number;
+        $item->title = $title;
+        $item->link = $link;
+        $item->color = $color;
+        $item->type = 4;
+        return $item;
+    }
+
     public function render()
     {
         switch ($this->type) {
@@ -79,6 +94,16 @@ HTML;
                 return <<<HTML
 <a href="{$this->link}" target="_blank" class="btn btn-block ub-text-left margin-bottom" style="color:{$this->color}">
     {$this->title}
+</a>
+HTML;
+            case 4:
+                return <<<HTML
+<a href="{$this->link}" class="ub-dashboard-item-b" style="background:{$this->color}">
+    <div class="icon">
+        <i class="font {$this->icon}"></i>
+    </div>
+    <div class="number-value">{$this->number}</div>
+    <div class="number-title">{$this->title}</div>
 </a>
 HTML;
 

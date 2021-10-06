@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Module\Vendor\Provider\Notifier;
+namespace Module\Vendor\Provider\RichContent;
 
 
 use Module\Vendor\Provider\RichContent\AbstractRichContentProvider;
@@ -31,7 +31,7 @@ class RichContentProvider
         return self::$instances;
     }
 
-    public function getByName($name)
+    public static function getByName($name)
     {
         foreach (self::all() as $instance) {
             if ($instance->name() == $name) {
