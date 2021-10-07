@@ -9,6 +9,10 @@ use ModStart\Core\Input\Response;
 
 class WidgetIconController extends Controller
 {
+    public static $PermitMethodMap = [
+        '*' => '*',
+    ];
+
     public function index()
     {
         $icons = [];

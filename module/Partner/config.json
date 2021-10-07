@@ -2,9 +2,10 @@
   "name": "Partner",
   "title": "友情链接管理",
   "require": [
-    "Vendor"
+    "Vendor:>=1.4.0"
   ],
   "version": "1.0.0",
+  "modstartVersion": ">=1.4.0",
   "author": "官方",
   "description": "提供友情链接基础管理功能",
   "config": {

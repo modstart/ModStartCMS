@@ -5,7 +5,6 @@ namespace Module\Vendor\Provider\HomePage;
 
 
 use ModStart\Core\Exception\BizException;
-use function Qcloud\Cos\startWith;
 
 class HomePageProvider
 {

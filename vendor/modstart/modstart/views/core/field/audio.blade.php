@@ -11,7 +11,7 @@
                placeholder="{{$placeholder}}"
                value="{{$value}}"/>
         <div id="{{$name}}Selector">
-            <div class="ub-video-selector" style="display:inline-block;border:1px solid #EEE;position:relative;border-radius:0.2rem;line-height:1.3rem;padding:0 2rem 0 0.5rem;vertical-align:bottom;">
+            <div class="ub-audio-selector" style="display:inline-block;border:1px solid #EEE;position:relative;border-radius:0.2rem;line-height:1.3rem;padding:0 2rem 0 0.5rem;vertical-align:bottom;">
                 <div data-value>{{$value or L('None')}}</div>
                 <a data-close href="javascript:;" style="{{$value?'display:inline-block;':'display:none;'}}position:absolute;right:0px;top:0px;line-height:1.3rem;width:1rem;text-align:center;color:#999;"><i class="iconfont icon-close"></i></a>
             </div>
@@ -19,7 +19,7 @@
             @if($mode=='default')
                 <a href="javascript:;" class="btn" data-gallery style="display:inline-block;vertical-align:bottom;">
                     <i class="iconfont icon-category"></i>
-                    {{L('Video Gallery')}}
+                    {{L('Audio Gallery')}}
                 </a>
             @endif
         </div>
@@ -27,7 +27,7 @@
         <script>
             $(function () {
                 var $field = $('#{{$id}}');
-                var $selector = $('#{{$name}}Selector .ub-video-selector');
+                var $selector = $('#{{$name}}Selector .ub-audio-selector');
                 var $gallery = $('#{{$name}}Selector [data-gallery]')
                 function setValue(path) {
                     try {
@@ -49,8 +49,8 @@
                     text: '<a href="javascript:;" class="btn" style="display:inline-block;vertical-align:bottom;"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
                     swf: "@asset('asset/vendor/webuploader/Uploader.swf')",
                     server: "{{$server}}",
-                    extensions: window.__dataConfig.category.video.extensions.join(','),
-                    sizeLimit: window.__dataConfig.category.video.maxSize,
+                    extensions: window.__dataConfig.category.audio.extensions.join(','),
+                    sizeLimit: window.__dataConfig.category.audio.maxSize,
                     chunkSize: window.__dataConfig.chunkSize,
                     showFileQueue: true,
                     fileNumLimit: 1,

@@ -41,7 +41,7 @@ class BannerController extends Controller
                         
                         $context->video('video', '视频');
                     });
-                $builder->text('link', '链接');
+                $builder->link('link', '链接');
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })

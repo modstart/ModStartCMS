@@ -9,7 +9,11 @@
                class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
+               @if(null===$fixedValue)
                value="{{$value}}"
+               @else
+               value="{{$fixedValue}}"
+               @endif
                @if($styleFormField) style="{!! $styleFormField !!}" @endif
         />
         @if(!empty($help))

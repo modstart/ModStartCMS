@@ -4,6 +4,6 @@
   "version": "1.4.0",
   "author": "官方",
   "description": "提供基础功能",
-  "modstartVersion": "*",
+  "modstartVersion": ">=1.4.0",
   "config": []
 }

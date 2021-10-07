@@ -52,6 +52,7 @@ class FieldManager
             'fileTemp' => \ModStart\Field\FileTemp::class,
             'file' => \ModStart\Field\File::class,
             'video' => \ModStart\Field\Video::class,
+            'audio' => \ModStart\Field\Audio::class,
             'areaChina' => \ModStart\Field\AreaChina::class,
             'hidden' => \ModStart\Field\Hidden::class,
             'icon' => \ModStart\Field\Icon::class,

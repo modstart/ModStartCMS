@@ -289,7 +289,7 @@ class Grid
                 BizException::throws('Grid item support Model|stdClass only');
             }
             $record = [];
-            $record['_id'] = $item->{$this->repository()->getKeyName()};
+            $record['_id'] = '' . $item->{$this->repository()->getKeyName()};
             foreach ($this->listableFields() as $field) {
                 
                 if ($field->isLayoutField()) {
@@ -395,6 +395,7 @@ class Grid
             case 'hookDeleting':
             case 'hookChanged':
             case 'hookDeleted':
+            case 'hookSaving':
             case 'formClass':
             case 'gridFilter':
                 return $this;

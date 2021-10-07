@@ -2,15 +2,14 @@
   "name": "Cms",
   "title": "通用内容管理系统",
   "require": [
-    "Vendor",
+    "Vendor:>=1.4.0",
     "Member"
   ],
   "version": "1.4.0",
+  "modstartVersion": ">=1.4.0",
   "author": "ModStart",
   "description": "提供自适应的内容管理系统",
   "providers": [
     "Module\\Cms\\Provider\\ModuleServiceProvider"
-  ],
-  "config": {
-  }
+  ]
 }

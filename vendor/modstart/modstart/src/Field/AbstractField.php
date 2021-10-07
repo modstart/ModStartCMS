@@ -34,6 +34,7 @@ class AbstractField implements Renderable
     private $column;
     private $label;
     protected $value = null;
+    protected $fixedValue = null;
     protected $rules = '';
     protected $view = null;
     protected $variables = [];
@@ -210,6 +211,15 @@ class AbstractField implements Renderable
         return $this;
     }
 
+    public function fixedValue($fixedValue = null)
+    {
+        if (null === $fixedValue) {
+            return $this->fixedValue;
+        }
+        $this->fixedValue = $fixedValue;
+        return $this;
+    }
+
     public function setValue($value)
     {
         $this->value = $value;
@@ -331,6 +341,7 @@ class AbstractField implements Renderable
             'id' => $this->id,
             'name' => $this->name(),
             'value' => $this->value(),
+            'fixedValue' => $this->fixedValue(),
             'label' => $this->label,
             'column' => $this->column,
             'placeholder' => $this->placeholder(),

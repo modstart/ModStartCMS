@@ -13,6 +13,10 @@ use Module\Vendor\Admin\Config\AdminWidgetLink;
 
 class WidgetLinkController extends Controller
 {
+    public static $PermitMethodMap = [
+        '*' => '*',
+    ];
+
     private function build($groupName, $titleLinks)
     {
         if (empty($titleLinks)) {

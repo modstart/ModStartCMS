@@ -120,24 +120,26 @@ class AuthMiddleware
                             }
                         }
                     }
-                    if (starts_with($fallbackMethod, '@')) {
-                        $checkControllerMethod = substr($fallbackMethod, 1);
-                    } else if (str_contains($fallbackMethod, '@')) {
-                        $checkControllerMethod = $fallbackMethod;
-                    } else {
-                        $checkControllerMethod = $urlController . '@' . $fallbackMethod;
-                    }
-                    if (isset($rules[$checkControllerMethod])) {
-                        if (empty($rules[$checkControllerMethod]['auth'])) {
-                            return Response::send(-1, L('No Permission'));
+                    if ('*' != $fallbackMethod) {
+                        if (starts_with($fallbackMethod, '@')) {
+                            $checkControllerMethod = substr($fallbackMethod, 1);
+                        } else if (str_contains($fallbackMethod, '@')) {
+                            $checkControllerMethod = $fallbackMethod;
+                        } else {
+                            $checkControllerMethod = $urlController . '@' . $fallbackMethod;
                         }
-                    } else {
-                        if (isset($controllerRuleMap[$checkControllerMethod])) {
-                            if (empty($rules[$controllerRuleMap[$checkControllerMethod]]['auth'])) {
+                        if (isset($rules[$checkControllerMethod])) {
+                            if (empty($rules[$checkControllerMethod]['auth'])) {
                                 return Response::send(-1, L('No Permission'));
                             }
                         } else {
-                            return Response::send(-1, L('No Permission'));
+                            if (isset($controllerRuleMap[$checkControllerMethod])) {
+                                if (empty($rules[$controllerRuleMap[$checkControllerMethod]]['auth'])) {
+                                    return Response::send(-1, L('No Permission'));
+                                }
+                            } else {
+                                return Response::send(-1, L('No Permission'));
+                            }
                         }
                     }
                 }
