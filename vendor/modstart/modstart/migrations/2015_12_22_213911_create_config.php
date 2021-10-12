@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateConfig extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('config', function (Blueprint $table) {
@@ -19,9 +23,12 @@ class CreateConfig extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-
     }
 }

@@ -7,13 +7,18 @@ use Illuminate\Support\Fluent;
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Core\Util\IdUtil;
 
-
+/**
+ * Class AbstractWidget
+ * @package ModStart\Widget
+ */
 class AbstractWidget extends Fluent implements Renderable
 {
     protected $view;
     protected $id;
 
-    
+    /**
+     * AbstractWidget constructor.
+     */
     public function __construct()
     {
         $this->id = IdUtil::generate('Widget');

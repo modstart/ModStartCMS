@@ -66,6 +66,28 @@ class DashboardItemA extends AbstractWidget
         return $item;
     }
 
+    /**
+     * @param $icon
+     * @param $title
+     * @param $link
+     * @param null $color
+     * @return DashboardItemA
+     * @since 1.5.0
+     */
+    public static function makeIconTitleLink($icon, $title, $link, $color = null)
+    {
+        if (null === $color) {
+            $color = ColorUtil::randomColor();
+        }
+        $item = new DashboardItemA();
+        $item->icon = $icon;
+        $item->title = $title;
+        $item->link = $link;
+        $item->color = $color;
+        $item->type = 5;
+        return $item;
+    }
+
     public function render()
     {
         switch ($this->type) {
@@ -104,6 +126,15 @@ HTML;
     </div>
     <div class="number-value">{$this->number}</div>
     <div class="number-title">{$this->title}</div>
+</a>
+HTML;
+            case 5:
+                return <<<HTML
+<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-shadow tw-py-4">
+    <div style="height:1.5rem;">
+        <i class="{$this->icon}" style="font-size:1.5rem;line-height:1.5rem;color:{$this->color};"></i>
+    </div>
+    <div class="tw-text-gray-400">{$this->title}</div>
 </a>
 HTML;
 

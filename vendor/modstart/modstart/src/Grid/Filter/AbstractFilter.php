@@ -8,7 +8,14 @@ use ModStart\Grid\Filter\Field\Text;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFluentAttribute;
 
-
+/**
+ * Class AbstractFilter
+ * @package ModStart\Grid\Filter
+ *
+ *
+ * @method AbstractFilter hookRendering($value = null)
+ * > $value = function(AbstractFilter $filter){  }
+ */
 abstract class AbstractFilter
 {
     use HasFluentAttribute;
@@ -18,20 +25,42 @@ abstract class AbstractFilter
     ];
     private $hookRendering;
 
-    
+    /**
+     * @var
+     */
     protected $id;
-    
+    /**
+     * Label of field.
+     *
+     * @var string
+     */
     protected $label;
-    
+    /**
+     * @var string
+     */
     protected $column;
-    
+    /**
+     * field
+     * @var Filter\Field\AbstractFilterField
+     */
     protected $field;
-    
+    /**
+     * Query for filter.
+     *
+     * @var string
+     */
     protected $query = 'where';
-    
+    /**
+     * @var GridFilter
+     */
     private $tableFilter;
 
-    
+    /**
+     * AbstractFilter constructor.
+     *
+     * @param $column
+     * @param string $label
+     */
     public function __construct($column, $label = '')
     {
         $this->id = IdUtil::generate('GridFilter');
@@ -48,7 +77,9 @@ abstract class AbstractFilter
         return lcfirst(end($class));
     }
 
-    
+    /**
+     * @param GridFilter $filter
+     */
     public function setTableFilter(GridFilter $filter)
     {
         $this->tableFilter = $filter;
@@ -62,7 +93,11 @@ abstract class AbstractFilter
         return null;
     }
 
-    
+    /**
+     * Get field object of filter.
+     *
+     * @return mixed|$this
+     */
     public function field($value = null)
     {
         if (null === $value) {
@@ -71,13 +106,21 @@ abstract class AbstractFilter
         $this->field = $value;
     }
 
-    
+    /**
+     * Get column name of current filter.
+     *
+     * @return string
+     */
     public function column()
     {
         return $this->column;
     }
 
-    
+    /**
+     * Build conditions of filter.
+     *
+     * @return array|mixed
+     */
     protected function buildCondition()
     {
         $column = explode('.', $this->column);
@@ -87,7 +130,11 @@ abstract class AbstractFilter
         return call_user_func_array([$this, 'buildRelationCondition'], func_get_args());
     }
 
-    
+    /**
+     * Build query condition of model relation.
+     *
+     * @return array
+     */
     protected function buildRelationCondition()
     {
         $args = func_get_args();
@@ -97,7 +144,11 @@ abstract class AbstractFilter
         }]];
     }
 
-    
+    /**
+     * Variables for filter view.
+     *
+     * @return array
+     */
     private function variables()
     {
         $variables = [
@@ -112,7 +163,11 @@ abstract class AbstractFilter
         return $variables;
     }
 
-    
+    /**
+     * Render this filter.
+     *
+     * @return \Illuminate\View\View|string
+     */
     public function render()
     {
         if ($this->hookRendering instanceof \Closure) {
@@ -135,6 +190,5 @@ abstract class AbstractFilter
         }
         throw new \Exception('AbstractFilter __call error : ' . $name);
     }
-
 
 }

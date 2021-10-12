@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Exception\ExceptionReportHandleTrait;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -17,6 +18,7 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         HttpException::class,
         ModelNotFoundException::class,
+        BizException::class,
     ];
 
     

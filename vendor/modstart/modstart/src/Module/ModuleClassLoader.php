@@ -8,7 +8,7 @@ use Composer\Autoload\ClassLoader;
 
 class ModuleClassLoader
 {
-    
+    /** @var ClassLoader $loader */
     private static $loader = null;
 
     public static function addNamespace($namespace, $path)

@@ -4,7 +4,18 @@
 namespace ModStart\Widget;
 
 
-
+/**
+ * Class Label
+ * @package ModStart\Widget
+ *
+ * @method static string muted($text)
+ * @method static string warning($text)
+ * @method static string danger($text)
+ * @method static string success($text)
+ *
+ * @method void text($text)
+ * @method void type($type)
+ */
 class StatusText extends AbstractWidget
 {
     public static function getAssets()

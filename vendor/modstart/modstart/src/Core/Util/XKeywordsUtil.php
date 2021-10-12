@@ -5,7 +5,12 @@ namespace ModStart\Core\Util;
 
 class XKeywordsUtil
 {
-    
+    /**
+     *
+     * @param $keywords
+     * @param $content
+     * @param $matKeyword
+     */
     public static function match($keywords, $content, &$matKeyword = null)
     {
         $keywords = trim($keywords);

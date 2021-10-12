@@ -8,7 +8,9 @@ use ModStart\Grid\GridFilter;
 
 trait HasGridFilter
 {
-    
+    /**
+     * @var GridFilter
+     */
     protected $gridFilter;
 
     private function setupGridFilter()
@@ -16,7 +18,9 @@ trait HasGridFilter
         $this->gridFilter = new GridFilter($this->model);
     }
 
-    
+    /**
+     * @return GridFilter
+     */
     public function getGridFilter()
     {
         return $this->gridFilter;

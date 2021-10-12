@@ -9,7 +9,9 @@ class SignUtil
         if ($sign == self::common($params, $appSecret)) {
             return true;
         }
-                        if ($sign == self::common($params, $appSecret, 'urlencode')) {
+        // rawurlencode 遵守是94年国际标准备忘录RFC 1738，
+        // urlencode 实现的是传统做法，和上者的主要区别是对空格的转义是'+'而不是'%20'
+        if ($sign == self::common($params, $appSecret, 'urlencode')) {
             return true;
         }
         if ($sign == self::common($params, $appSecret, 'rawurlencode')) {
@@ -37,7 +39,9 @@ class SignUtil
 
     public static function checkWithoutSecret($sign, $params, $prefix = null)
     {
-                        if ($sign == self::commonWithoutSecret($params, $prefix)) {
+        // rawurlencode 遵守是94年国际标准备忘录RFC 1738，
+        // urlencode 实现的是传统做法，和上者的主要区别是对空格的转义是'+'而不是'%20'
+        if ($sign == self::commonWithoutSecret($params, $prefix)) {
             return true;
         }
         if ($sign == self::commonWithoutSecret($params, $prefix, 'rawurlencode')) {

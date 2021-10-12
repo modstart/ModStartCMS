@@ -11,7 +11,14 @@ use Illuminate\Contracts\Support\Renderable;
 
 class ConvertUtil
 {
-    
+    /**
+     * 把给定的值转化为数组.
+     *
+     * @param $value
+     * @param bool $filter
+     *
+     * @return array
+     */
     public static function toArray($value, $filter = true)
     {
         if (!$value) {
@@ -42,7 +49,15 @@ class ConvertUtil
         }) : $value;
     }
 
-    
+    /**
+     * 把给定的值渲染为字符串
+     *
+     * @param string|Grid|\Closure|Renderable|Htmlable $value
+     * @param array $params
+     * @param object $newThis
+     *
+     * @return string
+     */
     public static function render($value, $params = [], $newThis = null)
     {
         if (is_string($value)) {

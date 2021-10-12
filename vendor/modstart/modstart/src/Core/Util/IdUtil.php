@@ -47,7 +47,12 @@ class IdUtil
         return $timestamp . $workerBit . $bit . sprintf('%03d', $seq++);
     }
 
-    
+    /**
+     * 生成一个19位长的订单号（BigInteger）
+     * @return string
+     * @example
+     * 20210101010101+12121
+     */
     public static function generateSN()
     {
         return date('YmdHis', time()) . sprintf('%05d', rand(0, 99999));

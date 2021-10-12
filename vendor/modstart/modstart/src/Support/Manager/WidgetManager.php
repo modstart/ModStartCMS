@@ -3,9 +3,6 @@
 
 namespace ModStart\Support\Manager;
 
-
-use ModStart\Field\AbstractField;
-
 class WidgetManager
 {
     private static $availableWidgets = [];

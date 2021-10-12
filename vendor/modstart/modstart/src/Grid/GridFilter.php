@@ -15,16 +15,29 @@ use ModStart\Grid\Filter\Likes;
 use ModStart\Grid\Filter\Range;
 use ReflectionClass;
 
-
+/**
+ * Class Filter.
+ *
+ * @method Eq               eq($column, $label = '')
+ * @method Like             like($column, $label = '')
+ * @method Likes            likes($column, $label = '')
+ * @method Range            range($column, $label = '')
+ */
 class GridFilter
 {
-    
+    /**
+     * @var Model
+     */
     protected $model;
 
-    
+    /**
+     * @var array
+     */
     protected $filters = [];
 
-    
+    /**
+     * @var array
+     */
     protected $supports = [
         'eq',
         'like',
@@ -32,18 +45,27 @@ class GridFilter
         'range',
     ];
 
-    
+    /**
+     * @var AbstractFilterField
+     */
     private $field;
 
-    
+    /**
+     * @var array
+     */
     private $search;
 
-    
+    /**
+     * 动态范围条件
+     * @var Collection
+     */
     private $scopes;
 
-
-
-    
+    /**
+     * Create a new filter instance.
+     *
+     * @param Model $model
+     */
     public function __construct(Model $model = null)
     {
         $this->model = $model;
@@ -51,14 +73,19 @@ class GridFilter
         $this->scopes = collect();
     }
 
-    
+    /**
+     * @param $search
+     * @return $this
+     */
     public function setSearch(array $search)
     {
         $this->search = $search;
         return $this;
     }
 
-    
+    /**
+     * @return GridFilterScope
+     */
     public function scope()
     {
         $scope = new GridFilterScope($this);
@@ -66,20 +93,29 @@ class GridFilter
         return $scope;
     }
 
-    
+    /**
+     * @param AbstractFilter $filter
+     * @return AbstractFilter
+     */
     public function addFilter(AbstractFilter $filter)
     {
         $filter->setTableFilter($this);
         return $this->filters[] = $filter;
     }
 
-    
+    /**
+     * 清空Filter
+     */
     public function clearFilter()
     {
         $this->filters = [];
     }
 
-    
+    /**
+     * Get all queries.
+     *
+     * @return AbstractFilter[]
+     */
     public function filters()
     {
         return $this->filters;
@@ -125,10 +161,12 @@ class GridFilter
         return [];
     }
 
-
-
-
-    
+    /**
+     * @param $method
+     * @param $arguments
+     * @return AbstractFilter
+     * @throws \ReflectionException
+     */
     public function __call($method, $arguments)
     {
         if (in_array($method, $this->supports)) {

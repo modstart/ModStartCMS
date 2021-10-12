@@ -4,7 +4,10 @@
 namespace ModStart\Grid\Concerns;
 
 
-
+/**
+ * Trait HasPaginator
+ * @package ModStart\Grid\Concerns
+ */
 trait HasPaginator
 {
     public function enablePagination($enable = false)

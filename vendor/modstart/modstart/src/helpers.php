@@ -103,7 +103,11 @@ function modstart_baseurl_active($match, $output = 'active')
     return '';
 }
 
-
+/**
+ * 生成安全的路由地址
+ * @param $name
+ * @return string|null
+ */
 function modstart_action($name, $parameters = [])
 {
     try {
@@ -113,7 +117,12 @@ function modstart_action($name, $parameters = [])
     }
 }
 
-
+/**
+ * @param null $key
+ * @param string $default
+ * @param bool $useCache
+ * @return \Illuminate\Foundation\Application|mixed|string
+ */
 function modstart_config($key = null, $default = '', $useCache = true)
 {
     try {

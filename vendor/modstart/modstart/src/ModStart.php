@@ -8,6 +8,10 @@ use ModStart\Form\Form;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Support\Manager\WidgetManager;
 
+/**
+ * Class ModStart
+ * @package ModStart
+ */
 class ModStart
 {
     public static $version = '1.4.0';
@@ -17,7 +21,9 @@ class ModStart
     public static $css = [];
     public static $js = [];
 
-    
+    /**
+     * 清除缓存
+     */
     public static function clearCache()
     {
         Cache::forget('ModStartServiceProviders');
@@ -25,6 +31,20 @@ class ModStart
         Cache::forget('ModStartApiRoutes');
         Cache::forget('ModStartOpenApiRoutes');
         Cache::forget('ModStartWebRoutes');
+        /**
+         * 如果启用了Laravel优化，这些文件会缓存ServiceProvider
+         * 会造成缓存清理不干净甚至服务崩溃的问题
+         */
+        self::safeCleanOptimizedFile('bootstrap/cache/compiled.php');
+        self::safeCleanOptimizedFile('bootstrap/cache/services.json');
+        self::safeCleanOptimizedFile('bootstrap/cache/config.php');
+    }
+
+    private static function safeCleanOptimizedFile($file)
+    {
+        if (file_exists($path = base_path($file))) {
+            @unlink($path);
+        }
     }
 
 
@@ -40,7 +60,11 @@ class ModStart
         }
     }
 
-    
+    /**
+     * JS 脚本代码，显示在body底部
+     * @param string $script
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
     public static function script($script = '')
     {
         $script = trim($script);
@@ -63,7 +87,11 @@ class ModStart
         }
     }
 
-    
+    /**
+     * CSS 样式代码，显示在head头部
+     * @param string $style
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
     public static function style($style = '')
     {
         $style = trim($style);
@@ -79,7 +107,11 @@ class ModStart
         return view('modstart::part.style', ['style' => array_unique(self::$style)]);
     }
 
-    
+    /**
+     * CSS 样式文件，显示在head头部
+     * @param null $css
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
     public static function css($css = null)
     {
         if (!is_null($css)) {
@@ -93,7 +125,11 @@ class ModStart
         return view('modstart::part.css', ['css' => array_unique(static::$css)]);
     }
 
-    
+    /**
+     * JS 脚本文件，显示在body底部
+     * @param null $js
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
     public static function js($js = null)
     {
         if (!is_null($js)) {

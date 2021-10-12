@@ -32,7 +32,7 @@ class AdminUserController extends Controller
             $grid->text('username', L('Username'))->width(100);
             $grid->tags('roles', L('Roles'))->hookFormatValue(function ($value, AbstractField $field) {
                 $item = $field->item();
-                
+                /** @var \stdClass $item */
                 if (AdminPermission::isFounder($item->id)) {
                     return [L('Admin Founder')];
                 }
@@ -67,7 +67,7 @@ class AdminUserController extends Controller
                 ->hookFormatValue(function ($value, AbstractField $field) {
                     return '';
                 });
-            
+            /** @var AdminUser $item */
             $item = $form->item();
             $rolesField = $form->checkbox('roles', L('Roles'))
                 ->optionModel('admin_role')
@@ -122,7 +122,7 @@ class AdminUserController extends Controller
             $detail->text('username', L('Username'));
             $detail->tags('roles', L('Roles'))->hookFormatValue(function ($value, AbstractField $field) {
                 $item = $field->item();
-                
+                /** @var \stdClass $item */
                 if (AdminPermission::isFounder($item->id)) {
                     return [L('Admin Founder')];
                 }

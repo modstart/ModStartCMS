@@ -4,7 +4,6 @@
 namespace ModStart;
 
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
@@ -16,15 +15,16 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use ModStart\Admin\ModStartAdmin;
-use ModStart\Core\Facades\ModStart;
 use ModStart\App\Api\ModStartApi;
 use ModStart\App\OpenApi\ModStartOpenApi;
 use ModStart\App\Web\ModStartWeb;
-use ModStart\Core\Input\Response;
-use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Facades\ModStart;
 use ModStart\Module\ModuleManager;
-use Module\Vendor\Pay\Providers\PayServiceProvider;
 
+/**
+ * Class ModStartServiceProvider
+ * @package ModStart
+ */
 class ModStartServiceProvider extends ServiceProvider
 {
     protected $commands = [
@@ -60,7 +60,8 @@ class ModStartServiceProvider extends ServiceProvider
         if ($adminPath === '/') {
             $adminPath = '';
         }
-                if (Str::startsWith($basePath, $adminPath . '/') || $basePath == $adminPath) {
+        // var_dump([$basePath, $adminPath]);exit();
+        if (Str::startsWith($basePath, $adminPath . '/') || $basePath == $adminPath) {
             ModStartAdmin::registerAuthRoutes();
             ModStartAdmin::registerModuleRoutes();
         } else if (Str::startsWith($basePath, '/' . trim(config('modstart.api.prefix'), '/') . '/')) {
@@ -165,13 +166,15 @@ class ModStartServiceProvider extends ServiceProvider
             }
             if ($queryCountPerRequest > 10) {
                 Log::warning("MASS_REQUEST_SQL $queryCountPerRequest $method [$url] $param -> " . json_encode($queryCountPerRequestSqls));
-                            }
+                // Log::warning("MASS_REQUEST_SQL $queryCountPerRequest $method [$url] $param");
+            }
         });
 
         Event::listen('illuminate.query', function ($query, $bindings, $time, $connectionName) use (&$queryCountPerRequest, &$queryCountPerRequestSqls) {
             $queryCountPerRequest++;
             $queryCountPerRequestSqls[] = "$query, " . json_encode($bindings);
-                        if ($time > 500) {
+            // Log::info("SQL $query, " . json_encode($bindings));
+            if ($time > 500) {
                 $param = json_encode($bindings);
                 Log::warning("LONG_SQL ${time}ms, $query, $param");
             }

@@ -10,9 +10,11 @@ class CodeUtil
     {
         $commentTokens = array(T_COMMENT);
         if (defined('T_DOC_COMMENT')) {
-            $commentTokens[] = T_DOC_COMMENT;         }
+            $commentTokens[] = T_DOC_COMMENT; // PHP 5
+        }
         if (defined('T_ML_COMMENT')) {
-            $commentTokens[] = T_ML_COMMENT;          }
+            $commentTokens[] = T_ML_COMMENT;  // PHP 4
+        }
         $codeNew = [];
         $tokens = token_get_all($code);
         $prevEmpty = false;

@@ -21,7 +21,17 @@ use ModStart\Support\Concern\HasFields;
 use ModStart\Support\Concern\HasFluentAttribute;
 use ModStart\Support\Manager\FieldManager;
 
-
+/**
+ * Class Detail
+ * @package ModStart\Detail
+ *
+ * @method  Detail|mixed engine($value = null)
+ * @method  Detail|mixed title($value = null)
+ * @method  Detail|mixed formClass($value = null)
+ * @method  Detail|array|integer|string itemId($value = null)
+ * @method  Detail|\Illuminate\Database\Eloquent\Model|\stdClass item($value = null)
+ *
+ */
 class Detail implements Renderable
 {
     use HasFields,
@@ -30,11 +40,17 @@ class Detail implements Renderable
         HasCascadeFields,
         HasRepositoryFilter;
 
-    
+    /**
+     * @var string
+     */
     private $id;
-    
+    /**
+     * @var Repository
+     */
     private $repository;
-    
+    /**
+     * @var string
+     */
     private $view = 'modstart::core.detail.index';
 
     private $fluentAttributes = [
@@ -44,16 +60,28 @@ class Detail implements Renderable
         'item',
         'formClass',
     ];
-    
+    /**
+     * 运行引擎 @see DetailEngine
+     * @var string
+     */
     private $engine = 'basic';
     private $title;
-    
+    /**
+     * 表单编辑、删除的记录ID
+     * @var integer|string|array|mixed
+     */
     private $itemId = null;
-    
+    /**
+     * 当前展示详情记录
+     * @var Model|\stdClass
+     */
     private $item;
     private $formClass = '';
 
-    
+    /**
+     * Form constructor.
+     * @param Model|\Illuminate\Database\Eloquent\Builder|Repository $model
+     */
     public function __construct($repository, \Closure $builder = null)
     {
         $this->id = IdUtil::generate('Grid');
@@ -92,7 +120,9 @@ class Detail implements Renderable
         return $this;
     }
 
-    
+    /**
+     * @return Repository|null
+     */
     public function repository()
     {
         return $this->repository;
@@ -103,7 +133,11 @@ class Detail implements Renderable
         $this->runBuilder();
     }
 
-    
+    /**
+     * 显示记录
+     * @return $this
+     * @throws BizException
+     */
     public function show($id)
     {
         $this->itemId($id);
@@ -122,7 +156,15 @@ class Detail implements Renderable
         return view($this->view, $data)->render();
     }
 
-    
+    /**
+     * Generate a Field object and add to form builder if Field exists.
+     *
+     * @param string $method
+     * @param array $arguments
+     *
+     * @return AbstractField|void|$this
+     * @throws \Exception
+     */
     public function __call($method, $arguments)
     {
         switch ($method) {

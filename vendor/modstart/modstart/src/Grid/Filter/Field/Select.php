@@ -5,7 +5,11 @@ namespace ModStart\Grid\Filter\Field;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Type\BaseType;
 
-
+/**
+ * Class Select
+ * @package ModStart\Grid\Filter\Field
+ *
+ */
 class Select extends AbstractFilterField
 {
     protected $options = [];

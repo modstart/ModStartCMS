@@ -9,6 +9,8 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\VersionUtil;
+use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
 
 class ModuleStoreUtil
@@ -89,6 +91,58 @@ class ModuleStoreUtil
                 'api-token' => $token,
                 'X-Requested-With' => 'XMLHttpRequest',
             ]
+        ]);
+    }
+
+    public static function checkPackage($token, $module, $version)
+    {
+        $ret = self::baseRequest('/api/store/module_info', [
+            'module' => $module,
+            'version' => $version,
+        ], $token);
+        BizException::throwsIfResponseError($ret);
+        $config = $ret['data']['config'];
+        $packageSize = $ret['data']['packageSize'];
+        $requires = [];
+        if (!empty($config['modstartVersion'])) {
+            $require = [
+                'name' => "<a href='https://modstart.com/download' class='ub-text-white tw-underline' target='_blank'>ModStart</a>:" . htmlspecialchars($config['modstartVersion']),
+                'success' => VersionUtil::match(ModStart::$version, $config['modstartVersion']),
+                'resolve' => null,
+            ];
+            if (!$require['success']) {
+                $require['resolve'] = '请使用版本 ' . $config['modstartVersion'] . ' 的ModStart核心';
+            }
+            $requires[] = $require;
+        }
+        if (!empty($config['require'])) {
+            foreach ($config['require'] as $require) {
+                list($m, $v) = VersionUtil::parse($require);
+                $require = [
+                    'name' => "<a href='https://modstart.com/m/$m' class='ub-text-white tw-underline' target='_blank'>$m</a>:" . htmlspecialchars($v),
+                    'success' => true,
+                    'resolve' => null,
+                ];
+                if (ModuleManager::isModuleInstalled($m)) {
+                    $basic = ModuleManager::getModuleBasic($m);
+                    BizException::throwsIfEmpty("获取模块 $m 信息失败", $basic);
+                    $require['success'] = VersionUtil::match($basic['version'], $v);
+                    if (!$require['success']) {
+                        $require['resolve'] = "请使用版本 " . htmlspecialchars($v) . " 的模块 <a href='https://modstart.com/m/$m' class='ub-text-white tw-underline' target='_blank'>$m</a>";
+                    }
+                } else {
+                    $require['success'] = false;
+                    $require['resolve'] = "请先安装 $require[name]";
+                }
+                $requires[] = $require;
+            }
+        }
+        return Response::generateSuccessData([
+            'requires' => $requires,
+            'errorCount' => count(array_filter($requires, function ($o) {
+                return !$o['success'];
+            })),
+            'packageSize' => $packageSize,
         ]);
     }
 

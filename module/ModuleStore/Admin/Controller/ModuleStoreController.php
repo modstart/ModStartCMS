@@ -5,7 +5,6 @@ namespace Module\ModuleStore\Admin\Controller;
 
 
 use Illuminate\Routing\Controller;
-use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Core\Exception\BizException;
@@ -17,7 +16,6 @@ use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\RepositoryUtil;
 use Module\ModuleStore\Util\ModuleStoreUtil;
-use function Qcloud\Cos\startWith;
 
 class ModuleStoreController extends Controller
 {
@@ -198,10 +196,18 @@ class ModuleStoreController extends Controller
                     'package' => $ret['data']['package'],
                     'licenseKey' => $ret['data']['licenseKey'],
                 ]);
-            default:
+            case 'checkPackage':
+                $ret = ModuleStoreUtil::checkPackage($token, $module, $version);
+                BizException::throwsIfResponseError($ret);
                 return $this->doNext('upgrade', 'downloadPackage', [
+                    '<span class="ub-text-success">开始模块安装预检，依赖 ' . $ret['data']['requireText'] . '</span>',
+                    '<span class="ub-text-default">开始下载安装包...</span>'
+                ]);
+                break;
+            default:
+                return $this->doNext('upgrade', 'checkPackage', [
                     '<span class="ub-text-success">开始升级到远程模块 ' . $module . ' V' . $version . '</span>',
-                    '<span class="ub-text-default">开始获取模块安装包...</span>'
+                    '<span class="ub-text-default">开始模块安装预检...</span>'
                 ]);
         }
     }
@@ -277,10 +283,31 @@ class ModuleStoreController extends Controller
                         'package' => $ret['data']['package'],
                         'licenseKey' => $ret['data']['licenseKey'],
                     ]);
+                case 'checkPackage':
+                    $ret = ModuleStoreUtil::checkPackage($token, $module, $version);
+                    BizException::throwsIfResponseError($ret);
+                    $msgs = [];
+                    foreach ($ret['data']['requires'] as $require) {
+                        $msgs[] = '<span>&nbsp;&nbsp;</span>'
+                            . ($require['success']
+                                ? '<span class="ub-text-success"><i class="iconfont icon-check"></i> 成功</span>'
+                                : '<span class="ub-text-danger"><i class="iconfont icon-warning"></i> 失败</span>')
+                            . " <span>$require[name]</span> " . ($require['resolve'] ? " <span>解决：$require[resolve]</span>" : "");
+                    }
+                    if ($ret['data']['errorCount'] > 0) {
+                        return $this->doFinish(array_merge($msgs, [
+                            '<span class="ub-text-danger">预检失败，' . $ret['data']['errorCount'] . '个依赖不满足要求</span>',
+                        ]));
+                    }
+                    $msgs[] = '<span class="ub-text-default">开始下载安装包...</span>';
+                    return $this->doNext('install', 'downloadPackage', array_merge([
+                        '<span class="ub-text-success">预检成功，' . count($ret['data']['requires']) . '个依赖满足要求，安装包大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
+                    ], $msgs));
+                    break;
                 default:
-                    return $this->doNext('install', 'downloadPackage', [
+                    return $this->doNext('install', 'checkPackage', [
                         '<span class="ub-text-success">开始安装远程模块 ' . $module . ' V' . $version . '</span>',
-                        '<span class="ub-text-default">开始获取模块安装包...</span>'
+                        '<span class="ub-text-default">开始模块安装预检...</span>'
                     ]);
             }
         }

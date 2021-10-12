@@ -10,16 +10,27 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
-
+/**
+ * API兼容Session处理
+ * 使用 header 中的 api-token 作为验证信息，共用 Session 信息
+ *
+ * Class SessionMiddleware
+ * @package ModStart\App\Api\Middleware
+ */
 class SessionMiddleware
 {
     public function handle(Request $request, \Closure $next)
     {
         $setApiToken = false;
         $sessionRestart = false;
-        
+        /**
+         * 主要使用 api-token 来标识当前会话
+         * 如果出现 sessionId 和 api-token 不一致，使用 api-token 替代 sessionId
+         */
         $apiToken = $this->get($request, 'api-token');
-                        if (empty($apiToken) || !Session::isValidId($apiToken)) {
+        // Log::info("SessionMiddleware - RequestUrl - " . \ModStart\Core\Input\Request::currentPageUrl());
+        // Log::info("SessionMiddleware - ApiToken - $apiToken");
+        if (empty($apiToken) || !Session::isValidId($apiToken)) {
             $apiToken = Session::getId();
             $setApiToken = true;
         } else {
@@ -27,7 +38,8 @@ class SessionMiddleware
             $sessionRestart = true;
         }
         $sessionId = Session::getId();
-                if ($sessionId && $sessionId != $apiToken) {
+        // Log::info("SessionMiddleware - SessionId - $sessionId");
+        if ($sessionId && $sessionId != $apiToken) {
             Session::setId($apiToken);
             $sessionRestart = true;
         }
@@ -45,9 +57,10 @@ class SessionMiddleware
         $apiVersion = $this->get($request, 'api-version');
         $request->headers->set('api-version', $apiVersion);
 
-        
+        /** @var Response $response */
         $response = $next($request);
-                if ($setApiToken) {
+        // Log::info('SessionMiddleware - Response - ' . get_class($response));
+        if ($setApiToken) {
             $illuminateResponse = 'Illuminate\Http\Response';
             $symfonyResponse = 'Symfony\Component\HttpFoundation\Response';
             if ($response instanceof $illuminateResponse) {
@@ -61,7 +74,16 @@ class SessionMiddleware
     }
 
 
-    
+    /**
+     * @param Request $request
+     * @param $key
+     * @return string
+     *
+     * 获取顺序 ( api-token, api-param, api-device )
+     * 1. get/post，request 中统一使用下划线 (_)
+     * 2. header，header 中统一使用下划线 (-)
+     * 3. cookie，cookie 中统一使用下划线 (_)
+     */
     private function get(Request &$request, $key)
     {
         $key_ = str_replace('-', '_', $key);

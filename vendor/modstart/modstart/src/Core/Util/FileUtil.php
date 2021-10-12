@@ -183,7 +183,17 @@ class FileUtil
         return join('/', $dirs);
     }
 
-    
+    /**
+     * 复制文件夹
+     * @param $src : 必须给出，不能为空
+     * @param $dst : 必须给出，不能为空
+     * @param $replaceExt : 如果文件存在需要添加的后缀名
+     * @param $callback : 复制回调
+     * @param $filter : 复制回调
+     *
+     *
+     * 注意：src 和 dst 如果是文件，需同时是文件，如果是目录，需同时是目录
+     */
     public static function copy($src, $dst, $replaceExt = null, $callback = null, $filter = null)
     {
         if (!file_exists($src)) {
@@ -200,7 +210,8 @@ class FileUtil
                 if (!file_exists($dir = dirname($dst))) {
                     @mkdir($dir, 0755, true);
                 }
-                                if ($callback) {
+                // echo "COPY: ${src} -> ${dst}\n";
+                if ($callback) {
                     call_user_func($callback, $src, $dst);
                 }
                 copy($src, $dst);
@@ -228,7 +239,8 @@ class FileUtil
                         if (null !== $replaceExt && file_exists($dst . $file)) {
                             @rename($dst . $file, $dst . $file . $replaceExt);
                         }
-                                                if ($callback) {
+                        // echo "COPY: ${src}${file} -> ${dst}${file}\n";
+                        if ($callback) {
                             call_user_func($callback, $src . $file, $dst . $file);
                         }
                         copy($src . $file, $dst . $file);
@@ -239,7 +251,14 @@ class FileUtil
         closedir($dir);
     }
 
-    
+    /**
+     * 删除文件夹
+     *
+     * @param $dir : string
+     * @pararm $removeSelf : bool
+     *
+     * @return null
+     */
     public static function rm($dir, $removeSelf = true)
     {
         if (is_dir($dir)) {

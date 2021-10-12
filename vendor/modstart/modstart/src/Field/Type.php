@@ -13,14 +13,20 @@ class Type extends AbstractField
     protected function setup()
     {
         $this->addVariables([
-            
+            /**
+             * @var string|array
+             */
             'valueMap' => null,
             'colorMap' => [],
         ]);
     }
 
 
-    
+    /**
+     * @param string|array|\Closure $value
+     * @param null|array $colorMap 设置颜色，空数组自动猜测模式，null不启用
+     * @return $this
+     */
     public function type($value, $colorMap = [])
     {
         if ($value instanceof \Closure) {

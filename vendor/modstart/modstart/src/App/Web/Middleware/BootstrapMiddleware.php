@@ -11,7 +11,9 @@ use ModStart\Support\Manager\WidgetManager;
 
 class BootstrapMiddleware
 {
-    
+    /**
+     * @var AccessGate[]
+     */
     private static $gates = [];
 
     public static function addGate($cls)
@@ -22,7 +24,7 @@ class BootstrapMiddleware
     public function handle(Request $request, \Closure $next)
     {
         foreach (self::$gates as $item) {
-            
+            /** @var AccessGate $instance */
             $instance = app($item);
             $ret = $instance->check($request);
             if (Response::isError($ret)) {

@@ -1,9 +1,16 @@
 <?php
 return [
+    'coreUpgradeable' => false,
+    'appUpgradeable' => false,
     'system' => [
-        'Vendor' => [],
-        'ModuleManager' => [],
-        'AdminManager' => [],
-        'ConfigSite' => [],
+        'Vendor' => [
+            'enable' => true,
+        ],
+        'ModuleManager' => [
+            'enable' => true,
+        ],
+        'AdminManager' => [
+            'enable' => true,
+        ],
     ],
 ];

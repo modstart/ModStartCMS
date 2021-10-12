@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAdmin extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         $connection = config('modstart.admin.database.connection') ?: config('database.default');
@@ -50,7 +54,7 @@ class CreateAdmin extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('adminUserId')->nullable()->comment('用户ID');
-            
+            /** @see \ModStart\Admin\Type\AdminLogType */
             $table->tinyInteger('type')->nullable()->comment('类型');
             $table->string('summary', 400)->nullable()->comment('摘要');
         });
@@ -63,9 +67,22 @@ class CreateAdmin extends Migration
 
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        
+        /**
+         * $connection = config('modstart.admin.database.connection') ?: config('database.default');
+         *
+         * Schema::connection($connection)->dropIfExists('admin_role');
+         * Schema::connection($connection)->dropIfExists('admin_role_rule');
+         * Schema::connection($connection)->dropIfExists('admin_user');
+         * Schema::connection($connection)->dropIfExists('admin_user_role');
+         * Schema::connection($connection)->dropIfExists('admin_log');
+         * Schema::connection($connection)->dropIfExists('admin_log_data');
+         */
     }
 }

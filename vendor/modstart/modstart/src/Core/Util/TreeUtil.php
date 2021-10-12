@@ -16,7 +16,15 @@ class TreeUtil
         self::$CHILD_KEY = $key;
     }
 
-    
+    /**
+     * @param $model
+     * @param array $fieldsMap $fieldsMap = [title=>titleField,...]
+     * @param string $keyId
+     * @param string $keyPid
+     * @param string $keySort
+     * @param array $where
+     * @return array
+     */
     public static function modelToTree($model, $fieldsMap = [], $keyId = 'id', $keyPid = 'pid', $keySort = 'sort', $where = [])
     {
         $models = ModelUtil::all($model, $where);
@@ -38,7 +46,16 @@ class TreeUtil
         return self::nodesToTree($nodes, 0, $keyId, $keyPid, $keySort);
     }
 
-    
+    /**
+     * 读取模型节点，组装成为一个树
+     * @param $pid
+     * @param $model
+     * @param array $fieldsMap
+     * @param string $keyId
+     * @param string $keyPid
+     * @param string $keySort
+     * @return array
+     */
     public static function modelToTreeByParentId($pid, $model, $fieldsMap = [], $keyId = 'id', $keyPid = 'pid', $keySort = 'sort')
     {
         $models = [];
@@ -78,13 +95,33 @@ class TreeUtil
         return self::nodesToTree($nodes, $topPid, $keyId, $keyPid, $keySort);
     }
 
-    
+    /**
+     * 检测模型节点是否能够删除，以下情形不能删除
+     * - 如果有子节点则不能删除
+     * @param $model
+     * @param $id
+     * @param string $pidName
+     * @param array $where
+     * @return bool
+     */
     public static function modelNodeDeleteAble($model, $id, $pidName = 'pid', $where = [])
     {
         return !ModelUtil::exists($model, array_merge($where, [$pidName => $id]));
     }
 
-    
+    /**
+     * 建的模型节点是否能够修改，以下情况不能修改
+     * - 如果修改后变成一个环
+     * - 如果修改后节点断裂
+     * @param $model
+     * @param $id
+     * @param $fromPid
+     * @param $toPid
+     * @param string $idName
+     * @param string $pidName
+     * @param array $where
+     * @return bool
+     */
     public static function modelNodeChangeAble($model, $id, $fromPid, $toPid, $idName = 'id', $pidName = 'pid', $where = [])
     {
         if ($fromPid == $toPid) {
@@ -245,19 +282,47 @@ class TreeUtil
         return $newItems;
     }
 
-    
+    /**
+     * 检测模型节点是否能增加
+     * - 如果有子节点则不能删除
+     * @param Model $model
+     * @param $id
+     * @param string $idName
+     * @param array $where
+     * @return bool
+     */
     public static function modelItemAddAble(Model $model, $pid, $idName = 'id')
     {
         return $model->newQuery()->where([$idName => $pid])->exists();
     }
 
-    
+    /**
+     * 检测模型节点是否能够删除，以下情形不能删除
+     * - 如果有子节点则不能删除
+     * @param Model $model
+     * @param $id
+     * @param string $pidName
+     * @param array $where
+     * @return bool
+     */
     public static function modelItemDeleteAble(Model $model, $id, $pidName = 'pid')
     {
         return !$model->newQuery()->where([$pidName => $id])->exists();
     }
 
-    
+    /**
+     * 建的模型节点是否能够修改，以下情况不能修改
+     * - 如果修改后变成一个环
+     * - 如果修改后节点断裂
+     * @param $model
+     * @param $id
+     * @param $fromPid
+     * @param $toPid
+     * @param string $idName
+     * @param string $pidName
+     * @param array $where
+     * @return bool
+     */
     public static function modelItemChangeAble(Model $model, $id, $fromPid, $toPid, $idName = 'id', $pidName = 'pid')
     {
         if ($fromPid == $toPid) {

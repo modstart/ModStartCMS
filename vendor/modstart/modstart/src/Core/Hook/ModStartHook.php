@@ -10,7 +10,11 @@ class ModStartHook
 {
     private static $listeners = [];
 
-    
+    /**
+     * 订阅一个行为
+     * @param $name
+     * @param $callable
+     */
     public static function subscribe($name, $callable)
     {
         if (!isset(self::$listeners[$name])) {
@@ -19,7 +23,11 @@ class ModStartHook
         self::$listeners[$name][] = $callable;
     }
 
-    
+    /**
+     * 获取一个行为
+     * @param string $name
+     * @return array|mixed
+     */
     public static function get($name = '')
     {
         if (empty($name)) {
@@ -28,7 +36,13 @@ class ModStartHook
         return array_key_exists($name, self::$listeners) ? self::$listeners[$name] : [];
     }
 
-    
+    /**
+     * 触发一个行为
+     * @param $name
+     * @param null $param
+     * @param null $extra
+     * @return array|mixed
+     */
     public static function fire($name, &$param = null, $extra = null)
     {
         $results = [];
@@ -38,7 +52,12 @@ class ModStartHook
         return $results;
     }
 
-    
+    /**
+     * @param $name
+     * @param null $param
+     * @param null $extra
+     * @return string
+     */
     public static function fireInView($name, &$param = null, $extra = null)
     {
         return join('', self::fire($name, $param, $extra));

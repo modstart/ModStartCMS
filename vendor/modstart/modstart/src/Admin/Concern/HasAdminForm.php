@@ -18,10 +18,12 @@ trait HasAdminForm
         return $this->pageTitle ? $this->pageTitle : $title;
     }
 
-    
+    /**
+     * @return Form
+     */
     private function getForm()
     {
-        
+        /** @var Form $form */
         $form = $this->form();
         $form->showSubmit(false)->showReset(false);
         return $form;

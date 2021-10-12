@@ -2,10 +2,21 @@
 
 namespace ModStart\Grid\Filter;
 
-
+/**
+ * 多条件搜索
+ *
+ * Class Likes
+ * @package ModStart\Grid\Filter
+ */
 class Likes extends AbstractFilter
 {
-    
+    /**
+     * Get condition of this filter.
+     *
+     * @param array $search
+     *
+     * @return array|mixed|void
+     */
     public function condition($searchInfo)
     {
         if (isset($searchInfo['likes']) && is_array($searchInfo['likes'])) {

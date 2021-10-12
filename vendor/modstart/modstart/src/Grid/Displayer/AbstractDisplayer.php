@@ -13,18 +13,26 @@ abstract class AbstractDisplayer implements Renderable
 {
     use HasFluentAttribute;
 
-    
+    /**
+     * @var array
+     */
     protected static $css = [];
 
-    
+    /**
+     * @var array
+     */
     protected static $js = [];
 
-    
+    /**
+     * @var Grid
+     */
     protected $grid;
 
     protected $fluentAttributes = [];
 
-    
+    /**
+     * ItemOperate constructor.
+     */
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;

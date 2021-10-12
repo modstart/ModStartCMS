@@ -14,7 +14,9 @@ class Line extends AbstractWidget
 {
     use DSTrait;
 
-    
+    /**
+     * @var string
+     */
     protected $view = 'modstart::widget.chart';
 
     protected $height = 300;
@@ -55,7 +57,9 @@ class Line extends AbstractWidget
         ]
     ];
 
-    
+    /**
+     * Line constructor.
+     */
     public function __construct()
     {
         parent::__construct();

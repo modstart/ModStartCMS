@@ -24,21 +24,33 @@ class Tree extends AbstractField
         ]);
     }
 
-    
+    /**
+     * 设置id字段映射
+     * @param $value
+     * @return $this
+     */
     public function columnNameId($value)
     {
         $this->columnNames['id'] = $value;
         return $this;
     }
 
-    
+    /**
+     * 设置title字段映射
+     * @param $value
+     * @return $this
+     */
     public function columnNameTitle($value)
     {
         $this->columnNames['title'] = $value;
         return $this;
     }
 
-    
+    /**
+     * 设置children字段映射
+     * @param $value
+     * @return $this
+     */
     public function columnNameChildren($value)
     {
         $this->columnNames['children'] = $value;
@@ -66,7 +78,12 @@ class Tree extends AbstractField
         return ConvertUtil::toArray($value);
     }
 
-    
+    /**
+     * 设置树状节点的待选值
+     *
+     * @param \Closure|array $tree
+     * @return $this
+     */
     public function tree($tree)
     {
         if ($tree instanceof \Closure) {

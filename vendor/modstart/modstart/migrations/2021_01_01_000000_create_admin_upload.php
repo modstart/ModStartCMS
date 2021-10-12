@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAdminUpload extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('admin_upload', function (Blueprint $table) {
@@ -39,9 +43,17 @@ class CreateAdminUpload extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        
+        /**
+         * $connection = config('modstart.admin.database.connection') ?: config('database.default');
+         * Schema::connection($connection)->dropIfExists('admin_upload');
+         * Schema::connection($connection)->dropIfExists('admin_upload_category');
+         */
     }
 }

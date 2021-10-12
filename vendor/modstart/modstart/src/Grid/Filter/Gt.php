@@ -4,7 +4,13 @@ namespace ModStart\Grid\Filter;
 
 class Gt extends AbstractFilter
 {
-    
+    /**
+     * Get condition of this filter.
+     *
+     * @param array $search
+     *
+     * @return array|mixed|void
+     */
     public function condition($search)
     {
         $value = array_get($search, $this->column);

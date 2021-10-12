@@ -10,8 +10,17 @@ use Illuminate\Support\Facades\Schema;
 class ModelUtil
 {
 
+//    private static $timestampEnable = true;
+//
+//    public static function enableTimestamp($enable)
+//    {
+//        self::$timestampEnable = $enable;
+//    }
 
-    
+    /**
+     * @param $model
+     * @return Builder | Model
+     */
     public static function model($model)
     {
         $m = new DynamicModel();
@@ -70,7 +79,12 @@ class ModelUtil
         self::model($model)->where($where[0], $where[1], $where[2])->update($data);
     }
 
-    
+    /**
+     * @param $model
+     * @param $where
+     * @param $data
+     * @return int| null -> return the records count updated
+     */
     public static function update($model, $where, $data)
     {
         if (empty($where)) {
@@ -269,13 +283,44 @@ class ModelUtil
         });
     }
 
-    
+    /**
+     *
+     * 关联表列出关联信息
+     *
+     * @param $model : 表名称
+     * @param $sourceField : 外键列名
+     * @param $sourceValue : 外键值
+     * @param array $filter : 关联过滤条件
+     * @param array $extraFields : 额外返回字段
+     * @param string $idField : 关系表ID列名
+     *
+     * @return array
+     */
     public static function relationList($model, $sourceField, $sourceValue, $filter = [], $extraFields = [], $idField = 'id')
     {
         return self::all($model, array_merge([$sourceField => $sourceValue], $filter), array_merge([$idField, $sourceField], $extraFields));
     }
 
-    
+    /**
+     *
+     * 关系表关联操作
+     *
+     * @param $model : 表名称
+     * @param $sourceField : 外键列名
+     * @param $sourceValue : 外键值
+     * @param $targetField : 关联列名
+     * @param $targetValues : 关联列值
+     * @param array $filter : 关联过滤条件
+     * @param string $idField : 关系表ID列名
+     *
+     * @example
+     *
+     * 表 user_article ( corpId, userId, articleId )
+     * relationAssign('user_article','userId',1,'articleId',[4,5,6],['corpId'=>5])
+     *
+     * 表 user_article ( userId, articleId )
+     * relationAssign('user_article','userId',1,'articleId',[4,5,6])
+     */
     public static function relationAssign($model, $sourceField, $sourceValue, $targetField, $targetValues, $filter = [], $idField = 'id')
     {
         $relations = self::all($model, array_merge([$sourceField => $sourceValue], $filter), [$idField, $targetField]);
@@ -497,7 +542,12 @@ class ModelUtil
             $o = $o->whereRaw($option['whereRaw']);
         }
 
-        
+        /**
+         * $search = [];
+         * $search[] = ['field1'=>['equal'=>value],'field2'=>['equal'=>value]];
+         * $search[] = ['field1'=>['exp'=>'or','equal'=>value1,'like'=>'value2'],'field2'=>['equal'=>value]];
+         * $search[] = ['__exp'=>'and|or','field1'=>[...],'field2'=>[...],];
+         */
         if (!empty($option['search']) && is_array($option['search'])) {
             foreach ($option['search'] as $searchItem) {
 
@@ -629,7 +679,9 @@ class ModelUtil
             }
         }
 
-        
+        /**
+         * $filter = []
+         */
         if (!empty($option['filter']) && is_array($option['filter'])) {
             $o = $o->where(function ($queryBase) use (&$option) {
                 foreach ($option['filter'] as $oneFilter) {
@@ -899,9 +951,181 @@ class ModelUtil
         }
     }
 
+//    public static function replaceRelationId($model, $where, $idKey, $ids)
+//    {
+//        ModelHelper::delete($model, $where);
+//        $inserts = [];
+//        foreach ($ids as $id) {
+//            $inserts[] = array_merge($where, [$idKey => $id]);
+//        }
+//        ModelHelper::addAll($model, $inserts);
+//    }
+//
 
+//
+//    public static function generateHash($model, $field, $hashLength = 16)
+//    {
+//        if (self::isModel($model)) {
+//            do {
+//                $hash = strtolower(Str::random($hashLength));
+//            } while ($model::where([$field => $hash])->exists());
+//            return $hash;
+//        } else {
+//            do {
+//                $hash = strtolower(Str::random($hashLength));
+//                $m = new DynamicModel();
+//                $m->timestamps = self::$timestampEnable;
+//                $m->setTable($model);
+//            } while ($m->where([$field => $hash])->exists());
+//            return $hash;
+//        }
+//    }
+//
+//
+//
+//    public static function map($model, $valueField = 'title', $keyField = 'id', $where = [], $order = null)
+//    {
+//        $items = self::find($model, $where, $order);
+//        $map = [];
+//        foreach ($items as $item) {
+//            $map[$item[$keyField]] = $item[$valueField];
+//        }
+//        return $map;
+//    }
+//
+//    public static function first($model, $where = [], $order = null)
+//    {
+//        $record = null;
+//        if (self::isModel($model)) {
+//            if ($order) {
+//                $record = $model::where($where)->orderBy($order[0], $order[1])->first();
+//            } else {
+//                $record = $model::where($where)->first();
+//            }
+//        } else {
+//            $m = new DynamicModel();
+//            $m->timestamps = self::$timestampEnable;
+//            $m->setTable($model);
+//            if ($order) {
+//                $record = $m->where($where)->orderBy($order[0], $order[1])->first();
+//            } else {
+//                $record = $m->where($where)->first();
+//            }
+//        }
+//        if (empty($record)) {
+//            return null;
+//        }
+//        return $record->toArray();
+//    }
+//
 
+//
+//    public static function addAll($model, $datas)
+//    {
+//        foreach ($datas as $data) {
+//            ModelHelper::add($model, $data);
+//        }
+//    }
+//
+//    public static function update($model, $where, $data)
+//    {
+//        if (empty($data)) {
+//            return null;
+//        }
+//        if (self::isModel($model)) {
+//            $m = $model::where($where)->get();
+//        } else {
+//            $m = new DynamicModel();
+//            $m->timestamps = self::$timestampEnable;
+//            $m->setTable($model);
+//            $m = $m->where($where)->get();
+//        }
+//
+//        if (empty($m)) {
+//            return null;
+//        }
+//        foreach ($m as $_m) {
+//            foreach ($data as $k => $v) {
+//                $_m->$k = $v;
+//            }
+//            $_m->save();
+//        }
+//        return $m->toArray();
+//    }
+//
 
+//
+//    public static function updateOne($model, $where, $data)
+//    {
+//        if (empty($data)) {
+//            return null;
+//        }
+//        if (is_string($where) || is_numeric($where)) {
+//            $where = ['id' => $where];
+//        }
+//        if (self::isModel($model)) {
+//            $m = $model::where($where)->first();
+//        } else {
+//            $m = new DynamicModel();
+//            $m->timestamps = self::$timestampEnable;
+//            $m->setTable($model);
+//            $m = $m->where($where)->first();
+//        }
+//
+//        if (empty($m)) {
+//            return null;
+//        }
+//        foreach ($data as $k => $v) {
+//            $m->$k = $v;
+//        }
+//        $m->save();
+//        return $m->toArray();
+//    }
+//
+//    public static function addOrUpdateOne($model, $where, $data)
+//    {
+//        if (is_string($where) || is_numeric($where)) {
+//            $where = ['id' => $where];
+//        }
+//        if (self::isModel($model)) {
+//            $m = $model::where($where)->first();
+//        } else {
+//            $m = new DynamicModel();
+//            $m->timestamps = self::$timestampEnable;
+//            $m->setTable($model);
+//            $m = $m->where($where)->first();
+//        }
+//        if (empty($m)) {
+//
+//            // insert
+//            if (self::isModel($model)) {
+//                $m = new $model();
+//            } else {
+//                $m = new DynamicModel();
+//                $m->timestamps = self::$timestampEnable;
+//                $m->setTable($model);
+//            }
+//            foreach ($data as $k => $v) {
+//                $m->$k = $v;
+//            }
+//            $m->save();
+//            return $m->toArray();
+//
+//        } else {
+//
+//            // update
+//            foreach ($data as $k => $v) {
+//                if (array_key_exists($k, $where)) {
+//                    continue;
+//                }
+//                $m->$k = $v;
+//            }
+//            $m->save();
+//            return $m->toArray();
+//
+//        }
+//    }
+//
 
     public static function change($model, $where, $field, $value)
     {
@@ -922,6 +1146,11 @@ class ModelUtil
         return self::model($model)->where($where)->max($field);
     }
 
+//    public static function truncate($model)
+//    {
+//        DB::table($model)->truncate();
+//    }
+//
 
 
 }

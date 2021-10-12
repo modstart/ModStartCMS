@@ -10,7 +10,10 @@ class AutoRenderedFieldValue
 {
     private $value;
 
-    
+    /**
+     * AutoRenderFieldValue constructor.
+     * @param $value
+     */
     public function __construct($value)
     {
         $this->value = $value;
@@ -26,7 +29,9 @@ class AutoRenderedFieldValue
         return self::make(View::make($view, $viewData)->render());
     }
 
-    
+    /**
+     * @return mixed
+     */
     public function getValue()
     {
         return $this->value;

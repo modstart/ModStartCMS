@@ -17,7 +17,10 @@ class InputPackage
         $this->data = $data;
     }
 
-    
+    /**
+     * @param $key
+     * @return InputPackage
+     */
     public static function buildFromInputJson($key)
     {
         $data = Input::get($key, null);
@@ -25,7 +28,11 @@ class InputPackage
         return new InputPackage($data);
     }
 
-    
+    /**
+     *
+     * @param $key
+     * @param $value
+     */
     public static function mergeToInput($key, $value, $group = null)
     {
         if (null === $group) {
@@ -40,7 +47,11 @@ class InputPackage
         }
     }
 
-    
+    /**
+     *
+     * @param $arrays
+     * @param $group
+     */
     public static function mergeToInputAll($arrays, $group = null)
     {
         if (null === $group) {
@@ -55,13 +66,18 @@ class InputPackage
         }
     }
 
-    
+    /**
+     * @param $data
+     * @return InputPackage
+     */
     public static function build($data)
     {
         return new InputPackage($data);
     }
 
-    
+    /**
+     * @return InputPackage
+     */
     public static function buildFromInput()
     {
         return new InputPackage(Input::all());
@@ -143,7 +159,8 @@ class InputPackage
     {
         if (isset($this->data[$key])) {
             if ($this->data[$key]) {
-                                if ('false' === $this->data[$key]) {
+                // 这里一定要用 === 因为 'false'==true
+                if ('false' === $this->data[$key]) {
                     return false;
                 }
                 return true;
@@ -194,7 +211,8 @@ class InputPackage
         return $values;
     }
 
-        public function getIdNo($key, $defaultValue = '')
+    // 获取身份证
+    public function getIdNo($key, $defaultValue = '')
     {
         if (isset($this->data[$key])) {
             if (!is_string($this->data[$key])) {
@@ -389,7 +407,13 @@ class InputPackage
     }
 
 
-    
+    /**
+     * 获取本系统文件系统的文件
+     *
+     * @param $key
+     * @param string $defaultValue
+     * @return string
+     */
     public function getDataImagePath($key, $defaultValue = '')
     {
         if (isset($this->data[$key])) {
@@ -397,7 +421,8 @@ class InputPackage
                 return $defaultValue;
             }
             $value = trim($this->data[$key]);
-                        if (preg_match('/(data\\/[a-z]+\\/\\d{4}\\/\\d{2}\\/\\d{2}\\/[a-z0-9\\_]+\\.[a-z0-9]+)[\\?]?/', $value, $mat)) {
+            // data/image/2018/01/10/32331_b9qm_7078.png?
+            if (preg_match('/(data\\/[a-z]+\\/\\d{4}\\/\\d{2}\\/\\d{2}\\/[a-z0-9\\_]+\\.[a-z0-9]+)[\\?]?/', $value, $mat)) {
                 return $value;
             }
             return $value;
@@ -417,7 +442,7 @@ class InputPackage
     {
         if (isset($this->data[$key])) {
             if ($this->data[$key] instanceof UploadedFile) {
-                
+                /** @var $file UploadedFile */
                 $file = $this->data[$key];
                 return [
                     'name' => $file->getClientOriginalName(),

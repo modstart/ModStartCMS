@@ -13,7 +13,9 @@ class CascadeGroup extends AbstractField
         ];
     }
 
-    
+    /**
+     * @return string
+     */
     public function render()
     {
         $column = $this->column();
@@ -22,7 +24,9 @@ class CascadeGroup extends AbstractField
 HTML;
     }
 
-    
+    /**
+     * @return void
+     */
     public function end()
     {
         $this->context->html($this->column() . '_end')->html('</div>')->plain();

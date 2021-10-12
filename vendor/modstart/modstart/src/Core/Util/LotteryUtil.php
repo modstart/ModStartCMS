@@ -5,7 +5,17 @@ namespace ModStart\Core\Util;
 
 class LotteryUtil
 {
-    
+    /**
+     * 抽取一个奖品
+     *
+     * @param array $pool = array(
+     *  ['id'=>xx,'rate'=>5.01],
+     *  ['id'=>xx,'rate'=>5.00],
+     *  ['id'=>xx,'rate'=>5.00],
+     * )
+     * @return id or null
+     * @throws \Exception
+     */
     public static function fetchPoll(array $pool)
     {
         $map = [];
@@ -29,7 +39,13 @@ class LotteryUtil
         return $map[$index];
     }
 
-    
+    /**
+     * 返回一个取值范围（包含 min 和 max）
+     *
+     * @param $min : 0.00
+     * @param $max : 1.00
+     * @return string
+     */
     public static function randomMoneyInRange($min, $max)
     {
         $redbagValue = rand(
@@ -122,7 +138,15 @@ class LotteryUtil
         ]);
     }
 
-    
+    /**
+     * 根据总金额、总数量、最小值、最大值抽取下一个随机的数字
+     *
+     * @param $moneyTotal
+     * @param $number
+     * @param null $moneyPerMin
+     * @param null $moneyPerMax
+     * @return array
+     */
     public static function next($moneyTotal, $number, $moneyPerMin = null, $moneyPerMax = null)
     {
         if (null === $moneyPerMin) {
@@ -143,7 +167,18 @@ class LotteryUtil
         return self::generate(0, null, ['money' => $ret['data']['moneys'][0]]);
     }
 
-    
+    /**
+     * 抽取一个奖品
+     *
+     * @param array $pool = array(
+     *  ['id'=>xx,'rate'=>5],
+     *  ['id'=>xx,'rate'=>5],
+     *  ['id'=>xx,'rate'=>5],
+     * )
+     * 按照百分数
+     * @return id or null
+     * @throws \Exception
+     */
     public static function lottery(array $pool)
     {
         $map = [];
@@ -163,7 +198,17 @@ class LotteryUtil
         return $map[$index];
     }
 
-    
+    /**
+     * 抽取一个奖品
+     *
+     * @param array $pool = array(
+     *  ['id'=>xx,'rate'=>5.01],
+     *  ['id'=>xx,'rate'=>5.00],
+     *  ['id'=>xx,'rate'=>5.00],
+     * )
+     * @return id or null
+     * @throws \Exception
+     */
     public static function preciseLottery(array $pool)
     {
         $map = [];
@@ -184,7 +229,12 @@ class LotteryUtil
         return $map[$index];
     }
 
-    
+    /**
+     * 获取一个可能性
+     *
+     * @param $percent
+     * @return bool
+     */
     public static function probability($percent)
     {
         return rand(0, 99) < $percent;

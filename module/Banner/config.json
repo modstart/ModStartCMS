@@ -1,8 +1,9 @@
 {
   "name": "Banner",
   "require": [
-    "Vendor:>=1.3.0"
+    "Vendor:>=1.4.0"
   ],
+  "modstartVersion": ">=1.4.0",
   "title": "通用轮播管理",
   "version": "1.0.0",
   "author": "官方",

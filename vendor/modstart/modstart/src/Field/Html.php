@@ -37,7 +37,7 @@ class Html extends AbstractField
         return <<<EOT
 <div class="line">
     <div class="label">
-        {{$label}}:
+        {$this->label}:
     </div>
     <div class="field">
         $this->html

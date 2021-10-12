@@ -6,7 +6,6 @@ namespace ModStart\Field;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ConvertUtil;
-use ModStart\Field\Type\FieldRenderMode;
 
 class Checkbox extends AbstractField
 {

@@ -12,13 +12,14 @@ class ModStartAdmin
 {
     public static function registerAuthRoutes()
     {
-                Route::group([
+        // echo config('modstart.admin.prefix');exit();
+        Route::group([
             'prefix' => config('modstart.admin.prefix'),
             'namespace' => '\\ModStart\\Admin\\Controller',
             'middleware' => ['admin.bootstrap', 'admin.auth'],
         ], function ($router) {
 
-            
+            /* @var \Illuminate\Routing\Router $router */
             $router->match(['get', 'post'], 'login', 'AuthController@login');
             $router->match(['get', 'post'], 'logout', 'AuthController@logout');
             $router->match(['get', 'post'], 'login/captcha', 'AuthController@loginCaptcha');

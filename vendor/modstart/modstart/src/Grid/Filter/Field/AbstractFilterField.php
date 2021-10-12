@@ -7,7 +7,12 @@ namespace ModStart\Grid\Filter\Field;
 use ModStart\Grid\Filter\AbstractFilter;
 use ModStart\Support\Concern\HasFluentAttribute;
 
-
+/**
+ * Class AbstractFilterField
+ * @package ModStart\Grid\Filter\Field
+ *
+ * @method AbstractFilterField label($value = null)
+ */
 abstract class AbstractFilterField
 {
     use HasFluentAttribute;
@@ -15,10 +20,12 @@ abstract class AbstractFilterField
         'label',
     ];
     protected $label = '';
-    
+    /** @var AbstractFilter */
     private $filter;
 
-    
+    /**
+     * AbstractFilterField constructor.
+     */
     public function __construct(AbstractFilter $filter)
     {
         $this->filter = $filter;

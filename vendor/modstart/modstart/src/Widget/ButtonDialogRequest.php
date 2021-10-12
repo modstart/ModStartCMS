@@ -6,7 +6,21 @@ namespace ModStart\Widget;
 
 use ModStart\ModStart;
 
-
+/**
+ * Class Label
+ * @package ModStart\Widget
+ *
+ * @method static string primary($text, $url, $disabled = false)
+ * @method static string muted($text, $url, $disabled = false)
+ * @method static string warning($text, $url, $disabled = false)
+ * @method static string danger($text, $url, $disabled = false)
+ * @method static string success($text, $url, $disabled = false)
+ *
+ * @method void text($text)
+ * @method void type($type)
+ * @method void url($url)
+ * @method void disabled($boolean)
+ */
 class ButtonDialogRequest extends AbstractWidget
 {
     public static function getAssets()

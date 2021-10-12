@@ -5,7 +5,12 @@ namespace ModStart\Core\Util;
 
 class MemCacheUtil
 {
-    
+    /**
+     *  key => [
+     *      0 => <expire timestamp> 0 means no expire
+     *      1 => <object>
+     *  ]
+     */
     private static $pool = [];
 
     public static function remember($key, $callback, $expire = 10)

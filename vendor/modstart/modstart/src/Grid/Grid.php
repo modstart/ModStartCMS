@@ -26,7 +26,43 @@ use ModStart\Support\Concern\HasFluentAttribute;
 use ModStart\Support\Concern\HasSetting;
 use ModStart\Support\Manager\FieldManager;
 
-
+/**
+ * Class Grid
+ *
+ * @method  Grid|mixed engine($value = null)
+ * @method  Grid|mixed title($value = null)
+ * @method  Grid|mixed titleAdd($value = null)
+ * @method  Grid|mixed titleEdit($value = null)
+ * @method  Grid|mixed titleShow($value = null)
+ * @method  Grid|mixed canAdd($value = null)
+ * @method  Grid|mixed canEdit($value = null)
+ * @method  Grid|mixed canDelete($value = null)
+ * @method  Grid|mixed canShow($value = null)
+ * @method  Grid|mixed canExport($value = null)
+ * @method  Grid|mixed canMultiSelectItem($value = null)
+ * @method  Grid|mixed canSingleSelectItem($value = null)
+ * @method  Grid|mixed urlAdd($value = null)
+ * @method  Grid|mixed urlEdit($value = null)
+ * @method  Grid|mixed urlDelete($value = null)
+ * @method  Grid|mixed urlShow($value = null)
+ * @method  Grid|mixed urlExport($value = null)
+ * @method  Grid|mixed urlSort($value = null)
+ * @method  Grid|mixed addDialogSize($value = null)
+ * @method  Grid|mixed editDialogSize($value = null)
+ * @method  Grid|mixed showDialogSize($value = null)
+ * @method  Grid|mixed addBlankPage($value = null)
+ * @method  Grid|mixed editBlankPage($value = null)
+ * @method  Grid|mixed defaultOrder($value = null)
+ * @method  Grid|mixed treeMaxLevel($value = null)
+ * @method  Form|mixed treeRootPid($value = null)
+ * @method  Grid|mixed batchOperatePrepend($value = null)
+ * @method  Grid|mixed view($value = null)
+ * @method  Grid|mixed gridRowCols($value = null)
+ *
+ * $value = function(Grid $grid, $items){ return $items; }
+ * @method  Grid|mixed hookPrepareItems($value = null)
+ *
+ */
 class Grid
 {
     use HasBuilder,
@@ -38,9 +74,13 @@ class Grid
         HasSort,
         HasRepositoryFilter;
 
-    
+    /**
+     * @var string
+     */
     private $id;
-    
+    /**
+     * @var Model
+     */
     private $model;
 
     protected $fluentAttributes = [
@@ -79,7 +119,10 @@ class Grid
         'hookPrepareItems',
         'gridRowCols',
     ];
-    
+    /**
+     * 运行引擎 @see GridEngine
+     * @var string
+     */
     private $engine = 'basic';
     private $title;
     private $titleAdd;
@@ -111,17 +154,20 @@ class Grid
     private $treeMaxLevel = 0;
     private $treeRootPid = 0;
     private $batchOperatePrepend = '';
-    
+    /** @var array null:表示不启用，[6,12]:表示md,sm栅格占比 */
     private $gridRowCols = null;
 
-    
+    /** @var Closure 渲染前置处理Items */
     private $hookPrepareItems = null;
 
     private $isBuilt = false;
 
     private $view = 'modstart::core.grid.index';
 
-    
+    /**
+     * Form constructor.
+     * @param Model $model
+     */
     public function __construct($repository = null, \Closure $builder = null)
     {
         $this->id = IdUtil::generate('Grid');
@@ -134,7 +180,11 @@ class Grid
         $this->builder($builder);
     }
 
-    
+    /**
+     * @param $model
+     * @param Closure|null $builder = function(Grid $grid){  }
+     * @return Grid
+     */
     public static function make($model, \Closure $builder = null)
     {
         if (class_exists($model) && is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)) {
@@ -143,7 +193,12 @@ class Grid
         return new Grid(DynamicModel::make($model), $builder);
     }
 
-    
+    /**
+     * @param $htmlHookRending
+     * @return $this
+     *
+     * $value = function(AbstractField $field, $item, $index){ return $item->title; }
+     */
     public function useSimple($htmlHookRending)
     {
         $this->view = 'modstart::core.grid.simple';
@@ -176,7 +231,10 @@ class Grid
         return $this;
     }
 
-    
+    /**
+     * @param null $value
+     * @return Grid|bool
+     */
     public function canBatchDelete($value = null)
     {
         if (null === $value) {
@@ -222,14 +280,20 @@ class Grid
         return $this->model->repository()->getKeyName();
     }
 
-    
+    /**
+     * Set the grid filter.
+     *
+     * @param Closure $callback function(GridFilter $filter){ $filter->eq('id','ID'); }
+     */
     public function gridFilter(Closure $callback)
     {
         call_user_func($callback, $this->gridFilter);
         return $this;
     }
 
-    
+    /**
+     * 开始构建Grid，主要处理回调等操作
+     */
     public function build()
     {
         if (!$this->isBuilt) {
@@ -271,7 +335,8 @@ class Grid
             $treeIdName = $this->repository()->getKeyName();
             $treePidName = $this->repository()->getTreePidColumn();
             $treeSortName = $this->repository()->getTreeSortColumn();
-                        $items = TreeUtil::itemsMergeLevel($items, $treeIdName, $treePidName, $treeSortName);
+            // return [$items, $treeIdName, $treePidName, $treeSortName];
+            $items = TreeUtil::itemsMergeLevel($items, $treeIdName, $treePidName, $treeSortName);
         }
         $paginator = $this->model->paginator();
         if ($this->hookPrepareItems) {
@@ -279,7 +344,8 @@ class Grid
         }
         $records = [];
         foreach ($items as $index => $item) {
-                        
+            // print_r($item);exit();
+            /** @var \Illuminate\Database\Eloquent\Model|\stdClass $item */
             $itemColumns = [];
             if ($item instanceof \Illuminate\Database\Eloquent\Model) {
                 $itemColumns = array_keys($item->getAttributes());
@@ -291,7 +357,7 @@ class Grid
             $record = [];
             $record['_id'] = '' . $item->{$this->repository()->getKeyName()};
             foreach ($this->listableFields() as $field) {
-                
+                /** @var AbstractField $field */
                 if ($field->isLayoutField()) {
                     continue;
                 }
@@ -321,8 +387,10 @@ class Grid
                     }
                 }
                 $field->setValue($value);
-                                $field->item($item);
-                                $record[$field->column()] = $field->renderView($field, $item, $index);
+                // echo $field->column() . ' ' . json_encode($value) . "\n";
+                $field->item($item);
+                // return $this->repository()->getTreeTitleColumn();
+                $record[$field->column()] = $field->renderView($field, $item, $index);
                 if ($this->engine == GridEngine::TREE && $field->column() == $this->repository()->getTreeTitleColumn()) {
                     $treePrefix = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $item->_level - 1)
                         . '<a class="tree-arrow-icon ub-text-muted" href="javascript:;"><i class="icon iconfont icon-angle-right"></i></a> ';
@@ -387,7 +455,14 @@ class Grid
     }
 
 
-    
+    /**
+     * Generate a Field object and add to form builder if Field exists.
+     *
+     * @param string $method
+     * @param array $arguments
+     *
+     * @return AbstractField|void
+     */
     public function __call($method, $arguments)
     {
         switch ($method) {

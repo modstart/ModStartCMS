@@ -7,7 +7,7 @@ use Closure;
 
 trait HasRepositoryFilter
 {
-    
+    /** @var RepositoryFilter */
     private $repositoryFilter;
 
     private function setupRepositoryFilter()
@@ -15,7 +15,12 @@ trait HasRepositoryFilter
         $this->repositoryFilter = new RepositoryFilter();
     }
 
-    
+    /**
+     * Set the grid filter.
+     *
+     * @param Closure $callback function(RepositoryFilter $filter){ $filter->where('userId','1'); }
+     * @return $this|RepositoryFilter
+     */
     public function repositoryFilter(Closure $callback = null)
     {
         if (null === $callback) {

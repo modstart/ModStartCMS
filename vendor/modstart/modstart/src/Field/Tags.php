@@ -11,9 +11,13 @@ use ModStart\Field\Type\FieldRenderMode;
 
 class Tags extends AbstractField
 {
-    
+    /**
+     * 使用JSON
+     */
     const SERIALIZE_TYPE_DEFAULT = null;
-    
+    /**
+     * 使用冒号分割
+     */
     const SERIALIZE_TYPE_COLON_SEPARATED = 1;
 
     protected $value = [];

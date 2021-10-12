@@ -10,7 +10,16 @@ use Illuminate\Support\Facades\View;
 
 class Response
 {
-    
+    /**
+     * 从另外一个接口返回data数据
+     * 如果ret是一个标准错误会抛出BizException异常，该异常会被同一捕获
+     * 如果ret是一个JsonResponse，会尝试获取实际值
+     *
+     * @param $ret
+     * @param $key
+     * @return mixed
+     * @throws BizException
+     */
     public static function tryGetData($ret, $key = null)
     {
         if ($ret instanceof JsonResponse) {
@@ -238,7 +247,7 @@ class Response
 
     public static function send($code, $msg, $data = null, $redirect = null)
     {
-        if (\Illuminate\Support\Facades\Request::ajax()) {
+        if (\Illuminate\Support\Facades\Request::ajax() || Request::headerGet('is-ajax', false)) {
             return self::json($code, $msg, $data, $redirect);
         } else {
             if (empty($msg) && $redirect) {

@@ -9,7 +9,14 @@ use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 use ModStart\Support\Concern\HasFluentAttribute;
 
-
+/**
+ * Class AdminCRUDBuilder
+ * @package ModStart\Admin\Layout
+ * @mixin Grid|Form|Detail
+ *
+ * @method AdminCRUDBuilder|mixed field($value = null);
+ * @method AdminCRUDBuilder|mixed title($value = null)
+ */
 class AdminCRUDBuilder
 {
     const MODE_GRID = 'grid';
@@ -24,11 +31,11 @@ class AdminCRUDBuilder
     ];
     private $model;
     private $field;
-    
+    /** @var Grid */
     private $grid;
-    
+    /** @var Form */
     private $form;
-    
+    /** @var Detail */
     private $detail;
 
     public function useModeGrid()

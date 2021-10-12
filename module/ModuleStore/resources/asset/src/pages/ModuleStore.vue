@@ -38,7 +38,7 @@
             </el-tabs>
             <div class="ub-padding">
                 <div class="tw-float-right">
-                    <el-button style="padding:0.25rem;" :loading="memberUserLoading" @click="doMemberLoginShow()">
+                    <el-button round style="padding:0.25rem 0.5rem;" :loading="memberUserLoading" @click="doMemberLoginShow()">
                         <span v-if="memberUserLoading">
                             登录中
                         </span>
@@ -240,7 +240,7 @@
                             <div class="field">
                                 <el-checkbox v-model="memberLoginInfo.agree">
                                     同意
-                                    <a target="_blank" href="https://modstart.com/article/module_agreement">《ModStart模块协议》</a>
+                                    <a target="_blank" href="https://modstart.com/article/module_agreement">《使用协议》</a>
                                     <a target="_blank" href="https://modstart.com/article/disclaimer">《免责声明》</a>
                                 </el-checkbox>
                             </div>
@@ -262,8 +262,7 @@
             </div>
             <div v-else>
                 <div>
-                    <div class="tw-bg-white tw-rounded-sm tw-mb-2 tw-box tw-px-5 tw-py-3 tw-mb-3 tw-flex tw-items-center tw-zoom-in"
-                         data-repeat="3">
+                    <div class="tw-bg-white tw-rounded-sm tw-mb-2 tw-box tw-px-5 tw-py-3 tw-mb-3 tw-flex tw-items-center tw-zoom-in">
                         <div class="tw-w-10 tw-h-10 tw-flex-none tw-image-fit tw-rounded-full tw-overflow-hidden">
                             <div class="circle tw-border tw-border-gray-200 tw-border-solid tw-shadow ub-cover-1-1"
                                  :style="{backgroundImage:`url(${memberUser.avatar||'/asset/image/avatar.png'})`}"></div>
@@ -274,6 +273,16 @@
                         <div>
                             <a href="javascript:;" @click="doMemberUserLogout()">退出</a>
                         </div>
+                    </div>
+                    <div class="tw-p-4">
+                        <a class="btn btn-round" href="https://modstart.com/member_ms_module_license" target="_blank">
+                            <i class="iconfont icon-lock"></i>
+                            已授权的模块
+                        </a>
+                        <a class="btn btn-round" href="https://modstart.com/developer" target="_blank">
+                            <i class="iconfont icon-code"></i>
+                            成为模块开发者
+                        </a>
                     </div>
                 </div>
             </div>
@@ -483,7 +492,7 @@
             doMemberLoginCaptchaRefresh(cb) {
                 this.doStoreRequest('store/login_captcha', {}, res => {
                     this.memberLoginCaptchaImage = res.data.image
-                    cb()
+                    cb && cb()
                 })
             },
             doMemberLoginShow() {

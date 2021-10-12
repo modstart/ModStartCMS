@@ -3,7 +3,18 @@
 
 namespace ModStart\Core\Input;
 
-
+/**
+ * Class StaticQueryUtil
+ * @package ModStart\Core\Input
+ *
+ * @example
+ *
+ * $a = StaticQueryUtil::build(['name' => 'n', 'age' => 'a']);
+ * $query = $a->create(['name' => 1, 'age' => 2]);
+ * var_dump($query);
+ * $query = $a->parse($query);
+ * var_dump($query);
+ */
 class StaticQueryUrl
 {
     public $map = [];

@@ -19,7 +19,13 @@ class AuthMiddleware
         '\ModStart\Admin\Controller\UtilController',
     ];
 
-    
+    /**
+     * Handle an incoming request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @return mixed
+     */
     public function handle($request, Closure $next)
     {
         $routeAction = Route::currentRouteAction();
@@ -41,8 +47,34 @@ class AuthMiddleware
         $adminUserId = intval(Session::get('_adminUserId', null));
         $adminUser = null;
 
-        
-        
+        /**
+         * 对于使用API调用的处理逻辑
+         */
+        /*
+        if (empty($adminUserId)) {
+            $authAdminUserId = intval(Request::headerGet('auth-admin-user-id'));
+            $authAdminTimestamp = intval(Request::headerGet('auth-admin-timestamp'));
+            $authAdminSign = trim(Request::headerGet('auth-admin-sign'));
+            if ($authAdminUserId > 0) {
+                if ($authAdminTimestamp < time() - 1800 || $authAdminTimestamp > time() + 1800) {
+                    return Response::json(-1, "auth-admin-timestamp error");
+                }
+                $authAdminUser = Admin::get($authAdminUserId);
+                if (empty($authAdminUser)) {
+                    return Response::json(-1, "admin user not exists");
+                }
+                if (empty($authAdminUser['password']) || empty($authAdminUser['passwordSalt'])) {
+                    return Response::json(-1, "admin user forbidden");
+                }
+                $signCalc = md5("$authAdminUserId:$authAdminTimestamp:$authAdminUser[password]$authAdminUser[passwordSalt]");
+                if ($signCalc != $authAdminSign) {
+                    return Response::json(-1, 'admin user sign error');
+                }
+                $adminUserId = $authAdminUser['id'];
+                $adminUser = $authAdminUser;
+            }
+        }
+        */
         if ($adminUserId) {
             if (empty($adminUser)) {
                 $adminUser = Admin::get($adminUserId);
@@ -90,7 +122,9 @@ class AuthMiddleware
             }
             Session::put('_adminRules', $rules);
 
-            
+            /**
+             * 检查 action
+             */
             if (isset($rules[$urlControllerMethod])) {
                 if (empty($rules[$urlControllerMethod]['auth'])) {
                     return Response::send(-1, L('No Permission'));
@@ -102,13 +136,24 @@ class AuthMiddleware
                     }
                     return [$rule['url'], $rule['rule']];
                 }));
-                
+                /**
+                 * 尝试将 action 转换为自定义 rule 检查权限
+                 */
                 if (isset($controllerRuleMap[$urlControllerMethod])) {
                     if (empty($rules[$controllerRuleMap[$urlControllerMethod]]['auth'])) {
                         return Response::send(-1, L('No Permission'));
                     }
                 } else {
-                    
+                    /*
+                     * 对于只有一个方法的 controller，尝试使用重新校验
+                     * 1 默认使用 controller 的 index 方法
+                     * 2 如果定义了 public static $PermitMethodMap 属性，使用该属性作为映射
+                     * 2.1 currentMethod => checkMethod         使用 当前 Controller 的 checkMethod 检查权限
+                     * 2.2 currentMethod => controller@method   使用 Controller@method 检查权限
+                     * 2.3 currentMethod => @rule               使用 rule 检查权限
+                     * 2.4 currentMethod => *                   忽略匹配不到时的权限检查
+                     * 2.5 *             => *                   本 Controller 的所有方法匹配不到时忽略权限检查
+                     */
                     $fallbackMethod = 'index';
                     if (property_exists($urlController, 'PermitMethodMap')) {
                         $map = $urlController::$PermitMethodMap;

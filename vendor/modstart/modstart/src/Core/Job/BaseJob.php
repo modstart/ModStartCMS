@@ -11,4 +11,8 @@ use Illuminate\Queue\SerializesModels;
 abstract class BaseJob implements SelfHandling, ShouldQueue
 {
     use Queueable, InteractsWithQueue, SerializesModels;
-    }
+
+    /**
+     * public function handle(){}
+     */
+}

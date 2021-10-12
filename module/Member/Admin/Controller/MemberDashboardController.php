@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminPage;
 use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Core\Util\TimeUtil;
 use ModStart\Layout\Row;

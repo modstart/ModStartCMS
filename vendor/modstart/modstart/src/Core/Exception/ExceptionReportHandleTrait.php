@@ -44,7 +44,8 @@ trait ExceptionReportHandleTrait
                 }
             }
         } catch (\Exception $e) {
-                    }
+            // do nothing
+        }
     }
 
     private function getExceptionResponse($exception)

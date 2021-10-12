@@ -40,7 +40,7 @@ class BannerController extends Controller
                     ->when(BannerType::VIDEO, function ($context) {
                         
                         $context->video('video', '视频');
-                    });
+                    })->required();
                 $builder->link('link', '链接');
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);

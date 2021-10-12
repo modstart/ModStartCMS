@@ -6,13 +6,23 @@ use Illuminate\Contracts\Support\Renderable;
 
 class Row implements Buildable, Renderable
 {
-    
+    /**
+     * @var Column[]
+     */
     protected $columns = [];
 
-    
+    /**
+     * row classes.
+     *
+     * @var array
+     */
     protected $class = [];
 
-    
+    /**
+     * Row constructor.
+     *
+     * @param string $content
+     */
     public function __construct($content = '')
     {
         if (!empty($content)) {
@@ -24,7 +34,12 @@ class Row implements Buildable, Renderable
         }
     }
 
-    
+    /**
+     * Add a column.
+     *
+     * @param int|array $width
+     * @param $content
+     */
     public function column($width, $content)
     {
         $width = $width < 1 ? round(12 * $width) : $width;
@@ -34,13 +49,17 @@ class Row implements Buildable, Renderable
         $this->addColumn($column);
     }
 
-    
+    /**
+     * @param Column $column
+     */
     protected function addColumn(Column $column)
     {
         $this->columns[] = $column;
     }
 
-    
+    /**
+     * Build row column.
+     */
     public function build()
     {
         $this->startRow();
@@ -50,7 +69,9 @@ class Row implements Buildable, Renderable
         $this->endRow();
     }
 
-    
+    /**
+     * Start row.
+     */
     protected function startRow()
     {
         $class = $this->class;
@@ -58,13 +79,19 @@ class Row implements Buildable, Renderable
         echo '<div class="' . implode(' ', $class) . '">';
     }
 
-    
+    /**
+     * End column.
+     */
     protected function endRow()
     {
         echo '</div>';
     }
 
-    
+    /**
+     * Render row.
+     *
+     * @return string
+     */
     public function render()
     {
         ob_start();

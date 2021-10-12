@@ -13,12 +13,18 @@ use ModStart\Layout\Page;
 use ModStart\Repository\RepositoryUtil;
 use ModStart\Widget\Box;
 
-
+/**
+ * Class WebConfigBuilder
+ * @package ModStart\App\Web\Layout
+ *
+ * @mixin Page
+ * @mixin Form
+ */
 class WebConfigBuilder implements Renderable
 {
-    
+    /** @var Page */
     private $page;
-    
+    /** @var Form */
     private $form;
     private $pagePrepend = [];
 
@@ -70,7 +76,11 @@ class WebConfigBuilder implements Renderable
         return $this->page->render();
     }
 
-    
+    /**
+     * @param \stdClass ：$item null 使用 config中的数据
+     * @param \Closure $callback = function (Form $form) { return Response::generateSuccess('ok'); }
+     * @return $this
+     */
     public function perform($item = null, $callback = null)
     {
         if (Request::isPost()) {

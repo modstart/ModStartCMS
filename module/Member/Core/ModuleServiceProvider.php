@@ -12,6 +12,7 @@ use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Manager\FieldManager;
+use Module\Member\Config\MemberHomeIcon;
 use Module\Member\Config\MemberMenu;
 use Module\Member\Listener\MemberVipPayListener;
 use Module\Member\Widget\Field\MemberImage;
@@ -64,6 +65,32 @@ class ModuleServiceProvider extends ServiceProvider
                         [
                             'title' => '绑定邮箱',
                             'url' => modstart_web_url('member_profile/email'),
+                        ],
+                    ]
+                ],
+            ];
+        });
+
+        MemberHomeIcon::register(function () {
+            return [
+                [
+                    'title' => '我的',
+                    'sort' => 1000,
+                    'children' => [
+                        [
+                            'icon' => 'iconfont icon-card',
+                            'title' => '我的资料',
+                            'url' => modstart_web_url('member_profile'),
+                        ],
+                        [
+                            'icon' => 'iconfont icon-lock',
+                            'title' => '修改密码',
+                            'url' => modstart_web_url('member_profile/password'),
+                        ],
+                        [
+                            'icon' => 'iconfont icon-user',
+                            'title' => '修改头像',
+                            'url' => modstart_web_url('member_profile/avatar'),
                         ],
                     ]
                 ],

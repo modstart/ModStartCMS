@@ -3,27 +3,7 @@
 
 namespace ModStart\Repository;
 
-class EmptyItem extends \stdClass
-{
-    private $attributes = [];
-
-    
-    public function __construct($initValue = [])
-    {
-        $this->attributes = array_merge($this->attributes, $initValue);
-    }
-
-
-    public function __get($name)
-    {
-        return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->attributes[$name] = $value;
-    }
-}
+use Illuminate\Support\Collection;
 
 class RepositoryUtil
 {
@@ -34,7 +14,10 @@ class RepositoryUtil
         });
     }
 
-    
+    /**
+     * @param array|\stdClass $item
+     * @return object
+     */
     public static function itemFromArray($item)
     {
         return (object)$item;
@@ -47,7 +30,7 @@ class RepositoryUtil
 
     public static function makeItems($itemOrItems)
     {
-        if ($itemOrItems instanceof \Illuminate\Support\Collection) {
+        if ($itemOrItems instanceof Collection) {
             return $itemOrItems;
         }
         return collect([$itemOrItems]);

@@ -31,6 +31,11 @@ class ModuleServiceProvider extends ServiceProvider
                         'url' => '\ModStart\Admin\Controller\AdminUserController@index',
                     ],
                     [
+                        'title' => L('Admin User Manage'),
+                        'rule' => 'AdminUserManage',
+                        'hide' => true,
+                    ],
+                    [
                         'title' => L('Admin Log'),
                         'url' => '\ModStart\Admin\Controller\AdminLogController@index',
                     ],
@@ -78,6 +83,11 @@ class ModuleServiceProvider extends ServiceProvider
                         'rule' => 'DataFileManagerAdd/Edit',
                         'hide' => true,
                     ],
+                    [
+                        'title' => '系统升级',
+                        'rule' => 'SystemUpgrade',
+                        'hide' => true,
+                    ]
                 ]
             ]
         ]);

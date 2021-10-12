@@ -2,10 +2,20 @@
 
 namespace ModStart\Core\Util;
 
-
+/**
+ * 数据工具包
+ *
+ * Class ArrayUtil
+ * @package ModStart\Core\Util
+ */
 class ArrayUtil
 {
-    
+    /**
+     * 判断两个数组是否相同（会先排序后比较）
+     * @param array $arr1
+     * @param array $arr2
+     * @return bool
+     */
     public static function sequenceEqual($arr1, $arr2)
     {
         sort($arr1);
@@ -13,7 +23,14 @@ class ArrayUtil
         return json_encode($arr1) == json_encode($arr2);
     }
 
-    
+    /**
+     * 判断两个数组是否相同
+     * @param array $arr1
+     * @param array $arr2
+     * @param null $keys 比较的键，如果为空比较所有键
+     * @param bool $strict 是否使用严格模式 ===
+     * @return bool
+     */
     public static function equal($arr1, $arr2, $keys = null, $strict = false)
     {
         if (null === $keys) {
@@ -39,7 +56,13 @@ class ArrayUtil
         return true;
     }
 
-    
+    /**
+     * 抽取Key对应的数据到新数组
+     *
+     * @param $records
+     * @param $key
+     * @return array
+     */
     public static function flatItemsByKey(&$records, $key)
     {
         $result = [];
@@ -49,7 +72,13 @@ class ArrayUtil
         return $result;
     }
 
-    
+    /**
+     * 过滤 $record 中的 $keys 并返回
+     *
+     * @param array $record
+     * @param array $keys
+     * @return array
+     */
     public static function keepKeys($record, $keys)
     {
         if (empty($record)) {
@@ -70,7 +99,12 @@ class ArrayUtil
         return $newArr;
     }
 
-    
+    /**
+     * 只保留记录中的键
+     * @param array( array() ) $records
+     * @param array $keys
+     * @return array
+     */
     public static function keepItemsKeys(&$records, $keys)
     {
         $newArr = [];
@@ -89,7 +123,13 @@ class ArrayUtil
         return $newArr;
     }
 
-    
+    /**
+     * 移除 $record 中的 $keys 并返回
+     *
+     * @param array $record
+     * @param array $keys
+     * @return array
+     */
     public static function removeKeys($record, $keys)
     {
         if (empty($keys) || empty($record)) {
@@ -104,7 +144,12 @@ class ArrayUtil
         return $newArr;
     }
 
-    
+    /**
+     * 重命名Keys
+     *
+     * @param array(array()) &$records
+     * @param array $keyMap [old=>new]
+     */
     public static function renameItemsKey(&$records, $keyMap)
     {
         foreach ($records as $k => $v) {
@@ -115,7 +160,10 @@ class ArrayUtil
         }
     }
 
-    
+    /**
+     * @param $records
+     * @return mixed|null
+     */
     public static function random($records)
     {
         if (empty($records)) {
@@ -128,7 +176,12 @@ class ArrayUtil
     }
 
 
-    
+    /**
+     * trim所有数组中的元素
+     *
+     * @param $records
+     * @return array
+     */
     public static function trimItems($records)
     {
         $newArr = [];
@@ -142,7 +195,12 @@ class ArrayUtil
         return $newArr;
     }
 
-    
+    /**
+     * 是否所有的都为空
+     *
+     * @param $records
+     * @return bool
+     */
     public static function isAllEmpty($records)
     {
         if (empty($records) || !is_array($records)) {
@@ -157,7 +215,14 @@ class ArrayUtil
         return true;
     }
 
-    
+    /**
+     * 根据key排序
+     *
+     * @param array $records
+     * @param string $key
+     * @param string $sort
+     * @return mixed
+     */
     public static function sortByKey($records, $key = 'sort', $sort = 'asc')
     {
         usort($records, function ($o1, $o2) use ($key, $sort) {
@@ -170,7 +235,13 @@ class ArrayUtil
         return $records;
     }
 
-    
+    /**
+     * 只保留特定数量
+     *
+     * @param $records
+     * @param int $size
+     * @return array
+     */
     public static function keep(&$records, $size = 10)
     {
         $results = [];
@@ -185,7 +256,16 @@ class ArrayUtil
         return $results;
     }
 
-    
+    /**
+     * 计算两个数组的差异
+     * @param array $olds
+     * @param array $news
+     * @return array
+     *
+     * @example
+     *
+     * list($inserts, $deletes) = diff($olds,$news);
+     */
     public static function diff(array $olds, array $news)
     {
         $deletes = [];
@@ -203,7 +283,12 @@ class ArrayUtil
         return [$inserts, $deletes];
     }
 
-    
+    /**
+     * 根据键值对比两个数组的差异
+     * @param array $old
+     * @param array $new
+     * @return array
+     */
     public static function diffWithKeys(array $old, array $new)
     {
         $deletes = [];

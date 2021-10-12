@@ -14,12 +14,18 @@ use ModStart\Layout\Page;
 use ModStart\Repository\RepositoryUtil;
 use ModStart\Widget\Box;
 
-
+/**
+ * Class AdminConfigBuilder
+ * @package ModStart\Admin\Layout
+ *
+ * @mixin Page
+ * @mixin Form
+ */
 class AdminConfigBuilder implements Renderable
 {
-    
+    /** @var Page */
     private $page;
-    
+    /** @var Form */
     private $form;
     private $pagePrepend = [];
 
@@ -67,7 +73,11 @@ class AdminConfigBuilder implements Renderable
         return $this->page->render();
     }
 
-    
+    /**
+     * @param \stdClass $item
+     * @param \Closure $callback = function (Form $form) { return Response::generateSuccess('ok'); }
+     * @return $this
+     */
     public function perform($item = null, $callback = null)
     {
         if (Request::isPost()) {

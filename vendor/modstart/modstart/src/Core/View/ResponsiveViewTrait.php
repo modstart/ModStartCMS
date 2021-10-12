@@ -88,7 +88,8 @@ trait ResponsiveViewTrait
     protected function view($view, $viewData = [])
     {
         list($view, $frameView) = $this->viewPaths($view);
-                return view($view, $viewData);
+        // return [$view, $frameView];
+        return view($view, $viewData);
     }
 
     protected function viewRender($view, $viewData = [])

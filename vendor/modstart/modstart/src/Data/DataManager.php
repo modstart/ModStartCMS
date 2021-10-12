@@ -13,11 +13,14 @@ use ModStart\Data\Storage\FileDataStorage;
 
 class DataManager
 {
-    
+    /** @var AbstractDataStorage[] */
     private static $storages = [];
     private static $config = null;
 
-    
+    /**
+     * 从用户配置中获取文件上传相关配置
+     * @return array|null
+     */
     public static function getConfigOption()
     {
         static $option = null;
@@ -50,7 +53,11 @@ class DataManager
         return $option;
     }
 
-    
+    /**
+     * @param null $option
+     * @return AbstractDataStorage
+     * @throws BizException
+     */
     public static function storage($option = null)
     {
         if (null === $option) {
@@ -61,7 +68,15 @@ class DataManager
         return self::$storages[$hash];
     }
 
-    
+    /**
+     * 文件上传
+     * @param $category
+     * @param $input
+     * @param array $extra
+     * @param null $option
+     * @return array
+     * @throws \Exception
+     */
     public static function uploadHandle($category, $input, $extra = [], $option = null)
     {
         if (null === $option) {
@@ -105,7 +120,14 @@ class DataManager
         ]);
     }
 
-    
+    /**
+     * 上传文件到 data_temp
+     * @param $category
+     * @param $filename
+     * @param $content
+     * @param null $option
+     * @return array
+     */
     public static function uploadToTemp($category, $filename, $content, $option = null)
     {
         if (null === $option) {
@@ -157,7 +179,15 @@ class DataManager
         ]);
     }
 
-    
+    /**
+     * 上传文件内容
+     * @param string $category
+     * @param string $filename 包含后缀名的文件
+     * @param string $content
+     * @param null $option
+     * @return array
+     * @throws \Exception
+     */
     public static function upload($category, $filename, $content, $option = null)
     {
         if (null === $option) {
@@ -210,7 +240,13 @@ class DataManager
         ]);
     }
 
-    
+    /**
+     * 根据TempData完整路径存储
+     * @param $tempPath
+     * @param null $option
+     * @return array
+     * @throws \Exception
+     */
     public static function storeTempDataByPath($dataTempFullPath, $option = null)
     {
         if (null === $option) {
@@ -224,7 +260,14 @@ class DataManager
         return Response::generate(-1, 'TempPath Invalid', null);
     }
 
-    
+    /**
+     * 根据Category和TempData路径存储
+     * @param $category
+     * @param $tempPath
+     * @param null $option
+     * @return array
+     * @throws \Exception
+     */
     public static function storeTempData($category, $dataTempPath, $option = null)
     {
         if (null === $option) {
@@ -265,7 +308,11 @@ class DataManager
         ]);
     }
 
-    
+    /**
+     * 根据ID删除文件（包括物理软删除）
+     * @param $id
+     * @param $option
+     */
     public static function deleteById($id, $option = null)
     {
         if (null === $option) {
@@ -280,7 +327,13 @@ class DataManager
         $storage->repository()->deleteDataById($id);
     }
 
-    
+    /**
+     * 根据路径删除
+     *
+     * @param $path
+     * @param null $option
+     * @throws \Exception
+     */
     public static function deleteByPath($path, $option = null)
     {
         if (null === $option) {
@@ -299,7 +352,13 @@ class DataManager
         $storage->repository()->deleteDataById($data['id']);
     }
 
-    
+    /**
+     * 根据路径删除DataTemp
+     *
+     * @param $tempDataPath
+     * @param null $option
+     * @throws \Exception
+     */
     public static function deleteDataTempByPath($tempDataPath, $option = null)
     {
         if (null === $option) {
@@ -314,7 +373,12 @@ class DataManager
     }
 
 
-    
+    /**
+     * 解析已上传文件路径
+     *
+     * @param $url 文件路径 /data/xxxxxxx.xxx http://xxx.com/data/xxxxxxx.xxx
+     * @return array
+     */
     public static function parseDataUrl($url)
     {
         if (preg_match(AbstractDataStorage::PATTERN_DATA_STRING, $url, $mat)) {
@@ -328,7 +392,12 @@ class DataManager
     }
 
 
-    
+    /**
+     * 准备文件到本地可用
+     * @param $path 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx
+     * @param $option
+     * @return array
+     */
     public static function preparePathForLocal($path, $option = null)
     {
         if (null === $option) {
@@ -348,7 +417,13 @@ class DataManager
     }
 
 
-    
+    /**
+     * 准备文件到本地可用（使用内网域名）
+     * @param $path 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx
+     * @param $option
+     * @return array
+     * @throws
+     */
     public static function preparePathInternalForLocal($path, $option = null)
     {
         if (null === $option) {
@@ -420,4 +495,42 @@ class DataManager
         $storage = self::storage($option);
         return AssetsUtil::fixFull($storage->getDriverFullPath($path), false);
     }
+//
+//    public static function repairContent($content)
+//    {
+//        $urls = [];
+//        preg_match_all('/\\((\\/?' . self::PATTERN_DATA_STRING . ')\\)/', $content, $mat);
+//        if (!empty($mat[1])) {
+//            $urls = array_merge($urls, $mat[1]);
+//        }
+//        preg_match_all('/"(\\/?' . self::PATTERN_DATA_STRING . ')"/', $content, $mat);
+//        if (!empty($mat[1])) {
+//            $urls = array_merge($urls, $mat[1]);
+//        }
+//        if (empty($urls)) {
+//            return $content;
+//        }
+//        $map = array_build($urls, function ($k, $o) {
+//            return [$o, self::fix($o)];
+//        });
+//        $searchs = [];
+//        $replaces = [];
+//        foreach ($map as $old => $new) {
+//            $searchs[] = $old;
+//            $replaces[] = $new;
+//        }
+//        return str_replace($searchs, $replaces, $content);
+//    }
+//
+//    public static function repairJsonArray($json)
+//    {
+//        $arr = @json_decode($json, true);
+//        if (empty($arr)) {
+//            return $json;
+//        }
+//        foreach ($arr as $i => $v) {
+//            $arr[$i] = self::fix($v);
+//        }
+//        return json_encode($arr);
+//    }
 }

@@ -1,8 +1,20 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
-import Cookies from 'js-cookie'
 
 let apiRequest = null, apiStore = null
+
+const isInited = () => {
+    return apiStore && apiStore.state.api.baseUrl
+}
+
+const isRemoteInited = () => {
+    return apiStore && apiStore.state.api.baseUrl &&
+        (
+            apiStore.state.api.baseUrl.startsWith('http://')
+            ||
+            apiStore.state.api.baseUrl.startsWith('https://')
+        )
+}
 
 const init = (store) => {
     if (null !== apiRequest) {
@@ -16,15 +28,17 @@ const init = (store) => {
     apiRequest.interceptors.request.use(
         config => {
             if (apiStore) {
-                let token = Cookies.get(apiStore.state.api.tokenKey)
+                let token = apiStore.state.api.token
                 if (token) {
                     config.headers[apiStore.state.api.tokenKey] = token
                 }
+                config.baseURL = apiStore.state.api.baseUrl
                 // let additionalSendHeaders = Storage.getObject('ADDITIONAL_HEADERS', {})
                 // for (let k in additionalSendHeaders) {
                 //     config.headers[k] = additionalSendHeaders[k]
                 // }
             }
+            config.headers['is-ajax'] = true
             return config
         },
         error => {
@@ -155,8 +169,9 @@ const post = (url, param, successCallback, failCallback) => {
 }
 
 const Api = {
+    isInited,
+    isRemoteInited,
     init,
-    // get,
     post,
     // postJson,
     // setApiBaseUrl,

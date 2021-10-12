@@ -8,7 +8,10 @@ use ModStart\Grid\Filter\Field\Radio;
 
 class Eq extends AbstractFilter
 {
-    
+    /**
+     * @param mixed $options array | BaseType
+     * @return $this
+     */
     public function select($options)
     {
         $this->field = new Field\Select($this);
@@ -21,7 +24,10 @@ class Eq extends AbstractFilter
         return $this->select(ModelUtil::valueMap($table, $keyName, $labelName, $where));
     }
 
-    
+    /**
+     * @param mixed $options array | BaseType
+     * @return $this
+     */
     public function radio($options)
     {
         $this->field = new Field\Radio($this);

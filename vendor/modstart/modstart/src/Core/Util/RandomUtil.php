@@ -53,7 +53,11 @@ class RandomUtil
         return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
     }
 
-    
+    /**
+     * @return string
+     *
+     * 长度
+     */
     public static function uuid()
     {
         return date('Ymd')

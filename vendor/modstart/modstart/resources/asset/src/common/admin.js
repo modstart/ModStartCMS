@@ -1,5 +1,7 @@
 $(window).on('load', function () {
-    // 修复部分依赖窗口滚动时间的组件（ueditor顶部悬浮工具栏)
+    /**
+     * 修复部分依赖窗口滚动时间的组件（ueditor顶部悬浮工具栏)
+     */
     $('.ub-panel-frame > .right > .content.fixed').scroll(function () {
         var evt = document.createEvent('HTMLEvents');
         evt.initEvent('scroll', false, true);

@@ -21,7 +21,7 @@ trait HasAdminGrid
 
     public function index(AdminPage $page)
     {
-        
+        /** @var Grid $grid */
         $grid = $this->grid();
         CRUDUtil::registerGridResource($grid, $this->registerGridClass ? $this->registerGridClass : '\\' . __CLASS__);
         if (Request::isPost()) {

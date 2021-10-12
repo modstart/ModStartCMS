@@ -5,7 +5,11 @@ namespace ModStart\Grid\Filter\Field;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Type\BaseType;
 
-
+/**
+ * Class Radio
+ * @package ModStart\Grid\Filter\Field
+ *
+ */
 class Radio extends AbstractFilterField
 {
     protected $options = [];

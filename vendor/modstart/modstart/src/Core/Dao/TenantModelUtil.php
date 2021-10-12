@@ -58,7 +58,10 @@ class TenantModelUtil
         return $table;
     }
 
-    
+    /**
+     * @param $tenant
+     * @return \Illuminate\Database\Connection
+     */
     public static function DBconnection($tenant)
     {
         return DB::connection(self::connection($tenant));
@@ -188,7 +191,28 @@ class TenantModelUtil
         return true;
     }
 
-    
+    /**
+     * @param $tenants
+     * @param $table
+     * @param $schemaCallback
+     * @example
+     *
+     * TenantModelUtil::migrates(
+     *     [1, 2, 3, 4, 5],
+     *     'table1',
+     *     function ($table, $schema) {
+     *         $schema->create($table, function (Blueprint $table) {
+     *
+     *             $table->increments('id');
+     *             $table->timestamps();
+     *
+     *             $table->string('foo', 100)->nullable()->comment('');
+     *             $table->string('bar', 100)->nullable()->comment('');
+     *
+     *         });
+     *     }
+     * );
+     */
     public static function migrates($tenants, $table, $schemaCallback)
     {
         if (empty($tenants)) {
@@ -204,7 +228,10 @@ class TenantModelUtil
         }
     }
 
-    
+    /**
+     * @param $model
+     * @return Builder | Model
+     */
     public static function model($tenant, $model)
     {
         $m = new DynamicModel();
@@ -213,7 +240,10 @@ class TenantModelUtil
         return $m;
     }
 
-    
+    /**
+     * @param $model
+     * @return Builder | Model
+     */
     public static function modelTenant($tenant, $modelWithTenant)
     {
         $m = new DynamicModel();

@@ -25,7 +25,13 @@ class File extends AbstractField
         return $this;
     }
 
-    
+    /**
+     * 上传模式
+     * Image::MODE_RAW：直接点选文件并上传到系统中，用户文件管理中不可见
+     * Image::MODE_DEFAULT：正常上传模式
+     * @param $mode
+     * @return $this
+     */
     public function mode($mode)
     {
         $this->addVariables(['mode' => $mode]);

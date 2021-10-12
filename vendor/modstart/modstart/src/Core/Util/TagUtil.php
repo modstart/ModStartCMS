@@ -28,7 +28,11 @@ class TagUtil
         return join('', array_unique($filterTags));
     }
 
-    
+    /**
+     * @param string $tags
+     * @param string $format 格式，auto自动识别 string字符串
+     * @return array
+     */
     public static function string2Array($tags, $format = 'auto')
     {
         $tags = trim($tags, ':');

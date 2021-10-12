@@ -6,7 +6,21 @@ namespace ModStart\Widget;
 
 use ModStart\ModStart;
 
-
+/**
+ * Class Label
+ * @package ModStart\Widget
+ *
+ * @method static string primary($text, $attributes = '')
+ * @method static string muted($text, $attributes = '')
+ * @method static string warning($text, $attributes = '')
+ * @method static string danger($text, $attributes = '')
+ * @method static string success($text, $attributes = '')
+ *
+ * @method void text($text)
+ * @method void type($type)
+ * @method void attr($type)
+ * @method void disabled($boolean)
+ */
 class TextAction extends AbstractWidget
 {
     public static function getAssets()

@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class DModelUtil
 {
-    
+    /**
+     * @param $model
+     * @return Builder | Model
+     */
     public static function model($conn, $model)
     {
         $m = new DynamicModel();

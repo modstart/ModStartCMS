@@ -107,10 +107,21 @@ class FileManager
         return Response::generateSuccessData(ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']));
     }
 
-    
+    /**
+     * 直接上传模式，用户文件管理中可见
+     *
+     * @param InputPackage $input
+     * @param $category
+     * @param $uploadTable
+     * @param $uploadCategoryTable
+     * @param $userId
+     * @param $option
+     * @return mixed
+     * @throws \Exception
+     */
     private static function uploadDirectExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
-        
+        /** @var UploadedFile $file */
         $file = Input::file('file');
         if (empty($file)) {
             return Response::jsonError('file empty');
@@ -133,10 +144,21 @@ class FileManager
         ]);
     }
 
-    
+    /**
+     * 直接上传模式，用户文件管理中不可见
+     *
+     * @param InputPackage $input
+     * @param $category
+     * @param $uploadTable
+     * @param $uploadCategoryTable
+     * @param $userId
+     * @param $option
+     * @return mixed
+     * @throws \Exception
+     */
     private static function uploadDirectRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
-        
+        /** @var UploadedFile $file */
         $file = Input::file('file');
         if (empty($file)) {
             return Response::jsonError('file empty');

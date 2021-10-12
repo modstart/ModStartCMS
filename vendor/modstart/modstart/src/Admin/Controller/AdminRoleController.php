@@ -73,12 +73,13 @@ class AdminRoleController extends Controller
                 if (FormMode::EDIT == $form->mode()) {
                     $datSubmitted = $form->dataSubmitted();
                     $newRules = ConvertUtil::toArray($datSubmitted['rules']);
-                    
+                    /** @var Collection $oldRules */
                     $oldRules = collect($form->item()->rules)->map(function ($o) {
                         return $o['rule'];
                     })->toArray();
                     list($inserts, $deletes) = ArrayUtil::diff($oldRules, $newRules);
-                                        $inserts = collect($inserts)->map(function ($r) {
+                    // print_r(['inserts' => $inserts, 'deletes' => $deletes]); exit();
+                    $inserts = collect($inserts)->map(function ($r) {
                         return ['rule' => $r];
                     });
                     $form->dataEditing(array_merge($form->dataEditing(), ['rules' => $inserts]));

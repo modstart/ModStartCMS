@@ -11,7 +11,9 @@ class RedisUtil
         return !!config('env.REDIS_HOST');
     }
 
-    
+    /**
+     * @return \Predis\Client
+     */
     public static function client()
     {
         static $client = null;

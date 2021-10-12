@@ -9,7 +9,18 @@ use ModStart\Core\Util\TimeUtil;
 
 trait DSTrait
 {
-    
+    /**
+     * @param $start
+     * @param $end
+     * @param array $series
+     * @return array
+     *
+     * @example
+     * $series = [
+     *  ['title'=>'总数','table'=>'table1',],
+     *  ['title'=>'成功','table'=>'table2','where'=>[]],
+     * ]
+     */
     protected function dsTableCountSeriesDaily($start, $end, $series = [])
     {
         $startTime = $start . ' 00:00:00';
@@ -54,7 +65,18 @@ trait DSTrait
         ];
     }
 
-    
+    /**
+     * @param $start
+     * @param $end
+     * @param array $series
+     * @return array
+     *
+     * @example
+     * $series = [
+     *  ['title'=>'总数','table'=>'table1','field'=>'payFee'],
+     *  ['title'=>'成功','table'=>'table2','field'=>'payFee','where'=>[]],
+     * ]
+     */
     protected function dsTableSumSeriesDaily($start, $end, $series = [])
     {
         $startTime = $start . ' 00:00:00';

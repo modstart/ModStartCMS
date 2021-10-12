@@ -6,10 +6,15 @@ namespace ModStart\Support\Concern;
 
 trait HasBuilder
 {
-    
+    /**
+     * @var \Closure
+     */
     private $builder;
 
-    
+    /**
+     * @param $builder
+     * @return $this
+     */
     public function builder($builder)
     {
         $this->builder = $builder;

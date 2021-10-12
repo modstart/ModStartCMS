@@ -8,7 +8,10 @@ use ModStart\Core\Util\StubUtil;
 
 class DynamicModel extends Model
 {
-    
+    /**
+     * @param $table
+     * @return Model
+     */
     public static function make($table)
     {
         $className = 'DynamicModel_' . $table;

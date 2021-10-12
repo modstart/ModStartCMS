@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateDataTemp extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('data_temp', function (Blueprint $table) {
@@ -22,7 +26,11 @@ class CreateDataTemp extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
     }
