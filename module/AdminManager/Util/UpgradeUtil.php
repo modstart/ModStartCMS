@@ -70,24 +70,34 @@ class UpgradeUtil
         BizException::throwsIf('diffContent为空', empty($diffContent));
         $zipper = new Zipper();
         $zipper->make($package);
+        $logs = [];
         if (!empty($diffContent['add'])) {
+            $logs[] = "新增文件：";
             foreach ($diffContent['add'] as $file) {
                 $content = $zipper->getFileContent($file);
                 FileUtil::write(base_path($file), $content);
+                $logs[] = "> $file";
             }
+            $logs[] = "";
         }
         if (!empty($diffContent['update'])) {
+            $logs[] = "修改文件：";
             foreach ($diffContent['update'] as $file) {
                 $content = $zipper->getFileContent($file);
                 FileUtil::write(base_path($file), $content);
+                $logs[] = "> $file";
             }
+            $logs[] = "";
         }
         if (!empty($diffContent['delete'])) {
+            $logs[] = "删除文件：";
             foreach ($diffContent['delete'] as $file) {
                 if (file_exists($f = base_path($file))) {
                     @unlink($f);
+                    $logs[] = "> $file";
                 }
             }
+            $logs[] = "";
         }
         $zipper->close();
         ModStart::clearCache();
@@ -97,6 +107,8 @@ class UpgradeUtil
         BizException::throwsIf("调用 php artisan modstart:module-install-all 失败", 0 != $exitCode);
         FileUtil::safeCleanLocalTemp($package);
         FileUtil::safeCleanLocalTemp($diffContentFile);
-        return Response::generateSuccess();
+        return Response::generateSuccessData([
+            'logs' => $logs,
+        ]);
     }
 }

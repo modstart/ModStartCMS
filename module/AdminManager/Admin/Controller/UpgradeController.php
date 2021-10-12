@@ -22,12 +22,13 @@ class UpgradeController extends Controller
         'info' => '@SystemUpgrade',
     ];
 
-    private function doFinish($msgs)
+    private function doFinish($msgs, $logs = null)
     {
         return Response::generateSuccessData([
             'msg' => array_map(function ($item) {
                 return '<i class="iconfont icon-hr"></i> ' . $item;
             }, $msgs),
+            'logs' => $logs,
             'finish' => true,
         ]);
     }
@@ -69,7 +70,7 @@ class UpgradeController extends Controller
                     BizException::throwsIfResponseError($ret);
                     return $this->doFinish([
                         '<span class="ub-text-success">升级完成，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
-                    ]);
+                    ], $ret['data']['logs']);
                 case 'downloadPackage':
                     $ret = UpgradeUtil::downloadPackage($token, AppConstant::APP, AppConstant::VERSION, $toVersion);
                     BizException::throwsIfResponseError($ret);

@@ -36,19 +36,27 @@
             <div class="body">
                 <div>
                     <div class="tw-py-2">
-                        当前版本：<code>v{{info.version || '-'}}</code>
+                        <i class="iconfont icon-tag"></i> 当前版本：<code>v{{info.version || '-'}}</code>
                     </div>
                     <div class="tw-py-2">
-                        最新版本：<code>v{{info.latestVersion || '-'}}</code>
-                        <span class="ub-text-warning tw-ml-4" v-if="!info.autoUpgrade && info.version">
-                            缺少自动升级包 v{{info.version || '-'}} <i class="iconfont icon-direction-right"></i> v{{info.latestVersion || '-'}}，
-                            请 <a href="https://modstart.com/download" target="_blank">手动下载</a> 最新安装包升级
-                        </span>
-                        <a href="javascript:;" class="ub-text-danger tw-pl-4"
-                           v-if="info.autoUpgrade&&!upgradeDetailShow"
-                           @click="upgradeDetailShow=true">
-                            <i class="iconfont icon-up"></i> 立即升级
-                        </a>
+                        <i class="iconfont icon-tag"></i> 最新版本：<code>v{{info.latestVersion || '-'}}</code>
+                        <div class="tw-pt-4">
+                            <span class="ub-text-success" v-if="info.version===info.latestVersion">
+                                <i class="iconfont icon-checked"></i>
+                                您的系统已经是最新版本，无需升级
+                            </span>
+                            <span class="ub-text-warning tw-ml-4"
+                                  v-if="info.version!==info.latestVersion && !info.autoUpgrade && info.version">
+                                v{{info.version || '-'}} <i class="iconfont icon-direction-right"></i> v{{info.latestVersion || '-'}} 不能自动升级，
+                                请 <a href="https://modstart.com/download" target="_blank"><i
+                                    class="iconfont icon-download"></i> 手动下载</a> 最新安装包升级
+                            </span>
+                            <a href="javascript:;" class="btn btn-warning"
+                               v-if="info.autoUpgrade&&!upgradeDetailShow"
+                               @click="upgradeDetailShow=true">
+                                <i class="iconfont icon-up"></i> 立即升级
+                            </a>
+                        </div>
                     </div>
                     <div class="tw-mt-4 tw-bg-gray-800 tw-text-white tw-rounded tw-p-4"
                          v-if="upgradeDetailShow && info.autoUpgrade">
@@ -58,11 +66,12 @@
                             v{{info.autoUpgrade.version}}（增加文件{{info.autoUpgrade.addCount}}，更新文件{{info.autoUpgrade.updateCount}}个，删除文件{{info.autoUpgrade.deleteCount}}个），请您确定已经完成系统的备份（文件和数据库）
                         </div>
                         <div class="tw-mt-2" v-if="">
-                            <a href="javascript:;" class="btn btn-danger" @click="doUpgradeSubmit" v-if="!upgradeRunning">
+                            <a href="javascript:;" class="btn btn-danger" @click="doUpgradeSubmit"
+                               v-if="!upgradeRunning">
                                 我已知道风险，立即升级
                             </a>
                         </div>
-                        <div class="tw-bg-gray-900 tw-font-mono tw-leading-8 tw-p-4 tw-text-white"
+                        <div class="tw-bg-gray-900 tw-font-mono tw-leading-8 tw-p-4 tw-text-white tw-rounded"
                              v-if="upgradeRunning">
                             <div v-for="(msg,msgIndex) in upgradeMsgs" v-html="msg"></div>
                             <div v-if="!upgradeFinish">
@@ -76,6 +85,17 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="ub-panel" v-if="upgradeLogs.length>0">
+            <div class="head">
+                <div class="title">
+                    <i class="iconfont icon-list"></i>
+                    升级日志
+                </div>
+            </div>
+            <div class="body">
+                <pre class="tw-p-4 tw-leading-loose">{{upgradeLogs.join("\n")}}</pre>
             </div>
         </div>
         <el-dialog :visible.sync="memberUserShow" append-to-body>
@@ -213,6 +233,7 @@
                 upgradeRunElapse: 0,
                 upgradeMsgs: [],
                 upgradeFinish: false,
+                upgradeLogs: [],
 
             }
         },
@@ -350,6 +371,7 @@
                 if (null === step) {
                     this.upgradeMsgs = []
                     this.upgradeFinish = false
+                    this.upgradeLogs = []
                 }
                 if (title) {
                     this.upgradeMsgs.push('<i class="iconfont icon-hr"></i> ' + title)
@@ -366,6 +388,13 @@
                         this.upgradeMsgs = this.upgradeMsgs.concat(res.data.msg)
                     } else {
                         this.upgradeMsgs.push(res.data.msg)
+                    }
+                    if (res.data.logs) {
+                        if (Array.isArray(res.data.logs)) {
+                            this.upgradeLogs = this.upgradeLogs.concat(res.data.logs)
+                        } else {
+                            this.upgradeLogs.push(res.data.logs)
+                        }
                     }
                     if (res.data.finish) {
                         this.upgradeFinish = true
