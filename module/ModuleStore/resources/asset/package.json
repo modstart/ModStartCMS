@@ -18,6 +18,7 @@
     "less-loader": "^5.0.0",
     "merge-stream": "^2.0.0",
     "on-build-webpack": "^0.1.0",
+    "package-json-cleanup-loader": "^1.0.3",
     "style-loader": "^2.0.0",
     "uglify-js": "^3.12.6",
     "url-loader": "^4.1.1",

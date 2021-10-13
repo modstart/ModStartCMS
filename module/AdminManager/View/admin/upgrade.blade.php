@@ -26,5 +26,5 @@
             }
         };
     </script>
-    <script src="@asset('vendor/AdminManager/entry/upgrade.js')?{{time()}}"></script>
+    <script src="@asset('vendor/AdminManager/entry/upgrade.js')"></script>
 @endsection
