@@ -4,6 +4,7 @@ namespace Module\Site\Admin\Controller;
 
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminConfigBuilder;
+use Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider;
 
 class ConfigController extends Controller
 {
@@ -19,6 +20,7 @@ class ConfigController extends Controller
         $builder->text('siteBeian', '备案编号');
         $builder->image('siteFavIco', '网站ICO');
         $builder->color('sitePrimaryColor', '网站主色调');
+        $builder->select('siteTemplate', '网站模板')->options(SiteTemplateProvider::map());
         return $builder->perform();
     }
 

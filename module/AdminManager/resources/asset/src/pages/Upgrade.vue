@@ -47,14 +47,16 @@
                             </span>
                             <span class="ub-text-warning tw-ml-4"
                                   v-if="info.version!==info.latestVersion && !info.autoUpgrade && info.version">
-                                v{{info.version || '-'}} <i class="iconfont icon-direction-right"></i> v{{info.latestVersion || '-'}} 不能自动升级，
+                                v{{info.version || '-'}}
+                                <i class="iconfont icon-direction-right"></i>
+                                v{{info.latestVersion || '-'}} 不能自动升级，
                                 请 <a href="https://modstart.com/download" target="_blank"><i
                                     class="iconfont icon-download"></i> 手动下载</a> 最新安装包升级
                             </span>
                             <a href="javascript:;" class="btn btn-warning"
                                v-if="info.autoUpgrade&&!upgradeDetailShow"
                                @click="upgradeDetailShow=true">
-                                <i class="iconfont icon-up"></i> 立即升级
+                                <i class="iconfont icon-up"></i> 自动升级到 v{{info.autoUpgrade.version}}
                             </a>
                         </div>
                     </div>

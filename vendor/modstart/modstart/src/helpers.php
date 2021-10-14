@@ -121,7 +121,7 @@ function modstart_action($name, $parameters = [])
  * @param null $key
  * @param string $default
  * @param bool $useCache
- * @return \Illuminate\Foundation\Application|mixed|string
+ * @return \Illuminate\Foundation\Application|mixed|string|\ModStart\Core\Config\MConfig
  */
 function modstart_config($key = null, $default = '', $useCache = true)
 {

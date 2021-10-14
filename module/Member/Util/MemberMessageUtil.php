@@ -93,7 +93,7 @@ class MemberMessageUtil
 
     public static function sendTemplate($memberUserId, $template, $templateData = [], $fromMemberUserId = 0, $module = null)
     {
-        $theme = modstart_config('siteTemplate', 'default');
+        $theme = modstart_config()->getWithEnv('siteTemplate', 'default');
         $view = 'theme.' . $theme . '.message.' . $template;
         if (!view()->exists($view)) {
             $view = 'theme.default.message.' . $template;

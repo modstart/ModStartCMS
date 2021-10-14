@@ -26,7 +26,8 @@ trait ResponsiveViewTrait
 
     protected function viewPaths($view)
     {
-        $template = modstart_config('siteTemplate', 'default');
+        $template = modstart_config()->getWithEnv('siteTemplate', 'default');
+        // echo $template;exit();
         $module = $this->getModule();
 
         $mobileView = "theme.$template.m.$view";
@@ -48,6 +49,7 @@ trait ResponsiveViewTrait
         $pcFrameViewDefault = "theme.default.pc.frame";
 
         $useView = $pcView;
+        // var_dump($useView);exit();
         $useFrameView = $pcFrameView;
         if ($this->isMobile()) {
             $useView = $mobileView;

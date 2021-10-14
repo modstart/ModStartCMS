@@ -14,7 +14,7 @@ class WebPage extends Page
             if ($this->view) {
                 return $this->view;
             }
-            $template = modstart_config('siteTemplate', 'default');
+            $template = modstart_config()->getWithEnv('siteTemplate','default');
 
             $mobileView = "theme.$template.m.page";
             $mobileViewDefault = "theme.default.m.page";
