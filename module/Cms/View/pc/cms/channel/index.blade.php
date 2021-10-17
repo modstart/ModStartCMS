@@ -7,17 +7,18 @@
 
 @section('bodyContent')
 
+    <div class="ub-cover" style="background-color:#EEE;background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($channel['cover'])}})">
+        <div class="ub-nav-header">
+            {{$channel['title']}}
+        </div>
+        <div class="ub-nav-header-sub">
+            {{$channel['description']}}
+        </div>
+    </div>
+
     <div class="ub-container margin-top">
         <div class="row">
             <div class="col-md-12">
-                <div class="ub-panel margin-top">
-                    <div class="head">
-                        <div class="title">{{$channel['title']}}</div>
-                    </div>
-                    <div class="body">
-                        {{$channel['description']}}
-                    </div>
-                </div>
                 <div class="ub-panel margin-top">
                     <div class="head">
                         <div class="title">文章列表</div>

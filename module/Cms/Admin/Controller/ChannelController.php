@@ -7,8 +7,10 @@ namespace Module\Cms\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
+use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
+use Module\Cms\Util\ChannelUtil;
 
 class ChannelController extends Controller
 {
@@ -35,6 +37,9 @@ class ChannelController extends Controller
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('title', L('Title'));
+            })
+            ->hookChanged(function (Form $form) {
+                ChannelUtil::clearCache();
             })
             ->dialogSizeSmall()
             ->title('频道管理')
