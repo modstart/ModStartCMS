@@ -2,9 +2,8 @@
 
 
 
-use ModStart\Core\Util\CurlUtil;
+use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\FileUtil;
-use ModStart\Core\Util\RandomUtil;
 
 include __DIR__ . '/function.php';
 ?>
@@ -49,7 +48,7 @@ include __DIR__ . '/function.php';
             <div class="body">
                 <?php text_success('系统：' . PHP_OS); ?>
                 <?php version_compare(PHP_VERSION, '5.5.9', '>=') ? text_success('PHP版本' . PHP_VERSION) : text_error('PHP版本>=5.5.9 当前为' . PHP_VERSION); ?>
-                <?php text_success('最大上传：' . FileUtil::formatByte(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize'))); ?>
+                <?php text_success('最大上传：' . FileUtil::formatByte(EnvUtil::env('uploadMaxSize'))); ?>
                 <?php function_exists('openssl_open') ? text_success('OpenSSL PHP 扩展') : text_error('缺少 OpenSSL PHP 扩展'); ?>
                 <?php function_exists('exif_read_data') ? text_success('Exif PHP 扩展') : text_error('缺少 Exif PHP 扩展'); ?>
                 <?php function_exists('proc_open') ? text_success('proc_open 函数') : text_error('缺少 proc_open 函数'); ?>
@@ -61,14 +60,14 @@ include __DIR__ . '/function.php';
                 <?php function_exists('mb_internal_encoding') ? text_success('缺少 Mbstring PHP 扩展') : text_error('Mbstring PHP 扩展'); ?>
                 <?php function_exists('token_get_all') ? text_success('缺少 Tokenizer PHP 扩展') : text_error('Tokenizer PHP 扩展'); ?>
                 <?php function_exists('finfo_file') ? text_success('缺少 PHP Fileinfo 扩展') : text_error('PHP Fileinfo 扩展'); ?>
-                <?php \ModStart\Core\Util\EnvUtil::iniFileConfig('always_populate_raw_post_data')=='-1' ? text_success('验证 always_populate_raw_post_data=-1') : text_error('请配置 always_populate_raw_post_data=-1'); ?>
+                <?php EnvUtil::iniFileConfig('always_populate_raw_post_data')=='-1' ? text_success('验证 always_populate_raw_post_data=-1') : text_error('请配置 always_populate_raw_post_data=-1'); ?>
                 <?php is_writable(APP_PATH . '/storage/') ? text_success('/storage/目录可写') : text_error('/storage/目录不可写'); ?>
                 <?php is_writable(APP_PATH . '/public/') ? text_success('/public/目录可写') : text_error('/public/目录不可写'); ?>
                 <?php is_writable(APP_PATH . '/bootstrap/cache/') ? text_success('/bootstrap/cache/目录可写') : text_error('/bootstrap/cache/目录不可写'); ?>
                 <div data-rewrite-check>
                     <div class="status loading"><div class="ub-alert">Rewrite规则检测中...</div></div>
-                    <div class="status success" style="display:none;"><?php echo text_success('Rewrite规则正确'); ?></div>
-                    <div class="status error" style="display:none;"><?php echo text_error('Rewrite规则错误',null,false); ?></div>
+                    <div class="status success" style="display:none;"><?php text_success('Rewrite规则正确'); ?></div>
+                    <div class="status error" style="display:none;"><?php text_error('Rewrite规则错误',null,false); ?></div>
                     <div class="status error ub-alert ub-alert-warning" style="display:none;">
                         <div>- 配置Nginx/Apache，保证访问 /install/ping 出现 ok 字样。</div>
                     </div>
