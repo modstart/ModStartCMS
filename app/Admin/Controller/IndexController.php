@@ -14,4 +14,5 @@ class IndexController extends Controller
     {
         return $this->dashboard();
     }
+
 }

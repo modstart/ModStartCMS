@@ -12,5 +12,6 @@ class IndexController extends BaseController
     {
         InstallerUtil::checkForInstallRedirect();
         return HomePageProvider::call(__METHOD__, '\\Module\\Cms\\Web\\Controller\\IndexController@index');
+
     }
 }
