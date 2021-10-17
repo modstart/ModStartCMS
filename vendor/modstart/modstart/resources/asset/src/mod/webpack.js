@@ -4,7 +4,7 @@ const process = require('process')
 let moduleConfig = require('./config.js');
 
 module.exports = function (dirname) {
-    const mod = dirname.replace(/^.+\/([A-Za-z0-9]+)\/resources\/asset/, '$1')
+    const mod = dirname.replace(/^.+[\/\\]([A-Za-z0-9]+)[\/\\]resources[\/\\]asset/, '$1')
     let config = moduleConfig(mod)
     config.dist = path.join(dirname, config.dist)
     config.distAsset = path.join(dirname, config.distAsset)
@@ -25,6 +25,12 @@ module.exports = function (dirname) {
     let files = glob.sync(path.resolve(config.distAsset) + '/entry-chunk-*.js')
     files = files.concat(glob.sync(path.resolve(config.dist) + '/entry-chunk-*.js'))
 
+    switch (config.platform) {
+        case "windows":
+            files = files.map(f=>f.replace(/\//g,'\\'))
+            break
+    }
+
     const ts = function () {
         return (new Date()).getTime();
     };
@@ -39,11 +45,28 @@ module.exports = function (dirname) {
             for (let i = 0; i < files.length; i++) {
                 if (/\.js$/.test(files[i])) {
                     let flag = files[i].replace(/\.js$/, '').replace(src, '');
-                    entries[flag] = './' + files[i].replace(dirname + '/', '');
+                    switch(config.platform){
+                        case 'windows':
+                            entries[flag] = './' + files[i].replace(dirname + '\\', '');
+                            break
+                        default:
+                            entries[flag] = './' + files[i].replace(dirname + '/', '');
+                            break
+                    }
                 }
             }
         }
         return entries;
+    }
+
+    let cleanFilesCommands = []
+    switch(config.platform){
+        case 'windows':
+            cleanFilesCommands.push(files.length > 0 ? 'del /F ' + files.join(' ') : 'cd')
+            break
+        default:
+            cleanFilesCommands.push(files.length > 0 ? 'rm -rv ' + files.join(' ') : 'pwd')
+            break
     }
 
     const webpackConfig = {
@@ -63,9 +86,7 @@ module.exports = function (dirname) {
                 externalPublicPath: "window.__msCDN+'" + config.cdn.substring(1) + "/'"
             }),
             new WebpackShellPlugin({
-                onBuildStart: [
-                    files.length > 0 ? 'rm -rv ' + files.join(' ') : 'pwd',
-                ]
+                onBuildStart: cleanFilesCommands
             }),
             new WebpackBuildNotifierPlugin({
                 title: `Module ${mod}`,
@@ -90,7 +111,7 @@ module.exports = function (dirname) {
                     return
                 }
                 const assets = stats.compilation.getAssets()
-                assets 
+                assets
                 	.filter(f => /.js$/.test(f.name))
                     .forEach(f => {
                         const fileFullPath = f.source.existsAt
@@ -115,7 +136,7 @@ module.exports = function (dirname) {
                             if(codeCompress){
 	                            console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
 	                            fs.writeFile(fileFullPath, codeCompress, () => {
-	                            });	
+	                            });
                             }
                         });
                     })

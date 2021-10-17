@@ -22,4 +22,9 @@ class EnvUtil
         }
         return null;
     }
+
+    public static function iniFileConfig($key)
+    {
+        return @ini_get($key);
+    }
 }

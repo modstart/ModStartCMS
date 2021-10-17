@@ -56,11 +56,16 @@ const webpackConfig = {
             if (stats.compilation.options.mode === 'development') {
                 return
             }
-            Object.keys(stats.compilation.assets)
-                .filter(f => /.js$/.test(f))
+            const assets = stats.compilation.getAssets()
+            assets
+                .filter(f => /.js$/.test(f.name))
                 .forEach(f => {
-                    console.log("process", f)
-                    const fileFullPath = stats.compilation.assets[f]['existsAt']
+                    const fileFullPath = f.source.existsAt
+                    if (!fileFullPath) {
+                        console.log('process ignore', f.name)
+                        return;
+                    }
+                    console.log("process", fileFullPath)
                     fs.readFile(fileFullPath, {
                         flag: 'r+',
                         encoding: 'utf8'
@@ -74,9 +79,11 @@ const webpackConfig = {
                                 comments: /^SOME_NONE_COMMENTS/
                             }
                         }).code
-                        console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
-                        fs.writeFile(fileFullPath, codeCompress, () => {
-                        });
+                        if (codeCompress) {
+                            console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
+                            fs.writeFile(fileFullPath, codeCompress, () => {
+                            });
+                        }
                     });
                 })
         })

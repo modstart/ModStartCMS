@@ -13,7 +13,7 @@ module.exports = function (gulp, dirname, excludes) {
     const gulpIgnore = require('gulp-ignore');
     const exclude = require('./exclude');
     const gulpStyleAliases = require('gulp-style-aliases');
-    const mod = dirname.replace(/^.+\/([A-Za-z0-9]+)\/resources\/asset/, '$1');
+    const mod = dirname.replace(/^.+[\/\\]([A-Za-z0-9]+)[\/\\]resources[\/\\]asset/, '$1');
     let config = moduleConfig(mod)
     const Env = {
         exclude: ['common', 'lib', 'entry', 'sui', 'svue', 'components'],
