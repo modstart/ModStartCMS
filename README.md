@@ -21,9 +21,9 @@
 # ModStartCMS 基于Laravel的快速开发框架
 
 
-##  🔥 当前版本
+##  🔥 最新版本
 
-`v1.4.0`基础功能已完善，后续功能正在加紧迭代开发中，欢迎交流
+基础功能已完善，后续功能正在加紧迭代开发中，欢迎交流
 
 
 
@@ -56,7 +56,7 @@
 - 组件按需加载静态资源
 - 内置丰富的表格常用功能
 - 内置文件上传，无需繁琐的开发
-- 模块市场，只需在管理页面点击鼠标即可完成插件的安装、更新和卸载等操作
+- 模块市场，只需在管理页面点击鼠标即可完成模块的安装、更新和卸载等操作
 
 
 
@@ -146,8 +146,8 @@ server {
 
 ### 集成环境
 
-- 宝塔一键安装教程：待完善
-- PHPStudy意见安装教程：待完善
+- 宝塔一键安装教程：[https://modstart.com/doc/install/baota.html](https://modstart.com/doc/install/baota.html)
+- PHPStudy一键安装教程：[https://modstart.com/doc/install/phpstudy.html](https://modstart.com/doc/install/phpstudy.html)
 
 ### 环境预检
 
@@ -163,14 +163,7 @@ server {
 
 ### 升级指南
 
-在升级前，请备份好系统的源代码、数据等信息，按照如下步骤进行操作。
-
-1. 获取最新的 ModStart 源代码包
-2. 全量覆盖所有的源代码
-3. 使用命令行进入到系统的根路径，运行 `php artisan migrate`，重新构建 `public/asset` 目录和所有基础服务代码；
-4. 使用命令行进入到系统的根路径，运行 `php artisan modstart:module-install-all`，重新构建 `public/vendor` 目录和所有扩展包代码。
-
-
+参照 [https://modstart.com/doc/install/upgrade.html](https://modstart.com/doc/install/upgrade.html)
 
 ### 版本策略
 
