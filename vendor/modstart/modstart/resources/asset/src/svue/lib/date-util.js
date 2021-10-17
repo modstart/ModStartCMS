@@ -16,6 +16,9 @@ export const DateUtil = {
     timestamp() {
         return (new Date()).getTime()
     },
+    timestampSecond() {
+        return parseInt(DateUtil.timestamp() / 1000)
+    },
     date() {
         return date.format(new Date(), DateUtil.FORMAT_DATE)
     },

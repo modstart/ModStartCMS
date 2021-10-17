@@ -23,6 +23,14 @@ const ViewUtil = {
     },
     fireResize() {
         $(window).trigger('resize')
+    },
+    watchHeightResponsively(cb, minHeight) {
+        minHeight = minHeight || 200
+        const resize = () => {
+            cb(ViewUtil.windowHeight())
+        }
+        setTimeout(() => resize(), 0)
+        $(window).on('resize', resize)
     }
 }
 

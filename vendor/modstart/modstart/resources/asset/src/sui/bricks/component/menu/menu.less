@@ -145,7 +145,6 @@
 }
 
 .ub-menu {
-  border: 0.05rem solid #EEE;
   border-radius: 0.25rem;
   background: #FFF;
 
@@ -159,7 +158,6 @@
 
   .title {
     line-height: 2rem;
-    border-bottom: 0.05rem solid #EEE;
     padding: 0 1rem;
     display: block;
     color: #333;
@@ -192,8 +190,7 @@
 
     a {
       line-height: 2rem;
-      border-bottom: 0.05rem solid #EEE;
-      padding: 0 0.5rem 0 1.5rem;
+      padding: 0 0.5rem 0 1.9rem;
       display: block;
       color: #333;
 
@@ -217,7 +214,6 @@
     .title {
       display: inline-block;
       min-width: 4em;
-      border-bottom: none;
 
       &:before {
         display: none;
@@ -249,8 +245,10 @@
       top: 2rem;
 
       a {
-        padding: 0 0.5rem;
+        padding: 0 0.15rem;
         text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
   }

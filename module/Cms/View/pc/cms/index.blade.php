@@ -10,8 +10,10 @@
     <div class="ub-container margin-top">
         <div class="row">
             <div class="col-md-8">
-                <div id="banner">
-                    @include('module::Banner.View.pc.public.banner',['position'=>'home','bannerRatio'=>'5-2'])
+                <div class="tw-bg-white tw-rounded-lg">
+                    <div id="banner">
+                        @include('module::Banner.View.pc.public.banner',['position'=>'home','bannerRatio'=>'5-2'])
+                    </div>
                 </div>
                 @foreach($channelTree as $channelGroup)
                     @if(!empty($channelLatestPost[$channelGroup['id']]))

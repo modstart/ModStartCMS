@@ -84,6 +84,24 @@ class AssetsUtil
         return $schema . '://' . Request::server('HTTP_HOST') . $path;
     }
 
+    /**
+     * @param $path
+     * @param $cdn
+     * @param bool $hash
+     * @return string
+     * @since 1.5.0
+     */
+    public static function fixFullWithCdn($path, $cdn, $hash = true)
+    {
+        if (empty($path)) {
+            return $path;
+        }
+        if (Str::startsWith($path, 'http://') || Str::startsWith($path, 'https://')) {
+            return $path;
+        }
+        return $cdn . ltrim($path, '/');
+    }
+
     public static function fixFullOrDefault($path, $default = null)
     {
         if (empty($path)) {

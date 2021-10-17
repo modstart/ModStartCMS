@@ -7,7 +7,7 @@
 
 @section('body')
     <div class="ub-admin-login">
-        <div class="head">{!! L('Admin Login') !!}</div>
+        <div class="head"><i class="iconfont icon-user"></i> {!! L('Admin Login') !!}</div>
         <div class="form">
             <form class="uk-form" method="post" action="?" data-ajax-form>
                 <div class="line">

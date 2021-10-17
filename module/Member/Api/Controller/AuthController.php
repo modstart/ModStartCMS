@@ -64,7 +64,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url(''));
-        $type = $input->getType('type', OauthType::class, $oauthType);
+        $oauthType = $input->getTrimString('type', $oauthType);
         $oauthUserInfo = Session::get('oauthUserInfo', []);
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');
@@ -124,7 +124,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         if (empty($oauthType)) {
-            $oauthType = $input->getType('type', OauthType::class);
+            $oauthType = $input->getTrimString('type');
         }
         if (empty($callback)) {
             $callback = $input->getTrimString('callback', null);
@@ -156,7 +156,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         if (empty($oauthType)) {
-            $oauthType = $input->getType('type', OauthType::class);
+            $oauthType = $input->getTrimString('type');
         }
         if (empty($callback)) {
             $callback = $input->getTrimString('callback', 'NO_CALLBACK');

@@ -179,6 +179,7 @@ class Detail implements Renderable
             case 'treeMaxLevel':
             case 'hookSaved':
             case 'hookChanged':
+            case 'hookDeleting':
             case 'hookDeleted':
             case 'hookItemOperateRendering':
             case 'addBlankPage':
