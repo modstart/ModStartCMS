@@ -199,11 +199,23 @@ class ModuleStoreController extends Controller
             case 'checkPackage':
                 $ret = ModuleStoreUtil::checkPackage($token, $module, $version);
                 BizException::throwsIfResponseError($ret);
-                return $this->doNext('upgrade', 'downloadPackage', [
-                    '<span class="ub-text-success">开始模块安装预检，依赖 ' . $ret['data']['requireText'] . '</span>',
-                    '<span class="ub-text-default">开始下载安装包...</span>'
-                ]);
-                break;
+                $msgs = [];
+                foreach ($ret['data']['requires'] as $require) {
+                    $msgs[] = '<span>&nbsp;&nbsp;</span>'
+                        . ($require['success']
+                            ? '<span class="ub-text-success"><i class="iconfont icon-check"></i> 成功</span>'
+                            : '<span class="ub-text-danger"><i class="iconfont icon-warning"></i> 失败</span>')
+                        . " <span>$require[name]</span> " . ($require['resolve'] ? " <span>解决：$require[resolve]</span>" : "");
+                }
+                if ($ret['data']['errorCount'] > 0) {
+                    return $this->doFinish(array_merge($msgs, [
+                        '<span class="ub-text-danger">预检失败，' . $ret['data']['errorCount'] . '个依赖不满足要求</span>',
+                    ]));
+                }
+                $msgs[] = '<span class="ub-text-default">开始下载安装包...</span>';
+                return $this->doNext('upgrade', 'downloadPackage', array_merge([
+                    '<span class="ub-text-success">预检成功，' . count($ret['data']['requires']) . '个依赖满足要求，安装包大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
+                ], $msgs));
             default:
                 return $this->doNext('upgrade', 'checkPackage', [
                     '<span class="ub-text-success">开始升级到远程模块 ' . $module . ' V' . $version . '</span>',
