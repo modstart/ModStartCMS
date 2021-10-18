@@ -9,6 +9,7 @@
     <meta name="keywords" content="@yield('pageKeywords','')">
     <meta name="description" content="@yield('pageDescription','')">
     <link rel="stylesheet" href="@asset('asset/vendor/iconfont/iconfont.css')">
+    <link rel="stylesheet" href="@asset('asset/font-awesome/css/font-awesome.min.css')">
     <script>
         window.__msCDN = "{{\ModStart\Core\Assets\AssetsUtil::cdn()}}";
         window.__msRoot = "{{modstart_web_url()}}";
