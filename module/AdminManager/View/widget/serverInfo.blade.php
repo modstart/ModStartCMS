@@ -6,7 +6,15 @@
         <table class="ub-table tw-font-mono">
             <tbody>
             <tr>
-                <td width="100" class="tw-font-bold">操作系统</td>
+                <td width="100" class="tw-font-bold">
+                    ModStart核心
+                </td>
+                <td collapse="3">
+                    V{{\ModStart\ModStart::$version}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tw-font-bold">操作系统</td>
                 <td>{{PHP_OS}}</td>
             </tr>
             <tr>
@@ -28,11 +36,27 @@
                 </td>
             </tr>
             <tr>
-                <td class="tw-font-bold">
-                    ModStart核心
-                </td>
+                <td class="tw-font-bold">文件上传限制</td>
                 <td>
-                    V{{\ModStart\ModStart::$version}}
+                    {{@ini_get('upload_max_filesize')}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tw-font-bold">表单提交限制</td>
+                <td>
+                    {{@ini_get('post_max_size')}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tw-font-bold">最大提交数量</td>
+                <td>
+                    {{@ini_get('max_file_uploads')}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tw-font-bold">分配内存限制</td>
+                <td>
+                    {{@ini_get('memory_limit')}}
                 </td>
             </tr>
             <tr>

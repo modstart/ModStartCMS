@@ -18,9 +18,11 @@ class ServerInfoWidget extends AbstractWidget
             $info = ModuleManager::getModuleBasic($m);
             $modules[] = "$m:$info[version]";
         }
+        $phpExtensions = get_loaded_extensions();
         return [
             'modules' => $modules,
             'attributes' => $this->formatAttributes(),
+            'phpExtensions' => $phpExtensions,
         ];
     }
 }
