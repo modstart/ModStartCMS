@@ -9,6 +9,11 @@ use Module\Member\Util\MemberUtil;
 
 abstract class AbstractOauth
 {
+    public function hasRender()
+    {
+        return true;
+    }
+
     public function isSupport()
     {
         return true;

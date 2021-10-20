@@ -53,6 +53,7 @@ use ModStart\Field\Type\FieldRenderMode;
  * @method \ModStart\Field\AreaChina      areaChina($column, $label = '')
  * @method \ModStart\Field\Hidden         hidden($column, $label = '')
  * @method \ModStart\Field\Icon           icon($column, $label = '')
+ * @method \ModStart\Field\Custom         custom($column, $label = '')
  */
 trait HasFields
 {

@@ -46,5 +46,11 @@ return [
         'SiteCounter' => [
             'enable' => true,
         ],
+        'SmsAliyun' => [
+            'enable' => true,
+        ],
+        'SmsYunpian' => [
+            'enable' => true,
+        ],
     ],
 ];

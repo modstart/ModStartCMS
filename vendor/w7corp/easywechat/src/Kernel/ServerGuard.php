@@ -148,7 +148,7 @@ class ServerGuard
         } else {
             $response = new Response($this->buildResponse($result['to'], $result['from'], $result['response']), 200, ['Content-Type' => 'application/xml']);
         }
-        $this->app->events->dispatch(new Events\ServerGuardResponseCreated($response));
+        // $this->app->events->dispatch(new Events\ServerGuardResponseCreated($response));
         return $response;
     }
     /**

@@ -33,7 +33,12 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         if ($passwordNew != $passwordRepeat) {
             return Response::generate(-1, '两次新密码输入不一致');
         }
-        $ret = MemberUtil::changePassword(MemberUser::id(), $passwordNew, $passwordOld);
+        $memberUser = MemberUser::get();
+        if (empty($memberUser['password'])) {
+            $ret = MemberUtil::changePassword(MemberUser::id(), $passwordNew, null, true);
+        } else {
+            $ret = MemberUtil::changePassword(MemberUser::id(), $passwordNew, $passwordOld);
+        }
         if ($ret['code']) {
             return Response::generate(-1, $ret['msg']);
         }

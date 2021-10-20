@@ -5,6 +5,7 @@ namespace Module\Member\Config;
 
 
 use ModStart\Core\Exception\BizException;
+use Module\Member\Oauth\AbstractOauth;
 
 class MemberOauth
 {
@@ -17,7 +18,12 @@ class MemberOauth
 
     public static function hasItems()
     {
-        return !empty(self::get());
+        $items = self::get();
+        $items = array_filter($items, function ($item) {
+            
+            return $item->hasRender();
+        });
+        return !empty($items);
     }
 
     public static function get($name = null)

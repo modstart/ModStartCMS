@@ -21,7 +21,7 @@ var UrlWatcher = function (option) {
     };
 
     this.stop = function () {
-        if (me.running) {
+        if (!me.running) {
             return;
         }
         me.running = false;

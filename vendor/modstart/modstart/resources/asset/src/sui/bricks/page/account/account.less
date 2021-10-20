@@ -4,12 +4,18 @@
   .box {
     background: #FFF;
     max-width: 17rem;
-    margin: 0 auto;
-    box-shadow: 0 0 0.4rem #DDD;
+    box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     border-radius: var(--size-radius);
     padding: 1rem 0;
     margin: 2rem auto;
+    text-align: center;
+
+    // @since 1.6.0
+    &.wide {
+      max-width: 34rem;
+      width: 34rem;
+    }
 
     .logo {
       text-align: center;
@@ -26,7 +32,6 @@
     }
 
     .nav {
-      text-align: center;
       font-size: var(--font-size-large);
       color: #999;
       margin-top: 1rem;
@@ -117,6 +122,11 @@
       max-width: 100%;
       box-shadow: none;
       background: transparent;
+
+      // @since 1.6.0
+      &.wide {
+        width: auto;
+      }
     }
   }
 }

@@ -85,6 +85,20 @@ abstract class AbstractEncoder
     abstract protected function processWebp();
 
     /**
+     * Processes and returns image as Avif encoded string
+     *
+     * @return string
+     */
+    abstract protected function processAvif();
+
+    /**
+     * Processes and returns image as Heic encoded string
+     *
+     * @return string
+     */
+    abstract protected function processHeic();
+
+    /**
      * Process a given image
      *
      * @param  Image   $image
@@ -117,9 +131,11 @@ abstract class AbstractEncoder
 
             case 'jpg':
             case 'jpeg':
+            case 'image/jp2':
             case 'image/jpg':
             case 'image/jpeg':
             case 'image/pjpeg':
+            case 'image/jfif':
                 $this->result = $this->processJpeg();
                 break;
 
@@ -132,7 +148,6 @@ abstract class AbstractEncoder
                 $this->result = $this->processTiff();
                 break;
 
-            case 'bmp':
             case 'bmp':
             case 'ms-bmp':
             case 'x-bitmap':
@@ -168,10 +183,21 @@ abstract class AbstractEncoder
             case 'image/x-webp':
                 $this->result = $this->processWebp();
                 break;
+
+            case 'avif':
+            case 'image/avif':
+                $this->result = $this->processAvif();
+                break;
+
+            case 'heic':
+            case 'image/heic':
+            case 'image/heif':
+                $this->result = $this->processHeic();
+                break;
                 
             default:
                 throw new NotSupportedException(
-                    "Encoding format ({$format}) is not supported."
+                    "Encoding format ({$this->format}) is not supported."
                 );
         }
 

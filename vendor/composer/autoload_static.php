@@ -464,6 +464,13 @@ class ComposerStaticInit706b33cb1a59da22e16a05108f7ffbcb
                 0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced',
             ),
         ),
+        'B' => 
+        array (
+            'BaconQrCode' => 
+            array (
+                0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
+            ),
+        ),
     );
 
     public static $classMap = array (

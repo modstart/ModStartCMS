@@ -1,6 +1,16 @@
 @extends($_viewFrame)
 
-@section('pageTitle','注册 - '.modstart_config('siteName'))
+@section('pageTitleMain')注册@endsection
+
+@section('headAppend')
+    @parent
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageHeadAppend',$this); !!}
+@endsection
+
+@section('bodyAppend')
+    @parent
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageBodyAppend',$this); !!}
+@endsection
 
 @section('bodyAppend')
     @parent
@@ -47,7 +57,7 @@
 
 @section('bodyContent')
 
-    <div class="ub-account">
+    <div class="ub-account" style="min-height:calc( 100vh - 220px );">
 
         <div class="box">
 

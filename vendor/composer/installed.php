@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'f9ebaece76cab81451bc02baa74e8b52ed5dd931',
+    'reference' => '38e91faa838a0b84c252214becade1a99435c73a',
     'name' => 'soft/org',
   ),
   'versions' => 
@@ -19,6 +19,15 @@
       array (
       ),
       'reference' => '8c0f5d10f8fb1481b9d98488dbbe2bf84c2e1a25',
+    ),
+    'bacon/bacon-qr-code' => 
+    array (
+      'pretty_version' => '1.0.3',
+      'version' => '1.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5a91b62b9d37cee635bbf8d553f4546057250bee',
     ),
     'chumper/zipper' => 
     array (
@@ -165,21 +174,21 @@
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => '1.4.1',
-      'version' => '1.4.1.0',
+      'pretty_version' => '1.5.0',
+      'version' => '1.5.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
+      'reference' => '136a635e2b4a49b9d79e9c8fee267ffb257fdba0',
     ),
     'guzzlehttp/psr7' => 
     array (
-      'pretty_version' => '1.8.2',
-      'version' => '1.8.2.0',
+      'pretty_version' => '1.8.3',
+      'version' => '1.8.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
+      'reference' => '1afdd860a2566ed3c2b0b4a3de6e23434a79ec85',
     ),
     'guzzlehttp/ringphp' => 
     array (
@@ -397,12 +406,12 @@
     ),
     'intervention/image' => 
     array (
-      'pretty_version' => '2.5.1',
-      'version' => '2.5.1.0',
+      'pretty_version' => '2.7.0',
+      'version' => '2.7.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'abbf18d5ab8367f96b3205ca3c89fb2fa598c69e',
+      'reference' => '9a8cc99d30415ec0b3f7649e1647d03a55698545',
     ),
     'jakub-onderka/php-console-color' => 
     array (
@@ -424,12 +433,12 @@
     ),
     'jaybizzle/crawler-detect' => 
     array (
-      'pretty_version' => 'v1.2.106',
-      'version' => '1.2.106.0',
+      'pretty_version' => 'v1.2.107',
+      'version' => '1.2.107.0',
       'aliases' => 
       array (
       ),
-      'reference' => '78bf6792cbf9c569dc0bf2465481978fd2ed0de9',
+      'reference' => '62b9055b555be9e1479d7c37515d7c58975c2aa4',
     ),
     'jenssegers/agent' => 
     array (
@@ -539,7 +548,7 @@
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '40273f4d1978d54ceb4937fc39280b89a3e88535',
+      'reference' => '05d796119a9faf2c1e4f0c95e535644cf5eb5eac',
     ),
     'monolog/monolog' => 
     array (
@@ -606,12 +615,12 @@
     ),
     'predis/predis' => 
     array (
-      'pretty_version' => 'v1.1.7',
-      'version' => '1.1.7.0',
+      'pretty_version' => 'v1.1.9',
+      'version' => '1.1.9.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'b240daa106d4e02f0c5b7079b41e31ddf66fddf8',
+      'reference' => 'c50c3393bb9f47fa012d0cdfb727a266b0818259',
     ),
     'psr/container' => 
     array (
@@ -697,7 +706,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'f9ebaece76cab81451bc02baa74e8b52ed5dd931',
+      'reference' => '38e91faa838a0b84c252214becade1a99435c73a',
     ),
     'swiftmailer/swiftmailer' => 
     array (
@@ -914,7 +923,7 @@
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '59a950ecf0104b879623ee5e5c82cf49c0e791cb',
+      'reference' => 'ccfc4f3ca10322cf2a3c4a2fde5dfe37a780e5b9',
     ),
   ),
 );

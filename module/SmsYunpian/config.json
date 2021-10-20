@@ -1,0 +1,14 @@
+{
+  "name": "SmsYunpian",
+  "title": "云片短信",
+  "require": [
+    "Vendor:>=1.6.0"
+  ],
+  "version": "1.1.0",
+  "author": "ModStart",
+  "description": "云片短信发送配置",
+  "providers": [
+  ],
+  "config": {
+  }
+}

@@ -4,6 +4,7 @@ namespace Module\Vendor\Sms;
 
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
+use Module\Vendor\Provider\SmsSender\SmsSenderProvider;
 use Module\Vendor\SoftApi\SoftApi;
 
 class SmsUtil
@@ -57,11 +58,9 @@ class SmsUtil
 
     public static function send($phone, $template, $templateData = [])
     {
-        $driver = app()->config->get('SmsSenderDriver');
-        BizException::throwsIfEmpty('短信发送未配置', $driver);
-        
-        $instance = app($driver);
-        $ret = $instance->send($phone, $template, $templateData);
+        $provider = app()->config->get('SmsSenderProvider');
+        BizException::throwsIfEmpty('短信发送未配置', $provider);
+        $ret = SmsSenderProvider::get($provider)->send($phone, $template, $templateData);
         BizException::throwsIfResponseError($ret);
         return Response::generateSuccess();
     }

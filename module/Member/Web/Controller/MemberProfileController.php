@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\View;
 use ModStart\App\Web\Layout\WebConfigBuilder;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Field\AbstractField;
+use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleBaseController;
+use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
 
 class MemberProfileController extends ModuleBaseController implements MemberLoginCheck
@@ -29,9 +32,16 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     public function password(WebConfigBuilder $builder)
     {
+        $memberUser = MemberUser::get();
         $builder->pageTitle('修改密码');
         $builder->page()->view($this->viewMemberFrame);
-        $builder->password('passwordOld', '旧密码')->required()->styleFormField('max-width:10rem;');
+        if (empty($memberUser['password'])) {
+            $builder->custom('tips', '')->hookRendering(function (AbstractField $field, $item, $index) {
+                return AutoRenderedFieldValue::make('<div class="ub-alert ub-alert-warning"><i class="iconfont icon-warning"></i> 您还没有设定密码，请设定新密码</div>');
+            });
+        } else {
+            $builder->password('passwordOld', '旧密码')->required()->styleFormField('max-width:10rem;');
+        }
         $builder->password('passwordNew', '新密码')->rules('required')->styleFormField('max-width:10rem;');
         $builder->password('passwordRepeat', '重复密码')->rules('required')->styleFormField('max-width:10rem;');
         return $builder->perform(null, function (Form $form) {
