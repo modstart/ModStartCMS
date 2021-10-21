@@ -22,6 +22,25 @@ if (!file_exists(ENV_FILE)) {
     file_put_contents(ENV_FILE, "APP_ENV=beta\nAPP_DEBUG=true\nAPP_KEY=" . \ModStart\Core\Util\RandomUtil::string(32));
 }
 
+function php_version_requires()
+{
+    return join(', ', [
+        '5.6.x',
+        '7.0.x',
+    ]);
+}
+
+function php_version_ok()
+{
+    if (version_compare(PHP_VERSION, '5.5.9', '<')) {
+        return false;
+    }
+    if (version_compare(PHP_VERSION, '7.1.0', '>=')) {
+        return false;
+    }
+    return true;
+}
+
 function get_env_config($key, $default = '')
 {
     static $envConfig = null;

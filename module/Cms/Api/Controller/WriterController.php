@@ -21,8 +21,10 @@ use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberUtil;
 use Module\Vendor\Html\HtmlConverter;
 
+
 class WriterController extends Controller implements MemberLoginCheck
 {
+    
     public function settingGet()
     {
         $memberUser = MemberUser::user();
@@ -35,6 +37,7 @@ class WriterController extends Controller implements MemberLoginCheck
         return Response::generateSuccessData($setting);
     }
 
+    
     public function settingSave()
     {
         $input = InputPackage::buildFromInput();

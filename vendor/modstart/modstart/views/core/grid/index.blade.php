@@ -113,6 +113,7 @@
                 search: $lister.find('[data-search]'),
                 table: $lister.find('[data-table]')
             }, {
+                hashUrl: false,
                 server: window.location.href,
                 render: function (data) {
                     listerData = data;

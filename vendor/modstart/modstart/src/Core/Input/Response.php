@@ -247,7 +247,10 @@ class Response
 
     public static function send($code, $msg, $data = null, $redirect = null)
     {
-        if (\Illuminate\Support\Facades\Request::ajax() || Request::headerGet('is-ajax', false)) {
+        if (\Illuminate\Support\Facades\Request::ajax()
+            || Request::headerGet('is-ajax', false)
+            || (($headerAccept = Request::headerGet('accept')) && $headerAccept == 'application/json')
+        ) {
             return self::json($code, $msg, $data, $redirect);
         } else {
             if (empty($msg) && $redirect) {

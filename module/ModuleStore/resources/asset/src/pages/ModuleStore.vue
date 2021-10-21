@@ -106,7 +106,7 @@
                                 <div>
                                     <a :href="module.url" target="_blank"
                                        class="tw-font-bold tw-text-gray-700 ub-text-truncate tw-block">
-                                        <span v-if="module._isLocal" class="ub-tag primary sm ub-bg-a">本地插件</span>
+                                        <span v-if="module._isLocal" class="ub-tag primary sm ub-bg-a">本地模块</span>
                                         <span v-html="$highlight(module.title,search.keywords)"></span>
                                     </a>
                                     <div>

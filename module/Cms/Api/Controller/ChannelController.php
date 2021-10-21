@@ -13,8 +13,10 @@ use Module\Cms\Util\ChannelUtil;
 use Module\Cms\Util\PostUtil;
 use Module\Member\Util\MemberUtil;
 
+
 class ChannelController extends Controller
 {
+    
     public function paginate()
     {
         $input = InputPackage::buildFromInput();

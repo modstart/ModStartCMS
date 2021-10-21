@@ -46,7 +46,7 @@ include __DIR__ . '/function.php';
             </div>
             <div class="body">
                 <?php text_success('系统：' . PHP_OS); ?>
-                <?php version_compare(PHP_VERSION, '5.5.9', '>=') ? text_success('PHP版本' . PHP_VERSION) : text_error('PHP版本>=5.5.9 当前为' . PHP_VERSION); ?>
+                <?php php_version_ok() ? text_success('PHP版本 ' . PHP_VERSION) : text_error('PHP版本要求（'.php_version_requires().'） 当前为 ' . PHP_VERSION); ?>
                 <?php text_success('最大上传：' . FileUtil::formatByte(EnvUtil::env('uploadMaxSize'))); ?>
                 <?php function_exists('openssl_open') ? text_success('OpenSSL PHP 扩展') : text_error('缺少 OpenSSL PHP 扩展'); ?>
                 <?php function_exists('exif_read_data') ? text_success('Exif PHP 扩展') : text_error('缺少 Exif PHP 扩展'); ?>
