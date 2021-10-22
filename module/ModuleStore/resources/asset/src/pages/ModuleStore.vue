@@ -38,7 +38,8 @@
             </el-tabs>
             <div class="ub-padding">
                 <div class="tw-float-right">
-                    <el-button round style="padding:0.25rem 0.5rem;" :loading="memberUserLoading" @click="doMemberLoginShow()">
+                    <el-button round style="padding:0.25rem 0.5rem;" :loading="memberUserLoading"
+                               @click="doMemberLoginShow()">
                         <span v-if="memberUserLoading">
                             登录中
                         </span>
@@ -132,10 +133,17 @@
                                     </a>
                                 </div>
                                 <a v-if="!module._isInstalled" href="javascript:;" @click="doInstall(module)"
-                                   class="tw-mr-4" :data-tk-event="'ModuleStore,Install,'+module.name"
+                                   class="tw-mr-1" :data-tk-event="'ModuleStore,Install,'+module.name"
                                 >
                                     <i class="iconfont icon-plus"></i>安装
                                 </a>
+                                <el-tooltip class="item" effect="dark" content="安装其他版本" placement="top">
+                                    <a v-if="!module._isInstalled" href="javascript:;" @click="doInstallVersion(module)"
+                                       class="tw-mr-4 tw-text-gray-400"
+                                    >
+                                        <i class="iconfont icon-down"></i>
+                                    </a>
+                                </el-tooltip>
                                 <a v-if="module._isInstalled && !module._isLocal && module.latestVersion!==module._localVersion"
                                    @click="doUpgrade(module)"
                                    :data-tk-event="'ModuleStore,Upgrade,'+module.name"
@@ -313,6 +321,34 @@
                 <el-button type="danger" @click="commandDialogShow=false">关闭</el-button>
             </div>
         </el-dialog>
+        <el-dialog :visible.sync="installVersionDialogShow"
+                   :close-on-press-escape="false"
+                   :close-on-click-modal="false"
+                   append-to-body>
+            <div slot="title">
+                <div class="ub-text-bold ub-text-primary" v-if="installVersionModule">
+                    <i class="iconfont icon-code"></i>
+                    安装 {{installVersionModule.title}} 其他版本
+                </div>
+            </div>
+            <div v-if="installVersionModule">
+                <table class="ub-table tw-w-full tw-font-mono">
+                    <tbody>
+                    <tr v-for="(v,vIndex) in installVersionModule.releases">
+                        <td width="100">v{{v.version}}</td>
+                        <td>{{v.feature}}</td>
+                        <td width="100">{{v.time}}</td>
+                        <td>
+                            <a href="javascript:;" @click="doInstallVersionSubmit(installVersionModule,v.version)">
+                                <i class="iconfont icon-plus"></i>
+                                安装
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -357,6 +393,8 @@
                 storeConfig: {
                     disable: false,
                 },
+                installVersionDialogShow: false,
+                installVersionModule: null,
             }
         },
         computed: {
@@ -573,12 +611,23 @@
                     return true
                 })
             },
+            doInstallVersion(module) {
+                this.installVersionDialogShow = true
+                this.installVersionModule = module
+            },
             doInstall(module) {
                 this.doCommand('install', {
                     module: module.name,
                     version: module.latestVersion,
                     isLocal: module._isLocal
                 }, null, `安装模块 ${module.title}（${module.name}） V${module.latestVersion}`)
+            },
+            doInstallVersionSubmit(module, version) {
+                this.doCommand('install', {
+                    module: module.name,
+                    version: version,
+                    isLocal: module._isLocal
+                }, null, `安装模块 ${module.title}（${module.name}） V${version}`)
             },
             doDisable(module) {
                 this.doCommand('disable', {

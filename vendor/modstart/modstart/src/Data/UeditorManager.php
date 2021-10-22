@@ -5,6 +5,7 @@ namespace ModStart\Data;
 
 
 use ModStart\Admin\Auth\AdminPermission;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
@@ -115,8 +116,18 @@ class UeditorManager
                     return Response::jsonRaw($sret);
                 }
                 $sret ['state'] = 'SUCCESS';
+                $ignores = array_filter([
+                    trim(AssetsUtil::cdn(), '/') ? AssetsUtil::cdn() : null,
+                ]);
                 foreach ($list as $f) {
-                    if (preg_match('/^(http|ftp|https):\\/\\//i', $f)) {
+                    $ignoreCatch = false;
+                    foreach ($ignores as $ignore) {
+                        if (str_contains($f, $ignore)) {
+                            $ignoreCatch = true;
+                            break;
+                        }
+                    }
+                    if (!$ignoreCatch && preg_match('/^(http|ftp|https):\\/\\//i', $f)) {
                         $ext = FileUtil::extension($f);
                         if (in_array('.' . $ext, $config ['catcherAllowFiles'])) {
                             if ($imageContent = CurlUtil::getRaw($f)) {

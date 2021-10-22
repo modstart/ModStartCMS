@@ -24,15 +24,20 @@ class ModuleInstallCommand extends Command
         BizException::throwsIf('Module basic empty', !$basic);
         BizException::throwsIf(L('Module %s:%s depend on ModStart:%s, install fail', $module, $basic['version'], $basic['modstartVersion']), !VersionUtil::match(ModStart::$version, $basic['modstartVersion']));
         foreach ($basic['require'] as $require) {
-            $v = '*';
-            $pcs = explode(':', $require);
-            $m = $pcs[0];
-            if (isset($pcs[1])) {
-                $v = $pcs[1];
-            }
+            list($m, $v) = VersionUtil::parse($require);
             BizException::throwsIf(L('Module %s:%s depend on %s:%s, install fail', $module, $basic['version'], $m, $v), !isset($installeds[$m]));
             $mBasic = ModuleManager::getModuleBasic($m);
             BizException::throwsIf(L('Module %s:%s depend on %s:%s, install fail', $module, $basic['version'], $m, $v), !VersionUtil::match($mBasic['version'], $v));
+        }
+        if (!empty($basic['conflicts'])) {
+            foreach ($basic['conflicts'] as $conflict) {
+                list($m, $v) = VersionUtil::parse($conflict);
+                if (!isset($installeds[$m])) {
+                    continue;
+                }
+                $mBasic = ModuleManager::getModuleBasic($m);
+                BizException::throwsIf(L('Module %s:%s conflict with %s:%s, install fail', $module, $basic['version'], $m, $v), VersionUtil::match($mBasic['version'], $v));
+            }
         }
         $output = null;
 

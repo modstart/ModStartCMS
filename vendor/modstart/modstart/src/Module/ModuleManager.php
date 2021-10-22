@@ -35,6 +35,15 @@ class ModuleManager
                     // 'Xxx:>*'
                     // 'Xxx:<*'
                 ],
+                // 已知冲突模块
+                'conflicts' => [
+                    // 'Xxx:*'
+                    // 'Xxx:>=*'
+                    // 'Xxx:==*'
+                    // 'Xxx:<=*'
+                    // 'Xxx:>*'
+                    // 'Xxx:<*'
+                ],
                 'modstartVersion' => '*',
                 'author' => 'Author',
                 'description' => 'Description',

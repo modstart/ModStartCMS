@@ -265,7 +265,7 @@ class FileUtil
             $dh = opendir($dir);
             while (($file = readdir($dh)) !== false) {
                 if ($file != "." && $file != "..") {
-                    $fullPath = rtrim($dir, '/') . '/' . $file;
+                    $fullPath = rtrim($dir, '/\\') . '/' . $file;
                     if (is_dir($fullPath)) {
                         self::rm($fullPath, true);
                     } else {

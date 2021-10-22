@@ -99,6 +99,7 @@ return [
     'Module %s:%s depend on ModStart:%s, install fail' => '模块 %s:%s 依赖 ModStart核心:%s，安装失败',
     'Module %s:%s depend on %s:%s, install fail' => '模块%s:%s依赖%s:%s，安装失败',
     'Module %s depend on %s, uninstall fail' => '模块%s依赖%s，卸载失败',
+    'Module %s:%s conflict with %s:%s, install fail' => '模块%s:%s和依赖%s:%s冲突，安装失败',
     'File extension %s not permit' => '文件后缀%s不允许',
     'File Size Limit %s' => '文件最大为%s',
     'Loading' => '加载中',
