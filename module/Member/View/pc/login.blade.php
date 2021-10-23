@@ -75,7 +75,7 @@
                         @endif
                     </div>
                     <div class="tw-hidden col-md-6 lg:tw-flex lg:tw-flex-col lg:tw-justify-center">
-                        <div class="lg:tw-flex-grow tw-rounded-r tw--my-11 tw-flex tw-flex-col tw-justify-center tw-bg-no-repeat tw-bg-center tw-bg-cover tw-relative tw-overflow-hidden"
+                        <div class="lg:tw-flex-grow tw-rounded-r tw--my-11 tw-flex tw-flex-col tw-justify-center tw-bg-no-repeat tw-bg-center tw-bg-contain tw-relative tw-overflow-hidden"
                              style="background-image:url( @asset('vendor/Member/image/login_bg.png') )" data-member-login-right>
                         </div>
                     </div>
