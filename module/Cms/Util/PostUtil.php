@@ -95,8 +95,7 @@ class PostUtil
     public static function delete($id)
     {
         ModelUtil::delete('cms_post', ['id' => $id]);
-        ModelUtil::delete('cms_post_comment', ['postId' => $id]);
-        ModelUtil::delete('cms_post_like', ['postId' => $id]);
+                ModelUtil::delete('cms_post_like', ['postId' => $id]);
     }
 
     public static function deleteByMemberPostId($memberPostId)
