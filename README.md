@@ -15,10 +15,20 @@
   <a href="https://github.com/modstart/ModStartCMS" target="_blank">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/modstart/ModStartCMS">
   </a>
+  <a href="https://github.com/modstart/ModStartCMS" target="_blank">
+    <img alt="GitHub last release" src="https://img.shields.io/github/v/release/modstart/ModStartCMS">
+  </a>
 </p>
 
 
 # ModStartCMS 基于Laravel的快速开发框架
+
+
+##  🔥 当前版本
+
+最新版本 <img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/github/v/release/modstart/ModStartCMS?style=flat-square">，基础功能已完善，后续功能正在加紧迭代开发中，欢迎交流
+
+
 
 ##  💡 系统简介
 
@@ -82,7 +92,7 @@ demo | 123456| 演示账号只可以查看不能操作
 
 ### 环境要求
 
-- `PHP` >= `5.6`
+- `PHP` ： `5.6` 或 `7.0`
 - `MySQL` >= `5.0`
 - `PHP Extension`：`Fileinfo`
 - `Apache/Nginx`
@@ -141,6 +151,7 @@ server {
 
 - 宝塔一键安装教程：[https://modstart.com/doc/install/baota.html](https://modstart.com/doc/install/baota.html)
 - PHPStudy一键安装教程：[https://modstart.com/doc/install/phpstudy.html](https://modstart.com/doc/install/phpstudy.html)
+- Docker一键安装教程：[https://modstart.com/doc/install/docker.html](https://modstart.com/doc/install/docker.html)
 
 ### 环境预检
 
