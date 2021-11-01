@@ -1,5 +1,11 @@
 /*基础UI构建
 */
+@font-face {
+  font-family: "editor-iconfont"; /* Project id 2897874 */
+  src: data-uri('./../iconfont/iconfont.woff2?t=1635388959700') format('woff2'),
+  data-uri('./../iconfont/iconfont.woff?t=1635388959700') format('woff'),
+  data-uri('./../iconfont/iconfont.ttf?t=1635388959700') format('truetype');
+}
 /* common layer */
 .edui-default .edui-box {
   border: none;
@@ -165,7 +171,7 @@ div.edui-box {
   /*background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);*/
   /*background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);*/
   /*background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);*/
-  background: #F8F8F8;
+  background: #FFF;
   /*background-repeat: repeat-x;*/
   /*border: 1px solid #d4d4d4;*/
   -webkit-border-radius: 4px 4px 0 0;
@@ -318,9 +324,10 @@ div.edui-box {
 
 .edui-default .edui-list .edui-state-hover {
   position: relative;
-  background-color: #fff5d4;
-  border: 1px solid #dcac6c;
+  background-color: #EEE;
+  border: 1px solid #EEE;
   padding: 0;
+  border-radius:0.25rem;
 }
 
 .edui-default .edui-for-fontfamily .edui-listitem-label {
@@ -440,9 +447,14 @@ div.edui-box {
 .edui-default .edui-toolbar .edui-combox-body .edui-arrow {
   //background: url(../images/icons.png) -741px 0;
   //_background: url(../images/icons.gif) -741px 0;
-  background: data-uri('../icon/dropdown.png') no-repeat center;
+  //background: data-uri('../icon/dropdown.png') no-repeat center;
   height: 30px;
   width: 9px;
+  &:before{
+    content: "\e9f0";
+    font-family: "editor-iconfont";
+    font-size: 8px;
+  }
 }
 
 .edui-default .edui-toolbar .edui-combox .edui-combox-body {
@@ -451,6 +463,7 @@ div.edui-box {
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
+  cursor: pointer;
 }
 
 .edui-default .edui-toolbar .edui-combox-body .edui-splitborder {
@@ -462,12 +475,12 @@ div.edui-box {
 }
 
 .edui-default .edui-toolbar .edui-state-hover .edui-combox-body {
-  background-color: #fff5d4;
-  border: 1px solid #dcac6c;
+  //background-color: #fff5d4;
+  //border: 1px solid #dcac6c;
 }
 
 .edui-default .edui-toolbar .edui-state-hover .edui-combox-body .edui-arrow {
-  border-left: 1px solid #dcac6c;
+  //border-left: 1px solid #dcac6c;
 }
 
 .edui-default .edui-toolbar .edui-state-checked .edui-combox-body {
@@ -500,26 +513,35 @@ div.edui-box {
   //background: #FFF center no-repeat;
   background-position: center;
   background-repeat: no-repeat;
+
+  font-family: "editor-iconfont";
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .edui-default .edui-toolbar .edui-button .edui-button-wrap {
   padding: 1px;
   position: relative;
+  border-radius: 3px;
 }
 
 .edui-default .edui-toolbar .edui-button .edui-state-hover .edui-button-wrap {
-  background-color: #fff5d4;
+  background-color: #EEE;
   padding: 0;
-  border: 1px solid #dcac6c;
+  border: 1px solid #EEE;
 }
 
 .edui-default .edui-toolbar .edui-button .edui-state-checked .edui-button-wrap {
-  background-color: #ffe69f;
+  background-color: #EEE;
   padding: 0;
-  border: 1px solid #dcac6c;
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
+  border: 1px solid #EEE;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
 }
 
 .edui-default .edui-toolbar .edui-button .edui-state-active .edui-button-wrap {
@@ -547,13 +569,21 @@ div.edui-box {
 }
 
 .edui-default .edui-for-bold .edui-icon {
-  background-image: data-uri('../icon/bold.png');
-  background-size: 14px;
+  //background-image: data-uri('../icon/bold.png');
+  //background-size: 14px;
+  &:before {
+    content: "\e628";
+    font-size:14px;
+  }
 }
 
 .edui-default .edui-for-italic .edui-icon {
-  background-image: data-uri('../icon/italic.png');
-  background-size: 16px;
+  //background-image: data-uri('../icon/italic.png');
+  //background-size: 16px;
+  &:before {
+    content: "\e62a";
+    font-size:14px;
+  }
 }
 
 .edui-default .edui-for-fontborder .edui-icon {
@@ -561,13 +591,21 @@ div.edui-box {
 }
 
 .edui-default .edui-for-underline .edui-icon {
-  background-image: data-uri('../icon/underline.png');
-  background-size: 16px;
+  //background-image: data-uri('../icon/underline.png');
+  //background-size: 16px;
+  &:before {
+    content: "\e63e";
+    font-size:14px;
+  }
 }
 
 .edui-default .edui-for-strikethrough .edui-icon {
-  background-image: data-uri('../icon/strikethrough.png');
-  background-size: 16px;
+  //background-image: data-uri('../icon/strikethrough.png');
+  //background-size: 16px;
+  &:before {
+    content: "\e64a";
+    font-size:14px;
+  }
 }
 
 .edui-default .edui-for-subscript .edui-icon {
@@ -583,8 +621,12 @@ div.edui-box {
 }
 
 .edui-default .edui-for-forecolor .edui-icon {
-  background-image: data-uri('../icon/forecolor.png');
-  background-size: 18px;
+  //background-image: data-uri('../icon/forecolor.png');
+  //background-size: 18px;
+  &:before {
+    content: "\e7f8";
+    font-size:20px;
+  }
 }
 
 .edui-default .edui-for-backcolor .edui-icon {
@@ -596,23 +638,35 @@ div.edui-box {
 }
 
 .edui-default .edui-for-autotypeset .edui-icon {
-  background-image: data-uri('../icon/autotypeset.png');
-  background-size: 18px;
+  //background-image: data-uri('../icon/autotypeset.png');
+  //background-size: 18px;
+  &:before {
+    content: "\e662";
+  }
 }
 
 .edui-default .edui-for-justifyleft .edui-icon {
-  background-image: data-uri('../icon/justifyleft.png');
-  background-size: 14px;
+  //background-image: data-uri('../icon/justifyleft.png');
+  //background-size: 14px;
+  &:before {
+    content: "\e7f7";
+  }
 }
 
 .edui-default .edui-for-justifycenter .edui-icon {
-  background-image: data-uri('../icon/justifycenter.png');
-  background-size: 14px;
+  //background-image: data-uri('../icon/justifycenter.png');
+  //background-size: 14px;
+  &:before {
+    content: "\e7f6";
+  }
 }
 
 .edui-default .edui-for-justifyright .edui-icon {
-  background-image: data-uri('../icon/justifyright.png');
-  background-size: 14px;
+  //background-image: data-uri('../icon/justifyright.png');
+  //background-size: 14px;
+  &:before {
+    content: "\e7f5";
+  }
 }
 
 .edui-default .edui-for-justifyjustify .edui-icon {
@@ -644,8 +698,11 @@ div.edui-box {
 }
 
 .edui-default .edui-for-link .edui-icon {
-  background-image: data-uri('../icon/link.png');
-  background-size: 14px;
+  //background-image: data-uri('../icon/link.png');
+  //background-size: 14px;
+  &:before {
+    content: "\e648";
+  }
 }
 
 .edui-default .edui-for-code .edui-icon {
@@ -653,11 +710,17 @@ div.edui-box {
 }
 
 .edui-default .edui-for-insertimage .edui-icon {
-  background-position: -726px -77px;
+  //background-position: -726px -77px;
+  &:before {
+    content: "\e605";
+  }
 }
 
 .edui-default .edui-for-uploadimage .edui-icon {
-  background-image: data-uri('../icon/image.png');
+  //background-image: data-uri('../icon/image.png');
+  &:before {
+    content: "\e605";
+  }
 }
 
 .edui-default .edui-for-wechatcustomemotion .edui-icon {
@@ -705,7 +768,10 @@ div.edui-box {
 }
 
 .edui-default .edui-for-insertvideo .edui-icon {
-  background-image: data-uri('../icon/video.png');
+  //background-image: data-uri('../icon/video.png');
+  &:before {
+    content: "\e636";
+  }
 }
 
 .edui-default .edui-for-video .edui-icon {
@@ -749,18 +815,29 @@ div.edui-box {
 }
 
 .edui-default .edui-for-source .edui-icon {
-  background-image: data-uri('../icon/source.png');
-  background-size: 18px;
+  //background-image: data-uri('../icon/source.png');
+  //background-size: 18px;
+  &:before {
+    font-size:20px;
+    content: "\e608";
+  }
 }
 
 .edui-default .edui-for-removeformat .edui-icon {
-  background-image: data-uri('../icon/removeformat.png');
-  background-size: 20px;
+  //background-image: data-uri('../icon/removeformat.png');
+  //background-size: 20px;
+  &:before {
+    font-size:18px;
+    content: "\e782";
+  }
 }
 
 .edui-default .edui-for-unlink .edui-icon {
-  background-image: data-uri('../icon/unlink.png');
-  background-size: 20px;
+  //background-image: data-uri('../icon/unlink.png');
+  //background-size: 20px;
+  &:before {
+    content: "\e92b";
+  }
 }
 
 .edui-default .edui-for-touppercase .edui-icon {
@@ -864,8 +941,11 @@ div.edui-box {
 }
 
 .edui-default .edui-for-indent .edui-icon {
-  background-image: data-uri('../icon/indent.png');
-  background-size: 16px;
+  //background-image: data-uri('../icon/indent.png');
+  //background-size: 16px;
+  &:before {
+    content: "\e7f3";
+  }
 }
 
 .edui-default .edui-for-outdent .edui-icon {
@@ -989,29 +1069,35 @@ div.edui-box {
 .edui-default .edui-toolbar .edui-menubutton-body .edui-arrow {
   //background: url(../images/icons.png) -741px 0;
   //_background: url(../images/icons.gif) -741px 0;
-  background: data-uri('../icon/dropdown.png') no-repeat center;
+  //background: data-uri('../icon/dropdown.png') no-repeat center;
   height: 30px;
   width: 9px;
+  &:before{
+    content: "\e9f0";
+    font-family: "editor-iconfont";
+    font-size: 8px;
+  }
 }
 
 .edui-default .edui-toolbar .edui-splitbutton .edui-splitbutton-body,
 .edui-default .edui-toolbar .edui-menubutton .edui-menubutton-body {
   padding: 1px;
+  border-radius:3px;
 }
 
 .edui-default .edui-toolbar .edui-splitborder {
   width: 1px;
-  height: 20px;
+  height: 30px;
 }
 
 .edui-default .edui-toolbar .edui-state-hover .edui-splitborder {
   width: 1px;
-  border-left: 0px solid #dcac6c;
+  border-left: 0px solid #EEE;
 }
 
 .edui-default .edui-toolbar .edui-state-active .edui-splitborder {
   width: 0;
-  border-left: 1px solid gray;
+  border-left: 1px solid #EEE;
 }
 
 .edui-default .edui-toolbar .edui-state-opened .edui-splitborder {
@@ -1021,8 +1107,8 @@ div.edui-box {
 
 .edui-default .edui-toolbar .edui-splitbutton .edui-state-hover .edui-splitbutton-body,
 .edui-default .edui-toolbar .edui-menubutton .edui-state-hover .edui-menubutton-body {
-  background-color: #fff5d4;
-  border: 1px solid #dcac6c;
+  background-color: #EEE;
+  border: 1px solid #EEE;
   padding: 0;
 }
 
@@ -1036,7 +1122,7 @@ div.edui-box {
 .edui-default .edui-toolbar .edui-splitbutton .edui-state-active .edui-splitbutton-body,
 .edui-default .edui-toolbar .edui-menubutton .edui-state-active .edui-menubutton-body {
   background-color: #ffffff;
-  border: 1px solid gray;
+  border: 1px solid #EEE;
   padding: 0;
 }
 
@@ -1048,7 +1134,7 @@ div.edui-box {
 .edui-default .edui-toolbar .edui-splitbutton .edui-state-opened .edui-splitbutton-body,
 .edui-default .edui-toolbar .edui-menubutton .edui-state-opened .edui-menubutton-body {
   background-color: white;
-  border: 1px solid gray;
+  border: 1px solid #CCC;
   padding: 0;
 }
 
@@ -1229,6 +1315,10 @@ div.edui-box {
   width: auto;
 }
 
+.edui-dialog .edui-default .edui-icon:before{
+  display: none;
+}
+
 .edui-default .edui-dialog-wrap {
   margin-right: 6px;
   margin-bottom: 6px;
@@ -1257,19 +1347,21 @@ div.edui-box {
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  *border-right-width: 2px;
-  *border-bottom-width: 2px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
-  background-clip: padding-box;
+  border-radius: 0.5rem;
+  //border: 1px solid #ccc;
+  //border: 1px solid rgba(0, 0, 0, 0.2);
+  //*border-right-width: 2px;
+  //*border-bottom-width: 2px;
+  //-webkit-border-radius: 6px;
+  //-moz-border-radius: 6px;
+  //border-radius: 6px;
+  //-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  //-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  //box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  //-webkit-background-clip: padding-box;
+  //-moz-background-clip: padding;
+  //background-clip: padding-box;
+  //display: none;
 }
 
 .edui-default .edui-dialog-foot {
@@ -1277,22 +1369,24 @@ div.edui-box {
 }
 
 .edui-default .edui-dialog-titlebar {
-  height: 26px;
+  height: 36px;
   border-bottom: 1px solid #c6c6c6;
-  background: url(../images/dialog-title-bg.png) repeat-x bottom;
+  // background: url(../images/dialog-title-bg.png) repeat-x bottom;
+  background: #FFF;
   position: relative;
   cursor: move;
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
 .edui-default .edui-dialog-caption {
   font-weight: bold;
-  font-size: 12px;
-  line-height: 26px;
+  font-size: 14px;
+  line-height: 36px;
   padding-left: 5px;
 }
 
 .edui-default .edui-dialog-draghandle {
-  height: 26px;
+  height: 36px;
 }
 
 .edui-default .edui-dialog-closebutton {
@@ -1302,18 +1396,29 @@ div.edui-box {
 }
 
 .edui-default .edui-dialog-closebutton .edui-button-body {
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   cursor: pointer;
-  background: url("../images/icons-all.gif") no-repeat 0 -59px;
+  //background: url("../images/icons-all.gif") no-repeat 0 -59px;
+  font-family: "editor-iconfont";
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 26px;
+  vertical-align: top;
+  line-height: 30px;
+  &:before{
+    content: "\e6a7";
+  }
 }
 
 .edui-default .edui-dialog-closebutton .edui-state-hover .edui-button-body {
-  background: url("../images/icons-all.gif") no-repeat 0 -89px;
+  //background: url("../images/icons-all.gif") no-repeat 0 -89px;
 }
 
 .edui-default .edui-dialog-foot {
   height: 40px;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .edui-default .edui-dialog-buttons {
@@ -1326,17 +1431,20 @@ div.edui-box {
 }
 
 .edui-default .edui-dialog-buttons .edui-button .edui-button-body {
-  background: url("../images/icons-all.gif") no-repeat;
-  height: 24px;
+  //background: url("../images/icons-all.gif") no-repeat;
+  height: 30px;
   width: 96px;
-  font-size: 12px;
-  line-height: 24px;
+  font-size: 13px;
+  line-height: 30px;
   text-align: center;
-  cursor: default;
+  background: #F7F7F7;
+  border-radius:5px;
+  cursor: pointer;
 }
 
 .edui-default .edui-dialog-buttons .edui-button .edui-state-hover .edui-button-body {
-  background: url("../images/icons-all.gif") no-repeat 0 -30px;
+  // background: url("../images/icons-all.gif") no-repeat 0 -30px;
+  background: #F7F7F7;
 }
 
 .edui-default .edui-dialog iframe {
@@ -1347,11 +1455,13 @@ div.edui-box {
 }
 
 .edui-default .edui-dialog-modalmask {
-  opacity: 0.3;
+  //opacity: 0.3;
   //filter: alpha(opacity = 30);
-  background-color: #ccc;
+  //background-color: #ccc;
   position: absolute;
   /*z-index: 1999;*/
+  background: #000;
+  opacity: .48;
 }
 
 .edui-default .edui-dialog-dragmask {
@@ -1589,7 +1699,7 @@ div.edui-box {
 }
 
 .edui-default .edui-dialog-buttons .edui-label {
-  line-height: 24px;
+  line-height: 30px;
 }
 
 .edui-default .edui-tablepicker .edui-infoarea .edui-clickable {
@@ -1615,10 +1725,11 @@ div.edui-box {
 
 .edui-default .edui-colorpicker-preview {
   height: 20px;
-  border: 1px inset black;
+  border: 1px solid #EEE;
   margin-left: 1px;
   width: 128px;
   float: left;
+  border-radius:3px;
 }
 
 .edui-default .edui-colorpicker-nocolor {
@@ -1626,10 +1737,11 @@ div.edui-box {
   margin-right: 1px;
   font-size: 12px;
   line-height: 14px;
-  height: 14px;
-  border: 1px solid #333;
+  height: 20px;
+  border: 1px solid #EEE;
   padding: 3px 5px;
   cursor: pointer;
+  border-radius:3px;
 }
 
 .edui-default .edui-colorpicker-tablefirstrow {
@@ -1757,6 +1869,18 @@ div.edui-box {
 .edui-default .edui-autotypesetpicker-body td input {
   margin: 3px 3px 3px 4px;
   *margin: 1px 0 0 0;
+}
+
+.edui-default .edui-autotypesetpicker-body button {
+  -webkit-appearance: button;
+  border: none;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 5px;
+  border-radius: 3px;
+  margin-left: -10px;
+  color: #333;
+  cursor: pointer;
 }
 
 /*自动排版弹出菜单*/
@@ -1995,6 +2119,7 @@ div.edui-box {
 .editor-wechatcustomemotion {
   width: 34px *  12;
   padding: 10px;
+
   a.item {
     display: inline-block;
     width: 32px;
@@ -2002,13 +2127,21 @@ div.edui-box {
     border: 1px solid #EEE;
     text-align: center;
     cursor: pointer;
+
     &:hover {
       background: #F8F8F8;
     }
+
     img {
       width: 24px;
       height: 24px;
       margin-top: 4px;
     }
+  }
+}
+
+.edui-default .edui-for-formula .edui-icon {
+  &:before{
+    content: "\e616";
   }
 }

@@ -74,7 +74,7 @@ class AdminConfigBuilder implements Renderable
     }
 
     /**
-     * @param \stdClass $item
+     * @param \stdClass|null|false $item null表示使用默认的modstart_config配置获取，false表示不使用任何内容初始化
      * @param \Closure $callback = function (Form $form) { return Response::generateSuccess('ok'); }
      * @return $this
      */

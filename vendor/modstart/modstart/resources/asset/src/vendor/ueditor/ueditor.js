@@ -7180,7 +7180,7 @@
                         'p{margin:5px 0;}</style>' +
                         ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) +
                         (options.initialStyle ? '<style>' + options.initialStyle + '</style>' : '') +
-                        '</head><body class=\'view\' ></body>' +
+                        '</head><body class=\'view ub-html\' ></body>' +
                         '<script type=\'text/javascript\' ' + (ie ? 'defer=\'defer\'' : '' ) + ' id=\'_initialScript\'>' +
                         'setTimeout(function(){editor = window.parent.UE.instants[\'ueditorInstant' + me.uid + '\'];editor._setup(document);},0);' +
                         'var _tmpScript = document.getElementById(\'_initialScript\');_tmpScript.parentNode.removeChild(_tmpScript);</script></html>';
@@ -8307,7 +8307,7 @@
             initialContent: '',
             initialStyle: '',
             autoClearinitialContent: false,
-            iframeCssUrl: _url + 'themes/iframe.css',
+            iframeCssUrl: _url + 'themes/iframe.css?20211028',
             textarea: 'editorValue',
             focus: false,
             focusInEnd: true,
@@ -18117,6 +18117,7 @@
                 // }
             },
             queryCommandState: function () {
+                console.log('xxx',me.selection.getRange().getClosedNode())
                 var img = me.selection.getRange().getClosedNode(),
                     flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
                 return flag ? 1 : 0;
@@ -28186,7 +28187,7 @@
             'searchreplace': '~/dialogs/searchreplace/searchreplace.html',
             'map': '~/dialogs/map/map.html',
             'gmap': '~/dialogs/gmap/gmap.html',
-            'insertvideo': '~/dialogs/video/video.html?20200511_3',
+            'insertvideo': '~/dialogs/video/video.html?20211028',
             'help': '~/dialogs/help/help.html',
             'preview': '~/dialogs/preview/preview.html',
             'emotion': '~/dialogs/emotion/emotion.html',
@@ -28213,7 +28214,7 @@
             'insertparagraphbeforetable', 'insertrow', 'insertcol', 'mergeright', 'mergedown', 'deleterow',
             'deletecol', 'splittorows', 'splittocols', 'splittocells', 'mergecells', 'deletetable', 'drafts',
             // 额外增加的插件
-            'uploadimage','wechatcustomemotion'
+            'uploadimage','wechatcustomemotion','formula',
         ];
 
         for (var i = 0, ci; ci = btnCmds[i++];) {
@@ -29717,7 +29718,7 @@
             var editor = new UE.Editor(options);
             editor.options.editor = editor;
             utils.loadFile(document, {
-                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css",
+                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211028",
                 tag: "link",
                 type: "text/css",
                 rel: "stylesheet"

@@ -41,4 +41,11 @@ class SmsSenderProvider
         }
         BizException::throws('没有找到SmsSenderProvider');
     }
+
+    
+    public static function hasProvider()
+    {
+        $provider = app()->config->get('SmsSenderProvider');
+        return !empty($provider);
+    }
 }

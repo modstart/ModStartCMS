@@ -25,20 +25,36 @@
             mode: {
                 type: String,
                 default: 'guess'
+            },
+            type: {
+                type: Object,
+                default: () => {
+                    return null
+                }
             }
         },
         computed: {
             values() {
                 let vs = {}
-                if (this.name in Constants) {
-                    const v = Constants[this.name]
-                    Object.keys(v).forEach(k => {
-                        vs['v' + v[k].value] = {
-                            name: v[k].name,
-                            value: v[k].value,
+                if (this.type) {
+                    Object.keys(this.type).forEach(k => {
+                        vs['v' + this.type[k].value] = {
+                            name: this.type[k].name,
+                            value: this.type[k].value,
                             key: k
                         }
                     })
+                } else {
+                    if (this.name in Constants) {
+                        const v = Constants[this.name]
+                        Object.keys(v).forEach(k => {
+                            vs['v' + v[k].value] = {
+                                name: v[k].name,
+                                value: v[k].value,
+                                key: k
+                            }
+                        })
+                    }
                 }
                 return vs
             },

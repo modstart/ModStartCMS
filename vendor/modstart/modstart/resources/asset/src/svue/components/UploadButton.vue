@@ -58,7 +58,7 @@
             const init = () => {
                 const url = `${this.url}/${this.category}`
                 UploadButtonUploader('#' + this.id, {
-                    text: '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200" style="display:inline-block;line-height:28px;"><i class="iconfont icon-upload"></i> ' + this.L('Select Local File') + '</span>',
+                    text: '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200" style="display:block;line-height:28px;"><i class="iconfont icon-upload"></i> ' + this.L('Select Local File') + '</span>',
                     // swf: '/static/webuploader/Uploader.swf',
                     server: this.$api.url ? this.$api.url(url) : url,
                     extensions: this.dataUploadConfig.category[this.category].extensions.join(','),

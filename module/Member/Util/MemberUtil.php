@@ -2,6 +2,7 @@
 
 namespace Module\Member\Util;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use ModStart\Core\Assets\AssetsUtil;
@@ -15,6 +16,14 @@ use Module\Member\Type\MemberStatus;
 
 class MemberUtil
 {
+    
+    public static function total()
+    {
+        return Cache::remember('MemberUserTotal', 60, function () {
+            return ModelUtil::count('member_user');
+        });
+    }
+
     public static function get($id)
     {
         return ModelUtil::get('member_user', ['id' => $id]);

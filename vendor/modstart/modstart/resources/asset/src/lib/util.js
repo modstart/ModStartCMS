@@ -1,3 +1,4 @@
+const md5 = require('md5');
 var Util = {};
 
 Util.specialchars = function (str) {
@@ -191,6 +192,77 @@ Util.scrollTo = function (selector) {
     }
     var top = $target.offset().top;
     $('html,body').animate({scrollTop: top}, 200);
+};
+
+/**
+ * 动态设置样式
+ * @param id
+ * @param css
+ * @since 1.7.0
+ */
+Util.setStyleContent = function (id, css) {
+    let style = document.getElementById(id)
+    if (!style) {
+        style = document.createElement('style')
+        style.type = 'text/css'
+        style.id = id
+        document.getElementsByTagName('head')[0].appendChild(style)
+        style = document.getElementById(id)
+    }
+    style.innerHTML = css
+};
+/**
+ * 动态加载JS
+ * @param id
+ * @param css
+ * @since 1.7.0
+ */
+Util.loadScript = function (url, cb) {
+    let id = 's_' + md5(url)
+    let script = document.getElementById(id)
+    if (script) {
+        cb && cb({isNew: false})
+        return
+    }
+    script = document.createElement('script')
+    script.id = id
+    script.src = url
+    script.onload = () => {
+        cb && cb({isNew: true})
+    }
+    document.getElementsByTagName('head')[0].appendChild(script)
+};
+/**
+ * 动态加载CSS
+ * @param url
+ * @param cb
+ * @since 1.7.0
+ */
+Util.loadStylesheet = function (url, cb) {
+    let id = 's_' + md5(url)
+    let link = document.getElementById(id)
+    if (link) {
+        cb && cb({isNew: false})
+        return
+    }
+    link = document.createElement('link')
+    link.id = id
+    link.rel = 'stylesheet'
+    link.type = 'text/css'
+    link.href = url
+    link.onload = () => {
+        cb && cb({isNew: true})
+    }
+    document.getElementsByTagName('head')[0].appendChild(link)
+};
+
+/**
+ * 计算MD5值
+ * @param data
+ * @since 1.7.0
+ */
+Util.md5 = function (data) {
+    return md5(data)
 };
 
 module.exports = Util;

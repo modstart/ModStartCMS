@@ -16,7 +16,7 @@ abstract class AbstractEmailSender
     {
         $view = $template;
         if (!view()->exists($view)) {
-            $view = 'theme.' . modstart_config()->getWithEnv('siteTemplate','default') . '.mail.' . $template;
+            $view = 'theme.' . modstart_config()->getWithEnv('siteTemplate', 'default') . '.mail.' . $template;
             if (!view()->exists($view)) {
                 $view = 'theme.default.mail.' . $template;
                 if (!view()->exists($view)) {

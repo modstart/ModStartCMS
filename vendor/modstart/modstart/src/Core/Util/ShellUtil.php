@@ -17,4 +17,53 @@ class ShellUtil
         $process->getStopSignal();
         return $process->getOutput();
     }
+
+    /**
+     * @param $commandFilter
+     * @return array|string|null
+     * @since 1.7.0
+     */
+    public static function commandStatus($commandFilter)
+    {
+        $cmd = "ps -eo pid,etimes,cmd";
+        if (is_array($commandFilter)) {
+            foreach ($commandFilter as $item) {
+                $cmd .= " | grep '$item'";
+            }
+        } else {
+            $cmd .= " | grep '$commandFilter'";
+        }
+        $cmd .= " | grep -v grep";
+        $ret = trim(shell_exec($cmd));
+        if (empty($ret)) {
+            return null;
+        }
+        $pcs = preg_split('/\\s+/', $ret);
+        if (count($pcs) >= 3) {
+            $ret = [
+                'pid' => intval($pcs[0]),
+                'uptime' => intval($pcs[1]),
+                'cmd' => '',
+            ];
+            array_shift($pcs);
+            array_shift($pcs);
+            $ret['cmd'] = join(' ', $pcs);
+            return $ret;
+        }
+        return null;
+    }
+
+    /**
+     * @param $command
+     * @param null $outputFile
+     * @since 1.7.0
+     */
+    public static function commandRunBackground($command, $outputFile = null)
+    {
+        if (null === $outputFile) {
+            $outputFile = '/dev/null';
+        }
+        $cmd = "nohup $command >$outputFile 2>&1 &";
+        shell_exec($cmd);
+    }
 }

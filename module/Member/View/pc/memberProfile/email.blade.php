@@ -27,7 +27,7 @@
         <div class="body">
             <form action="?" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
 
-                @if(!modstart_config('systemEmailEnable',false))
+                @if(! \Module\Vendor\Provider\MailSender\MailSenderProvider::hasProvider())
                     <div class="line">
                         <div class="ub-alert ub-alert-danger">
                             <i class="ub-icon-warning"></i>

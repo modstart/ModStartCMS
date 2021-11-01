@@ -11,6 +11,6 @@ class CaptchaController extends Controller
 {
     public function image()
     {
-        return Captcha::create('default');
+        return Captcha::create('formula');
     }
 }
