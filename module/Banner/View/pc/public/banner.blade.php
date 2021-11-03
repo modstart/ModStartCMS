@@ -41,7 +41,7 @@ if(empty($bannerRatio)){
                            @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif>
                             <video class="video-player"
                                    src="{{\ModStart\Core\Assets\AssetsUtil::fix($banner['video'])}}"
-                                   autoplay="autoplay" loop="loop" muted="muted" controls="false"></video>
+                                   autoplay="autoplay" loop="loop" muted="muted"></video>
                         </a>
                     @endif
                 @endforeach
@@ -71,8 +71,8 @@ if(empty($bannerRatio)){
 @if(count($banners)>1)
     <script>
         $(function () {
-            $.each('#{{$bannerId}} video', function(){
-                this.controls = false;
+            $('#{{$bannerId}} video').each(function(i,o){
+                o.controls = false;
             });
             var swiper = new Swiper('#{{$bannerId}} .swiper-container', {
                 pagination: {
