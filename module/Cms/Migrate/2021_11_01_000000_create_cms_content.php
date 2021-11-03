@@ -44,7 +44,6 @@ class CreateCmsContent extends Migration
 
             $table->index(['postTime']);
             $table->index(['catId']);
-            $table->index(['memberUserId']);
             $table->unique(['alias']);
 
         });
