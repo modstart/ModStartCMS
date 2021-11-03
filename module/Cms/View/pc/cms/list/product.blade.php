@@ -6,7 +6,8 @@
 
 @section('bodyContent')
 
-    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-transparent ub-cover tw-bg-fixed" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fixFullOrDefault($cat['bannerBg'],'vendor/Cms/bg/product.jpg')}});">
+    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-transparent ub-cover"
+         style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fixFullOrDefault($cat['bannerBg'],'vendor/Cms/bg/product.jpg')}});">
         <div class="ub-container">
             <h1 class="tw-text-4xl">{{$cat['title']}}</h1>
             <div class="tw-mt-4">
@@ -19,7 +20,8 @@
         <div class="ub-breadcrumb">
             <a href="{{modstart_web_url('')}}">首页</a>
             @foreach($catChain as $i=>$c)
-                <a class="@if(count($catChain)==$i+1) active @endif" href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
+                <a class="@if(count($catChain)==$i+1) active @endif"
+                   href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
             @endforeach
         </div>
     </div>
@@ -43,7 +45,8 @@
                                     <div class="col-md-4 col-6">
                                         <div class="item-p">
                                             <a class="image" href="{{$record['_url']}}" style="padding:0.25rem 0 0 0;">
-                                                <div class="cover contain ub-cover-1-1" style="width:90%;margin:0 auto;background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
+                                                <div class="cover contain ub-cover-1-1"
+                                                     style="width:90%;margin:0 auto;background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
                                             </a>
                                             <a class="title" href="{{$record['_url']}}">{{$record['title']}}</a>
                                         </div>
@@ -60,9 +63,11 @@
             <div class="col-md-3">
 
                 <div class="ub-menu simple">
-                    <a class="title @if($catRoot['url']==\ModStart\Core\Input\Request::path()) active @endif" href="{{modstart_web_url($catRoot['url'])}}">全部</a>
+                    <a class="title @if($catRoot['url']==\ModStart\Core\Input\Request::path()) active @endif"
+                       href="{{modstart_web_url($catRoot['url'])}}">全部</a>
                     @foreach($catRootChildren as $c)
-                        <a class="title @if(\ModStart\Core\Input\Request::path()==$c['url']) active @endif" href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
+                        <a class="title @if(\ModStart\Core\Input\Request::path()==$c['url']) active @endif"
+                           href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
                     @endforeach
                 </div>
 

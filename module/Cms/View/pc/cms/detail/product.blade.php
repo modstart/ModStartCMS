@@ -7,7 +7,7 @@
 {!! \ModStart\ModStart::js('asset/common/lazyLoad.js') !!}
 @section('bodyContent')
 
-    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-transparent ub-cover tw-bg-fixed"
+    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-transparent ub-cover"
          style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fixFullOrDefault($cat['bannerBg'],'vendor/Cms/bg/product.jpg')}});">
         <div class="ub-container">
             <h1 class="tw-text-4xl">{{$cat['title']}}</h1>

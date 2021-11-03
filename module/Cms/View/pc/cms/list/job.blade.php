@@ -6,7 +6,8 @@
 
 @section('bodyContent')
 
-    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-transparent ub-cover tw-bg-fixed" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fixFullOrDefault($cat['bannerBg'],'vendor/Cms/bg/news.jpg')}});">
+    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-transparent ub-cover"
+         style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fixFullOrDefault($cat['bannerBg'],'vendor/Cms/bg/job.jpg')}});">
         <div class="ub-container">
             <h1 class="tw-text-4xl">{{$cat['title']}}</h1>
             <div class="tw-mt-4">
@@ -19,7 +20,8 @@
         <div class="ub-breadcrumb">
             <a href="{{modstart_web_url('')}}">首页</a>
             @foreach($catChain as $i=>$c)
-                <a class="@if(count($catChain)==$i+1) active @endif" href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
+                <a class="@if(count($catChain)==$i+1) active @endif"
+                   href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
             @endforeach
         </div>
     </div>
