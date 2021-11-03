@@ -1018,20 +1018,34 @@
 }
 
 @media screen and (max-width: 40rem) {
+  .ub-list .body, .ub-list-items {
+    .item-k {
+      padding: 0.5rem 0.5rem 0.5rem 5rem;
+
+      .title {
+        font-size: var(--font-size);
+        line-height: var(--font-size);
+      }
+
+      .image {
+        width: 4rem;
+        margin-left: -4.5rem;
+      }
+
+      .summary {
+        font-size: var(--font-size-small);
+        padding-top: 0.25rem;
+        height: 2rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 40rem) {
   .ub-list {
     max-width: 100%;
     overflow: hidden;
 
-    .body {
-      .item-k {
-        padding-left: 6rem;
-
-        .image {
-          width: 4rem;
-          margin-left: -5rem;
-        }
-      }
-    }
 
     &.no-bg {
       .head {
