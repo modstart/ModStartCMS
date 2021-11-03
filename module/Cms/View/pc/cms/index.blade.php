@@ -63,7 +63,7 @@
             <div class="ub-nav-header-sub">
                 RECOMMEND NEWS
             </div>
-            <div class="tw-pb-8">
+            <div class="">
                 <div class="ub-list-items">
                     <div class="row">
                         @foreach(Cms::paginateCatByUrl('news',1,4,['where'=>['isRecommend'=>true]]) as $record)
@@ -85,10 +85,18 @@
             </div>
         </div>
 
-    </div>
+        <div>
+            <div class="ub-nav-header">
+                合作伙伴
+            </div>
+            <div class="ub-nav-header-sub">
+                PARTNERS
+            </div>
+            <div class="">
+                @include('module::Partner.View.pc.public.partnerRaw',['position'=>'home'])
+            </div>
+        </div>
 
-    <div class="ub-container margin-top">
-        @include('module::Partner.View.pc.public.partner',['position'=>'home'])
     </div>
 
 @endsection
