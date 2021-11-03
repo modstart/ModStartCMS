@@ -95,7 +95,7 @@ class CmsCatUtil
 
     public static function build($modelName, $cat, $catParentUrl = null)
     {
-        $model = CmsModelUtil::getByName($modelName);
+        $model = ModelUtil::get('cms_model', ['name' => $modelName]);
         if (!isset($cat['pid'])) {
             $cat['pid'] = 0;
         }
@@ -104,7 +104,7 @@ class CmsCatUtil
         }
         $cat['modelId'] = $model['id'];
         if ($catParentUrl) {
-            $parentCat = self::getByUrl($catParentUrl);
+            $parentCat = ModelUtil::get('cms_cat', ['url' => $catParentUrl]);
             $cat['pid'] = $parentCat['id'];
         }
         ModelUtil::insert('cms_cat', $cat);
