@@ -46,9 +46,6 @@ return [
         'Cms' => [
             'enable' => true,
         ],
-        'CmsWriter' => [
-            'enable' => true,
-        ],
         'SiteCounter' => [
             'enable' => true,
         ],
