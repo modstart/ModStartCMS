@@ -1,6 +1,6 @@
 <?php $partners = \Module\Partner\Util\PartnerUtil::listByPositionWithCache($position); ?>
 {!! ModStart::style('.pb-partner-item{filter:grayscale(100%);opacity:0.5;}.pb-partner-item:hover{filter:grayscale(0%);opacity:1;}') !!}
-<div class="ub-list">
+<div class="ub-list-items">
     <div class="row">
         @foreach($partners as $partner)
             <div class="col-md-2 col-6">
