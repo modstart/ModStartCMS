@@ -18,7 +18,7 @@
                          src="{{\ModStart\Core\Assets\AssetsUtil::fix(modstart_config('Cms_HomeInfoImage','/placeholder/300x200'))}}"/>
                 </div>
                 <div class="col-md-9">
-                    <div class="tw-text-3xl">{{modstart_config('Cms_HomeInfoTitle','[首页介绍标题]')}}</div>
+                    <div class="tw-text-3xl tw-mt-2">{{modstart_config('Cms_HomeInfoTitle','[首页介绍标题]')}}</div>
                     <div class="ub-html tw-mt-4">
                         {!! modstart_config('Cms_HomeInfoContent','[首页介绍说明]') !!}
                     </div>
