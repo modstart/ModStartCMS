@@ -36,7 +36,7 @@ if(empty($bannerRatio)){
                                 <a class="link" href="{{$banner['link']}}" target="_blank">{{$banner['linkText']}}</a>
                             </div>
                         </div>
-                    @elseif($banner['type']==\Module\Banner\Type\BannerType::VIDEO)
+                    @elseif($banner['type']==\Module\Banner\Type\BannerType::VIDEO && !\ModStart\Core\Util\AgentUtil::isMobile())
                         <a class="swiper-slide video"
                            @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif>
                             <video class="video-player"
@@ -53,23 +53,10 @@ if(empty($bannerRatio)){
             <div class="swiper-button-prev swiper-button-white"></div>
         @endif
     </div>
-    <style type="text/css">
-        video::-webkit-media-controls {
-            display: none;
-        }
-        video::-webkit-media-controls-play-button {}
-        video::-webkit-media-controls-volume-slider {}
-        video::-webkit-media-controls-mute-button {}
-        video::-webkit-media-controls-timeline {}
-        video::-webkit-media-controls-current-time-display {}
-    </style>
 </div>
 @if(count($banners)>1)
     <script>
         $(function () {
-            $('#{{$bannerId}} video').each(function(i,o){
-                o.controls = false;
-            });
             var swiper = new Swiper('#{{$bannerId}} .swiper-container', {
                 pagination: {
                     el: '.swiper-pagination',
