@@ -68,7 +68,7 @@
                     <div class="row">
                         @foreach(Cms::paginateCatByUrl('news',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-6">
-                                <div class="item-k tw-bg-white">
+                                <div class="item-k tw-bg-white margin-bottom">
                                     <a class="image" href="{{$record['_url']}}">
                                         <div class="cover ub-cover-4-3"
                                              style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}})"></div>
