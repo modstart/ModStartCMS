@@ -11,7 +11,7 @@ class InitCmsData extends Migration
     {
         CmsModelUtil::build([
             'name' => 'news',
-            'title' => '新闻咨询',
+            'title' => '新闻资讯',
             'listTemplate' => 'news.blade.php',
             'detailTemplate' => 'news.blade.php',
         ]);
