@@ -11,7 +11,7 @@ include APP_PATH . '/vendor/modstart/modstart/src/Core/Util/FileUtil.php';
 define('INSTALL_LOCK_FILE', APP_PATH . '/storage/install.lock');
 define('ENV_FILE_EXAMPLE', APP_PATH . '/env.example');
 define('ENV_FILE', APP_PATH . '/.env');
-if (file_exists($licenseFile = APP_PATH . '/license.txt')) {
+if (file_exists($licenseFile = APP_PATH . '/license_url.txt')) {
     define('LICENSE_URL', trim(file_get_contents($licenseFile)));
 }
 if (file_exists($demoData = APP_PATH . '/public/data_demo/data.php')) {

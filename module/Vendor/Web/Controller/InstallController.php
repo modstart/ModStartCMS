@@ -73,7 +73,7 @@ class InstallController extends Controller
         if (empty($password)) {
             return Response::jsonError("管理用户密码不能为空");
         }
-        if (file_exists(base_path('license.txt')) && !$installLicense) {
+        if (file_exists(base_path('license_url.txt')) && !$installLicense) {
             return Response::jsonError("请先同意《软件安装许可协议》");
         }
 
