@@ -5,7 +5,7 @@
     "Vendor:>=1.4.0",
     "Member"
   ],
-  "version": "1.5.0",
+  "version": "1.6.0",
   "modstartVersion": ">=1.4.0",
   "author": "ModStart",
   "description": "提供通用的动态模型内容管理系统"
