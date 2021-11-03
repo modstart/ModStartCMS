@@ -16,7 +16,7 @@ return [
         'Article' => [
             'enable' => true,
             'config' => [
-                'position' => '[{"k":"","v":"独立页面"}]',
+                'position' => '[{"k":"","v":"单页"},{"k":"simple","v":"简单页面"}]',
             ],
         ],
         'Nav' => [
