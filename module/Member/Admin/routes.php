@@ -38,3 +38,10 @@ $router->match(['get', 'post'], 'member_money_cash/delete', 'MemberMoneyCashCont
 $router->match(['get', 'post'], 'member_money_cash/show', 'MemberMoneyCashController@show');
 $router->match(['get', 'post'], 'member_money_cash/pass', 'MemberMoneyCashController@pass');
 
+$router->match(['get', 'post'], 'member_group', 'MemberGroupController@index');
+$router->match(['get', 'post'], 'member_group/add', 'MemberGroupController@add');
+$router->match(['get', 'post'], 'member_group/edit', 'MemberGroupController@edit');
+$router->match(['get', 'post'], 'member_group/delete', 'MemberGroupController@delete');
+$router->match(['get', 'post'], 'member_group/show', 'MemberGroupController@show');
+$router->match(['get', 'post'], 'member_group/sort', 'MemberGroupController@sort');
+

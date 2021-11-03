@@ -93,4 +93,5 @@ class CRUDUtil
     {
         return "[js]parent.location.reload();";
     }
+
 }

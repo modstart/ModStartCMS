@@ -7,19 +7,14 @@ $router->group([
 ], function () use ($router) {
 
     $router->match(['get', 'post'], 'cms', 'IndexController@index');
+    $router->match(['get', 'post'], 'a/{alias_url}', 'DetailController@index');
+    $router->match(['get', 'post'], 'c/{id}', 'ListController@index');
 
-    $router->match(['get', 'post'], 'writer', 'WriterController@index');
-    $router->match(['get', 'post'], 'writer/setting', 'WriterController@setting');
-
-    $router->match(['get', 'post'], 'writer/category', 'WriterController@category');
-    $router->match(['get', 'post'], 'writer/category_edit', 'WriterController@categoryEdit');
-    $router->match(['get', 'post'], 'writer/category_delete', 'WriterController@categoryDelete');
-
-    $router->match(['get', 'post'], 'writer/post', 'WriterController@post');
-    $router->match(['get', 'post'], 'writer/post_edit', 'WriterController@postEdit');
-
-    $router->match(['get', 'post'], 'channel/{alias_url}', 'ChannelController@index');
-    $router->match(['get', 'post'], 'p/{alias}', 'PostController@show');
+    foreach (\Module\Cms\Util\CmsCatUtil::allSafely() as $item) {
+        if (!empty($item['url'])) {
+            $router->match(['get', 'post'], $item['url'], 'ListController@index');
+        }
+    }
 
 });
 

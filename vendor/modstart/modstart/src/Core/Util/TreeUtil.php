@@ -181,13 +181,29 @@ class TreeUtil
         return $options;
     }
 
-    public static function treeToListWithLevel(&$tree, $keyId = 'id', $keyTitle = 'title', $keyPid = 'pid', $level = 0)
+    /**
+     * @param $tree
+     * @param string $keyId
+     * @param string $keyTitle
+     * @param string $keyPid
+     * @param int $level
+     * @param array $fieldsMap
+     * @return array
+     * @since 1.7.0 add $fieldsMap
+     */
+    public static function treeToListWithLevel(&$tree, $keyId = 'id', $keyTitle = 'title', $keyPid = 'pid', $level = 0, $fieldsMap = [])
     {
         $options = array();
         foreach ($tree as &$r) {
-            $options[] = array('id' => $r[$keyId], 'title' => $r[$keyTitle], 'level' => $level, 'pid' => $r[$keyPid],);
+            $option = array('id' => $r[$keyId], 'title' => $r[$keyTitle], 'level' => $level, 'pid' => $r[$keyPid],);
+            if (!empty($fieldsMap)) {
+                foreach ($fieldsMap as $k => $v) {
+                    $option[$k] = $r[$v];
+                }
+            }
+            $options[] = $option;
             if (!empty($r[self::$CHILD_KEY])) {
-                $options = array_merge($options, self::treeToListWithLevel($r[self::$CHILD_KEY], $keyId, $keyTitle, $keyPid, $level + 1));
+                $options = array_merge($options, self::treeToListWithLevel($r[self::$CHILD_KEY], $keyId, $keyTitle, $keyPid, $level + 1, $fieldsMap));
             }
         }
         return $options;

@@ -133,6 +133,9 @@ trait CanCascadeFields
        }
    };
    var compare = function (a, b, o) {
+       if(!(o in operatorTable)){
+           console.error('unsupported operator ',o)
+       }
        if (! $.isArray(b) ) return operatorTable[o](a, b);
        if (o === '!=') {
            for (var i in b) {

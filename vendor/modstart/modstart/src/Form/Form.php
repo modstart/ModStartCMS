@@ -227,7 +227,7 @@ class Form implements Renderable
     private $canDelete = true;
     private $canSort = false;
     private $formClass = '';
-    private $treeMaxLevel = 0;
+    private $treeMaxLevel = 99;
     private $treeRootPid = 0;
     private $formUrl = null;
 

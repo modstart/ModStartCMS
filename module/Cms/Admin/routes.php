@@ -1,23 +1,22 @@
 <?php
 
 
-$router->match(['get', 'post'], 'cms/config/setting', 'ConfigController@setting');
+$router->match(['get', 'post'], 'cms/model', 'ModelController@index');
+$router->match(['get', 'post'], 'cms/model/edit', 'ModelController@edit');
+$router->match(['get', 'post'], 'cms/model/delete', 'ModelController@delete');
+$router->match(['get', 'post'], 'cms/model/field/{modelId}', 'ModelController@field');
+$router->match(['get', 'post'], 'cms/model/field/{modelId}/edit', 'ModelController@fieldEdit');
+$router->match(['get', 'post'], 'cms/model/field/{modelId}/delete', 'ModelController@fieldDelete');
 
-$router->match(['get', 'post'], 'cms/post', 'PostController@index');
-$router->match(['get', 'post'], 'cms/post/add', 'PostController@add');
-$router->match(['get', 'post'], 'cms/post/edit', 'PostController@edit');
-$router->match(['get', 'post'], 'cms/post/delete', 'PostController@delete');
-$router->match(['get', 'post'], 'cms/post/show', 'PostController@show');
+$router->match(['get', 'post'], 'cms/template', 'TemplateController@index');
 
-$router->match(['get', 'post'], 'cms/post_system', 'PostSystemController@index');
-$router->match(['get', 'post'], 'cms/post_system/add', 'PostSystemController@add');
-$router->match(['get', 'post'], 'cms/post_system/edit', 'PostSystemController@edit');
-$router->match(['get', 'post'], 'cms/post_system/delete', 'PostSystemController@delete');
-$router->match(['get', 'post'], 'cms/post_system/show', 'PostSystemController@show');
+$router->match(['get', 'post'], 'cms/cat', 'CatController@index');
+$router->match(['get', 'post'], 'cms/cat/add', 'CatController@add');
+$router->match(['get', 'post'], 'cms/cat/edit', 'CatController@edit');
+$router->match(['get', 'post'], 'cms/cat/delete', 'CatController@delete');
+$router->match(['get', 'post'], 'cms/cat/show', 'CatController@show');
+$router->match(['get', 'post'], 'cms/cat/sort', 'CatController@sort');
 
-$router->match(['get', 'post'], 'cms/channel', 'ChannelController@index');
-$router->match(['get', 'post'], 'cms/channel/add', 'ChannelController@add');
-$router->match(['get', 'post'], 'cms/channel/edit', 'ChannelController@edit');
-$router->match(['get', 'post'], 'cms/channel/delete', 'ChannelController@delete');
-$router->match(['get', 'post'], 'cms/channel/show', 'ChannelController@show');
-$router->match(['get', 'post'], 'cms/channel/sort', 'ChannelController@sort');
+$router->match(['get', 'post'], 'cms/content/{modelId}', 'ContentController@index');
+$router->match(['get', 'post'], 'cms/content/edit/{modelId}', 'ContentController@edit');
+$router->match(['get', 'post'], 'cms/content/delete/{modelId}', 'ContentController@delete');

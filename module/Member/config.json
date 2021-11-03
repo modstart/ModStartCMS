@@ -32,6 +32,12 @@
         "switch",
         "启用地址"
       ]
+    ],
+    "groupEnable": [
+      [
+        "switch",
+        "启用分组"
+      ]
     ]
   }
 }

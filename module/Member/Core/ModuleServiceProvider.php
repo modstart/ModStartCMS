@@ -178,6 +178,10 @@ class ModuleServiceProvider extends ServiceProvider
                                     'title' => 'VIP等级',
                                     'url' => '\Module\Member\Admin\Controller\MemberVipSetController@index',
                                 ] : null,
+                                ModuleManager::getModuleConfigBoolean('Member', 'groupEnable') ? [
+                                    'title' => '会员分组',
+                                    'url' => '\Module\Member\Admin\Controller\MemberGroupController@index',
+                                ] : null,
                             ]
                         ],
                     ]

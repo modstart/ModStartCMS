@@ -32,6 +32,11 @@ class ModelManageUtil
         return Schema::hasTable($table);
     }
 
+    public static function dropTable($table)
+    {
+        return Schema::dropIfExists($table);
+    }
+
     public static function listTableColumns($table)
     {
         if (!self::hasTable($table)) {
@@ -116,6 +121,142 @@ class ModelManageUtil
             }
             return $imported;
         }
+    }
+
+    /**
+     * @param $table
+     * @param \Closure $schemaCallback
+     * @param string $connection
+     * @since 1.7.0
+     */
+    public static function migrate($table, \Closure $schemaCallback, $connection = 'mysql')
+    {
+
+        $tenantTable = self::table($table);
+        $schemaCallback($tenantTable, Schema::connection($connection));
+    }
+
+    /**
+     * @param $fieldType
+     * @return bool
+     * @since 1.7.0
+     */
+    public static function ddlFieldTypeIsCorrect($fieldType)
+    {
+        if (preg_match('/^INT$/', $fieldType)) {
+            return true;
+        }
+        if (preg_match('/^DECIMAL\\(\\d+,\\d+\\)$/', $fieldType)) {
+            return true;
+        }
+        if (preg_match('/^DATE$/', $fieldType)) {
+            return true;
+        }
+        if (preg_match('/^DATETIME$/', $fieldType)) {
+            return true;
+        }
+        if (preg_match('/^TIME/', $fieldType)) {
+            return true;
+        }
+        if (preg_match('/^VARCHAR\\(\\d+\\)$/', $fieldType)) {
+            return true;
+        }
+        if (preg_match('/^TEXT$/', $fieldType)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param $table
+     * @param $fieldName
+     * @param $fieldType
+     * @throws \Exception
+     * @since 1.7.0
+     */
+    public static function ddlFieldAdd($table, $fieldName, $fieldType)
+    {
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $table)) {
+            throw new \Exception('DDL table error');
+        }
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $fieldName)) {
+            throw new \Exception('DDL fieldName error');
+        }
+        if (!self::ddlFieldTypeIsCorrect($fieldType)) {
+            throw new \Exception('DDL fieldType error : ' . $fieldType);
+        }
+        $table = self::table($table);
+        $sql = "ALTER TABLE `$table` ADD `$fieldName` $fieldType DEFAULT NULL";
+        self::statement($sql);
+    }
+
+    /**
+     * @param $table
+     * @param $fieldNameOld
+     * @param $fieldName
+     * @param $fieldType
+     * @throws \Exception
+     * @since 1.7.0
+     */
+    public static function ddlFieldChange($table, $fieldNameOld, $fieldName, $fieldType)
+    {
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $table)) {
+            throw new \Exception('DDL table error');
+        }
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $fieldNameOld)) {
+            throw new \Exception('DDL fieldNameOld error');
+        }
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $fieldName)) {
+            throw new \Exception('DDL fieldName error');
+        }
+        if (!self::ddlFieldTypeIsCorrect($fieldType)) {
+            throw new \Exception('DDL fieldType error : ' . $fieldType);
+        }
+        $table = self::table($table);
+        $sql = "ALTER TABLE `$table` CHANGE `$fieldNameOld` `$fieldName` $fieldType DEFAULT NULL";
+        self::statement($sql);
+    }
+
+    /**
+     * @param $table
+     * @param $fieldName
+     * @param $fieldType
+     * @throws \Exception
+     * @since 1.7.0
+     */
+    public static function ddlFieldModify($table, $fieldName, $fieldType)
+    {
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $table)) {
+            throw new \Exception('DDL table error');
+        }
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $fieldName)) {
+            throw new \Exception('DDL fieldName error');
+        }
+        if (!self::ddlFieldTypeIsCorrect($fieldType)) {
+            throw new \Exception('DDL fieldType error : ' . $fieldType);
+        }
+        $table = self::table($table);
+        $sql = "ALTER TABLE `$table` MODIFY `$fieldName` $fieldType DEFAULT NULL";
+        self::statement($sql);
+    }
+
+    /**
+     * @param $table
+     * @param $fieldName
+     * @throws \Exception
+     * @since 1.7.0
+     */
+    public static function ddlFieldDrop($table, $fieldName)
+    {
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $table)) {
+            throw new \Exception('DDL table error');
+        }
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $fieldName)) {
+            throw new \Exception('DDL fieldName error');
+        }
+        $table = self::table($table);
+        $sql = "ALTER TABLE `$table` DROP `$fieldName`";
+        self::statement($sql);
     }
 
 }

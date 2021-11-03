@@ -22,7 +22,7 @@ class MemberVipSetController extends Controller
             ->init('member_vip_set')
             ->field(function ($builder) {
                 
-                $builder->id('id', 'ID');
+                $builder->id('id', 'ID')->addable(true)->editable(true);
                 $builder->text('title', '名称');
                 $builder->text('flag', '英文标识');
                 $builder->switch('isDefault', '默认')->help('会员是否默认为该等级');
@@ -38,7 +38,7 @@ class MemberVipSetController extends Controller
             ->enablePagination(false)
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)
-            ->title('会员等级')
+            ->title('VIP等级')
             ->addDialogSize(['600px', '95%'])
             ->editDialogSize(['600px', '95%'])
             ->hookSaved(function (Form $form) {

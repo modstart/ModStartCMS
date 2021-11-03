@@ -39,10 +39,16 @@ return [
         ],
         'Member' => [
             'enable' => true,
+            'config' => [
+                'groupEnable' => true,
+            ],
         ],
         'Cms' => [
             'enable' => true,
         ],
+//        'CmsWriter' => [
+//            'enable' => true,
+//        ],
         'SiteCounter' => [
             'enable' => true,
         ],

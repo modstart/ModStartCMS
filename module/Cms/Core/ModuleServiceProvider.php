@@ -9,7 +9,7 @@ use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
-use Module\Member\Config\MemberMenu;
+use Module\Cms\Util\CmsModelUtil;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
 
@@ -18,39 +18,17 @@ class ModuleServiceProvider extends ServiceProvider
     
     public function boot(Dispatcher $events)
     {
-        MemberMenu::register(function () {
-            return [
-                [
-                    'icon' => 'list-alt',
-                    'title' => '文章管理',
-                    'sort' => 100,
-                    'children' => [
-                        [
-                            'title' => '分类管理',
-                            'url' => modstart_web_url('writer/category'),
-                        ],
-                        [
-                            'title' => '文章管理',
-                            'url' => modstart_web_url('writer/post'),
-                        ],
-                        [
-                            'title' => '写作设置',
-                            'url' => modstart_web_url('writer/setting'),
-                        ],
-                    ]
-                ],
-            ];
-        });
+        require_once __DIR__ . '/../Helpers/CMS.php';
 
         AdminWidgetLink::register(function () {
             $menu = [];
-            $menu[] = ['CMS首页', modstart_web_url('cms')];
-            $tree = TreeUtil::modelToTree('cms_channel', ['title' => 'title', 'alias' => 'alias']);
-            $categories = TreeUtil::treeToListWithIndent($tree, 'id', 'title', 0, ['alias']);
+            $menu[] = ['首页', modstart_web_url('cms')];
+            $tree = TreeUtil::modelToTree('cms_cat', ['title' => 'title', 'url' => 'url']);
+            $categories = TreeUtil::treeToListWithIndent($tree, 'id', 'title', 0, ['url']);
             $menu = array_merge($menu, array_map(function ($record) {
                 return [
-                    '频道:' . $record['title'],
-                    modstart_web_url("channel/$record[alias]"),
+                    '栏目:' . $record['title'],
+                    modstart_web_url($record['url'] ? $record['url'] : 'c/' . $record['id']),
                 ];
             }, $categories));
             return [
@@ -59,56 +37,61 @@ class ModuleServiceProvider extends ServiceProvider
         });
 
         AdminMenu::register(function () {
+            $models = CmsModelUtil::all();
+            $contentMenus = [];
+            foreach ($models as $model) {
+                $contentMenus[] = [
+                    'title' => $model['title'],
+                    'rule' => 'CmsContentManage' . $model['id'],
+                    'url' => action('\Module\Cms\Admin\Controller\ContentController@index', ['modelId' => $model['id']]),
+                ];
+            }
             return [
                 [
-                    'title' => 'CMS管理',
-                    'icon' => 'category',
+                    'title' => 'CMS内容',
+                    'icon' => 'credit',
                     'sort' => 150,
+                    'children' => $contentMenus
+                ],
+                [
+                    'title' => 'CMS配置',
+                    'icon' => 'tools',
+                    'sort' => 160,
                     'children' => [
                         [
-                            'title' => '频道管理',
-                            'url' => '\Module\Cms\Admin\Controller\ChannelController@index',
+                            'title' => '模型管理',
+                            'url' => '\Module\Cms\Admin\Controller\ModelController@index',
                         ],
                         [
-                            'title' => '系统文章',
-                            'url' => '\Module\Cms\Admin\Controller\PostSystemController@index',
+                            'title' => '模板管理',
+                            'url' => '\Module\Cms\Admin\Controller\TemplateController@index',
                         ],
                         [
-                            'title' => '用户文章',
-                            'url' => '\Module\Cms\Admin\Controller\PostController@index',
+                            'title' => '栏目管理',
+                            'url' => '\Module\Cms\Admin\Controller\CatController@index',
                         ],
                     ]
                 ],
-                [
-                    'title' => '功能设置',
-                    'icon' => 'tools',
-                    'sort' => 300,
-                    'children' => [
-                        [
-                            'title' => 'CMS设置',
-                            'url' => '\Module\Cms\Admin\Controller\ConfigController@setting',
-                        ],
-                    ]
-                ]
             ];
         });
 
         AdminWidgetDashboard::registerIcon(function (Row $row) {
+            $models = CmsModelUtil::all();
+            foreach ($models as $model) {
+                $row->column(3, DashboardItemA::makeIconNumberTitle(
+                    'iconfont icon-details', ModelUtil::count('cms_content', ['modelId' => $model['id']]), $model['title'],
+                    modstart_admin_url('cms/content/' . $model['id'])
+                ));
+            }
             $row->column(3, DashboardItemA::makeIconNumberTitle(
-                'iconfont icon-list-alt', ModelUtil::count('cms_channel'), '频道数',
-                modstart_admin_url('cms/channel')
+                'iconfont icon-list-alt', ModelUtil::count('cms_cat'), '栏目数',
+                modstart_admin_url('cms/cat')
             ));
             $row->column(3, DashboardItemA::makeIconNumberTitle(
-                'iconfont icon-file',
-                ModelUtil::model('cms_post')->where('memberUserId', '>', 0)->count(),
-                '用户文章数',
-                modstart_admin_url('cms/post')
-            ));
-            $row->column(3, DashboardItemA::makeIconNumberTitle(
-                'iconfont icon-file',
-                ModelUtil::model('cms_post')->where('memberUserId', 0)->count(),
-                '系统文章数',
-                modstart_admin_url('cms/post_system')
+                'iconfont icon-credit',
+                ModelUtil::count('cms_model'),
+                '模型数',
+                modstart_admin_url('cms/model')
             ));
         });
 

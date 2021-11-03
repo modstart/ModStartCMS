@@ -189,6 +189,10 @@ class AdminPermission
 
     public static function menu($controllerMethod, $menu = null)
     {
+        static $currentUrl = null;
+        if (null === $currentUrl) {
+            $currentUrl = Request::currentPageUrl();
+        }
         if (null === $menu) {
             $menu = self::menuAll();
         }
@@ -201,7 +205,7 @@ class AdminPermission
                 continue;
             }
             if (empty($v['children'])) {
-                if ($controllerMethod === $v['url']) {
+                if ($controllerMethod === $v['url'] || $currentUrl === $v['url']) {
                     $v['_active'] = true;
                 }
                 if (self::permit($v['rule'])) {
