@@ -6,9 +6,9 @@
 
     <div style="background:#FFF;">
         @if(\ModStart\Core\Util\AgentUtil::isMobile())
-            @include('module::Banner.View.pc.public.banner',['position'=>'home','bannerRatio'=>'5-2'])
-        @else
             @include('module::Banner.View.pc.public.banner',['position'=>'home','bannerRatio'=>'3-2'])
+        @else
+            @include('module::Banner.View.pc.public.banner',['position'=>'home','bannerRatio'=>'5-2'])
         @endif
     </div>
 
