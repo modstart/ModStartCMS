@@ -87,7 +87,7 @@ class ModuleServiceProvider extends ServiceProvider
                     'sort' => 300,
                     'children' => [
                         [
-                            'title' => 'CMS设置',
+                            'title' => '文章投稿设置',
                             'url' => '\Module\CmsWriter\Admin\Controller\ConfigController@setting',
                         ],
                     ]

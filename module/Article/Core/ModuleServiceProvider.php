@@ -20,7 +20,7 @@ class ModuleServiceProvider extends ServiceProvider
                 'sort' => 200,
                 'children' => [
                     [
-                        'title' => '单页文章',
+                        'title' => '通用文章',
                         'url' => '\Module\Article\Admin\Controller\ArticleController@index',
                     ],
                 ]

@@ -16,13 +16,13 @@ return [
         'Article' => [
             'enable' => true,
             'config' => [
-                'position' => '[{"k":"","v":"独立页面"},{"k":"foot","v":"底部文章"}]',
+                'position' => '[{"k":"","v":"独立页面"}]',
             ],
         ],
         'Nav' => [
             'enable' => true,
             'config' => [
-                'position' => '[{"k":"head","v":"头部导航"}]',
+                'position' => '[{"k":"head","v":"头部导航"},{"k":"foot","v":"底部导航"}]',
             ],
         ],
         'Banner' => [

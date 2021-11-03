@@ -50,27 +50,35 @@ class ModuleServiceProvider extends ServiceProvider
             }
             return [
                 [
-                    'title' => 'CMS内容',
+                    'title' => 'CMS管理',
                     'icon' => 'credit',
                     'sort' => 150,
-                    'children' => $contentMenus
-                ],
-                [
-                    'title' => 'CMS配置',
-                    'icon' => 'tools',
-                    'sort' => 160,
                     'children' => [
                         [
-                            'title' => '模型管理',
-                            'url' => '\Module\Cms\Admin\Controller\ModelController@index',
+                            'title' => 'CMS内容',
+                            'children' => $contentMenus
                         ],
                         [
-                            'title' => '模板管理',
-                            'url' => '\Module\Cms\Admin\Controller\TemplateController@index',
+                            'title' => 'CMS配置',
+                            'children' => [
+
+                                [
+                                    'title' => '模型管理',
+                                    'url' => '\Module\Cms\Admin\Controller\ModelController@index',
+                                ],
+                                [
+                                    'title' => '模板管理',
+                                    'url' => '\Module\Cms\Admin\Controller\TemplateController@index',
+                                ],
+                                [
+                                    'title' => '栏目管理',
+                                    'url' => '\Module\Cms\Admin\Controller\CatController@index',
+                                ],
+                            ]
                         ],
                         [
-                            'title' => '栏目管理',
-                            'url' => '\Module\Cms\Admin\Controller\CatController@index',
+                            'title' => '企业信息设置',
+                            'url' => '\Module\Cms\Admin\Controller\ConfigController@basic',
                         ],
                     ]
                 ],

@@ -1,6 +1,8 @@
 <?php
 
 
+$router->match(['get', 'post'], 'cms/config/basic', 'ConfigController@basic');
+
 $router->match(['get', 'post'], 'cms/model', 'ModelController@index');
 $router->match(['get', 'post'], 'cms/model/edit', 'ModelController@edit');
 $router->match(['get', 'post'], 'cms/model/delete', 'ModelController@delete');
