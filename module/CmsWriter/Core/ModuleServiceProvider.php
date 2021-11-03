@@ -9,9 +9,11 @@ use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
+use Module\CmsWriter\Provider\CmsWriterHomePageProvider;
 use Module\Member\Config\MemberMenu;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
+use Module\Vendor\Provider\HomePage\HomePageProvider;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -111,6 +113,8 @@ class ModuleServiceProvider extends ServiceProvider
                 modstart_admin_url('cms/post_system')
             ));
         });
+
+        HomePageProvider::register(CmsWriterHomePageProvider::class);
 
     }
 
