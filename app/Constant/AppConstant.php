@@ -5,5 +5,5 @@ namespace App\Constant;
 class AppConstant
 {
     const APP = 'cms';
-    const VERSION = '1.6.0';
+    const VERSION = '2.0.0';
 }
