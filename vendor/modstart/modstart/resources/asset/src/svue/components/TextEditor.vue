@@ -25,7 +25,7 @@
                 <div class="tw-flex tw-items-center tw-justify-center">
                     <el-upload :limit="1" :show-file-list="false"
                                ref="imageUpload"
-                               :data="{action:'raw'}"
+                               :data="{action:'uploadDirectRaw'}"
                                :on-success="onImageFinish"
                                :action="imageUploadUrl">
                         <a href="javascript:;"

@@ -4,7 +4,7 @@
   "require": [
     "Vendor:>=1.7.0"
   ],
-  "version": "1.5.0",
+  "version": "1.6.0",
   "modstartVersion": ">=1.4.0",
   "author": "官方",
   "description": "提供基础的用户管理服务",
@@ -18,7 +18,7 @@
     "creditEnable": [
       [
         "switch",
-        "启用资金"
+        "启用积分"
       ]
     ],
     "vipEnable": [

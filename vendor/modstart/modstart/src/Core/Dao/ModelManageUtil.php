@@ -131,9 +131,7 @@ class ModelManageUtil
      */
     public static function migrate($table, \Closure $schemaCallback, $connection = 'mysql')
     {
-
-        $tenantTable = self::table($table);
-        $schemaCallback($tenantTable, Schema::connection($connection));
+        $schemaCallback($table, Schema::connection($connection));
     }
 
     /**

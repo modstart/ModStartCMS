@@ -12,9 +12,16 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\RandomUtil;
+use ModStart\Field\AbstractField;
+use ModStart\Field\AutoRenderedFieldValue;
+use ModStart\Form\Form;
+use ModStart\Form\Type\FormMode;
 use ModStart\Grid\GridFilter;
+use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
 use Module\Member\Type\MemberStatus;
+use Module\Member\Util\MemberGroupUtil;
 use Module\Member\Util\MemberUtil;
 
 class MemberController extends Controller
@@ -28,20 +35,47 @@ class MemberController extends Controller
             ->field(function ($builder) {
                 
                 $builder->id('id', 'ID');
-                $builder->display('created_at', '创建时间');
-                $builder->type('status', '状态')->type(MemberStatus::class);
-                $builder->image('avatar', '头像');
-                $builder->text('username', '用户名');
+                $builder->display('avatar', '头像')->hookRendering(function (AbstractField $field, $item, $index) {
+                    $avatarSmall = AssetsUtil::fixOrDefault($item->avatar, 'asset/image/avatar.png');
+                    $avatarBig = AssetsUtil::fixOrDefault($item->avatarBig, 'asset/image/avatar.png');
+                    return AutoRenderedFieldValue::make("<a href='$avatarBig' class='tw-inline-block' data-image-preview>
+                        <img src='$avatarSmall' class='tw-rounded-full tw-w-8 tw-h-8 tw-shadow'></a>");
+                });
+                $builder->text('username', '用户名')->required()->ruleUnique('member_user');
+                $builder->text('password', '初始密码')
+                    ->editable(false)->addable(true)
+                    ->listable(false)->showable(false)->required()->defaultValue(RandomUtil::lowerString(8));
                 $builder->text('email', '邮箱');
                 $builder->text('phone', '手机');
+                $builder->type('status', '状态')->type(MemberStatus::class, [
+                    MemberStatus::NORMAL => 'success',
+                    MemberStatus::FORBIDDEN => 'danger',
+                ])->required();
+                if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+                    $builder->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
+                }
+                $builder->display('created_at', '创建时间');
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->eq('status', '状态')->select(MemberStatus::class);
+                if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+                    $filter->eq('groupId', '分组')->select(MemberGroupUtil::mapIdTitle());
+                }
                 $filter->like('username', '用户名');
                 $filter->like('email', '邮箱');
                 $filter->like('phone', '手机');
             })
+            ->hookSaved(function (Form $form) {
+                
+                $item = $form->item();
+                switch ($form->mode()) {
+                    case FormMode::ADD:
+                        MemberUtil::changePassword($item->id, $item->password, null, true);
+                        break;
+                }
+            })
+            ->dialogSizeSmall()
             ->title('用户管理')
             ->canDelete(false);
     }
@@ -74,4 +108,5 @@ class MemberController extends Controller
         }, $paginateData['records']);
         return Response::jsonSuccessData($records);
     }
+
 }
