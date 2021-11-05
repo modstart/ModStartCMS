@@ -21,7 +21,7 @@
 
 @section('memberBodyContent')
 
-    @include('module::Member.view.pc.memberProfile.bindNav')
+    @include('module::Member.View.pc.memberProfile.bindNav')
 
     <div class="ub-panel">
         <div class="head">
