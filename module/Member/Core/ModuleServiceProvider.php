@@ -53,20 +53,16 @@ class ModuleServiceProvider extends ServiceProvider
                             'url' => modstart_web_url('member_address'),
                         ] : null,
                         [
-                            'title' => '修改密码',
-                            'url' => modstart_web_url('member_profile/password'),
+                            'title' => '账号安全',
+                            'url' => modstart_web_url('member_profile/security'),
                         ],
                         [
-                            'title' => '修改头像',
-                            'url' => modstart_web_url('member_profile/avatar'),
+                            'title' => '账号资料',
+                            'url' => modstart_web_url('member_profile/profile'),
                         ],
                         [
-                            'title' => '绑定手机',
-                            'url' => modstart_web_url('member_profile/phone'),
-                        ],
-                        [
-                            'title' => '绑定邮箱',
-                            'url' => modstart_web_url('member_profile/email'),
+                            'title' => '账号绑定',
+                            'url' => modstart_web_url('member_profile/bind'),
                         ],
                     ]
                 ],

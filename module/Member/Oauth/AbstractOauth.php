@@ -19,6 +19,11 @@ abstract class AbstractOauth
         return true;
     }
 
+    public function title()
+    {
+        return $this->name();
+    }
+
     abstract public function name();
 
     abstract public function render();
@@ -48,7 +53,14 @@ abstract class AbstractOauth
         if ($id && $memberUserId != $id) {
             MemberUtil::forgetOauth($this->name(), $userInfo['openid']);
         }
-        MemberUtil::putOauth($memberUserId, $this->name(), $userInfo['openid']);
+        $info = [];
+        if (!empty($userInfo['username'])) {
+            $info['infoUsername'] = $userInfo['username'];
+        }
+        if (!empty($userInfo['avatar'])) {
+            $info['infoAvatar'] = $userInfo['avatar'];
+        }
+        MemberUtil::putOauth($memberUserId, $this->name(), $userInfo['openid'], $info);
         return Response::generateSuccess();
     }
 }

@@ -42,6 +42,7 @@ $router->group([
     $router->match(['get', 'post'], 'member_profile/email_verify', 'MemberProfileController@emailVerify');
     $router->match(['get', 'post'], 'member_profile/phone', 'MemberProfileController@phone');
     $router->match(['get', 'post'], 'member_profile/phone_verify', 'MemberProfileController@phoneVerify');
+    $router->match(['get', 'post'], 'member_profile/oauth_unbind', 'MemberProfileController@oauthUnbind');
 
     $router->match(['get', 'post'], 'member_message', 'MemberMessageController@paginate');
     $router->match(['get', 'post'], 'member_message/delete', 'MemberMessageController@delete');

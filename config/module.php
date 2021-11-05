@@ -49,5 +49,8 @@ return [
         'SiteCounter' => [
             'enable' => true,
         ],
+        'MemberOauth' => [
+            'enable' => true,
+        ],
     ],
 ];

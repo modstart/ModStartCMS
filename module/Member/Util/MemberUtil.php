@@ -504,14 +504,21 @@ class MemberUtil
         return $m['openId'];
     }
 
-    public static function putOauth($memberUserId, $oauthType, $openId)
+    
+    public static function getOauth($memberUserId, $oauthType)
+    {
+        $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];
+        return ModelUtil::get('member_oauth', $where);
+    }
+
+    public static function putOauth($memberUserId, $oauthType, $openId, $info = [])
     {
         $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];
         $m = ModelUtil::get('member_oauth', $where);
         if (empty($m)) {
-            ModelUtil::insert('member_oauth', array_merge($where, ['openId' => $openId]));
+            ModelUtil::insert('member_oauth', array_merge($where, ['openId' => $openId], $info));
         } else if ($m['openId'] != $openId) {
-            ModelUtil::update('member_oauth', ['id' => $m['id']], ['openId' => $openId]);
+            ModelUtil::update('member_oauth', ['id' => $m['id']], array_merge(['openId' => $openId], $info));
         }
     }
 

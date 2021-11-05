@@ -26,6 +26,7 @@ class MemberOauth
         return !empty($items);
     }
 
+    
     public static function get($name = null)
     {
         static $list = null;

@@ -20,6 +20,9 @@
 @endsection
 
 @section('memberBodyContent')
+
+    @include('module::Member.view.pc.memberProfile.bindNav')
+
     <div class="ub-panel">
         <div class="head">
             <div class="title">{{$pageTitle}}</div>

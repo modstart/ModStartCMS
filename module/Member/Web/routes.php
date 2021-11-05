@@ -39,12 +39,16 @@ $router->group([
     $router->match(['get', 'post'], 'member', 'MemberController@index');
 
     $router->match(['get', 'post'], 'member_profile/captcha', 'MemberProfileController@captcha');
+    $router->match(['get', 'post'], 'member_profile/security', 'MemberProfileController@security');
     $router->match(['get', 'post'], 'member_profile/password', 'MemberProfileController@password');
+    $router->match(['get', 'post'], 'member_profile/profile', 'MemberProfileController@profile');
     $router->match(['get', 'post'], 'member_profile/avatar', 'MemberProfileController@avatar');
+    $router->match(['get', 'post'], 'member_profile/bind', 'MemberProfileController@bind');
     $router->match(['get', 'post'], 'member_profile/email', 'MemberProfileController@email');
     $router->match(['get', 'post'], 'member_profile/email_verify', 'MemberProfileController@emailVerify');
     $router->match(['get', 'post'], 'member_profile/phone', 'MemberProfileController@phone');
     $router->match(['get', 'post'], 'member_profile/phone_verify', 'MemberProfileController@phoneVerify');
+    $router->match(['get', 'post'], 'member_profile/oauth/{type}', 'MemberProfileController@oauth');
 
     $router->match(['get', 'post'], 'member_message', 'MemberMessageController@index');
     $router->match(['get', 'post'], 'member_message/delete', 'MemberMessageController@delete');

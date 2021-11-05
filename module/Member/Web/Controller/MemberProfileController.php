@@ -6,6 +6,7 @@ namespace Module\Member\Web\Controller;
 
 use Illuminate\Support\Facades\View;
 use ModStart\App\Web\Layout\WebConfigBuilder;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Field\AbstractField;
@@ -13,7 +14,9 @@ use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
+use Module\Member\Config\MemberOauth;
 use Module\Member\Support\MemberLoginCheck;
+use Module\Member\Util\MemberUtil;
 
 class MemberProfileController extends ModuleBaseController implements MemberLoginCheck
 {
@@ -62,6 +65,34 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
     public function captcha()
     {
         return $this->api->captchaRaw();
+    }
+
+    public function bind()
+    {
+        return Response::redirect(modstart_web_url('member_profile/email'));
+    }
+
+    public function security()
+    {
+        return Response::redirect(modstart_web_url('member_profile/password'));
+    }
+
+    public function profile()
+    {
+        return Response::redirect(modstart_web_url('member_profile/avatar'));
+    }
+
+    public function oauth($type)
+    {
+        $oauth = MemberOauth::get($type);
+        BizException::throwsIfEmpty('授权登录不存在', $oauth);
+        $oauthRecord = MemberUtil::getOauth(MemberUser::id(), $oauth->name());
+        $viewData = [
+            'pageTitle' => $oauth->title(),
+            'oauth' => $oauth,
+            'oauthRecord' => $oauthRecord,
+        ];
+        return $this->view('memberProfile.oauth', $viewData);
     }
 
     public function email()

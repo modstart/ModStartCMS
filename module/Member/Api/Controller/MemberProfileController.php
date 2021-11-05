@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Mews\Captcha\Facades\Captcha;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\FormatUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
+use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserUpdatedEvent;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberUtil;
@@ -276,5 +278,18 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         SmsUtil::send($phone, 'verify', ['code' => $verify]);
         return Response::generate(0, '验证码发送成功');
 
+    }
+
+    public function oauthUnbind()
+    {
+        $input = InputPackage::buildFromInput();
+        $type = $input->getTrimString('type');
+        $oauth = MemberOauth::get($type);
+        BizException::throwsIfEmpty('授权方式不存在', $oauth);
+        $openId = MemberUtil::getOauthOpenId(MemberUser::id(), $oauth->name());
+        if ($openId) {
+            MemberUtil::forgetOauth($oauth->name(), $openId);
+        }
+        return Response::generate(0, '解绑成功', null, '[reload]');
     }
 }

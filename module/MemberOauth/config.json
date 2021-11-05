@@ -1,0 +1,21 @@
+{
+  "name": "MemberOauth",
+  "title": "会员授权登录",
+  "require": [
+    "Vendor",
+    "Member:>=1.4.0"
+  ],
+  "version": "1.0.0",
+  "author": "ModStart",
+  "description": "微信授权登录、QQ授权登录等",
+  "providers": [
+  ],
+  "config": {
+    "wechatMiniProgramEnable": [
+      [
+        "switch",
+        "启用微信小程序"
+      ]
+    ]
+  }
+}

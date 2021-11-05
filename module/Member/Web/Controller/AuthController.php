@@ -9,6 +9,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleBaseController;
+use Module\Member\Auth\MemberUser;
 
 
 
@@ -250,6 +251,14 @@ class AuthController extends ModuleBaseController
         if ($ret['data']['memberUserId'] > 0) {
             Session::forget('oauthRedirect');
             return Response::redirect($redirect);
+        }
+        if (MemberUser::isLogin()) {
+            $ret = $this->api->oauthBind($oauthType);
+            if ($ret['code']) {
+                return Response::send(-1, $ret['msg']);
+            }
+            Session::forget('oauthRedirect');
+            return Response::send(0, '绑定成功', null, $redirect);
         }
         return $this->view('oauthBind', [
             'oauthUserInfo' => $oauthUserInfo,
