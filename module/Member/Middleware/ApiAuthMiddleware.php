@@ -20,7 +20,8 @@ class ApiAuthMiddleware
                 $memberUser = null;
         if ($memberUserId) {
             $memberUser = MemberUtil::get($memberUserId);
-            if($memberUser){
+            MemberUtil::processDefault($memberUser);
+            if ($memberUser) {
                 switch ($memberUser['status']) {
                     case MemberStatus::FORBIDDEN:
                         $memberUser = null;

@@ -20,6 +20,7 @@ class WebAuthMiddleware
         $memberUser = null;
         if ($memberUserId) {
             $memberUser = MemberUtil::get($memberUserId);
+            MemberUtil::processDefault($memberUser);
             if ($memberUser) {
                 switch ($memberUser['status']) {
                     case MemberStatus::FORBIDDEN:

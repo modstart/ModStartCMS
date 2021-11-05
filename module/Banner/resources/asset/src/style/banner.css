@@ -134,9 +134,18 @@
   .ub-banner .swiper-slide.a .content {
     padding: 1rem;
     text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    margin: 0;
   }
   .ub-banner .swiper-slide.a .content .title {
     font-size: 1.2rem;
+  }
+  .ub-banner .swiper-slide.a .content .slogan {
+    padding: 0.5rem 0;
   }
   .ub-banner .swiper-slide.a .content .link {
     line-height: 1.5rem;

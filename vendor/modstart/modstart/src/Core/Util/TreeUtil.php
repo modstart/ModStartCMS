@@ -224,16 +224,25 @@ class TreeUtil
         return $ids;
     }
 
-    public static function treeChain(&$tree, $id, $pk_name = 'id', $pid_name = 'pid', $chain = [])
+    public static function treeChain(&$tree, $id, $pk_name = 'id', $pid_name = 'pid', $chain = [], $level = 0)
     {
+        // echo json_encode($tree, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);exit();
+        // echo "treeChain - $level - $id - " . json_encode($chain, JSON_UNESCAPED_UNICODE) . "\n";
         foreach ($tree as $item) {
+            /**
+             * Reset Root
+             * @since 1.8.0
+             */
+            if (!$item[$pid_name]) {
+                $chain = [];
+            }
             if ($item[$pk_name] == $id) {
                 $chain[] = $item;
                 return $chain;
             }
             if (!empty($item[self::$CHILD_KEY])) {
                 $chain[] = ArrayUtil::removeKeys($item, [self::$CHILD_KEY]);
-                $results = self::treeChain($item[self::$CHILD_KEY], $id, $pk_name, $pid_name, $chain);
+                $results = self::treeChain($item[self::$CHILD_KEY], $id, $pk_name, $pid_name, $chain, $level + 1);
                 if (!empty($results)) {
                     return $results;
                 }

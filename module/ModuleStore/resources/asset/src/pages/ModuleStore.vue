@@ -171,10 +171,14 @@
                                 </a>
                             </div>
                             <div v-else
-                                 class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
-                                <span class="ub-text-muted">
-                                    系统模块不能动态配置
-                                </span>
+                                 class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500 tw-overflow-hidden">
+                                <div class="tw-float-right" v-if="module._isInstalled">
+                                    <a v-if="module._isInstalled && module._hasConfig" href="javascript:;"
+                                       :data-tk-event="'ModuleStore,Config,'+module.name"
+                                       @click="doConfig(module)">
+                                        <i class="iconfont icon-cog"></i>配置
+                                    </a>
+                                </div>
                                 <a v-if="module._isInstalled && !module._isLocal && module.latestVersion && versionCompare(module.latestVersion,module._localVersion)>0"
                                    :data-tk-event="'ModuleStore,UpgradeSystem,'+module.name"
                                    @click="doUpgrade(module)"

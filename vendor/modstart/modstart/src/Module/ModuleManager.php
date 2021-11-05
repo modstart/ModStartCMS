@@ -12,7 +12,14 @@ use ModStart\Core\Util\VersionUtil;
 
 class ModuleManager
 {
+    /**
+     * 已安装模块配置保存KEY
+     */
     const MODULE_ENABLE_LIST = 'ModuleList';
+    /**
+     * 系统模块配置保存
+     */
+    const MODULE_SYSTEM_OVERWRITE_CONFIG = 'ModuleSystemOverwriteConfig';
 
     /**
      * 获取模块的基本信息
@@ -244,11 +251,28 @@ class ModuleManager
             foreach (explode(',', config('env.MS_MODULES')) as $m) {
                 if (!empty($m)) {
                     $modules[$m] = [
+                        'isSystem' => true,
                         'enable' => true,
                     ];
                 }
             }
         }
+        try {
+            $systemConfig = modstart_config()->getArray(self::MODULE_SYSTEM_OVERWRITE_CONFIG, []);
+            if (!empty($systemConfig)) {
+                foreach ($systemConfig as $m => $config) {
+                    if (empty($modules[$m]) || !is_array($config)) {
+                        continue;
+                    }
+                    if (!isset($modules[$m]['config'])) {
+                        $modules[$m]['config'] = [];
+                    }
+                    $modules[$m]['config'] = array_merge($modules[$m]['config'], $config);
+                }
+            }
+        } catch (\Exception $e) {
+        }
+        // print_r($modules);exit();
         return $modules;
     }
 
@@ -401,6 +425,19 @@ class ModuleManager
             $modules[$module]['config'] = array_merge($modules[$module]['config'], $config);
         }
         self::saveUserInstalledModules($modules);
+    }
+
+    /**
+     * 保存模块至系统配置
+     * @param $module
+     * @param $config
+     * @since 1.8.0
+     */
+    public static function saveSystemOverwriteModuleConfig($module, $config)
+    {
+        $current = modstart_config()->getArray(self::MODULE_SYSTEM_OVERWRITE_CONFIG);
+        $current[$module] = $config;
+        modstart_config()->setArray(self::MODULE_SYSTEM_OVERWRITE_CONFIG, $current);
     }
 
     /**

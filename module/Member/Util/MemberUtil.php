@@ -29,6 +29,26 @@ class MemberUtil
         return ModelUtil::get('member_user', ['id' => $id]);
     }
 
+    
+    public static function processDefault(&$memberUser)
+    {
+        if (empty($memberUser)) {
+            return;
+        }
+        if (empty($memberUser['nickname'])) {
+            $memberUser['nickname'] = $memberUser['username'];
+        }
+        if (empty($memberUser['avatar'])) {
+            $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.png', false);
+        }
+        if (empty($memberUser['avatarMedium'])) {
+            $memberUser['avatarMedium'] = AssetsUtil::fixFull('asset/image/avatar.png', false);
+        }
+        if (empty($memberUser['avatarBig'])) {
+            $memberUser['avatarBig'] = AssetsUtil::fixFull('asset/image/avatar.png', false);
+        }
+    }
+
     public static function getBasic($id, $keepFields = null)
     {
         if (null === $keepFields) {
