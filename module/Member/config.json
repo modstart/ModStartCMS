@@ -4,7 +4,7 @@
   "require": [
     "Vendor:>=1.7.0"
   ],
-  "version": "1.6.0",
+  "version": "1.6.1",
   "modstartVersion": ">=1.4.0",
   "author": "官方",
   "description": "提供基础的用户管理服务",
