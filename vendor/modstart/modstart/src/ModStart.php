@@ -89,7 +89,7 @@ class ModStart
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      * @throws BizException
      */
-    public static function styleFile($styleFile, $absolute)
+    public static function styleFile($styleFile, $absolute = false)
     {
         if (!$absolute) {
             $styleFile = base_path($styleFile);
