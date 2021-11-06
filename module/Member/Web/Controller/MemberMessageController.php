@@ -58,7 +58,7 @@ class MemberMessageController extends ModuleBaseController implements MemberLogi
         if (Request::isPost()) {
             return $grid->request();
         }
-        ModStart::scriptFile(__DIR__ . '/memberMessage.js');
+        ModStart::scriptFile('module/Member/Web/Controller/memberMessage.js');
         list($view, $frame) = $this->viewPaths('member.frame');
         return $page->pageTitle('消息中心')->view($view)->body(new Box($grid, '消息中心'));
     }

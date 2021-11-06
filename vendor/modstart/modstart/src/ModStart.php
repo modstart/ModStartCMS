@@ -48,9 +48,16 @@ class ModStart
     }
 
 
-    public static function scriptFile($scriptFile)
+    /**
+     * 载入一个JS文件内容
+     * @param $scriptFile
+     * @param bool $absolute
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @throws BizException
+     */
+    public static function scriptFile($scriptFile, $absolute = false)
     {
-        if (strpos($scriptFile, '/') !== 0) {
+        if (!$absolute) {
             $scriptFile = base_path($scriptFile);
         }
         try {
@@ -75,9 +82,16 @@ class ModStart
         return view('modstart::part.script', ['script' => array_unique(self::$script)]);
     }
 
-    public static function styleFile($styleFile)
+    /**
+     * 载入一个CSS样式文件的内容
+     * @param $styleFile
+     * @param $absolute
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @throws BizException
+     */
+    public static function styleFile($styleFile, $absolute)
     {
-        if (strpos($styleFile, '/') !== 0) {
+        if (!$absolute) {
             $styleFile = base_path($styleFile);
         }
         try {

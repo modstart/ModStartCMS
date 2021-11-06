@@ -189,7 +189,7 @@ class ModelController extends Controller
             BizException::throwsIfEmpty('记录不存在', $record);
         }
         ModStart::js('vendor/Cms/entry/pinyin.js');
-        ModStart::scriptFile(__DIR__ . '/ModelControllerModel.js');
+        ModStart::scriptFile('module/Cms/Admin/Controller/ModelControllerModel.js');
         $form = Form::make(null);
         $form->text('title', '名称')->required();
         $nameField = $form->text('name', '标识')->required()->ruleRegex('/^[a-z_0-9]+$/')->ruleUnique('cms_model')

@@ -1,4 +1,4 @@
-@extends('modstart::admin.dialogFrame')
+@extends('modstart::app.web.dialogFrame')
 
 @section('bodyContent')
     {!! $content or '' !!}
