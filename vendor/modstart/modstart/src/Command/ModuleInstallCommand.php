@@ -4,6 +4,8 @@ namespace ModStart\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
+use ModStart\Core\Events\ModuleInstalledEvent;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
@@ -56,6 +58,10 @@ class ModuleInstallCommand extends Command
 
 
         ModStart::clearCache();
+
+        $event = new ModuleInstalledEvent();
+        $event->name = $module;
+        Event::fire($event);
 
         $this->info('Module Install Success');
     }

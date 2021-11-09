@@ -30,6 +30,17 @@ class SiteTemplateProvider
         return self::$instances;
     }
 
+    
+    public static function get($name)
+    {
+        foreach (self::all() as $provider) {
+            if ($provider->name() == $name) {
+                return $provider;
+            }
+        }
+        return null;
+    }
+
     public static function map()
     {
         return array_build(self::all(), function ($k, $v) {

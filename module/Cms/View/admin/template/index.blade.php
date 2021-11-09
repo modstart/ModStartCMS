@@ -7,6 +7,10 @@
         <i class="iconfont icon-warning"></i>
         请使用专业IDE对模板进行操作。
     </div>
+    <div class="ub-alert ub-alert-warning">
+        <i class="iconfont icon-warning"></i>
+        当前使用的模板是「{{\Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider::get(modstart_config('siteTemplate','default'))->title()}}」，模板文件位于 <code class="tw-bg-transparent tw-border-0 tw-text-red-400">resources/views/theme/{{modstart_config('siteTemplate')}}/</code>。
+    </div>
     <div class="ub-panel">
         <div class="head">
             <div class="title">列表模板</div>
@@ -16,7 +20,7 @@
                 <thead>
                     <tr>
                         <td width="200">模板</td>
-                        <td>渲染优先级</td>
+                        <td>模板渲染优先级</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,8 +30,13 @@
                             <td>
                                 @foreach($fs as $i=>$f)
                                     <div class="tw-py-2">
-                                        <span class="tw-w-6 tw-h-6 tw-text-center tw-leading-6 tw-bg-gray-200 tw-inline-block tw-rounded-full">{{$i+1}}</span>
-                                        <code>{{$f['_path']}}</code>
+                                        @if($i==0)
+                                            <span><i class="iconfont icon-checked tw-text-lg ub-text-success"></i></span>
+                                            <code>{{$f['_path']}}</code>
+                                        @else
+                                            <span><i class="iconfont icon-checked tw-text-lg ub-text-muted"></i></span>
+                                            <code class="ub-text-muted">{{$f['_path']}}</code>
+                                        @endif
                                     </div>
                                 @endforeach
                             </td>
@@ -56,8 +65,13 @@
                         <td>
                             @foreach($fs as $i=>$f)
                                 <div class="tw-py-2">
-                                    <span class="tw-w-6 tw-h-6 tw-text-center tw-leading-6 tw-bg-gray-200 tw-inline-block tw-rounded-full">{{$i+1}}</span>
-                                    <code>{{$f['_path']}}</code>
+                                    @if($i==0)
+                                        <span><i class="iconfont icon-checked tw-text-lg ub-text-success"></i></span>
+                                        <code>{{$f['_path']}}</code>
+                                    @else
+                                        <span><i class="iconfont icon-checked tw-text-lg ub-text-muted"></i></span>
+                                        <code class="ub-text-muted">{{$f['_path']}}</code>
+                                    @endif
                                 </div>
                             @endforeach
                         </td>

@@ -39,6 +39,6 @@ class DetailController extends ModuleBaseController
         $viewData['catRootChildren'] = $catRootChildren;
         $viewData['model'] = $data['model'];
         $viewData['latestRecords'] = $latestRecords;
-                return $this->view('cms.detail.' . CmsTemplateUtil::toBladeView($view), $viewData);
+                 return $this->view('cms.detail.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

@@ -3,6 +3,8 @@
 namespace ModStart\Command;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Event;
+use ModStart\Core\Events\ModuleEnabledEvent;
 use ModStart\Core\Exception\BizException;
 use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
@@ -21,6 +23,9 @@ class ModuleEnableCommand extends Command
         $installeds[$module]['enable'] = true;
         ModuleManager::saveUserInstalledModules($installeds);
         ModStart::clearCache();
+        $event = new ModuleEnabledEvent();
+        $event->name = $module;
+        Event::fire($event);
         $this->info('Module Enable Success');
     }
 

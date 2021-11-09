@@ -13,8 +13,18 @@ class CmsTemplateUtil
         'module/Cms/View/pc/cms/',
     ];
 
+    private static function prepareTemplate()
+    {
+        $template = modstart_config('siteTemplate', 'default');
+        $root = "resources/views/theme/$template/pc/cms/";
+        if ($root != self::$roots[0]) {
+            array_unshift(self::$roots, $root);
+        }
+    }
+
     private static function listFiles($dir)
     {
+        self::prepareTemplate();
         $files = [];
         foreach (self::$roots as $root) {
             $files = array_merge(

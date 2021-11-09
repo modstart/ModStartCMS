@@ -54,6 +54,7 @@ class CmsContentUtil
         $model = CmsModelUtil::get($record['modelId']);
         $table = "cms_m_$model[name]";
         $recordData = ModelUtil::get($table, $record['id']);
+        $record['_tags'] = TagUtil::string2Array($record['tags']);
         $record['_data'] = $recordData;
         return [
             'record' => $record,
@@ -68,6 +69,7 @@ class CmsContentUtil
         $model = CmsModelUtil::get($record['modelId']);
         $table = "cms_m_$model[name]";
         $recordData = ModelUtil::get($table, $record['id']);
+        $record['_tags'] = TagUtil::string2Array($record['tags']);
         $record['_data'] = $recordData;
         return [
             'record' => $record,

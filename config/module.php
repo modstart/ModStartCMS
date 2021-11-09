@@ -49,5 +49,8 @@ return [
         'SiteCounter' => [
             'enable' => true,
         ],
+//        'CmsThemeCorp' => [
+//            'enable' => true,
+//        ],
     ],
 ];

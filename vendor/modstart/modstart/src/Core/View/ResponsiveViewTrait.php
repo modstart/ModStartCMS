@@ -5,6 +5,7 @@ namespace ModStart\Core\View;
 
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Util\AgentUtil;
+use Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider;
 
 trait ResponsiveViewTrait
 {
@@ -26,30 +27,50 @@ trait ResponsiveViewTrait
 
     protected function viewPaths($view)
     {
-        $template = modstart_config()->getWithEnv('siteTemplate', 'default');
-        // echo $template;exit();
-        $module = $this->getModule();
+        static $template = null;
+        static $provider = null;
+        static $module = null;
+        static $templateRoot = null;
+        if (null === $template) {
+            $template = modstart_config()->getWithEnv('siteTemplate', 'default');
+            $module = $this->getModule();
+            $provider = SiteTemplateProvider::get($template);
+            if ($provider && $provider->root()) {
+                $templateRoot = $provider->root();
+            } else {
+                $templateRoot = "theme.$template";
+            }
 
-        $mobileView = "theme.$template.m.$view";
+        }
+
+        /**
+         * 模板的View
+         */
+        $mobileView = "$templateRoot.m.$view";
+        /**
+         * 模板不存在时替代View
+         */
         $mobileViewDefault = "theme.default.m.$view";
+        /**
+         * 是模块时，模块替代View
+         */
         if ($module) {
             $mobileViewModule = "module::$module.View.m.$view";
         }
 
-        $pcView = "theme.$template.pc.$view";
+        $pcView = "$templateRoot.pc.$view";
         $pcViewDefault = "theme.default.pc.$view";
         if ($module) {
             $pcViewModule = "module::$module.View.pc.$view";
         }
 
-        $mobileFrameView = "theme.$template.m.frame";
+        $mobileFrameView = "$templateRoot.m.frame";
         $mobileFrameViewDefault = "theme.default.m.frame";
 
-        $pcFrameView = "theme.$template.pc.frame";
+        $pcFrameView = "$templateRoot.pc.frame";
         $pcFrameViewDefault = "theme.default.pc.frame";
 
         $useView = $pcView;
-        // var_dump($useView);exit();
         $useFrameView = $pcFrameView;
         if ($this->isMobile()) {
             $useView = $mobileView;
@@ -77,6 +98,7 @@ trait ResponsiveViewTrait
         if (!view()->exists($useFrameView)) {
             $useFrameView = $pcFrameViewDefault;
         }
+        // print_r([$view, $useView, $useFrameView]);exit();
         View::share('_viewFrame', $useFrameView);
         return [$useView, $useFrameView];
     }

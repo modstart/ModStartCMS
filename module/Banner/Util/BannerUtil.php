@@ -24,6 +24,14 @@ class BannerUtil
         });
     }
 
+    public static function insertIfMissing($position, $data)
+    {
+        $data['position'] = $position;
+        if (!ModelUtil::exists('banner', $data)) {
+            ModelUtil::insert('banner', $data);
+        }
+    }
+
     public static function hasData($position = 'home')
     {
         return !empty(self::listByPositionWithCache($position));

@@ -3,7 +3,8 @@
 namespace ModStart\Command;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
+use ModStart\Core\Events\ModuleUninstalledEvent;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
@@ -34,6 +35,11 @@ class ModuleUninstallCommand extends Command
         ModuleManager::saveUserInstalledModules($installeds);
 
         ModStart::clearCache();
+
+
+        $event = new ModuleUninstalledEvent();
+        $event->name = $module;
+        Event::fire($event);
     }
 
     private function unPublishRoot($module)
