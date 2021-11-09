@@ -75,10 +75,13 @@ trait ResponsiveViewTrait
         if ($this->isMobile()) {
             $useView = $mobileView;
             if (!view()->exists($useView)) {
-                $useView = $mobileViewDefault;
-                if ($module) {
-                    if (!view()->exists($useView)) {
-                        $useView = $mobileViewModule;
+                $useView = $pcView;
+                if (!view()->exists($useView)) {
+                    $useView = $mobileViewDefault;
+                    if ($module) {
+                        if (!view()->exists($useView)) {
+                            $useView = $mobileViewModule;
+                        }
                     }
                 }
             }
@@ -98,7 +101,7 @@ trait ResponsiveViewTrait
         if (!view()->exists($useFrameView)) {
             $useFrameView = $pcFrameViewDefault;
         }
-        // print_r([$view, $useView, $useFrameView]);exit();
+        // print_r([$view, $useView, $useFrameView]); exit();
         View::share('_viewFrame', $useFrameView);
         return [$useView, $useFrameView];
     }

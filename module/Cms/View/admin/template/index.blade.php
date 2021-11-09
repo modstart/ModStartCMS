@@ -9,7 +9,7 @@
     </div>
     <div class="ub-alert ub-alert-warning">
         <i class="iconfont icon-warning"></i>
-        当前使用的模板是「{{\Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider::get(modstart_config('siteTemplate','default'))->title()}}」，模板文件位于 <code class="tw-bg-transparent tw-border-0 tw-text-red-400">resources/views/theme/{{modstart_config('siteTemplate')}}/</code>。
+        当前使用的模板是 <b>{{$provider?$provider->title():'[未知]'}}</b>，模板文件位于 <code class="tw-bg-transparent tw-border-0 tw-text-red-400">{{$templateRoot}}</code>。
     </div>
     <div class="ub-panel">
         <div class="head">

@@ -5,6 +5,7 @@ namespace Module\Cms\Util;
 
 
 use ModStart\Core\Util\FileUtil;
+use Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider;
 
 class CmsTemplateUtil
 {
@@ -15,11 +16,22 @@ class CmsTemplateUtil
 
     private static function prepareTemplate()
     {
-        $template = modstart_config('siteTemplate', 'default');
-        $root = "resources/views/theme/$template/pc/cms/";
+        $root = self::templateRoot() . 'pc/cms/';
         if ($root != self::$roots[0]) {
             array_unshift(self::$roots, $root);
         }
+    }
+
+    public static function templateRoot()
+    {
+        $template = modstart_config()->getWithEnv('siteTemplate', 'default');
+        $root = "resources/views/theme/$template";
+        $provider = SiteTemplateProvider::get($template);
+        if ($provider && $provider->root()) {
+            $root = $provider->root();
+            $root = str_replace(['::', '.'], '/', $root);
+        }
+        return rtrim($root, '/\\') . '/';
     }
 
     private static function listFiles($dir)
