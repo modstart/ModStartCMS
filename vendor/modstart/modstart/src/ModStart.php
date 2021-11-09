@@ -14,7 +14,7 @@ use ModStart\Support\Manager\WidgetManager;
  */
 class ModStart
 {
-    public static $version = '1.8.0';
+    public static $version = '1.9.0';
 
     public static $script = [];
     public static $style = [];
