@@ -22,6 +22,30 @@ class CmsTemplateUtil
         }
     }
 
+    public static function allTemplateRoots()
+    {
+        $roots = [
+            [
+                'title' => 'CMS默认',
+                'path' => 'module/Cms/View/pc/cms/',
+            ]
+        ];
+        foreach (SiteTemplateProvider::all() as $provider) {
+            $name = $provider->name();
+            $root = "resources/views/theme/$name";
+            if ($provider->root()) {
+                $root = $provider->root();
+                $root = str_replace(['::', '.'], '/', $root);
+            }
+            $root = rtrim($root, '/\\');
+            $roots[] = [
+                'title' => $provider->title(),
+                'path' => $root,
+            ];
+        }
+        return $roots;
+    }
+
     public static function templateRoot()
     {
         $template = modstart_config()->getWithEnv('siteTemplate', 'default');
