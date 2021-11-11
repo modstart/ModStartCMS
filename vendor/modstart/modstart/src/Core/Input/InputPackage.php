@@ -138,9 +138,18 @@ class InputPackage
         return min($page, $max);
     }
 
-    public function getPageSize($key = 'pageSize', $min = 2, $max = 100)
+    public function getPageSize($key = 'pageSize', $min = 2, $max = 100, $default = 10)
     {
-        $pageSize = $this->getInteger($key, 10);
+        if (null === $key) {
+            $key = 'pageSize';
+        }
+        if (null === $min) {
+            $min = 2;
+        }
+        if (null === $max) {
+            $max = 100;
+        }
+        $pageSize = $this->getInteger($key, $default);
         return min(max($pageSize, $min), $max);
     }
 

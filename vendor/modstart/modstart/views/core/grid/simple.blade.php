@@ -18,9 +18,9 @@
         @endforeach
         <div class="field">
             @if(!count($filters))
-                <a href="javascript:;" class="btn" data-refresh-button>
-                    <i class="iconfont icon-refresh"></i>
-                </a>
+                <button class="btn" data-refresh-button>
+                    <i class="iconfont icon-refresh"></i> {{L('Refresh')}}
+                </button>
             @endif
             @if(count($filters)>0)
                 <button class="btn btn-primary" data-search-button>

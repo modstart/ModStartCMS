@@ -22,6 +22,15 @@ class TimeUtil
     const MINUTE_PERIOD_HOUR = 60;
     const MINUTE_PERIOD_MINITE = 1;
 
+    public static function formatTimeLength($seconds)
+    {
+        static $ts = null;
+        if (null === $ts) {
+            $ts = strtotime('2020-01-01 00:00:00');
+        }
+        return date('H:i:s', $ts + $seconds);
+    }
+
     public static function yesterdayStart()
     {
         return date('Y-m-d 00:00:00', time() - self::PERIOD_DAY);

@@ -61,7 +61,7 @@ class ModStartAdmin
 
     private static function listModuleRoutes()
     {
-        $modules = ModuleManager::listAllInstalledModulesInRequiredOrder(true);
+        $modules = ModuleManager::listAllInstalledModulesInRequiredOrder();
         $files = [];
         foreach ($modules as $module) {
             if (file_exists($file = ModuleManager::path($module, 'Admin/routes.php'))) {
