@@ -16,12 +16,12 @@ use ModStart\ModStart;
  * @method static string danger($text, $url, $disabled = false)
  * @method static string success($text, $url, $disabled = false)
  *
- * @method void text($text)
- * @method void type($type)
- * @method void url($url)
- * @method void disabled($boolean)
- * @method void width($value)
- * @method void height($value)
+ * @method TextDialogRequest text($text)
+ * @method TextDialogRequest type($type)
+ * @method TextDialogRequest url($url)
+ * @method TextDialogRequest disabled($boolean)
+ * @method TextDialogRequest width($value)
+ * @method TextDialogRequest height($value)
  */
 class TextDialogRequest extends AbstractWidget
 {
@@ -40,9 +40,25 @@ class TextDialogRequest extends AbstractWidget
             $ins->type($name);
             $ins->text($arguments[0]);
             $ins->url($arguments[1]);
+            if (isset($arguments[2])) {
+                $ins->disabled($arguments[2]);
+            }
             return $ins->render();
         }
         throw new \Exception('TextDialogRequest error ' . join(',', $methods) . ' ');
+    }
+
+    /**
+     * @param mixed ...$arguments
+     * @return TextDialogRequest
+     */
+    public static function make(...$arguments)
+    {
+        $ins = new static();
+        $ins->type($arguments[0]);
+        $ins->text($arguments[1]);
+        $ins->url($arguments[2]);
+        return $ins;
     }
 
     public function render()

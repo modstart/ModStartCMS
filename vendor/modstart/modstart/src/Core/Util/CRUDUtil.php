@@ -46,30 +46,31 @@ class CRUDUtil
         Route::match(['get', 'post'], "$prefix/sort", "$class@sort");
     }
 
-    public static function registerGridResource(Grid $grid, $class)
+    public static function registerGridResource(Grid $grid, $class, $param = [])
     {
-        if ($grid->canAdd() && ($url = action($class . '@add'))) {
+        if ($grid->canAdd() && ($url = action($class . '@add', $param))) {
             switch ($grid->engine()) {
                 case GridEngine::TREE_MASS:
                     $input = InputPackage::buildFromInput();
-                    $pid = $input->get('_pid', $grid->treeRootPid());
-                    $grid->urlAdd($url . '?' . http_build_query(['_pid' => $pid]));
+                    $query = [];
+                    $query['_pid'] = $input->get('_pid', $grid->treeRootPid());
+                    $grid->urlAdd($url . '?' . http_build_query($query));
                     break;
                 default:
                     $grid->urlAdd($url);
                     break;
             }
         }
-        if ($grid->canEdit() && ($url = action($class . '@edit'))) {
+        if ($grid->canEdit() && ($url = action($class . '@edit', $param))) {
             $grid->urlEdit($url);
         }
-        if ($grid->canDelete() && ($url = action($class . '@delete'))) {
+        if ($grid->canDelete() && ($url = action($class . '@delete', $param))) {
             $grid->urlDelete($url);
         }
-        if ($grid->canShow() && ($url = action($class . '@show'))) {
+        if ($grid->canShow() && ($url = action($class . '@show', $param))) {
             $grid->urlShow($url);
         }
-        if ($grid->canSort() && ($url = action($class . '@sort'))) {
+        if ($grid->canSort() && ($url = action($class . '@sort', $param))) {
             $grid->urlSort($url);
         }
     }

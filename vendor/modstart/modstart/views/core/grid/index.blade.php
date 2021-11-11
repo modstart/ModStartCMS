@@ -17,12 +17,19 @@
             {!! $filter->render() !!}
         @endforeach
         <div class="field">
-            <button class="btn btn-primary" data-search-button>
-                <i class="iconfont icon-search"></i> {{L('Search')}}
-            </button>
-            <button class="btn" data-reset-search-button>
-                <i class="iconfont icon-refresh"></i> {{L('Reset')}}
-            </button>
+            @if(!count($filters))
+                <button class="btn btn-primary" data-search-button>
+                    <i class="iconfont icon-refresh"></i> {{L('Refresh')}}
+                </button>
+            @endif
+            @if(count($filters)>0)
+                <button class="btn btn-primary" data-search-button>
+                    <i class="iconfont icon-search"></i> {{L('Search')}}
+                </button>
+                <button class="btn" data-reset-search-button>
+                    <i class="iconfont icon-refresh"></i> {{L('Reset')}}
+                </button>
+            @endif
         </div>
     </div>
     <div data-addition class="table-addition-container"></div>

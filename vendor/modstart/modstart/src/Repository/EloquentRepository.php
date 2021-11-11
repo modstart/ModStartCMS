@@ -327,9 +327,10 @@ class EloquentRepository extends Repository
         return $this->model;
     }
 
-    private function getMaxValue($field)
+    private function getMaxValue($field, Form $form)
     {
         $query = $this->newQuery();
+        $form->repositoryFilter()->executeQueries($query);
         if ($this->isSoftDeletes) {
             $query->withTrashed();
         }
@@ -354,12 +355,12 @@ class EloquentRepository extends Repository
                     if ($model->getAttribute($this->getTreePidColumn())) {
                         BizException::throwsIf(L('Parent Item Not Exists'), !TreeUtil::modelItemAddAble($model, $model->getAttribute($this->getTreePidColumn()), $this->getKeyName()));
                     }
-                    $model->setAttribute($this->getTreeSortColumn(), $this->getMaxValue($this->getTreeSortColumn()) + 1);
+                    $model->setAttribute($this->getTreeSortColumn(), $this->getMaxValue($this->getTreeSortColumn(), $form) + 1);
                 }
                 if ($form->canSort()) {
                     $sortColumn = $this->getSortColumn();
                     if (empty($model->getAttribute($sortColumn))) {
-                        $model->setAttribute($sortColumn, $this->getMaxValue($sortColumn) + 1);
+                        $model->setAttribute($sortColumn, $this->getMaxValue($sortColumn, $form) + 1);
                     }
                 }
                 $result = $model->save();
@@ -379,11 +380,11 @@ class EloquentRepository extends Repository
     }
 
     /**
-     * 更新数据.
+     * 更新数据
      *
      * @param Form $form
-     *
-     * @return bool
+     * @return array|Arrayable|void|null
+     * @throws BizException
      */
     public function edit(Form $form)
     {
@@ -434,6 +435,7 @@ class EloquentRepository extends Repository
     {
         $direction = $this->getArgument('direction');
         $query = $this->newQuery();
+        $form->repositoryFilter()->executeQueries($query);
         if ($this->isSoftDeletes) {
             $query->withTrashed();
         }
@@ -441,6 +443,7 @@ class EloquentRepository extends Repository
             ->with($this->getRelations())
             ->find($form->itemId(), $this->getFormColumns());
         $queryAll = $this->newQuery();
+        $form->repositoryFilter()->executeQueries($queryAll);
         if ($this->isSoftDeletes) {
             $queryAll->withTrashed();
         }
