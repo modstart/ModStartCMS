@@ -38,20 +38,26 @@
                         </div>
                     </div>
                     @if(modstart_config('loginCaptchaEnable',false))
-                        <div class="line">
-                            <div class="field">
-                                <div class="row no-gutters">
-                                    <div class="col-6">
-                                        <input type="text" class="form-lg" name="captcha" autocomplete="off" placeholder="图片验证码" />
-                                    </div>
-                                    <div class="col-6">
-                                        <img class="captcha captcha-lg" title="刷新验证" data-captcha
-                                             src="{{modstart_web_url('login/captcha')}}"
-                                             onclick="$(this).attr('src','{{modstart_web_url('login/captcha')}}?'+Math.random())" />
+                        @if(modstart_config('loginCaptchaProvider',null))
+                            <div style="padding:0.5rem;">
+                                {!! \Module\Vendor\Provider\Captcha\CaptchaProvider::get(modstart_config('loginCaptchaProvider',null))->render() !!}
+                            </div>
+                        @else
+                            <div class="line">
+                                <div class="field">
+                                    <div class="row no-gutters">
+                                        <div class="col-6">
+                                            <input type="text" class="form-lg" name="captcha" autocomplete="off" placeholder="图片验证码" />
+                                        </div>
+                                        <div class="col-6">
+                                            <img class="captcha captcha-lg" title="刷新验证" data-captcha
+                                                 src="{{modstart_web_url('login/captcha')}}"
+                                                 onclick="$(this).attr('src','{{modstart_web_url('login/captcha')}}?'+Math.random())" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endif
                     <div class="line">
                         <div class="field">

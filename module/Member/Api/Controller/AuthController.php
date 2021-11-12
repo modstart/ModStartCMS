@@ -20,6 +20,7 @@ use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Oauth\AbstractOauth;
 use Module\Member\Util\MemberUtil;
 use Module\Vendor\Email\MailSendJob;
+use Module\Vendor\Provider\Captcha\CaptchaProvider;
 use Module\Vendor\Session\SessionUtil;
 use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
@@ -399,8 +400,16 @@ class AuthController extends ModuleBaseController
         }
 
         if (modstart_config('loginCaptchaEnable', false)) {
-            if (!Captcha::check($input->getTrimString('captcha'))) {
-                return Response::generate(ResponseCodes::CAPTCHA_ERROR, '验证码错误');
+            $captchaProvider = modstart_config('loginCaptchaProvider', null);
+            if ($captchaProvider) {
+                $ret = CaptchaProvider::get($captchaProvider)->validate();
+                if (Response::isError($ret)) {
+                    return $ret;
+                }
+            } else {
+                if (!Captcha::check($input->getTrimString('captcha'))) {
+                    return Response::generate(ResponseCodes::CAPTCHA_ERROR, '验证码错误');
+                }
             }
         }
         $memberUser = null;

@@ -7,13 +7,18 @@ use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Core\Input\Request;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
+use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class ConfigController extends Controller
 {
     public function setting(AdminConfigBuilder $builder)
     {
+        $captchaType = array_merge(['' => '默认'], CaptchaProvider::nameTitleMap());
         $builder->pageTitle('功能设置');
-        $builder->switch('loginCaptchaEnable', '启用登录验证码');
+        $builder->switch('loginCaptchaEnable', '启用登录验证码')
+            ->when('=', true, function (Form $form) use ($captchaType) {
+                $form->select('loginCaptchaProvider', '登录验证码类型')->options($captchaType);
+            });
         $builder->switch('registerDisable', '禁用注册');
         $builder->switch('registerEmailEnable', '启用邮箱注册');
         $builder->switch('registerPhoneEnable', '启用手机注册');

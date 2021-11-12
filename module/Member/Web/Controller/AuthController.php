@@ -38,11 +38,8 @@ class AuthController extends ModuleBaseController
         }
         if (Request::isPost()) {
             $ret = $this->api->login();
-            if ($ret['code']) {
-                if ($input->getTrimString('captcha')) {
-                    return Response::send(-1, $ret['msg'], null, '[js]$("[data-captcha]").click()');
-                }
-                return Response::send(-1, $ret['msg']);
+            if (Response::isError($ret)) {
+                return Response::sendFromGenerate($ret);
             }
             return Response::send(0, '', '', $redirect);
         }

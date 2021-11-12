@@ -1,17 +1,26 @@
 <?php
 
 
-namespace Module\Vendor\Captcha;
-
+namespace Module\Vendor\Provider\Captcha;
 
 use Illuminate\Support\Facades\View;
 use Mews\Captcha\Facades\Captcha;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 
-
 class DefaultCaptchaProvider extends AbstractCaptchaProvider
 {
+    public function name()
+    {
+        return 'default';
+    }
+
+    public function title()
+    {
+        return '图片验证码';
+    }
+
+
     public function render()
     {
         return View::make('module::Vendor.View.widget.captcha.default')->render();
