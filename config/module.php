@@ -49,8 +49,5 @@ return [
         'SiteCounter' => [
             'enable' => true,
         ],
-        'CaptchaTecmz' => [
-            'enable' => true,
-        ],
     ],
 ];
