@@ -56,6 +56,8 @@ class FieldManager
             'areaChina' => \ModStart\Field\AreaChina::class,
             'hidden' => \ModStart\Field\Hidden::class,
             'icon' => \ModStart\Field\Icon::class,
+
+            'layoutGrid' => \ModStart\Layout\LayoutGrid::class,
         ];
 
         foreach ($map as $abstract => $class) {
@@ -129,6 +131,7 @@ class FieldManager
             $element->renderMode($context->fieldDefaultRenderMode());
             $element->context($context);
             $context->pushField($element);
+            $element->postSetup();
             return $element;
         }
         throw new \Exception("Field [" . ucfirst($method) . "] not exists or registered, available: " . json_encode(array_keys(static::$availableFields)));

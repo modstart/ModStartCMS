@@ -220,6 +220,11 @@ class AbstractField implements Renderable
 
     }
 
+    public function postSetup()
+    {
+
+    }
+
     public function context($context = null)
     {
         if (null === $context) {

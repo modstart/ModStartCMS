@@ -18,6 +18,8 @@ use Module\Member\Events\MemberUserLoginedEvent;
 use Module\Member\Events\MemberUserPasswordResetedEvent;
 use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Oauth\AbstractOauth;
+use Module\Member\Provider\RegisterProcessor\AbstractMemberRegisterProcessorProvider;
+use Module\Member\Provider\RegisterProcessor\MemberRegisterProcessorProvider;
 use Module\Member\Util\MemberUtil;
 use Module\Vendor\Email\MailSendJob;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
@@ -467,7 +469,6 @@ class AuthController extends ModuleBaseController
         }
 
         $username = $input->getTrimString('username');
-        $password = $input->getTrimString('password');
         $phone = $input->getPhone('phone');
         $phoneVerify = $input->getTrimString('phoneVerify');
         $email = $input->getEmail('email');
@@ -532,6 +533,14 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, '两次输入密码不一致');
         }
 
+        foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
+            
+            $ret = $provider->preCheck();
+            if (Response::isError($ret)) {
+                return $ret;
+            }
+        }
+
         $ret = MemberUtil::register($username, $phone, $email, $password);
         if ($ret['code']) {
             return Response::generate(-1, $ret['msg']);
@@ -549,6 +558,10 @@ class AuthController extends ModuleBaseController
         }
         Event::fire(new MemberUserRegisteredEvent($memberUserId));
         Session::forget('registerCaptchaPass');
+        foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
+            
+            $provider->postProcess($memberUserId);
+        }
         return Response::generate(0, '注册成功', [
             'id' => $memberUserId,
         ]);

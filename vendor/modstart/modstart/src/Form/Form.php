@@ -674,6 +674,7 @@ class Form implements Renderable
             case 'editDialogSize':
             case 'dialogSizeSmall':
             case 'gridFilter':
+            case 'gridOperateAppend':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

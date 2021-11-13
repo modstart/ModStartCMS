@@ -9,6 +9,7 @@ use ModStart\Field\Text;
 use ModStart\Field\Type\FieldRenderMode;
 use Module\Member\Util\MemberCmsUtil;
 
+
 class AdminMemberInfo extends Text
 {
     protected $view = 'modstart::core.field.text';

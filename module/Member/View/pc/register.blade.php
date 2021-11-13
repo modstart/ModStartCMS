@@ -149,6 +149,9 @@
                             <input type="password" class="form-lg" name="passwordRepeat" placeholder="重复密码" />
                         </div>
                     </div>
+                    @foreach(\Module\Member\Provider\RegisterProcessor\MemberRegisterProcessorProvider::listAll() as $provider)
+                        {!! $provider->render() !!}
+                    @endforeach
                     <div class="line">
                         <div class="field">
                             <button type="submit" class="btn btn-primary btn-lg btn-block">提交注册</button>

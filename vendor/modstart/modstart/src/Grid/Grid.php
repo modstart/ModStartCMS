@@ -56,6 +56,7 @@ use ModStart\Support\Manager\FieldManager;
  * @method  Grid|mixed treeMaxLevel($value = null)
  * @method  Form|mixed treeRootPid($value = null)
  * @method  Grid|mixed batchOperatePrepend($value = null)
+ * @method  Grid|mixed gridOperateAppend($value = null)
  * @method  Grid|mixed view($value = null)
  * @method  Grid|mixed gridRowCols($value = null)
  *
@@ -116,6 +117,7 @@ class Grid
         'treeMaxLevel',
         'treeRootPid',
         'batchOperatePrepend',
+        'gridOperateAppend',
         'hookPrepareItems',
         'gridRowCols',
     ];
@@ -153,8 +155,11 @@ class Grid
     private $defaultOrder = [];
     private $treeMaxLevel = 0;
     private $treeRootPid = 0;
+    /** @var string 批量操作向前字符串 */
     private $batchOperatePrepend = '';
-    /** @var array null:表示不启用，[6,12]:表示md,sm栅格占比 */
+    /** @var string 表格操作右上角追加字符串 */
+    private $gridOperateAppend = '';
+    /** @var array simple模式下栅格所占用的栅格大小null:表示不启用，[6,12]:表示md,sm栅格占比 */
     private $gridRowCols = null;
 
     /** @var Closure 渲染前置处理Items */

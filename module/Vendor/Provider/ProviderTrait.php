@@ -13,7 +13,7 @@ trait ProviderTrait
         self::$list[] = $provider;
     }
 
-    private static function listAll()
+    public static function listAll()
     {
         foreach (self::$list as $k => $v) {
             if ($v instanceof \Closure) {

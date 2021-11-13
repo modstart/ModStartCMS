@@ -11,6 +11,7 @@
                 </a>
             @endif
         @endif
+            {!! $gridOperateAppend !!}
     </div>
     <div data-search class="ub-lister-search">
         @foreach($filters as $filter)

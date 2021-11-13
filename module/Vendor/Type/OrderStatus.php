@@ -26,4 +26,16 @@ class OrderStatus implements BaseType
             self::CANCEL_QUEUE => '正在取消',
         ];
     }
+
+    public static function filterList($types)
+    {
+        $filtered = [];
+        foreach (self::getList() as $k => $v) {
+            if (!in_array($k, $types)) {
+                continue;
+            }
+            $filtered[$k] = $v;
+        }
+        return $filtered;
+    }
 }

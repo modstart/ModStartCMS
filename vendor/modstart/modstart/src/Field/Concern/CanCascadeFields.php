@@ -31,7 +31,7 @@ trait CanCascadeFields
     /**
      * @param $operator
      * @param $value
-     * @param $closure function (Form $form) { }
+     * @param $closure \Closure function(Form $form) { }
      *
      * @return $this
      */

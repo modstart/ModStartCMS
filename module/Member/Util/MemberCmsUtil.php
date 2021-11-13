@@ -13,6 +13,9 @@ class MemberCmsUtil
     
     public static function showFromId($memberUserId)
     {
+        if (!$memberUserId) {
+            return '<span class="ub-text-muted">-</span>';
+        }
         $memberUser = ModelUtil::getWithCache('member_user', ['id' => $memberUserId]);
         return self::show($memberUser);
     }

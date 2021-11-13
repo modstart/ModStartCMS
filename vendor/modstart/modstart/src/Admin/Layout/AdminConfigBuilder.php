@@ -9,6 +9,7 @@ use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Dao\DynamicModel;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Field\AbstractField;
 use ModStart\Form\Form;
 use ModStart\Layout\Page;
 use ModStart\Repository\RepositoryUtil;
@@ -100,11 +101,19 @@ class AdminConfigBuilder implements Renderable
         if (null === $item) {
             $item = [];
             foreach ($this->form->fields() as $field) {
+                /** @var $field AbstractField */
+                if ($field->isLayoutField()) {
+                    continue;
+                }
                 $item[$field->column()] = modstart_config($field->column(), $field->defaultValue());
             }
         } else if (false === $item) {
             $item = [];
             foreach ($this->form->fields() as $field) {
+                /** @var $field AbstractField */
+                if ($field->isLayoutField()) {
+                    continue;
+                }
                 $item[$field->column()] = null;
             }
         }

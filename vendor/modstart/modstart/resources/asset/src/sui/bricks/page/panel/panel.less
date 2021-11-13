@@ -44,6 +44,22 @@
       overflow: auto;
       transition: all 0.2s linear;
 
+      &::-webkit-scrollbar-track {
+        background-color: #F8F8F8;
+        border: 1px solid #EEE;
+      }
+
+      &::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+        background-color: #F5F5F5;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background-color: #CCC;
+      }
+
       & > .menu-item {
         padding-left: 0 !important;
 

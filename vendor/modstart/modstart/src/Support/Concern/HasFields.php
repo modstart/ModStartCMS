@@ -54,6 +54,8 @@ use ModStart\Field\Type\FieldRenderMode;
  * @method \ModStart\Field\Hidden         hidden($column, $label = '')
  * @method \ModStart\Field\Icon           icon($column, $label = '')
  * @method \ModStart\Field\Custom         custom($column, $label = '')
+ *
+ * @method \ModStart\Layout\LayoutGrid    layoutGrid($callback)
  */
 trait HasFields
 {

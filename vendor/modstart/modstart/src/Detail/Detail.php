@@ -190,6 +190,7 @@ class Detail implements Renderable
             case 'dialogSizeSmall':
             case 'gridFilter':
             case 'canMultiSelectItem':
+            case 'gridOperateAppend':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

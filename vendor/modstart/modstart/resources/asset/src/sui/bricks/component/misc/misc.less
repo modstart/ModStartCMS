@@ -1,17 +1,19 @@
-*::-webkit-scrollbar-track {
-  background-color: #F8F8F8;
-  border: 0.05rem solid #EEE;
-}
+.ub-scroll-bar-mini {
+  &::-webkit-scrollbar-track {
+    background-color: #F8F8F8;
+    border: 1px solid #EEE;
+  }
 
-*::-webkit-scrollbar {
-  width: 0.4rem;
-  height: 0.4rem;
-  background-color: #F5F5F5;
-}
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+    background-color: #F5F5F5;
+  }
 
-*::-webkit-scrollbar-thumb {
-  border-radius: 0.4rem;
-  background-color: #CCC;
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #CCC;
+  }
 }
 
 .ub-loading {
