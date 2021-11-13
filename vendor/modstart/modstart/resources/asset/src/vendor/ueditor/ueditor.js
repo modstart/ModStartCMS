@@ -8307,7 +8307,7 @@
             initialContent: '',
             initialStyle: '',
             autoClearinitialContent: false,
-            iframeCssUrl: _url + 'themes/iframe.css?20211028',
+            iframeCssUrl: _url + 'themes/iframe.css?20211111',
             textarea: 'editorValue',
             focus: false,
             focusInEnd: true,
@@ -29718,7 +29718,7 @@
             var editor = new UE.Editor(options);
             editor.options.editor = editor;
             utils.loadFile(document, {
-                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211028",
+                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211111",
                 tag: "link",
                 type: "text/css",
                 rel: "stylesheet"
