@@ -140,6 +140,11 @@
     right: 0;
     border: 0;
     margin: 0;
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .ub-banner .swiper-slide.a .content .title {
     font-size: 1.2rem;
