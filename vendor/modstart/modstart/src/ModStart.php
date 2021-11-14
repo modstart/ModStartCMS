@@ -5,6 +5,7 @@ namespace ModStart;
 use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Exception\BizException;
 use ModStart\Form\Form;
+use ModStart\Module\ModuleManager;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Support\Manager\WidgetManager;
 
@@ -38,6 +39,10 @@ class ModStart
         self::safeCleanOptimizedFile('bootstrap/cache/compiled.php');
         self::safeCleanOptimizedFile('bootstrap/cache/services.json');
         self::safeCleanOptimizedFile('bootstrap/cache/config.php');
+
+        if (method_exists(ModuleManager::class, 'hotReloadSystemConfig')) {
+            ModuleManager::hotReloadSystemConfig();
+        }
     }
 
     private static function safeCleanOptimizedFile($file)

@@ -310,9 +310,12 @@ class ModuleManager
      * 列出所有模块，包括系统和用户安装
      * @return array|mixed
      */
-    public static function listAllInstalledModules()
+    public static function listAllInstalledModules($forceReload = false)
     {
         static $modules = null;
+        if ($forceReload) {
+            $modules = null;
+        }
         if (null !== $modules) {
             return $modules;
         }
@@ -495,6 +498,26 @@ class ModuleManager
             return $items[$itemKey];
         }
         return $default;
+    }
+
+    /**
+     * 动态重载
+     */
+    public static function hotReloadSystemConfig()
+    {
+        $configSystem = config('module.system', []);
+        $file = base_path('config/module.php');
+        if (file_exists($file)) {
+            if (function_exists('opcache_invalidate')) {
+                opcache_invalidate($file);
+            }
+            $configModuleContent = (include $file);
+            $configSystem = array_merge($configSystem, $configModuleContent['system']);
+            config([
+                'module.system' => $configSystem,
+            ]);
+        }
+        self::listAllInstalledModules(true);
     }
 
 }
