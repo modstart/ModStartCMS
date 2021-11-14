@@ -22,12 +22,12 @@ class CreateMemberGroup extends Migration
 
         \ModStart\Core\Dao\ModelUtil::insertAll('member_group', [
             [
-                'title' => '普通会员',
+                'title' => '普通用户',
                 'description' => '',
                 'isDefault' => true,
             ],
             [
-                'title' => '高级会员',
+                'title' => '高级用户',
                 'description' => '',
                 'isDefault' => false,
             ],

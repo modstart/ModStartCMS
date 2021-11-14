@@ -26,6 +26,7 @@ class MemberGroupController extends Controller
                 $builder->text('title', '名称');
                 $builder->text('description', '描述');
                 $builder->switch('isDefault', '默认')->optionsYesNo()->help('');
+                $builder->switch('showFront', '前台显示')->optionsYesNo()->help('');
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })

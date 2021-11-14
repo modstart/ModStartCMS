@@ -175,7 +175,7 @@ class ModuleServiceProvider extends ServiceProvider
                                     'url' => '\Module\Member\Admin\Controller\MemberVipSetController@index',
                                 ] : null,
                                 ModuleManager::getModuleConfigBoolean('Member', 'groupEnable') ? [
-                                    'title' => '会员分组',
+                                    'title' => '用户分组',
                                     'url' => '\Module\Member\Admin\Controller\MemberGroupController@index',
                                 ] : null,
                             ]

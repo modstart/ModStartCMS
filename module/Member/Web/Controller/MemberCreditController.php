@@ -44,6 +44,7 @@ class MemberCreditController extends ModuleBaseController implements MemberLogin
             return $grid->request();
         }
         list($view, $_) = $this->viewPaths('memberCredit.index');
+        $page->pageTitle('我的积分');
         return $page->view($view)->body($grid);
     }
 
