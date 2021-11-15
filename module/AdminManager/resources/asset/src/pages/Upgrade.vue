@@ -103,17 +103,13 @@
         <el-dialog :visible.sync="memberUserShow" append-to-body>
             <div slot="title">
                 <i class="iconfont icon-user"></i>
-                账号信息
+                我的信息
             </div>
             <div v-if="!memberUser.id">
                 <div style="max-width:300px;margin:0 auto 2rem auto;">
-                    <div class="tw-text-center">
-                        <a href="https://modstart.com" target="_blank">
-                            <img class="tw-h-20" :src="$url.cdn('vendor/AdminManager/image/logo_modstart.png')" />
-                        </a>
-                    </div>
-                    <div class="tw-font-bold tw-py-2 tw-text-center tw-text-lg">
-                        请登录账号
+                    <div class="tw-font-bold tw-py-2 tw-text-center tw-text-lg ub-text-primary">
+                        <i class="iconfont icon-user"></i>
+                        登录ModStart账号
                     </div>
                     <div class="ub-form vertical">
                         <div class="line">
