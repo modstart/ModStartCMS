@@ -93,12 +93,12 @@
                     <div class="row">
                         @foreach(Cms::paginateCatByUrl('news',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-6">
-                                <div class="item-k tw-bg-white margin-bottom" style="padding:0 0 0 10rem;">
+                                <div class="item-k tw-bg-white margin-bottom">
                                     <a class="image" href="{{$record['_url']}}">
                                         <div class="cover ub-cover-4-3"
                                              style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}})"></div>
                                     </a>
-                                    <a class="title tw-block tw-mt-4" href="{{$record['_url']}}">{{$record['title']}}</a>
+                                    <a class="title" href="{{$record['_url']}}">{{$record['title']}}</a>
                                     <div class="summary">
                                         {{\ModStart\Core\Util\HtmlUtil::text($record['summary'],200)}}
                                     </div>
