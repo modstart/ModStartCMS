@@ -36,7 +36,7 @@
                             {{$cat['title']}}
                         </div>
                     </div>
-                    <div class="body">
+                    <div class="body" style="padding:0;">
                         @if(empty($records))
                             <div class="ub-empty tw-my-20">
                                 <div class="icon">
@@ -45,7 +45,7 @@
                                 <div class="text">暂无记录</div>
                             </div>
                         @else
-                            <div class="ub-list-items" style="padding:0.5rem;">
+                            <div class="ub-list-items">
                                 @foreach($records as $record)
                                     <div class="item-k">
                                         <a class="image" href="{{$record['_url']}}">
