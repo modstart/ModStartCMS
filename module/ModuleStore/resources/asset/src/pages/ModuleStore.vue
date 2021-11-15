@@ -75,6 +75,14 @@
                           style="width:10rem;"
                           placeholder="搜索模块"></el-input>
             </div>
+            <div class="tw-px-2" v-if="categories.length>0">
+                <a href="javascript:;" class="btn" :class="{'btn-primary':search.categoryId===0}" @click="search.categoryId=0">
+                    全部
+                </a>
+                <a href="javascript:;" class="btn tw-mr-1" :class="{'btn-primary':search.categoryId===cat.id}" v-for="(cat,catIndex) in categories" :key="catIndex" @click="search.categoryId=cat.id">
+                    {{cat.title}}
+                </a>
+            </div>
             <div class="ub-empty" v-if="loading">
                 <div class="icon">
                     <i class="icon-refresh iconfont tw-animate-spin tw-inline-block tw-p-4"></i>
@@ -212,9 +220,13 @@
             </div>
             <div v-if="!memberUser.id">
                 <div style="max-width:300px;margin:0 auto 2rem auto;">
-                    <div class="tw-font-bold tw-py-2 tw-text-center tw-text-lg ub-text-primary">
-                        <i class="iconfont icon-user"></i>
-                        登录ModStart账号
+                    <div class="tw-text-center">
+                        <a href="https://modstart.com" target="_blank">
+                            <img class="tw-h-20" :src="$url.cdn('vendor/ModuleStore/image/logo_modstart.png')" />
+                        </a>
+                    </div>
+                    <div class="tw-font-bold tw-py-2 tw-text-center tw-text-lg">
+                        请登录账号
                     </div>
                     <div class="ub-form vertical">
                         <div class="line">
