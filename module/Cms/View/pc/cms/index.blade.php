@@ -70,7 +70,7 @@
                             <div class="col-md-3 col-6">
                                 <div class="item-p">
                                     <a class="image" href="{{$record['_url']}}">
-                                        <div class="cover contain ub-cover-1-1" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
+                                        <div class="cover ub-cover-1-1" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
                                     </a>
                                     <a class="title" href="{{$record['_url']}}">{{$record['title']}}</a>
                                 </div>
