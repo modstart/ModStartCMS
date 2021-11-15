@@ -76,10 +76,10 @@
                           placeholder="搜索模块"></el-input>
             </div>
             <div class="tw-px-2" v-if="categories.length>0">
-                <a href="javascript:;" class="btn" :class="{'btn-primary':search.categoryId===0}" @click="search.categoryId=0">
+                <a href="javascript:;" class="" :class="{'ub-text-primary':search.categoryId===0}" @click="search.categoryId=0">
                     全部
                 </a>
-                <a href="javascript:;" class="btn tw-mr-1" :class="{'btn-primary':search.categoryId===cat.id}" v-for="(cat,catIndex) in categories" :key="catIndex" @click="search.categoryId=cat.id">
+                <a href="javascript:;" class="tw-mr-1" :class="{'ub-text-primary':search.categoryId===cat.id}" v-for="(cat,catIndex) in categories" :key="catIndex" @click="search.categoryId=cat.id">
                     {{cat.title}}
                 </a>
             </div>
