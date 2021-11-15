@@ -103,7 +103,7 @@
         <el-dialog :visible.sync="memberUserShow" append-to-body>
             <div slot="title">
                 <i class="iconfont icon-user"></i>
-                我的信息
+                账号信息
             </div>
             <div v-if="!memberUser.id">
                 <div style="max-width:300px;margin:0 auto 2rem auto;">
