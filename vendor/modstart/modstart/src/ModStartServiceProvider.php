@@ -137,7 +137,9 @@ class ModStartServiceProvider extends ServiceProvider
             });
         }
         foreach ($providers as $provider) {
-            $this->app->register($provider);
+            if (class_exists($provider)) {
+                $this->app->register($provider);
+            }
         }
     }
 

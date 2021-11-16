@@ -2,9 +2,10 @@
 
 namespace ModStart;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 use ModStart\Core\Exception\BizException;
-use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Support\Manager\WidgetManager;
@@ -57,7 +58,7 @@ class ModStart
      * 载入一个JS文件内容
      * @param $scriptFile
      * @param bool $absolute
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return Factory|View|void
      * @throws BizException
      */
     public static function scriptFile($scriptFile, $absolute = false)
@@ -75,7 +76,7 @@ class ModStart
     /**
      * JS 脚本代码，显示在body底部
      * @param string $script
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return Factory|View|void
      */
     public static function script($script = '')
     {
@@ -91,7 +92,7 @@ class ModStart
      * 载入一个CSS样式文件的内容
      * @param $styleFile
      * @param $absolute
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return Factory|View|void
      * @throws BizException
      */
     public static function styleFile($styleFile, $absolute = false)
@@ -109,7 +110,7 @@ class ModStart
     /**
      * CSS 样式代码，显示在head头部
      * @param string $style
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return Factory|View|void
      */
     public static function style($style = '')
     {
@@ -129,7 +130,7 @@ class ModStart
     /**
      * CSS 样式文件，显示在head头部
      * @param null $css
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return Factory|View|void
      */
     public static function css($css = null)
     {
@@ -147,7 +148,7 @@ class ModStart
     /**
      * JS 脚本文件，显示在body底部
      * @param null $js
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return Factory|View|void
      */
     public static function js($js = null)
     {

@@ -28,9 +28,13 @@ class ModuleManager
      */
     public static function getModuleBasic($name)
     {
+        static $basic = [];
+        if (array_key_exists($name, $basic)) {
+            return $basic[$name];
+        }
         if (file_exists($path = self::path($name, 'config.json'))) {
             $config = json_decode(file_get_contents($path), true);
-            return array_merge([
+            $basic[$name] = array_merge([
                 'name' => 'None',
                 'title' => 'None',
                 'version' => '1.0.0',
@@ -57,8 +61,10 @@ class ModuleManager
                 'config' => [],
                 'providers' => [],
             ], $config);
+        } else {
+            $basic[$name] = null;
         }
-        return null;
+        return $basic[$name];
     }
 
     private static function callCommand($command, $param = [])
@@ -196,6 +202,29 @@ class ModuleManager
         return !empty($modules[$name]['enable']);
     }
 
+
+    /**
+     * 检测模块是否匹配
+     * @param $name
+     * @param $version
+     * @return bool
+     * @since 2.0.0
+     *
+     * @example
+     * Ad >=1.4.0
+     */
+    public static function isModuleEnableMatch($name, $version)
+    {
+        if (!self::isModuleEnabled($name)) {
+            return false;
+        }
+        $basic = self::getModuleBasic($name);
+        if (!$basic) {
+            return false;
+        }
+        return VersionUtil::match($basic['version'], $version);
+    }
+
     /**
      * 列出本地所有的模块
      * @return array
@@ -308,6 +337,7 @@ class ModuleManager
 
     /**
      * 列出所有模块，包括系统和用户安装
+     * @param $forceReload boolean
      * @return array|mixed
      */
     public static function listAllInstalledModules($forceReload = false)

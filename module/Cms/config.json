@@ -9,5 +9,7 @@
   "version": "1.8.0",
   "modstartVersion": ">=1.4.0",
   "author": "ModStart",
-  "description": "提供通用的动态模型内容管理系统"
+  "description": "提供通用的动态模型内容管理系统",
+  "providers": [
+  ]
 }
