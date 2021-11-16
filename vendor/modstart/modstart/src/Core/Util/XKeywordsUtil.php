@@ -7,8 +7,8 @@ class XKeywordsUtil
 {
     /**
      *
-     * @param $keywords
-     * @param $content
+     * @param $keywords 关键词
+     * @param $content 需要匹配的内容
      * @param $matKeyword
      */
     public static function match($keywords, $content, &$matKeyword = null)

@@ -58,6 +58,31 @@
 
         <div>
             <div class="ub-nav-header">
+                客户案例
+            </div>
+            <div class="ub-nav-header-sub">
+                RECOMMEND CASES
+            </div>
+            <div class="">
+                <div class="ub-list-items">
+                    <div class="row">
+                        @foreach(Cms::paginateCatByUrl('cases',1,4,['where'=>['isRecommend'=>true]]) as $record)
+                            <div class="col-md-3 col-6">
+                                <div class="item-p">
+                                    <a class="image" href="{{$record['_url']}}">
+                                        <div class="cover ub-cover-1-1" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
+                                    </a>
+                                    <a class="title" href="{{$record['_url']}}">{{$record['title']}}</a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="ub-nav-header">
                 新闻中心
             </div>
             <div class="ub-nav-header-sub">

@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '38e91faa838a0b84c252214becade1a99435c73a',
+    'reference' => '7bb4392c4084894283015b26504cabe0a2342517',
     'name' => 'soft/org',
   ),
   'versions' => 
@@ -174,12 +174,12 @@
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => '1.5.0',
-      'version' => '1.5.0.0',
+      'pretty_version' => '1.5.1',
+      'version' => '1.5.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '136a635e2b4a49b9d79e9c8fee267ffb257fdba0',
+      'reference' => 'fe752aedc9fd8fcca3fe7ad05d419d32998a06da',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -433,12 +433,12 @@
     ),
     'jaybizzle/crawler-detect' => 
     array (
-      'pretty_version' => 'v1.2.107',
-      'version' => '1.2.107.0',
+      'pretty_version' => 'v1.2.108',
+      'version' => '1.2.108.0',
       'aliases' => 
       array (
       ),
-      'reference' => '62b9055b555be9e1479d7c37515d7c58975c2aa4',
+      'reference' => '69a38c09f99ee056e7cca9fe7c8b1952fd62b837',
     ),
     'jenssegers/agent' => 
     array (
@@ -520,7 +520,7 @@
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '97c57de881a2e6a3e7d7747570f90dd042c5337d',
+      'reference' => 'b2998b3f8ad78c022fc6c3960134d346c551f17b',
     ),
     'mews/purifier' => 
     array (
@@ -548,7 +548,7 @@
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '05d796119a9faf2c1e4f0c95e535644cf5eb5eac',
+      'reference' => '2e054841c4a22af09be100bf9cb72e0a7732f4ce',
     ),
     'monolog/monolog' => 
     array (
@@ -706,7 +706,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '38e91faa838a0b84c252214becade1a99435c73a',
+      'reference' => '7bb4392c4084894283015b26504cabe0a2342517',
     ),
     'swiftmailer/swiftmailer' => 
     array (
@@ -923,7 +923,7 @@
       array (
         0 => '9999999-dev',
       ),
-      'reference' => 'ccfc4f3ca10322cf2a3c4a2fde5dfe37a780e5b9',
+      'reference' => 'a8fe3ae6c2245431e00163537361431a735c2c20',
     ),
   ),
 );

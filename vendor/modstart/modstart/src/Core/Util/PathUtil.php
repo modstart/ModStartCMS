@@ -3,6 +3,7 @@
 namespace ModStart\Core\Util;
 
 use Illuminate\Support\Str;
+use ModStart\Core\Input\Request;
 
 class PathUtil
 {
@@ -52,7 +53,7 @@ class PathUtil
             return $path;
         }
         if (null === $schema) {
-            $schema = RequestHelper::schema();
+            $schema = Request::schema();
         }
         if (Str::startsWith($path, '//')) {
             return $schema . ':' . $path;
@@ -61,7 +62,7 @@ class PathUtil
             $path = '/' . $path;
         }
         if ($cdn === null) {
-            $cdn = $schema . '://' . RequestHelper::domain();
+            $cdn = $schema . '://' . Request::domain();
         }
         if (Str::endsWith($cdn, '/')) {
             $cdn = substr($cdn, 0, strlen($cdn) - 1);
