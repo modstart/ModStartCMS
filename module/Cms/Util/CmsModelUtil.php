@@ -42,18 +42,22 @@ class CmsModelUtil
     public static function all()
     {
         return Cache::rememberForever('CmsModelAll', function () {
-            $models = ModelUtil::all('cms_model');
-            $fields = ModelUtil::all('cms_model_field');
-            ModelUtil::decodeRecordsJson($fields, ['fieldData']);
-            foreach ($models as $k => $model) {
-                $models[$k]['_customFields'] = [];
-                foreach ($fields as $field) {
-                    if ($field['modelId'] == $model['id']) {
-                        $models[$k]['_customFields'][] = $field;
+            try {
+                $models = ModelUtil::all('cms_model');
+                $fields = ModelUtil::all('cms_model_field');
+                ModelUtil::decodeRecordsJson($fields, ['fieldData']);
+                foreach ($models as $k => $model) {
+                    $models[$k]['_customFields'] = [];
+                    foreach ($fields as $field) {
+                        if ($field['modelId'] == $model['id']) {
+                            $models[$k]['_customFields'][] = $field;
+                        }
                     }
                 }
+                return $models;
+            } catch (\Exception $e) {
+                return [];
             }
-            return $models;
         });
     }
 

@@ -8,13 +8,16 @@ use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 
+
 class CmsCatUtil
 {
+    
     public static function clearCache()
     {
         Cache::forget('CmsCatAll');
     }
 
+    
     public static function all()
     {
         return Cache::rememberForever('CmsCatAll', function () {
@@ -24,6 +27,7 @@ class CmsCatUtil
         });
     }
 
+    
     public static function childrenIds($catId, $includeSelf = true)
     {
         $nodes = self::all();
@@ -74,6 +78,7 @@ class CmsCatUtil
         return null;
     }
 
+    
     public static function get($id)
     {
         foreach (self::all() as $item) {
