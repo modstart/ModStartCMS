@@ -28,7 +28,7 @@ Vue.prototype.$onCopyError = () => {
     Dialog.tipError((window.lang && window.lang['Copy Fail']) ? window.lang['Copy Fail'] : 'Copy Fail')
 }
 
-Vue.prototype.$highlight = (words, query) =>{
+Vue.prototype.$highlight = (words, query) => {
     words = HtmlUtil.specialchars(words)
     if (!query) {
         return words
@@ -70,6 +70,11 @@ const Api = {
             })
         })
     },
+    postRaw(url, param, cb) {
+        Base.post(url, param, function (res) {
+            cb && cb(res)
+        })
+    }
 }
 Vue.prototype.$api = Api
 Vue.prototype.$url = {

@@ -10,6 +10,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\IdUtil;
 use ModStart\Core\Util\TreeUtil;
+use ModStart\Detail\Detail;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
@@ -466,7 +467,8 @@ class Grid
      * @param string $method
      * @param array $arguments
      *
-     * @return AbstractField|void
+     * @return AbstractField|void|Grid|Form|Detail
+     * @throws \Exception
      */
     public function __call($method, $arguments)
     {

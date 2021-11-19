@@ -5,9 +5,11 @@ namespace Module\Member\Admin\Controller;
 
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
+use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Core\Assets\AssetsUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
@@ -22,6 +24,7 @@ use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
 use Module\Member\Type\MemberStatus;
 use Module\Member\Util\MemberGroupUtil;
+use Module\Member\Util\MemberMessageUtil;
 use Module\Member\Util\MemberUtil;
 
 class MemberController extends Controller
@@ -75,7 +78,6 @@ class MemberController extends Controller
                         break;
                 }
             })
-            ->dialogSizeSmall()
             ->title('用户管理')
             ->canDelete(false);
     }
@@ -109,4 +111,49 @@ class MemberController extends Controller
         return Response::jsonSuccessData($records);
     }
 
+    public function resetPassword(AdminConfigBuilder $builder)
+    {
+        $id = CRUDUtil::id();
+        $memberUser = MemberUtil::get($id);
+        BizException::throwsIfEmpty('用户不存在', $memberUser);
+        $builder->useDialog();
+        $builder->pageTitle('重置密码');
+        $builder->text('passwordNew', '新密码')->required()->defaultValue(RandomUtil::upperString(6));
+        if (Request::isPost()) {
+            return $builder->formRequest(function (Form $form) use ($memberUser) {
+                $data = $form->dataForming();
+                $ret = MemberUtil::changePassword($memberUser['id'], $data['passwordNew'], null, true);
+                BizException::throwsIfResponseError($ret);
+                return Response::redirect(CRUDUtil::jsDialogClose());
+            });
+        }
+        return $builder;
+    }
+
+    public function sendMessage(AdminConfigBuilder $builder)
+    {
+        $id = CRUDUtil::id();
+        $memberUser = MemberUtil::get($id);
+        BizException::throwsIfEmpty('用户不存在', $memberUser);
+        $builder->useDialog();
+        $builder->pageTitle('发送消息');
+        $builder->richHtml('content', '消息内容')->required();
+        if (Request::isPost()) {
+            return $builder->formRequest(function (Form $form) use ($memberUser) {
+                $data = $form->dataForming();
+                $ret = MemberMessageUtil::send($memberUser['id'], $data['content']);
+                BizException::throwsIfResponseError($ret);
+                return Response::redirect(CRUDUtil::jsDialogClose());
+            });
+        }
+        return $builder;
+    }
+
+    public function show()
+    {
+        $record = MemberUtil::get(CRUDUtil::id());
+        return view('module::Member.View.admin.memberUser.show', [
+            'record' => $record,
+        ]);
+    }
 }

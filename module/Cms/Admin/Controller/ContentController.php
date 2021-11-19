@@ -154,7 +154,10 @@ class ContentController extends Controller
                 }
             }
         }
-        $form->text('alias', '别名')->ruleUnique($this->modelTable)->help('可以通过别名访问内容');
+        $form->text('alias', '别名')
+            ->ruleUnique($this->modelTable)
+            ->ruleRegex('^[a-z0-9_]*[a-z][a-z0-9_]*$')
+            ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
         $form->richHtml('content', '内容');
         $form->textarea('summary', '摘要');
         $form->image('cover', '封面');

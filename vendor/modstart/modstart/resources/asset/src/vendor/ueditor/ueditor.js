@@ -18117,7 +18117,7 @@
                 // }
             },
             queryCommandState: function () {
-                console.log('xxx',me.selection.getRange().getClosedNode())
+                // console.log('xxx',me.selection.getRange().getClosedNode())
                 var img = me.selection.getRange().getClosedNode(),
                     flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
                 return flag ? 1 : 0;
@@ -29718,7 +29718,7 @@
             var editor = new UE.Editor(options);
             editor.options.editor = editor;
             utils.loadFile(document, {
-                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211111",
+                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211119",
                 tag: "link",
                 type: "text/css",
                 rel: "stylesheet"

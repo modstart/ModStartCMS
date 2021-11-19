@@ -1,6 +1,4 @@
 const FileSaver = require('file-saver');
-import {Base64Util} from './encode'
-
 
 export const FileUtil = {
     base64toBlob(b64Data, contentType = '', sliceSize = 512) {

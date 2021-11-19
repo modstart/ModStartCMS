@@ -19,7 +19,7 @@ class MemberMoneyUtil
     {
         $m = ModelUtil::get('member_money', ['memberUserId' => $memberUserId]);
         if (empty($m)) {
-            return 0;
+            return '0.00';
         }
         return $m['total'];
     }

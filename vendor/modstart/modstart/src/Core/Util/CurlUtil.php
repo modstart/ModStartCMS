@@ -250,6 +250,40 @@ class CurlUtil
         return $content;
     }
 
+    public static function postRaw($url, $param = [], $option = [])
+    {
+        if (empty($config['timeout'])) {
+            $config['timeout'] = 30;
+        }
+        $sendHeaders = [];
+        if (!empty($option['header'])) {
+            foreach ($option['header'] as $k => $v) {
+                $sendHeaders[] = "$k:$v";
+            }
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        if (!empty($sendHeaders)) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $sendHeaders);
+        }
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $config['timeout']);
+        curl_setopt($ch, CURLOPT_REFERER, $url);
+        if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
+            curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        }
+        if (StrUtil::startWith($url, 'https://')) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        }
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        $temp = curl_exec($ch);
+        curl_close($ch);
+        return $temp;
+    }
+
     public static function getRaw($url, $param = [], $option = [])
     {
         if (empty($config['timeout'])) {

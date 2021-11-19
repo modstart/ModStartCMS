@@ -106,6 +106,9 @@
                 }
                 throw new Error('Failed to load sound file.');
             },
+            play() {
+                this.audio.play()
+            }
         }
     }
 </script>
