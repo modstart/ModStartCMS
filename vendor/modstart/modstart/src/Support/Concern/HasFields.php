@@ -6,6 +6,7 @@ namespace ModStart\Support\Concern;
 use Illuminate\Support\Collection;
 use ModStart\Field\AbstractField;
 use ModStart\Field\Type\FieldRenderMode;
+use ModStart\Layout\LayoutGrid;
 
 /**
  * 字段管理能力
@@ -55,6 +56,7 @@ use ModStart\Field\Type\FieldRenderMode;
  * @method \ModStart\Field\Icon           icon($column, $label = '')
  * @method \ModStart\Field\Custom         custom($column, $label = '')
  *
+ * $callback = function (LayoutGrid $grid) { $grid->layoutColumn(4, function ($builder) { }); });
  * @method \ModStart\Layout\LayoutGrid    layoutGrid($callback)
  */
 trait HasFields

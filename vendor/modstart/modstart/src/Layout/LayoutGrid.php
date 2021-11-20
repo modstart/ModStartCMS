@@ -29,6 +29,13 @@ class LayoutGrid extends AbstractField
     }
 
 
+    /**
+     * @param $widths
+     * @param $closure
+     *
+     * @example
+     * $closure = function ($builder) { }
+     */
     public function layoutColumn($widths, $closure)
     {
         if (!is_array($widths)) {

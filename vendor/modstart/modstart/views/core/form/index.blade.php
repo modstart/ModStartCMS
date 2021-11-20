@@ -1,4 +1,4 @@
-<form class="ub-form {{$formClass}}" method="post" action="{{$formUrl or \ModStart\Core\Input\Request::currentPageUrl()}}" data-ajax-form>
+<form class="ub-form {{$formClass}}" method="post" action="{{$formUrl or \ModStart\Core\Input\Request::currentPageUrl()}}" @if($ajax) data-ajax-form @endif {!! $formAttr !!}>
     @foreach($fields as $field)
         {!! $field->render() !!}
     @endforeach

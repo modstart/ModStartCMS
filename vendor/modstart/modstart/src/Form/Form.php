@@ -95,6 +95,8 @@ use stdClass;
  * @method  Form|mixed treeMaxLevel($value = null)
  * @method  Form|mixed treeRootPid($value = null)
  * @method  Form|mixed formUrl($value = null)
+ * @method  Form|mixed ajax($value = null)
+ * @method  Form|mixed formAttr($value = null)
  *
  */
 class Form implements Renderable
@@ -147,6 +149,8 @@ class Form implements Renderable
         'treeMaxLevel',
         'treeRootPid',
         'formUrl',
+        'ajax',
+        'formAttr',
     ];
     /**
      * 运行引擎 @see FormEngine
@@ -230,6 +234,8 @@ class Form implements Renderable
     private $treeMaxLevel = 99;
     private $treeRootPid = 0;
     private $formUrl = null;
+    private $ajax = true;
+    private $formAttr = '';
 
     /**
      * Form constructor.

@@ -22,7 +22,19 @@
       max-width: 25rem;
       margin: 0 auto;
       position: relative;
-      height: 2rem;
+      height: 2.5rem;
+
+      &.captcha {
+        img {
+          height: 2.4rem;
+          line-height: 2.4rem;
+          position: absolute;
+          right: 5rem;
+          top: 0.05rem;
+          border-radius: 0.25rem;
+          cursor: pointer;
+        }
+      }
 
       input {
         width: 100%;
