@@ -29,6 +29,18 @@
     <div class="ub-container">
 
         <div class="row">
+            <div class="col-md-3">
+
+                <div class="ub-menu simple">
+                    <a class="title @if($catRoot['url']==\ModStart\Core\Input\Request::path()) active @endif"
+                       href="{{modstart_web_url($catRoot['url'])}}">全部</a>
+                    @foreach($catRootChildren as $c)
+                        <a class="title @if(\ModStart\Core\Input\Request::path()==$c['url']) active @endif"
+                           href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
+                    @endforeach
+                </div>
+
+            </div>
             <div class="col-md-9">
                 <div class="tw-rounded">
                     @if(empty($records))
@@ -59,18 +71,6 @@
                         </div>
                     @endif
                 </div>
-            </div>
-            <div class="col-md-3">
-
-                <div class="ub-menu simple">
-                    <a class="title @if($catRoot['url']==\ModStart\Core\Input\Request::path()) active @endif"
-                       href="{{modstart_web_url($catRoot['url'])}}">全部</a>
-                    @foreach($catRootChildren as $c)
-                        <a class="title @if(\ModStart\Core\Input\Request::path()==$c['url']) active @endif"
-                           href="{{modstart_web_url($c['url'])}}">{{$c['title']}}</a>
-                    @endforeach
-                </div>
-
             </div>
         </div>
 
