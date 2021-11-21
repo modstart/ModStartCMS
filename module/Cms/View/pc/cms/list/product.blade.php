@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-md-3">
 
-                <div class="ub-menu simple">
+                <div class="ub-menu simple margin-bottom">
                     <a class="title @if($catRoot['url']==\ModStart\Core\Input\Request::path()) active @endif"
                        href="{{modstart_web_url($catRoot['url'])}}">全部</a>
                     @foreach($catRootChildren as $c)
