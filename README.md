@@ -10,13 +10,23 @@
 
 <p align="center">  
   <a href="https://github.com/modstart/ModStartCMS" target="_blank">
-    <img alt="GitHub" src="https://img.shields.io/github/license/modstart/ModStartCMS">
+    <img alt="License Apache2.0" src="https://img.shields.io/badge/License-Apache2.0-blue">
   </a>
   <a href="https://github.com/modstart/ModStartCMS" target="_blank">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/modstart/ModStartCMS">
   </a>
   <a href="https://github.com/modstart/ModStartCMS" target="_blank">
     <img alt="GitHub last release" src="https://img.shields.io/github/v/release/modstart/ModStartCMS">
+  </a>
+  <br />
+  <a href="https://github.com/modstart/ModStartCMS" target="_blank">
+    <img alt="Laravel" src="https://img.shields.io/badge/Framework-ModStart-blue">
+  </a>
+  <a href="https://github.com/modstart/ModStartCMS" target="_blank">
+    <img alt="Laravel" src="https://img.shields.io/badge/PHP-Laravel-red">
+  </a>
+  <a href="https://github.com/modstart/ModStartCMS" target="_blank">
+    <img alt="Laravel" src="https://img.shields.io/badge/JS-Vue-green">
   </a>
 </p>
 
@@ -32,8 +42,9 @@
 
 ##  💡 系统简介
 
-`ModStart` 是一个基于 `Laravel` 模块化的后台系统框架，很少的代码即可快速构建出一个功能完善的后台系统。其中模块市场包含了丰富则模块，开箱即用，让开发者能够从冗长的代码中提效，对后端开发者非常友好。
+`ModStart` 是一个基于 `Laravel` 模块化的后台系统框架。基于 Apache 2.0 开源协议发布，免费且不限制商业使用。其中模块市场包含了丰富的模块，开箱即用，让开发者能够从冗长的代码中提效，对后端开发者非常友好。
 
+<img src="https://ms-assets.modstart.com/data/image/2021/11/07/46017_dv5r_7358.jpg" alt="功能架构" />
 
 - [官方网站](https://modstart.com)
 - [Demo / 在线演示](https://cms.demo.tecmz.com)
@@ -47,7 +58,7 @@
 - [jQuery](http://jquery.com)
 - [Vue](https://vuejs.org/)
 - [Element UI](https://element.eleme.io/)
-- [LayUI](https://www.layui.com/)
+- [LayUI](https://github.com/sentsin/layui)
 
 
 
@@ -305,12 +316,6 @@ AdminMenu::register(function () {
 - 撰写教程
 - 完善注释
 - ...
-
-### 微信交流群
-
-<p>
-    <img width="200" src="https://ms-assets.modstart.com/data/image/2021/09/25/29167_je52_5650.png" />
-</p>
 
 ### QQ交流群
 
