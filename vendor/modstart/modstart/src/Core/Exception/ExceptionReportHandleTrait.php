@@ -2,6 +2,7 @@
 
 namespace ModStart\Core\Exception;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -56,6 +57,8 @@ trait ExceptionReportHandleTrait
                 return response()->make($ret);
             }
             return $ret;
+        } elseif ($exception instanceof ModelNotFoundException) {
+            return null;
         }
         return null;
     }

@@ -107,6 +107,20 @@ export const ListerMixin = {
                 errorCB && errorCB()
             })
         },
+        doListProcessCustom(url, page, param, successCB, errorCB) {
+            param = param || {}
+            this.$api.post(url, Object.assign({
+                order: this.order,
+                search: this.search,
+                filter: this.filter,
+                page: page,
+                pageSize: this.list.pageSize
+            }, param), res => {
+                successCB && successCB(res)
+            }, res => {
+                errorCB && errorCB()
+            })
+        },
         doListProcessRaw(url, param, successCB, errorCB) {
             param = param || {}
             this.listLoading = true

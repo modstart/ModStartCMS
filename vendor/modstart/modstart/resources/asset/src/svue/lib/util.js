@@ -169,6 +169,7 @@ export const UrlUtil = {
     },
     urldecode(str) {
         let ret = "";
+        str = str + ''
         for (let i = 0; i < str.length; i++) {
             let chr = str.charAt(i);
             if (chr === "+") {

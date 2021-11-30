@@ -56,4 +56,33 @@
         </a>
     </div>
 
+    @if(!empty($showPanelProviders))
+        <div class="ub-nav-tab margin-top" data-show-panel-tab>
+            @foreach($showPanelProviders as $provider)
+                <a href="javascript:;">{{$provider->title()}}</a>
+            @endforeach
+        </div>
+        <div class="tw-bg-white tw-rounded tw-p-4" data-show-panel-body>
+            @foreach($showPanelProviders as $provider)
+                <div class="tw-overflow-hidden">
+                    {!! $provider->render($record,[]) !!}
+                </div>
+            @endforeach
+        </div>
+        <script>
+            $(function () {
+                var $tab = $('[data-show-panel-tab] > a');
+                var $body = $('[data-show-panel-body] > div');
+                $tab.on('click', function () {
+                    var index = $tab.index(this)
+                    $tab.removeClass('active');
+                    $(this).addClass('active');
+                    $body.css({width: 0, height: 0});
+                    $($body.get(index)).css({width: 'auto', height: 'auto'});
+                });
+                $($tab[0]).click();
+            });
+        </script>
+    @endif
+
 @endsection

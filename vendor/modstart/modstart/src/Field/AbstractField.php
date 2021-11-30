@@ -51,6 +51,8 @@ use ModStart\Support\Concern\HasFluentAttribute;
  *
  * @method AbstractField|mixed hookFormatValue($value = null)
  * @method AbstractField|mixed hookValueUnserialize($value = null)
+ *
+ * > $value = function ($value, AbstractField $field) { return $value; }
  * @method AbstractField|mixed hookValueSerialize($value = null)
  *
  * grid|form|detail模式：渲染自定义回调
@@ -73,6 +75,12 @@ use ModStart\Support\Concern\HasFluentAttribute;
  * -> view->render
  *
  * form.addRequest
+ * -> prepareInput($value, $dataSubmitted)
+ * -> serializeValue($value, $dataSubmitted)
+ * -> hookValueSerialize(function($value, AbstractField $field){return $value;})
+ * -> repository->add
+ *
+ * form.formRequest
  * -> prepareInput($value, $dataSubmitted)
  * -> serializeValue($value, $dataSubmitted)
  * -> hookValueSerialize(function($value, AbstractField $field){return $value;})

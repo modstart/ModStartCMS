@@ -16,6 +16,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Form\Form;
+use ModStart\ModStart;
 
 class SystemController extends Controller
 {
@@ -32,6 +33,7 @@ class SystemController extends Controller
         if (0 != $exitCode) {
             return Response::send(-1, L('Clear Cache') . ' ' . L('Error') . " view:clear ExitCode($exitCode)");
         }
+        ModStart::clearCache();
         return Response::jsonSuccess(L('Operate Success'));
     }
 

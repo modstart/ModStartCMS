@@ -1,16 +1,27 @@
+## 模块介绍
+
+「通用用户系统」提供一个基础的用户管理功能。
+
+## 功能特性
+
+- 注册、登录
+- 找回密码（通过手机或邮箱）
+- 绑定手机
+- 绑定邮箱
+- 三方授权登录
+- 用户钱包
+- 用户积分
+- 用户分组
 
 
 ## 常见问题
 
+#### 如何保证用户登录后才可以访问方法？
 
+当前 `Controller` 实现 `Module\Member\Support\MemberLoginCheck` 接口，同时在 Route 中使用中间件 `WebAuthMiddleware`
 
-**获取开发包含使用当前用户的Controller？**
+#### 如何获取到当前用户？
 
-使当前 `Controller` 实现 `Module\Member\Support\MemberLoginCheck` 接口，同时在 Route 中使用中间件 `WebAuthMiddleware`
-
-
-
-**如何获取到当前登录用户？**
 
 通过以下方法获取到当前用户
 

@@ -242,7 +242,7 @@ class DataManager
 
     /**
      * 根据TempData完整路径存储
-     * @param $tempPath
+     * @param $dataTempFullPath
      * @param null $option
      * @return array
      * @throws \Exception
@@ -419,7 +419,7 @@ class DataManager
 
     /**
      * 准备文件到本地可用（使用内网域名）
-     * @param $path 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx
+     * @param $path string 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx
      * @param $option
      * @return array
      * @throws

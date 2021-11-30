@@ -6,10 +6,8 @@ namespace ModStart\Data;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
-use ModStart\Core\Exception\ResultException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
@@ -108,7 +106,7 @@ class FileManager
     }
 
     /**
-     * 直接上传模式，用户文件管理中可见
+     * 直接上传模式（不分片），用户文件管理中可见
      *
      * @param InputPackage $input
      * @param $category
@@ -145,7 +143,7 @@ class FileManager
     }
 
     /**
-     * 直接上传模式，用户文件管理中不可见
+     * 直接上传模式（不分片），用户文件管理中不可见
      *
      * @param InputPackage $input
      * @param $category
@@ -218,6 +216,18 @@ class FileManager
         ]);
     }
 
+    /**
+     * 保存到文件库中，
+     *
+     * @param InputPackage $input
+     * @param $category
+     * @param $uploadTable
+     * @param $uploadCategoryTable
+     * @param $userId
+     * @param $option
+     * @return mixed
+     * @throws BizException
+     */
     private static function saveRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
         $path = $input->getTrimString('path');
@@ -241,7 +251,6 @@ class FileManager
 
     private static function initExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
-
         return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option);
     }
 

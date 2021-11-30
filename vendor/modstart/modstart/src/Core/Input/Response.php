@@ -269,12 +269,13 @@ class Response
         }
     }
 
-    public static function download($filename, $content, $headers = [])
+    public static function download($filename, $content, $headers = [], $filenameFallback = null)
     {
         $response = new \Illuminate\Http\Response($content);
         $disposition = $response->headers->makeDisposition(
             \Symfony\Component\HttpFoundation\ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $filename
+            $filename,
+            $filenameFallback
         );
         $response->headers->set('Content-Disposition', $disposition);
         foreach ($headers as $k => $v) {

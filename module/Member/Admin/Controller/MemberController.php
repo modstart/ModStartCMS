@@ -22,6 +22,7 @@ use ModStart\Form\Type\FormMode;
 use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
+use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Type\MemberStatus;
 use Module\Member\Util\MemberGroupUtil;
 use Module\Member\Util\MemberMessageUtil;
@@ -78,7 +79,7 @@ class MemberController extends Controller
                         break;
                 }
             })
-            ->title('用户管理')
+            ->title('用户')
             ->canDelete(false);
     }
 
@@ -152,8 +153,10 @@ class MemberController extends Controller
     public function show()
     {
         $record = MemberUtil::get(CRUDUtil::id());
+        $showPanelProviders = MemberAdminShowPanelProvider::listAll();
         return view('module::Member.View.admin.memberUser.show', [
             'record' => $record,
+            'showPanelProviders' => $showPanelProviders,
         ]);
     }
 }
