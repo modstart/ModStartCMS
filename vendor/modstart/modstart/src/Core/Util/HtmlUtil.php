@@ -22,11 +22,17 @@ class HtmlUtil
         return $content;
     }
 
-    public static function replaceImageSrcToFull($content, $useAssets = false)
+    public static function replaceImageSrcToFull($content, $useAssets = false, $useUrl = null)
     {
         preg_match_all('/(<img.*?)src="(.*?)"(.*?>)/i', $content, $mat);
         foreach ($mat[0] as $k => $v) {
-            $content = str_replace($v, $mat[1][$k] . 'src="' . AssetsUtil::fixFull($mat[2][$k]) . '"' . $mat[3][$k], $content);
+            if ($useUrl) {
+                $content = str_replace($v, $mat[1][$k] . 'src="' . AssetsUtil::fixFullWithCdn($mat[2][$k], $useUrl) . '"' . $mat[3][$k], $content);
+            } else if ($useAssets) {
+                $content = str_replace($v, $mat[1][$k] . 'src="' . AssetsUtil::fixFull($mat[2][$k]) . '"' . $mat[3][$k], $content);
+            } else {
+                $content = str_replace($v, $mat[1][$k] . 'src="' . AssetsUtil::fixCurrentDomain($mat[2][$k]) . '"' . $mat[3][$k], $content);
+            }
         }
         return $content;
     }
