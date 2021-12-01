@@ -2,6 +2,8 @@
 
 @section('pageTitle'){{modstart_config('siteName').' - '.modstart_config('siteSlogan')}}@endsection
 
+
+{!! \ModStart\ModStart::js('asset/common/scrollAnimate.js') !!}
 @section('bodyContent')
 
     <div style="background:#FFF;">
@@ -18,7 +20,7 @@
         <div class="tw-bg-white tw-p-4 lg:tw-p-8 tw-rounded margin-top">
             <div class="row">
                 <div class="col-md-3">
-                    <img class="tw-w-full tw-rounded tw-mb-2 animated fadeInUp"
+                    <img class="tw-w-full tw-rounded tw-mb-2" data-scroll-animate="animated fadeInUp"
                          src="{{\ModStart\Core\Assets\AssetsUtil::fix(modstart_config('Cms_HomeInfoImage','/placeholder/300x200'))}}"/>
                 </div>
                 <div class="col-md-9">
@@ -42,7 +44,7 @@
                     <div class="row">
                         @foreach(Cms::paginateCatByUrl('product',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-3 col-6">
-                                <div class="item-p animated fadeInUp">
+                                <div class="item-p" data-scroll-animate="animated fadeInUp">
                                     <a class="image" href="{{$record['_url']}}" style="padding:0.25rem 0 0 0;">
                                         <div class="cover contain ub-cover-1-1"
                                              style="width:90%;margin:0 auto;background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
@@ -68,7 +70,7 @@
                     <div class="row">
                         @foreach(Cms::paginateCatByUrl('cases',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-3 col-6">
-                                <div class="item-p animated fadeInUp">
+                                <div class="item-p animated" data-scroll-animate="animated fadeInUp">
                                     <a class="image" href="{{$record['_url']}}">
                                         <div class="cover ub-cover-1-1" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
                                     </a>
@@ -93,7 +95,7 @@
                     <div class="row">
                         @foreach(Cms::paginateCatByUrl('news',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-6">
-                                <div class="item-k tw-bg-white margin-bottom">
+                                <div class="item-k tw-bg-white margin-bottom" data-scroll-animate="animated fadeInUp">
                                     <a class="image" href="{{$record['_url']}}">
                                         <div class="cover ub-cover-4-3"
                                              style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}})"></div>
@@ -117,7 +119,7 @@
             <div class="ub-nav-header-sub">
                 PARTNERS
             </div>
-            <div class="">
+            <div class="" data-scroll-animate="animated fadeInUp">
                 @include('module::Partner.View.pc.public.partnerRaw',['position'=>'home'])
             </div>
         </div>
