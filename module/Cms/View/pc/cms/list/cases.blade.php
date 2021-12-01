@@ -6,10 +6,14 @@
 
 @section('bodyContent')
 
-    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-transparent ub-cover" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fixFullOrDefault($cat['bannerBg'],'vendor/Cms/bg/cases.jpg')}});">
+    <div class="tw-text-white tw-text-lg tw-py-20 tw-bg-gray-500 ub-cover"
+         @if($cat['bannerBg'])
+         style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($cat['bannerBg'])}});"
+        @endif
+    >
         <div class="ub-container">
-            <h1 class="tw-text-4xl">{{$cat['title']}}</h1>
-            <div class="tw-mt-4">
+            <h1 class="tw-text-4xl animated fadeInUp">{{$cat['title']}}</h1>
+            <div class="tw-mt-4 animated fadeInUp">
                 {{$cat['subTitle']}}
             </div>
         </div>
