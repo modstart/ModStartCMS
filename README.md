@@ -1,11 +1,11 @@
 
 <p align="center">
   <a href="https://modstart.com">
-    <img src="https://ms-assets.modstart.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="layui" width="360">
+    <img src="https://ms-assets.modstart.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="ModStart" width="360" />
   </a>
 </p>
 <p align="center">
-  一个模块式的快速开发框架
+  模块化的快速开发框架
 </p>
 
 <p align="center">  
@@ -31,25 +31,25 @@
 </p>
 
 
-# ModStartCMS 基于Laravel的快速开发框架
+# ModStart是基于Laravel的模块化快速开发框架
 
 
 ##  🔥 当前版本
 
-最新版本 <img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/github/v/release/modstart/ModStartCMS?style=flat-square">，基础功能已完善，后续功能正在加紧迭代开发中，欢迎交流
+最新版本 <img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/github/v/release/modstart/ModStartCMS?style=flat-square">，功能完善，模块市场丰富，欢迎交流。
 
 
 
 ##  💡 系统简介
 
-`ModStart` 是一个基于 `Laravel` 模块化的后台系统框架。基于 Apache 2.0 开源协议发布，免费且不限制商业使用。其中模块市场包含了丰富的模块，开箱即用，让开发者能够从冗长的代码中提效，对后端开发者非常友好。
+`ModStart` 是一个基于 `Laravel` 模块化快速开发框架。基于 Apache 2.0 开源协议发布，**免费且不限制商业使用**。模块市场包含了丰富的模块，后台一键快速安装，让开发者能够从冗长的代码中提效。
 
 <img src="https://ms-assets.modstart.com/data/image/2021/11/07/46017_dv5r_7358.jpg" alt="功能架构" />
 
 - [官方网站](https://modstart.com)
-- [Demo / 在线演示](https://cms.demo.tecmz.com)
+- [在线演示](https://cms.demo.tecmz.com)
 - [模块市场](https://modstart.com/store)
-- [源码地址 / 码云](https://gitee.com/modstart/ModStartCMS)
+- [源码地址 / Gitee](https://gitee.com/modstart/ModStartCMS)
 - [源码地址 / GitHub](https://github.com/modstart/ModStartCMS)
 
 **技术栈**
@@ -66,11 +66,11 @@
 
 - 简洁优雅、灵活可扩展
 - 后台RBAC权限管理
-- Ajax页面无刷新
+- 模块化开发，积木式搭建系统
 - 组件按需加载静态资源
-- 内置丰富的表格常用功能
+- 丰富的数据表格、数据表单功能
 - 内置文件上传，无需繁琐的开发
-- 模块市场，只需在管理页面点击鼠标即可完成模块的安装、更新和卸载等操作
+- 丰富的模块市场，后台一键快速安装
 
 
 
@@ -80,33 +80,30 @@
 
 [http://cms.demo.tecmz.com/](http://cms.demo.tecmz.com/)
 
-用户密码自行注册
+> 用户密码自行注册使用
 
 ### 后台演示地址
 
 [http://cms.demo.tecmz.com/admin](http://cms.demo.tecmz.com/admin)
 
-账号 | 密码| 操作权限
----|---|---
-demo | 123456| 演示账号只可以查看不能操作
-
+> 账号：`demo` 密码：`123456` （演示账号只可以查看不能操作）
 
 
 ## 🌐 开发文档
 
 [https://modstart.com/doc](https://modstart.com/doc)
 
-> 系统文档不断完善中
-
 
 ##  🔧 系统安装
 
 ### 环境要求
 
-- `PHP` ： `5.6` 或 `7.0`
-- `MySQL` >= `5.0`
+- `PHP` `5.6 或 7.0`
+- `MySQL` `>=5.0`
 - `PHP Extension`：`Fileinfo`
 - `Apache/Nginx`
+
+> 强力推荐使用PHP 5.6 或 7.0 版本，系统稳定性最好
 
 ### 安装步骤
 
@@ -117,6 +114,8 @@ demo | 123456| 演示账号只可以查看不能操作
 <p>
 <img src="https://mz-assets.tecmz.com/data/image/2020/04/21/47617_sqcj_4993.jpg" />
 </p>
+
+
 **Nginx参考配置**
 
 ```
@@ -168,8 +167,8 @@ server {
 
 为方便系统环境快速配置，我们提供了服务器端安装环境预检程序。使用方式如下：
 
-1. 通过连接下载文件  <a href="https://modstart.com/env_check.zip" target="_blank">https://modstart.com/env_check.zip</a>  ，解压出 `env_check.php` 文件。
-2. 将 `env_check.php` 文件上传到服务器空间，配置通过访问 `http://www.xxx.com/env_check.php` 来查看安装环境是否配置成功，如果环境预检成功，可以看到如下提示。
+- 通过连接下载文件  <a href="https://modstart.com/env_check.zip" target="_blank">https://modstart.com/env_check.zip</a>  ，解压出 `env_check.php` 文件。
+- 将 `env_check.php` 文件上传到服务器空间，配置通过访问 `http://www.xxx.com/env_check.php` 来查看安装环境是否配置成功，如果环境预检成功，可以看到如下提示。
 
 <p style="text-align:center;">
 	<img src="https://www.ms.modstart.com/vendor/ModStart/images/guide/EnvCheck.jpg" style="max-width:300px;" />
@@ -187,14 +186,10 @@ ModStart 的版本发行将会参考主流 web 框架的发行策略，尽量降
 对于小版本的发行，开发者可以放心的升级，基本不用担心代码兼容性问题。只有像从 v2.0.0 到 v3.0.0 这样的大版本升级才可能会有兼容性问题，小版本则基本是完全兼容的（小版本升级也可能会有不兼容的情况，但几率很小）。
 
 
-
 ##  🔨 快速开发
 
 
-
-在日常开发中，最常见的即是增删改查代码，使用ModStart开发此类功能，会变得非常简单。
-
-下面将会给大家介绍 `ModStart` 的使用方法，以及一个增删改查页面的基本构成。通过学习下面的内容将可以帮助大家快速理解这个系统的基本使用方法。
+以一个增删改查页面的基本构成，通过学习下面的内容将可以帮助大家快速理解 `ModStart` 基本使用方法。
 
 
 
@@ -271,37 +266,41 @@ $router->match(['get', 'post'], 'news/news/show', 'NewsController@show');
 ```
 
 
-
 在 `ModuleServiceProvider.php` 中注册菜单信息
 
 ```php
 AdminMenu::register(function () {
-  return [
-    [
-      'title' => '新闻管理',
-      'icon' => 'list',
-      'sort' => 150,
-      'url' => '\App\Admin\Controller\NewsController@index',
-    ]
-  ];
+    return [
+        [
+            'title' => '新闻管理',
+            'icon' => 'list',
+            'sort' => 150,
+            'url' => '\App\Admin\Controller\NewsController@index',
+        ]
+    ];
 });
 ```
 
-
-
-### 开发完成
-
 这样一个简单的增删改查页面就开发完成了
-
 
 
 ##  🌭 开发前必读
 
 ### 开发前的配置
 
-开发环境请打开 debug 模式（即在 `.env` 文件中设置 `APP_DEBUG=true` ）
+开发环境请打开 debug 模式，方便查看日志文件，操作方式如下：
 
+在 `.env` 文件中设置 `APP_DEBUG=true` 
 
+## 📋 常见问题
+
+我们列举了常见问题，请查看官方标准指南
+
+[https://modstart.com/doc/qa.html](https://modstart.com/doc/qa.html)
+
+如有其他问题推荐使用官方讨论交流群或在线讨论
+
+[https://modstart.com/forum](https://modstart.com/forum)
 
 ##  ✨ 使用交流
 

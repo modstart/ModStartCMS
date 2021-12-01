@@ -66,4 +66,15 @@ class ShellUtil
         $cmd = "nohup $command >$outputFile 2>&1 &";
         shell_exec($cmd);
     }
+
+    public static function cleanDir($dir, $keepMinute, $ext)
+    {
+        shell_exec("/usr/bin/find $dir -mmin +$keepMinute -name \"*.$ext\" -exec rm -rfv {} \;");
+    }
+
+    public static function cleanDirWithPattern($dir, $keepMinute, $pattern)
+    {
+        // /usr/bin/find / -maxdepth 1 -mmin +1 -name "core.*" -exec rm -rfv {} \;
+        shell_exec("/usr/bin/find $dir -maxdepth 1 -mmin +$keepMinute -name \"$pattern\" -exec rm -rfv {} \;");
+    }
 }
