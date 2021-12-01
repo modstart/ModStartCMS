@@ -54,7 +54,10 @@ class ContentController extends Controller
         $grid->id('id', 'ID');
         $grid->select('catId', '栏目')->optionModelTree('cms_cat', 'id', 'title');
         $grid->text('title', '标题');
-        $grid->type('status', '状态')->type(CmsModelContentStatus::class);
+        $grid->type('status', '状态')->type(CmsModelContentStatus::class, [
+            CmsModelContentStatus::SHOW => 'success',
+            CmsModelContentStatus::HIDE => 'muted',
+        ]);
         $grid->repositoryFilter(function (RepositoryFilter $filter) {
             $filter->where(['modelId' => $this->modelId]);
         });
