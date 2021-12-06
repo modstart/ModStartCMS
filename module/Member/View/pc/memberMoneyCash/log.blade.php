@@ -1,6 +1,8 @@
 @extends($_viewMemberFrame)
 
-@section('pageTitleMain','我的钱包')
+@section('pageTitleMain')提现记录@endsection
+@section('pageKeywords')提现记录@endsection
+@section('pageDescription')提现记录@endsection
 
 @section('memberBodyContent')
 

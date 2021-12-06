@@ -1,6 +1,8 @@
 @extends($_viewFrame)
 
 @section('pageTitleMain')注册@endsection
+@section('pageKeywords')注册@endsection
+@section('pageDescription')注册@endsection
 
 @section('headAppend')
     @parent

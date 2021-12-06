@@ -1,6 +1,8 @@
 @extends($_viewMemberFrame)
 
-@section('pageTitleMain','我的钱包')
+@section('pageTitleMain')我的钱包@endsection
+@section('pageKeywords')我的钱包@endsection
+@section('pageDescription')我的钱包@endsection
 
 @section('memberBodyContent')
 

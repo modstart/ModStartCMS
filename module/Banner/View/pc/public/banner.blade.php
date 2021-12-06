@@ -66,8 +66,8 @@ if(empty($bannerRatio)){
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
-                loop: true
-                ,autoplay: {
+                loop: true,
+                autoplay: {
                     delay: 3000
                 }
             });

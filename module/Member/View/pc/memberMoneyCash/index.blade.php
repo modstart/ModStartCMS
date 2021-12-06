@@ -1,6 +1,8 @@
 @extends($_viewMemberFrame)
 
 @section('pageTitleMain')钱包提现@endsection
+@section('pageKeywords')钱包提现@endsection
+@section('pageDescription')钱包提现@endsection
 
 
 @section('bodyAppend')

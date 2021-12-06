@@ -1,5 +1,9 @@
 @extends($_viewMemberFrame)
 
+@section('pageTitleMain')绑定手机@endsection
+@section('pageKeywords')绑定手机@endsection
+@section('pageDescription')绑定手机@endsection
+
 @section('bodyAppend')
     @parent
     {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}

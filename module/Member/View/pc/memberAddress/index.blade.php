@@ -1,6 +1,8 @@
 @extends($_viewMemberFrame)
 
-@section('pageTitleMain','我的地址')
+@section('pageTitleMain')我的地址@endsection
+@section('pageKeywords')我的地址@endsection
+@section('pageDescription')我的地址@endsection
 
 @section('memberBodyContent')
     <div class="ub-panel">

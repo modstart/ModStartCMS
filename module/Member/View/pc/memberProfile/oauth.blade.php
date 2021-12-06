@@ -1,5 +1,9 @@
 @extends($_viewMemberFrame)
 
+@section('pageTitleMain')绑定的账号@endsection
+@section('pageKeywords')绑定的账号@endsection
+@section('pageDescription')绑定的账号@endsection
+
 @section('memberBodyContent')
 
     @include('module::Member.View.pc.memberProfile.bindNav')

@@ -36,7 +36,6 @@ class XxxBannerPositionProvider extends AbstractBannerPositionProvider
     {
         return '问答首页';
     }
-
 }
 ```
 

@@ -1,5 +1,9 @@
 @extends($_viewMemberFrame)
 
+@section('pageTitleMain')绑定邮箱@endsection
+@section('pageKeywords')绑定邮箱@endsection
+@section('pageDescription')绑定邮箱@endsection
+
 @section('bodyAppend')
     @parent
     {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}

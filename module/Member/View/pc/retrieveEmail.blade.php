@@ -1,6 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitle','找回密码 - '.modstart_config('siteName'))
+@section('pageTitleMain')通过邮箱找回密码@endsection
+@section('pageKeywords')通过邮箱找回密码@endsection
+@section('pageDescription')通过邮箱找回密码@endsection
 
 @section('bodyAppend')
     @parent

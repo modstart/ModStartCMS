@@ -1,6 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitle','设置新密码 - '.modstart_config('siteName'))
+@section('pageTitleMain')设置新密码@endsection
+@section('pageKeywords')设置新密码@endsection
+@section('pageDescription')设置新密码@endsection
 
 @section('bodyContent')
 

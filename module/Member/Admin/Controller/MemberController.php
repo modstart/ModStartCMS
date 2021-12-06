@@ -4,6 +4,7 @@
 namespace Module\Member\Admin\Controller;
 
 use Illuminate\Routing\Controller;
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
@@ -122,6 +123,7 @@ class MemberController extends Controller
         $builder->text('passwordNew', '新密码')->required()->defaultValue(RandomUtil::upperString(6));
         if (Request::isPost()) {
             return $builder->formRequest(function (Form $form) use ($memberUser) {
+                AdminPermission::demoCheck();
                 $data = $form->dataForming();
                 $ret = MemberUtil::changePassword($memberUser['id'], $data['passwordNew'], null, true);
                 BizException::throwsIfResponseError($ret);
@@ -141,6 +143,7 @@ class MemberController extends Controller
         $builder->richHtml('content', '消息内容')->required();
         if (Request::isPost()) {
             return $builder->formRequest(function (Form $form) use ($memberUser) {
+                AdminPermission::demoCheck();
                 $data = $form->dataForming();
                 $ret = MemberMessageUtil::send($memberUser['id'], $data['content']);
                 BizException::throwsIfResponseError($ret);

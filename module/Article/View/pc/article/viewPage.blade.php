@@ -1,6 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitleMain',htmlspecialchars($article['title']))
+@section('pageTitleMain'){{$article['title']}}@endsection
+@section('pageKeywords'){{$article['title']}}@endsection
+@section('pageDescription'){{$article['title']}}@endsection
 
 @section('body')
 

@@ -1,5 +1,9 @@
 @extends($_viewMemberFrame)
 
+@section('pageTitleMain')修改头像@endsection
+@section('pageKeywords')修改头像@endsection
+@section('pageDescription')修改头像@endsection
+
 @section('bodyAppend')
     @parent
     {{\ModStart\ModStart::js('asset/vendor/cropper/cropper.js')}}

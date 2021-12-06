@@ -1,6 +1,8 @@
 @extends($_viewFrame)
 
 @section('pageTitleMain'){{modstart_config('Member_AgreementTitle','用户使用协议')}}@endsection
+@section('pageKeywords')用户使用协议@endsection
+@section('pageDescription')用户使用协议@endsection
 
 @section('body')
 

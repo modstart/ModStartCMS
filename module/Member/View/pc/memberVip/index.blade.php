@@ -1,6 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitleMain','会员VIP')
+@section('pageTitleMain')开通VIP会员@endsection
+@section('pageKeywords')开通VIP会员@endsection
+@section('pageDescription')开通VIP会员@endsection
 
 {!! \ModStart\ModStart::css('vendor/Member/style/member.css') !!}
 @section('bodyAppend')

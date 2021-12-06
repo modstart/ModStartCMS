@@ -1,6 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitle','用户授权绑定 - '.modstart_config('siteName'))
+@section('pageTitleMain')用户授权绑定@endsection
+@section('pageKeywords')用户授权绑定@endsection
+@section('pageDescription')用户授权绑定@endsection
 
 @section('bodyContent')
 

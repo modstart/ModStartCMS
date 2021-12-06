@@ -95,6 +95,7 @@ class MemberUtil
         return [
             'id' => $memberUser['id'],
             'username' => $memberUser['username'],
+            'nickname' => empty($memberUser['nickname']) ? $memberUser['username'] : $memberUser['nickname'],
             'created_at' => $memberUser['created_at'],
             'signature' => isset($memberUser['signature']) ? $memberUser['signature'] : null,
             'avatar' => AssetsUtil::fixFullOrDefault($memberUser['avatar'], 'asset/image/avatar.png'),
@@ -107,6 +108,7 @@ class MemberUtil
             return [
                 'id' => $item['id'],
                 'username' => $item['username'],
+                'nickname' => empty($item['nickname']) ? $item['username'] : $item['nickname'],
                 'created_at' => $item['created_at'],
                 'signature' => isset($item['signature']) ? $item['signature'] : null,
                 'avatar' => AssetsUtil::fixFullOrDefault($item['avatar'], 'asset/image/avatar.png'),
