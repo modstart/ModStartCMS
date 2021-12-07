@@ -152,12 +152,14 @@ trait CanCascadeFields
    var cascadeChange = function(value){
        cascadeGroups.forEach(function (group) {
            var groupDom = $('#{$this->id()}_group_' + group.index);
+           groupDom.addClass('cascade-group-hide');
+       });
+       cascadeGroups.forEach(function (group) {
+           var groupDom = $('#{$this->id()}_group_' + group.index);
            var pass = compare(value, group.value, group.operator);
            // console.log(value, group.operator, group.value, pass);
            if (pass) {
                groupDom.removeClass('cascade-group-hide');
-           } else {
-               groupDom.addClass('cascade-group-hide');
            }
         });
    };

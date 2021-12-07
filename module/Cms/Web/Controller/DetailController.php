@@ -26,9 +26,9 @@ class DetailController extends ModuleBaseController
         $catRootChildren = CmsCatUtil::children($catRoot['id']);
         $paginateData = CmsContentUtil::paginateCat($catRoot['id'], 1, 10);
         $latestRecords = $paginateData['records'];
-        $view = $cat['listTemplate'];
+        $view = $cat['detailTemplate'];
         if (empty($view)) {
-            $view = $data['model']['listTemplate'];
+            $view = $data['model']['detailTemplate'];
         }
         BizException::throwsIfEmpty('模板未找到', $view);
         $viewData = [];
