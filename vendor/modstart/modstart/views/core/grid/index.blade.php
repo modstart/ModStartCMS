@@ -88,7 +88,10 @@
             }
             return items;
         };
-        layui.use(['table', 'laypage'], function () {
+        layui.extend({
+            mstable: window.__msCDN + 'asset/layui/lay/ext/mstable'
+        });
+        layui.use(['table', 'laypage','mstable'], function () {
             var table = layui.table.render({
                 id: '{{$id}}Table',
                 elem: '#{{$id}}Table',
@@ -105,7 +108,10 @@
                 loading: true,
                 cellMinWidth: 100,
                 cols: [[]],
-                data: []
+                data: [],
+                done: function() {
+                    layui.mstable.render(this);
+                }
             });
             layui.table.on('sort({{$id}}Table)', function (obj) {
                 if (null == obj.type) {

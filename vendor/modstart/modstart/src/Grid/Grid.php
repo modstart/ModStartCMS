@@ -425,8 +425,10 @@ class Grid
                 'title' => $field->label(),
                 'sort' => $field->sortable(),
             ];
-            if ($field->width()) {
+            if ($field->width() !== '') {
                 $record['width'] = $field->width();
+            } else {
+                $record['withAuto'] = true;
             }
             $head[] = $record;
         }
