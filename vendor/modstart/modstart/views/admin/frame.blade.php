@@ -70,6 +70,11 @@
                     </div>
                 @endforeach
             </div>
+            <div class="toolbar">
+                <a href="javascript:;" class="menu-expand-all" title="{{L('Expand All')}}">
+                    <i class="iconfont icon-move"></i>
+                </a>
+            </div>
         </div>
         <div class="right">
             <div class="top">

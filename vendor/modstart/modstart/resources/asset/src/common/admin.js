@@ -9,6 +9,9 @@ $(window).on('load', function () {
     });
     var isMobile = ($(window).width() < 600)
     var $frame = $('.ub-panel-frame');
+    $frame.find('.menu-expand-all').on('click',function(){
+        $frame.find('.left .menu .title').addClass('open');
+    });
     if (isMobile) {
         $frame.find('.left-menu-shrink').on('click', function () {
             $frame.removeClass('left-toggle');

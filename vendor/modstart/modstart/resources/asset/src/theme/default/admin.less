@@ -11,6 +11,43 @@ html {
   background: #222D32;
 }
 
+.ub-panel-frame {
+  .left {
+    overflow: visible;
+
+    &:hover {
+      .toolbar {
+        display: block;
+      }
+    }
+
+    .toolbar {
+      position: absolute;
+      right: -1.5rem;
+      border: 0;
+      width: 1.5rem;
+      bottom: 0;
+      border-radius: 0 0.5rem 0.5rem 0;
+      background: #FFF;
+      box-shadow: 1px 1px 3px #999;
+      display: none;
+
+      a {
+        display: inline-block;
+        line-height: 1.5rem;
+        height: 1.5rem;
+        width: 1.5rem;
+        text-align: center;
+        color: #999;
+
+        &:hover {
+          color: #CCC;
+        }
+      }
+    }
+  }
+}
+
 .ub-admin-login {
   width: 300px;
   margin: 0 auto;

@@ -181,4 +181,5 @@ return [
     'No Permission' => '没有权限',
     'Edit file' => '编辑文件',
     'Reverse Select Order' => '反转选择顺序',
+    'Expand All' => '展开全部',
 ];
