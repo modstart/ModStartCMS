@@ -5,7 +5,11 @@
   src: data-uri('./../iconfont/iconfont.woff2?t=1635388959700') format('woff2'),
   data-uri('./../iconfont/iconfont.woff?t=1635388959700') format('woff'),
   data-uri('./../iconfont/iconfont.ttf?t=1635388959700') format('truetype');
+  //src: url('//at.alicdn.com/t/font_2897874_3pjwacdzjg1.woff2?t=1639097214974') format('woff2'),
+  //url('//at.alicdn.com/t/font_2897874_3pjwacdzjg1.woff?t=1639097214974') format('woff'),
+  //url('//at.alicdn.com/t/font_2897874_3pjwacdzjg1.ttf?t=1639097214974') format('truetype');
 }
+
 /* common layer */
 .edui-default .edui-box {
   border: none;
@@ -156,8 +160,8 @@ div.edui-box {
   height: auto;
 }
 
-.edui-default .edui-editor iframe{
-  height:inherit;
+.edui-default .edui-editor iframe {
+  height: inherit;
 }
 
 .edui-default .edui-editor-toolbarbox {
@@ -221,7 +225,7 @@ div.edui-box {
   height: 0;
   overflow: hidden;
   border-spacing: 0;
-  margin:0;
+  margin: 0;
 }
 
 .edui-default .edui-editor-bottomContainer td {
@@ -247,7 +251,7 @@ div.edui-box {
   width: 100%;
   height: 12px;
   margin-top: 10px;
-  background: url(../images/scale.png) no-repeat;
+  background: data-uri("../images/scale.png") no-repeat;
   cursor: se-resize;
 }
 
@@ -332,7 +336,7 @@ div.edui-box {
   background-color: #EEE;
   border: 1px solid #EEE;
   padding: 0;
-  border-radius:0.25rem;
+  border-radius: 0.25rem;
 }
 
 .edui-default .edui-for-fontfamily .edui-listitem-label {
@@ -405,7 +409,7 @@ div.edui-box {
 .edui-default .edui-menu-body {
   _width: 150px;
   min-width: 170px;
-  background: url("../images/sparator_v.png") repeat-y 25px;
+  background: data-uri("../images/sparator_v.png") repeat-y 25px;
 }
 
 .edui-default .edui-menuitem-body {
@@ -420,7 +424,7 @@ div.edui-box {
 .edui-default .edui-menuitem .edui-icon {
   width: 20px !important;
   height: 20px !important;
-  background: url(../images/icons.png) 0 -4000px;
+  //background: url(../images/icons.png) 0 -4000px;
 }
 
 .edui-default .edui-menuitem .edui-label {
@@ -450,12 +454,10 @@ div.edui-box {
 }
 
 .edui-default .edui-toolbar .edui-combox-body .edui-arrow {
-  //background: url(../images/icons.png) -741px 0;
-  //_background: url(../images/icons.gif) -741px 0;
-  //background: data-uri('../icon/dropdown.png') no-repeat center;
   height: 30px;
   width: 9px;
-  &:before{
+
+  &:before {
     content: "\e9f0";
     font-family: "editor-iconfont";
     font-size: 8px;
@@ -566,145 +568,155 @@ div.edui-box {
 
 /* toolbar icons */
 .edui-default .edui-for-undo .edui-icon {
-  background-position: -160px 0;
+  &:before {
+    content: "\e60f";
+  }
 }
 
 .edui-default .edui-for-redo .edui-icon {
-  background-position: -100px 0;
+  &:before {
+    content: "\e60c";
+  }
 }
 
 .edui-default .edui-for-bold .edui-icon {
-  //background-image: data-uri('../icon/bold.png');
-  //background-size: 14px;
   &:before {
     content: "\e628";
-    font-size:14px;
+    font-size: 14px;
   }
 }
 
 .edui-default .edui-for-italic .edui-icon {
-  //background-image: data-uri('../icon/italic.png');
-  //background-size: 16px;
   &:before {
     content: "\e62a";
-    font-size:14px;
+    font-size: 14px;
   }
 }
 
 .edui-default .edui-for-fontborder .edui-icon {
-  background-position: -160px -40px;
+  &:before {
+    content: '\e62d';
+  }
 }
 
 .edui-default .edui-for-underline .edui-icon {
-  //background-image: data-uri('../icon/underline.png');
-  //background-size: 16px;
   &:before {
     content: "\e63e";
-    font-size:14px;
+    font-size: 14px;
   }
 }
 
 .edui-default .edui-for-strikethrough .edui-icon {
-  //background-image: data-uri('../icon/strikethrough.png');
-  //background-size: 16px;
   &:before {
     content: "\e64a";
-    font-size:14px;
+    font-size: 14px;
   }
 }
 
 .edui-default .edui-for-subscript .edui-icon {
-  background-position: -600px 0;
+  &:before {
+    content: "\ece9";
+  }
 }
 
 .edui-default .edui-for-superscript .edui-icon {
-  background-position: -620px 0;
+  &:before {
+    content: "\e83e";
+  }
 }
 
 .edui-default .edui-for-blockquote .edui-icon {
-  background-position: -220px 0;
+  &:before{
+    content: "\e6d8";
+  }
 }
 
 .edui-default .edui-for-forecolor .edui-icon {
-  //background-image: data-uri('../icon/forecolor.png');
-  //background-size: 18px;
   &:before {
     content: "\e7f8";
-    font-size:20px;
+    font-size: 20px;
   }
 }
 
 .edui-default .edui-for-backcolor .edui-icon {
-  background-position: -760px 0;
+  &:before {
+    content: "\e71a";
+  }
 }
 
 .edui-default .edui-for-inserttable .edui-icon {
-  background-position: -580px -20px;
+  &:before{
+    content: "\e60d";
+  }
 }
 
 .edui-default .edui-for-autotypeset .edui-icon {
-  //background-image: data-uri('../icon/autotypeset.png');
-  //background-size: 18px;
   &:before {
     content: "\e662";
   }
 }
 
 .edui-default .edui-for-justifyleft .edui-icon {
-  //background-image: data-uri('../icon/justifyleft.png');
-  //background-size: 14px;
   &:before {
     content: "\e7f7";
   }
 }
 
 .edui-default .edui-for-justifycenter .edui-icon {
-  //background-image: data-uri('../icon/justifycenter.png');
-  //background-size: 14px;
   &:before {
     content: "\e7f6";
   }
 }
 
 .edui-default .edui-for-justifyright .edui-icon {
-  //background-image: data-uri('../icon/justifyright.png');
-  //background-size: 14px;
   &:before {
     content: "\e7f5";
   }
 }
 
 .edui-default .edui-for-justifyjustify .edui-icon {
-  background-position: -440px 0;
+  &:before {
+    content: "\e87c";
+  }
 }
 
 .edui-default .edui-for-insertorderedlist .edui-icon {
-  background-position: -80px 0;
+  &:before {
+    content: "\e737";
+  }
 }
 
 .edui-default .edui-for-insertunorderedlist .edui-icon {
-  background-position: -20px 0;
+  &:before {
+    content: "\e7f4";
+  }
 }
 
 .edui-default .edui-for-lineheight .edui-icon {
-  background-position: -725px -40px;
+  &:before{
+    content: "\e638";
+  }
 }
 
 .edui-default .edui-for-rowspacingbottom .edui-icon {
-  background-position: -745px -40px;
+  &:before{
+    content:'\eb09';
+  }
 }
 
 .edui-default .edui-for-rowspacingtop .edui-icon {
-  background-position: -765px -40px;
+  &:before{
+    content:'\eb0a';
+  }
 }
 
 .edui-default .edui-for-horizontal .edui-icon {
-  background-position: -360px 0;
+  &:before{
+    content: "\e617";
+  }
 }
 
 .edui-default .edui-for-link .edui-icon {
-  //background-image: data-uri('../icon/link.png');
-  //background-size: 14px;
   &:before {
     content: "\e648";
   }
@@ -715,21 +727,21 @@ div.edui-box {
 }
 
 .edui-default .edui-for-insertimage .edui-icon {
-  //background-position: -726px -77px;
   &:before {
     content: "\e605";
   }
 }
 
 .edui-default .edui-for-uploadimage .edui-icon {
-  //background-image: data-uri('../icon/image.png');
   &:before {
     content: "\e605";
   }
 }
 
 .edui-default .edui-for-wechatcustomemotion .edui-icon {
-  background-image: data-uri('../icon/wechatcustomemotion.png');
+  &:before {
+    content: "\e60e";
+  }
 }
 
 .edui-default .edui-for-insertframe .edui-icon {
@@ -757,7 +769,10 @@ div.edui-box {
 }
 
 .edui-default .edui-for-selectall .edui-icon {
-  background-position: -400px -20px;
+  //background-position: -400px -20px;
+  &:before {
+    content: '\e62f';
+  }
 }
 
 .edui-default .edui-for-searchreplace .edui-icon {
@@ -765,7 +780,10 @@ div.edui-box {
 }
 
 .edui-default .edui-for-map .edui-icon {
-  background-position: -40px -40px;
+  //background-position: -40px -40px;
+  &:before {
+    content: "\e649";
+  }
 }
 
 .edui-default .edui-for-gmap .edui-icon {
@@ -773,7 +791,6 @@ div.edui-box {
 }
 
 .edui-default .edui-for-insertvideo .edui-icon {
-  //background-image: data-uri('../icon/video.png');
   &:before {
     content: "\e636";
   }
@@ -804,11 +821,18 @@ div.edui-box {
 }
 
 .edui-default .edui-for-formatmatch .edui-icon {
-  background-position: -40px 0;
+  //background-position: -40px 0;
+  &:before {
+    content: "\e637";
+  }
 }
 
 .edui-default .edui-for-pasteplain .edui-icon {
   background-position: -360px -20px;
+
+  &:before {
+    content: '\edfb';
+  }
 }
 
 .edui-default .edui-for-directionalityltr .edui-icon {
@@ -820,134 +844,176 @@ div.edui-box {
 }
 
 .edui-default .edui-for-source .edui-icon {
-  //background-image: data-uri('../icon/source.png');
-  //background-size: 18px;
   &:before {
-    font-size:20px;
+    font-size: 20px;
     content: "\e608";
   }
 }
 
 .edui-default .edui-for-removeformat .edui-icon {
-  //background-image: data-uri('../icon/removeformat.png');
-  //background-size: 20px;
   &:before {
-    font-size:18px;
+    font-size: 18px;
     content: "\e782";
   }
 }
 
 .edui-default .edui-for-unlink .edui-icon {
-  //background-image: data-uri('../icon/unlink.png');
-  //background-size: 20px;
   &:before {
     content: "\e92b";
   }
 }
 
 .edui-default .edui-for-touppercase .edui-icon {
-  background-position: -786px 0;
+  &:before{
+    content: "\e619";
+  }
 }
 
 .edui-default .edui-for-tolowercase .edui-icon {
-  background-position: -806px 0;
+  &:before{
+    content: "\e61a";
+  }
 }
 
 .edui-default .edui-for-insertrow .edui-icon {
-  background-position: -478px -76px;
+  &:before{
+    content: "\e603";
+  }
 }
 
 .edui-default .edui-for-insertrownext .edui-icon {
-  background-position: -498px -76px;
+  &:before{
+    content: "\e602";
+  }
 }
 
 .edui-default .edui-for-insertcol .edui-icon {
-  background-position: -455px -76px;
+  &:before{
+    content: "\e601";
+  }
 }
 
 .edui-default .edui-for-insertcolnext .edui-icon {
-  background-position: -429px -76px;
+  &:before{
+    content: "\e600";
+  }
 }
 
 .edui-default .edui-for-mergeright .edui-icon {
-  background-position: -60px -40px;
+  &:before{
+    content: "\e615";
+  }
 }
 
 .edui-default .edui-for-mergedown .edui-icon {
-  background-position: -80px -40px;
+  &:before{
+    content: "\e613";
+  }
 }
 
 .edui-default .edui-for-splittorows .edui-icon {
-  background-position: -100px -40px;
+  &:before{
+    content: "\e610";
+  }
 }
 
 .edui-default .edui-for-splittocols .edui-icon {
-  background-position: -120px -40px;
+  &:before{
+    content: "\e611";
+  }
 }
 
 .edui-default .edui-for-insertparagraphbeforetable .edui-icon {
-  background-position: -140px -40px;
+  &:before{
+    content:'\e901';
+  }
 }
 
 .edui-default .edui-for-deleterow .edui-icon {
-  background-position: -660px -20px;
+  &:before{
+    content: "\e609";
+  }
 }
 
 .edui-default .edui-for-deletecol .edui-icon {
-  background-position: -640px -20px;
+  &:before{
+    content: "\e604";
+  }
 }
 
 .edui-default .edui-for-splittocells .edui-icon {
-  background-position: -800px -20px;
+  &:before{
+    content: "\e612";
+  }
 }
 
 .edui-default .edui-for-mergecells .edui-icon {
-  background-position: -760px -20px;
+  &:before{
+    content: "\e606";
+  }
 }
 
 .edui-default .edui-for-deletetable .edui-icon {
-  background-position: -620px -20px;
+  &:before {
+    content: "\e60a";
+  }
 }
 
 .edui-default .edui-for-cleardoc .edui-icon {
-  background-position: -520px 0;
+  &:before{
+    content: "\e61e";
+  }
 }
 
 .edui-default .edui-for-fullscreen .edui-icon {
-  background-position: -100px -20px;
+  &:before {
+    content: "\e675";
+  }
 }
 
 .edui-default .edui-for-anchor .edui-icon {
-  background-position: -200px 0;
+  &:before{
+    content: "\e61b";
+  }
 }
 
 .edui-default .edui-for-pagebreak .edui-icon {
-  background-position: -460px -40px;
+  &:before{
+    content: "\e61d";
+  }
 }
 
 .edui-default .edui-for-imagenone .edui-icon {
-  background-position: -480px -40px;
+  &:before {
+    content: "\e61f";
+  }
 }
 
 .edui-default .edui-for-imageleft .edui-icon {
-  background-position: -500px -40px;
+  &:before {
+    content: "\e621";
+  }
 }
 
 .edui-default .edui-for-wordimage .edui-icon {
-  background-position: -660px -40px;
+  &:before{
+    content: "\e618";
+  }
 }
 
 .edui-default .edui-for-imageright .edui-icon {
-  background-position: -520px -40px;
+  &:before {
+    content: "\e622";
+  }
 }
 
 .edui-default .edui-for-imagecenter .edui-icon {
-  background-position: -540px -40px;
+  &:before {
+    content: "\e620";
+  }
 }
 
 .edui-default .edui-for-indent .edui-icon {
-  //background-image: data-uri('../icon/indent.png');
-  //background-size: 16px;
   &:before {
     content: "\e7f3";
   }
@@ -970,7 +1036,10 @@ div.edui-box {
 }
 
 .edui-default .edui-for-template .edui-icon {
-  background-position: -339px -40px;
+  //background-position: -339px -40px;
+  &:before {
+    content: "\e6ad";
+  }
 }
 
 .edui-default .edui-for-delete .edui-icon {
@@ -978,7 +1047,10 @@ div.edui-box {
 }
 
 .edui-default .edui-for-attachment .edui-icon {
-  background-position: -620px -40px;
+  //background-position: -620px -40px;
+  &:before {
+    content: "\e704";
+  }
 }
 
 .edui-default .edui-for-edittd .edui-icon {
@@ -1002,7 +1074,10 @@ div.edui-box {
 }
 
 .edui-default .edui-for-formula .edui-icon {
-  background-position: -200px -40px
+  //background-position: -200px -40px
+  &:before {
+    content: "\e616";
+  }
 }
 
 .edui-default .edui-for-aligntd .edui-icon {
@@ -1054,7 +1129,7 @@ div.edui-box {
 }
 
 .edui-default .edui-for-charts .edui-icon {
-  background: url(../images/charts.png) no-repeat 2px 3px !important;
+  background: data-uri("../images/charts.png") no-repeat 2px 3px !important;
 }
 
 .edui-default .edui-for-inserttitlecol .edui-icon {
@@ -1066,18 +1141,19 @@ div.edui-box {
 }
 
 .edui-default .edui-for-simpleupload .edui-icon {
-  background-position: -380px 0px;
+  //background-position: -380px 0px;
+  &:before {
+    content: "\e7ad";
+  }
 }
 
 /*splitbutton*/
 .edui-default .edui-toolbar .edui-splitbutton-body .edui-arrow,
 .edui-default .edui-toolbar .edui-menubutton-body .edui-arrow {
-  //background: url(../images/icons.png) -741px 0;
-  //_background: url(../images/icons.gif) -741px 0;
-  //background: data-uri('../icon/dropdown.png') no-repeat center;
   height: 30px;
   width: 9px;
-  &:before{
+
+  &:before {
     content: "\e9f0";
     font-family: "editor-iconfont";
     font-size: 8px;
@@ -1087,7 +1163,7 @@ div.edui-box {
 .edui-default .edui-toolbar .edui-splitbutton .edui-splitbutton-body,
 .edui-default .edui-toolbar .edui-menubutton .edui-menubutton-body {
   padding: 1px;
-  border-radius:3px;
+  border-radius: 3px;
 }
 
 .edui-default .edui-toolbar .edui-splitborder {
@@ -1320,7 +1396,7 @@ div.edui-box {
   width: auto;
 }
 
-.edui-dialog .edui-default .edui-icon:before{
+.edui-dialog .edui-default .edui-icon:before {
   display: none;
 }
 
@@ -1376,7 +1452,6 @@ div.edui-box {
 .edui-default .edui-dialog-titlebar {
   height: 36px;
   border-bottom: 1px solid #c6c6c6;
-  // background: url(../images/dialog-title-bg.png) repeat-x bottom;
   background: #FFF;
   position: relative;
   cursor: move;
@@ -1412,7 +1487,8 @@ div.edui-box {
   font-size: 26px;
   vertical-align: top;
   line-height: 30px;
-  &:before{
+
+  &:before {
     content: "\e6a7";
   }
 }
@@ -1443,7 +1519,7 @@ div.edui-box {
   line-height: 30px;
   text-align: center;
   background: #F7F7F7;
-  border-radius:5px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -1734,7 +1810,7 @@ div.edui-box {
   margin-left: 1px;
   width: 128px;
   float: left;
-  border-radius:3px;
+  border-radius: 3px;
 }
 
 .edui-default .edui-colorpicker-nocolor {
@@ -1746,7 +1822,7 @@ div.edui-box {
   border: 1px solid #EEE;
   padding: 3px 5px;
   cursor: pointer;
-  border-radius:3px;
+  border-radius: 3px;
 }
 
 .edui-default .edui-colorpicker-tablefirstrow {
@@ -1775,11 +1851,11 @@ div.edui-box {
 }
 
 .arrow_down {
-  background: white url('../images/arrow_down.png') no-repeat center;
+  background: white data-uri('../images/arrow_down.png') no-repeat center;
 }
 
 .arrow_up {
-  background: white url('../images/arrow_up.png') no-repeat center;
+  background: white data-uri('../images/arrow_up.png') no-repeat center;
 }
 
 /*高级的样式*/
@@ -1811,7 +1887,7 @@ div.edui-box {
   left: 0;
   width: 150px;
   height: 150px;
-  background: url("../images/tangram-colorpicker.png") -160px -200px;
+  background: data-uri("../images/tangram-colorpicker.png") -160px -200px;
 }
 
 .edui-colorpicker-padDot {
@@ -1821,7 +1897,7 @@ div.edui-box {
   width: 11px;
   height: 11px;
   overflow: hidden;
-  background: url(../images/tangram-colorpicker.png) 0px -200px repeat-x;
+  background: data-uri("../images/tangram-colorpicker.png") 0px -200px repeat-x;
   z-index: 1000;
 
 }
@@ -1832,7 +1908,7 @@ div.edui-box {
   top: 13px;
   width: 19px;
   height: 152px;
-  background: url(../images/tangram-colorpicker.png) -179px -12px no-repeat;
+  background: data-uri("../images/tangram-colorpicker.png") -179px -12px no-repeat;
 
 }
 
@@ -1908,7 +1984,7 @@ div.edui-box {
   height: 20px;
   width: 20px;
   padding: 1px;
-  background-image: url(../images/table-cell-align.png);
+  background-image: data-uri("../images/table-cell-align.png");
 }
 
 .edui-default .edui-cellalignpicker-body .edui-left {
@@ -1953,7 +2029,7 @@ div.edui-box {
   width: 2px;
   height: 20px;
   margin: 2px 4px 2px 3px;
-  background: url(../images/icons.png) -181px 0;
+  background: data-uri("../images/icons.png") -181px 0;
 }
 
 /*颜色按钮 */
@@ -2046,7 +2122,7 @@ div.edui-box {
 .edui-default .edui-pasteicon {
   width: 100%;
   height: 100%;
-  background-image: url('../images/wordpaste.png');
+  background-image: data-uri('../images/wordpaste.png');
   background-position: 0 0;
 }
 
@@ -2084,7 +2160,7 @@ div.edui-box {
   width: 29px;
   height: 29px;
   margin-left: 5px;
-  background-image: url('../images/wordpaste.png');
+  background-image: data-uri('../images/wordpaste.png');
   background-repeat: no-repeat;
 }
 
@@ -2117,9 +2193,9 @@ div.edui-box {
   background-position: -339px -40px;
 }
 
-.edui-default .edui-for-wechatcustomemotion .edui-icon {
-  background-position: -60px -20px;
-}
+//.edui-default .edui-for-wechatcustomemotion .edui-icon {
+//  background-position: -60px -20px;
+//}
 
 .editor-wechatcustomemotion {
   width: 34px *  12;
@@ -2145,13 +2221,7 @@ div.edui-box {
   }
 }
 
-.edui-default .edui-for-formula .edui-icon {
-  &:before{
-    content: "\e616";
-  }
-}
 
-
-.CodeMirror pre{
-  color:#333;
+.CodeMirror pre {
+  color: #333;
 }

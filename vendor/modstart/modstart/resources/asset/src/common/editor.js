@@ -135,17 +135,17 @@ UE.commands['wechatcustomemotion'] = {
         var $emotionContainer = $('<div class="editor-wechatcustomemotion"></div>');
         $emotionContainer.attr('id', editorEmotionId);
         for (var i = 0; i < emotions.length; i++) {
-            $emotionContainer.append('<a href="javascript:;" class="item" data-key="' + emotions[i].key + '" data-val="' + emotions[i].val + '"><img src="/assets/lib/img/emotion/' + emotions[i].val + '@2x.png" /></a>');
+            $emotionContainer.append('<a href="javascript:;" class="item" data-key="' + emotions[i].key + '" data-val="' + emotions[i].val + '"><img src="' + window.__msCDN + 'asset/image/emotion/' + emotions[i].val + '@2x.png" /></a>');
         }
-        editorEmotionDialog = Dialog.dialogContent($emotionContainer.prop('outerHTML'), {
+        editorEmotionDialog = window.MS.dialog.dialogContent($emotionContainer.prop('outerHTML'), {
             shadeClose: false,
             openCallback: function () {
                 $('#' + editorEmotionId).on('click', 'a.item', function () {
                     var key = $(this).attr('data-key');
                     var val = $(this).attr('data-val');
-                    var emotionImage = '<img data-key="' + key + '" data-val="' + val + '" src="/assets/lib/img/emotion/' + val + '@2x.png" height="20" style="vertical-align:middle;" />';
+                    var emotionImage = '<img data-key="' + key + '" data-val="' + val + '" src="' + window.__msCDN + 'asset/image/emotion/' + val + '@2x.png" height="20" style="vertical-align:middle;" />';
                     _this.execCommand('insertHtml', emotionImage);
-                    Dialog.dialogClose(editorEmotionDialog);
+                    window.MS.dialog.dialogClose(editorEmotionDialog);
                     editorEmotionDialog = null;
                 });
             }
@@ -273,7 +273,7 @@ var Editor = {
                     'uploadimage', 'bold', 'italic', 'underline',
                     //'fontborder',
                     'strikethrough',
-                    'insertcode'
+                    'insertcode',
                     //'superscript', 'subscript',
                 ]
             ],

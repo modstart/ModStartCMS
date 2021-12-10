@@ -50,13 +50,26 @@ if(empty($bannerRatio)){
         @if(count($banners)>1)
             <div class="swiper-pagination swiper-pagination-white"></div>
             <div class="swiper-button-next swiper-button-white"></div>
-            <div class="swiper-button-prev swiper-button-white"></div>
+            <div class="swiper-button-prev swiper-button-white tw-delay-200"></div>
         @endif
     </div>
 </div>
 @if(count($banners)>1)
     <script>
         $(function () {
+            var changeAnimate = function(slide){
+                var $content = $(slide).find('.content');
+                if($content.length>0){
+                    $content.find('.title').removeClass('animated fadeInUp');
+                    $content.find('.slogan').removeClass('animated fadeInUp');
+                    $content.find('.link').removeClass('animated fadeInUp');
+                    setTimeout(function(){
+                        $content.find('.title').addClass('animated fadeInUp');
+                        $content.find('.slogan').addClass('animated fadeInUp');
+                        $content.find('.link').addClass('animated fadeInUp');
+                    },0);
+                }
+            };
             var swiper = new Swiper('#{{$bannerId}} .swiper-container', {
                 pagination: {
                     el: '.swiper-pagination',
@@ -70,6 +83,10 @@ if(empty($bannerRatio)){
                 autoplay: {
                     delay: 3000
                 }
+            });
+            changeAnimate(swiper.slides[swiper.activeIndex]);
+            swiper.on('slideChange',function(){
+                changeAnimate(swiper.slides[swiper.activeIndex]);
             });
         });
     </script>

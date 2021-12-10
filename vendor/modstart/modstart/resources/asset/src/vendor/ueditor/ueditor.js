@@ -29718,7 +29718,7 @@
             var editor = new UE.Editor(options);
             editor.options.editor = editor;
             utils.loadFile(document, {
-                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211119",
+                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211209",
                 tag: "link",
                 type: "text/css",
                 rel: "stylesheet"

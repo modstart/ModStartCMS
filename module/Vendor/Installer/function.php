@@ -217,3 +217,18 @@ function env($key, $defaultValue = '')
     }
     return isset($values[$key]) ? $values[$key] : $defaultValue;
 }
+
+function is_dir_really_writable($dir)
+{
+    $dir = rtrim($dir, '/\\') . '/';
+    $testFile = $dir . '.writable_test_file';
+    @file_put_contents($testFile, 'test');
+    if (!file_exists($testFile)) {
+        return false;
+    }
+    if (file_get_contents($testFile) != 'test') {
+        return false;
+    }
+    @unlink($testFile);
+    return true;
+}

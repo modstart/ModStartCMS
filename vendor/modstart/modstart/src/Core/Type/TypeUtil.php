@@ -53,6 +53,7 @@ class TypeUtil
             'completed' => 'success',
             'finish' => 'success',
             'converting' => 'warning',
+            'sending' => 'warning',
             'ignore' => 'muted',
             'expired' => 'muted',
             'info' => 'primary',

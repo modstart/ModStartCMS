@@ -62,9 +62,10 @@ include __DIR__ . '/function.php';
                 <?php if(version_compare(PHP_VERSION,'5.6.0','ge') && version_compare(PHP_VERSION,'5.7.0','lt')){ ?>
                 <?php EnvUtil::iniFileConfig('always_populate_raw_post_data')=='-1' ? text_success('验证 always_populate_raw_post_data=-1') : text_error('请配置 always_populate_raw_post_data=-1'); ?>
                 <?php } ?>
-                <?php is_writable(APP_PATH . '/storage/') ? text_success('/storage/目录可写') : text_error('/storage/目录不可写'); ?>
-                <?php is_writable(APP_PATH . '/public/') ? text_success('/public/目录可写') : text_error('/public/目录不可写'); ?>
-                <?php is_writable(APP_PATH . '/bootstrap/cache/') ? text_success('/bootstrap/cache/目录可写') : text_error('/bootstrap/cache/目录不可写'); ?>
+                <?php is_dir_really_writable(APP_PATH . '/bootstrap/') ? text_success('/bootstrap/目录可写') : text_error('/bootstrap/目录不可写'); ?>
+                <?php is_dir_really_writable(APP_PATH . '/storage/') ? text_success('/storage/目录可写') : text_error('/storage/目录不可写'); ?>
+                <?php is_dir_really_writable(APP_PATH . '/public/') ? text_success('/public/目录可写') : text_error('/public/目录不可写'); ?>
+                <?php is_dir_really_writable(APP_PATH . '/bootstrap/cache/') ? text_success('/bootstrap/cache/目录可写') : text_error('/bootstrap/cache/目录不可写'); ?>
                 <div data-rewrite-check>
                     <div class="status loading"><div class="ub-alert">Rewrite规则检测中...</div></div>
                     <div class="status success" style="display:none;"><?php text_success('Rewrite规则正确'); ?></div>
