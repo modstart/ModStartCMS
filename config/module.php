@@ -49,8 +49,5 @@ return [
         'SiteCounter' => [
             'enable' => true,
         ],
-        'LinkExternalJumper' => [
-            'enable' => true,
-        ],
     ],
 ];
