@@ -118,6 +118,7 @@ layui.define([], function (exports) {
                             }
                         }
                         maxWidth += 32;
+                        maxWidth = Math.min(maxWidth, 500);
                         config.width = maxWidth;
                         config.widthAutoSize = maxWidth;
                     }
