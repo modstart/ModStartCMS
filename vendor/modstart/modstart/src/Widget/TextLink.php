@@ -50,7 +50,7 @@ class TextLink extends AbstractWidget
         if ($this->disabled) {
             return '<a href="javascript:;" class="ub-text-link ub-text-muted">' . $this->text . '</a>';
         } else {
-            return '<a href="' . $this->link . '" class="ub-text-link ub-text-' . $this->type . '" ' . $this->attr . '>' . $this->text . '</a>';
+            return '<a href="' . $this->link . '" class="ub-text-link ub-text-' . ($this->type == 'primary' ? 'link' : $this->type) . '" ' . $this->attr . '>' . $this->text . '</a>';
         }
     }
 }

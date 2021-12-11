@@ -430,6 +430,9 @@ class Grid
             } else {
                 $record['withAuto'] = true;
             }
+            if ($field->gridFixed()) {
+                $record['fixed'] = $field->gridFixed();
+            }
             $head[] = $record;
         }
         return Response::jsonSuccessData([

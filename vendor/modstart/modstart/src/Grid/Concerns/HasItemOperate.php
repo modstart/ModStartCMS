@@ -25,6 +25,12 @@ trait HasItemOperate
      */
     private $hookItemOperateRendering;
 
+    /**
+     * 操作列初始化时回调
+     * @var \Closure
+     */
+    private $hookItemOperateFieldBuild;
+
     private function setupItemOperate()
     {
         $this->itemOperate = new ItemOperate($this);
@@ -42,6 +48,9 @@ trait HasItemOperate
                 }
                 return $this->itemOperate->render();
             });
+            if ($this->hookItemOperateFieldBuild) {
+                call_user_func($this->hookItemOperateFieldBuild, $field);
+            }
             $this->pushField($field);
         }
     }
@@ -66,5 +75,29 @@ trait HasItemOperate
         }
         $this->hookItemOperateRendering = $callback;
         return $this;
+    }
+
+    /**
+     * @param null $callback = function(AbstractField $field){  }
+     * @return $this|\Closure
+     */
+    public function hookItemOperateFieldBuild($callback = null)
+    {
+        if (null === $callback) {
+            return $this->hookItemOperateFieldBuild;
+        }
+        $this->hookItemOperateFieldBuild = $callback;
+        return $this;
+    }
+
+    /**
+     * 操作栏浮动
+     * @param $fixed string left|right
+     */
+    public function operateFixed($fixed)
+    {
+        $this->hookItemOperateFieldBuild(function (AbstractField $field) use ($fixed) {
+            $field->gridFixed($fixed);
+        });
     }
 }
