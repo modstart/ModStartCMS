@@ -257,7 +257,7 @@ class ModelUtil
         return ArrayUtil::fetchSpecifiedKeyToArray($records, $idKey);
     }
 
-    public static function values($model, $field, $where = [])
+    public static function values($model, $field, $where = [], $order = null)
     {
         $flat = false;
         if (!is_array($field)) {
@@ -266,7 +266,11 @@ class ModelUtil
         } else {
             $fields = $field;
         }
-        $ms = self::model($model)->where($where)->get($fields)->toArray();
+        $ms = self::model($model)->where($where);
+        if (!empty($order)) {
+            $ms = $ms->orderBy($order[0], $order[1]);
+        }
+        $ms = $ms->get($fields)->toArray();
         if ($flat) {
             return array_map(function ($item) use ($field) {
                 return $item[$field];

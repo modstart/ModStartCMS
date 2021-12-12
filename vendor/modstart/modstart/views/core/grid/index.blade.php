@@ -147,7 +147,7 @@
                         curr: data.page,
                         count: data.total,
                         limit: data.pageSize,
-                        limits: [10,20,50,100,500,1000],
+                        limits: [10,20,50,100],
                         layout: [ 'limit', 'prev', 'page', 'next','count',],
                         jump: function (obj, first) {
                             if (!first) {

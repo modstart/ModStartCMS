@@ -38,7 +38,7 @@ class ReUtil
     {
         $wild = str_replace('*', '__x__star__', $wild);
         $regex = '/^' . preg_quote($wild, '/') . '$/';
-        $regex = str_replace('__x__star__', '[a-zA-Z0-9_]+', $regex);
+        $regex = str_replace('__x__star__', '.*', $regex);
         // echo "isWildMatch ==> $regex <-> $text\n";
         return preg_match($regex, $text);
     }
