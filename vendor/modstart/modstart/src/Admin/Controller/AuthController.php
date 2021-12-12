@@ -12,6 +12,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\StrUtil;
+use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class AuthController extends Controller
 {
@@ -41,8 +42,17 @@ class AuthController extends Controller
                 return Response::json(-2, L('Password Required'));
             }
             if (config('modstart.admin.login.captcha', false)) {
-                if (!Captcha::check($input->getTrimString('captcha'))) {
-                    return Response::json(-1, L('Captcha Incorrect'), null, "[js]$('[data-captcha]').click();");
+                $providerName = modstart_config('AdminManagerEnhance_LoginCaptchaProvider', null);
+                if ($providerName && ($provider = CaptchaProvider::get($providerName))) {
+                    $provider->setParam('biz', 'admin');
+                    $ret = $provider->validate();
+                    if (Response::isError($ret)) {
+                        return Response::jsonFromGenerate($ret);
+                    }
+                } else {
+                    if (!Captcha::check($input->getTrimString('captcha'))) {
+                        return Response::json(-1, L('Captcha Incorrect'), null, "[js]$('[data-captcha]').click();");
+                    }
                 }
             }
             $ret = Admin::login($username, $password);

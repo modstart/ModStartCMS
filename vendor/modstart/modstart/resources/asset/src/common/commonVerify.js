@@ -16,6 +16,9 @@ var CommonVerify = function (option) {
         },
         sendError: function (msg) {
             window.api.dialog.tipError(msg);
+        },
+        formData: function () {
+            return {}
         }
     }, option);
 
@@ -55,7 +58,11 @@ var CommonVerify = function (option) {
         }
         sending = true;
         window.api.dialog.loadingOn();
-        window.api.base.post(opt.generateServer, {target: target, captcha: captcha}, function (res) {
+        var formData = opt.formData();
+        window.api.base.post(opt.generateServer, Object.assign(formData, {
+            target: target,
+            captcha: captcha
+        }), function (res) {
             window.api.dialog.loadingOff();
             sending = false;
             window.api.base.defaultFormCallback(res, {

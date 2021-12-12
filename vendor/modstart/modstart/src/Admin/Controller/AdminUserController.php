@@ -29,7 +29,13 @@ class AdminUserController extends Controller
     {
         $grid = new Grid(AdminUser::class, function (Grid $grid) {
             $grid->display('id', L('ID'))->sortable(true)->width(80);
-            $grid->text('username', L('Username'))->width(100);
+            $grid->text('username', L('Username'));
+            if (modstart_config('AdminManagerEnhance_EnablePhone', false)) {
+                $grid->text('phone', L('Phone'));
+            }
+            if (modstart_config('AdminManagerEnhance_EnableEmail', false)) {
+                $grid->text('email', L('Email'));
+            }
             $grid->tags('roles', L('Roles'))->hookFormatValue(function ($value, AbstractField $field) {
                 $item = $field->item();
                 /** @var \stdClass $item */
@@ -38,8 +44,8 @@ class AdminUserController extends Controller
                 }
                 return collect($value)->pluck('name')->toArray();
             });
-            $grid->text('lastLoginTime', L('Last Login Time'))->width(150);
-            $grid->text('lastLoginIp', L('Last Login Ip'))->width(150);
+            $grid->text('lastLoginTime', L('Last Login Time'));
+            $grid->text('lastLoginIp', L('Last Login Ip'));
             $grid->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('username', L('Username'));
@@ -67,6 +73,12 @@ class AdminUserController extends Controller
                 ->hookFormatValue(function ($value, AbstractField $field) {
                     return '';
                 });
+            if (modstart_config('AdminManagerEnhance_EnablePhone', false)) {
+                $form->text('phone', L('Phone'))->ruleUnique('admin_user');
+            }
+            if (modstart_config('AdminManagerEnhance_EnableEmail', false)) {
+                $form->text('email', L('Email'))->ruleUnique('admin_user');
+            }
             /** @var AdminUser $item */
             $item = $form->item();
             $rolesField = $form->checkbox('roles', L('Roles'))
@@ -120,6 +132,12 @@ class AdminUserController extends Controller
         $detail = new Detail(AdminUser::class, function (Detail $detail) {
             $detail->display('id', L('ID'));
             $detail->text('username', L('Username'));
+            if (modstart_config('AdminManagerEnhance_EnablePhone', false)) {
+                $detail->text('phone', L('Phone'));
+            }
+            if (modstart_config('AdminManagerEnhance_EnableEmail', false)) {
+                $detail->text('email', L('Email'));
+            }
             $detail->tags('roles', L('Roles'))->hookFormatValue(function ($value, AbstractField $field) {
                 $item = $field->item();
                 /** @var \stdClass $item */

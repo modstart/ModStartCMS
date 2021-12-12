@@ -15,7 +15,7 @@ class VerifySmsTemplateProvider extends AbstractSmsTemplateProvider
 
     public function title()
     {
-        return '验证码';
+        return '用户验证码';
     }
 
     public function description()

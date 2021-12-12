@@ -51,7 +51,7 @@ class CaptchaProvider
                 return $item;
             }
         }
-        BizException::throws('没有找到CaptchaProvider');
+        return null;
     }
 
     
