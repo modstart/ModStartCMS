@@ -550,4 +550,22 @@ class ModuleManager
         self::listAllInstalledModules(true);
     }
 
+    /**
+     * 动态调用模块ModuleServiceProvider的方法
+     *
+     * @param $module
+     * @param $method
+     * @param array $args
+     */
+    public static function callHook($module, $method, $args = [])
+    {
+        $cls = '\\Module\\' . $module . '\\Core\\ModuleHook';
+        if (class_exists($cls)) {
+            $hook = app($cls);
+            if (method_exists($hook, $method)) {
+                call_user_func_array([$hook, $method], $args);
+            }
+        }
+    }
+
 }

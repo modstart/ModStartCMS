@@ -28,6 +28,9 @@ class ModuleUninstallCommand extends Command
                 return Response::generateError(L('Module %s depend on %s, uninstall fail', $one, $module));
             }
         }
+
+        ModuleManager::callHook($module, 'hookBeforeUninstall');
+
         unset($installeds[$module]);
 
         $this->unPublishRoot($module);
@@ -35,7 +38,6 @@ class ModuleUninstallCommand extends Command
         ModuleManager::saveUserInstalledModules($installeds);
 
         ModStart::clearCache();
-
 
         $event = new ModuleUninstalledEvent();
         $event->name = $module;

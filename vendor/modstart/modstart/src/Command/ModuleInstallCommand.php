@@ -56,8 +56,9 @@ class ModuleInstallCommand extends Command
             ModuleManager::saveUserInstalledModules($installeds);
         }
 
-
         ModStart::clearCache();
+
+        ModuleManager::callHook($module, 'hookInstalled');
 
         $event = new ModuleInstalledEvent();
         $event->name = $module;
