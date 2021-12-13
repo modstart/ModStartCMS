@@ -58,7 +58,9 @@ class ModuleInstallCommand extends Command
 
         ModStart::clearCache();
 
-        ModuleManager::callHook($module, 'hookInstalled');
+        if (method_exists(ModuleManager::class, 'callHook')) {
+            ModuleManager::callHook($module, 'hookInstalled');
+        }
 
         $event = new ModuleInstalledEvent();
         $event->name = $module;

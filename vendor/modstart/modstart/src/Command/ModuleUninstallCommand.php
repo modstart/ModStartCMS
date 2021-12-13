@@ -29,7 +29,9 @@ class ModuleUninstallCommand extends Command
             }
         }
 
-        ModuleManager::callHook($module, 'hookBeforeUninstall');
+        if (method_exists(ModuleManager::class, 'callHook')) {
+            ModuleManager::callHook($module, 'hookBeforeUninstall');
+        }
 
         unset($installeds[$module]);
 
