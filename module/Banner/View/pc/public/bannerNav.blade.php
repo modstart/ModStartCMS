@@ -32,11 +32,11 @@ $banners = \Module\Banner\Util\BannerUtil::listByPositionWithCache($position);
         <div class="menu">
             @if(!empty($navs))
                 @foreach($navs as $nav)
-                    <a class="item {{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" @if(!empty($nav['newBlank'])) target="_blank" @endif>{!! $nav['name'] !!}</a>
+                    <a class="item animated fadeInUp {{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" @if(!empty($nav['newBlank'])) target="_blank" @endif>{!! $nav['name'] !!}</a>
                 @endforeach
             @else
                 @foreach(\Module\Nav\Util\NavUtil::listByPositionWithCache($navPosition) as $nav)
-                    <a class="item {{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" @if(!empty($nav['newBlank'])) target="_blank" @endif>{{$nav['name']}}</a>
+                    <a class="item animated fadeInUp {{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" @if(!empty($nav['newBlank'])) target="_blank" @endif>{{$nav['name']}}</a>
                 @endforeach
             @endif
         </div>
