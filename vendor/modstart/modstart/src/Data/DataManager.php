@@ -4,6 +4,7 @@
 namespace ModStart\Data;
 
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Exception\BizException;
@@ -394,7 +395,7 @@ class DataManager
 
     /**
      * 准备文件到本地可用
-     * @param $path 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx
+     * @param $path string 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx http://www.example.com/data/xxxxx.xxx
      * @param $option
      * @return array
      */
@@ -419,7 +420,7 @@ class DataManager
 
     /**
      * 准备文件到本地可用（使用内网域名）
-     * @param $path string 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx
+     * @param $path string 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx http://www.example.com/data/xxxxx.xxx
      * @param $option
      * @return array
      * @throws

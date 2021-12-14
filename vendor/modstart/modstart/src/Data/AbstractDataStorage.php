@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use League\Flysystem\FilesystemInterface;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\PathUtil;
 use ModStart\Data\Repository\DatabaseDataRepository;
 
 abstract class AbstractDataStorage
@@ -77,6 +78,13 @@ abstract class AbstractDataStorage
         return '';
     }
 
+    /**
+     * 获取路径的完整路径
+     * @param $path
+     * @return mixed|string
+     * 如果path是公共路径（http,https）直接返回
+     * 如果是本地路径，返回完整路径，如 /data/xxxxx.xx
+     */
     public function getDriverFullPath($path)
     {
         if (empty($path)) {
@@ -87,15 +95,28 @@ abstract class AbstractDataStorage
         } else {
             $path = ltrim($path, '/');
         }
+        if (PathUtil::isPublicNetPath($path)) {
+            return $path;
+        }
         return '/' . $path;
     }
 
+    /**
+     * 获取路径的内部可用完整路径
+     * @param $path
+     * @return mixed|string
+     * 如果path是公共路径（http,https）直接返回
+     * 如果是本地路径，返回完整路径，如 /data/xxxxx.xx
+     */
     public function getDriverFullPathInternal($path)
     {
         if (Str::startsWith($path, '//')) {
             $path = 'http:' . $path;
         } else {
             $path = ltrim($path, '/');
+        }
+        if (PathUtil::isPublicNetPath($path)) {
+            return $path;
         }
         return '/' . $path;
     }

@@ -353,6 +353,10 @@ class FileUtil
         return true;
     }
 
+    /**
+     * 删除使用 savePathToLocalTemp 或 generateLocalTempPath 产生的本地临时路径
+     * @param $path string
+     */
     public static function safeCleanLocalTemp($path)
     {
         if (empty($path)) {
@@ -364,6 +368,12 @@ class FileUtil
         }
     }
 
+    /**
+     * 将远程文件保存为本地可用
+     * @param $path string 可以为 http://example.com/xxxxx.xxx /data/xxxxx.xxx
+     * @param string $ext
+     * @return string|null 返回本地临时路径或本地文件绝对路径，注意使用safeCleanLocalTemp来清理文件，如果是本地其他路径可能会误删
+     */
     public static function savePathToLocalTemp($path, $ext = '')
     {
         $tempPath = public_path('temp/' . md5($path) . (starts_with($ext, '.') ? $ext : '.' . $ext));
@@ -392,6 +402,13 @@ class FileUtil
         return $tempPath;
     }
 
+    /**
+     * 产生一个本地临时路径
+     *
+     * @param string $ext
+     * @return string
+     * @throws BizException
+     */
     public static function generateLocalTempPath($ext = 'tmp')
     {
         if (!file_exists(public_path('temp'))) {
