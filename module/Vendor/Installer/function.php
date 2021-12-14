@@ -2,6 +2,9 @@
 
 define('APP_PATH', realpath(__DIR__ . '/../../../'));
 
+if (file_exists($f = APP_PATH . '/app/Constant/AppConstant.php')) {
+    include $f;
+}
 include APP_PATH . '/vendor/modstart/modstart/src/Core/Env/EnvUtil.php';
 include APP_PATH . '/vendor/modstart/modstart/src/Core/Util/EnvUtil.php';
 include APP_PATH . '/vendor/modstart/modstart/src/Core/Util/RandomUtil.php';
@@ -16,6 +19,21 @@ if (file_exists($licenseFile = APP_PATH . '/license_url.txt')) {
 }
 if (file_exists($demoData = APP_PATH . '/public/data_demo/data.php')) {
     define('DEMO_DATA', true);
+}
+
+if (class_exists(\App\Constant\AppConstant::class)) {
+    if (defined('\\App\\Constant\\AppConstant::APP')) {
+        define('INSTALL_APP_NAME', strtoupper(\App\Constant\AppConstant::APP));
+    }
+    if (defined('\\App\\Constant\\AppConstant::VERSION')) {
+        define('INSTALL_APP_VERSION', \App\Constant\AppConstant::VERSION);
+    }
+}
+if (!defined('INSTALL_APP_NAME')) {
+    define('INSTALL_APP_NAME', 'APP');
+}
+if (!defined('INSTALL_APP_VERSION')) {
+    define('INSTALL_APP_VERSION', '0.0.0');
 }
 
 if (!file_exists(ENV_FILE)) {

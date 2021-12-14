@@ -18,12 +18,17 @@ include __DIR__ . '/function.php';
     <script src="/asset/layui/layui.js"></script>
     <link rel="stylesheet" href="/asset/layui/css/layui.css">
     <link rel="stylesheet" href="/asset/theme/default/style.css">
-    <title>安装助手</title>
+    <title><?php echo INSTALL_APP_NAME.' V'.INSTALL_APP_VERSION; ?> 安装助手</title>
     <style type="text/css">
         body, html {
             min-height: 100%;
         }
-
+        body {
+            background-image:url("data:image/svg+xml;base64,<?php echo base64_encode('<?xml version="1.0" encoding="UTF-8"?><svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><text x="50%" y="50%" font-size="16" fill="#444444" style="transform:rotate(-45deg);transform-origin:center;" font-family="system-ui,sans-serif" text-anchor="middle" dominant-baseline="middle">'.INSTALL_APP_NAME.' V'.INSTALL_APP_VERSION.'</text></svg>'); ?>");
+        }
+        .ub-panel {
+            background-image:url("data:image/svg+xml;base64,<?php echo base64_encode('<?xml version="1.0" encoding="UTF-8"?><svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><text x="50%" y="50%" font-size="10" fill="#EEEEEE" style="transform:rotate(-45deg);transform-origin:center;" font-family="system-ui,sans-serif" text-anchor="middle" dominant-baseline="middle">'.INSTALL_APP_NAME.' V'.INSTALL_APP_VERSION.'</text></svg>'); ?>");
+        }
         .license-content p {
             font-size: 14px;
             line-height: 1.8em;
@@ -31,14 +36,14 @@ include __DIR__ . '/function.php';
         }
     </style>
 </head>
-<body style="background:#333;padding:40px 0;">
+<body style="background-color:#333;padding:40px 0;">
 <div style="width:600px;min-height:100vh;margin:0 auto;">
 
     <?php if (file_exists(APP_PATH . '/storage/install.lock')) { ?>
         <div class="ub-alert ub-alert-danger ub-text-center">系统无需重复安装</div>
     <?php } else { ?>
         <h1 class="ub-text-center" style="color:#FFF;">
-            安装助手
+            <?php echo INSTALL_APP_NAME.' V'.INSTALL_APP_VERSION; ?> 安装助手
         </h1>
         <div class="ub-panel">
             <div class="head">
