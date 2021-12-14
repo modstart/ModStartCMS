@@ -80,6 +80,10 @@ class InstallController extends Controller
                 try {
             new PDO("mysql:host=$dbHost;dbname=$dbDatabase", $dbUsername, $dbPassword);
         } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            if (str_contains($msg, 'Server sent charset unknown to the client')) {
+                return Response::generateError('数据库编码不支持');
+            }
             return Response::jsonError('连接数据信息 ' . $dbHost . '.' . $dbDatabase . ' 失败!');
         }
 
