@@ -103,6 +103,9 @@ Vue.prototype.$url = {
         return `${window.__msRoot}api/${url}${this.buildParam(param)}`
     },
     cdn(url) {
+        if (url && url.startsWith('/')) {
+            url = url.replace(/^[ \/]+/g, '')
+        }
         return `${window.__msCDN}${url}`
     }
 }

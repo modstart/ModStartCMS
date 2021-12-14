@@ -1,7 +1,7 @@
 <template>
     <div class="pb-data-selector" v-if="permission['View']">
         <el-dialog :visible="visible || 'flat'===mode" :custom-class="'pb-data-selector-mode-'+mode"
-                   width="60%"
+                   width="60%" @close="()=>{this.visible=false}"
                    append-to-body>
             <div slot="title">
                 <span>{{L('Please Select')}}</span>
@@ -10,7 +10,7 @@
                 <el-button type="primary" @click="doSubmit">{{L('Confirm')}}</el-button>
             </div>
             <div style="border-bottom:1px solid #EEE;padding-bottom:7px;">
-                <div style="position:absolute;right:0.5rem;top:0.5rem;z-index:999;" v-if="permission['Upload']">
+                <div class="pb-data-upload-button" v-if="permission['Upload']">
                     <UploadButton :url="url" :category="category" @success="onUploadButtonSuccess"/>
                 </div>
                 <el-button :type="tab==='list'?'primary':''" @click="tab='list'">
@@ -71,6 +71,12 @@
                            @click="doFileEdit">
                             <i class="iconfont icon-sign"></i>
                         </a>
+                        <a href="javascript:;" :title="L('Copy Links')"
+                           :class="{active:listChecked.length>0}"
+                           v-clipboard:copy='listChecked.map(o=>o.path).join("\n")'
+                           v-clipboard:success="$onCopySuccess">
+                            <i class="iconfont icon-copy"></i>
+                        </a>
                     </div>
                     <div class="records" style="min-height:5rem;" v-loading="listLoading">
                         <div class="ub-empty" v-if="!listLoading && records.length===0">
@@ -103,11 +109,11 @@
                     </div>
                     <div class="page" v-if="!listLoading && records.length>0">
                         <el-pagination
-                                @current-change="doList"
-                                :current-page.sync="page"
-                                :page-size="pageSize"
-                                layout="total,prev,pager,next"
-                                :total="total">
+                            @current-change="doList"
+                            :current-page.sync="page"
+                            :page-size="pageSize"
+                            layout="total,prev,pager,next"
+                            :total="total">
                         </el-pagination>
                     </div>
                 </div>
@@ -121,18 +127,18 @@
             </div>
         </el-dialog>
         <el-dialog
-                :title="categoryEdit.id>0?L('Edit Category'):L('Add Category')"
-                :visible.sync="categoryVisible"
-                append-to-body
-                width="30%">
+            :title="categoryEdit.id>0?L('Edit Category'):L('Add Category')"
+            :visible.sync="categoryVisible"
+            append-to-body
+            width="30%">
             <el-form label-width="80px">
                 <el-form-item :label="L('Parent')">
                     <el-select v-model="categoryEdit.pid" :placeholder="L('Please Select')">
                         <el-option
-                                v-for="item in categoryListParent"
-                                :key="item.id"
-                                :label="item.title"
-                                :value="item.id">
+                            v-for="item in categoryListParent"
+                            :key="item.id"
+                            :label="item.title"
+                            :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -149,18 +155,18 @@
               </span>
         </el-dialog>
         <el-dialog
-                :title="L('Edit file')"
-                :visible.sync="fileVisible"
-                append-to-body
-                width="30%">
+            :title="L('Edit file')"
+            :visible.sync="fileVisible"
+            append-to-body
+            width="30%">
             <el-form label-width="80px">
                 <el-form-item :label="L('Category')">
                     <el-select v-model="fileEdit.categoryId" :placeholder="L('Please Select')">
                         <el-option
-                                v-for="item in categoryListAll"
-                                :key="item.id"
-                                :label="item.title"
-                                :value="item.id">
+                            v-for="item in categoryListAll"
+                            :key="item.id"
+                            :label="item.title"
+                            :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -175,561 +181,579 @@
 </template>
 
 <script>
-    import UploadButton from "./UploadButton";
-    import ImageCover from "./DataSelector/ImageCover"
-    import {Dialog} from "../lib/dialog";
-    import {JsonUtil} from "../lib/util";
+import UploadButton from "./UploadButton";
+import ImageCover from "./DataSelector/ImageCover"
+import {Dialog} from "../lib/dialog";
+import {JsonUtil} from "../lib/util";
 
-    export default {
-        name: "DataSelector",
-        components: {UploadButton, ImageCover},
-        props: {
-            mode: {
-                type: String,
-                default: 'dialog'
-            },
-            url: {
-                type: String,
-                default: ''
-            },
-            category: {
-                type: String,
-                default: ''
-            },
-            min: {
-                type: Number,
-                default: 1,
-            },
-            max: {
-                type: Number,
-                default: 1,
-            },
-            childKey: {
-                type: String,
-                default: '_child',
-            },
-            permission: {
-                type: Object,
-                default: () => {
-                    return {
-                        'View': true,
-                        'Upload': true,
-                        'Delete': true,
-                        'Add/Edit': true
-                    }
-                }
-            }
+export default {
+    name: "DataSelector",
+    components: {UploadButton, ImageCover},
+    props: {
+        mode: {
+            type: String,
+            default: 'dialog'
         },
-        data() {
-            return {
-                visible: false,
-                tab: 'list',
-                currentCategoryId: 0,
-                fileVisible: false,
-                fileEdit: {
-                    categoryId: 0,
-                },
-                fileEditLoading: false,
-                categoryLoading: false,
-                categoryVisible: false,
-                categoryListAll: [],
-                categoryListParent: [],
-                categoryEdit: {
-                    id: 0,
-                    pid: 0,
-                    title: '',
-                },
-                categoryEditLoading: false,
-                categoryTreeAll: [],
-                categoryTreeParent: [],
-                categoryFilter: '',
-                records: [],
-                listLoading: false,
-                page: 1,
-                pageSize: 10,
-                total: 0,
-                input: {
-                    path: '',
-                },
-                reverseSelectOrder: false,
-            }
+        url: {
+            type: String,
+            default: ''
         },
-        watch: {
-            categoryFilter(val) {
-                this.$refs.$categoryTreeAll.filter(val)
-            }
+        category: {
+            type: String,
+            default: ''
         },
-        computed: {
-            apiUrl() {
-                return this.url + '/' + this.category
-            },
-            listChecked() {
-                return this.records.filter(o => o.checked
-                )
-            },
-            listCheckedIds() {
-                return this.listChecked.map(o => o.id
-                )
-            }
+        min: {
+            type: Number,
+            default: 1,
         },
-        mounted() {
-            if ('flat' === this.mode) {
-                if (this.permission['View']) {
-                    this.doCategoryList()
-                }
-            }
+        max: {
+            type: Number,
+            default: 1,
         },
-        methods: {
-            categoryFilterCallback(value, data) {
-                if (!value) return true
-                return data.name.indexOf(value) !== -1
-            },
-            fileExt(file) {
-                return file.substring(file.lastIndexOf('.') + 1).toLocaleLowerCase()
-            },
-            isImage(file) {
-                return ['jpg', 'png', 'gif', 'jpeg'].includes(this.fileExt(file))
-            },
-            show() {
-                this.visible = true
-                this.doCategoryList()
-            },
-            hide() {
-                this.visible = false
-            },
-            doClickItem(index) {
-                const item = this.records[index]
-                if (item.checked) {
-                    item.checked = false
-                    return
+        childKey: {
+            type: String,
+            default: '_child',
+        },
+        permission: {
+            type: Object,
+            default: () => {
+                return {
+                    'View': true,
+                    'Upload': true,
+                    'Delete': true,
+                    'Add/Edit': true
                 }
-                const records = this.listChecked
-                if (records.length < this.max) {
-                    item.checked = true
-                    return
-                }
-                if (this.max === 1) {
-                    this.records.map(o => o.checked = false)
-                    item.checked = true
-                    return
-                }
-                Dialog.tipError(this.L('Select %d item(s) at most', this.max))
-            },
-            doFileEdit() {
-                this.fileEdit.categoryId = this.currentCategoryId
-                this.fileVisible = true
-            },
-            doFileEditSubmit() {
-                const ids = this.listCheckedIds;
-                if (ids.length === 0) {
-                    return;
-                }
-                this.fileEditLoading = true
-                this.$api.post(this.apiUrl, JsonUtil.extend(this.fileEdit, {
-                    id: ids.join(','),
-                    action: 'fileEdit'
-                }), res => {
-                    Dialog.tipSuccess(this.L('Edit Success'))
-                    this.fileEditLoading = false
-                    this.fileVisible = false
-                    this.doList()
-                }, res => {
-                    this.fileEditLoading = false
-                })
-            },
-            doFileDelete() {
-                const ids = this.listCheckedIds;
-                if (ids.length === 0) {
-                    return;
-                }
-                Dialog.confirm(this.L('Confirm Delete ?'), () => {
-                    Dialog.loadingOn()
-                    this.$api.post(this.apiUrl, JsonUtil.extend({id: ids.join(',')}, {action: 'fileDelete'}), res => {
-                        Dialog.loadingOff()
-                        Dialog.tipSuccess(this.L('Delete Success'))
-                        this.doList(1)
-                    }, res => {
-                        Dialog.loadingOff()
-                    })
-                })
-            },
-            doCategoryAdd() {
-                if (this.currentCategoryId < 0) {
-                    return;
-                }
-                this.categoryEdit.id = 0
-                this.categoryEdit.pid = this.currentCategoryId
-                this.categoryEdit.title = ''
-                this.categoryVisible = true
-                this.categoryEditLoading = false
-            },
-            doCategoryEdit() {
-                if (this.currentCategoryId <= 0) {
-                    return;
-                }
-                let category = this.categories.filter(o => o.id === this.currentCategoryId
-                )
-                if (category.length !== 1) {
-                    return;
-                }
-                category = category[0]
-                this.categoryEdit.id = category.id
-                this.categoryEdit.pid = category.pid
-                this.categoryEdit.title = category.name
-                this.categoryVisible = true
-                this.categoryEditLoading = false
-            },
-            doCategoryDelete() {
-                if (this.currentCategoryId <= 0) {
-                    return;
-                }
-                Dialog.confirm(this.L('Confirm Delete ?'), () => {
-                    this.$api.post(this.apiUrl, JsonUtil.extend({id: this.currentCategoryId}, {action: 'categoryDelete'}), res => {
-                        Dialog.tipSuccess(this.L('Delete Success'))
-                        this.currentCategoryId = 0
-                        this.doCategoryList()
-                    })
-                })
-            },
-            doCategoryEditSubmit() {
-                this.categoryEditLoading = true
-                this.$api.post(this.apiUrl, JsonUtil.extend(this.categoryEdit, {action: 'categoryEdit'}), res => {
-                    Dialog.tipSuccess(this.L('Add Success'))
-                    this.categoryEditLoading = false
-                    this.categoryVisible = false
-                    this.currentCategoryId = 0
-                    this.doCategoryList()
-                }, res => {
-                    this.categoryEditLoading = false
-                })
-            },
-            doCategoryList() {
-                this.categoryLoading = true
-                this.$api.post(this.apiUrl, {action: 'category'}, res => {
-                    this.categoryLoading = false
-                    this.categoryTreeAll = res.data.categoryTreeAll
-                    this.categoryListAll = res.data.categoryListAll
-                    this.categoryTreeParent = res.data.categoryTreeParent
-                    this.categoryListParent = res.data.categoryListParent
-                    this.categories = res.data.categories
-                    this.$nextTick(() => {
-                        this.$refs.$categoryTreeAll.setCurrentKey(this.currentCategoryId)
-                    })
-                    this.doList(1)
-                }, res => {
-                    this.categoryLoading = false
-                })
-            },
-            doCategorySelect(data) {
-                this.currentCategoryId = data.id
-                this.doList(1)
-            },
-            doList(page) {
-                page = page || this.page
-                this.page = page
-                this.listLoading = true
-                this.$api.post(this.apiUrl, {
-                    action: 'list',
-                    page: page,
-                    categoryId: this.currentCategoryId
-                }, res => {
-                    this.tab = 'list'
-                    let records = res.data.records
-                    records.map(o => (o.checked = false, o))
-                    this.records = records
-                    this.total = res.data.total
-                    this.pageSize = res.data.pageSize
-                    this.$nextTick(() => {
-                        this.listLoading = false
-                    })
-                })
-            },
-            onUploadButtonSuccess(file) {
-                this.$api.post(this.apiUrl, {
-                    action: 'save',
-                    path: file.path,
-                    name: file.name,
-                    size: file.size,
-                    categoryId: this.currentCategoryId
-                }, res => {
-                    if (this.currentCategoryId === 0) {
-                        this.currentCategoryId = -1
-                    }
-                    this.doList(1)
-                })
-            },
-            doSubmit() {
-                if (this.tab === 'input') {
-                    if (!this.input.path) {
-                        Dialog.tipError(this.L('Please Input'))
-                        return
-                    }
-                    const records = []
-                    records.push({
-                        category: this.category,
-                        name: '',
-                        path: this.input.path,
-                        fullPath: '',
-                        type: '',
-                    })
-                    this.$emit('on-select', records)
-                    this.visible = false
-                    return
-                }
-                let records = this.listChecked.map(o => {
-                        return {
-                            category: o.category,
-                            filename: o.filename,
-                            path: o.path,
-                            fullPath: o.fullPath,
-                            type: o.type,
-                        }
-                    }
-                )
-                if (records.length < this.min) {
-                    Dialog.tipError(this.L('Select %d item(s) at least', this.min))
-                    return
-                } else if (records.length > this.max) {
-                    Dialog.tipError(this.L('Select %d item(s) at most', this.max))
-                    return
-                }
-                if (this.reverseSelectOrder) {
-                    records.reverse()
-                }
-                this.$emit('on-select', records)
-                this.visible = false
             }
         }
+    },
+    data() {
+        return {
+            visible: false,
+            tab: 'list',
+            currentCategoryId: 0,
+            fileVisible: false,
+            fileEdit: {
+                categoryId: 0,
+            },
+            fileEditLoading: false,
+            categoryLoading: false,
+            categoryVisible: false,
+            categoryListAll: [],
+            categoryListParent: [],
+            categoryEdit: {
+                id: 0,
+                pid: 0,
+                title: '',
+            },
+            categoryEditLoading: false,
+            categoryTreeAll: [],
+            categoryTreeParent: [],
+            categoryFilter: '',
+            records: [],
+            listLoading: false,
+            page: 1,
+            pageSize: 10,
+            total: 0,
+            input: {
+                path: '',
+            },
+            reverseSelectOrder: false,
+        }
+    },
+    watch: {
+        categoryFilter(val) {
+            this.$refs.$categoryTreeAll.filter(val)
+        }
+    },
+    computed: {
+        apiUrl() {
+            return this.url + '/' + this.category
+        },
+        listChecked() {
+            return this.records.filter(o => o.checked
+            )
+        },
+        listCheckedIds() {
+            return this.listChecked.map(o => o.id
+            )
+        }
+    },
+    mounted() {
+        if ('flat' === this.mode) {
+            if (this.permission['View']) {
+                this.doCategoryList()
+            }
+        }
+    },
+    methods: {
+        categoryFilterCallback(value, data) {
+            if (!value) return true
+            return data.name.indexOf(value) !== -1
+        },
+        fileExt(file) {
+            return file.substring(file.lastIndexOf('.') + 1).toLocaleLowerCase()
+        },
+        isImage(file) {
+            return ['jpg', 'png', 'gif', 'jpeg'].includes(this.fileExt(file))
+        },
+        show() {
+            this.visible = true
+            this.doCategoryList()
+        },
+        hide() {
+            this.visible = false
+        },
+        doClickItem(index) {
+            const item = this.records[index]
+            if (item.checked) {
+                item.checked = false
+                return
+            }
+            const records = this.listChecked
+            if (records.length < this.max) {
+                item.checked = true
+                return
+            }
+            if (this.max === 1) {
+                this.records.map(o => o.checked = false)
+                item.checked = true
+                return
+            }
+            Dialog.tipError(this.L('Select %d item(s) at most', this.max))
+        },
+        doFileEdit() {
+            this.fileEdit.categoryId = this.currentCategoryId
+            this.fileVisible = true
+        },
+        doFileEditSubmit() {
+            const ids = this.listCheckedIds;
+            if (ids.length === 0) {
+                return;
+            }
+            this.fileEditLoading = true
+            this.$api.post(this.apiUrl, JsonUtil.extend(this.fileEdit, {
+                id: ids.join(','),
+                action: 'fileEdit'
+            }), res => {
+                Dialog.tipSuccess(this.L('Edit Success'))
+                this.fileEditLoading = false
+                this.fileVisible = false
+                this.doList()
+            }, res => {
+                this.fileEditLoading = false
+            })
+        },
+        doFileDelete() {
+            const ids = this.listCheckedIds;
+            if (ids.length === 0) {
+                return;
+            }
+            Dialog.confirm(this.L('Confirm Delete ?'), () => {
+                Dialog.loadingOn()
+                this.$api.post(this.apiUrl, JsonUtil.extend({id: ids.join(',')}, {action: 'fileDelete'}), res => {
+                    Dialog.loadingOff()
+                    Dialog.tipSuccess(this.L('Delete Success'))
+                    this.doList(1)
+                }, res => {
+                    Dialog.loadingOff()
+                })
+            })
+        },
+        doCategoryAdd() {
+            if (this.currentCategoryId < 0) {
+                return;
+            }
+            this.categoryEdit.id = 0
+            this.categoryEdit.pid = this.currentCategoryId
+            this.categoryEdit.title = ''
+            this.categoryVisible = true
+            this.categoryEditLoading = false
+        },
+        doCategoryEdit() {
+            if (this.currentCategoryId <= 0) {
+                return;
+            }
+            let category = this.categories.filter(o => o.id === this.currentCategoryId
+            )
+            if (category.length !== 1) {
+                return;
+            }
+            category = category[0]
+            this.categoryEdit.id = category.id
+            this.categoryEdit.pid = category.pid
+            this.categoryEdit.title = category.name
+            this.categoryVisible = true
+            this.categoryEditLoading = false
+        },
+        doCategoryDelete() {
+            if (this.currentCategoryId <= 0) {
+                return;
+            }
+            Dialog.confirm(this.L('Confirm Delete ?'), () => {
+                this.$api.post(this.apiUrl, JsonUtil.extend({id: this.currentCategoryId}, {action: 'categoryDelete'}), res => {
+                    Dialog.tipSuccess(this.L('Delete Success'))
+                    this.currentCategoryId = 0
+                    this.doCategoryList()
+                })
+            })
+        },
+        doCategoryEditSubmit() {
+            this.categoryEditLoading = true
+            this.$api.post(this.apiUrl, JsonUtil.extend(this.categoryEdit, {action: 'categoryEdit'}), res => {
+                Dialog.tipSuccess(this.L('Add Success'))
+                this.categoryEditLoading = false
+                this.categoryVisible = false
+                this.currentCategoryId = 0
+                this.doCategoryList()
+            }, res => {
+                this.categoryEditLoading = false
+            })
+        },
+        doCategoryList() {
+            this.categoryLoading = true
+            this.$api.post(this.apiUrl, {action: 'category'}, res => {
+                this.categoryLoading = false
+                this.categoryTreeAll = res.data.categoryTreeAll
+                this.categoryListAll = res.data.categoryListAll
+                this.categoryTreeParent = res.data.categoryTreeParent
+                this.categoryListParent = res.data.categoryListParent
+                this.categories = res.data.categories
+                this.$nextTick(() => {
+                    this.$refs.$categoryTreeAll.setCurrentKey(this.currentCategoryId)
+                })
+                this.doList(1)
+            }, res => {
+                this.categoryLoading = false
+            })
+        },
+        doCategorySelect(data) {
+            this.currentCategoryId = data.id
+            this.doList(1)
+        },
+        doList(page) {
+            page = page || this.page
+            this.page = page
+            this.listLoading = true
+            this.$api.post(this.apiUrl, {
+                action: 'list',
+                page: page,
+                categoryId: this.currentCategoryId
+            }, res => {
+                this.tab = 'list'
+                let records = res.data.records
+                records.map(o => (o.checked = false, o))
+                this.records = records
+                this.total = res.data.total
+                this.pageSize = res.data.pageSize
+                this.$nextTick(() => {
+                    this.listLoading = false
+                })
+            })
+        },
+        onUploadButtonSuccess(file) {
+            this.$api.post(this.apiUrl, {
+                action: 'save',
+                path: file.path,
+                name: file.name,
+                size: file.size,
+                categoryId: this.currentCategoryId
+            }, res => {
+                if (this.currentCategoryId === 0) {
+                    this.currentCategoryId = -1
+                }
+                this.doList(1)
+            })
+        },
+        doSubmit() {
+            if (this.tab === 'input') {
+                if (!this.input.path) {
+                    Dialog.tipError(this.L('Please Input'))
+                    return
+                }
+                const records = []
+                records.push({
+                    category: this.category,
+                    name: '',
+                    path: this.input.path,
+                    fullPath: '',
+                    type: '',
+                })
+                this.$emit('on-select', records)
+                this.visible = false
+                return
+            }
+            let records = this.listChecked.map(o => {
+                    return {
+                        category: o.category,
+                        filename: o.filename,
+                        path: o.path,
+                        fullPath: o.fullPath,
+                        type: o.type,
+                    }
+                }
+            )
+            if (records.length < this.min) {
+                Dialog.tipError(this.L('Select %d item(s) at least', this.min))
+                return
+            } else if (records.length > this.max) {
+                Dialog.tipError(this.L('Select %d item(s) at most', this.max))
+                return
+            }
+            if (this.reverseSelectOrder) {
+                records.reverse()
+            }
+            this.$emit('on-select', records)
+            this.visible = false
+        }
     }
+}
 </script>
 
 <style lang="less">
 
 
+.pb-data-selector-gallery {
+    padding: 10px 10px 10px 210px;
+    background: #FFF;
+}
+
+.pb-data-selector-category {
+    width: 200px;
+    border-right: 1px solid #EEE;
+    padding: 10px;
+    overflow: auto;
+
+    .action {
+        border-bottom: 1px solid #EEE;
+        padding: 10px;
+        overflow: hidden;
+
+        a {
+            display: block;
+            width: 33%;
+            float: left;
+            text-align: center;
+            color: #999;
+            text-decoration: none;
+
+            &:hover {
+                color: var(--color-primary, #419488);
+            }
+
+            &.active {
+                color: var(--color-primary, #419488);
+            }
+        }
+    }
+}
+
+.pb-data-selector-mode-dialog {
+    .el-dialog__header {
+        padding: 10px 10px 0;
+
+        .el-dialog__headerbtn {
+            top: 10px;
+        }
+    }
+
+    .el-dialog__body {
+        padding: 10px;
+    }
+
     .pb-data-selector-gallery {
-        padding: 10px 10px 10px 210px;
-        background: #FFF;
+        position: relative;
     }
 
     .pb-data-selector-category {
-        width: 200px;
-        border-right: 1px solid #EEE;
-        padding: 10px;
-        overflow: auto;
-
-        .action {
-            border-bottom: 1px solid #EEE;
-            padding: 10px;
-            overflow: hidden;
-
-            a {
-                display: block;
-                width: 33%;
-                float: left;
-                text-align: center;
-                color: #999;
-                text-decoration: none;
-
-                &:hover {
-                    color: var(--color-primary, #419488);
-                }
-
-                &.active {
-                    color: var(--color-primary, #419488);
-                }
-            }
-        }
+        position: absolute;
+        left: 0;
+        top: 0px;
+        bottom: 0px;
     }
 
-    .pb-data-selector-mode-dialog {
-        .el-dialog__header {
-            padding: 10px 10px 0;
-        }
+    .pb-data-upload-button {
+        position: absolute;
+        right: 0.5rem;
+        top: 1.9rem;
+        z-index: 999;
+    }
+}
 
-        .el-dialog__body {
-            padding: 10px;
-        }
 
-        .pb-data-selector-gallery {
-            position: relative;
-        }
+.pb-data-selector-mode-flat {
+    width: 100% !important;
+    margin: 0 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: auto !important;
+    bottom: 0;
 
-        .pb-data-selector-category {
-            position: absolute;
-            left: 0;
-            top: 0px;
-            bottom: 0px;
-        }
+    .el-dialog__header {
+        display: none;
     }
 
-
-    .pb-data-selector-mode-flat {
-        width: 100% !important;
-        margin: 0 !important;
+    .el-dialog__body {
         position: fixed;
+        left: 0;
         top: 0;
+        bottom: 50px;
+        right: 0;
+        overflow: auto;
+    }
+
+    .el-dialog__footer {
+        position: fixed;
+        bottom: 0;
         left: 0;
         right: 0;
-        height: auto !important;
-        bottom: 0;
+        background: #FFF;
+        box-shadow: 0 0 5px #EEE;
+    }
 
-        .el-dialog__header {
-            display: none;
-        }
+    .pb-data-selector-gallery {
+        position: fixed;
+        top: 51px;
+        right: 0;
+        left: 0;
+        bottom: 50px;
+        overflow: auto;
+    }
 
-        .el-dialog__body {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 50px;
-            right: 0;
-            overflow: auto;
-        }
+    .pb-data-selector-category {
+        z-index: 1000;
+        position: fixed;
+        top: 51px;
+        left: 0;
+        bottom: 50px;
+    }
 
-        .el-dialog__footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #FFF;
-            box-shadow: 0 0 5px #EEE;
-        }
+    .pb-data-upload-button {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+        z-index: 999;
+    }
+}
 
-        .pb-data-selector-gallery {
-            position: fixed;
-            top: 51px;
-            right: 0;
-            left: 0;
-            bottom: 50px;
-            overflow: auto;
-        }
+.pb-data-selector-list {
+    font-size: var(--font-size, 0.65rem);
 
-        .pb-data-selector-category {
-            z-index: 1000;
-            position: fixed;
-            top: 51px;
-            left: 0;
-            bottom: 50px;
+    & > .action {
+        border-bottom: 1px solid #EEE;
+        padding: 10px;
+        overflow: hidden;
+
+        & > a {
+            display: inline-block;
+            padding: 0 20px;
+            text-align: center;
+            color: #999;
+            text-decoration: none;
+
+            &:hover {
+                color: var(--color-primary, #419488);
+            }
+
+            &.active {
+                color: var(--color-primary, #419488);
+            }
         }
     }
 
-    .pb-data-selector-list {
-        font-size: var(--font-size, 0.65rem);
+    .records {
+        margin-top: 10px;
 
-        & > .action {
-            border-bottom: 1px solid #EEE;
-            padding: 10px;
-            overflow: hidden;
+        .item {
+            margin: 0 0 10px 0;
+            border-radius: 3px;
+            position: relative;
+            border: 1px solid #EEE;
 
-            & > a {
-                display: inline-block;
-                padding: 0 20px;
-                text-align: center;
-                color: #999;
-                text-decoration: none;
-
-                &:hover {
-                    color: var(--color-primary, #419488);
-                }
-
-                &.active {
-                    color: var(--color-primary, #419488);
-                }
-            }
-        }
-
-        .records {
-            margin-top: 10px;
-
-            .item {
-                margin: 0 0 10px 0;
-                border-radius: 3px;
+            .file-cover {
                 position: relative;
-                border: 1px solid #EEE;
+                overflow: hidden;
+                display: block;
 
-                .file-cover {
-                    position: relative;
-                    overflow: hidden;
-                    display: block;
-
-                    .text {
-                        position: absolute;
-                        top: 0px;
-                        right: 0;
-                        bottom: 0;
-                        left: 0;
-                        text-align: center;
-                        color: #CCC;
-                        line-height: 100px;
-                        font-size: 20px;
-                    }
-
-                    &:after {
-                        content: '';
-                        margin-top: 100%;
-                        overflow: hidden;
-                        display: block;
-                    }
-                }
-
-                &.active {
-                    border-color: var(--color-primary, #419488);
-
-                    .check {
-                        display: block;
-                    }
-                }
-
-                .pb-cover {
-                    border-color: #FFF;
-                }
-
-                .check {
+                .text {
                     position: absolute;
                     top: 0px;
-                    right: 0px;
-                    color: var(--color-primary, #419488);
-                    width: 30px;
-                    height: 30px;
-                    line-height: 30px;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    text-align: center;
+                    color: #CCC;
+                    line-height: 100px;
                     font-size: 20px;
-                    text-align: center;
-                    display: none;
                 }
 
-                .title {
-                    text-align: center;
-                    font-size: 12px;
-                    color: #999;
-                    height: 20px;
+                &:after {
+                    content: '';
+                    margin-top: 100%;
                     overflow: hidden;
-                    width: 100%;
-                    text-overflow: ellipsis;
-                    border-top: 1px solid #EEE;
-                    padding: 5px 0;
-                    box-sizing: content-box;
+                    display: block;
                 }
+            }
 
-                .action {
-                    text-align: center;
-                    border-top: 1px dashed #EEE;
-                    padding: 5px 0;
-                    text-decoration: none;
+            &.active {
+                border-color: var(--color-primary, #419488);
 
-                    a {
-                        display: inline-block;
-                        color: #999;
+                .check {
+                    display: block;
+                }
+            }
 
-                        i {
-                            font-size: 12px;
-                        }
+            .pb-cover {
+                border-color: #FFF;
+            }
+
+            .check {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                color: var(--color-primary, #419488);
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 20px;
+                text-align: center;
+                display: none;
+            }
+
+            .title {
+                text-align: center;
+                font-size: 12px;
+                color: #999;
+                height: 20px;
+                overflow: hidden;
+                width: 100%;
+                text-overflow: ellipsis;
+                border-top: 1px solid #EEE;
+                padding: 5px 0;
+                box-sizing: content-box;
+            }
+
+            .action {
+                text-align: center;
+                border-top: 1px dashed #EEE;
+                padding: 5px 0;
+                text-decoration: none;
+
+                a {
+                    display: inline-block;
+                    color: #999;
+
+                    i {
+                        font-size: 12px;
                     }
                 }
             }
         }
-
-        .page {
-            text-align: center;
-        }
     }
+
+    .page {
+        text-align: center;
+    }
+}
 </style>

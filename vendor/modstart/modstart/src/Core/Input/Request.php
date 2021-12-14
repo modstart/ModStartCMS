@@ -65,7 +65,18 @@ class Request
         } else {
             $redirect = \Illuminate\Support\Facades\Request::fullUrl();
         }
+        $redirect = self::fixFullUrlForceSchema($redirect);
         return self::fixUrlSubdir($redirect);
+    }
+
+    private static function fixFullUrlForceSchema($url)
+    {
+        if ($forceSchema = config('modstart.forceSchema')) {
+            if (!starts_with($url, $forceSchema)) {
+                $url = preg_replace('/^(http|https)/', $forceSchema, $url);
+            }
+        }
+        return $url;
     }
 
 
@@ -76,7 +87,9 @@ class Request
      */
     public static function currentPageUrlWithOutQueries()
     {
-        return self::fixUrlSubdir(\Illuminate\Support\Facades\Request::url());
+        $url = \Illuminate\Support\Facades\Request::url();
+        $url = self::fixFullUrlForceSchema($url);
+        return self::fixUrlSubdir($url);
     }
 
     private static function fixUrlSubdir($url)
@@ -118,6 +131,9 @@ class Request
 
     public static function isSecurity()
     {
+        if ($forceSchema = config('modstart.forceSchema')) {
+            return $forceSchema == 'https';
+        }
         return \Illuminate\Support\Facades\Request::secure();
     }
 
@@ -125,6 +141,10 @@ class Request
     {
         static $schema = null;
         if (null === $schema) {
+            $forceSchema = config('modstart.forceSchema', null);
+            if ($forceSchema) {
+                return $forceSchema;
+            }
             if (\Illuminate\Support\Facades\Request::secure()) {
                 $schema = 'https';
             } else {

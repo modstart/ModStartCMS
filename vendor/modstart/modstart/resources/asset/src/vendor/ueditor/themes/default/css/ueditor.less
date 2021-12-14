@@ -2045,7 +2045,9 @@ div.edui-box {
 /*表情按钮及弹出菜单*/
 /*去除了表情的下拉箭头*/
 .edui-default .edui-for-emotion .edui-icon {
-  background-position: -60px -20px;
+  &:before {
+    content: "\e60e";
+  }
 }
 
 .edui-default .edui-for-emotion .edui-popup-content iframe {

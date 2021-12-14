@@ -141,7 +141,7 @@
             doList(page) {
                 page = page || this.data.page
                 this.loading = true
-                this.$api.post('member_message/list', {
+                this.$api.post('member_message', {
                         page: page,
                         pageSize: this.data.pageSize,
                         search: JSON.stringify(this.search)

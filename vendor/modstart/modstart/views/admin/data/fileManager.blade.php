@@ -38,6 +38,7 @@
             "Image Gallery",
             "File Gallery",
             "Reverse Select Order",
+            "Copy Links",
         ]) !!}
     </script>
     <script>

@@ -184,4 +184,5 @@ return [
     'Expand All' => '展开全部',
     'Phone' => '手机',
     'Email' => '邮箱',
+    'Copy Links' => '复制链接',
 ];

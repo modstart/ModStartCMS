@@ -6,6 +6,7 @@ return [
         'track_missing' => false,
     ],
 
+    'forceSchema' => env('FORCE_SCHEMA', null),
     'subdirUrl' => env('SUBDIR_URL', null),
     'subdir' => env('SUBDIR', '/'),
 

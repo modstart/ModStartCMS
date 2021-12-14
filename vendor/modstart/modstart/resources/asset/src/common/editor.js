@@ -232,7 +232,7 @@ var Editor = {
                     //'imagenone', 'imageleft', 'imageright', 'imagecenter', //'|',
                     //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
                     //'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',
-                    // 'formula'
+                    // 'formula', 'wechatcustomemotion'
                 ]
             ],
             serverUrl: opt.server,
@@ -275,6 +275,7 @@ var Editor = {
                     'strikethrough',
                     'insertcode',
                     //'superscript', 'subscript',
+                    // 'emotion','wechatcustomemotion'
                 ]
             ],
             serverUrl: opt.server,
