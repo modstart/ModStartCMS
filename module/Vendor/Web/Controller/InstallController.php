@@ -6,6 +6,7 @@ namespace Module\Vendor\Web\Controller;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Core\Dao\ModelUtil;
@@ -82,8 +83,11 @@ class InstallController extends Controller
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             if (str_contains($msg, 'Server sent charset unknown to the client')) {
-                return Response::generateError('数据库编码不支持');
+                return Response::generateError('数据库编码不支持：' . $msg);
+            } else if (str_contains($msg, 'Access denied for user')) {
+                return Response::generateError('用户密码不匹配：' . $msg);
             }
+            Log::error('InstallError -> ' . $e->getMessage() . ' -> ' . $e->getTraceAsString());
             return Response::jsonError('连接数据信息 ' . $dbHost . '.' . $dbDatabase . ' 失败!');
         }
 
