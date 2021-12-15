@@ -290,7 +290,7 @@ AdminMenu::register(function () {
 
 开发环境请打开 debug 模式，方便查看日志文件，操作方式如下：
 
-在 `.env` 文件中设置 `APP_DEBUG=true` 
+在 `.env` 文件中设置 `APP_DEBUG=true`
 
 ## 📋 常见问题
 
