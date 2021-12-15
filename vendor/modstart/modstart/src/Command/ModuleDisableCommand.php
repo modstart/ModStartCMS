@@ -20,6 +20,11 @@ class ModuleDisableCommand extends Command
         $installeds = ModuleManager::listAllInstalledModules();
         $basic = ModuleManager::getModuleBasic($module);
         BizException::throwsIf('Module basic empty', !$basic);
+
+        if (method_exists(ModuleManager::class, 'callHook')) {
+            ModuleManager::callHook($module, 'hookBeforeDisable');
+        }
+
         $installeds[$module]['enable'] = false;
         ModuleManager::saveUserInstalledModules($installeds);
         ModStart::clearCache();

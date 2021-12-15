@@ -23,6 +23,11 @@ class ModuleEnableCommand extends Command
         $installeds[$module]['enable'] = true;
         ModuleManager::saveUserInstalledModules($installeds);
         ModStart::clearCache();
+
+        if (method_exists(ModuleManager::class, 'callHook')) {
+            ModuleManager::callHook($module, 'hookEnabled');
+        }
+
         $event = new ModuleEnabledEvent();
         $event->name = $module;
         Event::fire($event);

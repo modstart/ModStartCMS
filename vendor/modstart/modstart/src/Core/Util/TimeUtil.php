@@ -31,6 +31,11 @@ class TimeUtil
         return date('H:i:s', $ts + $seconds);
     }
 
+    public static function yesterdayDate()
+    {
+        return date('Y-m-d', time() - self::PERIOD_DAY);
+    }
+
     public static function yesterdayStart()
     {
         return date('Y-m-d 00:00:00', time() - self::PERIOD_DAY);

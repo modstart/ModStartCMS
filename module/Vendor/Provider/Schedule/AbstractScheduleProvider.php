@@ -28,6 +28,12 @@ abstract class AbstractScheduleProvider
         return '0,30 * * * * *';
     }
 
+    
+    protected function cronEveryDayHour24($hour)
+    {
+        return "0 $hour * * * *";
+    }
+
     protected function cronEveryHour()
     {
         return '0 * * * * *';
