@@ -17,10 +17,13 @@ use Module\Member\Util\MemberMoneyUtil;
 
 class MemberMoneyCashController extends MemberFrameController implements MemberLoginCheck
 {
-    
+    /** @var \Module\Member\Api\Controller\MemberMoneyCashController */
     private $api;
 
-    
+    /**
+     * MemberMoneyCashController constructor.
+     * @param \Module\Member\Api\Controller\MemberMoneyCashController $api
+     */
     public function __construct(\Module\Member\Api\Controller\MemberMoneyCashController $api)
     {
         parent::__construct();

@@ -21,7 +21,7 @@ class MemberGroupController extends Controller
         $builder
             ->init('member_group')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id', 'ID')->editable(true)->addable(true);
                 $builder->text('title', '名称');
                 $builder->text('description', '描述');

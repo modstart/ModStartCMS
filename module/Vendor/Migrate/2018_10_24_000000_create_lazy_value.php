@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateLazyValue extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('lazy_value', function (Blueprint $table) {
@@ -27,7 +31,11 @@ class CreateLazyValue extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

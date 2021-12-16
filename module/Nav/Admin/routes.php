@@ -1,6 +1,6 @@
 <?php
 
-
+/* @var \Illuminate\Routing\Router $router */
 
 $router->match(['get', 'post'], 'nav', 'NavController@index');
 $router->match(['get', 'post'], 'nav/add', 'NavController@add');

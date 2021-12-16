@@ -20,13 +20,17 @@ class MemberOauth
     {
         $items = self::get();
         $items = array_filter($items, function ($item) {
-            
+            /** @var $item AbstractOauth */
             return $item->hasRender();
         });
         return !empty($items);
     }
 
-    
+    /**
+     * @param null $name
+     * @return AbstractOauth|array|null
+     * @throws BizException
+     */
     public static function get($name = null)
     {
         static $list = null;

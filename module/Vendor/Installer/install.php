@@ -1,5 +1,15 @@
 <?php
 
+//$INSTALL_CONFIG = [
+//    'envs' => [
+//        [
+//            'name' => 'DOMAIN_MAIN',
+//            'label' => '主域名',
+//            'desc' => '如期望不同城市的访问域名为 bj.example.com, sh.example.com 需要配置主域名为 example.com',
+//            'default' => isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '',
+//        ],
+//    ]
+//];
 
 use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\FileUtil;

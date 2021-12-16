@@ -15,7 +15,7 @@ class HtmlConvertUtil
             $interceptors = [$interceptors];
         }
         foreach ($interceptors as $interceptor) {
-            
+            /** @var $instance HtmlConverterInterceptor */
             $instance = app($interceptor);
             $value = $instance->convert($value);
         }

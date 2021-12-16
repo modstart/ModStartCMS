@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class ModifyArticleAddSort extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::table('article', function (Blueprint $table) {
@@ -13,7 +17,11 @@ class ModifyArticleAddSort extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

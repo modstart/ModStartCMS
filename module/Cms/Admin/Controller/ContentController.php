@@ -73,6 +73,12 @@ class ContentController extends Controller
             return $grid->request();
         }
         return $page->pageTitle($this->model['title'] . '管理')
+//            ->row(function (Row $row) {
+//                $row->column(3, DashboardItemA::makeIconNumberTitle(
+//                    'iconfont icon-details', ModelUtil::count('cms_content', ['modelId' => $this->model['id']]), '总数',
+//                    modstart_admin_url('cms/content/' . $this->model['id'])
+//                ));
+//            })
             ->append($grid);
     }
 

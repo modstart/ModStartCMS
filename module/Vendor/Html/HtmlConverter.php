@@ -5,7 +5,12 @@ namespace Module\Vendor\Html;
 use ModStart\Core\Util\HtmlUtil;
 use Module\Vendor\Markdown\MarkdownUtil;
 
-
+/**
+ * Class HtmlConverter
+ * @package Module\Vendor\Html
+ * @deprecated
+ * @see \Module\Vendor\Provider\RichContent\RichContentProvider
+ */
 class HtmlConverter
 {
     public static function convertToHtml($contentType,

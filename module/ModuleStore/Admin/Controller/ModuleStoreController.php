@@ -349,7 +349,7 @@ class ModuleStoreController extends Controller
             }
         }
         return $builder->perform(RepositoryUtil::itemFromArray($moduleInfo['config']), function (Form $form) use ($module, $moduleInfo) {
-            BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
+            AdminPermission::demoCheck();
             if ($moduleInfo['isSystem']) {
                 ModuleManager::saveSystemOverwriteModuleConfig($module, $form->dataForming());
             } else {

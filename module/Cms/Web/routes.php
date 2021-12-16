@@ -1,5 +1,5 @@
 <?php
-
+/* @var \Illuminate\Routing\Router $router */
 $router->group([
     'middleware' => [
         \Module\Member\Middleware\WebAuthMiddleware::class,

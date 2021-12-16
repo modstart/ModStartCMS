@@ -5,7 +5,11 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateMemberAddress extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('member_address', function (Blueprint $table) {
@@ -29,7 +33,11 @@ class CreateMemberAddress extends Migration
 
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

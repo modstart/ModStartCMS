@@ -24,7 +24,7 @@ use Module\Member\Support\MemberLoginCheck;
 
 class MemberAddressController extends MemberFrameController implements MemberLoginCheck
 {
-    
+    /** @var \Module\Member\Api\Controller\MemberAddressController */
     private $api;
 
     public function __construct()
@@ -62,7 +62,7 @@ class MemberAddressController extends MemberFrameController implements MemberLog
             $record = ModelUtil::get('member_address', ['id' => $id, 'memberUserId' => MemberUser::id()]);
             BizException::throwsIfEmpty('地址不存在', $record);
         }
-        
+        /** @var WebConfigBuilder $builder */
         $builder = app(WebConfigBuilder::class);
         $builder->useDialog();
         $builder->pageTitle(($id ? '修改' : '增加') . '地址');

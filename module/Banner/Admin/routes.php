@@ -1,6 +1,6 @@
 <?php
 
-
+/* @var \Illuminate\Routing\Router $router */
 $router->match(['get', 'post'], 'banner', '\Module\Banner\Admin\Controller\BannerController@index');
 $router->match(['get', 'post'], 'banner/add', '\Module\Banner\Admin\Controller\BannerController@add');
 $router->match(['get', 'post'], 'banner/edit', '\Module\Banner\Admin\Controller\BannerController@edit');

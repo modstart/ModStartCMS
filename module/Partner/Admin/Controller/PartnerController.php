@@ -22,7 +22,7 @@ class PartnerController extends Controller
         $builder
             ->init('partner')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id','ID');
                 $builder->select('position', '位置')->optionType(PartnerPosition::class);
                 $builder->text('title', '名称');

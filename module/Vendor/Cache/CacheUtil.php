@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheUtil
 {
-    
+    /**
+     * @return \Illuminate\Cache\Repository
+     */
     private static function client()
     {
         return Cache::store();

@@ -1,6 +1,6 @@
 <?php
 
-
+/* @var \Illuminate\Routing\Router $router */
 
 $router->match(['get', 'post'], 'module_store', 'ModuleStoreController@index');
 $router->match(['get', 'post'], 'module_store/all', 'ModuleStoreController@all');

@@ -18,7 +18,7 @@ class MemberSelectController extends Controller
         $builder
             ->init('member_user')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id', 'ID');
                 $builder->display('created_at', '创建时间');
                 $builder->image('avatar', '头像');

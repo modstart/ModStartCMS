@@ -1,6 +1,6 @@
 <?php
 
-
+/* @var \Illuminate\Routing\Router $router */
 $router->match(['get', 'post'], 'partner', '\Module\Partner\Admin\Controller\PartnerController@index');
 $router->match(['get', 'post'], 'partner/add', '\Module\Partner\Admin\Controller\PartnerController@add');
 $router->match(['get', 'post'], 'partner/edit', '\Module\Partner\Admin\Controller\PartnerController@edit');

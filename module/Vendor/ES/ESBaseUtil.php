@@ -12,7 +12,14 @@ class ESBaseUtil
             throw new \Exception('不存在的索引');
         }
         if (!self::client()->indices()->exists(['index' => $table . '_' . $version])) {
-            
+            /**
+             * static::client()->indices()->putSettings([
+             * 'index' => 'customer_v1',
+             * 'body' => [
+             * 'max_result_window' => 50000,
+             * ]
+             * ])
+             */
             self::client()->indices()->create([
                 'index' => $table . '_' . $version,
                 'body' => [
@@ -83,7 +90,9 @@ class ESBaseUtil
         return null;
     }
 
-    
+    /**
+     * @return \Elasticsearch\Client
+     */
     public static function client($esConfig = [])
     {
         static $client = null;

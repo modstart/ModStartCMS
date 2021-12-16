@@ -5,10 +5,16 @@ namespace Module\Vendor\Provider\SmsSender;
 
 use ModStart\Core\Exception\BizException;
 
-
+/**
+ * Class SmsSenderProvider
+ * @package Module\Vendor\Provider\SmsSender
+ * @since 1.6.0
+ */
 class SmsSenderProvider
 {
-    
+    /**
+     * @var AbstractSmsSenderProvider[]
+     */
     private static $instances = [
     ];
 
@@ -17,7 +23,9 @@ class SmsSenderProvider
         self::$instances[] = $provider;
     }
 
-    
+    /**
+     * @return AbstractSmsSenderProvider[]
+     */
     public static function all()
     {
         foreach (self::$instances as $k => $v) {
@@ -30,11 +38,15 @@ class SmsSenderProvider
         return self::$instances;
     }
 
-    
+    /**
+     * @param $name
+     * @return AbstractSmsSenderProvider
+     * @throws BizException
+     */
     public static function get($name)
     {
         foreach (self::all() as $item) {
-            
+            /** @var AbstractSmsSenderProvider $item */
             if ($item->name() == $name) {
                 return $item;
             }
@@ -42,7 +54,10 @@ class SmsSenderProvider
         BizException::throws('没有找到SmsSenderProvider');
     }
 
-    
+    /**
+     * @return bool
+     * @since 1.7.0
+     */
     public static function hasProvider()
     {
         $provider = app()->config->get('SmsSenderProvider');

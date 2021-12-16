@@ -15,7 +15,8 @@ use ModStart\ModStart;
 
 class UpgradeUtil
 {
-        const REMOTE_BASE = 'https://modstart.com';
+    // const REMOTE_BASE = 'http://org.demo.soft.host';
+    const REMOTE_BASE = 'https://modstart.com';
 
     private static function baseRequest($api, $data = [], $token = null)
     {

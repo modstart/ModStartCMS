@@ -9,7 +9,9 @@ use Module\Vendor\Provider\RichContent\UEditorRichContentProvider;
 
 class RichContentProvider
 {
-    
+    /**
+     * @var AbstractRichContentProvider[]
+     */
     private static $instances = [
         UEditorRichContentProvider::class,
     ];

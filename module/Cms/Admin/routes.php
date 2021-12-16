@@ -1,5 +1,5 @@
 <?php
-
+/* @var \Illuminate\Routing\Router $router */
 
 $router->match(['get', 'post'], 'cms/config/basic', 'ConfigController@basic');
 

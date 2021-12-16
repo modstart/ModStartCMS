@@ -19,7 +19,11 @@ use Module\Vendor\Provider\HomePage\HomePageProvider;
 
 class ModuleServiceProvider extends ServiceProvider
 {
-    
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
     public function boot(Dispatcher $events)
     {
         require_once __DIR__ . '/../Helpers/CMS.php';
@@ -111,7 +115,11 @@ class ModuleServiceProvider extends ServiceProvider
 
     }
 
-    
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
     public function register()
     {
 

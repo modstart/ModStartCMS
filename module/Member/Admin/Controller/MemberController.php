@@ -38,7 +38,7 @@ class MemberController extends Controller
         $builder
             ->init('member_user')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id', 'ID');
                 $builder->display('avatar', '头像')->hookRendering(function (AbstractField $field, $item, $index) {
                     $avatarSmall = AssetsUtil::fixOrDefault($item->avatar, 'asset/image/avatar.png');
@@ -72,7 +72,7 @@ class MemberController extends Controller
                 $filter->like('phone', '手机');
             })
             ->hookSaved(function (Form $form) {
-                
+                /** @var \stdClass $item */
                 $item = $form->item();
                 switch ($form->mode()) {
                     case FormMode::ADD:

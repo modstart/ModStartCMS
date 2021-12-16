@@ -16,7 +16,10 @@ use Module\Member\Type\MemberStatus;
 
 class MemberUtil
 {
-    
+    /**
+     * @return mixed
+     * @since 1.5.0
+     */
     public static function total()
     {
         return Cache::remember('MemberUserTotal', 60, function () {
@@ -29,7 +32,10 @@ class MemberUtil
         return ModelUtil::get('member_user', ['id' => $id]);
     }
 
-    
+    /**
+     * @param $memberUser
+     * @since Member 1.6.0
+     */
     public static function processDefault(&$memberUser)
     {
         if (empty($memberUser)) {
@@ -145,7 +151,13 @@ class MemberUtil
         return ModelUtil::update('member_user', ['id' => $id], $data);
     }
 
-    
+    /**
+     * 更新基本数据，同时检查唯一性
+     *
+     * @param $id
+     * @param $data
+     * @return array
+     */
     public static function updateBasicWithUniqueCheck($id, $data)
     {
         if (empty($data)) {
@@ -168,7 +180,15 @@ class MemberUtil
         return Response::generate(0, 'ok');
     }
 
-    
+    /**
+     * 登录，email phone username 只能选择一个作为登录凭证
+     *
+     * @param string $username
+     * @param string $phone
+     * @param string $email
+     * @param string $password
+     * @return array ['code'=>'0','msg'=>'ok','data'=>MemberUser]
+     */
     public static function login($username = '', $phone = '', $email = '', $password = '')
     {
         $email = trim($email);
@@ -235,7 +255,16 @@ class MemberUtil
         return Response::generateError('注册失败');
     }
 
-    
+    /**
+     * 注册，email phone username 可以只选择一个为注册ID
+     *
+     * @param string $username
+     * @param string $phone
+     * @param string $email
+     * @param string $password
+     * @param bool $ignorePassword
+     * @return array ['code'=>'0','msg'=>'ok','data'=>'member_user array']
+     */
     public static function register($username = '', $phone = '', $email = '', $password = '', $ignorePassword = false)
     {
         $email = trim($email);
@@ -267,10 +296,12 @@ class MemberUtil
             if ($ret['code']) {
                 return $ret;
             }
-                        if (Str::contains($username, '@')) {
+            // 为了统一登录时区分邮箱
+            if (Str::contains($username, '@')) {
                 return Response::generate(-1, '用户名不能包含特殊字符');
             }
-                        if (preg_match('/^[0-9]{11}$/', $username)) {
+            // 为了统一登录时候区分手机号
+            if (preg_match('/^[0-9]{11}$/', $username)) {
                 return Response::generate(-1, '用户名不能为纯数字');
             }
         } else {
@@ -293,7 +324,14 @@ class MemberUtil
         return Response::generate(0, 'ok', $memberUser);
     }
 
-    
+    /**
+     * 唯一性检查
+     *
+     * @param string $type = email | phone | username
+     * @param $value
+     * @param int $ignoreUserId
+     * @return array ['code'=>'0','msg'=>'ok']
+     */
     public static function uniqueCheck($type, $value, $ignoreUserId = 0)
     {
         $value = trim($value);
@@ -349,7 +387,16 @@ class MemberUtil
         return ModelUtil::get('member_user', ['phone' => $phone]);
     }
 
-    
+    /**
+     * 修改密码
+     * 注意参数顺序!!!
+     *
+     * @param $memberUserId
+     * @param $new
+     * @param $old
+     * @param bool $ignoreOld
+     * @return array
+     */
     public static function changePassword($memberUserId, $new, $old = null, $ignoreOld = false)
     {
         if (!$ignoreOld && empty($old)) {
@@ -377,7 +424,14 @@ class MemberUtil
         return Response::generate(0, 'ok');
     }
 
-    
+    /**
+     * 用户上传你图片
+     * @param $userId
+     * @param $avatarData
+     * @param string $avatarExt
+     * @return array ['code'=>'0','msg'=>'ok']
+     * @throws \Exception
+     */
     public static function setAvatar($userId, $avatarData, $avatarExt = 'jpg')
     {
         $memberUser = self::get($userId);
@@ -418,7 +472,11 @@ class MemberUtil
         return Response::generateSuccess();
     }
 
-    
+    /**
+     * 批量查询用户
+     * @param $userIds
+     * @return array [userId=>MemberUser,...]
+     */
     public static function findUsers($userIds)
     {
         $userMemberMap = [];
@@ -506,7 +564,12 @@ class MemberUtil
         return $m['openId'];
     }
 
-    
+    /**
+     * @param $memberUserId
+     * @param $oauthType
+     * @return array|null
+     * @since Member 1.6.0
+     */
     public static function getOauth($memberUserId, $oauthType)
     {
         $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];

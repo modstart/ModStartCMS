@@ -6,7 +6,9 @@ namespace Module\Vendor\Provider\IDManager;
 
 class IDManager
 {
-    
+    /**
+     * @var AbstractIDManager[]
+     */
     private static $instances = [];
 
     public static function register($provider)
@@ -14,7 +16,9 @@ class IDManager
         self::$instances[] = $provider;
     }
 
-    
+    /**
+     * @return AbstractIDManager[]
+     */
     public static function all()
     {
         foreach (self::$instances as $k => $v) {
@@ -27,7 +31,10 @@ class IDManager
         return self::$instances;
     }
 
-    
+    /**
+     * @param $name
+     * @return AbstractIDManager
+     */
     public static function get($name)
     {
         $name = modstart_config($name, $name);

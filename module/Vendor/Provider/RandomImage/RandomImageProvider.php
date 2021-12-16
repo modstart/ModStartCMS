@@ -6,7 +6,9 @@ namespace Module\Vendor\Provider\RandomImage;
 
 class RandomImageProvider
 {
-    
+    /**
+     * @return AbstractRandomImageProvider
+     */
     public static function get()
     {
         static $instance = null;

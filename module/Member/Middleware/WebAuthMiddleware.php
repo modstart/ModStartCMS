@@ -12,7 +12,13 @@ use Module\Member\Util\MemberUtil;
 
 class WebAuthMiddleware
 {
-    
+    /**
+     * Handle an incoming request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @return mixed
+     */
     public function handle($request, \Closure $next)
     {
         list($controller, $action) = Request::getControllerAction();
@@ -39,7 +45,8 @@ class WebAuthMiddleware
                 if (property_exists($controller, 'memberLoginCheckIgnores')
                     && is_array($controller::$memberLoginCheckIgnores) && in_array($action, $controller::$memberLoginCheckIgnores)
                 ) {
-                                    } else {
+                    //pass
+                } else {
                     return Response::send(-1, null, null, modstart_web_url('login') . '?redirect=' . urlencode(Request::currentPageUrl()));
                 }
             }

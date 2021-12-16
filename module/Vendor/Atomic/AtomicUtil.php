@@ -6,7 +6,15 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\RedisUtil;
 
-
+/**
+ * Class AtomicUtil
+ *
+ * product onece
+ * comsume some times
+ *
+ * example:
+ * - captcha error count
+ */
 class AtomicUtil
 {
     public static function produce($name, $value, $expire = 3600)

@@ -12,12 +12,19 @@ use Module\Vendor\Support\ResponseCodes;
 
 class ApiAuthMiddleware
 {
-    
+    /**
+     * Handle an incoming request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @return mixed
+     */
     public function handle($request, \Closure $next)
     {
         list($controller, $action) = Request::getControllerAction();
         $memberUserId = intval(Session::get('memberUserId', 0));
-                $memberUser = null;
+        // Log::info("ApiAuthMiddleware - MemberUserId - $memberUserId");
+        $memberUser = null;
         if ($memberUserId) {
             $memberUser = MemberUtil::get($memberUserId);
             MemberUtil::processDefault($memberUser);
@@ -38,7 +45,8 @@ class ApiAuthMiddleware
                 if (property_exists($controller, 'memberLoginCheckIgnores')
                     && is_array($controller::$memberLoginCheckIgnores) && in_array($action, $controller::$memberLoginCheckIgnores)
                 ) {
-                                    } else {
+                    //pass
+                } else {
                     return Response::json(ResponseCodes::LOGIN_REQUIRED, '请登录', null, modstart_web_url('login', [
                         'redirect' => Request::currentPageUrl(),
                     ]));

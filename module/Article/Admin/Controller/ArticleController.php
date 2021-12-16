@@ -22,7 +22,7 @@ class ArticleController extends Controller
         $builder
             ->init('article')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id', 'ID');
                 $builder->select('position', '位置')->optionType(ArticlePosition::class);
                 $builder->text('title', '名称');

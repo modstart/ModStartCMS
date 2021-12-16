@@ -5,10 +5,16 @@ namespace Module\Vendor\Provider\SmsTemplate;
 
 use ModStart\Support\Concern\HasFields;
 
-
+/**
+ * Class SmsTemplateProvider
+ * @package Module\Vendor\Provider\SmsTemplate
+ * @since 1.6.0
+ */
 class SmsTemplateProvider
 {
-    
+    /**
+     * @var AbstractSmsTemplateProvider[]
+     */
     private static $instances = [
     ];
 
@@ -17,7 +23,9 @@ class SmsTemplateProvider
         self::$instances[] = $provider;
     }
 
-    
+    /**
+     * @return AbstractSmsTemplateProvider[]
+     */
     public static function all()
     {
         foreach (self::$instances as $k => $v) {

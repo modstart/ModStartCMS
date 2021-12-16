@@ -6,7 +6,12 @@ namespace Module\Member\Widget\Field;
 
 use ModStart\Field\Image;
 
-
+/**
+ * 用户图片字段
+ *
+ * Class MemberImage
+ * @package Module\Member\Widget\Field
+ */
 class MemberImage extends Image
 {
     protected $view = 'modstart::core.field.image';

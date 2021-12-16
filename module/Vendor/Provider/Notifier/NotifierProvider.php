@@ -6,7 +6,9 @@ namespace Module\Vendor\Provider\Notifier;
 
 class NotifierProvider
 {
-    
+    /**
+     * @return AbstractNotifierProvider[]
+     */
     public static function get()
     {
         static $instances = null;

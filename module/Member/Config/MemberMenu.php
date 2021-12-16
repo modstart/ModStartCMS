@@ -94,7 +94,8 @@ class MemberMenu
                 if (count(explode('^^', $prefix)) !== count(explode('^^', $k))) {
                     continue;
                 }
-                            } else {
+                // echo "$prefix -> $k\n";
+            } else {
                 if (1 != count($ks)) {
                     continue;
                 }
@@ -107,6 +108,7 @@ class MemberMenu
             if (empty($item['children']) && empty($item['url'])) continue;
             $tree[] = $item;
         }
-                return $tree;
+        // echo $prefix . ' -> ' . json_encode($tree) . "\n";
+        return $tree;
     }
 }

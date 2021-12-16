@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMemberUser extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('member_user', function (Blueprint $table) {
@@ -27,7 +31,7 @@ class CreateMemberUser extends Migration
             $table->string('avatarMedium', 100)->nullable()->comment('头像(中)');
             $table->string('avatarBig', 100)->nullable()->comment('头像(大)');
 
-            
+            /** @see \Module\Member\Type\Gender */
             $table->tinyInteger('gender')->nullable()->comment('性别');
             $table->string('realname', 20)->nullable()->comment('真实姓名');
             $table->string('signature', 200)->nullable()->comment('个性签名');
@@ -39,7 +43,11 @@ class CreateMemberUser extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

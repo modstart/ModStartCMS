@@ -6,7 +6,11 @@ use ModStart\Core\Dao\ModelManageUtil;
 
 class CreateBanner extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         if (ModelManageUtil::hasTable('banner')) {
@@ -37,7 +41,11 @@ class CreateBanner extends Migration
         }
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
     }

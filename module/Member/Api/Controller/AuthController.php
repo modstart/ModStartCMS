@@ -27,18 +27,102 @@ use Module\Vendor\Session\SessionUtil;
 use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
 
+/**
+ * 相关配置开关
+ *
+ * - loginCaptchaEnable
+ * - registerDisable
+ * - registerEmailEnable
+ * - registerPhoneEnable
+ * - retrieveDisable
+ * - retrievePhoneEnable
+ * - retrieveEmailEnable
+ * - ssoServerEnable
+ * - ssoServerSecret
+ * - ssoServerClientList
+ * - ssoClientEnable
+ * - ssoClientSecret
+ * - ssoClientServer
+ */
+
+/**
+ * ############### 系列产品 SSO Client 登录流程 ###############
+ *
+ * 1. Client 访问 http://client.com/login 页面，前台检测到SSO登录是否已开启 (config.ssoClientEnable) ；
+ * 2. Client 请求 http://client.com/api/sso/client_prepare ，拿到需要跳转的SSO登录地址，SSO登录地址包含如下参数：
+ *              client      -> http://client.com/sso/client
+ *              timestamp   -> time()
+ *              sign        -> md5(md5(ssoClientSecret) + md5(timestamp) + md5(client))
+ * 3. Client 记录当前登录 redirect 存储到 Storage（ssoClientRedirect），同时跳转到SSO登录地址；
+ * 4. Server 端授权登录跳回页面 http://client.com/sso/client （第2步传递的client） 并附带参数
+ *              server      -> http://server.com/sso/server
+ *              timestamp   -> time()
+ *              username    -> base64_encode(username)
+ *              sign        -> md5( md5(ssoServerSecret) + md5(timestamp) + md5(server) + md5(username) )
+ * 5. Client 访问到 http://client.com/sso/client 请求 http://client.com/api/sso/client 并验证参数：
+ *              验证 sign 是否正确；
+ *              验证 timestamp 是否合法,误差不能相差 1 小时；
+ *              验证 server 是否为预期 (config.ssoClientServer)；
+ * 6. Client 验证完全正确后，根据 username 来进行登录,如果用户不存在创建用户,如果用户已经存在直接设置为已登录状态;
+ * 7. Client 前端跳转到 ssoClientRedirect（从Storage读取）；
+ */
 
 
+/**
+ * ############### 系列产品 SSO Server 登录流程 ###############
+ *
+ * 1. Server 访问 http://server.com/sso/server 页面 （跳转过来的登录请求），附带以下参数;
+ *              client      -> http://client.com/sso/client
+ *              timestamp   -> time()
+ *              sign        -> md5( md5(ssoServerSecret) + md5(timestamp) + md5(client) )
+ * 2. Server 发送第1步所有参数到，记录 ssoServerClient 到 Storage；
+ * 3. Server 请求 http://server.com/api/sso/server ，同时返回 isLogin 参数，验证以下信息：
+ *              检测 SSO 登录是否开启 (config.ssoServerEnable);
+ *              sign        -> 验证 sign 是否正确;
+ *              验证 timestamp 是否合法,误差不能超过 1 小时;
+ *              验证 client 是否为预期 (config.ssoServerClientList);
+ * 4. Server 如果判断 isLogin 为真, 直接跳转到 http://server.com/sso/server_success;
+ * 5. Server 如果判断 isLogin 为假，跳转到登录页面 /login 并附带以下参数:
+ *              redirect    -> http://server.com/sso/server_success
+ * 6. Server 用户登录，登录成功后重定向到 http://server.com/sso/server_success ;
+ * 4. Server 请求 http://server.com/api/sso/server_success 接口，
+ *    携带以下参数
+ *              client      -> http://client.com/sso/client （从 Storage 读取 ssoServerClient）
+ *              domainUrl   -> http://server.com
+ *    获取到以下参数
+ *              redirect    -> http://client.com/sso/client?server=xxx&timestamp=xxx&username=xxx&sign=xxx
+ *                             server      -> http://server.com/sso/server
+ *                             timestamp   -> time()
+ *                             username    -> base64_encode(username)
+ *                             sign        -> md5( md5(ssoServerSecret) + md5(timestamp) + md5(server) + md5(username) )
+ * 7. Server 页面跳转到 redirect
+ */
 
+/**
+ * ############### 系列产品 SSO Client 退出流程 ###############
+ * 1. Client 需要退出登陆,跳转到 http://client.com/logout 并附带以下参数：
+ *              redirect    -> <logout-to-go> 地址
+ * 2. Client 判断如果检测到SSO登录开启（config.ssoClientEnable），记录 redirect 到 Storage 为 ssoLogoutRedirect；
+ * 2. Client 请求 http://client.com/api/sso/client_logout_prepare ，返回以下参数：
+ *              redirect    -> http://server.com/sso/server_logout?redirect=urlencode(http://client.com/sso/client_logout)
+ * 3. Client 跳转到 redirect
+ * 4. Server 返回到 http://client.com/sso/client_logout ，请求 http://client.com/api/sso/client_logout ；
+ * 5. Client 从 Storage 读取 ssoLogoutRedirect ，跳转到 ssoLogout ；
+ */
 
+/**
+ * ############### 系列产品 SSO Server 退出流程 ###############
+ * 1. Client 页面访问 http://server.com/sso/server_logout 并附带以下参数：
+ *              redirect    -> <logout-to-go>
+ * 2. Client 请求 http://server.com/api/sso/server_logout ，返回以下参数：
+ *              redirect    -> <logout-to-go>
+ * 3. Client 跳转到 redirect
+ */
 
-
-
-
-
-
-
-
+/**
+ * Class AuthController
+ * @package Module\Member\Api\Controller
+ */
 class AuthController extends ModuleBaseController
 {
     public function oauthTryLogin($oauthType = null)
@@ -47,7 +131,7 @@ class AuthController extends ModuleBaseController
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');
         }
-        
+        /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::get($oauthType);
         $ret = $oauth->processTryLogin([
             'userInfo' => $oauthUserInfo,
@@ -72,9 +156,10 @@ class AuthController extends ModuleBaseController
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');
         }
-        
+        /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::get($oauthType);
-                $loginedMemberUserId = Session::get('memberUserId', 0);
+        //如果用户已经登录直接关联到当前用户
+        $loginedMemberUserId = Session::get('memberUserId', 0);
         if ($loginedMemberUserId > 0) {
             $ret = $oauth->processBindToUser([
                 'memberUserId' => $loginedMemberUserId,
@@ -136,7 +221,7 @@ class AuthController extends ModuleBaseController
         if (empty($code)) {
             return Response::generate(-1, '登录失败(code为空)', null, '/');
         }
-        
+        /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::get($oauthType);
         $ret = $oauth->processLogin([
             'code' => $code,
@@ -165,7 +250,7 @@ class AuthController extends ModuleBaseController
             $callback = $input->getTrimString('callback', 'NO_CALLBACK');
         }
         $silence = $input->getBoolean('silence', false);
-        
+        /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::get($oauthType);
         $ret = $oauth->processRedirect([
             'callback' => $callback,
@@ -359,7 +444,8 @@ class AuthController extends ModuleBaseController
             $memberUser = MemberUtil::get($ret['data']['id']);
         }
         Session::put('memberUserId', $memberUser['id']);
-                return Response::generate(0, 'ok');
+        // return Response::generateError('forbidden');
+        return Response::generate(0, 'ok');
     }
 
     public function ssoClientPrepare()
@@ -480,7 +566,7 @@ class AuthController extends ModuleBaseController
         if (empty($username)) {
             return Response::generate(-1, '用户名不能为空');
         }
-        
+        /** 为了兼容统一登录，禁止使用手机号格式和邮箱格式  */
         if (Str::contains($username, '@')) {
             return Response::generate(-1, '用户名不能包含特殊字符');
         }
@@ -534,7 +620,7 @@ class AuthController extends ModuleBaseController
         }
 
         foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
-            
+            /** @var AbstractMemberRegisterProcessorProvider $provider */
             $ret = $provider->preCheck();
             if (Response::isError($ret)) {
                 return $ret;
@@ -559,7 +645,7 @@ class AuthController extends ModuleBaseController
         Event::fire(new MemberUserRegisteredEvent($memberUserId));
         Session::forget('registerCaptchaPass');
         foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
-            
+            /** @var AbstractMemberRegisterProcessorProvider $provider */
             $provider->postProcess($memberUserId);
         }
         return Response::generate(0, '注册成功', [

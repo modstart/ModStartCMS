@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class ModifyArticleAddAlias extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::table('article', function (Blueprint $table) {
@@ -14,7 +18,11 @@ class ModifyArticleAddAlias extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

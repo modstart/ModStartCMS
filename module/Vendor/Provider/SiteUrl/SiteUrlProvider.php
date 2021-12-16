@@ -8,7 +8,9 @@ use ModStart\Core\Exception\BizException;
 
 class SiteUrlProvider
 {
-    
+    /**
+     * @var AbstractSiteUrlProvider
+     */
     private static $list = [];
     private static $init = false;
 
@@ -34,7 +36,7 @@ class SiteUrlProvider
     {
         BizException::throwsIfEmpty('SiteUrlProvider.Error -> url empty', $url);
         foreach (self::get() as $instance) {
-            
+            /** @var AbstractSiteUrlProvider $instance */
             $instance->update($url, $title, $param);
         }
     }
@@ -43,7 +45,7 @@ class SiteUrlProvider
     {
         BizException::throwsIfEmpty('SiteUrlProvider.Error -> url empty', $url);
         foreach (self::get() as $instance) {
-            
+            /** @var AbstractSiteUrlProvider $instance */
             $instance->delete($url);
         }
     }

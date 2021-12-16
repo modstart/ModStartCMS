@@ -22,7 +22,7 @@ class CatController extends Controller
         $builder
             ->init('cms_cat')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id', 'ID');
                 $builder->text('title', '名称')->required()->width(200);
                 $builder->text('url', 'URL')->required()
@@ -38,6 +38,16 @@ class CatController extends Controller
                 $builder->text('seoTitle', 'SEO标题')->listable(false);
                 $builder->text('seoDescription', 'SEO描述')->listable(false);
                 $builder->text('seoKeywords', 'SEO关键词')->listable(false);
+//                $builder->switch('visitMemberGroupEnable', '启用用户分组访问')->listable(false)
+//                    ->when('=', true, function ($builder) {
+//                        /** @var HasFields $builder */
+//                        $builder->checkbox('visitMemberGroups', '允许访问的分组')->optionModel('member_group', 'id', 'title')->listable(false);
+//                    });
+//                $builder->switch('visitMemberVipEnable', '启用用户VIP访问')->listable(false)
+//                    ->when('=', true, function ($builder) {
+//                        /** @var HasFields $builder */
+//                        $builder->checkbox('visitMemberVips', '允许访问的VIP')->optionModel('member_vip_set', 'id', 'title')->listable(false);
+//                    });
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })

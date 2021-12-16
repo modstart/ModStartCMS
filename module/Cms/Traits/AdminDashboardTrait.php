@@ -15,7 +15,7 @@ trait AdminDashboardTrait
 {
     public function dashboard()
     {
-        
+        /** @var AdminPage $page */
         $page = app(AdminPage::class);
         $page->pageTitle(L('Dashboard'))
             ->row(new SecurityTooltipBox())

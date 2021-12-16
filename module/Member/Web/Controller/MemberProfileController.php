@@ -20,11 +20,13 @@ use Module\Member\Util\MemberUtil;
 
 class MemberProfileController extends ModuleBaseController implements MemberLoginCheck
 {
-    
+    /** @var \Module\Member\Api\Controller\MemberProfileController */
     private $api;
     private $viewMemberFrame;
 
-    
+    /**
+     * MemberProfileController constructor.
+     */
     public function __construct()
     {
         list($this->viewMemberFrame, $_) = $this->viewPaths('member.frame');

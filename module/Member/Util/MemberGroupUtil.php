@@ -22,6 +22,11 @@ class MemberGroupUtil
         });
     }
 
+//    public static function update($id, $data)
+//    {
+//        ModelUtil::update('member_group', $id, $data);
+//        self::clearCache();
+//    }
 
     public static function map()
     {
@@ -52,6 +57,44 @@ class MemberGroupUtil
         return null;
     }
 
+//    public static function mapTitle()
+//    {
+//        return array_build(self::map(), function ($k, $v) {
+//            return [$k, $v['title']];
+//        });
+//    }
+//
+//    public static function getMemberGroup($memberUser)
+//    {
+//        if (empty($memberUser)) {
+//            return self::get(null);
+//        }
+//        if (!empty($memberUser['vipExpire']) && strtotime($memberUser['vipExpire']) > time()) {
+//            return self::get($memberUser['vipId']);
+//        }
+//        return self::get(null);
+//    }
+//
+//    public static function get($vipId, $key = null)
+//    {
+//        $map = self::map();
+//        if (null === $key) {
+//            if (isset($map[$vipId])) {
+//                return $map[$vipId];
+//            }
+//            if (isset($map[0])) {
+//                return $map[0];
+//            }
+//        } else {
+//            if (isset($map[$vipId][$key])) {
+//                return $map[$vipId][$key];
+//            }
+//            if (isset($map[0][$key])) {
+//                return $map[0][$key];
+//            }
+//        }
+//        return null;
+//    }
 
     public static function clearCache()
     {

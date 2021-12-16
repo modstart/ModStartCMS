@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMemberMessage extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         if (!\ModStart\Core\Dao\ModelManageUtil::hasTable('member_message')) {
@@ -24,7 +28,11 @@ class CreateMemberMessage extends Migration
         }
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
     }

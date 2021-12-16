@@ -8,7 +8,9 @@ use ModStart\Core\Exception\BizException;
 
 class HomePageProvider
 {
-    
+    /**
+     * @var AbstractHomePageProvider[]
+     */
     private static $instances = [
         DefaultHomePageProvider::class,
     ];
@@ -18,7 +20,9 @@ class HomePageProvider
         self::$instances[] = $provider;
     }
 
-    
+    /**
+     * @return AbstractHomePageProvider[]
+     */
     public static function all()
     {
         foreach (self::$instances as $k => $v) {

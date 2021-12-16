@@ -5,7 +5,11 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateMemberAddressUserIdFix extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::table('member_address', function (Blueprint $table) {
@@ -14,7 +18,11 @@ class CreateMemberAddressUserIdFix extends Migration
 
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

@@ -78,7 +78,8 @@ class InstallController extends Controller
             return Response::jsonError("请先同意《软件安装许可协议》");
         }
 
-                try {
+        // 数据库连接检测
+        try {
             new PDO("mysql:host=$dbHost;dbname=$dbDatabase", $dbUsername, $dbPassword);
         } catch (\Exception $e) {
             $msg = $e->getMessage();
@@ -91,7 +92,8 @@ class InstallController extends Controller
             return Response::jsonError('连接数据信息 ' . $dbHost . '.' . $dbDatabase . ' 失败!');
         }
 
-                $envContent = file_get_contents(base_path('env.example'));
+        // 替换.env文件
+        $envContent = file_get_contents(base_path('env.example'));
 
         $envContent = preg_replace("/DB_HOST=(.*?)\\n/", "DB_HOST=" . $dbHost . "\n", $envContent);
         $envContent = preg_replace("/DB_DATABASE=(.*?)\\n/", "DB_DATABASE=" . $dbDatabase . "\n", $envContent);
@@ -139,7 +141,9 @@ class InstallController extends Controller
             Admin::add($username, $password);
         }
 
-        
+        /**
+         * 预安装所有模块
+         */
         foreach (ModuleManager::listAllInstalledModulesInRequiredOrder() as $module) {
             if (!ModuleManager::isExists($module)) {
                 continue;
@@ -150,7 +154,8 @@ class InstallController extends Controller
             }
         }
 
-                if ($installDemo && file_exists($file = public_path('data_demo/data.php'))) {
+        // 初始化数据
+        if ($installDemo && file_exists($file = public_path('data_demo/data.php'))) {
             $data = include($file);
             if (!empty($data['inserts'])) {
                 foreach ($data['inserts'] as $table => $records) {

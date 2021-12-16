@@ -1,6 +1,6 @@
 <?php
 
-
+/* @var \Illuminate\Routing\Router $router */
 
 $router->match(['get', 'post'], 'install/ping', 'InstallController@ping');
 $router->match(['get', 'post'], 'install/prepare', 'InstallController@prepare');

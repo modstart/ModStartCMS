@@ -66,7 +66,8 @@ class LazyValueUtil
         return @json_decode($exists['value'], true);
     }
 
-        public static function watch()
+    // call minutely
+    public static function watch()
     {
         ModelUtil::model('lazy_value')->where('lifeExpire', '<', time())->delete();
         $expires = ModelUtil::model('lazy_value')->where('expire', '<', time())->get(['key', 'param', 'cacheSeconds']);

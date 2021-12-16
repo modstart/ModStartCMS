@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCmsContent extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
 
@@ -30,7 +34,7 @@ class CreateCmsContent extends Migration
             $table->integer('wordCount')->nullable()->comment('文字数');
             $table->integer('viewCount')->nullable()->comment('阅读数');
 
-            
+            /** @see CmsModelContentStatus */
             $table->tinyInteger('status')->nullable()->comment('状态');
 
             $table->integer('commentCount')->nullable()->comment('评论数');
@@ -50,7 +54,11 @@ class CreateCmsContent extends Migration
 
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

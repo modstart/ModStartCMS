@@ -24,7 +24,14 @@ class MemberMoneyUtil
         return $m['total'];
     }
 
-    
+    /**
+     * !! 这个方法应该在事务中调用
+     *
+     * @param $memberUserId
+     * @param $change
+     * @param $remark
+     * @throws \Exception
+     */
     public static function change($memberUserId, $change, $remark)
     {
         if (!$change) {
@@ -44,7 +51,18 @@ class MemberMoneyUtil
         }
     }
 
-    
+    /**
+     * !! 这个方法应该在事务中调用
+     *
+     * @param $memberUserId
+     * @param $money
+     * @param $moneyAfterTax
+     * @param $type
+     * @param $realname
+     * @param $account
+     * @param string $remark
+     * @throws \Exception
+     */
     public static function cash($memberUserId, $money, $moneyAfterTax, $type, $realname, $account, $remark = '余额提现')
     {
         self::change($memberUserId, -$money, '余额提现');

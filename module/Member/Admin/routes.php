@@ -1,6 +1,6 @@
 <?php
 
-
+/* @var \Illuminate\Routing\Router $router */
 
 $router->match(['get', 'post'], 'member/config/setting', 'ConfigController@setting');
 $router->match(['get', 'post'], 'member/config/agreement', 'ConfigController@agreement');

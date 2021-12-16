@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMemberFavorite extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('member_favorite', function (Blueprint $table) {
@@ -21,7 +25,11 @@ class CreateMemberFavorite extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
     }

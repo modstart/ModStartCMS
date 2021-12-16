@@ -24,21 +24,21 @@ class BannerController extends Controller
         $builder
             ->init('banner')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id', 'ID');
                 $builder->select('position', '位置')->optionType(BannerPosition::class);
                 $builder->image('image', '图片');
                 $builder->radio('type', '样式类型')
                     ->optionType(BannerType::class)
                     ->when(BannerType::IMAGE_TITLE_SLOGAN_LINK, function ($context) {
-                        
+                        /** @var HasFields $context */
                         $context->text('title', '标题');
                         $context->textarea('slogan', '内容描述');
                         $context->text('linkText', '链接文字');
                         $context->switch('colorReverse', '颜色反转');
                     })
                     ->when(BannerType::VIDEO, function ($context) {
-                        
+                        /** @var HasFields $context */
                         $context->video('video', '视频');
                     })->required();
                 $builder->link('link', '链接');

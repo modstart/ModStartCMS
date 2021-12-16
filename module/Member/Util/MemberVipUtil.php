@@ -80,7 +80,13 @@ class MemberVipUtil
         return null;
     }
 
-    
+    /**
+     * 会员卡升级差价计算
+     *
+     * @param $oldVipId
+     * @param $newVipId
+     * @return array
+     */
     public static function calcPrice($oldVipId, $oldVipExpire, $newVipId)
     {
         $oldVip = self::get($oldVipId);
@@ -111,7 +117,8 @@ class MemberVipUtil
                 $expireTimestamp = max(time() + $newVip['vipDays'] * 24 * 3600, $oldVipExpireTimestamp);
                 $expire = date('Y-m-d', $expireTimestamp);
                 $price = $newVip['price'] * (($expireTimestamp - time()) / (24 * 3600)) / $newVip['vipDays'];
-                                $oldLeftDays = max(0, intval(($oldVipExpireTimestamp - time()) / (24 * 3600)));
+                // 老会员折算
+                $oldLeftDays = max(0, intval(($oldVipExpireTimestamp - time()) / (24 * 3600)));
                 $oldTotalDays = $oldVip['vipDays'];
                 $oldPriceValue = ($oldTotalDays > 0 ? ($oldVip['price'] * $oldLeftDays / $oldTotalDays) : 0);
                 $price = max(bcsub($price, $oldPriceValue, 2), 0.01);

@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMemberOauth extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('member_oauth', function (Blueprint $table) {
@@ -22,7 +26,11 @@ class CreateMemberOauth extends Migration
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
     }

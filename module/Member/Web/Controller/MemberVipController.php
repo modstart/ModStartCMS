@@ -11,7 +11,7 @@ use Module\Member\Util\MemberVipUtil;
 
 class MemberVipController extends ModuleBaseController implements MemberLoginCheck
 {
-    
+    /** @var \Module\Member\Api\Controller\MemberVipController */
     private $api;
 
     public function __construct()

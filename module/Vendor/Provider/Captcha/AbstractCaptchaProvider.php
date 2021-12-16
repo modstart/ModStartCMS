@@ -4,7 +4,11 @@
 namespace Module\Vendor\Provider\Captcha;
 
 
-
+/**
+ * Class AbstractCaptchaProvider
+ * @package Module\Vendor\Provider\Captcha
+ * @since 1.6.0
+ */
 abstract class AbstractCaptchaProvider
 {
     protected $param = [];

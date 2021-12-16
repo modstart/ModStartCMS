@@ -24,7 +24,7 @@ class MemberVipOrderController extends Controller
         $builder
             ->init('member_vip_order')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->display('id', 'ID');
                 $builder->datetime('created_at', '创建时间');
                 $builder->display('memberUserId', '用户')->hookRendering(function (AbstractField $field, $item, $index) {

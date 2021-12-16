@@ -18,7 +18,7 @@ use Module\Member\Support\MemberLoginCheck;
 
 class MemberCreditController extends ModuleBaseController implements MemberLoginCheck
 {
-    
+    /** @var \Module\Member\Api\Controller\MemberCreditController */
     private $api;
 
     public function __construct()

@@ -9,7 +9,12 @@ use ModStart\Field\Text;
 use ModStart\Field\Type\FieldRenderMode;
 use Module\Member\Util\MemberCmsUtil;
 
-
+/**
+ * 后台管理用户信息字段
+ *
+ * Class AdminMemberInfo
+ * @package Module\Member\Widget\Field
+ */
 class AdminMemberInfo extends Text
 {
     protected $view = 'modstart::core.field.text';

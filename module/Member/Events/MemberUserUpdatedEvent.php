@@ -6,7 +6,8 @@ namespace Module\Member\Events;
 class MemberUserUpdatedEvent
 {
     public $memberUserId;
-        public $type;
+    // password avatar email phone
+    public $type;
 
     public function __construct($memberUserId, $type)
     {

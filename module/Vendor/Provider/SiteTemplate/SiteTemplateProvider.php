@@ -4,10 +4,16 @@
 namespace Module\Vendor\Provider\SiteTemplate;
 
 
-
+/**
+ * Class SiteTemplateProvider
+ * @package Module\Vendor\Provider\SiteTemplate
+ * @since 1.5.0
+ */
 class SiteTemplateProvider
 {
-    
+    /**
+     * @var AbstractSiteTemplateProvider[]
+     */
     private static $instances = [
         DefaultSiteTemplateProvider::class,
     ];
@@ -17,7 +23,9 @@ class SiteTemplateProvider
         self::$instances[] = $provider;
     }
 
-    
+    /**
+     * @return AbstractSiteTemplateProvider[]
+     */
     public static function all()
     {
         foreach (self::$instances as $k => $v) {
@@ -30,7 +38,11 @@ class SiteTemplateProvider
         return self::$instances;
     }
 
-    
+    /**
+     * @param $name
+     * @return AbstractSiteTemplateProvider|null
+     * @since 1.9.0
+     */
     public static function get($name)
     {
         foreach (self::all() as $provider) {
@@ -44,7 +56,7 @@ class SiteTemplateProvider
     public static function map()
     {
         return array_build(self::all(), function ($k, $v) {
-            
+            /** @var $v AbstractSiteTemplateProvider */
             return [$v->name(), $v->title()];
         });
     }

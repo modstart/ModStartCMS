@@ -5,7 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMemberMoney extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         if (!\ModStart\Core\Dao\ModelManageUtil::hasTable('member_money')) {
@@ -24,7 +28,11 @@ class CreateMemberMoney extends Migration
 
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
 

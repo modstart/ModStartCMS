@@ -11,11 +11,39 @@ use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 
+// =====================================================================================================================
+// ================================================== Routes ===========================================================
+// =====================================================================================================================
+//Route::match(['get', 'post'], 'login', 'AuthController@login');
+//Route::match(['get', 'post'], 'login/captcha', 'AuthController@loginCaptcha');
+//Route::match(['get', 'post'], 'logout', 'AuthController@logout');
+//Route::match(['get', 'post'], 'register', 'AuthController@register');
+//Route::match(['get', 'post'], 'register/captcha', 'AuthController@registerCaptcha');
+//Route::match(['get', 'post'], 'register/captcha_verify', 'AuthController@registerCaptchaVerify');
+//Route::match(['get', 'post'], 'register/phone_verify', 'AuthController@registerPhoneVerify');
+//Route::match(['get', 'post'], 'register/email_verify', 'AuthController@registerEmailVerify');
+//Route::match(['get', 'post'], 'retrieve', 'AuthController@retrieve');
+//Route::match(['get', 'post'], 'retrieve/email', 'AuthController@retrieveEmail');
+//Route::match(['get', 'post'], 'retrieve/email_verify', 'AuthController@retrieveEmailVerify');
+//Route::match(['get', 'post'], 'retrieve/phone', 'AuthController@retrievePhone');
+//Route::match(['get', 'post'], 'retrieve/phone_verify', 'AuthController@retrievePhoneVerify');
+//Route::match(['get', 'post'], 'retrieve/captcha', 'AuthController@retrieveCaptcha');
+//Route::match(['get', 'post'], 'retrieve/reset', 'AuthController@retrieveReset');
 
+//Route::match(['get', 'post'], 'oauth_login_{oauthType}', 'AuthController@oauthLogin');
+//Route::match(['get', 'post'], 'oauth_callback_{oauthType}', 'AuthController@oauthCallback');
+//Route::match(['get', 'post'], 'oauth_bind_{oauthType}', 'AuthController@oauthBind');
+//Route::match(['get', 'post'], 'oauth_proxy', 'AuthController@oauthProxy');
 
+//Route::get('sso/client', 'AuthController@ssoClient');
+//Route::get('sso/client_logout', 'AuthController@ssoClientLogout');
+//Route::get('sso/server', 'AuthController@ssoServer');
+//Route::get('sso/server_success', 'AuthController@ssoServerSuccess');
+//Route::get('sso/server_logout', 'AuthController@ssoServerLogout');
+// =====================================================================================================================
 class AuthController extends ModuleBaseController
 {
-    
+    /** @var \Module\Member\Api\Controller\AuthController */
     private $api;
 
     public function __construct()

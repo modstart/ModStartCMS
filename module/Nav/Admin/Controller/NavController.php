@@ -23,7 +23,7 @@ class NavController extends Controller
         $builder
             ->init('nav')
             ->field(function ($builder) {
-                
+                /** @var HasFields $builder */
                 $builder->id('id', 'ID');
                 $builder->select('position', '位置')->optionType(NavPosition::class);
                 $builder->text('name', '名称');

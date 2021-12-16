@@ -6,10 +6,16 @@ namespace Module\Vendor\Provider\Schedule;
 
 use Illuminate\Console\Scheduling\Schedule;
 
-
+/**
+ * Class ScheduleProvider
+ * @package Module\Vendor\Provider\Schedule
+ * @since 1.5.0
+ */
 class ScheduleProvider
 {
-    
+    /**
+     * @var AbstractScheduleProvider[]
+     */
     private static $instances = [
     ];
 
@@ -18,7 +24,9 @@ class ScheduleProvider
         self::$instances[] = $provider;
     }
 
-    
+    /**
+     * @return AbstractScheduleProvider[]
+     */
     public static function all()
     {
         foreach (self::$instances as $k => $v) {
@@ -34,7 +42,7 @@ class ScheduleProvider
     public static function call(Schedule $schedule)
     {
         foreach (ScheduleProvider::all() as $provider) {
-            
+            /** @var AbstractScheduleProvider $provider */
             $schedule->call(function () use ($provider) {
                 call_user_func([$provider, 'run']);
             })->cron($provider->cron());
