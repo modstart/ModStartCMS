@@ -83,7 +83,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url(''));
-        if (modstart_config('ssoClientEnable', false)) {
+        if (modstart_config('ssoClientEnable', false) && modstart_config('ssoClientLogoutSyncEnable', false)) {
             Input::merge(['domainUrl' => Request::domainUrl()]);
             $ret = $this->api->ssoClientLogoutPrepare();
             if ($ret['code']) {

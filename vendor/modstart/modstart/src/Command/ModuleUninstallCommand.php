@@ -35,6 +35,7 @@ class ModuleUninstallCommand extends Command
 
         unset($installeds[$module]);
 
+        $this->unPublishAsset($module);
         $this->unPublishRoot($module);
 
         ModuleManager::saveUserInstalledModules($installeds);
@@ -44,6 +45,21 @@ class ModuleUninstallCommand extends Command
         $event = new ModuleUninstalledEvent();
         $event->name = $module;
         Event::fire($event);
+    }
+
+    private function unPublishAsset($module)
+    {
+        $fs = $this->laravel['files'];
+        $from = ModuleManager::path($module, 'Asset') . '/';
+        if (!file_exists($from)) {
+            return;
+        }
+        $to = public_path("vendor/$module/");
+        if (!file_exists($to)) {
+            return;
+        }
+        $fs->deleteDirectory($to);
+        $this->info("Module Asset UnPublish : $to");
     }
 
     private function unPublishRoot($module)

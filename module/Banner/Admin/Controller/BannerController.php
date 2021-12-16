@@ -48,12 +48,12 @@ class BannerController extends Controller
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('position', '位置')->select(BannerPosition::class);
             })
+            ->hookChanged(function (Form $form) {
+                BannerUtil::clearCache();
+            })
             ->enablePagination(false)
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)
-            ->title('轮播图片')
-            ->hookSaved(function (Form $form) {
-                BannerUtil::clearCache();
-            });
+            ->title('轮播图片');
     }
 }

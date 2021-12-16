@@ -8307,7 +8307,7 @@
             initialContent: '',
             initialStyle: '',
             autoClearinitialContent: false,
-            iframeCssUrl: _url + 'themes/iframe.css?20211111',
+            iframeCssUrl: _url + 'themes/iframe.css?20211216',
             textarea: 'editorValue',
             focus: false,
             focusInEnd: true,

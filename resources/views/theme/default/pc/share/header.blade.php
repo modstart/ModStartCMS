@@ -17,7 +17,9 @@
                 <a href="javascript:;" data-confirm="确认退出？" data-href="/logout">退出</a>
             @else
                 <a href="{{modstart_web_url('login')}}">登录</a>
-                <a href="{{modstart_web_url('register')}}">注册</a>
+                @if(!modstart_config('registerDisable',false))
+                    <a href="{{modstart_web_url('register')}}">注册</a>
+                @endif
             @endif
         </div>
         <div class="logo">
