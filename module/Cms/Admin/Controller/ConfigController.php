@@ -11,7 +11,7 @@ class ConfigController extends Controller
 {
     public function basic(AdminConfigBuilder $builder)
     {
-        $builder->pageTitle('企业信息设置');
+        $builder->pageTitle('CMS基础信息');
 
         $builder->text('Cms_CompanyName', '公司名称');
         $builder->text('Cms_ContactEmail', '公司邮箱');
@@ -23,6 +23,9 @@ class ConfigController extends Controller
         $builder->richHtml('Cms_HomeInfoContent', '首页介绍说明');
         $builder->text('Cms_HomeInfoLinkText', '首页介绍链接文字');
         $builder->text('Cms_HomeInfoLink', '首页介绍链接');
+
+        $builder->text('Cms_FooterNavTitle', '底部导航标题')->help('默认为 关于');
+        $builder->text('Cms_FooterNavSecondaryTitle', '底部次导航标题')->help('默认为 导航');
 
         $builder->formClass('wide');
         return $builder->perform();

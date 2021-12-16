@@ -83,7 +83,7 @@ class ModuleServiceProvider extends ServiceProvider
                             ]
                         ],
                         [
-                            'title' => '企业信息设置',
+                            'title' => 'CMS基础信息',
                             'url' => '\Module\Cms\Admin\Controller\ConfigController@basic',
                         ],
                     ]

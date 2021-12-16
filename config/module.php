@@ -22,7 +22,7 @@ return [
         'Nav' => [
             'enable' => true,
             'config' => [
-                'position' => '[{"k":"head","v":"头部导航"},{"k":"foot","v":"底部导航"}]',
+                'position' => '[{"k":"head","v":"头部导航"},{"k":"foot","v":"底部导航"},{"k":"footSecondary","v":"底部次导航"}]',
             ],
         ],
         'Banner' => [
@@ -49,5 +49,8 @@ return [
         'SiteCounter' => [
             'enable' => true,
         ],
+//        'CmsThemeCorp' => [
+//            'enable' => true,
+//        ],
     ],
 ];
