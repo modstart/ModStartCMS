@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="body ub-list-items">
-                        @foreach(MCms:: as $a)
+                        @foreach(\MCms::latestCat($cat['id']) as $a)
                             <a class="item-c" href="{{$a['_url']}}">{{$a['title']}}</a>
                         @endforeach
                     </div>
