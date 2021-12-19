@@ -42,4 +42,17 @@ class ReUtil
         // echo "isWildMatch ==> $regex <-> $text\n";
         return preg_match($regex, $text);
     }
+
+    public static function replace($content, $regex, $callback)
+    {
+        preg_match_all($regex, $content, $mat);
+        foreach ($mat[0] as $i => $v) {
+            $row = array_map(function ($o) use ($i, $mat) {
+                return $o[$i];
+            }, $mat);
+            $replace = call_user_func_array($callback, [$row]);
+            $content = str_replace($v, $replace, $content);
+        }
+        return $content;
+    }
 }

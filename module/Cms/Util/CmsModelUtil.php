@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
+use Module\Cms\Type\CmsMode;
 use Module\Cms\Type\CmsModelContentStatus;
 use Module\Cms\Type\CmsModelFieldType;
 
@@ -17,6 +18,18 @@ class CmsModelUtil
     public static function clearCache()
     {
         Cache::forget('CmsModelAll');
+    }
+
+    public static function listModeMap()
+    {
+        $map = [];
+        foreach (CmsMode::getList() as $k => $v) {
+            $map[$k] = [];
+        }
+        foreach (CmsModelUtil::all() as $item) {
+            $map[$item['mode']][] = $item['id'];
+        }
+        return $map;
     }
 
     public static function getByName($name)

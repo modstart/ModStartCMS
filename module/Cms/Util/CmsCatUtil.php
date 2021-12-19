@@ -34,6 +34,9 @@ class CmsCatUtil
         return Cache::rememberForever('CmsCatAll', function () {
             $records = ModelUtil::all('cms_cat');
             ModelUtil::decodeRecordsJson($records, ['visitMemberGroups', 'visitMemberVips']);
+            foreach ($records as $k => $v) {
+                $records[$k]['_model'] = CmsModelUtil::get($v['modelId']);
+            }
             return $records;
         });
     }

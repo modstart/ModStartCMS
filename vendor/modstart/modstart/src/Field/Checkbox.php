@@ -6,21 +6,38 @@ namespace ModStart\Field;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ConvertUtil;
+use ModStart\Core\Util\TagUtil;
 
 class Checkbox extends AbstractField
 {
+    /**
+     * 使用JSON
+     */
+    const SERIALIZE_TYPE_DEFAULT = null;
+    /**
+     * 使用冒号分割
+     */
+    const SERIALIZE_TYPE_COLON_SEPARATED = 1;
+
     protected $value = [];
 
     protected function setup()
     {
         $this->addVariables([
             'options' => [],
+            'serializeType' => null,
         ]);
     }
 
     public function options($options)
     {
         $this->addVariables(['options' => $options]);
+        return $this;
+    }
+
+    public function serializeType($value)
+    {
+        $this->addVariables(['serializeType' => $value]);
         return $this;
     }
 
@@ -36,17 +53,32 @@ class Checkbox extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
-        return ConvertUtil::toArray($value);
+        switch ($this->getVariable('serializeType')) {
+            case self::SERIALIZE_TYPE_COLON_SEPARATED:
+                return TagUtil::string2Array($value);
+            default:
+                return ConvertUtil::toArray($value);
+        }
     }
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value);
+        switch ($this->getVariable('serializeType')) {
+            case self::SERIALIZE_TYPE_COLON_SEPARATED:
+                return TagUtil::array2String($value);
+            default:
+                return json_encode($value);
+        }
     }
 
     public function prepareInput($value, $model)
     {
-        return ConvertUtil::toArray($value);
+        switch ($this->getVariable('serializeType')) {
+            case self::SERIALIZE_TYPE_COLON_SEPARATED:
+                return TagUtil::string2Array($value);
+            default:
+                return ConvertUtil::toArray($value);
+        }
     }
 
 }

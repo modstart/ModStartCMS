@@ -14,7 +14,6 @@ class DetailController extends ModuleBaseController
 {
     public function index($id = 0)
     {
-        $data = null;
         if (is_numeric($id)) {
             $data = CmsContentUtil::get($id);
         } else {
@@ -24,8 +23,6 @@ class DetailController extends ModuleBaseController
         $catChain = CmsCatUtil::chain($cat['id']);
         $catRoot = CmsCatUtil::root($cat['id']);
         $catRootChildren = CmsCatUtil::children($catRoot['id']);
-        $paginateData = CmsContentUtil::paginateCat($catRoot['id'], 1, 10);
-        $latestRecords = $paginateData['records'];
         $view = $cat['detailTemplate'];
         if (empty($view)) {
             $view = $data['model']['detailTemplate'];
@@ -38,8 +35,6 @@ class DetailController extends ModuleBaseController
         $viewData['catChain'] = $catChain;
         $viewData['catRootChildren'] = $catRootChildren;
         $viewData['model'] = $data['model'];
-        $viewData['latestRecords'] = $latestRecords;
-         // return $viewData;
         return $this->view('cms.detail.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

@@ -1,5 +1,9 @@
 {
   "name": "Nav",
+  "types": [
+    "PC",
+    "Mobile"
+  ],
   "require": [
     "Vendor"
   ],

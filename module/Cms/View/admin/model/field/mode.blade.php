@@ -1,0 +1,18 @@
+<div>
+    @if($item->mode==\Module\Cms\Type\CmsMode::LIST_DETAIL)
+        <div>
+            默认列表模板：{{$item->listTemplate}}
+        </div>
+        <div>
+            默认详情模板：{{$item->detailTemplate}}
+        </div>
+    @elseif($item->mode==\Module\Cms\Type\CmsMode::PAGE)
+        <div>
+            默认单页模板：{{$item->pageTemplate}}
+        </div>
+    @elseif($item->mode==\Module\Cms\Type\CmsMode::FORM)
+        <div>
+            默认表单模板：{{$item->formTemplate}}
+        </div>
+    @endif
+</div>

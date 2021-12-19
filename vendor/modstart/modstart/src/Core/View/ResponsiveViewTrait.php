@@ -3,6 +3,8 @@
 
 namespace ModStart\Core\View;
 
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Util\AgentUtil;
 use Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider;
@@ -32,15 +34,34 @@ trait ResponsiveViewTrait
         static $module = null;
         static $templateRoot = null;
         if (null === $template) {
-            $template = modstart_config()->getWithEnv('siteTemplate', 'default');
+            $msSiteTemplate = Input::get('msSiteTemplate', null);
+            if (!empty($msSiteTemplate)) {
+                $provider = SiteTemplateProvider::get($msSiteTemplate);
+                if (!empty($provider)) {
+                    Session::set('msSiteTemplate', $msSiteTemplate);
+                }
+            }
+            if (empty($provider)) {
+                $msSiteTemplate = Session::get('msSiteTemplate', null);
+                if (!empty($msSiteTemplate)) {
+                    $provider = SiteTemplateProvider::get($msSiteTemplate);
+                    if (empty($provider)) {
+                        Session::forget('msSiteTemplate');
+                    }
+                }
+            }
             $module = $this->getModule();
-            $provider = SiteTemplateProvider::get($template);
+            if (empty($provider)) {
+                $template = modstart_config()->getWithEnv('siteTemplate', 'default');
+                $provider = SiteTemplateProvider::get($template);
+            }
             if ($provider && $provider->root()) {
                 $templateRoot = $provider->root();
+                $template = $provider->name();
             } else {
                 $templateRoot = "theme.$template";
             }
-
+            Session::put('msSiteTemplateUsing', $template);
         }
 
         /**

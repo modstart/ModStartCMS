@@ -6,6 +6,21 @@ namespace ModStart\Core\Util;
 
 class CodeUtil
 {
+    public static function cssRemoveComments($code)
+    {
+        $code = str_replace("/*", "__COMSTART", $code);
+        $code = str_replace("*/", "COMEND__", $code);
+        $code = preg_replace("/__COMSTART[\s\S]*?COMEND__/s", "", $code);
+        return $code;
+    }
+
+    public static function jsRemoveComments($code)
+    {
+        $pattern = '/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/';
+        $code = preg_replace($pattern, '', $code);
+        return $code;
+    }
+
     public static function phpRemoveComments($code)
     {
         $commentTokens = array(T_COMMENT);

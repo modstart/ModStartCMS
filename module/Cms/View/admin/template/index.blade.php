@@ -1,6 +1,6 @@
 @extends('modstart::admin.frame')
 
-@section('pageTitle')模板管理@endsection
+@section('pageTitle')内容模板@endsection
 
 @section('bodyContent')
     <div class="ub-alert">

@@ -2,10 +2,6 @@
     <div class="ub-container">
         <div class="menu">
             @if(\Module\Member\Auth\MemberUser::id())
-{{--                <a class="ub-color-vip" href="/member_vip">--}}
-{{--                    <i class="iconfont icon-vip"></i>--}}
-{{--                    {{\Module\Member\Auth\MemberVip::get('title')}}--}}
-{{--                </a>--}}
                 <a href="{{modstart_web_url('member_message')}}">
                     <i class="iconfont icon-bell"></i>
                     <?php $count = \Module\Member\Util\MemberMessageUtil::getUnreadMessageCount(\Module\Member\Auth\MemberUser::id()); ?>

@@ -93,6 +93,16 @@ class CmsTemplateUtil
         return self::listFiles('detail');
     }
 
+    public static function allPageTemplates()
+    {
+        return self::listFiles('page');
+    }
+
+    public static function allFormTemplates()
+    {
+        return self::listFiles('form');
+    }
+
     public static function allListTemplateMap()
     {
         return array_build(self::allListTemplates(), function ($k, $v) {
@@ -103,6 +113,20 @@ class CmsTemplateUtil
     public static function allDetailTemplateMap()
     {
         return array_build(self::allDetailTemplates(), function ($k, $v) {
+            return [$k, $k];
+        });
+    }
+
+    public static function allPageTemplateMap()
+    {
+        return array_build(self::allPageTemplates(), function ($k, $v) {
+            return [$k, $k];
+        });
+    }
+
+    public static function allFormTemplateMap()
+    {
+        return array_build(self::allFormTemplates(), function ($k, $v) {
             return [$k, $k];
         });
     }

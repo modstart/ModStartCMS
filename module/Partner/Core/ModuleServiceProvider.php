@@ -5,9 +5,6 @@ namespace Module\Partner\Core;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
-use ModStart\Module\ModuleClassLoader;
-use Module\SmsAliyun\Driver\SmsAliyunSender;
-use Module\SmsTecmz\Driver\SmsTecmzSender;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -18,6 +15,8 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
+        include __DIR__ . '/../Helpers/MPartner.php';
+
         AdminMenu::register([
             [
                 'title' => '物料管理',

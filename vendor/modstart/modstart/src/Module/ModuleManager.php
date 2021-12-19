@@ -38,6 +38,7 @@ class ModuleManager
                 'name' => 'None',
                 'title' => 'None',
                 'version' => '1.0.0',
+                'types' => [],
                 'require' => [
                     // 'Xxx:*'
                     // 'Xxx:>=*'

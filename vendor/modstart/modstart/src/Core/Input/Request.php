@@ -173,6 +173,11 @@ class Request
         return \Illuminate\Support\Facades\Request::isMethod('post');
     }
 
+    public static function isAjax()
+    {
+        return \Illuminate\Support\Facades\Request::ajax();
+    }
+
     /**
      * @return \Illuminate\Http\Request
      */

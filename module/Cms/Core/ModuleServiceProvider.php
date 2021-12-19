@@ -26,7 +26,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        require_once __DIR__ . '/../Helpers/CMS.php';
+        require_once __DIR__ . '/../Helpers/MCms.php';
 
         AdminWidgetLink::register(function () {
             $menu = [];
@@ -61,30 +61,37 @@ class ModuleServiceProvider extends ServiceProvider
                     'sort' => 150,
                     'children' => [
                         [
-                            'title' => 'CMS内容',
-                            'children' => $contentMenus
+                            'title' => '栏目管理',
+                            'url' => '\Module\Cms\Admin\Controller\CatController@index',
                         ],
                         [
-                            'title' => 'CMS配置',
+                            'title' => '基础信息',
+                            'url' => '\Module\Cms\Admin\Controller\ConfigController@basic',
+                        ],
+                        [
+                            'title' => '内容管理',
+                            'children' => $contentMenus
+                        ],
+//                        [
+//                            'title' => '表单管理',
+//                            'children' => $contentMenus
+//                        ],
+                        [
+                            'title' => 'CMS设置',
                             'children' => [
-
                                 [
-                                    'title' => '模型管理',
+                                    'title' => '内容模型',
                                     'url' => '\Module\Cms\Admin\Controller\ModelController@index',
                                 ],
+//                                [
+//                                    'title' => '表单模型',
+//                                    'url' => '\Module\Cms\Admin\Controller\ModelController@index',
+//                                ],
                                 [
                                     'title' => '模板管理',
                                     'url' => '\Module\Cms\Admin\Controller\TemplateController@index',
                                 ],
-                                [
-                                    'title' => '栏目管理',
-                                    'url' => '\Module\Cms\Admin\Controller\CatController@index',
-                                ],
                             ]
-                        ],
-                        [
-                            'title' => 'CMS基础信息',
-                            'url' => '\Module\Cms\Admin\Controller\ConfigController@basic',
                         ],
                     ]
                 ],

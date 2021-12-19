@@ -62,7 +62,7 @@ trait CanCascadeFields
     protected function formatValues($operator, &$value)
     {
         if (in_array($operator, ['in', 'notIn'])) {
-            $value = Arr::wrap($value);
+            $value = json_encode($value);
         }
         if (is_array($value)) {
             $value = array_map('strval', $value);
@@ -108,6 +108,13 @@ trait CanCascadeFields
         $script = <<<JS
 (function () {
     var operatorTable = {
+       'in': function(a, b) {
+           b = JSON.parse(b); a = String(a);
+           for(var i=0;i<b.length;i++){
+               b[i] = String(b[i]);
+           }
+           return b.indexOf(a)>=0;
+       },
        '=': function(a, b) {
            if ($.isArray(a) && $.isArray(b)) {
                return $(a).not(b).length === 0 && $(b).not(a).length === 0;

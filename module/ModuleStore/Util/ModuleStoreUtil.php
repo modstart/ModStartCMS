@@ -5,6 +5,7 @@ namespace Module\ModuleStore\Util;
 
 
 use Chumper\Zipper\Zipper;
+use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
@@ -19,7 +20,9 @@ class ModuleStoreUtil
 
     public static function remoteModuleData()
     {
-        return CurlUtil::getJSONData(self::REMOTE_BASE . '/api/store/module');
+        return Cache::remember('ModuleStore_Modules', 60, function () {
+            return CurlUtil::getJSONData(self::REMOTE_BASE . '/api/store/module');
+        });
     }
 
     public static function all()
@@ -27,14 +30,18 @@ class ModuleStoreUtil
         $storeConfig = [
             'disable' => config('env.MS_MODULE_STORE_DISABLE', false),
         ];
-        $remoteModuleResult = self::remoteModuleData();
+        $result = self::remoteModuleData();
         $categories = [];
-        if (!empty($remoteModuleResult['data']['categories'])) {
-            $categories = $remoteModuleResult['data']['categories'];
+        if (!empty($result['data']['categories'])) {
+            $categories = $result['data']['categories'];
+        }
+        $types = [];
+        if (!empty($result['data']['types'])) {
+            $types = $result['data']['types'];
         }
         $modules = [];
-        if (!empty($remoteModuleResult['data']['modules'])) {
-            foreach ($remoteModuleResult['data']['modules'] as $remote) {
+        if (!empty($result['data']['modules'])) {
+            foreach ($result['data']['modules'] as $remote) {
                 $remote['_isLocal'] = false;
                 $remote['_isInstalled'] = false;
                 $remote['_isEnabled'] = false;
@@ -80,6 +87,7 @@ class ModuleStoreUtil
         return [
             'storeConfig' => $storeConfig,
             'categories' => $categories,
+            'types' => $types,
             'modules' => array_values($modules),
         ];
     }

@@ -1,6 +1,10 @@
 {
   "name": "Member",
   "title": "通用用户系统",
+  "types": [
+    "PC",
+    "Mobile"
+  ],
   "require": [
     "Vendor:>=1.9.0"
   ],

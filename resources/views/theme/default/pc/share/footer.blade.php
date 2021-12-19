@@ -6,7 +6,7 @@
                     <div class="col-6">
                         <div class="link">
                             <div class="title">
-                                {{modstart_config('Cms_FooterNavTitle','关于')}}
+                                关于
                             </div>
                             <div class="list">
                                 @foreach(\Module\Nav\Util\NavUtil::listByPositionWithCache('foot') as $nav)
@@ -18,7 +18,7 @@
                     <div class="col-6">
                         <div class="link">
                             <div class="title">
-                                {{modstart_config('Cms_FooterNavSecondaryTitle','导航')}}
+                                导航
                             </div>
                             <div class="list">
                                 @foreach(\Module\Nav\Util\NavUtil::listByPositionWithCache('footSecondary') as $nav)

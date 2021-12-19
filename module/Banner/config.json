@@ -1,5 +1,9 @@
 {
   "name": "Banner",
+  "types": [
+    "PC",
+    "Mobile"
+  ],
   "require": [
     "Vendor:>=1.4.0"
   ],

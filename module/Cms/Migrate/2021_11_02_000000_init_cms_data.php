@@ -31,6 +31,7 @@ class InitCmsData extends Migration
                 'name' => 'price',
                 'title' => '价格',
                 'fieldType' => CmsModelFieldType::TEXT,
+                'isRequired' => false,
             ],
         ]);
         CmsModelUtil::build([

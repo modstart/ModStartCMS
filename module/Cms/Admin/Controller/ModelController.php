@@ -15,12 +15,15 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Field\AbstractField;
+use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\ModStart;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Widget\TextDialogRequest;
+use Module\Cms\Type\CmsMode;
 use Module\Cms\Type\CmsModelFieldType;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Cms\Util\CmsTemplateUtil;
@@ -158,8 +161,12 @@ class ModelController extends Controller
         $grid = Grid::make('cms_model');
         $grid->text('title', '名称');
         $grid->text('name', '标识');
-        $grid->select('listTemplate', '默认列表模板')->options(CmsTemplateUtil::allListTemplateMap());
-        $grid->select('detailTemplate', '默认详情模板')->options(CmsTemplateUtil::allDetailTemplateMap());
+        $grid->type('mode', '类型')->type(CmsMode::class);
+        $grid->display('_mode', '模式')->hookRendering(function (AbstractField $field, $item, $index) {
+            return AutoRenderedFieldValue::makeView('module::Cms.View.admin.model.field.mode', [
+                'item' => $item,
+            ]);
+        });
         $grid->title('模型')->dialogSizeSmall();
         $grid->canAdd(true)->urlAdd(action('\\' . __CLASS__ . '@edit'));
         $grid->canEdit(true)->urlEdit(action('\\' . __CLASS__ . '@edit'));
@@ -177,7 +184,7 @@ class ModelController extends Controller
         if (Request::isPost()) {
             return $grid->request();
         }
-        return $page->pageTitle('模型管理')->body($grid);
+        return $page->pageTitle('内容模型')->body($grid);
     }
 
     public function edit(AdminDialogPage $page)
@@ -197,8 +204,18 @@ class ModelController extends Controller
         if ($record) {
             $nameField->readonly(true);
         }
-        $form->select('listTemplate', '默认列表模板')->options(CmsTemplateUtil::allListTemplateMap());
-        $form->select('detailTemplate', '默认详情模板')->options(CmsTemplateUtil::allDetailTemplateMap());
+        $form->radio('mode', '显示模式')->optionType(CmsMode::class)
+            ->when('=', CmsMode::LIST_DETAIL, function (Form $form) {
+                $form->select('listTemplate', '默认列表模板')->options(CmsTemplateUtil::allListTemplateMap());
+                $form->select('detailTemplate', '默认详情模板')->options(CmsTemplateUtil::allDetailTemplateMap());
+            })
+            ->when('=', CmsMode::PAGE, function (Form $form) {
+                $form->select('pageTemplate', '默认单页模板')->options(CmsTemplateUtil::allPageTemplateMap());
+            })
+            ->when('=', CmsMode::FORM, function (Form $form) {
+                $form->select('formTemplate', '默认表单模板')->options(CmsTemplateUtil::allFormTemplateMap());
+            })
+            ->defaultValue(CmsMode::LIST_DETAIL)->required();
         $form->showSubmit(false)->showReset(false)->formClass('wide');
         $form->item($record)->fillFields();
         if (Request::isPost()) {
@@ -208,7 +225,7 @@ class ModelController extends Controller
                 ModelUtil::transactionBegin();
                 if ($record) {
                     ModelUtil::update('cms_model', $record['id'], ArrayUtil::keepKeys($data, [
-                        'title', 'listTemplate', 'detailTemplate',
+                        'title', 'form', 'listTemplate', 'detailTemplate', 'pageTemplate',
                     ]));
                 } else {
                     $data = ModelUtil::insert('cms_model', $data);
@@ -219,7 +236,7 @@ class ModelController extends Controller
                 return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
             });
         }
-        return $page->pageTitle('模型管理')->body($form);
+        return $page->pageTitle('内容模型')->body($form);
     }
 
     public function delete()

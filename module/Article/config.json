@@ -1,5 +1,9 @@
 {
   "name": "Article",
+  "types": [
+    "PC",
+    "Mobile"
+  ],
   "require": [
     "Vendor"
   ],

@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Admin\Layout\AdminPage;
-use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Request;
@@ -17,14 +16,17 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\TreeUtil;
+use ModStart\Field\AbstractField;
+use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Tags;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
-use ModStart\Layout\Row;
 use ModStart\Repository\Filter\RepositoryFilter;
+use Module\Cms\Type\CmsMode;
 use Module\Cms\Type\CmsModelContentStatus;
 use Module\Cms\Type\CmsModelFieldType;
+use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsModelUtil;
 
 class ContentController extends Controller
@@ -53,11 +55,23 @@ class ContentController extends Controller
         $grid = Grid::make($this->modelTable);
         $grid->id('id', 'ID');
         $grid->select('catId', '栏目')->optionModelTree('cms_cat', 'id', 'title');
-        $grid->text('title', '标题');
-        $grid->type('status', '状态')->type(CmsModelContentStatus::class, [
-            CmsModelContentStatus::SHOW => 'success',
-            CmsModelContentStatus::HIDE => 'muted',
-        ]);
+        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+            $grid->text('title', '标题');
+            $grid->type('status', '状态')->type(CmsModelContentStatus::class, [
+                CmsModelContentStatus::SHOW => 'success',
+                CmsModelContentStatus::HIDE => 'muted',
+            ]);
+        } else {
+            $customFields = isset($this->model['_customFields']) ? $this->model['_customFields'] : [];
+            $grid->display('_content', '内容')->hookRendering(function (AbstractField $field, $item, $index) use ($customFields) {
+                $data = CmsContentUtil::getModelData($this->model, $item->id);
+                return AutoRenderedFieldValue::makeView('module::Cms.View.admin.content.field.formData', [
+                    'item' => $item,
+                    'customFields' => $customFields,
+                    'data' => $data,
+                ]);
+            })->width(500);
+        }
         $grid->repositoryFilter(function (RepositoryFilter $filter) {
             $filter->where(['modelId' => $this->modelId]);
         });
@@ -66,7 +80,11 @@ class ContentController extends Controller
             $filter->like('title', '标题');
             $filter->eq('status', '状态')->select(CmsModelContentStatus::class);
         });
-        $grid->canAdd(true)->urlAdd(action('\\' . __CLASS__ . '@edit', ['modelId' => $this->modelId]));
+        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+            $grid->canAdd(true)->urlAdd(action('\\' . __CLASS__ . '@edit', ['modelId' => $this->modelId]));
+        } else {
+            $grid->canAdd(false);
+        }
         $grid->canEdit(true)->urlEdit(action('\\' . __CLASS__ . '@edit', ['modelId' => $this->modelId]));
         $grid->canDelete(true)->urlDelete(action('\\' . __CLASS__ . '@delete', ['modelId' => $this->modelId]));
         if (Request::isPost()) {
@@ -112,7 +130,9 @@ class ContentController extends Controller
             return [$v['id'], str_repeat('|--', $v['level']) . $v['title']];
         });
         $form->select('catId', '栏目')->options($options);
-        $form->text('title', '标题')->required();
+        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+            $form->text('title', '标题')->required();
+        }
         if (!empty($this->model['_customFields'])) {
             $fields = $this->model['_customFields'];
             foreach ($fields as $field) {
@@ -163,23 +183,27 @@ class ContentController extends Controller
                 }
             }
         }
-        $form->text('alias', '别名')
-            ->ruleUnique($this->modelTable)
-            ->ruleRegex('/^[a-z0-9_]*[a-z][a-z0-9_]*$/')
-            ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
+        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+            $form->text('alias', '别名')
+                ->ruleUnique($this->modelTable)
+                ->ruleRegex('/^[a-z0-9_]*[a-z][a-z0-9_]*$/')
+                ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
+        }
         $form->richHtml('content', '内容');
-        $form->textarea('summary', '摘要');
-        $form->image('cover', '封面');
-        $form->datetime('postTime', '发布时间')->required()->help('可以是未来时间，在未来发布')->defaultValue(Carbon::now());
-        $form->radio('status', '状态')->optionType(CmsModelContentStatus::class)->required()->defaultValue(CmsModelContentStatus::SHOW);
-        $form->switch('isRecommend', '推荐');
-        $form->switch('isTop', '置顶');
-        $form->tags('tags', '标签')->serializeType(Tags::SERIALIZE_TYPE_COLON_SEPARATED);
-        $form->text('author', '作者');
-        $form->text('source', '来源');
-        $form->text('seoTitle', 'SEO标题');
-        $form->text('seoDescription', 'SEO描述');
-        $form->text('seoKeywords', 'SEO关键词');
+        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+            $form->textarea('summary', '摘要');
+            $form->image('cover', '封面');
+            $form->datetime('postTime', '发布时间')->required()->help('可以是未来时间，在未来发布')->defaultValue(Carbon::now());
+            $form->radio('status', '状态')->optionType(CmsModelContentStatus::class)->required()->defaultValue(CmsModelContentStatus::SHOW);
+            $form->switch('isRecommend', '推荐');
+            $form->switch('isTop', '置顶');
+            $form->tags('tags', '标签')->serializeType(Tags::SERIALIZE_TYPE_COLON_SEPARATED);
+            $form->text('author', '作者');
+            $form->text('source', '来源');
+            $form->text('seoTitle', 'SEO标题');
+            $form->text('seoDescription', 'SEO描述');
+            $form->textarea('seoKeywords', 'SEO关键词');
+        }
         $form->item($record)->fillFields();
         $form->showReset(false)->showSubmit(false);
         if (Request::isPost()) {

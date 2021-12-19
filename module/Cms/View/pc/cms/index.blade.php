@@ -16,7 +16,6 @@
 
     <div class="ub-container">
 
-
         <div class="tw-bg-white tw-p-4 lg:tw-p-8 tw-rounded margin-top">
             <div class="row">
                 <div class="col-md-3">

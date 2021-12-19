@@ -1,5 +1,8 @@
 {
   "name": "AdminManager",
+  "types": [
+    "Admin"
+  ],
   "require": [
     "Vendor"
   ],

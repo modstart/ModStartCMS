@@ -30,9 +30,9 @@
                         <i class="iconfont icon-checked"></i> 已启用
                     </span>
                 </el-tab-pane>
-                <el-tab-pane name="local">
+                <el-tab-pane name="disabled">
                     <span slot="label">
-                        <i class="iconfont icon-pc"></i> 本地所有模块
+                        <i class="iconfont icon-close"></i> 已禁用
                     </span>
                 </el-tab-pane>
             </el-tabs>
@@ -56,32 +56,41 @@
                         </span>
                     </el-button>
                 </div>
-                <el-radio-group v-model="search.type">
+                <el-radio-group v-model="search.priceType">
                     <el-radio-button label="all"><i class="iconfont icon-list-alt"></i> 全部</el-radio-button>
                     <el-radio-button label="free"><i class="iconfont icon-gift"></i> 免费</el-radio-button>
                     <el-radio-button label="fee"><i class="iconfont icon-cny"></i> 付费</el-radio-button>
                 </el-radio-group>
-                <el-select v-model="search.categoryId" placeholder="请选择" style="width:auto;">
-                    <el-option :key="0" label="全部" :value="0"></el-option>
-                    <el-option
-                            v-for="item in categories"
-                            :key="item.id"
-                            :label="item.title"
-                            :value="item.id">
-                    </el-option>
-                </el-select>
+                <el-checkbox v-model="search.isRecommend" border>推荐</el-checkbox>
                 <el-input prefix-icon="el-icon-search"
                           v-model="search.keywords"
                           style="width:10rem;"
                           placeholder="搜索模块"></el-input>
             </div>
             <div class="tw-px-2" v-if="categories.length>0">
-                <i class="iconfont icon-category tw-ml-1 ub-text-muted"></i>
-                <a href="javascript:;" class="ub-text-muted" :class="{'ub-text-primary':search.categoryId===0}" @click="search.categoryId=0">
+                <i class="iconfont icon-category tw-ml-1 tw-text-gray-600 tw-inline-block tw-w-4"></i>
+                分类：
+                <a href="javascript:;" class="tw-text-gray-500 tw-mr-1"
+                   :class="{'ub-text-primary':search.categoryId===0}" @click="search.categoryId=0">
                     全部
                 </a>
-                <a href="javascript:;" class="tw-mr-1 ub-text-muted" :class="{'ub-text-primary':search.categoryId===cat.id}" v-for="(cat,catIndex) in categories" :key="catIndex" @click="search.categoryId=cat.id">
+                <a href="javascript:;" class="tw-mr-1 tw-text-gray-500 tw-mr-1"
+                   :class="{'ub-text-primary':search.categoryId===cat.id}"
+                   v-for="(cat,catIndex) in categories" :key="catIndex" @click="search.categoryId=cat.id">
                     {{cat.title}}
+                </a>
+            </div>
+            <div class="tw-px-2 tw-pt-2" v-if="types.length>0">
+                <i class="iconfont icon-desktop tw-ml-1 tw-text-gray-600 tw-inline-block tw-w-4"></i>
+                类型：
+                <a href="javascript:;" class="tw-text-gray-500 tw-mr-1"
+                   :class="{'ub-text-primary':!search.type}" @click="search.type=''">
+                    全部
+                </a>
+                <a href="javascript:;" class="tw-mr-1 tw-text-gray-500 tw-mr-1"
+                   :class="{'ub-text-primary':search.type===type.value}"
+                   v-for="(type,typeIndex) in types" :key="typeIndex" @click="search.type=type.value">
+                    {{type.title}}
                 </a>
             </div>
             <div class="ub-empty" v-if="loading">
@@ -99,7 +108,8 @@
             <div class="ub-padding" v-if="filterModules.length>0">
                 <div class="row">
                     <div v-for="(module,moduleIndex) in filterModules" class="col-md-4">
-                        <div class="tw-bg-white tw-p-2 tw-rounded tw-mb-2 tw-border-gray-200 tw-border-solid tw-border tw-shadow">
+                        <div
+                            class="tw-bg-white tw-p-2 tw-rounded tw-mb-2 tw-border-gray-200 tw-border-solid tw-border tw-shadow">
                             <div style="padding-left:6rem;">
                                 <div class="tw-w-28 tw-float-left" style="margin-left:-6rem;">
                                     <a v-if="module.url"
@@ -194,10 +204,12 @@
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
                                     <i class="iconfont icon-direction-up"></i>升级
                                 </a>
+                                &nbsp;
                             </div>
-                            <div class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
+                            <div
+                                class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
                                 <div class="ub-text-muted tw-inline-block"><i class="iconfont icon-tag"></i><span
-                                        v-html="$highlight(module.name,search.keywords)"></span></div>
+                                    v-html="$highlight(module.name,search.keywords)"></span></div>
                                 <span class="ub-text-muted">|</span>
                                 <span class="ub-text-muted" v-if="module._isLocal">
                                     版本V{{module._localVersion}}
@@ -223,7 +235,7 @@
                 <div style="max-width:300px;margin:0 auto 2rem auto;">
                     <div class="tw-text-center">
                         <a href="https://modstart.com" target="_blank">
-                            <img class="tw-h-20" :src="$url.cdn('vendor/ModuleStore/image/logo_modstart.png')" />
+                            <img class="tw-h-20" :src="$url.cdn('vendor/ModuleStore/image/logo_modstart.png')"/>
                         </a>
                     </div>
                     <div class="tw-font-bold tw-py-2 tw-text-center tw-text-lg">
@@ -287,7 +299,8 @@
             </div>
             <div v-else>
                 <div>
-                    <div class="tw-bg-white tw-rounded-sm tw-mb-2 tw-box tw-px-5 tw-py-3 tw-mb-3 tw-flex tw-items-center tw-zoom-in">
+                    <div
+                        class="tw-bg-white tw-rounded-sm tw-mb-2 tw-box tw-px-5 tw-py-3 tw-mb-3 tw-flex tw-items-center tw-zoom-in">
                         <div class="tw-w-10 tw-h-10 tw-flex-none tw-image-fit tw-rounded-full tw-overflow-hidden">
                             <div class="circle tw-border tw-border-gray-200 tw-border-solid tw-shadow ub-cover-1-1"
                                  :style="{backgroundImage:`url(${memberUser.avatar||'/asset/image/avatar.png'})`}"></div>
@@ -351,7 +364,7 @@
             <div v-if="installVersionModule">
                 <table class="ub-table tw-w-full tw-font-mono">
                     <tbody>
-                    <tr v-for="(v,vIndex) in installVersionModule.releases">
+                    <tr v-for="(v,vIndex) in installVersionReleases">
                         <td width="100">v{{v.version}}</td>
                         <td>{{v.feature}}</td>
                         <td width="100">{{v.time}}</td>
@@ -370,315 +383,337 @@
 </template>
 
 <script>
-    import {BeanUtil} from '@ModStartAsset/svue/lib/util'
-    import {Storage} from '@ModStartAsset/svue/lib/storage'
+import {BeanUtil} from '@ModStartAsset/svue/lib/util'
+import {Storage} from '@ModStartAsset/svue/lib/storage'
 
-    export default {
-        name: "ModuleStore",
-        data() {
-            return {
-                loading: true,
-                search: {
-                    tab: 'store',
-                    type: 'all',
-                    categoryId: 0,
-                    keywords: '',
-                },
-                commandDialogMsgs: [],
-                commandDialogRunStart: 0,
-                commandDialogRunElapse: 0,
-                commandDialogShow: false,
-                commandDialogFinish: false,
-                commandDialogTitle: '',
-                memberUserShow: false,
-                memberUserLoading: false,
-                memberLoginCaptchaImage: null,
-                memberLoginInfo: {
-                    username: '',
-                    password: '',
-                    captcha: '',
-                    agree: false,
-                },
-                storeApiToken: Storage.get('storeApiToken', ''),
-                memberUser: {
-                    id: 0,
-                    username: '',
-                    avatar: '',
-                },
-                categories: [],
-                modules: [],
-                storeConfig: {
-                    disable: false,
-                },
-                installVersionDialogShow: false,
-                installVersionModule: null,
-            }
-        },
-        computed: {
-            filterModules() {
-                const results = this.modules.filter(module => {
-                    switch (this.search.tab) {
-                        case 'store':
-                            if (module._isLocal) return false
-                            break
-                        case 'local':
-                            if (!module._isLocal) return false
-                            break
-                        case 'installed':
-                            if (!module._isInstalled) return false
-                            break;
-                        case 'enabled':
-                            if (!module._isEnabled) return false
-                            break;
-                    }
-                    switch (this.search.type) {
-                        case 'free':
-                            if (module.isFee) return false
-                            break
-                        case 'fee':
-                            if (!module.isFee) return false
-                            break
-                    }
-                    if (this.search.categoryId) {
-                        if (module.categoryId !== this.search.categoryId) return false
-                    }
-                    if (this.search.keywords) {
-                        if (module.title.toLowerCase().includes(this.search.keywords.toLowerCase())) {
-                            return true
-                        }
-                        if (module.name.toLowerCase().includes(this.search.keywords.toLowerCase())) {
-                            return true
-                        }
-                        if (module.description.toLowerCase().includes(this.search.keywords.toLowerCase())) {
-                            return true
-                        }
+export default {
+    name: "ModuleStore",
+    data() {
+        return {
+            loading: true,
+            search: {
+                tab: 'store',
+                priceType: 'all',
+                isRecommend: false,
+                categoryId: 0,
+                type: '',
+                keywords: '',
+            },
+            commandDialogMsgs: [],
+            commandDialogRunStart: 0,
+            commandDialogRunElapse: 0,
+            commandDialogShow: false,
+            commandDialogFinish: false,
+            commandDialogTitle: '',
+            memberUserShow: false,
+            memberUserLoading: false,
+            memberLoginCaptchaImage: null,
+            memberLoginInfo: {
+                username: '',
+                password: '',
+                captcha: '',
+                agree: false,
+            },
+            storeApiToken: Storage.get('storeApiToken', ''),
+            memberUser: {
+                id: 0,
+                username: '',
+                avatar: '',
+            },
+            categories: [],
+            types: [],
+            modules: [],
+            storeConfig: {
+                disable: false,
+            },
+            installVersionDialogShow: false,
+            installVersionReleases: [],
+            installVersionModule: null,
+        }
+    },
+    computed: {
+        filterModules() {
+            const results = this.modules.filter(module => {
+                switch (this.search.tab) {
+                    case 'store':
+                        if (module._isLocal) return false
+                        break
+                    case 'installed':
+                        if (!module._isInstalled) return false
+                        break;
+                    case 'enabled':
+                        if (!module._isEnabled) return false
+                        break;
+                    case 'disabled':
+                        if (!module._isInstalled || module._isEnabled) return false
+                        break;
+                }
+                if (this.search.isRecommend) {
+                    if (!module.isRecommend) {
                         return false
                     }
-                    return true
-                })
-                return results
+                }
+                if (!!this.search.type) {
+                    if (!module.types.includes(this.search.type)) {
+                        return false
+                    }
+                }
+                switch (this.search.priceType) {
+                    case 'free':
+                        if (module.isFee) return false
+                        break
+                    case 'fee':
+                        if (!module.isFee) return false
+                        break
+                }
+                if (this.search.categoryId) {
+                    if (module.categoryId !== this.search.categoryId) return false
+                }
+                if (this.search.keywords) {
+                    if (module.title.toLowerCase().includes(this.search.keywords.toLowerCase())) {
+                        return true
+                    }
+                    if (module.name.toLowerCase().includes(this.search.keywords.toLowerCase())) {
+                        return true
+                    }
+                    if (module.description.toLowerCase().includes(this.search.keywords.toLowerCase())) {
+                        return true
+                    }
+                    return false
+                }
+                return true
+            })
+            return results
+        }
+    },
+    mounted() {
+        this.doLoad()
+        this.doLoadStore()
+        setInterval(() => {
+            this.commandDialogRunElapse = parseInt(((new Date()).getTime() - this.commandDialogRunStart) / 1000)
+        }, 1000)
+    },
+    methods: {
+        versionCompare(left, right) {
+            let a = left.split('.'), b = right.split('.')
+            for (let i = 0, len = Math.max(a.length, b.length); i < len; i++) {
+                if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
+                    return 1;
+                } else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
+                    return -1;
+                }
+            }
+            return 0;
+        },
+        doStoreRequest(url, data, cbSuccess, cbError) {
+            const cbErrorDefault = (res) => {
+                this.$dialog.tipError(res.msg)
+            }
+            if (!cbError) {
+                cbError = cbErrorDefault
+            }
+            $.ajax({
+                url: `${window.__data.apiBase}/api/${url}`,
+                dataType: 'jsonp',
+                timeout: 10 * 1000,
+                data: Object.assign(data, {
+                    api_token: this.storeApiToken,
+                    modstartParam: JSON.stringify(window.__data.modstartParam),
+                }),
+                success: (res) => {
+                    if (res.code) {
+                        if (res.code === 1002) {
+                            this.doMemberLoginCaptchaRefresh()
+                        }
+                        if (true !== cbError(res)) {
+                            cbErrorDefault(res)
+                        }
+                    } else {
+                        cbSuccess(res)
+                    }
+                },
+                error: (res) => {
+                    if (true !== cbError({code: -1, msg: '请求出现错误'})) {
+                        cbErrorDefault({code: -1, msg: '请求出现错误'})
+                    }
+                },
+                jsonp: 'callback',
+            });
+        },
+        doMemberUserLogout() {
+            this.$dialog.confirm('确认退出？', () => {
+                this.storeApiToken = ''
+                Storage.set('storeApiToken', '')
+                this.memberUserShow = false
+                this.doLoadStore()
+            })
+        },
+        doSubmitCheck(e) {
+            if (e.keyCode === 13) {
+                this.doMemberLoginSubmit()
             }
         },
-        mounted() {
-            this.doLoad()
-            this.doLoadStore()
-            setInterval(() => {
-                this.commandDialogRunElapse = parseInt(((new Date()).getTime() - this.commandDialogRunStart) / 1000)
-            }, 1000)
+        doMemberLoginSubmit() {
+            if (!this.memberLoginInfo.agree) {
+                this.$dialog.tipError('请先同意使用协议')
+                return
+            }
+            this.$dialog.loadingOn()
+            this.doStoreRequest('store/login', this.memberLoginInfo, res => {
+                this.$dialog.loadingOff()
+                this.$dialog.tipSuccess('登录成功')
+                this.doLoadStoreMember()
+                this.memberLoginInfo.username = ''
+                this.memberLoginInfo.password = ''
+                this.memberLoginInfo.captcha = ''
+                this.memberUserShow = false
+            }, res => {
+                this.$dialog.loadingOff()
+            })
         },
-        methods: {
-            versionCompare(left, right) {
-                let a = left.split('.'), b = right.split('.')
-                for (let i = 0, len = Math.max(a.length, b.length); i < len; i++) {
-                    if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
-                        return 1;
-                    } else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
-                        return -1;
-                    }
-                }
-                return 0;
-            },
-            doStoreRequest(url, data, cbSuccess, cbError) {
-                const cbErrorDefault = (res) => {
-                    this.$dialog.tipError(res.msg)
-                }
-                if (!cbError) {
-                    cbError = cbErrorDefault
-                }
-                $.ajax({
-                    url: `${window.__data.apiBase}/api/${url}`,
-                    dataType: 'jsonp',
-                    timeout: 10 * 1000,
-                    data: Object.assign(data, {
-                        api_token: this.storeApiToken,
-                        modstartParam: JSON.stringify(window.__data.modstartParam),
-                    }),
-                    success: (res) => {
-                        if (res.code) {
-                            if (res.code === 1002) {
-                                this.doMemberLoginCaptchaRefresh()
-                            }
-                            if (true !== cbError(res)) {
-                                cbErrorDefault(res)
-                            }
-                        } else {
-                            cbSuccess(res)
-                        }
-                    },
-                    error: (res) => {
-                        if (true !== cbError({code: -1, msg: '请求出现错误'})) {
-                            cbErrorDefault({code: -1, msg: '请求出现错误'})
-                        }
-                    },
-                    jsonp: 'callback',
-                });
-            },
-            doMemberUserLogout() {
-                this.$dialog.confirm('确认退出？', () => {
-                    this.storeApiToken = ''
-                    Storage.set('storeApiToken', '')
-                    this.memberUserShow = false
-                    this.doLoadStore()
-                })
-            },
-            doSubmitCheck(e) {
-                if (e.keyCode === 13) {
-                    this.doMemberLoginSubmit()
-                }
-            },
-            doMemberLoginSubmit() {
-                if (!this.memberLoginInfo.agree) {
-                    this.$dialog.tipError('请先同意使用协议')
-                    return
-                }
+        doMemberLoginCaptchaRefresh(cb) {
+            this.doStoreRequest('store/login_captcha', {}, res => {
+                this.memberLoginCaptchaImage = res.data.image
+                cb && cb()
+            })
+        },
+        doMemberLoginShow() {
+            if (this.memberUser.id > 0) {
+                this.memberUserShow = true
+            } else {
                 this.$dialog.loadingOn()
-                this.doStoreRequest('store/login', this.memberLoginInfo, res => {
+                this.doMemberLoginCaptchaRefresh(() => {
                     this.$dialog.loadingOff()
-                    this.$dialog.tipSuccess('登录成功')
-                    this.doLoadStoreMember()
-                    this.memberLoginInfo.username = ''
-                    this.memberLoginInfo.password = ''
-                    this.memberLoginInfo.captcha = ''
-                    this.memberUserShow = false
-                }, res => {
-                    this.$dialog.loadingOff()
-                })
-            },
-            doMemberLoginCaptchaRefresh(cb) {
-                this.doStoreRequest('store/login_captcha', {}, res => {
-                    this.memberLoginCaptchaImage = res.data.image
-                    cb && cb()
-                })
-            },
-            doMemberLoginShow() {
-                if (this.memberUser.id > 0) {
                     this.memberUserShow = true
-                } else {
-                    this.$dialog.loadingOn()
-                    this.doMemberLoginCaptchaRefresh(() => {
-                        this.$dialog.loadingOff()
-                        this.memberUserShow = true
-                    })
-                }
-            },
-            doLoadStoreMember() {
-                this.memberUserLoading = true
-                this.doStoreRequest('store/member', {}, res => {
-                    this.memberUserLoading = false
-                    BeanUtil.update(this.memberUser, res.data)
-                }, res => {
-                    this.memberUserLoading = false
                 })
-            },
-            doLoadStore() {
-                if (!!this.storeApiToken) {
+            }
+        },
+        doLoadStoreMember() {
+            this.memberUserLoading = true
+            this.doStoreRequest('store/member', {}, res => {
+                this.memberUserLoading = false
+                BeanUtil.update(this.memberUser, res.data)
+            }, res => {
+                this.memberUserLoading = false
+            })
+        },
+        doLoadStore() {
+            if (!!this.storeApiToken) {
+                this.doLoadStoreMember()
+            } else {
+                this.doStoreRequest('store/config', {}, res => {
+                    this.storeApiToken = res.data.apiToken
+                    Storage.set('storeApiToken', res.data.apiToken)
                     this.doLoadStoreMember()
+                })
+            }
+        },
+        doLoad() {
+            this.$api.post(this.$url.admin('module_store/all'), {}, res => {
+                this.loading = false
+                this.categories = res.data.categories
+                this.types = res.data.types
+                this.modules = res.data.modules
+                this.storeConfig = res.data.storeConfig
+            })
+        },
+        doCommand(command, data, step, title) {
+            step = step || null
+            title = title || null
+            if (null === step) {
+                this.commandDialogMsgs = []
+                this.commandDialogShow = true
+                this.commandDialogFinish = false
+            }
+            if (title) {
+                this.commandDialogTitle = title
+                this.commandDialogMsgs.push('<i class="iconfont icon-hr"></i> ' + title)
+            }
+            this.commandDialogRunStart = (new Date()).getTime()
+            this.commandDialogRunElapse = 0
+            this.$api.post(this.$url.admin(`module_store/${command}`), {
+                token: this.storeApiToken,
+                step: step,
+                data: JSON.stringify(data)
+            }, res => {
+                if (Array.isArray(res.data.msg)) {
+                    this.commandDialogMsgs = this.commandDialogMsgs.concat(res.data.msg)
                 } else {
-                    this.doStoreRequest('store/config', {}, res => {
-                        this.storeApiToken = res.data.apiToken
-                        Storage.set('storeApiToken', res.data.apiToken)
-                        this.doLoadStoreMember()
-                    })
+                    this.commandDialogMsgs.push(res.data.msg)
                 }
-            },
-            doLoad() {
-                this.$api.post(this.$url.admin('module_store/all'), {}, res => {
-                    this.loading = false
-                    this.categories = res.data.categories
-                    this.modules = res.data.modules
-                    this.storeConfig = res.data.storeConfig
-                })
-            },
-            doCommand(command, data, step, title) {
-                step = step || null
-                title = title || null
-                if (null === step) {
-                    this.commandDialogMsgs = []
-                    this.commandDialogShow = true
-                    this.commandDialogFinish = false
-                }
-                if (title) {
-                    this.commandDialogTitle = title
-                    this.commandDialogMsgs.push('<i class="iconfont icon-hr"></i> ' + title)
-                }
-                this.commandDialogRunStart = (new Date()).getTime()
-                this.commandDialogRunElapse = 0
-                this.$api.post(this.$url.admin(`module_store/${command}`), {
-                    token: this.storeApiToken,
-                    step: step,
-                    data: JSON.stringify(data)
-                }, res => {
-                    if (Array.isArray(res.data.msg)) {
-                        this.commandDialogMsgs = this.commandDialogMsgs.concat(res.data.msg)
-                    } else {
-                        this.commandDialogMsgs.push(res.data.msg)
-                    }
-                    if (res.data.finish) {
-                        this.commandDialogFinish = true
-                        this.doLoad()
-                        return
-                    } else {
-                        setTimeout(() => {
-                            this.doCommand(res.data.command, res.data.data, res.data.step)
-                        }, 1000)
-                    }
-                }, res => {
-                    this.commandDialogMsgs.push('<i class="iconfont icon-close ub-text-danger"></i> <span class="ub-text-danger">' + res.msg + '</span>')
+                if (res.data.finish) {
                     this.commandDialogFinish = true
-                    return true
-                })
-            },
-            doInstallVersion(module) {
-                this.installVersionDialogShow = true
+                    this.doLoad()
+                    return
+                } else {
+                    setTimeout(() => {
+                        this.doCommand(res.data.command, res.data.data, res.data.step)
+                    }, 1000)
+                }
+            }, res => {
+                this.commandDialogMsgs.push('<i class="iconfont icon-close ub-text-danger"></i> <span class="ub-text-danger">' + res.msg + '</span>')
+                this.commandDialogFinish = true
+                return true
+            })
+        },
+        doInstallVersion(module) {
+            this.$dialog.loadingOn()
+            this.doStoreRequest('store/module_releases', {module: module.name}, res => {
+                this.$dialog.loadingOff()
                 this.installVersionModule = module
-            },
-            doInstall(module) {
-                this.doCommand('install', {
+                this.installVersionReleases = res.data.releases
+                this.installVersionDialogShow = true
+            }, res => {
+                this.$dialog.loadingOff()
+            })
+        },
+        doInstall(module) {
+            this.doCommand('install', {
+                module: module.name,
+                version: module.latestVersion,
+                isLocal: module._isLocal
+            }, null, `安装模块 ${module.title}（${module.name}） V${module.latestVersion}`)
+        },
+        doInstallVersionSubmit(module, version) {
+            this.doCommand('install', {
+                module: module.name,
+                version: version,
+                isLocal: module._isLocal
+            }, null, `安装模块 ${module.title}（${module.name}） V${version}`)
+        },
+        doDisable(module) {
+            this.doCommand('disable', {
+                module: module.name,
+                version: module._localVersion
+            }, null, `禁用模块 ${module.title}（${module.name}）`)
+        },
+        doEnable(module) {
+            this.doCommand('enable', {
+                module: module.name,
+                version: module._localVersion
+            }, null, `启用模块 ${module.title}（${module.name}）`)
+        },
+        doUninstall(module) {
+            this.$dialog.confirm('确认卸载？', () => {
+                this.doCommand('uninstall', {
+                    module: module.name,
+                    version: module._localVersion,
+                    isLocal: module._isLocal
+                }, null, `卸载模块 ${module.title}（${module.name}）`)
+            })
+        },
+        doUpgrade(module) {
+            this.$dialog.confirm('确认升级？', () => {
+                this.doCommand('upgrade', {
                     module: module.name,
                     version: module.latestVersion,
-                    isLocal: module._isLocal
-                }, null, `安装模块 ${module.title}（${module.name}） V${module.latestVersion}`)
-            },
-            doInstallVersionSubmit(module, version) {
-                this.doCommand('install', {
-                    module: module.name,
-                    version: version,
-                    isLocal: module._isLocal
-                }, null, `安装模块 ${module.title}（${module.name}） V${version}`)
-            },
-            doDisable(module) {
-                this.doCommand('disable', {
-                    module: module.name,
-                    version: module._localVersion
-                }, null, `禁用模块 ${module.title}（${module.name}）`)
-            },
-            doEnable(module) {
-                this.doCommand('enable', {
-                    module: module.name,
-                    version: module._localVersion
-                }, null, `启用模块 ${module.title}（${module.name}）`)
-            },
-            doUninstall(module) {
-                this.$dialog.confirm('确认卸载？', () => {
-                    this.doCommand('uninstall', {
-                        module: module.name,
-                        version: module._localVersion,
-                        isLocal: module._isLocal
-                    }, null, `卸载模块 ${module.title}（${module.name}）`)
-                })
-            },
-            doUpgrade(module) {
-                this.$dialog.confirm('确认升级？', () => {
-                    this.doCommand('upgrade', {
-                        module: module.name,
-                        version: module.latestVersion,
-                    }, null, `升级模块 ${module.title}（${module.name}） V${module.latestVersion}`)
-                })
-            },
-            doConfig(module) {
-                this.$dialog.dialog(this.$url.admin(`module_store/config/${module.name}`))
-            }
+                }, null, `升级模块 ${module.title}（${module.name}） V${module.latestVersion}`)
+            })
+        },
+        doConfig(module) {
+            this.$dialog.dialog(this.$url.admin(`module_store/config/${module.name}`))
         }
     }
+}
 </script>
 

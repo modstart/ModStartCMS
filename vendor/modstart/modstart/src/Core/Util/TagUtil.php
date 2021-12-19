@@ -35,6 +35,12 @@ class TagUtil
      */
     public static function string2Array($tags, $format = 'auto')
     {
+        if (is_array($tags)) {
+            $tags = join('::', $tags);
+            if (!empty($tags)) {
+                $tags = ":$tags:";
+            }
+        }
         $tags = trim($tags, ':');
         $tags = explode('::', $tags);
         $filterTags = [];

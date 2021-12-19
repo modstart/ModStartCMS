@@ -1,6 +1,9 @@
 {
   "name": "ModuleStore",
   "title": "模块市场",
+  "types": [
+    "Admin"
+  ],
   "require": [
     "Vendor:>=1.4.0"
   ],
