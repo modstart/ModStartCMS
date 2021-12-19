@@ -26,7 +26,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        require_once __DIR__ . '/../Helpers/MCms.php';
+        require_once(__DIR__ . '/../Helpers/MCms.php');
 
         AdminWidgetLink::register(function () {
             $menu = [];

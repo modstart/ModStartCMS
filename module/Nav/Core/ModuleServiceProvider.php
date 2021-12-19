@@ -15,7 +15,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        include __DIR__ . '/../Helpers/MNav.php';
+        require_once(__DIR__ . '/../Helpers/MNav.php');
 
         AdminMenu::register([
             [
