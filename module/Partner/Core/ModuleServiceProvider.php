@@ -6,6 +6,7 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
+use ModStart\Module\ModuleClassLoader;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -16,8 +17,9 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        Log::info('aaa');
-        require_once(__DIR__ . '/../Helpers/MPartner.php');
+        if (method_exists(ModuleClassLoader::class, 'addClass')) {
+            ModuleClassLoader::addClass('MPartner', __DIR__ . '/../Helpers/MPartner.php');
+        }
 
         AdminMenu::register([
             [

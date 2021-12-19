@@ -27,7 +27,9 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        ModuleClassLoader::addClass('MCms', __DIR__ . '/../Helpers/MCms.php');
+        if (method_exists(ModuleClassLoader::class, 'addClass')) {
+            ModuleClassLoader::addClass('MCms', __DIR__ . '/../Helpers/MCms.php');
+        }
 
         AdminWidgetLink::register(function () {
             $menu = [];
