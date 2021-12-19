@@ -3,6 +3,7 @@
 namespace Module\Partner\Core;
 
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
 
@@ -15,6 +16,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
+        Log::info('aaa');
         require_once(__DIR__ . '/../Helpers/MPartner.php');
 
         AdminMenu::register([
