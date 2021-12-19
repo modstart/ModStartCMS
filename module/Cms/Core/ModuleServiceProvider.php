@@ -10,6 +10,7 @@ use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
+use ModStart\Module\ModuleClassLoader;
 use ModStart\Module\ModuleManager;
 use Module\Cms\Provider\CmsHomePageProvider;
 use Module\Cms\Util\CmsModelUtil;
@@ -26,7 +27,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        require_once(__DIR__ . '/../Helpers/MCms.php');
+        ModuleClassLoader::addClass('MCms', __DIR__ . '/../Helpers/MCms.php');
 
         AdminWidgetLink::register(function () {
             $menu = [];
