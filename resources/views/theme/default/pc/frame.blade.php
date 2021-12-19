@@ -7,7 +7,9 @@
 
 @section('headAppend')
     @parent
-    <link rel="stylesheet" href="{{\ModStart\Core\Assets\AssetsUtil::fix('theme/'.\Illuminate\Support\Facades\Session::get('msSiteTemplateUsing','default').'/css/style.css')}}"/>
+    @if('default'==\Illuminate\Support\Facades\Session::get('msSiteTemplateUsing','default'))
+        <link rel="stylesheet" href="{{\ModStart\Core\Assets\AssetsUtil::fix('theme/default/css/style.css')}}"/>
+    @endif
     @if(modstart_config('sitePrimaryColor',null))
         <style type="text/css">
             :root{

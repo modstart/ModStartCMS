@@ -341,6 +341,19 @@
     color: #5d656b;
     text-decoration: none;
     flex: 1;
+    position: relative;
+
+    &.active {
+      color: var(--color-primary);
+
+      .icon {
+        color: var(--color-primary);
+
+        .img {
+          color: var(--color-primary);
+        }
+      }
+    }
 
     .icon {
       font-size: 1.1rem;
@@ -365,6 +378,21 @@
 
     .name {
       font-size: var(--font-size);
+    }
+
+    .badge {
+      position: absolute;
+      top: 0;
+      left: 60%;
+      background: red;
+      color: #fff;
+      height: 0.8rem;
+      line-height: .8rem;
+      font-size: .6rem;
+      border-radius: 0.4rem;
+      min-width: 0.8rem;
+      text-align: center;
+      padding: 0 0.2rem;
     }
   }
 }
