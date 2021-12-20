@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <td width="200">模板</td>
-                        <td>模板渲染优先级</td>
+                        <td>视图使用优先级</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +55,7 @@
                 <thead>
                 <tr>
                     <td width="200">模板</td>
-                    <td>渲染优先级</td>
+                    <td>视图使用优先级</td>
                 </tr>
                 </thead>
                 <tbody>

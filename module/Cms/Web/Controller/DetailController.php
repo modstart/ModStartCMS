@@ -35,6 +35,9 @@ class DetailController extends ModuleBaseController
         $viewData['catChain'] = $catChain;
         $viewData['catRootChildren'] = $catRootChildren;
         $viewData['model'] = $data['model'];
+
+        // return $viewData;
+
         return $this->view('cms.detail.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

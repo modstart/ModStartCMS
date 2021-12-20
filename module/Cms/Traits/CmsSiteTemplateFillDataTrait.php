@@ -72,11 +72,11 @@ trait CmsSiteTemplateFillDataTrait
                             ['modelId' => $model['id']],
                             $recordInfo['where']
                         );
-                        // BizException::throwsIf($title . '数据表不为空', ModelUtil::count("cms_content", $where) > 0);
+                        BizException::throwsIf($title . '数据表不为空', ModelUtil::count("cms_content", $where) > 0);
                         break;
                     case 'banner':
                     case 'nav':
-                        // BizException::throwsIf($title . '数据表不为空', ModelUtil::count($field, $recordInfo['where']) > 0);
+                        BizException::throwsIf($title . '数据表不为空', ModelUtil::count($field, $recordInfo['where']) > 0);
                         break;
                     case 'info':
                         break;

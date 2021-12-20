@@ -19,6 +19,8 @@ class FormController extends BaseCatController
         $data = parent::setup($id);
         $view = $this->getView($data, 'formTemplate');
         $viewData = $data;
+        $viewData['model'] = $data['cat']['_model'];
+        return $viewData;
         return $this->view('cms.form.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 
