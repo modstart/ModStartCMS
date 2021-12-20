@@ -10,7 +10,6 @@
                style="width:12em;"
                name="{{$name}}"
                id="{{$id}}Input"
-               autocomplete="off"
                placeholder="{{$placeholder}}"
                autocomplete="off"
                value="{{$value}}" />

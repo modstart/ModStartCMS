@@ -42,9 +42,78 @@
                                 <div class="field">
                                     @if($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::TEXT)
                                         <input class="form" type="text" name="{{$customField['name']}}" />
-                                    @endif
-                                    @if($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::TEXTAREA)
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::TEXTAREA)
                                         <textarea class="form" style="height:3rem;" name="{{$customField['name']}}"></textarea>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::RADIO)
+                                        @if(!empty($customField['fieldData']['options']))
+                                            @foreach($customField['fieldData']['options'] as $option)
+                                                <label>
+                                                    <input type="radio" name="{{$customField['name']}}" value="{{$option}}" />
+                                                    {{$option}}
+                                                </label>
+                                            @endforeach
+                                        @endif
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::RADIO)
+                                        @foreach($customField['fieldData']['options'] as $option)
+                                            <label>
+                                                <input type="radio" name="{{$customField['name']}}" value="{{$option}}" />
+                                                {{$option}}
+                                            </label>
+                                        @endforeach
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::SELECT)
+                                        <select name="{{$customField['name']}}">
+                                            @foreach($customField['fieldData']['options'] as $option)
+                                                <option value="{{$option}}">
+                                                    {{$option}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::CHECKBOX)
+                                        @foreach($customField['fieldData']['options'] as $option)
+                                            <label>
+                                                <input type="checkbox" name="{{$customField['name']}}" value="{{$option}}" />
+                                                {{$option}}
+                                            </label>
+                                        @endforeach
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::IMAGE)
+                                        <div class="ub-text-muted">暂不支持</div>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::FILE)
+                                        <div class="ub-text-muted">暂不支持</div>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::DATE)
+                                        <input type="text"
+                                               class="form"
+                                               style="width:12em;"
+                                               name="{{$customField['name']}}"
+                                               id="{{$customField['name']}}Input"
+                                               autocomplete="off" />
+                                        <script>
+                                            layui.use('laydate', function () {
+                                                var laydate = layui.laydate;
+                                                laydate.render({
+                                                    elem: '#{{$customField['name']}}Input'
+                                                });
+                                            });
+                                        </script>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::DATETIME)
+                                        <input type="text"
+                                               class="form"
+                                               style="width:12em;"
+                                               name="{{$customField['name']}}"
+                                               id="{{$customField['name']}}Input"
+                                               autocomplete="off" />
+                                        <script>
+                                            layui.use('laydate', function () {
+                                                var laydate = layui.laydate;
+                                                laydate.render({
+                                                    elem: '#{{$customField['name']}}Input',
+                                                    type: 'datetime'
+                                                });
+                                            });
+                                        </script>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::RICH_TEXT)
+                                        <div class="ub-text-muted">暂不支持</div>
+                                    @else
+                                        <pre>{{json_encode($customField,JSON_PRETTY_PRINT)}}</pre>
                                     @endif
                                 </div>
                             </div>

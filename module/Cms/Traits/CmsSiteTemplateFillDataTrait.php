@@ -3,6 +3,7 @@
 
 namespace Module\Cms\Traits;
 
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
@@ -44,6 +45,7 @@ trait CmsSiteTemplateFillDataTrait
         $builder->useDialog();
         $builder->pageTitle('初始化演示数据');
         return $builder->perform(false, function (Form $form) use ($recordFields, $demoData) {
+            AdminPermission::demoPostCheck();
             $data = $form->dataForming();
             $filterRecordFields = [];
             foreach ($recordFields as $field => $title) {
