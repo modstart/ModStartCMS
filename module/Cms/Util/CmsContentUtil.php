@@ -16,7 +16,7 @@ class CmsContentUtil
     public static function insert($model, $data, $dataData)
     {
         $data = ArrayUtil::keepKeys($data, [
-            'catId', 'title', 'alias', 'title', 'summary', 'cover', 'postTime',
+            'catId', 'title', 'alias', 'summary', 'cover', 'postTime',
             'status', 'isRecommend', 'isTop', 'tags', 'author', 'source',
         ]);
         $data['modelId'] = $model['id'];

@@ -51,6 +51,7 @@ class BannerController extends Controller
             ->hookChanged(function (Form $form) {
                 BannerUtil::clearCache();
             })
+            ->canBatchDelete(true)
             ->enablePagination(false)
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)

@@ -87,6 +87,7 @@ class ContentController extends Controller
         }
         $grid->canEdit(true)->urlEdit(action('\\' . __CLASS__ . '@edit', ['modelId' => $this->modelId]));
         $grid->canDelete(true)->urlDelete(action('\\' . __CLASS__ . '@delete', ['modelId' => $this->modelId]));
+        $grid->canBatchDelete(true);
         if (Request::isPost()) {
             return $grid->request();
         }
@@ -247,13 +248,15 @@ class ContentController extends Controller
     {
         AdminPermission::demoCheck();
         $this->init($modelId);
-        $id = CRUDUtil::id();
-        $record = ModelUtil::get($this->modelTable, $id);
-        BizException::throwsIfEmpty('记录不存在', $id);
-        ModelUtil::transactionBegin();
-        ModelUtil::delete($this->modelTable, $record['id']);
-        ModelUtil::delete($this->modelDataTable, $record['id']);
-        ModelUtil::transactionCommit();
+        $ids = CRUDUtil::ids();
+        foreach ($ids as $id) {
+            $record = ModelUtil::get($this->modelTable, $id);
+            BizException::throwsIfEmpty('记录不存在', $id);
+            ModelUtil::transactionBegin();
+            ModelUtil::delete($this->modelTable, $record['id']);
+            ModelUtil::delete($this->modelDataTable, $record['id']);
+            ModelUtil::transactionCommit();
+        }
         return Response::redirect(CRUDUtil::jsGridRefresh());
     }
 }

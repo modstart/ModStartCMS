@@ -38,6 +38,7 @@ class NavController extends Controller
             ->hookChanged(function (Form $form) {
                 NavUtil::clearCache();
             })
+            ->canBatchDelete(true)
             ->enablePagination(false)
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)
