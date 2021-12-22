@@ -30,7 +30,7 @@ class ModuleInstallAllCommand extends Command
         }
         $this->warn("ModuleInstallAll Run Finished");
 
-        $initUsers = config('env.MS_INIT_ADMIN_USERS', '')
+        $initUsers = config('env.MS_INIT_ADMIN_USERS', '');
         if ($initUsers) {
             $initUsers = explode(';', $initUsers);
             $initUsers = array_map(function ($v) {
