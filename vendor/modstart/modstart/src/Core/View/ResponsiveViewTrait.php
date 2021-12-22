@@ -27,13 +27,38 @@ trait ResponsiveViewTrait
         return $module;
     }
 
+    private function fetchViewPath($templateName, $templateRoot, $module, $device, $view)
+    {
+        $viewThemeCustom = "theme.$templateName.$device.$view";
+        $viewTheme = "$templateRoot.$device.$view";
+        if ($module) {
+            $viewModule = "module::$module.View.$device.$view";
+        }
+        $viewDefault = "theme.default.$device.$view";
+        if (view()->exists($viewThemeCustom)) {
+            return $viewThemeCustom;
+        }
+        if (view()->exists($viewTheme)) {
+            return $viewTheme;
+        }
+        if ($module) {
+            if (view()->exists($viewModule)) {
+                return $viewModule;
+            }
+        }
+        if (view()->exists($viewDefault)) {
+            return $viewDefault;
+        }
+        return null;
+    }
+
     protected function viewPaths($view)
     {
-        static $template = null;
+        static $templateName = null;
         static $provider = null;
         static $module = null;
         static $templateRoot = null;
-        if (null === $template) {
+        if (null === $templateName) {
             $msSiteTemplate = Input::get('msSiteTemplate', null);
             if (!empty($msSiteTemplate)) {
                 $provider = SiteTemplateProvider::get($msSiteTemplate);
@@ -52,75 +77,29 @@ trait ResponsiveViewTrait
             }
             $module = $this->getModule();
             if (empty($provider)) {
-                $template = modstart_config()->getWithEnv('siteTemplate', 'default');
-                $provider = SiteTemplateProvider::get($template);
+                $templateName = modstart_config()->getWithEnv('siteTemplate', 'default');
+                $provider = SiteTemplateProvider::get($templateName);
             }
             if ($provider && $provider->root()) {
                 $templateRoot = $provider->root();
-                $template = $provider->name();
+                $templateName = $provider->name();
             } else {
-                $templateRoot = "theme.$template";
+                $templateRoot = "theme.$templateName";
             }
-            Session::put('msSiteTemplateUsing', $template);
+            Session::put('msSiteTemplateUsing', $templateName);
         }
 
-        /**
-         * 模板的View
-         */
-        $mobileView = "$templateRoot.m.$view";
-        /**
-         * 模板不存在时替代View
-         */
-        $mobileViewDefault = "theme.default.m.$view";
-        /**
-         * 是模块时，模块替代View
-         */
-        if ($module) {
-            $mobileViewModule = "module::$module.View.m.$view";
-        }
-
-        $pcView = "$templateRoot.pc.$view";
-        $pcViewDefault = "theme.default.pc.$view";
-        if ($module) {
-            $pcViewModule = "module::$module.View.pc.$view";
-        }
-
-        $mobileFrameView = "$templateRoot.m.frame";
-        $mobileFrameViewDefault = "theme.default.m.frame";
-
-        $pcFrameView = "$templateRoot.pc.frame";
-        $pcFrameViewDefault = "theme.default.pc.frame";
-
-        $useView = $pcView;
-        $useFrameView = $pcFrameView;
+        $useView = null;
+        $useFrameView = null;
         if ($this->isMobile()) {
-            $useView = $mobileView;
-            if (!view()->exists($useView)) {
-                $useView = $pcView;
-                if (!view()->exists($useView)) {
-                    $useView = $mobileViewDefault;
-                    if ($module) {
-                        if (!view()->exists($useView)) {
-                            $useView = $mobileViewModule;
-                        }
-                    }
-                }
-            }
-            $useFrameView = $mobileFrameView;
-            if (!view()->exists($useFrameView)) {
-                $useFrameView = $mobileFrameViewDefault;
-            }
+            $useView = $this->fetchViewPath($templateName, $templateRoot, $module, 'm', $view);
+            $useFrameView = $this->fetchViewPath($templateName, $templateRoot, $module, 'm', 'frame');
         }
-        if (!view()->exists($useView)) {
-            $useView = $pcViewDefault;
-            if ($module) {
-                if (!view()->exists($useView)) {
-                    $useView = $pcViewModule;
-                }
-            }
+        if (empty($useView)) {
+            $useView = $this->fetchViewPath($templateName, $templateRoot, $module, 'pc', $view);
         }
-        if (!view()->exists($useFrameView)) {
-            $useFrameView = $pcFrameViewDefault;
+        if (empty($useFrameView)) {
+            $useFrameView = $this->fetchViewPath($templateName, $templateRoot, $module, 'pc', 'frame');
         }
         // print_r([$view, $useView, $useFrameView]); exit();
         View::share('_viewFrame', $useFrameView);
