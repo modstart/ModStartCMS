@@ -105,7 +105,7 @@ class UeditorManager
                     'state' => '',
                     'list' => null
                 );
-                if (AdminPermission::isDemo()) {
+                if ($uploadTable == 'admin_upload' && AdminPermission::isDemo()) {
                     $sret ['state'] = 'ERROR';
                     return Response::jsonRaw($sret);
                 }

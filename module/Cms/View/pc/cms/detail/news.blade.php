@@ -5,6 +5,8 @@
 @section('pageDescription'){{$record['seoDescription']?$record['seoDescription']:$record['title']}}@endsection
 
 {!! \ModStart\ModStart::js('asset/common/lazyLoad.js') !!}
+{!! \ModStart\ModStart::js('asset/common/htmlEnhance.js') !!}
+
 @section('bodyContent')
 
     <div class="lg:tw-text-left tw-text-center tw-text-white tw-text-lg tw-py-20 tw-bg-gray-500 ub-cover"
