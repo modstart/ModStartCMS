@@ -58,6 +58,19 @@ class Admin
         return ModelUtil::insert('admin_user', $data);
     }
 
+    public static function loginByPhone($phone)
+    {
+        $adminUser = ModelUtil::get('admin_user', ['phone' => $phone]);
+        if (empty($adminUser)) {
+            return Response::generate(-1, L('User Not Exists'));
+        }
+        ModelUtil::update('admin_user', $adminUser['id'], [
+            'lastLoginIp' => Request::ip(),
+            'lastLoginTime' => Carbon::now(),
+        ]);
+        return Response::generateSuccessData($adminUser);
+    }
+
     public static function login($username, $password)
     {
         $adminUser = ModelUtil::get('admin_user', ['username' => $username]);

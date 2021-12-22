@@ -10,20 +10,22 @@
         <div class="head"><i class="iconfont icon-user"></i> {!! L('Admin Login') !!}</div>
         <div class="form">
             <form class="uk-form" method="post" action="?" data-ajax-form>
-                <div class="line">
-                    {{ L('Username') }}
-                    <input type="text" name="username" value="{{\Illuminate\Support\Facades\Input::get('username','')}}" placeholder="{{ L('Please Input') }}"/>
-                </div>
-                <div class="line">
-                    {{ L('Password') }}
-                    <input type="password" name="password" value="{{\Illuminate\Support\Facades\Input::get('password','')}}" placeholder="{{ L('Please Input') }}"/>
-                </div>
+                @if(config('modstart.admin.login.captcha',false) && $captchaProvider && $captchaProvider->name()=='sms' && modstart_config('AdminManagerEnhance_SmsCaptchaQuick',false))
+                    {{--Ignore Username and password--}}
+                @else
+                    <div class="line">
+                        {{ L('Username') }}
+                        <input type="text" name="username" value="{{\Illuminate\Support\Facades\Input::get('username','')}}" placeholder="{{ L('Please Input') }}"/>
+                    </div>
+                    <div class="line">
+                        {{ L('Password') }}
+                        <input type="password" name="password" value="{{\Illuminate\Support\Facades\Input::get('password','')}}" placeholder="{{ L('Please Input') }}"/>
+                    </div>
+                @endif
                 @if(config('modstart.admin.login.captcha',false))
-                    <?php $providerName = modstart_config('AdminManagerEnhance_LoginCaptchaProvider',null); ?>
-                    @if($providerName && ($provider = \Module\Vendor\Provider\Captcha\CaptchaProvider::get($providerName)))
-                        <?php $provider->setParam('biz','admin'); ?>
+                    @if($captchaProvider)
                         <div style="padding:0.5rem;">
-                            {!! $provider->render() !!}
+                            {!! $captchaProvider->render() !!}
                         </div>
                     @else
                         <div class="line">

@@ -46,8 +46,5 @@ return [
         'Cms' => [
             'enable' => true,
         ],
-        'SiteCounter' => [
-            'enable' => true,
-        ],
     ],
 ];

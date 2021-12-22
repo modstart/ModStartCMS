@@ -12,7 +12,6 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\StrUtil;
-use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class AuthController extends Controller
 {
@@ -31,21 +30,41 @@ class AuthController extends Controller
         if (modstart_config('adminSSOClientEnable', false)) {
             return Response::redirect(modstart_admin_url('sso/client?redirect=' . urlencode($redirect)));
         }
+        /**
+         * 获取人机检测Provider
+         */
+        $captchaProviderName = modstart_config('AdminManagerEnhance_LoginCaptchaProvider', null);
+        $captchaProvider = null;
+        if (class_exists(\Module\Vendor\Provider\Captcha\CaptchaProvider::class)) {
+            $captchaProvider = \Module\Vendor\Provider\Captcha\CaptchaProvider::get($captchaProviderName);
+            if ($captchaProvider) {
+                $captchaProvider->setParam('biz', 'admin');
+            }
+        }
         if (Request::isPost()) {
             $input = InputPackage::buildFromInput();
-            $username = $input->getTrimString('username');
-            $password = $input->getTrimString('password');
-            if (empty($username)) {
-                return Response::json(-1, L('Username Required'));
-            }
-            if (empty($password)) {
-                return Response::json(-2, L('Password Required'));
+
+            $isSmsCaptchaQuickLogin = (
+                config('modstart.admin.login.captcha', false)
+                && $captchaProvider
+                && $captchaProvider->name() == 'sms'
+                && modstart_config('AdminManagerEnhance_SmsCaptchaQuick', false)
+            );
+            if ($isSmsCaptchaQuickLogin) {
+                // do nothing
+            } else {
+                $username = $input->getTrimString('username');
+                $password = $input->getTrimString('password');
+                if (empty($username)) {
+                    return Response::json(-1, L('Username Required'));
+                }
+                if (empty($password)) {
+                    return Response::json(-2, L('Password Required'));
+                }
             }
             if (config('modstart.admin.login.captcha', false)) {
-                $providerName = modstart_config('AdminManagerEnhance_LoginCaptchaProvider', null);
-                if ($providerName && ($provider = CaptchaProvider::get($providerName))) {
-                    $provider->setParam('biz', 'admin');
-                    $ret = $provider->validate();
+                if ($captchaProvider) {
+                    $ret = $captchaProvider->validate();
                     if (Response::isError($ret)) {
                         return Response::jsonFromGenerate($ret);
                     }
@@ -55,20 +74,38 @@ class AuthController extends Controller
                     }
                 }
             }
-            $ret = Admin::login($username, $password);
-            if ($ret['code']) {
-                Admin::addErrorLog(0, L('Login Error'), [
-                    'IP' => Request::ip(),
-                    L('Username') => $username,
-                    L('Password') => '******',
-                ]);
-                return Response::json(-1, L('Username / Password Incorrect'), null, "[js]$('[data-captcha]').click();");
+            if ($isSmsCaptchaQuickLogin) {
+                /** @var $smsCaptchaProvider \Module\CaptchaSms\Provider\SmsCaptchaProvider */
+                $smsCaptchaProvider = $captchaProvider;
+                $phone = $smsCaptchaProvider->getVerifiedPhone();
+                $ret = Admin::loginByPhone($phone);
+                if ($ret['code']) {
+                    Admin::addErrorLog(0, L('Login Error'), [
+                        'IP' => Request::ip(),
+                        L('Phone') => $phone,
+                    ]);
+                    return Response::json(-1, L('登录失败'), null, "[js]$('[data-captcha]').click();");
+                }
+            } else {
+                $ret = Admin::login($username, $password);
+                if ($ret['code']) {
+                    Admin::addErrorLog(0, L('Login Error'), [
+                        'IP' => Request::ip(),
+                        L('Username') => $username,
+                        L('Password') => '******',
+                    ]);
+                    return Response::json(-1, L('Username / Password Incorrect'), null, "[js]$('[data-captcha]').click();");
+                }
             }
             $adminUser = $ret['data'];
             Session::put(Admin::ADMIN_USER_ID_SESSION_KEY, $adminUser['id']);
             Session::forget('_adminUserPasswordWeak');
-            if (strlen($password) < 6 && StrUtil::passwordStrength($password) <= 1) {
-                Session::put('_adminUserPasswordWeak', true);
+            if ($isSmsCaptchaQuickLogin) {
+                // do nothing
+            } else {
+                if (strlen($password) < 6 && StrUtil::passwordStrength($password) <= 1) {
+                    Session::put('_adminUserPasswordWeak', true);
+                }
             }
             Admin::addInfoLog($adminUser['id'], L('Login Success'), [
                 'IP' => Request::ip(),
@@ -78,6 +115,8 @@ class AuthController extends Controller
         }
         return view('modstart::admin.login', [
             'pageTitle' => L('Admin Login'),
+            'captchaProviderName' => $captchaProviderName,
+            'captchaProvider' => $captchaProvider,
         ]);
     }
 
