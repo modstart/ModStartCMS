@@ -12,6 +12,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\ReUtil;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\RepositoryUtil;
@@ -32,6 +33,30 @@ class ModuleStoreController extends Controller
     public function all()
     {
         return Response::generateSuccessData(ModuleStoreUtil::all());
+    }
+
+    private function moduleOperateCheck($module)
+    {
+        BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
+        $whitelist = config('env.MS_MODULE_WHITELIST', '');
+        if (empty($whitelist)) {
+            return;
+        }
+        $whitelist = array_map(function ($v) {
+            return trim($v);
+        }, explode(',', $whitelist));
+        $whitelist = array_filter($whitelist);
+        if (empty($whitelist)) {
+            return;
+        }
+        $passed = false;
+        foreach ($whitelist as $item) {
+            if (ReUtil::isWildMatch($item, $module)) {
+                $passed = true;
+                break;
+            }
+        }
+        BizException::throwsIf('只允许操作模块:' . join(',', $whitelist), !$passed);
     }
 
     private function doFinish($msgs)
@@ -72,7 +97,7 @@ class ModuleStoreController extends Controller
         $version = $dataInput->getTrimString('version');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
-        BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
+        $this->moduleOperateCheck($module);
         switch ($step) {
             default:
                 $ret = ModuleManager::disable($module);
@@ -93,8 +118,7 @@ class ModuleStoreController extends Controller
         $version = $dataInput->getTrimString('version');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
-        BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
-
+        $this->moduleOperateCheck($module);
         switch ($step) {
             default:
                 $ret = ModuleManager::enable($module);
@@ -117,8 +141,7 @@ class ModuleStoreController extends Controller
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
         BizException::throwsIf('系统模块不能动态配置', ModuleManager::isSystemModule($module));
-        BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
-
+        $this->moduleOperateCheck($module);
         if ($isLocal) {
             switch ($step) {
                 default:
@@ -159,7 +182,7 @@ class ModuleStoreController extends Controller
         $version = $dataInput->getTrimString('version');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
-        BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
+        $this->moduleOperateCheck($module);
 
         switch ($step) {
             case 'installModule':
@@ -238,7 +261,7 @@ class ModuleStoreController extends Controller
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
         BizException::throwsIf('系统模块不能动态配置', ModuleManager::isSystemModule($module));
-        BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
+        $this->moduleOperateCheck($module);
 
         if ($isLocal) {
             switch ($step) {
