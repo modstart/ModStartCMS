@@ -14,6 +14,8 @@ $router->group([
     $router->match(['get', 'post'], 'a/{alias_url}', 'DetailController@index');
     $router->match(['get', 'post'], 'c/{id}', 'ListController@index');
 
+    $router->match(['get', 'post'], 'search', 'SearchController@index');
+
     foreach (CmsCatUtil::allSafely() as $item) {
         if (empty($item['url']) || empty($item['_model']['mode'])) {
             continue;

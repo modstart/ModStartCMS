@@ -557,17 +557,35 @@ class Form implements Renderable
             ResultException::throwsIfFail($this->hookCall($this->hookSubmitted));
             $this->dataEditing = [];
             $this->removeReservedFields();
-            foreach ($this->editableFields() as $field) {
-                if ($field->isLayoutField() || $field->isCustomField()) {
-                    continue;
+            $action = isset($this->dataSubmitted['_action']) ? $this->dataSubmitted['_action'] : null;
+            if ('itemCellEdit' == $action) {
+                $column = isset($this->dataSubmitted['column']) ? $this->dataSubmitted['column'] : null;
+                $value = isset($this->dataSubmitted['value']) ? $this->dataSubmitted['value'] : null;
+                if ($column) {
+                    foreach ($this->editableFields() as $field) {
+                        if ($field->isLayoutField() || $field->isCustomField()) {
+                            continue;
+                        }
+                        if ($field->column() == $column) {
+                            $this->dataEditing[$field->column()] = $value;
+                            break;
+                        }
+                    }
                 }
-                $value = isset($this->dataSubmitted[$field->column()]) ? $this->dataSubmitted[$field->column()] : null;
-                $value = $field->prepareInput($value, $this->dataSubmitted);
-                $value = $field->serializeValue($value, $field);
-                if ($field->hookValueSerialize()) {
-                    $value = call_user_func($field->hookValueSerialize(), $value, $field);
+                BizException::throwsIfEmpty('Data Error', $this->dataEditing);
+            } else {
+                foreach ($this->editableFields() as $field) {
+                    if ($field->isLayoutField() || $field->isCustomField()) {
+                        continue;
+                    }
+                    $value = isset($this->dataSubmitted[$field->column()]) ? $this->dataSubmitted[$field->column()] : null;
+                    $value = $field->prepareInput($value, $this->dataSubmitted);
+                    $value = $field->serializeValue($value, $field);
+                    if ($field->hookValueSerialize()) {
+                        $value = call_user_func($field->hookValueSerialize(), $value, $field);
+                    }
+                    $this->dataEditing[$field->column()] = $value;
                 }
-                $this->dataEditing[$field->column()] = $value;
             }
             $this->repository()->edit($this);
             if (!empty($this->dataSubmitted['_redirect'])) {

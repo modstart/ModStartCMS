@@ -70,4 +70,10 @@ abstract class AbstractDbCacheIDManager extends AbstractIDManager
         return $this->idsPaginate($ids, $page, $pageSize);
     }
 
+    public function forgetRandom($cacheKey = 'all')
+    {
+        Cache::forget($this->name() . '_Random_' . $cacheKey);
+    }
+
+
 }

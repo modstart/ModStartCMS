@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "380331",
+      "name": "dot",
+      "font_class": "dot-sm",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "1003028",
+      "name": "dot_1",
+      "font_class": "dot",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
       "icon_id": "885533",
       "name": "list",
       "font_class": "list",

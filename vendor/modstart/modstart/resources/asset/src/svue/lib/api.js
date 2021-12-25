@@ -121,7 +121,15 @@ const defaultSuccessCallback = function (res) {
 }
 
 const defaultErrorCatcher = function (err, failCB) {
-    failCB({code: -1, msg: '请求失败(1):' + err})
+    const errString = err.toString()
+    const res = {code: -1, msg: '请求失败(1):' + err}
+    if (errString.includes('failed with status code 404')) {
+        res.msg = '请求失败：地址不存在'
+    }
+    const ret = failCB(res)
+    if (undefined === ret) {
+        defaultFailCallback(res)
+    }
     console.error('api -> ', err)
 }
 

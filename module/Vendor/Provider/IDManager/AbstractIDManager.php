@@ -20,4 +20,6 @@ abstract class AbstractIDManager
 
     abstract public function paginateRandom($page, $pageSize, $cacheKey = 'all', $cacheMinutes = 60);
 
+    abstract public function forgetRandom($cacheKey = 'all');
+
 }

@@ -1,4 +1,4 @@
-<div id="{{$id}}" data-basic-lister class="ub-lister-table-container">
+<div id="{{$id}}" data-grid data-basic-lister class="ub-lister-table-container">
     <div class="toolbox-container">
         @if($canAdd)
             @if($addBlankPage)
@@ -223,6 +223,23 @@
                     end: function () {
                         lister.refresh();
                     }
+                });
+            });
+            $grid.on('grid-item-cell-change', function (e, data) {
+                var post = {
+                    _id: getId(data.ele),
+                    _action: 'itemCellEdit',
+                    column: data.column,
+                    value: data.value
+                };
+                window.api.dialog.loadingOn();
+                window.api.base.post(lister.realtime.url.edit, post, function (res) {
+                    window.api.dialog.loadingOff();
+                    window.api.base.defaultFormCallback(res, {
+                        success: function (res) {
+                        }
+                    });
+                    lister.refresh();
                 });
             });
             @endif

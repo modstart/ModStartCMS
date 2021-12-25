@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminPage;
 use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
-use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Core\Util\TimeUtil;
 use ModStart\Layout\Row;
@@ -20,18 +19,32 @@ class MemberDashboardController extends Controller
     public function index(AdminPage $page)
     {
         $page->pageTitle('用户统计');
-        $page->row(function (Row $row) {
-            $row->column(6, DashboardItemA::makeIconNumberTitle(
+        $report = [];
+        $report['yesterdayCount'] = ModelUtil::model('member_user')
+            ->where('created_at', '>=', TimeUtil::yesterdayStart())
+            ->where('created_at', '<=', TimeUtil::yesterdayEnd())
+            ->count();
+
+        $w = date('w');
+        if ($w == 0) {
+            $w = 7;
+        }
+        $lastWeek = time() - TimeUtil::PERIOD_DAY * 7 - TimeUtil::PERIOD_DAY * ($w - 1);
+        $report['lastWeekCount'] = ModelUtil::model('member_user')
+            ->where('created_at', '>=', date('Y-m-d 00:00:00', $lastWeek))
+            ->where('created_at', '<=', date('Y-m-d 23:59:59', $lastWeek + TimeUtil::PERIOD_DAY * 7))
+            ->count();
+        $page->row(function (Row $row) use ($report) {
+            $row->column(4, DashboardItemA::makeIconNumberTitle(
                 'iconfont icon-user', ModelUtil::count('member_user'), '用户总数',
                 modstart_admin_url('member'), ColorUtil::randomColor()
             ));
-            $row->column(6, DashboardItemA::makeIconNumberTitle(
-                'iconfont icon-user',
-                ModelUtil::model('member_user')
-                    ->where('created_at', '>=', TimeUtil::yesterdayStart())
-                    ->where('created_at', '<=', TimeUtil::yesterdayEnd())
-                    ->count(),
-                '昨日增长',
+            $row->column(4, DashboardItemA::makeIconNumberTitle(
+                'iconfont icon-user', $report['yesterdayCount'], '昨日增长',
+                modstart_admin_url('member'), ColorUtil::randomColor()
+            ));
+            $row->column(4, DashboardItemA::makeIconNumberTitle(
+                'iconfont icon-user', $report['lastWeekCount'], '上周增长',
                 modstart_admin_url('member'), ColorUtil::randomColor()
             ));
         });

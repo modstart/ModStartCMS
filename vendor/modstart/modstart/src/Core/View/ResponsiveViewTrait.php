@@ -6,6 +6,7 @@ namespace ModStart\Core\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\AgentUtil;
 use Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider;
 
@@ -103,6 +104,7 @@ trait ResponsiveViewTrait
         }
         // print_r([$view, $useView, $useFrameView]); exit();
         View::share('_viewFrame', $useFrameView);
+        BizException::throwsIfEmpty('View Not Exists : ' . $view, $useView);
         return [$useView, $useFrameView];
     }
 

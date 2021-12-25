@@ -62,6 +62,7 @@ use ModStart\Support\Concern\HasFluentAttribute;
  * @method AbstractField|mixed isLayoutField($vlaue = null)
  * @method AbstractField|mixed isCustomField($vlaue = null)
  * @method AbstractField|mixed gridFixed($vlaue = null)
+ * @method AbstractField|mixed gridEditable($vlaue = null)
  *
  * >>>>>> 数据流转换流程 >>>>>>
  *
@@ -161,6 +162,7 @@ class AbstractField implements Renderable
         'isLayoutField',
         'isCustomField',
         'gridFixed',
+        'gridEditable',
     ];
     /**
      * 字段渲染模式，默认为 add，请查看 @see FieldRenderMode
@@ -209,6 +211,10 @@ class AbstractField implements Renderable
      * @var null|left|right
      */
     private $gridFixed = null;
+    /**
+     * @var bool 行内编辑
+     */
+    private $gridEditable = false;
 
     public static function getAssets()
     {

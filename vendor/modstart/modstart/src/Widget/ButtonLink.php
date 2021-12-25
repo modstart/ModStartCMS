@@ -8,16 +8,17 @@ namespace ModStart\Widget;
  * Class Label
  * @package ModStart\Widget
  *
- * @method static string muted($text, $url, $disabled = false)
- * @method static string warning($text, $url, $disabled = false)
- * @method static string danger($text, $url, $disabled = false)
- * @method static string success($text, $url, $disabled = false)
+ * @method static ButtonLink muted($text, $url, $disabled = false)
+ * @method static ButtonLink primary($text, $url, $disabled = false)
+ * @method static ButtonLink warning($text, $url, $disabled = false)
+ * @method static ButtonLink danger($text, $url, $disabled = false)
+ * @method static ButtonLink success($text, $url, $disabled = false)
  *
- * @method void text($text)
- * @method void type($type)
- * @method void url($url)
- * @method void disabled($boolean)
- * @method void blank($boolean)
+ * @method ButtonLink text($text)
+ * @method ButtonLink type($type)
+ * @method ButtonLink url($url)
+ * @method ButtonLink disabled($boolean)
+ * @method ButtonLink blank($boolean)
  *
  * @since 2.1.0
  */
