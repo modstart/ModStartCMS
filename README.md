@@ -290,13 +290,13 @@ AdminMenu::register(function () {
 
 开发环境请打开 debug 模式，方便查看日志文件，操作方式如下：
 
-在 `.env` 文件中设置 `APP_DEBUG=true`
+在 `.env` 文件中设置 `APP_DEBUG=true` 
 
 ## 📋 常见问题
 
 我们列举了常见问题，请查看官方标准指南
 
-[https://modstart.com/doc/qa.html](https://modstart.com/doc/qa.html)
+[https://modstart.com/doc/install/qa.html](https://modstart.com/doc/install/qa.html)
 
 如有其他问题推荐使用官方讨论交流群或在线讨论
 

@@ -5,6 +5,7 @@ namespace Module\Cms\Admin\Controller;
 
 
 use Illuminate\Routing\Controller;
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
@@ -22,6 +23,7 @@ class RestoreController extends Controller
 
     public function delete()
     {
+        AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $module = $input->getTrimString('module');
         $filename = $input->getTrimString('filename');
@@ -37,6 +39,7 @@ class RestoreController extends Controller
 
     public function submit()
     {
+        AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $module = $input->getTrimString('module');
         $filename = $input->getTrimString('filename');

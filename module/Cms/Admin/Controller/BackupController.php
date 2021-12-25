@@ -5,6 +5,7 @@ namespace Module\Cms\Admin\Controller;
 
 
 use Illuminate\Routing\Controller;
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
@@ -19,6 +20,7 @@ class BackupController extends Controller
     public function index()
     {
         if (Request::isPost()) {
+            AdminPermission::demoCheck();
             $input = InputPackage::buildFromInput();
             $filename = $input->getTrimString('filename');
             BizException::throwsIfEmpty('备份名称为空', $filename);
