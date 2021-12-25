@@ -1,0 +1,54 @@
+{
+  "name": "modstart/modstart",
+  "description": "modstart",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "admin"
+  ],
+  "homepage": "https://github.com/modstart/modstart",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "ModStart",
+      "email": "modstart@163.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "intervention/image": "^2.3",
+    "jenssegers/agent": "^2.3",
+    "chumper/zipper": "^1.0.2",
+    "league/commonmark": "0.18.5",
+    "league/commonmark-ext-table": "0.9.0",
+    "mews/purifier": "2.0.8",
+    "guzzlehttp/guzzle": "~6.0",
+    "mews/captcha": "*",
+    "maatwebsite/excel": "~2.1.10",
+    "predis/predis": "^1.1",
+    "elasticsearch/elasticsearch": "~5.0",
+    "w7corp/easywechat": "dev-master",
+    "doctrine/dbal": "^2.5",
+    "arvenil/ninja-mutex": "^0.6.0",
+    "bacon/bacon-qr-code": "1.0.*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "ModStart\\": "src"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ModStart\\ModStartServiceProvidor"
+      ]
+    }
+  }
+}
