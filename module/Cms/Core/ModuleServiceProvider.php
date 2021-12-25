@@ -6,13 +6,13 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
 use ModStart\Admin\Widget\DashboardItemA;
-use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
-use ModStart\Module\ModuleManager;
 use Module\Cms\Provider\CmsHomePageProvider;
+use Module\Cms\Provider\Theme\CmsThemeProvider;
+use Module\Cms\Provider\Theme\DefaultThemeProvider;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
@@ -30,6 +30,8 @@ class ModuleServiceProvider extends ServiceProvider
         if (method_exists(ModuleClassLoader::class, 'addClass')) {
             ModuleClassLoader::addClass('MCms', __DIR__ . '/../Helpers/MCms.php');
         }
+
+        CmsThemeProvider::register(DefaultThemeProvider::class);
 
         AdminWidgetLink::register(function () {
             $menu = [];
@@ -75,24 +77,24 @@ class ModuleServiceProvider extends ServiceProvider
                             'title' => '内容管理',
                             'children' => $contentMenus
                         ],
-//                        [
-//                            'title' => '表单管理',
-//                            'children' => $contentMenus
-//                        ],
                         [
-                            'title' => 'CMS设置',
+                            'title' => 'CMS管理',
                             'children' => [
                                 [
                                     'title' => '内容模型',
                                     'url' => '\Module\Cms\Admin\Controller\ModelController@index',
                                 ],
-//                                [
-//                                    'title' => '表单模型',
-//                                    'url' => '\Module\Cms\Admin\Controller\ModelController@index',
-//                                ],
                                 [
                                     'title' => '模板管理',
                                     'url' => '\Module\Cms\Admin\Controller\TemplateController@index',
+                                ],
+                                [
+                                    'title' => '数据备份',
+                                    'url' => '\Module\Cms\Admin\Controller\BackupController@index',
+                                ],
+                                [
+                                    'title' => '数据恢复',
+                                    'url' => '\Module\Cms\Admin\Controller\RestoreController@index',
                                 ],
                             ]
                         ],

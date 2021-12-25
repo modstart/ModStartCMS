@@ -46,5 +46,8 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+        'CmsThemeCorp' => [
+            'enable' => true,
+        ],
     ],
 ];

@@ -1,0 +1,19 @@
+{
+  "name": "CmsThemeCorp",
+  "title": "CMS商务模板",
+  "types": [
+    "Theme"
+  ],
+  "require": [
+    "Vendor:>=1.8.0",
+    "Cms:>=2.0.0"
+  ],
+  "version": "1.1.0",
+  "modstartVersion": ">=1.9.0",
+  "author": "ModStart",
+  "description": "科技类官方网站模板",
+  "providers": [
+  ],
+  "config": {
+  }
+}

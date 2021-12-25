@@ -13,10 +13,6 @@ class SearchController extends ModuleBaseController
 {
     public function index()
     {
-//        $data = parent::setup($id);
-//        $view = $this->getView($data, 'listTemplate');
-//        $cat = $data['cat'];
-
         $input = InputPackage::buildFromInput();
         $page = $input->getPage();
         $pageSize = $input->getPageSize('pageSize');

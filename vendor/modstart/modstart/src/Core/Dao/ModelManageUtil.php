@@ -7,12 +7,18 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use ModStart\Core\Exception\BizException;
 
 class ModelManageUtil
 {
+    public static function tablePrefix($conn = 'mysql')
+    {
+        return config('database.connections.' . $conn . '.prefix');
+    }
+
     public static function table($table, $conn = 'mysql')
     {
-        return config('database.connections.' . $conn . '.prefix') . $table;
+        return self::tablePrefix($conn) . $table;
     }
 
     public static function fixDatetime0000($table, $field)
@@ -27,6 +33,25 @@ class ModelManageUtil
         }
     }
 
+    public static function listTables($conn = 'mysql')
+    {
+        $results = self::query('SHOW TABLES', $conn);
+        $tables = [];
+        $tablePrefix = self::tablePrefix($conn);
+        foreach ($results as $result) {
+            $values = array_values($result);
+            $table = $values[0];
+            if (!empty($tablePrefix)) {
+                if (!starts_with($table, $tablePrefix)) {
+                    continue;
+                }
+                $table = substr($table, strlen($tablePrefix));
+            }
+            $tables[] = $table;
+        }
+        return $tables;
+    }
+
     public static function hasTable($table)
     {
         return Schema::hasTable($table);
@@ -35,6 +60,11 @@ class ModelManageUtil
     public static function dropTable($table)
     {
         return Schema::dropIfExists($table);
+    }
+
+    public static function renameTable($tableFrom, $tableTo)
+    {
+        Schema::rename($tableFrom, $tableTo);
     }
 
     public static function listTableColumns($table)
@@ -255,6 +285,16 @@ class ModelManageUtil
         $table = self::table($table);
         $sql = "ALTER TABLE `$table` DROP `$fieldName`";
         self::statement($sql);
+    }
+
+    public static function tableStructure($table, $conn = 'mysql')
+    {
+        $tablePrefixed = self::table($table, $conn);
+        $result = self::query("SHOW CREATE TABLE `$tablePrefixed`", $conn);
+        $result = isset($result[0]['Create Table']) ? $result[0]['Create Table'] : '';
+        BizException::throwsIfEmpty('ShowTableStructureError', $result);
+        $result = str_replace("`$tablePrefixed`", "`__table_prefix__$table`", $result);
+        return $result;
     }
 
 }
