@@ -395,7 +395,7 @@ class DataManager
 
     /**
      * 准备文件到本地可用
-     * @param $path string 文件路径 /data/xxxxxxx.xxx /data_temp/xxxxxxx.xxx http://www.example.com/data/xxxxx.xxx
+     * @param $path string 文件路径 /data/xxxxxxx.xxx data_temp/xxxxxx.xxx /data_temp/xxxxxxx.xxx http://www.example.com/data/xxxxx.xxx
      * @param $option
      * @return array
      */

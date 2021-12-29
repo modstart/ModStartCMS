@@ -7,6 +7,7 @@ namespace Module\ModuleStore\Util;
 use Chumper\Zipper\Zipper;
 use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
@@ -20,8 +21,13 @@ class ModuleStoreUtil
 
     public static function remoteModuleData()
     {
-        return Cache::remember('ModuleStore_Modules', 60, function () {
-            return CurlUtil::getJSONData(self::REMOTE_BASE . '/api/store/module');
+        $input = InputPackage::buildFromInput();
+        $memberUserId = $input->getInteger('memberUserId');
+        $apiToken = $input->getTrimString('apiToken');
+        return Cache::remember('ModuleStore_Modules:' . $memberUserId, 60, function () use ($apiToken) {
+            return CurlUtil::getJSONData(self::REMOTE_BASE . '/api/store/module', [
+                'api_token' => $apiToken,
+            ]);
         });
     }
 
@@ -140,7 +146,7 @@ class ModuleStoreUtil
                     }
                 } else {
                     $require['success'] = false;
-                    $require['resolve'] = "请先安装 $require[name]";
+                    $require['resolve'] = "请先安装 $require[name] <a href='https://modstart.com/m/$m' class='ub-text-white tw-underline' target='_blank'>[点击查看]</a>";
                 }
                 $requires[] = $require;
             }

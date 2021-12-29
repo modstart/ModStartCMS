@@ -159,11 +159,16 @@
                             <button type="submit" class="btn btn-primary btn-lg btn-block">提交注册</button>
                         </div>
                     </div>
-                    @if(modstart_config('Member_AgreementEnable',false))
+                    @if(modstart_config('Member_AgreementEnable',false)||modstart_config('Member_PrivacyEnable',false))
                         <div class="line">
                             <div class="field">
                                 <input type="checkbox" name="agreement" value="1" checked class="tw-align-middle" />
-                                <a href="{{modstart_web_url('member/agreement')}}" target="_blank">{{modstart_config('Member_AgreementTitle','用户使用协议')}}</a>
+                                @if(modstart_config('Member_AgreementEnable',false))
+                                    <a href="{{modstart_web_url('member/agreement')}}" target="_blank">{{modstart_config('Member_AgreementTitle','用户使用协议')}}</a>
+                                @endif
+                                @if(modstart_config('Member_PrivacyEnable',false))
+                                    <a href="{{modstart_web_url('member/privacy')}}" target="_blank">{{modstart_config('Member_PrivacyTitle','用户隐私协议')}}</a>
+                                @endif
                             </div>
                         </div>
                     @endif

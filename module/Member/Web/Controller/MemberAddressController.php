@@ -18,6 +18,7 @@ use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
+use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
@@ -68,7 +69,13 @@ class MemberAddressController extends MemberFrameController implements MemberLog
         $builder->pageTitle(($id ? '修改' : '增加') . '地址');
         $builder->text('name', '姓名')->required();
         $builder->text('phone', '手机号')->required();
-        $builder->areaChina('area', '省市地区')->required();
+        if (ModuleManager::isModuleEnabled('Area')) {
+            $builder->areaChina('area', '省市地区')->required();
+        } else {
+            $html = "<div class='tw-bg-gray-200 tw-rounded tw-px-2'>省市地区需要依赖 <a href='https://modstart.com/m/Area' target='_blank'>Area</a> 模块</div>";
+            $builder->html('area', '省市地区')->html($html)->addable(true)->required();
+        }
+
         $builder->textarea('detail', '详细地址')->required();
         $builder->text('post', '邮政编码');
         return $builder->perform(ArrayUtil::keepKeys($record, ['name', 'phone', 'area', 'detail', 'post']),

@@ -41,5 +41,6 @@ class MemberGroupController extends Controller
             ->hookSaved(function (Form $form) {
                 MemberGroupUtil::clearCache();
             });
+        $builder->repository()->setSortColumn('id');
     }
 }

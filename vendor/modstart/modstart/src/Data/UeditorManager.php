@@ -130,7 +130,8 @@ class UeditorManager
                     if (!$ignoreCatch && preg_match('/^(http|ftp|https):\\/\\//i', $f)) {
                         $ext = FileUtil::extension($f);
                         if (in_array('.' . $ext, $config ['catcherAllowFiles'])) {
-                            if ($imageContent = CurlUtil::getRaw($f)) {
+                            $imageContent = CurlUtil::getRaw($f);
+                            if ($imageContent) {
                                 $ret = DataManager::upload('image', L('Image') . '.' . $ext, $imageContent, $option);
                                 if ($ret['code']) {
                                     $ret['state'] = $ret['msg'];

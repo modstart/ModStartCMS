@@ -1,8 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitleMain'){{modstart_config('Member_AgreementTitle','用户使用协议')}}@endsection
-@section('pageKeywords')用户使用协议@endsection
-@section('pageDescription')用户使用协议@endsection
+@section('pageTitleMain'){{$pageTitle}}@endsection
+@section('pageKeywords'){{$pageTitle}}@endsection
+@section('pageDescription'){{$pageTitle}}@endsection
 
 @section('body')
 
@@ -11,10 +11,10 @@
             <div class="head"></div>
             <div class="body">
                 <div class="ub-article">
-                    <h1 class="ub-text-center">{{modstart_config('Member_AgreementTitle','用户使用协议')}}</h1>
+                    <h1 class="ub-text-center">{{$pageTitle}}</h1>
                     <div class="attr"></div>
                     <div class="content ub-html">
-                        {!! modstart_config('Member_AgreementContent') !!}
+                        {!! $pageContent !!}
                     </div>
                 </div>
             </div>

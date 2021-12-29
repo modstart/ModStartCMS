@@ -10,7 +10,7 @@ class Html extends AbstractField
 {
     protected $html = '';
     protected $plain = false;
-    protected $isLayoutField=true;
+    protected $isLayoutField = true;
 
     public function html($html)
     {
@@ -34,9 +34,12 @@ class Html extends AbstractField
         if ($this->plain) {
             return $this->html;
         }
+        $rules = $this->rules();
+        $requiredRuleHtml = str_contains($rules, 'required') ? '<span class="ub-text-danger ub-text-bold">*</span>' : '';
         return <<<EOT
 <div class="line">
     <div class="label">
+        {$requiredRuleHtml}
         {$this->label}:
     </div>
     <div class="field">

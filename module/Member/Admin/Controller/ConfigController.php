@@ -33,9 +33,17 @@ class ConfigController extends Controller
     public function agreement(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('用户协议');
-        $builder->switch('Member_AgreementEnable', '用户使用协议开启');
-        $builder->text('Member_AgreementTitle', '用户使用协议标题')->help('默认为 用户使用协议');
-        $builder->richHtml('Member_AgreementContent', '用户使用协议内容');
+        $builder->switch('Member_AgreementEnable', '用户使用协议开启')
+            ->when('=', true, function ($builder) {
+                $builder->text('Member_AgreementTitle', '用户使用协议标题')->help('默认为 用户使用协议');
+                $builder->richHtml('Member_AgreementContent', '用户使用协议内容');
+            });
+
+        $builder->switch('Member_PrivacyEnable', '用户隐私协议开启')
+            ->when('=', true, function ($builder) {
+                $builder->text('Member_PrivacyTitle', '用户隐私协议标题')->help('默认为 用户隐私协议');
+                $builder->richHtml('Member_PrivacyContent', '用户隐私协议内容');
+            });
         $builder->formClass('wide');
         return $builder->perform();
     }

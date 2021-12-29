@@ -431,6 +431,14 @@ export default {
             installVersionModule: null,
         }
     },
+    watch: {
+        memberUser: {
+            handler(n, o) {
+                this.doLoad()
+            },
+            deep: true
+        }
+    },
     computed: {
         filterModules() {
             const results = this.modules.filter(module => {
@@ -609,7 +617,10 @@ export default {
             }
         },
         doLoad() {
-            this.$api.post(this.$url.admin('module_store/all'), {}, res => {
+            this.$api.post(this.$url.admin('module_store/all'), {
+                memberUserId: this.memberUser.id,
+                apiToken: this.storeApiToken,
+            }, res => {
                 this.loading = false
                 this.categories = res.data.categories
                 this.types = res.data.types
