@@ -173,6 +173,7 @@ class EloquentRepository extends Repository
             $query->where($this->getTreePidColumn(), $treePid);
         }
         $model->grid()->repositoryFilter()->executeQueries($query);
+        $model->grid()->scopeExecuteQueries($query);
         $model->getQueries()->each(function ($value) use (&$query) {
             if ($value['method'] == 'paginate') {
                 $value['arguments'][1] = $this->getTableColumns();

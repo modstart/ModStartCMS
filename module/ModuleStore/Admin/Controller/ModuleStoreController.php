@@ -351,7 +351,6 @@ class ModuleStoreController extends Controller
     public function config(AdminConfigBuilder $builder, $module)
     {
         $basic = ModuleManager::getModuleBasic($module);
-        AdminPermission::demoPostCheck();
         $builder->useDialog();
         $builder->pageTitle($basic['title'] . ' ' . L('Module Config'));
         $moduleInfo = ModuleManager::getInstalledModuleInfo($module);

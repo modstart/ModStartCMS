@@ -36,6 +36,7 @@ class CmsCatUtil
             ModelUtil::decodeRecordsJson($records, ['visitMemberGroups', 'visitMemberVips']);
             foreach ($records as $k => $v) {
                 $records[$k]['_model'] = CmsModelUtil::get($v['modelId']);
+                $records[$k]['_url'] = modstart_web_url($v['url']);
             }
             return $records;
         });
@@ -121,6 +122,13 @@ class CmsCatUtil
         } catch (\Exception $e) {
         }
         return [];
+    }
+
+    public static function allSafelyHavingUrl()
+    {
+        return array_filter(self::allSafely(), function ($item) {
+            return !empty($item['url']) && !empty($item['_model']['mode']);
+        });
     }
 
     public static function build($modelName, $cat, $catParentUrl = null)

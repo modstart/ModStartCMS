@@ -17,6 +17,7 @@ class BaseCatController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         if (empty($id)) {
+            // var_dump(Request::path());
             $cat = CmsCatUtil::getByUrl(Request::path());
         } else {
             $cat = CmsCatUtil::get($id);

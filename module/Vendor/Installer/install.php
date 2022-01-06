@@ -84,7 +84,7 @@ include __DIR__ . '/function.php';
                 <div data-rewrite-check>
                     <div class="status loading"><div class="ub-alert">Rewrite规则检测中...</div></div>
                     <div class="status success" style="display:none;"><?php text_success('Rewrite规则正确'); ?></div>
-                    <div class="status error" style="display:none;"><?php text_error('Rewrite规则错误',null,false); ?></div>
+                    <div class="status error" style="display:none;"><?php text_error('Rewrite规则错误','https://modstart.com/doc/install/qa.html#q-rewrite%E8%A7%84%E5%88%99',false); ?></div>
                     <div class="status error ub-alert ub-alert-warning" style="display:none;">
                         <div>- 配置Nginx/Apache，保证访问 /install/ping 出现 ok 字样。</div>
                     </div>

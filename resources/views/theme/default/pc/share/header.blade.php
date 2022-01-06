@@ -34,7 +34,20 @@
                 </div>
             </div>
             @foreach(\Module\Nav\Util\NavUtil::listByPositionWithCache('head') as $nav)
-                <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue(empty($nav['openType'])?null:$nav['openType'])}}>{{$nav['name']}}</a>
+                @if(empty($nav['_child']))
+                    <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue($nav)}}>{{$nav['name']}}</a>
+                @else
+                    <div class="nav-item">
+                        <div class="sub-title">
+                            <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue($nav)}}>{{$nav['name']}}</a>
+                        </div>
+                        <div class="sub-nav">
+                            @foreach($nav['_child'] as $child)
+                                <a class="sub-nav-item {{modstart_baseurl_active($child['link'])}}" href="{{$child['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue($child)}}>{{$child['name']}}</a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             @endforeach
         </div>
         <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">

@@ -4,6 +4,7 @@ namespace Module\Nav\Util;
 
 use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\TreeUtil;
 use Module\Nav\Type\NavPosition;
 
 class NavUtil
@@ -29,7 +30,15 @@ class NavUtil
      */
     public static function listByPosition($position = 'header')
     {
-        return ModelUtil::model('nav')->where(['position' => $position])->orderBy('sort', 'asc')->get()->toArray();
+        $nodes = TreeUtil::modelToTree('nav', [
+            'position' => 'position',
+            'name' => 'name',
+            'openType' => 'openType',
+            'link' => 'link',
+        ]);
+        return array_filter($nodes, function ($item) use ($position) {
+            return $item['position'] == $position;
+        });
     }
 
     /**

@@ -560,12 +560,12 @@ class AbstractField implements Renderable
             ModStart::script($this->script);
             switch ($this->renderMode) {
                 case FieldRenderMode::FORM:
-                    return view($this->view(), $this->variables());
+                    return View::make($this->view(), $this->variables())->render();
                 case FieldRenderMode::DETAIL:
                     if (view()->exists($view = $this->view($this->renderMode))) {
-                        return view($view, $this->variables());
+                        return View::make($view, $this->variables())->render();
                     }
-                    return view($this->view($this->renderMode, 'text'), $this->variables());
+                    return View::make($this->view($this->renderMode, 'text'), $this->variables())->render();
                 case FieldRenderMode::GRID:
                     if (view()->exists($view = $this->view($this->renderMode))) {
                         // echo json_encode($this->variables())."\n";

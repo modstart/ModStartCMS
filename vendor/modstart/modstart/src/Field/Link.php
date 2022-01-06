@@ -6,8 +6,6 @@ namespace ModStart\Field;
 
 class Link extends AbstractField
 {
-    protected $width = 80;
-
     protected function setup()
     {
         $this->addVariables([

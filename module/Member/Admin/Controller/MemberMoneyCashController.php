@@ -61,7 +61,7 @@ class MemberMoneyCashController extends Controller
 
     public function pass()
     {
-        AdminPermission::demoPostCheck();
+        AdminPermission::demoCheck();
         $id = CRUDUtil::id();
         ModelUtil::update('member_money_cash', $id, ['status' => MemberMoneyCashStatus::SUCCESS]);
         return Response::redirect(CRUDUtil::jsGridRefresh());

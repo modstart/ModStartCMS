@@ -10,6 +10,52 @@ use Module\Cms\Util\CmsContentUtil;
  */
 class MCms
 {
+
+    /**
+     * @param $catUrl string 栏目URL
+     * @return array
+     *
+     * @Util 获取栏目
+     */
+    public static function getCatByUrl($catUrl)
+    {
+        return CmsCatUtil::getByUrl($catUrl);
+    }
+
+    /**
+     * @param $catId integer 栏目ID
+     * @return array
+     *
+     * @Util 获取栏目
+     */
+    public static function getCat($catId)
+    {
+        return CmsCatUtil::get($catId);
+    }
+
+    /**
+     * @param $catUrl string 栏目URL
+     * @return array
+     *
+     * @Util 根据栏目URL获取子栏目
+     */
+    public static function listChildrenCatByUrl($catUrl)
+    {
+        $cat = CmsCatUtil::getByUrl($catUrl);
+        return self::listChildrenCat($cat['id']);
+    }
+
+    /**
+     * @param $catId integer 栏目ID
+     * @return array
+     *
+     * @Util 根据栏目ID获取子栏目
+     */
+    public static function listChildrenCat($catId)
+    {
+        return CmsCatUtil::children($catId);
+    }
+
     /**
      * @param $catUrl string 栏目URL
      * @param $page int 页码
@@ -42,17 +88,34 @@ class MCms
     }
 
     /**
+     * @param $cateUrl string 栏目URL
+     * @param $limit int 数量
+     *
+     * @Util 根据栏目URL获取最近记录
+     */
+    public static function latestContentByCatUrl($cateUrl, $limit = 10)
+    {
+        $cat = self::getCatByUrl($cateUrl);
+        return self::latestCat($cat['id'], $limit);
+    }
+
+    /**
      * @param $catId int 栏目ID
-     * @param $limit int 页码
+     * @param $limit int 数量
      * @return array
      *
      * @Util 根据栏目ID获取最近记录
      */
-    public static function latestCat($catId, $limit = 10)
+    public static function latestContentByCat($catId, $limit = 10)
     {
         $paginateData = CmsContentUtil::paginateCat($catId, 1, $limit);
         $latestRecords = $paginateData['records'];
         return $latestRecords;
+    }
+
+    public static function latestCat($catId, $limit = 10)
+    {
+        return self::latestContentByCat($catId, $limit);
     }
 
     /**

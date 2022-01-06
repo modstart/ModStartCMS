@@ -17,7 +17,8 @@
                 <img data-src="placeholder/400x100"/>
             </a>
         </div>
-        <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>
+        <div class="nav-mask"
+             onclick="$(this).closest('.ub-header-b').removeClass('show');$('body').removeClass('scroll-lock');"></div>
         <div class="nav">
             <div class="search">
                 <div class="box">
@@ -27,11 +28,21 @@
                     </form>
                 </div>
             </div>
-            <a href="#">首页</a>
-            <a href="#" class="active">导航A</a>
+            <a href="#" class="active">首页</a>
+            <div class="nav-item">
+                <div class="sub-title">
+                    二级
+                </div>
+                <div class="sub-nav">
+                    <a class="sub-nav-item" href="#">子导航A</a>
+                    <a class="sub-nav-item" href="#">子导航B</a>
+                    <a class="sub-nav-item" href="#">子导航C</a>
+                </div>
+            </div>
             <a href="#">导航B</a>
         </div>
-        <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">
+        <a class="nav-toggle" href="javascript:;"
+           onclick="$(this).closest('.ub-header-b').toggleClass('show');$('body').addClass('scroll-lock');">
             <i class="show iconfont icon-list"></i>
             <i class="close iconfont icon-close"></i>
         </a>
@@ -68,7 +79,6 @@
             </div>
             <a href="#">首页</a>
             <a href="#" class="active">导航A</a>
-            <a href="#">导航B</a>
         </div>
         <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">
             <i class="show iconfont icon-list"></i>
@@ -107,7 +117,6 @@
             </div>
             <a href="#">首页</a>
             <a href="#" class="active">导航A</a>
-            <a href="#">导航B</a>
         </div>
         <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">
             <i class="show iconfont icon-list"></i>

@@ -15,6 +15,7 @@ use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Concern\HasCascadeFields;
 use ModStart\Form\Form;
 use ModStart\Repository\Filter\HasRepositoryFilter;
+use ModStart\Repository\Filter\HasScopeFilter;
 use ModStart\Repository\Repository;
 use ModStart\Support\Concern\HasBuilder;
 use ModStart\Support\Concern\HasFields;
@@ -38,6 +39,7 @@ class Detail implements Renderable
         HasBuilder,
         HasFluentAttribute,
         HasCascadeFields,
+        HasScopeFilter,
         HasRepositoryFilter;
 
     /**

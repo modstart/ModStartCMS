@@ -19,9 +19,7 @@ class PageController extends BaseCatController
         $records = CmsContentUtil::allCat($cat['id']);
         $viewData['record'] = isset($records[0]) ? $records[0] : null;
         $viewData['records'] = $records;
-
         // return $viewData;
-
         return $this->view('cms.page.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

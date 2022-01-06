@@ -26,6 +26,7 @@ use ModStart\Form\Type\FormEngine;
 use ModStart\Form\Type\FormMode;
 use ModStart\Grid\Concerns\HasSort;
 use ModStart\Repository\Filter\HasRepositoryFilter;
+use ModStart\Repository\Filter\HasScopeFilter;
 use ModStart\Repository\Repository;
 use ModStart\Support\Concern\HasBuilder;
 use ModStart\Support\Concern\HasFields;
@@ -106,6 +107,7 @@ class Form implements Renderable
         HasFluentAttribute,
         HasSort,
         HasCascadeFields,
+        HasScopeFilter,
         HasRepositoryFilter;
 
     /**

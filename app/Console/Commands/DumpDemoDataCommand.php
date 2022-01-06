@@ -10,24 +10,37 @@ class DumpDemoDataCommand extends BaseDumpDemoDataCommand
 {
     public function handle()
     {
-//        $data = [
-//            'inserts' => $this->buildInsert(
-//                ['config', ['key', 'value'], function ($item) {
-//                    return !in_array($item['key'], ['moduleEnableList']);
-//                }],
-//                'article',
-//                'cms_job',
-//                'nav',
-//                'partner',
-//                ['case', ['title', 'content', 'cover']], 'case_category',
-//                ['news', ['title', 'content', 'cover', 'summary']], 'news_category',
-//                'product', 'product_category',
-//                'landing_page_item'
-//            ),
-//            'updates' => $this->buildUpdate(
-//                ['landing_page', ['url' => ''], ['title']]
-//            ),
-//        ];
-//        $this->buildDump($data);
+        $data = [
+            'inserts' => $this->buildInsert(
+                ['config', ['key', 'value'], function ($item) {
+                    return in_array($item['key'], [
+                        'siteName',
+                        'siteDescription',
+                        'siteKeywords',
+                        'siteLogo',
+                        'siteSlogan',
+                        'siteDomain',
+                        'systemCounter',
+                        'Cms_HomeInfoTitle',
+                        'Cms_HomeInfoImage',
+                        'Cms_HomeInfoContent',
+                        'Cms_CompanyName',
+                        'Cms_ContactEmail',
+                        'Cms_ContactPhone',
+                        'Cms_ContactAddress',
+                    ]);
+                }],
+                'cms_content',
+                'cms_m_cases',
+                'cms_m_job',
+                'cms_m_news',
+                'cms_m_product',
+                'nav',
+                'banner',
+                'partner'
+            ),
+            'updates' => $this->buildUpdate(),
+        ];
+        $this->buildDump($data);
     }
 }

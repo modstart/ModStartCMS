@@ -16,10 +16,8 @@ $router->group([
 
     $router->match(['get', 'post'], 'search', 'SearchController@index');
 
-    foreach (CmsCatUtil::allSafely() as $item) {
-        if (empty($item['url']) || empty($item['_model']['mode'])) {
-            continue;
-        }
+    $cats = CmsCatUtil::allSafelyHavingUrl();
+    foreach ($cats as $item) {
         switch ($item['_model']['mode']) {
             case CmsMode::LIST_DETAIL:
                 $router->match(['get'], $item['url'], 'ListController@index');
@@ -31,6 +29,11 @@ $router->group([
             case CmsMode::PAGE:
                 $router->match(['get'], $item['url'], 'PageController@index');
                 break;
+        }
+    }
+    if (modstart_config('Cms_ContentUrlMode') == \Module\Cms\Type\ContentUrlMode::CAT) {
+        foreach ($cats as $item) {
+            $router->match(['get'], $item['url'] . '/{alias_url}', 'DetailController@index');
         }
     }
 

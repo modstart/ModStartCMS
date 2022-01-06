@@ -45,7 +45,7 @@ trait CmsSiteTemplateFillDataTrait
         $builder->useDialog();
         $builder->pageTitle('初始化演示数据');
         return $builder->perform(false, function (Form $form) use ($recordFields, $demoData) {
-            AdminPermission::demoPostCheck();
+            AdminPermission::demoCheck();
             $data = $form->dataForming();
             $filterRecordFields = [];
             foreach ($recordFields as $field => $title) {

@@ -1,0 +1,1247 @@
+<?php return array (
+  'inserts' => 
+  array (
+    'config' => 
+    array (
+      12 => 
+      array (
+        'key' => 'siteLogo',
+        'value' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/20/45615_8ymj_3880.png',
+      ),
+      13 => 
+      array (
+        'key' => 'siteName',
+        'value' => 'ModStartCMS',
+      ),
+      14 => 
+      array (
+        'key' => 'siteSlogan',
+        'value' => '开源内容开发框架',
+      ),
+      15 => 
+      array (
+        'key' => 'siteDomain',
+        'value' => 'modstart.com',
+      ),
+      16 => 
+      array (
+        'key' => 'siteKeywords',
+        'value' => 'ModStart,开源CMS,模块开发框架,免费CMS源码',
+      ),
+      17 => 
+      array (
+        'key' => 'siteDescription',
+        'value' => 'ModStart是一个开源内容开发框架，免费且永久商用，基于配置+模块化开发，可以帮您快速完成网站系统的搭建。',
+      ),
+      37 => 
+      array (
+        'key' => 'systemCounter',
+        'value' => '<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c1367ea4c1f7fe05cfe5a84a76691976";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>',
+      ),
+      40 => 
+      array (
+        'key' => 'Cms_HomeInfoTitle',
+        'value' => 'XXX网络科技有限公司',
+      ),
+      41 => 
+      array (
+        'key' => 'Cms_HomeInfoImage',
+        'value' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/1748_0foa_6858.jpg',
+      ),
+      42 => 
+      array (
+        'key' => 'Cms_HomeInfoContent',
+        'value' => '<p>XXX网络科技有限公司是于1966年为了通过试验评价技术的支援以提高产业技术而成 立的试验评价机构，<br/>是和先进（发达）国家的试验、认证机构进行交流和合作的大韩民国代表性机构。<br/>为了保护本国产业的各种认证制度日渐完善，为保护消费者安 全和环境的各种制度的重要性日趋增加，<br/>KTL为适应形势的发展，从产品开发到获得认证的整个阶段提供支援，以帮助企业提高技术能力以及拥有更强的竞争力。<br/>为了两国企业间和认证机构和客户间的有机业务联系及满足客户的需求，<br/></p>',
+      ),
+      44 => 
+      array (
+        'key' => 'Cms_CompanyName',
+        'value' => 'XXX网络科技有限公司',
+      ),
+      45 => 
+      array (
+        'key' => 'Cms_ContactEmail',
+        'value' => 'modstart@163.com',
+      ),
+      46 => 
+      array (
+        'key' => 'Cms_ContactPhone',
+        'value' => '021-88888888',
+      ),
+      47 => 
+      array (
+        'key' => 'Cms_ContactAddress',
+        'value' => '陕西省西安市西安区XX街道XX号',
+      ),
+    ),
+    'cms_content' => 
+    array (
+      0 => 
+      array (
+        'id' => 2,
+        'created_at' => '2021-11-03 18:54:05',
+        'updated_at' => '2021-11-03 19:12:59',
+        'catId' => 10,
+        'modelId' => 4,
+        'alias' => NULL,
+        'title' => '销售员',
+        'summary' => '1、 组织领导公司的财务、成本、投融资、预算、会计核算及监督、财务分析等方面的工作； 
+
+2、 主持建立和完善财务管理制度和相关工作程序，制定和管理税收政策方案及程序； 
+
+3、 掌握公司财务状况、经营成果和资金变动情况，拟订或规划资金筹措和资本运作方案；',
+        'cover' => 'https://mz-assets.tecmz.com/data/mz-demo/gift-3.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 18:52:14',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => ':标签:',
+        'author' => 'modstart',
+        'source' => 'modstart',
+      ),
+      1 => 
+      array (
+        'id' => 3,
+        'created_at' => '2021-11-03 18:55:22',
+        'updated_at' => '2021-12-01 08:37:50',
+        'catId' => 12,
+        'modelId' => 2,
+        'alias' => NULL,
+        'title' => '客户案例二',
+        'summary' => '演示案例摘要',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/2269_9vhc_5881.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 18:55:16',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      2 => 
+      array (
+        'id' => 4,
+        'created_at' => '2021-11-03 18:56:47',
+        'updated_at' => '2021-11-03 18:56:47',
+        'catId' => 2,
+        'modelId' => 1,
+        'alias' => NULL,
+        'title' => '不只是快！5G进入商用冲刺阶段，该如何布局？',
+        'summary' => '今年8月10日，工信部、国家发改委联合印发《扩大和升级信息消费三年行动计划(2018-2020年)》，报告提出到2020年，信息消费规模达到6万亿元，年均增长11%以上。按照工信部部署，我国将于2020年实现5G商用。近日，多地在布局5G建设上亮出时间表和发展目标。8月13日，北京也正式启动首批5G站点，5G建设进入大提速阶段。',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39387_fbum_7347.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 18:56:18',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => ':modstart:',
+        'author' => 'modstart',
+        'source' => 'modstart',
+      ),
+      3 => 
+      array (
+        'id' => 6,
+        'created_at' => '2021-11-03 18:58:43',
+        'updated_at' => '2021-11-03 18:58:43',
+        'catId' => 3,
+        'modelId' => 1,
+        'alias' => NULL,
+        'title' => '三大运营商物联网发展进入规模商用阶段',
+        'summary' => '9月17日消息，《2017-2018年中国物联网发展年度报告》发布，报告显示：2017年全球物联网设备数量强劲增长，达到84亿台，首次超过人口数量。全球物联网市场有望在十年内实现大规模普及，到2025年市场规模或将成长至3.9-11.1万亿美元。',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39503_9ql4_4245.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 18:58:16',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => ':modstart:',
+        'author' => 'modstart',
+        'source' => 'modstart',
+      ),
+      4 => 
+      array (
+        'id' => 7,
+        'created_at' => '2021-11-03 18:59:25',
+        'updated_at' => '2021-11-03 18:59:25',
+        'catId' => 4,
+        'modelId' => 1,
+        'alias' => NULL,
+        'title' => '使用CDN加速您的网站的访问速度',
+        'summary' => '内容分发网络（Content Delivery Network，简称CDN）将您源站资源缓存至遍布全球的加速节点上。当终端用户请求访问和获取这些资源时，无需回源，系统将就近调用CDN节点上已经缓存的资源。
+
+在不同区域、不同场景下使用CDN加速您网站内容的分发，将有效分担源站压力，避免网络拥塞，提升用户访问资源的速度和体验。
+
+由于CDN是为加快网络访问速度而被优化的网络覆盖层，因此被形象',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39543_a47o_7781.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 18:58:57',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => 'modstart',
+        'source' => '网络',
+      ),
+      5 => 
+      array (
+        'id' => 8,
+        'created_at' => '2021-11-03 19:01:18',
+        'updated_at' => '2021-11-15 18:28:29',
+        'catId' => 2,
+        'modelId' => 1,
+        'alias' => NULL,
+        'title' => 'Selenium让浏览器动起来',
+        'summary' => 'Selenium 是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。它是一套完整的web应用程序测试系统，包含了测试的录制（Selenium IDE）,编写及运行（Selenium Remote Control）和测试的并行处理（Selenium Grid）。
+
+',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39386_50rd_1114.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:00:56',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => 'modstart',
+        'source' => '网络',
+      ),
+      6 => 
+      array (
+        'id' => 9,
+        'created_at' => '2021-11-03 19:01:52',
+        'updated_at' => '2021-11-03 19:01:52',
+        'catId' => 2,
+        'modelId' => 1,
+        'alias' => NULL,
+        'title' => '作为站长如何避免“宝塔漏洞”的事故出现',
+        'summary' => '前段时间宝塔面板出现严重级别的高危安全漏洞，攻击者借助该漏洞可直接获取服务器数据，给各位站长造成严重的威胁。
+
+前段时间宝塔面板出现严重级别的高危安全漏洞，攻击者借助该漏洞可直接获取服务器数据，给各位站长造成严重的威胁。
+
+',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39692_ialq_1392.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:01:26',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 0,
+        'isTop' => 1,
+        'tags' => ':mod:',
+        'author' => 'modstart',
+        'source' => '网络',
+      ),
+      7 => 
+      array (
+        'id' => 10,
+        'created_at' => '2021-11-03 19:02:33',
+        'updated_at' => '2021-11-15 18:25:50',
+        'catId' => 1,
+        'modelId' => 1,
+        'alias' => NULL,
+        'title' => '阿里巴巴 Arthas 3.5.0 版本发布，支持反编译打印行号和统一鉴权',
+        'summary' => 'Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
+
+Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
+
+',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/15/36896_cguz_7251.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:01:56',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 0,
+        'tags' => ':mods:',
+        'author' => 'modstart',
+        'source' => '网络',
+      ),
+      8 => 
+      array (
+        'id' => 12,
+        'created_at' => '2021-11-03 19:13:38',
+        'updated_at' => '2021-11-03 19:13:38',
+        'catId' => 10,
+        'modelId' => 4,
+        'alias' => NULL,
+        'title' => '市场专员',
+        'summary' => '职位类型：财务助理',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39692_ialq_1392.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:13:09',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      9 => 
+      array (
+        'id' => 13,
+        'created_at' => '2021-11-03 19:14:14',
+        'updated_at' => '2021-11-03 19:14:14',
+        'catId' => 10,
+        'modelId' => 4,
+        'alias' => NULL,
+        'title' => '财务经理',
+        'summary' => '职位类型：财务助理
+
+发布时间：2017-10-24
+
+有效日期：2017-12-12',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39662_uzkm_6350.png',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:13:56',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      10 => 
+      array (
+        'id' => 14,
+        'created_at' => '2021-11-03 19:14:51',
+        'updated_at' => '2021-11-03 19:14:51',
+        'catId' => 10,
+        'modelId' => 4,
+        'alias' => NULL,
+        'title' => '行政专员',
+        'summary' => '上岗时间：尽快
+
+职位类型：招聘
+
+发布时间：2017-09-13
+
+有效日期：2017-10-13',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39543_a47o_7781.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:14:32',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      11 => 
+      array (
+        'id' => 15,
+        'created_at' => '2021-11-03 19:16:05',
+        'updated_at' => '2021-11-03 19:16:25',
+        'catId' => 9,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => 'Apple iPad Air',
+        'summary' => '苹果 iPad Air 2使用iOS8系统，为您带来一系列全新功能。由于其专为iPad度身设计，因此一切不仅看起来赏心悦目，运行起来也同样出色。苹果 iPad Air 2内置一系列出色的app可用来发送电子邮件、浏览网页和进行视频通话。另有多款app让你可使用你的照片、影片、音乐、文档、演示文稿和电子表格来创造更多精彩。',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40561_8tdh_6533.png',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:15:46',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      12 => 
+      array (
+        'id' => 16,
+        'created_at' => '2021-11-03 19:16:56',
+        'updated_at' => '2021-11-03 19:16:56',
+        'catId' => 8,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => '台电（Teclast）X98',
+        'summary' => '台电X98 Air 3G 搭载英特尔Bay Trail-T Z3736F处理器（X86架构），主频高达2.16GHz，',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40612_ojpe_5713.png',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:16:34',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      13 => 
+      array (
+        'id' => 17,
+        'created_at' => '2021-11-03 19:18:04',
+        'updated_at' => '2021-11-03 19:18:04',
+        'catId' => 6,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => '华为MediaPad',
+        'summary' => '华为公司的最新平板电脑“MediaPad”即将面世，该平板可能将成为华为IDEOS系列产品线的一部分，而华为公司选择在2011年的亚洲通讯展（CommunicAsia 2011）上来进行发布。据了解，2011年亚洲通讯展将于6月21日-24日在新加坡举行。国内将在10月份上市。
+
+关于MediaPad，可实现“云通话”的双核高清平板，全球首款Android 3.2(Honeycomb) 7寸旗',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40681_bqlh_5171.png',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:17:39',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      14 => 
+      array (
+        'id' => 18,
+        'created_at' => '2021-11-03 19:19:05',
+        'updated_at' => '2021-11-03 19:20:06',
+        'catId' => 7,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => '小米（MI）7.9英寸平板',
+        'summary' => '从小米这个品牌诞生开始，已经被无数人吐槽的饥饿营销到了第四个年头还是依然没有停止，即使现在的小米已经基本摆脱了生产线可以完全可以满足量产的需求，甚至是小米任何产品的供货早已经没有什么问题，依然有不少人在吐槽，似乎这没有意义的吐槽，已经成了家常便饭。
+
+',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40742_l8gt_3221.png',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:18:48',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 1,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      15 => 
+      array (
+        'id' => 19,
+        'created_at' => '2021-11-03 19:20:42',
+        'updated_at' => '2021-11-03 19:21:34',
+        'catId' => 8,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => '戴尔（DELL）Ins14L-2528B',
+        'summary' => '主体
+
+品牌戴尔（DELL）
+
+平台Intel
+
+型号Ins14LR-2528B
+
+颜色范围黑
+
+操作系统win8
+
+产品定位商务便携',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40840_mftn_6615.png',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:20:07',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 0,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      16 => 
+      array (
+        'id' => 20,
+        'created_at' => '2021-11-03 19:21:17',
+        'updated_at' => '2021-11-03 19:21:17',
+        'catId' => 9,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => '联想（Lenovo）G50-70MA',
+        'summary' => '',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40875_ddhu_7670.png',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:20:56',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 0,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      17 => 
+      array (
+        'id' => 21,
+        'created_at' => '2021-11-03 19:22:03',
+        'updated_at' => '2021-11-03 19:22:03',
+        'catId' => 6,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => '三星GALAXY S6',
+        'summary' => '北京时间2015年3月2日（巴萨罗那时间2015年3月1日），三星在巴萨罗那发布三星galaxy s6，亮相MWC2015产品发布会。GALAXY S6前后均由玻璃覆盖，机身侧面具备弧度的金属边框。搭载Exynos 7420八核64位处理器，为14纳米制程，3GB的运行内存升级至LPDDR4，整体配置也当属顶级。猎豹宣布与三星达成合作，这部旗舰机中将内置猎豹清理大师提供的清理功能。首次在系统层面搭',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40921_thve_7727.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:21:51',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 0,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      18 => 
+      array (
+        'id' => 22,
+        'created_at' => '2021-11-03 19:22:26',
+        'updated_at' => '2021-11-03 19:22:26',
+        'catId' => 7,
+        'modelId' => 3,
+        'alias' => NULL,
+        'title' => '苹果iPhone 6(16GB)',
+        'summary' => 'iPhone 6采用4.7英寸屏幕，分辨率为1334*750像素，内置64位构架的苹果A8处理器，性能提升非常明显；同时还搭配全新的M8协处理器，专为健康应用所设计；采用后置800万像素镜头，前置120万像素 鞠昀摄影FaceTime HD 高清摄像头；并且加入Touch ID支持指纹识别，首次新增NFC功能；也是一款三网通手机，4G LTE连接速度可达150Mbps，支持多达20个LTE频段。',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40945_hz9e_6444.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 19:22:13',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 0,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      19 => 
+      array (
+        'id' => 23,
+        'created_at' => '2021-11-03 20:53:28',
+        'updated_at' => '2021-12-01 08:55:58',
+        'catId' => 5,
+        'modelId' => 2,
+        'alias' => NULL,
+        'title' => '客户案例3',
+        'summary' => '客户案例3摘要
+客户案例3摘要',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/2315_7z2m_7469.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 20:53:02',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      20 => 
+      array (
+        'id' => 24,
+        'created_at' => '2021-11-03 20:53:57',
+        'updated_at' => '2021-11-03 20:53:57',
+        'catId' => 5,
+        'modelId' => 2,
+        'alias' => NULL,
+        'title' => '客户案例4',
+        'summary' => '客户案例4摘要',
+        'cover' => 'https://mz-assets.tecmz.com/data/mz-demo/gift-3.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 20:53:37',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 0,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      21 => 
+      array (
+        'id' => 25,
+        'created_at' => '2021-11-03 20:54:38',
+        'updated_at' => '2021-12-01 08:56:16',
+        'catId' => 5,
+        'modelId' => 2,
+        'alias' => NULL,
+        'title' => '客户案例5',
+        'summary' => '客户案例5摘要',
+        'cover' => 'https://mz-assets.tecmz.com/data/mz-demo/gift-5.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-11-03 20:54:10',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+      22 => 
+      array (
+        'id' => 33,
+        'created_at' => '2021-12-01 08:53:50',
+        'updated_at' => '2021-12-01 08:55:47',
+        'catId' => 5,
+        'modelId' => 2,
+        'alias' => NULL,
+        'title' => '客户案例设计',
+        'summary' => '',
+        'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/3222_axih_7266.jpg',
+        'seoTitle' => NULL,
+        'seoDescription' => NULL,
+        'seoKeywords' => NULL,
+        'postTime' => '2021-12-01 08:53:22',
+        'wordCount' => NULL,
+        'viewCount' => NULL,
+        'status' => 1,
+        'commentCount' => NULL,
+        'likeCount' => NULL,
+        'isRecommend' => 1,
+        'isTop' => 0,
+        'tags' => '',
+        'author' => '',
+        'source' => '',
+      ),
+    ),
+    'cms_m_cases' => 
+    array (
+      0 => 
+      array (
+        'id' => 3,
+        'created_at' => '2021-11-03 18:55:22',
+        'updated_at' => '2021-12-01 08:37:50',
+        'content' => '<p>这是一个分类的演示案例</p><p>演示案例可以上传首页图片，文本内容，设置标签、作者、来源</p><p>SEO标题、<span style="word-spacing: 0.8px;">SEO</span>描述、<span style="word-spacing: 0.8px;">SEO</span>关键词</p>',
+      ),
+      1 => 
+      array (
+        'id' => 23,
+        'created_at' => '2021-11-03 20:53:28',
+        'updated_at' => '2021-12-01 08:55:58',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 16px; white-space: normal; background-color: rgb(255, 255, 255);">这是一个分类的演示案例</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 16px; white-space: normal; background-color: rgb(255, 255, 255);">演示案例可以上传首页图片，文本内容，设置标签、作者、来源</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 16px; white-space: normal; background-color: rgb(255, 255, 255);">SEO标题、<span style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; word-spacing: 0.8px;">SEO</span>描述、<span style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; word-spacing: 0.8px;">SEO</span>关键词</p>',
+      ),
+      2 => 
+      array (
+        'id' => 24,
+        'created_at' => '2021-11-03 20:53:57',
+        'updated_at' => '2021-11-03 20:53:57',
+        'content' => '<p>客户案例4内容<span style="word-spacing: 0.8px;"></span><span style="word-spacing: 0.8px;">客户案例4内容</span></p><p><span style="word-spacing: 0.8px;"><span style="word-spacing: 0.8px;"></span><span style="word-spacing: 0.8px;">客户案例4内容</span></span></p><p><span style="word-spacing: 0.8px;"><span style="word-spacing: 0.8px;"><span style="word-spacing: 0.8px;"></span><span style="word-spacing: 0.8px;">客户案例4内容</span></span></span></p>',
+      ),
+      3 => 
+      array (
+        'id' => 25,
+        'created_at' => '2021-11-03 20:54:38',
+        'updated_at' => '2021-12-01 08:56:16',
+        'content' => '<p>客户案例5客户案例5内容</p><p>客户案例5</p><p>客户案例5</p><p>客户案例5</p>',
+      ),
+      4 => 
+      array (
+        'id' => 33,
+        'created_at' => '2021-12-01 08:53:50',
+        'updated_at' => '2021-12-01 08:55:47',
+        'content' => NULL,
+      ),
+    ),
+    'cms_m_job' => 
+    array (
+      0 => 
+      array (
+        'id' => 2,
+        'created_at' => '2021-11-03 18:54:05',
+        'updated_at' => '2021-11-03 19:12:59',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">岗位职能：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、 组织领导公司的财务、成本、投融资、预算、会计核算及监督、财务分析等方面的工作；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、 主持建立和完善财务管理制度和相关工作程序，制定和管理税收政策方案及程序；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">3、 掌握公司财务状况、经营成果和资金变动情况，拟订或规划资金筹措和资本运作方案；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">4、 组织拟定公司年度预算大纲及财务预算，并提交董事会审议；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">5、 审核融资计划，报上级批准后组织实施；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">6、 组织编制预算、财务收支计划、成本费用计划、信贷计划、财务报告和会计报表等；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">7、 负责组织实施内部审计并配合外部审计工作；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">8、 参与集团重大投融资决策，优化资本结构和资本配置；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">9、 审定财务、会计、审计等财务负责人的任免、晋升、调动、奖惩事项；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">10、 协调公司同银行、工商、税务等部门的关系。&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">任职要求：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、学历高中及以上；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、有相关资质证书者优先；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">3、沪籍者优先；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">4、具体面试时的个人情况而定。</p><p><br/></p>',
+        'type' => '财务',
+        'amount' => '2',
+      ),
+      1 => 
+      array (
+        'id' => 12,
+        'created_at' => '2021-11-03 19:13:38',
+        'updated_at' => '2021-11-03 19:13:38',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">上岗时间：尽快</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">职位类型：财务助理</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">发布时间：2017-10-24</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">有效日期：2017-12-12</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">岗位职能：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、 组织领导公司的财务、成本、投融资、预算、会计核算及监督、财务分析等方面的工作；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、 主持建立和完善财务管理制度和相关工作程序，制定和管理税收政策方案及程序；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">3、 掌握公司财务状况、经营成果和资金变动情况，拟订或规划资金筹措和资本运作方案；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">4、 组织拟定公司年度预算大纲及财务预算，并提交董事会审议；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">5、 审核融资计划，报上级批准后组织实施；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">6、 组织编制预算、财务收支计划、成本费用计划、信贷计划、财务报告和会计报表等；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">7、 负责组织实施内部审计并配合外部审计工作；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">8、 参与集团重大投融资决策，优化资本结构和资本配置；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">9、 审定财务、会计、审计等财务负责人的任免、晋升、调动、奖惩事项；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">10、 协调公司同银行、工商、税务等部门的关系。&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">任职要求：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、学历高中及以上；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、有相关资质证书者优先；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">3、沪籍者优先；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">4、具体面试时的个人情况而定。</p><p><br/></p>',
+        'type' => '技术',
+        'amount' => '10',
+      ),
+      2 => 
+      array (
+        'id' => 13,
+        'created_at' => '2021-11-03 19:14:14',
+        'updated_at' => '2021-11-03 19:14:14',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">上岗时间：尽快</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">职位类型：财务助理</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">发布时间：2017-10-24</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">有效日期：2017-12-12</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">岗位职能：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、 组织领导公司的财务、成本、投融资、预算、会计核算及监督、财务分析等方面的工作；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、 主持建立和完善财务管理制度和相关工作程序，制定和管理税收政策方案及程序；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">3、 掌握公司财务状况、经营成果和资金变动情况，拟订或规划资金筹措和资本运作方案；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">4、 组织拟定公司年度预算大纲及财务预算，并提交董事会审议；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">5、 审核融资计划，报上级批准后组织实施；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">6、 组织编制预算、财务收支计划、成本费用计划、信贷计划、财务报告和会计报表等；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">7、 负责组织实施内部审计并配合外部审计工作；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">8、 参与集团重大投融资决策，优化资本结构和资本配置；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">9、 审定财务、会计、审计等财务负责人的任免、晋升、调动、奖惩事项；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">10、 协调公司同银行、工商、税务等部门的关系。&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">任职要求：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、学历高中及以上；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、有相关资质证书者优先；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">3、沪籍者优先；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">4、具体面试时的个人情况而定。</p><p><br/></p>',
+        'type' => '财务',
+        'amount' => '999',
+      ),
+      3 => 
+      array (
+        'id' => 14,
+        'created_at' => '2021-11-03 19:14:51',
+        'updated_at' => '2021-11-03 19:14:51',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">上岗时间：尽快</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">职位类型：招聘</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">发布时间：2017-09-13</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">有效日期：2017-10-13</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">岗位要求：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、有服装行业经验的优先考虑&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、选择合适的招聘合作平台进行长期合作，进行招聘需求分析，制定招聘计划</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">&nbsp;3、做好总公司人员招聘&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">4、收集人才信息，做好人才储备&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">5、总公司内部员工关系处理&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">任职资格：&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">1、人力资源或劳动关系相关专业大专以上学历；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">2、一年以上招聘实务操作经验；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">3、具有招聘渠道以及招聘相关经验；</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">&nbsp;4、良好的职业道德素养,仔细认真,稳重,守秘，良好的沟通和理解能力，处事灵活、有条理；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">5、沪籍者优先；&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">6、持有人力资源证书者优先。&nbsp;</p><p><br/></p>',
+        'type' => '后勤',
+        'amount' => '654',
+      ),
+    ),
+    'cms_m_news' => 
+    array (
+      0 => 
+      array (
+        'id' => 4,
+        'created_at' => '2021-11-03 18:56:47',
+        'updated_at' => '2021-11-03 18:56:47',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">今年8月10日，工信部、国家发改委联合印发《扩大和升级信息消费三年行动计划(2018-2020年)》，报告提出到2020年，信息消费规模达到6万亿元，年均增长11%以上。按照工信部部署，我国将于2020年实现5G商用。近日，多地在布局5G建设上亮出时间表和发展目标。8月13日，北京也正式启动首批5G站点，5G建设进入大提速阶段。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">中信建投证券通信行业分析师雷鸣：我们的测算来看，5G基站的建设量有望达到4G的1.3倍，资本开支相对4G增长55%，达到1.16万亿，按照收益的弹性大小，和收益的确定性排序来看，我们看好主设备，射频和天线，光模块和PCB板块。由于今年5G商业化也逐步推进，在A股市场上，5G概念股也不断走高。从今年7月至今，三大股指持续下跌，中兴通讯、光迅科技和烽火通信等通讯板块多只个股涨幅超过16%。除了获得资金的亲睐，多只5G概念股受到机构推荐，其中，中际旭创、东山精密、梅泰诺、日海智能、和而泰、天孚通信等股票获机构扎堆看好，获“买入”或“增持”评级，但分析师提示短期风险。天风证券通信行业首席分析师唐海清：5G落地需要时间，未来半年到一年大概率，还不是大规模5G投资落地的阶段，因为它也会带来一定风险，那就是股价上涨过快，没有合理的反应基本面，或者过于超前的反应基本面的风险。工信部通信科技委常务副主任韦乐平：5G的频段比较高，它投入的基站数要多，所以整个的投资的策略，投资的回报这些东西都是不一定的，就不清楚的，设备能不能做到，我们预期设想的价格。这些器件的性能价格能不能行，将来的垂直应用能不能如我们所预期的大规模的爆发，这些都是不确定的因素。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">5G时代1秒钟下载1部电影VR直播实现实时回传</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-align: center;"><img src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39386_50rd_1114.jpg" alt="5"/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">2018年5G将在中国数个城市进行商用试点，海外多个运营商也正在进行商用前的试点准备。今年6月，5G国际标准出台。从4G到5G，新一代的移动通信技术，将给我们的生活带来哪些改变？目前5G技术又进展到什么阶段？</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">作为第五代移动通信技术，5G网络带给人们的第一感受就是“快”，打开手机视频客户端，下载一部高清视频，只需一秒就能完成。记者在一辆5G体验车上进行速率体验，移动状态下，该体验车在广州的珠江新城临江大道上路面测试平均速率超过1Gbps，峰值可达3Gbps。中国移动广东公司5G技术专家陈其铭：5G相比4G来说，最大的一个特点，就是速率高。它的峰值速率可以达到4G的100倍，它支持在移动状态下，同时传输多路的高清4K视频。那我们现在看到的，就是16路4K同传的这样一个业务演示。未来在移动的状态下，也可以支持在同一个地方，有超过50个用户以上，同时观看网上的高清4K视频。4G网络下，终端到基站的时延一般为5毫秒，终端到服务器的时延为50~100毫秒。5G网络下，终端到基站的时延可降低到1毫秒，终端到服务器达10毫秒。眼前这位技术人员就正在进行5G下VR的演示，在珠江边上部署的360度全景摄像头拍摄的高清图像，通过5G网络传输到体验车的显示大屏，同时车内连接的VR眼镜及IPAD屏幕上均可通过5G网络清晰的展示回传视频。中国移动广东公司5G技术专家陈其铭：我们现在看到的就是，一个360度VR直播的现场。VR直播业务在4G时代是没有办法实现的，因为它对数据传输的要求非常高，但到了5G，我们不但可以看到面前的一些场景，同时我们还可以看到360度周围的环境，同时我们还可以通过缩小或放大，来随意去观察现场的一些细节。那在未来，这个业务是可以应用在像演唱会的现场，还有一些篮球体育赛事等等。5G是实现高速环境下自动化的重要一环，快速的数据传导网络是保障车辆行驶安全的基础，5G将给高速环境下自动化驾驶带来一个全新的机遇。在深圳5G的一个试点片区，记者看到搭载了阿尔法巴智能驾驶公交系统的公交车，在全程1.2公里的线路试运行。该系统目前已实现自动驾驶下的行人、车辆检测，减速避让，紧急停车，障碍物绕行，变道，自动按站停靠等功能。中国电信深圳分公司网络发展部副总经理王庆扬：目前我们在深圳福田保税区，阿尔法巴自动驾驶路线上，已经完成了三个基站的建设，覆盖了整个的运行路线。目前是在车上提供了实时的视频回传，我们计划在上面再安装4K的高清电视，我们的IPTV，另外我们后续还会在上面，做这个高精度定位以及远程驾驶的开发。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">5G测试紧锣密鼓开展运营商寻求应用技术突破</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-align: center;"><img src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39386_6dpf_8152.jpg" alt="6"/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">目前，三大通信运营商均已进入“5G时间”。2020年5G要商用，意味着要有进入市场的各种终端产品，而目前留给产业链上的研发、测试和生产，只有一年半时间。那么，目前5G技术在试点过程中存在哪些困难和瓶颈呢？</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">记者来到位于深圳西丽中兴园区，看到胡羡和其同事正在进行5G试点速率的测试工作。胡羡进行通讯网络建设研究数十年，他表示，频段越高、穿透性反而会下降，5G的高频段特性，要求运营商重视室内穿透性问题，下一步运营商的组网方案，以及4G网络和5G网络如何顺利进行互操作，技术衔接急需突破。中国联通深圳分公司网络建设部经理胡羡：我们现在是处于一个5G的实验场景，测试的情况来看，5G的速率是4G大概十倍左右。客户应用的要求不同，尤其是对高速率应用的需求，带来对组网结构需要越来越精细化。那么从单个单元的覆盖面积来说，是越来越小，越来越趋向于网格化，甚至以后可能是毛细化的一些组网方式，这个可能是和以前的技术最大的不同。据悉，目前多家运营商已经宣布，将在外场试验上布局支持5G商用场景的5G试验网络，并进行组网测试。测试的内容包括5G信号的覆盖能力、强度、基站间的切换、4G和5G核心网之间的互操作等等，针对不同城市的发展规划，配备不同的测试业务。中国移动广东公司规划技术部总经理蔡伟文：从2018年开始，我们进入了一个规模测试，主要想要测试的一个就是端到端，多厂家之间的互通跟业务上的一些测试。在应用上面测试，我们会联合一些应用的场景，比方说我们跟广汽，我们跟南方电网都签了一些合作的协议，目前正在推进当中，包括自动驾驶，包括智能电网这方面的测试。中国联通网络技术研究院副院长朱常波：我们也选择在16个城市，进行5G的这个试点。那么在不同的地方，我们会有一些针对不同的行业应用，也结合各个地方，不同的这样一个优势资源，来进行5G的应用的示范。比如说我们在青岛，我们进行这个5G+VR的这个试点应用，比如说在重庆，我们针对智能的交通，深圳的智慧金融、智慧的医疗等等。业内人士介绍，相较于4G，5G能更好地满足垂直行业在安全、服务上的传输保障，但这需要运营商对5G核心网进行新建，并且能将目前存量的核心网、用户数据，进行很好的对接。目前，我国5G频谱还没有分配，不确定的频率分配会影响产业对设备开发等各方面的支持。中国联通网络技术研究院院长张涌：目前基于5G的应用，绝大部分行业还是空白，不管是从终端还是在应用的标准，以及应用的场景，以及未来市场化的一些可行性方面，都需要我们去探索。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">5G商用进入冲刺阶段通信商扩大研发投入</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-align: center;"><img src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39387_fbum_7347.jpg" alt="7"/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">据《中国5G产业发展前景预测与产业链投资机会分析报告》显示，在5G商用初期，网络设备投资带来的设备制造商收入将成为5G直接经济产出的主要来源。预计2020年，网络设备和终端设备收入合计约4500亿元，占直接经济总产出的94%。那么，这些网络设备制造商将如何抓住这个机遇？今年6月，5G国际标准的出台，被视为5G“破壳”，标志着首个真正完整意义的国际5G标准正式出炉。SA独立组网方案的冻结，意味着基于5G网络的移动终端设备，可以在统一的标准下，开始进行研发生产测试。据悉，2019年，基于5G芯片的商用终端将面世，其中包括英特尔的全互联PC、华为的5G手机等。日前，OPPO、vivo、小米和华为也相继宣布了5G手机的新进展。华为荣耀总裁赵明：（目前）发布了我们的麒麟980（手机），以及巴龙芯片5G的解决方案。那么基于这样的解决方案，我们在实验室已经把整个5G的链路和5G基于射频到基带中射频以及业务上已经完全验证通过了。那下一步其实来讲我们要等到，运营商的商用网络标准层出之后，发布相应的5G终端的验证标准，那随着这些标准的推出，我们5G的产品也将推出。5G手机应用需要基础技术支撑，向际鹰从事研发5G设备核心技术多年，今年上半年针对运营商对5G频谱的不同需求，他们团队研发了多款5G设备。向际鹰表示，5G业务的三大场景对应到带宽，时延，连接数三个核心性能指标，这三方面的要求相对于4G都有大级别的提升。为了满足这些要求，该团队研发和采用了大量的新技术。中兴通讯首席科学家向际鹰：像我们上面这一款就是我们3.5G，64天线的5G Massive MIMO设备，然后下面这个是16天线的3.5G（设备），但是现在可能频谱有些重新的划分，那么我们针对性开发了2.6G的版本，就是同样是64天线和16天线，也正在开发之中。因为5G它除了低频段之外，还有更高的频段就是28G和39G。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">杨兆华所在的企业，近年来也一直为5G所需的设备做准备，目前该企业超过50%的研发人员都投入在5G的研发上，不少4G的设备生产线也转移为5G设备的生产做准备。烽火通讯科技有限公司网络产出线总经理杨兆华：在原来的这个人员的基础上面是增加20%，现在整个研发人员超过50%，是投入到5G的开发，从生产制造方面是单独的，额外的为5G的这种生产线，增加了设备生产线。我们估计到今年年底的话，这个（4G产能）会有，可能大概20%的回落。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">据《中国5G产业发展前景预测与产业链投资机会分析报告》显示，按2020年5G正式商用算起，预计当年将带动约4840亿元的直接产出和1.2万亿元的间接产出，到2030年5G带动的直接产出和间接产出将分别达到6.3万亿和10.6万亿元，两者年均复合增速分别为29%和24%。工信部通信科技委常务副主任韦乐平：国际市场对这块（5G），都是刚刚开始商用化，我们现在也是刚刚开始，差距并不大。总的投资，光是运营商这块的投资，三大运营商肯定一万多个亿是没有问题的。同时它还会带动效应，带动效应如果按照3.3（倍）来算的话，起码可以带动社会的投资4万亿，所以这个市场是非常可观的。</p><p><br/></p>',
+      ),
+      1 => 
+      array (
+        'id' => 6,
+        'created_at' => '2021-11-03 18:58:43',
+        'updated_at' => '2021-11-03 18:58:43',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">9月17日消息，《2017-2018年中国物联网发展年度报告》发布，报告显示：2017年全球物联网设备数量强劲增长，达到84亿台，首次超过人口数量。全球物联网市场有望在十年内实现大规模普及，到2025年市场规模或将成长至3.9-11.1万亿美元。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-align: center;"><img src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39503_9ql4_4245.jpg" alt="4"/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">而我国，2017年物联网市场逐步回归理性，进入实质性发展阶段，全年市场规模突破1万亿元，年复合增长率超过25%。同时，2018年三大运营商的物联网进入规模商用阶段：中国电信甚至提出为物联网产业能力的升级“注智”、中国移动已经取得3.84亿用户、154%的惊人增速好成绩、中国联通NB-IoT/eMTC与 LoRa一样不落下。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">中国电信：为物联网产业能力的升级“注智”</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在2018世界物联网博览会无锡峰会上，中国电信董事长杨杰提出：随着“万物智联”的加速到来，为物联网产业能力的升级“注智”，将是中国电信下一步最重要的任务。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">据介绍，“注智”将针对物联网“端管云用服”五大环节的整体能力全面展开：</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">终端注智，重点推动在物联网芯片中，嵌入智能无缝接入和行业终端定制适配的能力；网络注智，全面推进CTNet2025网络重构，引入SDN、NFV等智能化网络技术；领先规模部署5G，加速向下一代网络演进；平台注智，重点实施“物联网开放平台能力五大升级”，包括：物云融合能力、用户开发能力、应用部署能力、规模并发能力、安全防护能力；应用注智，重点加强开放平台对应用合作伙伴的能力输出、对合作伙伴应用产品的汇聚，提供开放随选的行业智能化解决方案库和合作共享的完整应用开发体系；服务注智，全面整合中国电信集团内外DICT的整体服务能力，为物联网产业和客户提供跨行业的智能数据服务和集成运营服务。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">据杨杰介绍：中国电信已建成了全球最大的NB-IoT网络，建成NB-IoT基站超过40余万个，实现城乡全覆盖，物联网用户规模超过了8000万。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">目前，中国电信连接管理模块承载连接总数超过9000万，每月API调用超50亿次；应用使能模块为终端和应用开发厂家提供优质开发环境，综合降低开发成本20%、缩短开发周期50%以上。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">2016年中国电信联合13家单位发起成立了天翼互联产业联盟。目前，联盟成员覆盖了产业的各个环节，总数已经超过了350家，汇聚合作伙伴超过300家、汇聚解决方案超过500个。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在上周举行的“天翼智能生态博览会”上，中国电信还发布了“新一代物联网开放平台”。新一代的物联网开放平台在五个方面进行了升级：一是“物云融合”升级，用户在平台上订购云资源只需几分钟；二是用户开发升级，用户一天内就能掌握平台开发方法；三是应用部署升级，用户一周内可实现从终端对接到应用部署；四是规模并发升级，平台可支持亿级连接，百万终端并发；五是安全防护升级，用户可获得国密级系统安全保障。“新一代物联网开放平台”将为用户提供更便捷、更可靠、更安全的全方位服务。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">同时，中国电信发布了《中国电信NB-IoT终端开发参考白皮书》，作为合作伙伴NB-IoT终端开发的技术参考。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">另外，在资费方面，中国电信2018年6月20日发布了NB-IoT业务套餐，该资费套餐是按照“连接次数”计费，套餐内规定一定的连接数，超出套餐外的连接次数部分另行收费。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">中国移动：用户数3.84亿 154%的惊人增速</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在2018年上半年业绩报告中，中国移动物联网智能连接同比增速达到惊人的154%，半年时间里净增1.55亿，至3.84亿。2018年的目标收入为70亿元，年增长率达到300%。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在中国移动大连接战略牵引下，中移物联网聚焦智能连接、芯片模组、开放平台、智能硬件、行业应用五大产品线，形成了物联网“云-管-端”服务能力。目前，五大核心业务板块取得了不错的成绩：</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在智能连接方面，截至今年上半年，中国移动物联网智能连接数净增1.55亿个，规模达到3.84亿个。特别是物联网卡截至目前已突破3亿张，并且以每天100万张的速度增长。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在芯片模组方面，2017年，自主品牌模组销量为274万片，2018年的目标是突破1000万片。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在开放平台方面，自主研发的行业主流开放平台OneNET注册用户数超过7.7万，企业客户超过8500个，接入设备数超过5000万，2018年目标是突破7000万台。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在“2018世界物联网博览会”上，中国移动物联网OneLink平台宣布通过对原CCMP平台技术改进，OneLink实现了业务运营、应用集成、NB-IoT专项接入、国际业务拓展、安全防护等五大能力突破，成功转变成一个拥有物联卡连接管理服务、API能力开放服务、<a href="http://bigdata.idcquan.com/" target="_blank" style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px;">大数据</a>分析能力服务、物联卡运营管理服务的多元化、综合性物联网平台。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在智能硬件方面，2017年终端销量超1400万台，2018年的目标是销售超2500万台。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在行业应用方面，布局智能家庭、车联网、安全防护、网络监测、能源与新经济、智能穿戴设备等多个领域，满足多种垂直行业需求。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">如今，中国移动新建了NB-IoT精品网络基础设施，已在11省(市、区)商用NB-IoT网络，NB-IoT网络一期建设覆盖346个城市。到2018年年底，全国NB-IoT连接数超过5000万，实现县一级覆盖。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">值得一提的是：2018年中国移动有20亿的物联网专项补贴，希望能够带动终端成本进一步降低，加快推动产业终端侧的成熟。其中，10亿是专门为NB-IoT准备，最高补贴率可以到达80%，另外10亿用于4G物联网模组补贴，补贴率最高到达50%。还推出了20元和40元两档NB-IoT套餐，希望满足不同的行业客户对网络的需求。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">去年底，由中国移动主导的中国移动物联网联盟成立，剑指建立大生态。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">中国联通：NB-IoT、eMTC与 LoRa一样不落下</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">本月初中国联通NB-IoT通信模块项目结果出炉，引起轰动。据悉，本次采购规模量为300万片，限价35元/片。与去年有“宇宙第一标”之称的中国电信NB-IoT&nbsp;50万片规模的招标相比，中国联通本次招标，规模更大、价格更低、供应商更多。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">今年517期间，中国联通宣布已经完成了30万个NB-IoT基站升级工作，已实现物联网全国覆盖。目标到2018年底，物联网连接数突破1.3亿个，这其中NB-IoT占据绝对主导。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在加速NB-IoT同时，中国联通也快速发展eMTC网络能力，并也关注LoRa等非网络连接服务，打造多样化、多场景的物联网络：</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">早在2015年中国联通制定了基于eSIM发展消费物联网业务的战略，打造自主开发的eSIM管理平台；2017年初，eSIM平台开通；2017年4月，eSIM独立号码业务上线。2018年 3月宣布在上海等6座城市率先启动“eSIM一号双终端”业务的办理；4月26日，在“中国联通2018年合作伙伴大会暨通信信息终端交易会”上，发起成立eSIM产业合作联盟。预计在今年三季度中国联通会开通eMTC核心网络的能力。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">本月初除了NB-IoT通信模块集采结果出炉引起轰动外，联通携手中兴克拉发布“LoRa连接管理平台”产品也引起不小的争议。</p><p><br/></p>',
+      ),
+      2 => 
+      array (
+        'id' => 7,
+        'created_at' => '2021-11-03 18:59:25',
+        'updated_at' => '2021-11-03 18:59:25',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><img src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39543_a47o_7781.jpg" alt="83419_eljs_2524.jpg"/></p><h2 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; padding: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);">CDN是什么</h2><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">内容分发网络（Content Delivery Network，简称CDN）将您源站资源缓存至遍布全球的加速节点上。当终端用户请求访问和获取这些资源时，无需回源，系统将就近调用CDN节点上已经缓存的资源。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">在不同区域、不同场景下使用CDN加速您网站内容的分发，将有效分担源站压力，避免网络拥塞，提升用户访问资源的速度和体验。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">由于CDN是为加快网络访问速度而被优化的网络覆盖层，因此被形象地称为“网络加速器”。</p><h2 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; padding: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);">如何使用CDN</h2><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">以阿里云CDN为例，阿里云CDN服务目前支持中国大陆范围加速。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">接入阿里云CDN服务的大致流程分以下几个步骤：</p><ol class=" list-paddingleft-2" style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><li><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent;">开通服务</p></li><li><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent;">添加加速域名</p></li><li><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent;">配置CNAME</p></li></ol><h2 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; padding: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);">魔众系统如何CDN加速</h2><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">魔众系统支持阿里云、百度云、腾讯云、七牛云等常见国内CDN加速配置。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">访问系统后台，在 系统设置＞访问设置 管理页面，配置页面加速CDN，即可实现页面的加速访问。</p><p><br/></p>',
+      ),
+      3 => 
+      array (
+        'id' => 8,
+        'created_at' => '2021-11-03 19:01:18',
+        'updated_at' => '2021-11-15 18:28:29',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><img src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39662_uzkm_6350.png" alt="49228_gvaf_5193.png"/></p><h2 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; padding: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);">Selenium 是什么</h2><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">Selenium 是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。它是一套完整的web应用程序测试系统，包含了测试的录制（Selenium IDE）,编写及运行（Selenium Remote Control）和测试的并行处理（Selenium Grid）。</p><h2 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; padding: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);">Selenium 的基本用法</h2><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">以 Python 为例，要声明并且调用 Selenium ，需要如下代码：</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">#&nbsp;导入库&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">from&nbsp;selenium&nbsp;import&nbsp;webdriver</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">#&nbsp;声明浏览器&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">browser&nbsp;=&nbsp;webdriver.Chrome()</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">&nbsp;#&nbsp;访问&nbsp;<a href="https://www.tecmz.com/" style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px;">https://www.tecmz.com&nbsp;</a></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">browser.get(&#39;<a style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px;">https://www.tecmz.com&#39;)&nbsp;</a></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">#&nbsp;打印网页源代码&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">print(browser.page_source)</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">&nbsp;#&nbsp;关闭浏览器&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">browser.close()</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);">上面的简单的例子，展示了如何使用Selenium，更多高级的功能可以自行查阅。</p><p><br/></p>',
+      ),
+      4 => 
+      array (
+        'id' => 9,
+        'created_at' => '2021-11-03 19:01:52',
+        'updated_at' => '2021-11-03 19:01:52',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;"><img alt="cover-2.jpg" src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39692_ialq_1392.jpg"/></p><h2 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 1em; margin-bottom: 16px; padding: 0px 0px 0.3em; -webkit-tap-highlight-color: transparent; border-bottom-width: 2px; line-height: 1.225; white-space: normal; font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, &quot;Microsoft YaHei&quot;, FreeSans, Arimo, &quot;Droid Sans&quot;, &quot;wenquanyi micro hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Hiragino Sans GB W3&quot;, FontAwesome, sans-serif; color: rgb(68, 68, 68); position: relative; background-color: rgb(255, 255, 255); text-shadow: none !important;">1 事件经过</h2><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">前段时间宝塔面板出现严重级别的高危安全漏洞，攻击者借助该漏洞可直接获取服务器数据，给各位站长造成严重的威胁。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">同一时间，阿里云、腾讯云等封杀宝塔面板888端口，同时宝塔开发商已快速做出响应，还是要给各位云厂商和软件开发商点个赞！</p><h2 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 1em; margin-bottom: 16px; padding: 0px 0px 0.3em; -webkit-tap-highlight-color: transparent; border-bottom-width: 2px; line-height: 1.225; white-space: normal; font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, &quot;Microsoft YaHei&quot;, FreeSans, Arimo, &quot;Droid Sans&quot;, &quot;wenquanyi micro hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Hiragino Sans GB W3&quot;, FontAwesome, sans-serif; color: rgb(68, 68, 68); position: relative; background-color: rgb(255, 255, 255); text-shadow: none !important;">2 如何避免</h2><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">类似这样的安全事故层出不穷，作为站长的我们，该如何避免此类事件的再次发生？</p><h4 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 1em; margin-bottom: 16px; padding: 0px; -webkit-tap-highlight-color: transparent; font-size: 1.3em; white-space: normal; font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, &quot;Microsoft YaHei&quot;, FreeSans, Arimo, &quot;Droid Sans&quot;, &quot;wenquanyi micro hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Hiragino Sans GB W3&quot;, FontAwesome, sans-serif; color: rgb(68, 68, 68); line-height: 1.4; position: relative; background-color: rgb(255, 255, 255); text-shadow: none !important;">2.1 不要使用默认配置</h4><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">默认的软件系统设置、默认的系统端口、默认的网站设置在发生漏洞时都可能在第一时间被不法人员利用，修改掉系统默认的配置可以很大程度避免这样的风险。</p><h4 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 1em; margin-bottom: 16px; padding: 0px; -webkit-tap-highlight-color: transparent; font-size: 1.3em; white-space: normal; font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, &quot;Microsoft YaHei&quot;, FreeSans, Arimo, &quot;Droid Sans&quot;, &quot;wenquanyi micro hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Hiragino Sans GB W3&quot;, FontAwesome, sans-serif; color: rgb(68, 68, 68); line-height: 1.4; position: relative; background-color: rgb(255, 255, 255); text-shadow: none !important;">2.2 最小权限原则</h4><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">最小权限，也就是在给一个软件权限时，避免使用root这样的权限，这样可以很大程度上保证系统发生漏洞时整个操作系统受到威胁。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">同时，不同的软件在配置数据库时，使用不同的用户名进行隔离，这样可以避免一个网站被攻击所有网站遭殃的悲剧。</p><h4 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 1em; margin-bottom: 16px; padding: 0px; -webkit-tap-highlight-color: transparent; font-size: 1.3em; white-space: normal; font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, &quot;Microsoft YaHei&quot;, FreeSans, Arimo, &quot;Droid Sans&quot;, &quot;wenquanyi micro hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Hiragino Sans GB W3&quot;, FontAwesome, sans-serif; color: rgb(68, 68, 68); line-height: 1.4; position: relative; background-color: rgb(255, 255, 255); text-shadow: none !important;">2.3 不要使用弱密码</h4><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">很多人为了系统管理方便（或者是懒），经常会设置类似123456、admin这样的管理密码，这样的密码很容易被暴力软件扫描出来。</p><h4 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 1em; margin-bottom: 16px; padding: 0px; -webkit-tap-highlight-color: transparent; font-size: 1.3em; white-space: normal; font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, &quot;Microsoft YaHei&quot;, FreeSans, Arimo, &quot;Droid Sans&quot;, &quot;wenquanyi micro hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Hiragino Sans GB W3&quot;, FontAwesome, sans-serif; color: rgb(68, 68, 68); line-height: 1.4; position: relative; background-color: rgb(255, 255, 255); text-shadow: none !important;">2.4 不使用来源不明的系统</h4><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">网站经营者经常经常会在不同的网站上下载一些来源不明的系统进行安装，这样的系统很可能被不法分子恶意的留后门，会造成极大的威胁。应该要从正规渠道采购、下载正版软件，避免这样的悲剧发生。</p><h4 style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 1em; margin-bottom: 16px; padding: 0px; -webkit-tap-highlight-color: transparent; font-size: 1.3em; white-space: normal; font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, &quot;Microsoft YaHei&quot;, FreeSans, Arimo, &quot;Droid Sans&quot;, &quot;wenquanyi micro hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Hiragino Sans GB W3&quot;, FontAwesome, sans-serif; color: rgb(68, 68, 68); line-height: 1.4; position: relative; background-color: rgb(255, 255, 255); text-shadow: none !important;">2.5 请专业的技术维护</h4><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">很多站长都是身兼数职，不可能在技术的所有领域都精通，因此很可能会造成因配置不当造成的安全事故。我们在实际运营过程中也会遇到说“是不是你们的系统有漏洞导致我们服务器被攻击”。作为系统开发者，我们进我们所能规范技术开发来最大程度的保证用户的系统安全，但是再安全的系统如果因为服务器配置不当也会出现很严重的安全事故，因此如果条件允许，请专业的人来维护您的网站是一个不错的选择。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: none; margin-top: 0px; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; line-height: 30px; white-space: normal; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 14px; background-color: rgb(255, 255, 255); text-shadow: none !important;">魔众，一站式软件解决方案，让您的想法快速落地！</p><p><br/></p>',
+      ),
+      5 => 
+      array (
+        'id' => 10,
+        'created_at' => '2021-11-03 19:02:33',
+        'updated_at' => '2021-11-15 18:25:50',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">Arthas 最新发布了 3.5.0 版本，最近几个release 版本带来下面两个主要特性：</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">•反编译支持行号</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">•Telnet/Websocket/HTTP API统一支持全面的鉴权</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><img src="https://mz-demo-assets.tecmz.com/data/image/2021/11/03/39732_4gni_3962.png" width="630" height="116" alt=""/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">反编译支持行号</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">Arthas开源之后的第一个 issue 就是jad命令能否支持显示行号：</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; white-space: normal; border: 0px; text-indent: 28px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(253, 253, 253);">jad命令多年以后终于支持行号了，“不忘初心”</p><p><br/></p>',
+      ),
+    ),
+    'cms_m_product' => 
+    array (
+      0 => 
+      array (
+        'id' => 15,
+        'created_at' => '2021-11-03 19:16:05',
+        'updated_at' => '2021-11-03 19:16:25',
+        'content' => '<p><span style="font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; text-indent: 26px; word-spacing: 1px; background-color: rgb(255, 255, 255);">苹果&nbsp;iPad&nbsp;Air&nbsp;2使用iOS8系统，为您带来一系列全新功能。由于其专为iPad度身设计，因此一切不仅看起来赏心悦目，运行起来也同样出色。苹果&nbsp;iPad&nbsp;Air&nbsp;2内置一系列出色的app可用来发送电子邮件、浏览网页和进行视频通话。另有多款app让你可使用你的照片、影片、音乐、文档、演示文稿和电子表格来创造更多精彩。</span></p>',
+        'price' => '9999',
+      ),
+      1 => 
+      array (
+        'id' => 16,
+        'created_at' => '2021-11-03 19:16:56',
+        'updated_at' => '2021-11-03 19:16:56',
+        'content' => '<p><span style="font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; text-indent: 26px; word-spacing: 1px; background-color: rgb(255, 255, 255);">台电X98 Air 3G 搭载英特尔Bay Trail-T Z3736F处理器（X86架构），主频高达2.16GHz，并且装配了2GB DDR3L内存与32GB eMMC内置储存，通话方面支持3G的一切功能。X98 Air 3G 在继承9.7英寸IPS屏幕的同时把屏幕边框缩小至9.5mm，分辨率为2048*1536（4:3）。后置500万像素摄像头，前置200万像素。此外台电X98 Air 3G可以运行Android 4.4与Windows8.1系统，可以实现安卓系统下的通话与3G上网，同时也保证Win8系统下强大的硬件功能。</span></p>',
+        'price' => '9999',
+      ),
+      2 => 
+      array (
+        'id' => 17,
+        'created_at' => '2021-11-03 19:18:04',
+        'updated_at' => '2021-11-03 19:18:04',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">华为公司的最新平板电脑“MediaPad”即将面世，该平板可能将成为华为IDEOS系列产品线的一部分，而华为公司选择在2011年的亚洲通讯展（CommunicAsia 2011）上来进行发布。据了解，2011年亚洲通讯展将于6月21日-24日在新加坡举行。国内将在10月份上市。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">关于MediaPad，可实现“云通话”的双核高清平板，全球首款Android 3.2(Honeycomb) 7寸旗舰平板电脑。华为公司称MediaPad是该公司至今为止“最智能、最小、最轻便的平板电脑”，并表示他们认为这款平板“一定能够改变消费者的娱乐体验”。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><br/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">全球最新蜂巢操作系统</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">拥有应用兼容性缩放、SD卡媒体同全新特性配合Mediapad集结的顶尖硬件配置，为消费者提供全新的平板电脑操作体验。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">最清晰的平板显示屏幕</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">7英寸IPS屏幕，分辨率1280*800，像素密度达到业界最高的217ppi（高于IPAD2）， 拥有全球最清晰的平板电脑显示效果。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">最急速双核CPU完美整合</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">业界最快的1.2GHZ双核处理器，14.4Mbps HSPA+;802.11n高速无线网络。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">时尚轻巧的外观设计</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">10.5毫米厚度，仅重390克，口袋平板，unibody工艺设计，一体化全铝合金机身。面板上无任何物理按键“简单”到极致，背面采用沙漏型图案设计。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">2外观简介</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><br/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">根据公布的MediaPad图片我们可以看到，这款平板电脑不设任何按钮装置，拥有一个非常清晰的正面布局。媒体猜测，MediaPad或将运行Android蜂巢操作系统。同时，该平板看起来大小约为7英寸（或者5英<span style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; text-indent: 2em;">寸）。</span></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">关于该平板是一款全新的产品或只是华为先前平板电脑S7 tablet的加强版尚未有结论，但媒体认为前者的可能性会更大。</p><p><br/></p>',
+        'price' => '9999',
+      ),
+      3 => 
+      array (
+        'id' => 18,
+        'created_at' => '2021-11-03 19:19:05',
+        'updated_at' => '2021-11-03 19:20:06',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">从小米这个品牌诞生开始，已经被无数人吐槽的饥饿营销到了第四个年头还是依然没有停止，即使现在的小米已经基本摆脱了生产线可以完全可以满足量产的需求，甚至是小米任何产品的供货早已经没有什么问题，依然有不少人在吐槽，似乎这没有意义的吐槽，已经成了家常便饭。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><br/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">在Geek今天介绍的小米平板里体现的也极为明显，其实这款产品顶多也只是名义上的饥饿营销，事实上都能买得到的情况下，饥饿营销的刻板印象还是停留在人们的脑海里，Geek只能说，雷布斯真的赢了。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255);"><br/></p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">小米平板没什么好多介绍的了，易迅网目前售价1488元包邮，比官方稍微便宜点。至于饥饿营销这一说，个人觉得已经完全没什么意义了。</p><p><br/></p>',
+        'price' => '9999',
+      ),
+      4 => 
+      array (
+        'id' => 19,
+        'created_at' => '2021-11-03 19:20:42',
+        'updated_at' => '2021-11-03 19:21:34',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">主体</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">品牌戴尔（DELL）</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">平台Intel</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">型号Ins14LR-2528B</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">颜色范围黑</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">操作系统win8</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">产品定位商务便携</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">外形尺寸宽：13.5英寸（342毫米） 高：0.88英寸（22.4毫米）/深：9.7英寸（246毫米）</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">厚度规格便携轻薄</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">重量净重 1.9kg</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">处理器</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">处理器描述inteli5</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">处理器系列第5代智能英特尔酷睿处理器</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">CPU型号 i5-5200U</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">CPU主频2.2 GHz</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">三级缓存3M</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">核心数双核</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">内存</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">内存容量4G</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">内存类型DDR3L 1600Mhz</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">硬盘</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">硬盘规格500G-1T(无SSD)</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">硬盘容量500GB</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">接口类型SATA 串行</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">硬盘转速5400转/分钟</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">显卡</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">显卡类型独立显卡</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">显卡定位性能级独显</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">显卡芯片AMD Radeon HD R5 M240</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">显存容量独立2GB</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">屏幕</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">显示屏类型非触摸</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">屏幕规格14英寸</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">屏幕尺寸14.0英寸</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">屏幕比例宽屏16：9</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">屏幕分辨率1366 x 768</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">背光技术LED背光</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">光驱</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">光驱类型无</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">音频</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">扬声器立体声扬声器，支持Waves MaxxAudio 4处理技术 内置数字麦克风</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">麦克风有</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">通信</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">无线局域网英特尔双频无线-AC 3160 802.11ac, 1X1, 2.4&amp;5GHz</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">局域网描述集成以太网10/100</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">蓝牙蓝牙4.0</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">端口</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">摄像头HD 720p 网络摄像头与阵列麦克风</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">数据接口2个USB 3.0端口+1 个USB2.0</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">视频接口HDMI</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">音频接口组合耳机/麦克风插孔</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">其他接口RJ45</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">读卡器5 合 1 卡读卡器</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">输入设备</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">指取设备英文键盘</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">键盘描述触摸板</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">电池/电源</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">电池类型3芯锂离子电池 (43瓦时) 电池</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">续航时间2-3小时, 具体时间视使用环境而定</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">电源适配器65W 交流电适配器</p><p><br/></p>',
+        'price' => '9999',
+      ),
+      5 => 
+      array (
+        'id' => 20,
+        'created_at' => '2021-11-03 19:21:17',
+        'updated_at' => '2021-11-03 19:21:17',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">全新G40&amp;50系列全面支持Windows 8.1 中文版（仅限部分机型，具体请参考产品配置！），秉承了坚实耐用、稳定可靠的产品指纹，令笔记本更加安全可靠。&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">搭载独立显卡在游戏和多媒体方面较上一代显卡最高可实现&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">两倍性能提升，提供更加强大的笔记本体验。 杜比环绕立体声音效，轻松拥有影院级高品质享受； 更可以通过HDMI接&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">口连接高清电视， 实现坐拥私家高清影院的梦想！</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">联想全能G40&amp;50 坚实耐用 稳定可靠 杜比环绕 HDMI接口高清电视 私家高清影院</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">Windows 8.1 操作系统（限部分机型标配），紧跟潮流</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">CPU全面升级，搭载第四代智能英特尔Hasewell平台ULT CPU，&amp; AMD: 高：Kaveri 低Beema双平台齐备，极致性能一本无 忧</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">显卡换代，火爆升级：NVIDIA Geforce 820M 2G DDR3独立显存，为客户带来酣畅使用体验</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">内存 &amp; 硬盘 ：最高至16GB DDR3 1600MHz高速内&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">存 &amp; 1TB硬盘</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">丰富接口：HDMI/USB3.0/VGA/读卡器，主流接口一应俱全</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">联想全能G40&amp;50 Windows 8.1 英特尔Hasewell平台四核cpu AMD R5230 HDMI/VGA</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">15.6” HD LED高清宽屏，分辨率HD 1366x768</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">杜比认证音效，全新smart audio声音系统，打游戏看电影时可以&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">启动宽频音域(Phantom音效)、虚拟环绕立体声(3D Immersion)，&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">享受震撼 效果</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">720p高感光摄像头为用户在任何光照条件下，清楚完成视频聊天。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">超快的 USB3.0 传输接口，给您带来十倍于 USB2.0的传输速率，&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">极速的数据分享，传输及备份，带来前所未有的使用体验。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">高触感“巧克力键盘”，极佳的键盘弹性&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">和键间距设计为国际先进水平，不仅输入速度快而且更加舒适。&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">键盘下双 层金属板支撑，不仅坚固耐压更能提供屏蔽&nbsp;</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">辐射的健康保护。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">联想全能G40&amp;50 HD LED高清宽屏 smart audio 720p高感光摄像头 USB3.0 巧克力键盘</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">全新Journal外观设计</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">导入24.8mm超薄外观</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">A/D面细纹理印花</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">C面超质感金属、拉丝、磨砂可选</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">联想全能G40&amp;50 Journal外观 24.8mm超薄 A/D面细纹理印花 C面超质感金属、拉丝、磨砂选择</p><p><br/></p>',
+        'price' => '9999',
+      ),
+      6 => 
+      array (
+        'id' => 21,
+        'created_at' => '2021-11-03 19:22:03',
+        'updated_at' => '2021-11-03 19:22:03',
+        'content' => '<p><span style="font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; text-indent: 26px; word-spacing: 1px; background-color: rgb(255, 255, 255);">北京时间2015年3月2日（巴萨罗那时间2015年3月1日），三星在巴萨罗那发布三星galaxy s6，亮相MWC2015产品发布会。GALAXY S6前后均由玻璃覆盖，机身侧面具备弧度的金属边框。搭载Exynos 7420八核64位处理器，为14纳米制程，3GB的运行内存升级至LPDDR4，整体配置也当属顶级。猎豹宣布与三星达成合作，这部旗舰机中将内置猎豹清理大师提供的清理功能。首次在系统层面搭载了电话邦提供的可视化IVR语音菜单等服务。</span></p>',
+        'price' => '9999',
+      ),
+      7 => 
+      array (
+        'id' => 22,
+        'created_at' => '2021-11-03 19:22:26',
+        'updated_at' => '2021-11-03 19:22:26',
+        'content' => '<p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-top: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">iPhone 6采用4.7英寸屏幕，分辨率为1334*750像素，内置64位构架的苹果A8处理器，性能提升非常明显；同时还搭配全新的M8协处理器，专为健康应用所设计；采用后置800万像素镜头，前置120万像素 鞠昀摄影FaceTime HD 高清摄像头；并且加入Touch ID支持指纹识别，首次新增NFC功能；也是一款三网通手机，4G LTE连接速度可达150Mbps，支持多达20个LTE频段。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">北京时间2014年9月10日凌晨1点，苹果公司在加州库比蒂诺德安萨学院的弗林特艺术中心正式发布其新一代产品 iPhone 6。9月12日开启预定，9月19日上市。首批上市的国家和地区包括美国、加拿大、法国、德国、英国、中国香港、日本、新加坡和澳大利亚，中国大陆无缘iPhone 6首发。</p><p style="--tw-shadow:0 0 #0000; --tw-ring-inset:var(--tw-empty, ); --tw-ring-offset-width:0rem; --tw-ring-offset-color:#fff; --tw-ring-color:rgba(59, 130, 246, 0.5); --tw-ring-offset-shadow:0 0 #0000; --tw-ring-shadow:0 0 #0000; outline: 0px; margin-bottom: 0px; -webkit-tap-highlight-color: transparent; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 13px; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;">2014年10月10日零时，苹果中国在线商店正式开启iPhone 6/6 Plus预售，iPhone 6售价5288元起，iPhone 6 Plus售6088元起，每名用户可分别最多购买2台，到货日期10月17日，同时三大运营商也同步发售。</p><p><br/></p>',
+        'price' => '9999',
+      ),
+    ),
+    'nav' => 
+    array (
+      0 => 
+      array (
+        'id' => 3,
+        'created_at' => '2021-09-10 20:22:51',
+        'updated_at' => '2022-01-06 15:56:01',
+        'position' => 'head',
+        'sort' => 2,
+        'name' => '模块市场',
+        'link' => 'https://modstart.com/store',
+        'openType' => 2,
+        'pid' => 23,
+      ),
+      1 => 
+      array (
+        'id' => 7,
+        'created_at' => '2021-09-17 15:13:26',
+        'updated_at' => '2022-01-06 15:39:39',
+        'position' => 'head',
+        'sort' => 4,
+        'name' => '新闻',
+        'link' => '/news',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      2 => 
+      array (
+        'id' => 8,
+        'created_at' => '2021-09-25 15:20:11',
+        'updated_at' => '2022-01-06 15:56:01',
+        'position' => 'head',
+        'sort' => 1,
+        'name' => '后台登录',
+        'link' => '/admin',
+        'openType' => 2,
+        'pid' => 23,
+      ),
+      3 => 
+      array (
+        'id' => 11,
+        'created_at' => '2021-11-03 19:10:06',
+        'updated_at' => '2022-01-06 15:39:39',
+        'position' => 'head',
+        'sort' => 5,
+        'name' => '招聘',
+        'link' => '/job',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      4 => 
+      array (
+        'id' => 13,
+        'created_at' => '2021-11-03 19:25:20',
+        'updated_at' => '2022-01-06 15:41:02',
+        'position' => 'foot',
+        'sort' => 9,
+        'name' => '自定义',
+        'link' => 'https://modstart.com',
+        'openType' => 2,
+        'pid' => 0,
+      ),
+      5 => 
+      array (
+        'id' => 14,
+        'created_at' => '2021-11-03 19:25:40',
+        'updated_at' => '2022-01-06 15:41:07',
+        'position' => 'foot',
+        'sort' => 7,
+        'name' => '联系我们',
+        'link' => '/article/lianxi',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      6 => 
+      array (
+        'id' => 15,
+        'created_at' => '2021-11-03 19:25:46',
+        'updated_at' => '2022-01-06 15:41:04',
+        'position' => 'foot',
+        'sort' => 8,
+        'name' => '关于我们',
+        'link' => '/article/about',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      7 => 
+      array (
+        'id' => 17,
+        'created_at' => '2021-11-05 16:29:13',
+        'updated_at' => '2022-01-06 15:39:39',
+        'position' => 'head',
+        'sort' => 2,
+        'name' => '产品',
+        'link' => '/product',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      8 => 
+      array (
+        'id' => 18,
+        'created_at' => '2021-11-05 16:29:24',
+        'updated_at' => '2022-01-06 15:39:39',
+        'position' => 'head',
+        'sort' => 3,
+        'name' => '案例',
+        'link' => '/cases',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      9 => 
+      array (
+        'id' => 19,
+        'created_at' => '2021-11-15 12:21:33',
+        'updated_at' => '2022-01-06 15:39:39',
+        'position' => 'head',
+        'sort' => 1,
+        'name' => '首页',
+        'link' => '/',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      10 => 
+      array (
+        'id' => 20,
+        'created_at' => '2021-12-16 15:52:23',
+        'updated_at' => '2022-01-06 15:41:00',
+        'position' => 'footSecondary',
+        'sort' => 10,
+        'name' => '产品分类1',
+        'link' => '/product/kind1',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      11 => 
+      array (
+        'id' => 21,
+        'created_at' => '2021-12-16 15:52:35',
+        'updated_at' => '2022-01-06 15:40:56',
+        'position' => 'footSecondary',
+        'sort' => 11,
+        'name' => '产品分类2',
+        'link' => '/product/kind2',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      12 => 
+      array (
+        'id' => 22,
+        'created_at' => '2021-12-16 15:52:46',
+        'updated_at' => '2022-01-06 15:40:52',
+        'position' => 'footSecondary',
+        'sort' => 12,
+        'name' => '产品动态',
+        'link' => '/news/kind2',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+      13 => 
+      array (
+        'id' => 23,
+        'created_at' => '2022-01-06 15:40:18',
+        'updated_at' => '2022-01-06 15:50:15',
+        'position' => 'head',
+        'sort' => 6,
+        'name' => '后台&模块',
+        'link' => '',
+        'openType' => 1,
+        'pid' => 0,
+      ),
+    ),
+    'banner' => 
+    array (
+      0 => 
+      array (
+        'id' => 3,
+        'created_at' => '2021-09-11 13:17:50',
+        'updated_at' => '2021-12-01 08:28:04',
+        'position' => 'home',
+        'sort' => 5,
+        'image' => '',
+        'link' => '',
+        'type' => 3,
+        'title' => '',
+        'slogan' => '',
+        'linkText' => '',
+        'colorReverse' => 0,
+        'video' => 'https://mz-demo-assets.tecmz.com/data/video/2021/12/01/1681_z0qi_2764.mp4',
+      ),
+      1 => 
+      array (
+        'id' => 10,
+        'created_at' => '2021-11-30 13:35:44',
+        'updated_at' => '2021-12-01 09:00:14',
+        'position' => 'home',
+        'sort' => 1,
+        'image' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/1456_lqrw_1346.jpg',
+        'link' => 'https://modstart.com/',
+        'type' => 2,
+        'title' => 'ModStart免费且不限制商业使用',
+        'slogan' => '基于 Apache 2.0 开源协议发布，使用Laravel框架开发',
+        'linkText' => '立即查看',
+        'colorReverse' => 1,
+        'video' => '',
+      ),
+      2 => 
+      array (
+        'id' => 12,
+        'created_at' => '2021-11-30 13:37:24',
+        'updated_at' => '2021-12-01 08:24:36',
+        'position' => 'home',
+        'sort' => 2,
+        'image' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/1456_jsyl_8866.jpg',
+        'link' => '',
+        'type' => 1,
+        'title' => '',
+        'slogan' => '',
+        'linkText' => '',
+        'colorReverse' => 0,
+        'video' => '',
+      ),
+      3 => 
+      array (
+        'id' => 14,
+        'created_at' => '2021-11-30 13:39:43',
+        'updated_at' => '2021-12-01 08:24:44',
+        'position' => 'home',
+        'sort' => 3,
+        'image' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/1456_zu0p_4893.jpg',
+        'link' => '',
+        'type' => 1,
+        'title' => '',
+        'slogan' => '',
+        'linkText' => '',
+        'colorReverse' => 0,
+        'video' => '',
+      ),
+      4 => 
+      array (
+        'id' => 15,
+        'created_at' => '2021-11-30 13:39:52',
+        'updated_at' => '2021-12-01 08:24:52',
+        'position' => 'home',
+        'sort' => 4,
+        'image' => 'https://mz-demo-assets.tecmz.com/data/image/2021/12/01/1457_ykti_6917.jpg',
+        'link' => '',
+        'type' => 1,
+        'title' => '',
+        'slogan' => '',
+        'linkText' => '',
+        'colorReverse' => 0,
+        'video' => '',
+      ),
+    ),
+    'partner' => 
+    array (
+      0 => 
+      array (
+        'id' => 12,
+        'created_at' => '2021-11-17 10:28:44',
+        'updated_at' => '2021-11-17 12:45:10',
+        'position' => 'home',
+        'sort' => 1,
+        'title' => 'ModStart',
+        'logo' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/17/8922_5tcg_7205.png',
+        'link' => 'https://modstart.com/',
+      ),
+      1 => 
+      array (
+        'id' => 13,
+        'created_at' => '2021-11-17 10:30:11',
+        'updated_at' => '2021-11-17 12:42:08',
+        'position' => 'home',
+        'sort' => 5,
+        'title' => '',
+        'logo' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/17/9009_aka8_7580.png',
+        'link' => '',
+      ),
+      2 => 
+      array (
+        'id' => 14,
+        'created_at' => '2021-11-17 10:31:02',
+        'updated_at' => '2021-11-17 12:42:09',
+        'position' => 'home',
+        'sort' => 4,
+        'title' => '',
+        'logo' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/17/9170_nxwk_5457.png',
+        'link' => '',
+      ),
+      3 => 
+      array (
+        'id' => 16,
+        'created_at' => '2021-11-17 12:35:49',
+        'updated_at' => '2021-11-17 12:45:29',
+        'position' => 'home',
+        'sort' => 2,
+        'title' => '魔众',
+        'logo' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/17/16547_cjl6_4196.png',
+        'link' => 'https://www.tecmz.com/',
+      ),
+      4 => 
+      array (
+        'id' => 17,
+        'created_at' => '2021-11-17 12:39:07',
+        'updated_at' => '2021-11-17 12:41:56',
+        'position' => 'home',
+        'sort' => 6,
+        'title' => '',
+        'logo' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/17/16776_eeic_9748.png',
+        'link' => '',
+      ),
+      5 => 
+      array (
+        'id' => 18,
+        'created_at' => '2021-11-17 12:41:40',
+        'updated_at' => '2021-11-17 12:42:09',
+        'position' => 'home',
+        'sort' => 3,
+        'title' => '',
+        'logo' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/17/16899_tg9x_3781.png',
+        'link' => '',
+      ),
+    ),
+  ),
+  'updates' => 
+  array (
+  ),
+);

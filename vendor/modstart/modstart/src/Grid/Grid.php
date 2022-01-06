@@ -12,7 +12,6 @@ use ModStart\Core\Util\IdUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Detail\Detail;
 use ModStart\Field\AbstractField;
-use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
 use ModStart\Grid\Concerns\HasGridFilter;
@@ -21,6 +20,7 @@ use ModStart\Grid\Concerns\HasPaginator;
 use ModStart\Grid\Concerns\HasSort;
 use ModStart\Grid\Type\GridEngine;
 use ModStart\Repository\Filter\HasRepositoryFilter;
+use ModStart\Repository\Filter\HasScopeFilter;
 use ModStart\Support\Concern\HasBuilder;
 use ModStart\Support\Concern\HasFields;
 use ModStart\Support\Concern\HasFluentAttribute;
@@ -74,6 +74,7 @@ class Grid
         HasItemOperate,
         HasPaginator,
         HasSort,
+        HasScopeFilter,
         HasRepositoryFilter;
 
     /**
@@ -400,7 +401,7 @@ class Grid
                 if ($this->engine == GridEngine::TREE && $field->column() == $this->repository()->getTreeTitleColumn()) {
                     $treePrefix = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $item->_level - 1)
                         . '<a class="tree-arrow-icon ub-text-muted" href="javascript:;"><i class="icon iconfont icon-angle-right"></i></a> ';
-                    $record[$field->column()] = $treePrefix . htmlspecialchars($record[$field->column()]);
+                    $record[$field->column()] = $treePrefix . $record[$field->column()];
                 } else if ($this->engine == GridEngine::TREE_MASS && $field->column() == $this->repository()->getTreeTitleColumn()) {
                     if (count($treeAncestors) < $this->treeMaxLevel() - 1) {
                         $record[$field->column()] =
@@ -409,7 +410,7 @@ class Grid
                     } else {
                         $record[$field->column()] =
                             '<span class="tree-arrow-icon ub-text-muted"><i class="icon iconfont icon-angle-right"></i></span>'
-                            . htmlspecialchars($record[$field->column()]);
+                            . $record[$field->column()];
                     }
                 }
             }
@@ -452,6 +453,7 @@ class Grid
             'id' => $this->id,
             'filters' => $this->gridFilter->filters(),
             'grid' => $this,
+            'scopes' => $this->scopeFilters,
         ]);
         return view($this->view, $data)->render();
     }

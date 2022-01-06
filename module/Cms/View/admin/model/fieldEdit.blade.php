@@ -15,5 +15,5 @@
             ModelFieldType:{!! json_encode(\ModStart\Core\Type\TypeUtil::dump(\Module\Cms\Type\CmsModelFieldType::class)) !!}
         }
     </script>
-    <script src="@asset('vendor/Cms/entry/adminModelFieldEdit.js')?{{time()}}"></script>
+    <script src="@asset('vendor/Cms/entry/adminModelFieldEdit.js')"></script>
 @endsection

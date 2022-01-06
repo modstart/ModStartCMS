@@ -29,7 +29,7 @@ class CatController extends Controller
                 $builder->text('title', '名称')->required()->width(200);
                 $builder->text('url', 'URL')->required()
                     ->help('字母数字下划线，如，demo 可以通过URL访问 /demo 访问')
-                    ->ruleUnique('cms_cat')->ruleRegex('/^[a-zA-Z0-9_]+$/');
+                    ->ruleUnique('cms_cat')->ruleRegex('/^[a-zA-Z0-9_\\/]+$/');
                 $modelField = $builder->select('modelId', '模型')->optionModel('cms_model', 'id', 'title')->required();
                 $modelModeMap = CmsModelUtil::listModeMap();
                 $modelField->when('in', $modelModeMap[CmsMode::LIST_DETAIL], function ($builder) {

@@ -10,7 +10,6 @@ use ModStart\Admin\Config\AdminConfig;
 use ModStart\Admin\Config\AdminMenu;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
-use ModStart\Module\ModuleManager;
 
 class AdminPermission
 {

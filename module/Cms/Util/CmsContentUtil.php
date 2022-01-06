@@ -10,6 +10,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TagUtil;
 use Module\Cms\Type\CmsModelContentStatus;
+use Module\Cms\Type\ContentUrlMode;
 
 class CmsContentUtil
 {
@@ -44,11 +45,7 @@ class CmsContentUtil
         }
         $paginateData = ModelUtil::paginate('cms_content', $page, $pageSize, $option);
         foreach ($paginateData['records'] as $k => $record) {
-            if ($record['alias']) {
-                $paginateData['records'][$k]['_url'] = modstart_web_url('a/' . $record['alias']);
-            } else {
-                $paginateData['records'][$k]['_url'] = modstart_web_url('a/' . $record['id']);
-            }
+            $paginateData['records'][$k]['_url'] = ContentUrlMode::url($record);
             $paginateData['records'][$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
             $paginateData['records'][$k]['tags'] = TagUtil::string2Array($record['tags']);
         }
@@ -71,11 +68,7 @@ class CmsContentUtil
             ->orderBy('postTime', 'desc')
             ->get()->toArray();
         foreach ($records as $k => $record) {
-            if ($record['alias']) {
-                $records[$k]['_url'] = modstart_web_url('a/' . $record['alias']);
-            } else {
-                $records[$k]['_url'] = modstart_web_url('a/' . $record['id']);
-            }
+            $records[$k]['_url'] = ContentUrlMode::url($record);
             $records[$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
             $records[$k]['tags'] = TagUtil::string2Array($record['tags']);
             $model = CmsModelUtil::get($record['modelId']);

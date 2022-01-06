@@ -24,8 +24,9 @@ class AdminCRUDBuilder
     const MODE_FORM = 'form';
 
     use HasFluentAttribute;
+
     private $mode;
-    private $fluentAttributes = [
+    protected $fluentAttributes = [
         'model',
         'field',
     ];

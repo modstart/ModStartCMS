@@ -96,6 +96,10 @@ class ModuleServiceProvider extends ServiceProvider
                                     'title' => '数据恢复',
                                     'url' => '\Module\Cms\Admin\Controller\RestoreController@index',
                                 ],
+                                [
+                                    'title' => 'CMS设置',
+                                    'url' => '\Module\Cms\Admin\Controller\ConfigController@setting',
+                                ],
                             ]
                         ],
                     ]
