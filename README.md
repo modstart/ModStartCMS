@@ -38,7 +38,7 @@
 
 最新版本 <img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/github/v/release/modstart/ModStartCMS?style=flat-square">，功能完善，模块市场丰富，欢迎交流。
 
-
+QQ交流群：467107293
 
 ##  💡 系统简介
 
@@ -161,6 +161,7 @@ server {
 
 - 宝塔一键安装教程：[https://modstart.com/doc/install/baota.html](https://modstart.com/doc/install/baota.html)
 - PHPStudy一键安装教程：[https://modstart.com/doc/install/phpstudy.html](https://modstart.com/doc/install/phpstudy.html)
+- WampServer安装教程：[https://modstart.com/doc/install/wampserver.html](https://modstart.com/doc/install/wampserver.html)
 - Docker一键安装教程：[https://modstart.com/doc/install/docker.html](https://modstart.com/doc/install/docker.html)
 
 ### 环境预检
@@ -170,9 +171,7 @@ server {
 - 通过连接下载文件  <a href="https://modstart.com/env_check.zip" target="_blank">https://modstart.com/env_check.zip</a>  ，解压出 `env_check.php` 文件。
 - 将 `env_check.php` 文件上传到服务器空间，配置通过访问 `http://www.xxx.com/env_check.php` 来查看安装环境是否配置成功，如果环境预检成功，可以看到如下提示。
 
-<p style="text-align:center;">
-	<img src="https://www.ms.modstart.com/vendor/ModStart/images/guide/EnvCheck.jpg" style="max-width:300px;" />
-</p>
+<img src="https://www.ms.modstart.com/vendor/ModStart/images/guide/EnvCheck.jpg?20220103" alt="环境预检" />
 
 
 ### 升级指南
