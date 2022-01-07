@@ -5,6 +5,7 @@
 @section('pageDescription'){{$pageDescription or ''}}@endsection
 {!! \ModStart\ModStart::css('asset/theme/default/admin.css') !!}
 {!! \ModStart\ModStart::js('asset/common/admin.js') !!}
+{!! \ModStart\ModStart::js('asset/vendor/pinyin-match.js') !!}
 
 @section('headAppend')
     @parent
@@ -28,35 +29,39 @@
                 {!! modstart_admin_config('title','<i class="icon iconfont icon-pc"></i> <span class="text">'.L('Admin Panel').'</span>') !!}
             </a>
             <div class="menu">
+                <div class="menu-search-container">
+                    <input type="text" id="menuSearchKeywords" placeholder="{{L('Search')}}" />
+                    <i class="iconfont icon-search"></i>
+                </div>
                 @foreach(\ModStart\Admin\Auth\AdminPermission::menu($_controllerMethod) as $_v1)
                     <div class="menu-item @if(!empty($_v1['_active'])) active @endif">
                         @if(empty($_v1['children']))
-                            <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v1['url'])}}" class="title">
+                            <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v1['url'])}}" class="title" data-keywords-item data-keywords-filter>
                                 {!! $_v1['icon'] or '<i class="icon iconfont icon-list"></i>' !!}
                                 <span class="text">{{$_v1['title']}}</span>
                             </a>
                         @else
-                            <a href="javascript:;" class="title @if(!empty($_v1['_active'])) open @endif" onclick="$(this).toggleClass('open')">
+                            <a href="javascript:;" class="title @if(!empty($_v1['_active'])) open @endif" data-keywords-item onclick="$(this).toggleClass('open')">
                                 <i class="arrow"></i>
                                 {!! $_v1['icon'] or '<i class="icon iconfont icon-list"></i>' !!}
                                 <span class="text">{{$_v1['title']}}</span>
                             </a>
-                            <div class="children">
+                            <div class="children" data-keywords-item>
                                 @foreach($_v1['children'] as $_v2)
                                     <div class="menu-item @if(!empty($_v2['_active'])) active @endif">
                                         @if(empty($_v2['children']))
-                                            <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v2['url'])}}" class="title">
+                                            <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v2['url'])}}" class="title" data-keywords-item data-keywords-filter>
                                                 <span class="text">{{$_v2['title']}}</span>
                                             </a>
                                         @else
-                                            <a href="javascript:;" class="title @if(!empty($_v2['_active'])) open @endif" onclick="$(this).toggleClass('open')">
+                                            <a href="javascript:;" data-keywords-item class="title @if(!empty($_v2['_active'])) open @endif" onclick="$(this).toggleClass('open')">
                                                 <i class="arrow"></i>
                                                 <span class="text">{{$_v2['title']}}</span>
                                             </a>
-                                            <div class="children">
+                                            <div class="children" data-keywords-item>
                                                 @foreach($_v2['children'] as $_v3)
                                                     <div class="menu-item @if(!empty($_v3['_active'])) active @endif">
-                                                        <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v3['url'])}}" class="title">
+                                                        <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v3['url'])}}" class="title" data-keywords-filter>
                                                             <span class="text">{{$_v3['title']}}</span>
                                                         </a>
                                                     </div>

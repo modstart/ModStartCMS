@@ -9,7 +9,7 @@ $(window).on('load', function () {
     });
     var isMobile = ($(window).width() < 600)
     var $frame = $('.ub-panel-frame');
-    $frame.find('.menu-expand-all').on('click',function(){
+    $frame.find('.menu-expand-all').on('click', function () {
         $frame.find('.left .menu .title').addClass('open');
     });
     if (isMobile) {
@@ -30,4 +30,56 @@ $(window).on('load', function () {
             );
         });
     }
+
+    // 后台菜单搜索
+    var $menu = $frame.find('.left .menu');
+    var markText = function (str, indexs) {
+        return str.substring(0, indexs[0]) + '<mark>' + str.substring(indexs[0], indexs[1] + 1) + '</mark>' + str.substring(indexs[1] + 1)
+    };
+    var filterMenu = function (keywords) {
+        keywords = $.trim(keywords);
+        if (!keywords) {
+            $menu.find('[data-keywords-filter]').attr('data-keywords-filter', 'show');
+            $menu.find('[data-keywords-item]').attr('data-keywords-item', 'show');
+            $menu.find('[data-keywords-filter]').each(function (i, o) {
+                var text = $(o).text().trim();
+                $(o).find('span').html(text);
+            });
+            return;
+        }
+        $menu.find('.title').addClass('open');
+        $menu.find('[data-keywords-filter]').attr('data-keywords-filter', 'hide');
+        $menu.find('[data-keywords-item]').attr('data-keywords-item', 'hide');
+        $menu.find('[data-keywords-filter]').each(function (i, o) {
+            var text = $(o).text().trim();
+            var indexs = PinyinMatch.match(text, keywords);
+            var colorText = text
+            if (false !== indexs) {
+                colorText = markText(text, indexs);
+                $(o).attr('data-keywords-filter', 'show');
+                $(o).attr('data-keywords-item', 'show');
+            }
+            $(o).find('span').html(colorText);
+        });
+        $menu.find('>.menu-item>.children>.menu-item>.children').each(function (i, o) {
+            if ($(o).find('[data-keywords-filter=show]').length > 0) {
+                $(o).attr('data-keywords-item', 'show').prev().attr('data-keywords-item', 'show');
+            }
+        });
+        $menu.find('>.menu-item>.children').each(function (i, o) {
+            if ($(o).find('[data-keywords-filter=show]').length > 0) {
+                $(o).attr('data-keywords-item', 'show').prev().attr('data-keywords-item', 'show');
+            }
+        });
+    };
+    var menuFilterTimer = null;
+    $frame.find('#menuSearchKeywords').on('keyup', function () {
+        var keywords = $(this).val();
+        if (menuFilterTimer) {
+            clearTimeout(menuFilterTimer);
+        }
+        menuFilterTimer = setTimeout(function () {
+            filterMenu(keywords);
+        }, 200);
+    });
 });
