@@ -190,6 +190,10 @@ class ContentController extends Controller
                 ->ruleRegex('/^[a-z0-9_]*[a-z][a-z0-9_]*$/')
                 ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
         }
+        if (modstart_config('CmsUrlMix_Enable', false)) {
+            $form->text('fullUrl', '[增强]全路径')->listable(false)
+                ->help('如 product/view/1.html');
+        }
         $form->richHtml('content', '内容');
         if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
             $form->textarea('summary', '摘要');
@@ -215,6 +219,9 @@ class ContentController extends Controller
                     'catId', 'title', 'alias', 'title', 'summary', 'cover', 'postTime',
                     'status', 'isRecommend', 'isTop', 'tags', 'author', 'source',
                 ]);
+                if (modstart_config('CmsUrlMix_Enable', false)) {
+                    $recordValue['fullUrl'] = (empty($data['fullUrl']) ? null : $data['fullUrl']);
+                }
                 if (empty($recordValue['alias'])) {
                     $recordValue['alias'] = null;
                 }

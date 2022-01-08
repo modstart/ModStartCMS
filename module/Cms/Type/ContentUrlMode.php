@@ -22,6 +22,9 @@ class ContentUrlMode implements BaseType
 
     public static function url($content)
     {
+        if (!empty($content['fullUrl'])) {
+            return modstart_web_url($content['fullUrl']);
+        }
         if (empty($content['alias'])) {
             $content['alias'] = $content['id'];
         }

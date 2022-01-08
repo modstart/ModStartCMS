@@ -20,13 +20,22 @@ class ListController extends BaseCatController
         $input = InputPackage::buildFromInput();
         $page = $input->getPage();
         $pageSize = $input->getPageSize('pageSize');
+        $pageSize = 2;
         $paginateData = CmsContentUtil::paginateCat($cat['id'], $page, $pageSize);
 
+
         $viewData = $data;
+        $viewData['page'] = $page;
+        $viewData['pageSize'] = $pageSize;
         $viewData['records'] = $paginateData['records'];
-        $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, '?page={page}');
+        $pageTemplate = '?page={page}';
+        if (!empty($cat['pageFullUrl'])) {
+            $pageTemplate = modstart_web_url($cat['pageFullUrl']);
+        }
+        $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, $pageTemplate);
 
         // return $viewData;
+
         return $this->view('cms.list.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

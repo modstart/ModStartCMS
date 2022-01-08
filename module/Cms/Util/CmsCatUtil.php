@@ -7,6 +7,7 @@ namespace Module\Cms\Util;
 use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
+use Module\Cms\Type\CatUrlMode;
 
 /**
  * Class CmsCatUtil
@@ -36,7 +37,7 @@ class CmsCatUtil
             ModelUtil::decodeRecordsJson($records, ['visitMemberGroups', 'visitMemberVips']);
             foreach ($records as $k => $v) {
                 $records[$k]['_model'] = CmsModelUtil::get($v['modelId']);
-                $records[$k]['_url'] = modstart_web_url($v['url']);
+                $records[$k]['_url'] = CatUrlMode::url($v);
             }
             return $records;
         });

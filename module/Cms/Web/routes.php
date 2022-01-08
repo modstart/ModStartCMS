@@ -14,7 +14,7 @@ $router->group([
     $router->match(['get', 'post'], 'a/{alias_url}', 'DetailController@index');
     $router->match(['get', 'post'], 'c/{id}', 'ListController@index');
 
-    $router->match(['get', 'post'], 'search', 'SearchController@index');
+    $router->match(['get', 'post'], 'search', 'SearchController@index')->name('aaaaa');
 
     $cats = CmsCatUtil::allSafelyHavingUrl();
     foreach ($cats as $item) {

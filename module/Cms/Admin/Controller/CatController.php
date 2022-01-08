@@ -7,9 +7,12 @@ namespace Module\Cms\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
+use ModStart\Field\AbstractField;
+use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
+use Module\Cms\Type\CatUrlMode;
 use Module\Cms\Type\CmsMode;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsModelUtil;
@@ -28,8 +31,20 @@ class CatController extends Controller
                 $builder->id('id', 'ID');
                 $builder->text('title', '名称')->required()->width(200);
                 $builder->text('url', 'URL')->required()
+                    ->hookRendering(function (AbstractField $field, $item, $index) {
+                        if ($field->renderMode() == FieldRenderMode::GRID) {
+                            return CatUrlMode::url($item->toArray());
+                        }
+                        return null;
+                    })
                     ->help('字母数字下划线，如，demo 可以通过URL访问 /demo 访问')
                     ->ruleUnique('cms_cat')->ruleRegex('/^[a-zA-Z0-9_\\/]+$/');
+                if (modstart_config('CmsUrlMix_Enable', false)) {
+                    $builder->text('fullUrl', '[增强]全路径')->listable(false)
+                        ->help('如 product/list');
+                    $builder->text('pageFullUrl', '[增强]全路径分页')->listable(false)
+                        ->help('分页请使用 {page} 占位，如 product/list/{page}，product/list?page={page}');
+                }
                 $modelField = $builder->select('modelId', '模型')->optionModel('cms_model', 'id', 'title')->required();
                 $modelModeMap = CmsModelUtil::listModeMap();
                 $modelField->when('in', $modelModeMap[CmsMode::LIST_DETAIL], function ($builder) {
