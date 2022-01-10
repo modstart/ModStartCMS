@@ -3,8 +3,6 @@
 namespace ModStart\Grid\Filter;
 
 use ModStart\Core\Dao\ModelUtil;
-use ModStart\Core\Type\BaseType;
-use ModStart\Grid\Filter\Field\Radio;
 
 class Eq extends AbstractFilter
 {
@@ -17,6 +15,14 @@ class Eq extends AbstractFilter
         $this->field = new Field\Select($this);
         $this->field->options($options);
         return $this;
+    }
+
+    public function selectArray($options, $idName = 'id', $titleName = 'title')
+    {
+        $options = array_build($options, function ($k, $v) use ($idName, $titleName) {
+            return [$v[$idName], $v[$titleName]];
+        });
+        return $this->select($options);
     }
 
     public function selectModel($table, $keyName = 'id', $labelName = 'name', $where = [])

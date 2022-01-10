@@ -9,14 +9,11 @@ use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Layout\Row;
-use ModStart\Module\ModuleClassLoader;
 use ModStart\Module\ModuleManager;
-use ModStart\Support\Manager\FieldManager;
 use Module\Member\Config\MemberHomeIcon;
 use Module\Member\Config\MemberMenu;
 use Module\Member\Listener\MemberVipPayListener;
 use Module\Member\Provider\VerifySmsTemplateProvider;
-use Module\Member\Widget\Field\MemberImage;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
 use Module\Vendor\Provider\SmsTemplate\SmsTemplateProvider;
@@ -118,7 +115,6 @@ class ModuleServiceProvider extends ServiceProvider
         });
 
         $events->subscribe(MemberVipPayListener::class);
-
         AdminMenu::register(function () {
             return [
                 [

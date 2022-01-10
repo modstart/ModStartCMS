@@ -16,7 +16,7 @@ class MemberVipController extends ModuleBaseController implements MemberLoginChe
 
     public function __construct()
     {
-        BizException::throwsIf('缺少统一结算服务模块', !ModuleManager::isModuleEnabled('PayCenter'));
+        BizException::throwsIf('缺少 PayCenter 模块', !ModuleManager::isModuleEnabled('PayCenter'));
         $this->api = app(\Module\Member\Api\Controller\MemberVipController::class);
     }
 

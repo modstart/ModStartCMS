@@ -36,11 +36,12 @@ class Html extends AbstractField
         }
         $rules = $this->rules();
         $requiredRuleHtml = str_contains($rules, 'required') ? '<span class="ub-text-danger ub-text-bold">*</span>' : '';
+        $label = $this->label ? $this->label . ':' : '';
         return <<<EOT
 <div class="line">
     <div class="label">
         {$requiredRuleHtml}
-        {$this->label}:
+        {$label}
     </div>
     <div class="field">
         $this->html

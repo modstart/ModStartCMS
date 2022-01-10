@@ -41,6 +41,7 @@ return [
             'enable' => true,
             'config' => [
                 'groupEnable' => true,
+                'vipEnable' => true,
             ],
         ],
         'Cms' => [

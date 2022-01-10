@@ -64,16 +64,16 @@ class CatController extends Controller
                 $builder->text('seoTitle', 'SEO标题')->listable(false);
                 $builder->text('seoDescription', 'SEO描述')->listable(false);
                 $builder->textarea('seoKeywords', 'SEO关键词')->listable(false);
-//                $builder->switch('visitMemberGroupEnable', '启用用户分组访问')->listable(false)
-//                    ->when('=', true, function ($builder) {
-//                        /** @var HasFields $builder */
-//                        $builder->checkbox('visitMemberGroups', '允许访问的分组')->optionModel('member_group', 'id', 'title')->listable(false);
-//                    });
-//                $builder->switch('visitMemberVipEnable', '启用用户VIP访问')->listable(false)
-//                    ->when('=', true, function ($builder) {
-//                        /** @var HasFields $builder */
-//                        $builder->checkbox('visitMemberVips', '允许访问的VIP')->optionModel('member_vip_set', 'id', 'title')->listable(false);
-//                    });
+                $builder->switch('visitMemberGroupEnable', '用户分组限制')->listable(false)
+                    ->when('=', true, function ($builder) {
+                        /** @var HasFields $builder */
+                        $builder->checkbox('visitMemberGroups', '允许访问的分组')->optionModel('member_group', 'id', 'title')->listable(false);
+                    });
+                $builder->switch('visitMemberVipEnable', '用户VIP限制')->listable(false)
+                    ->when('=', true, function ($builder) {
+                        /** @var HasFields $builder */
+                        $builder->checkbox('visitMemberVips', '允许访问的VIP')->optionModel('member_vip_set', 'id', 'title')->listable(false);
+                    });
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })

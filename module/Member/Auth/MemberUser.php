@@ -5,6 +5,8 @@ namespace Module\Member\Auth;
 
 
 use Illuminate\Support\Facades\Session;
+use Module\Member\Util\MemberGroupUtil;
+use Module\Member\Util\MemberVipUtil;
 
 class MemberUser
 {
@@ -36,6 +38,37 @@ class MemberUser
     public static function isNotLogin()
     {
         return !self::isLogin();
+    }
+
+    public static function isGroup($groupIds)
+    {
+        if (self::isNotLogin()) {
+            return false;
+        }
+        if (!is_array($groupIds)) {
+            $groupIds = [intval($groupIds)];
+        }
+        $groupId = intval(self::get('groupId', 0));
+        if ($groupId == 0) {
+            $groupId = MemberGroupUtil::defaultGroupId();
+        }
+        return in_array($groupId, $groupIds);
+    }
+
+    public static function isVip($vipIds)
+    {
+        if (self::isNotLogin()) {
+            return false;
+        }
+        if (!is_array($vipIds)) {
+            $vipIds = [intval($vipIds)];
+        }
+        $vip = MemberVipUtil::getMemberVip(self::user());
+        $vipId = 0;
+        if (!empty($vip)) {
+            $vipId = $vip['id'];
+        }
+        return in_array($vipId, $vipIds);
     }
 
     public static function get($key = null, $default = null)

@@ -37,7 +37,6 @@ class DetailController extends ModuleBaseController
         $viewData['model'] = $data['model'];
 
         // return $viewData;
-
         return $this->view('cms.detail.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

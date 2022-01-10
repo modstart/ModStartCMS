@@ -25,7 +25,7 @@ class MemberVipSetController extends Controller
                 $builder->id('id', 'ID')->addable(true)->editable(true);
                 $builder->text('title', '名称');
                 $builder->text('flag', '英文标识');
-                $builder->switch('isDefault', '默认')->help('会员是否默认为该等级');
+                $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级');
                 $builder->currency('price', '价格');
                 $builder->number('vipDays', '天数');
                 $builder->richHtml('content', '说明');

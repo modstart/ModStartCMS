@@ -28,6 +28,7 @@ use Module\Member\Type\MemberStatus;
 use Module\Member\Util\MemberGroupUtil;
 use Module\Member\Util\MemberMessageUtil;
 use Module\Member\Util\MemberUtil;
+use Module\Member\Util\MemberVipUtil;
 
 class MemberController extends Controller
 {
@@ -59,17 +60,23 @@ class MemberController extends Controller
                 if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
                     $builder->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
                 }
-                $builder->display('created_at', '创建时间');
+                if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+                    $builder->radio('groupId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
+                }
+                $builder->display('created_at', '注册时间');
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
+                $filter->like('username', '用户名');
+                $filter->like('email', '邮箱');
+                $filter->like('phone', '手机');
                 $filter->eq('status', '状态')->select(MemberStatus::class);
                 if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
                     $filter->eq('groupId', '分组')->select(MemberGroupUtil::mapIdTitle());
                 }
-                $filter->like('username', '用户名');
-                $filter->like('email', '邮箱');
-                $filter->like('phone', '手机');
+                if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+                    $filter->eq('vipId', 'VIP')->select(MemberVipUtil::mapTitle());
+                }
             })
             ->hookSaved(function (Form $form) {
                 /** @var \stdClass $item */

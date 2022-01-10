@@ -36,8 +36,10 @@
                         <img style="max-width:100%;" src="{{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}}" />
                     </div>
                 </div>
-                <div class="content ub-html" style="padding:1rem;font-size:0.8rem;">
-                    {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                <div class="content">
+                    <div class="ub-html" style="padding:1rem;font-size:0.8rem;">
+                        {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                    </div>
                 </div>
             </div>
         </div>

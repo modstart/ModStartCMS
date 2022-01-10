@@ -4,6 +4,8 @@
 namespace Module\Vendor\Provider\Notifier;
 
 
+use Module\Vendor\Util\NoneLoginOperateUtil;
+
 class NotifierProvider
 {
     /**
@@ -31,5 +33,18 @@ class NotifierProvider
         foreach (self::get() as $instance) {
             $instance->notify($biz, $title, $content, $param);
         }
+    }
+
+    public static function notifyProcess($biz, $title, $content, $processUrl)
+    {
+        self::notify($biz, $title, $content, [
+            'processUrl' => $processUrl,
+        ]);
+    }
+
+    public static function notifyNoneLoginOperateProcessUrl($biz, $title, $content, $processUrlPath, $processUrlParam = [])
+    {
+        $processUrl = NoneLoginOperateUtil::generateUrl($processUrlPath, $processUrlParam);
+        self::notifyProcess($biz, $title, $content, $processUrl);
     }
 }

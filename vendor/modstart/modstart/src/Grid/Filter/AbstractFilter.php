@@ -2,6 +2,8 @@
 
 namespace ModStart\Grid\Filter;
 
+use Illuminate\Support\Facades\View;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\IdUtil;
 use ModStart\Grid\Filter;
 use ModStart\Grid\Filter\Field\Text;
@@ -180,7 +182,7 @@ abstract class AbstractFilter
         $fieldClass = explode('\\', get_class($this->field));
         $view = 'modstart::core.grid.filter.'
             . lcfirst(end($class)) . '-' . lcfirst(end($fieldClass));
-        return view($view, $this->variables());
+        return View::make($view, $this->variables())->render();
     }
 
     public function __call($name, $arguments)

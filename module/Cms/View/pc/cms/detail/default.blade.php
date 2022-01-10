@@ -40,9 +40,16 @@
                             <i class="iconfont icon-time"></i>
                             {{($record['postTime'])}}
                         </div>
-                        <div class="content ub-html" style="font-size:0.8rem;">
-                            {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
-                        </div>
+                        @if(!\MCms::canAccessCatContent($cat))
+                            <div class="ub-alert ub-alert-danger">
+                                <i class="iconfont icon-warning"></i>
+                                您没有权限访问该栏目
+                            </div>
+                        @else
+                            <div class="content ub-html" style="font-size:0.8rem;">
+                                {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                            </div>
+                        @endif
                     </div>
                 </div>
 

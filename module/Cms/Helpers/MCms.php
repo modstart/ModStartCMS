@@ -2,6 +2,7 @@
 
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
+use Module\Member\Auth\MemberUser;
 
 /**
  * Class MCms
@@ -140,5 +141,26 @@ class MCms
     public static function prevOne($catId, $recordId)
     {
         return CmsContentUtil::prevOne($catId, $recordId);
+    }
+
+    /**
+     * @param $cat array 栏目
+     * @return bool
+     *
+     * @Util 判断是否可以访问栏目内容
+     */
+    public static function canAccessCatContent($cat)
+    {
+        if ($cat['visitMemberGroupEnable']) {
+            if (!MemberUser::isGroup($cat['visitMemberGroups'])) {
+                return false;
+            }
+        }
+        if ($cat['visitMemberVipEnable']) {
+            if (!MemberUser::isVip($cat['visitMemberVips'])) {
+                return false;
+            }
+        }
+        return true;
     }
 }
