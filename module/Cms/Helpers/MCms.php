@@ -163,4 +163,34 @@ class MCms
         }
         return true;
     }
+
+    /**
+     * @param $cat array
+     * @return bool
+     *
+     * @Util 判断用户是否可以发布到该栏目
+     */
+    public static function canPostCat($cat)
+    {
+        if (!$cat['memberUserPostEnable']) {
+            return false;
+        }
+        if ($cat['postMemberGroupEnable']) {
+            if (!MemberUser::isGroup($cat['postMemberGroups'])) {
+                return false;
+            }
+        }
+        if ($cat['postMemberVipEnable']) {
+            if (!MemberUser::isVip($cat['postMemberVips'])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public static function getCatTreeWithPost()
+    {
+
+    }
 }

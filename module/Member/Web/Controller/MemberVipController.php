@@ -14,14 +14,10 @@ class MemberVipController extends ModuleBaseController implements MemberLoginChe
     /** @var \Module\Member\Api\Controller\MemberVipController */
     private $api;
 
-    public function __construct()
+    public function index()
     {
         BizException::throwsIf('缺少 PayCenter 模块', !ModuleManager::isModuleEnabled('PayCenter'));
         $this->api = app(\Module\Member\Api\Controller\MemberVipController::class);
-    }
-
-    public function index()
-    {
         return $this->view('memberVip.index', [
             'memberVips' => MemberVipUtil::all(),
         ]);

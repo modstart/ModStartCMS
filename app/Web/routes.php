@@ -13,7 +13,7 @@ Route::group(
 
     Route::match(['get', 'post'], '', 'IndexController@index');
     Route::match(['get', 'post'], 'test', 'IndexController@test');
-    Route::match(['get', 'post'], 'member', 'MemberController@index');
+//    Route::match(['get', 'post'], 'member', 'MemberController@index');
     Route::match(['get', 'post'], 'member/{id}', 'MemberController@show');
     Route::match(['get', 'post'], 'member_profile', 'MemberProfileController@index');
 

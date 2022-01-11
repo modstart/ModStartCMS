@@ -236,6 +236,26 @@
                     }
                 });
             });
+            $lister.find('[data-table]').on('click', '[data-edit-quick]', function () {
+                var pcs = $(this).attr('data-edit-quick').split(':');
+                var column = pcs.shift();
+                var value = pcs.join(':');
+                var post = {
+                    _id: getId(this),
+                    _action: 'itemCellEdit',
+                    column: column,
+                    value: value
+                };
+                window.api.dialog.loadingOn();
+                window.api.base.post(lister.realtime.url.edit, post, function (res) {
+                    window.api.dialog.loadingOff();
+                    window.api.base.defaultFormCallback(res, {
+                        success: function (res) {
+                        }
+                    });
+                    lister.refresh();
+                });
+            });
             $grid.on('grid-item-cell-change', function (e, data) {
                 var post = {
                     _id: getId(data.ele),

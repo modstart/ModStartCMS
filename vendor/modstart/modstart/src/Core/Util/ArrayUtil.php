@@ -284,6 +284,33 @@ class ArrayUtil
     }
 
     /**
+     * 检测两个数组内容是否有变更
+     *
+     * @param array $old
+     * @param array $new
+     * @param array $keys
+     * @return bool
+     */
+    public static function isChanged(array $old, array $new, array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!isset($old[$key]) && !isset($new[$key])) {
+                continue;
+            }
+            if (!isset($old[$key])) {
+                return true;
+            }
+            if (!isset($new[$key])) {
+                return true;
+            }
+            if ($old[$key] != $new[$key]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * 根据键值对比两个数组的差异
      * @param array $old
      * @param array $new

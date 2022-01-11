@@ -67,7 +67,7 @@ class Checkbox extends AbstractField
             case self::SERIALIZE_TYPE_COLON_SEPARATED:
                 return TagUtil::array2String($value);
             default:
-                return json_encode($value);
+                return json_encode($value, JSON_UNESCAPED_UNICODE);
         }
     }
 

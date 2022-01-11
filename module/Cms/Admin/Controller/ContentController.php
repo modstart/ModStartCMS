@@ -11,6 +11,7 @@ use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Admin\Layout\AdminPage;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
@@ -20,9 +21,12 @@ use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Tags;
 use ModStart\Form\Form;
+use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Repository\Filter\RepositoryFilter;
+use ModStart\Widget\TextLink;
+use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsMode;
 use Module\Cms\Type\CmsModelContentStatus;
 use Module\Cms\Type\CmsModelFieldType;
@@ -61,6 +65,7 @@ class ContentController extends Controller
                 CmsModelContentStatus::SHOW => 'success',
                 CmsModelContentStatus::HIDE => 'muted',
             ]);
+            $grid->type('verifyStatus', '审核')->type(CmsContentVerifyStatus::class);
         } else {
             $customFields = isset($this->model['_customFields']) ? $this->model['_customFields'] : [];
             $grid->display('_content', '内容')->hookRendering(function (AbstractField $field, $item, $index) use ($customFields) {
@@ -72,6 +77,16 @@ class ContentController extends Controller
                 ]);
             })->width(500);
         }
+        $grid->hookItemOperateRendering(function (ItemOperate $itemOperate) {
+            /** @var \stdClass $item */
+            $item = $itemOperate->item();
+            switch ($item->verifyStatus) {
+                case CmsContentVerifyStatus::VERIFYING:
+                    $itemOperate->prepend(TextLink::success('审核通过', 'javascript:;', 'data-edit-quick="verifyStatus:' . CmsContentVerifyStatus::VERIFY_PASS . '"'));
+                    $itemOperate->prepend(TextLink::danger('审核拒绝', 'javascript:;', 'data-edit-quick="verifyStatus:' . CmsContentVerifyStatus::VERIFY_FAIL . '"'));
+                    break;
+            }
+        });
         $grid->repositoryFilter(function (RepositoryFilter $filter) {
             $filter->where(['modelId' => $this->modelId]);
         });
@@ -103,6 +118,7 @@ class ContentController extends Controller
 
     public function edit(AdminDialogPage $page, $modelId)
     {
+        $input = InputPackage::buildFromInput();
         $this->init($modelId);
         $id = CRUDUtil::id();
         $record = false;
@@ -117,6 +133,13 @@ class ContentController extends Controller
                     }
                     $record[$k] = $v;
                 }
+            }
+            $action = $input->getTrimString('_action');
+            if ($action == 'itemCellEdit') {
+                AdminPermission::demoCheck();
+                $form = Form::make('cms_content');
+                $form->radio('verifyStatus', '审核状态')->optionType(CmsContentVerifyStatus::class)->required()->defaultValue(CmsContentVerifyStatus::VERIFY_PASS);
+                return $form->editRequest($id);
             }
         }
         $form = Form::make(null);
@@ -200,6 +223,7 @@ class ContentController extends Controller
             $form->image('cover', '封面');
             $form->datetime('postTime', '发布时间')->required()->help('可以是未来时间，在未来发布')->defaultValue(Carbon::now());
             $form->radio('status', '状态')->optionType(CmsModelContentStatus::class)->required()->defaultValue(CmsModelContentStatus::SHOW);
+            $form->radio('verifyStatus', '审核状态')->optionType(CmsContentVerifyStatus::class)->required()->defaultValue(CmsContentVerifyStatus::VERIFY_PASS);
             $form->switch('isRecommend', '推荐');
             $form->switch('isTop', '置顶');
             $form->tags('tags', '标签')->serializeType(Tags::SERIALIZE_TYPE_COLON_SEPARATED);

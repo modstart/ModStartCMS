@@ -9,6 +9,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TagUtil;
+use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsModelContentStatus;
 use Module\Cms\Type\ContentUrlMode;
 
@@ -33,6 +34,7 @@ class CmsContentUtil
     public static function paginate($page, $pageSize, $option = [])
     {
         $option['where']['status'] = CmsModelContentStatus::SHOW;
+        $option['where']['verifyStatus'] = CmsContentVerifyStatus::VERIFY_PASS;
         if (!isset($option['whereOperate'])) {
             $option['whereOperate'] = [];
         }
@@ -62,6 +64,7 @@ class CmsContentUtil
             ->whereIn('catId', $catIds)
             ->where([
                 'status' => CmsModelContentStatus::SHOW,
+                'verifyStatus' => CmsContentVerifyStatus::VERIFY_PASS,
             ])
             ->where('postTime', '<', date('Y-m-d H:i:s'))
             ->orderBy('isTop', 'desc')

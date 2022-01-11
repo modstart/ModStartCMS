@@ -10,7 +10,7 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                value="{{$value}}"/>
-        <div id="{{$name}}Selector">
+        <div id="{{$name}}Selector" style="padding-left:1px;">
             <div class="ub-image-selector @if(!empty($value)) has-value @endif" style="vertical-align:bottom;">
                 <div class="tools">
                     <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>

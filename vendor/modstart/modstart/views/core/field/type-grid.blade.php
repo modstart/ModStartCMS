@@ -1,5 +1,6 @@
 @if(!empty($colorMap))
-    <span class="ub-text-{{isset($colorMap[$value])?$colorMap[$value]:'default'}}">
+    <span>
+        <i class="iconfont icon-dot-sm ub-text-{{isset($colorMap[$value])?$colorMap[$value]:'default'}}"></i>
         @if(isset($valueMap[$value]))
             {{$valueMap[$value]}}
         @else

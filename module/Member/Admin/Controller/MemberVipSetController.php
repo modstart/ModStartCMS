@@ -24,6 +24,7 @@ class MemberVipSetController extends Controller
                 /** @var HasFields $builder */
                 $builder->id('id', 'ID')->addable(true)->editable(true);
                 $builder->text('title', '名称');
+                $builder->image('icon', '图标');
                 $builder->text('flag', '英文标识');
                 $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级');
                 $builder->currency('price', '价格');

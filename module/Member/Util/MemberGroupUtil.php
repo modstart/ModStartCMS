@@ -79,18 +79,15 @@ class MemberGroupUtil
 //            return [$k, $v['title']];
 //        });
 //    }
-//
-//    public static function getMemberGroup($memberUser)
-//    {
-//        if (empty($memberUser)) {
-//            return self::get(null);
-//        }
-//        if (!empty($memberUser['vipExpire']) && strtotime($memberUser['vipExpire']) > time()) {
-//            return self::get($memberUser['vipId']);
-//        }
-//        return self::get(null);
-//    }
-//
+
+    public static function getMemberGroup($memberUser)
+    {
+        if (empty($memberUser)) {
+            return self::get(null);
+        }
+        return self::get($memberUser['groupId']);
+    }
+
 //    public static function get($vipId, $key = null)
 //    {
 //        $map = self::map();

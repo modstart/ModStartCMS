@@ -20,9 +20,7 @@ class ListController extends BaseCatController
         $input = InputPackage::buildFromInput();
         $page = $input->getPage();
         $pageSize = $input->getPageSize('pageSize');
-        $pageSize = 2;
         $paginateData = CmsContentUtil::paginateCat($cat['id'], $page, $pageSize);
-
 
         $viewData = $data;
         $viewData['page'] = $page;

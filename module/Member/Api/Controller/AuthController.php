@@ -496,7 +496,7 @@ class AuthController extends ModuleBaseController
                 }
             } else {
                 if (!Captcha::check($input->getTrimString('captcha'))) {
-                    return Response::generate(ResponseCodes::CAPTCHA_ERROR, '验证码错误');
+                    return Response::generate(ResponseCodes::CAPTCHA_ERROR, '图片验证码错误', null, '[js]$(\'[data-captcha]\').click();');
                 }
             }
         }

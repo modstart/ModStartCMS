@@ -6,11 +6,21 @@
     <div class="tw-bg-white tw-rounded tw-shadow">
         <div class="tw-flex tw-p-4 tw-flex-wrap">
             <div class="tw-flex-shrink-0 tw-w-14">
-                <a href="javascript:;" class="tw-block tw-w-10 tw-h-10 ub-cover-1-1 tw-rounded-full tw-shadow"
+                <a href="{{modstart_web_url('member_profile/avatar')}}" class="tw-block tw-w-10 tw-h-10 ub-cover-1-1 tw-rounded-full tw-shadow"
                    style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($_memberUser['avatar'])}})"></a>
             </div>
             <div class="tw-flex-grow">
                 <div class="tw-text-bold">{{$_memberUser['username']}}</div>
+                @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable'))
+                    <div class="tw-py-1 ub-text-primary">
+                        @if(\Module\Member\Auth\MemberVip::get('icon'))
+                            <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(\Module\Member\Auth\MemberVip::get('icon'))}}"
+                                 class="tw-h-4"
+                                 alt="{{\Module\Member\Auth\MemberVip::get('title')}}" />
+                        @endif
+                        {{\Module\Member\Auth\MemberVip::get('title')}}
+                    </div>
+                @endif
                 <div class="tw-text-gray-400">{{$_memberUser['signature'] or '暂无签名'}}</div>
 {{--                <div class="tw-flex tw-mt-3">--}}
 {{--                    <a href="{{modstart_web_url('wenda/member/'.$memberUser['id'].'/replies')}}" class="tw-text-center tw-pr-4 tw-text-sm">--}}

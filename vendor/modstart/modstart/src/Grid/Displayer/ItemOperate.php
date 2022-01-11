@@ -95,10 +95,6 @@ class ItemOperate extends AbstractDisplayer
 
     public function render()
     {
-        $autoWidth = empty($this->field->width());
-        if ($autoWidth) {
-            $this->field->width(200);
-        }
         if (null !== $this->onlyOperate) {
             return $this->onlyOperate;
         }
@@ -109,9 +105,6 @@ class ItemOperate extends AbstractDisplayer
             $this->operates[] = TextAction::primary('<i class="iconfont icon-direction-up"></i>', 'data-sort="up"');
             $this->operates[] = TextAction::primary('<i class="iconfont icon-direction-down"></i>', 'data-sort="down"');
             $this->operates[] = TextAction::primary('<i class="iconfont icon-bottom"></i>', 'data-sort="bottom"');
-            if ($autoWidth) {
-                $this->field->width(400);
-            }
         }
         if ($this->canShow() && $this->grid->urlShow()) {
             $this->operates[] = TextAction::primary(L('Show'), 'data-show');

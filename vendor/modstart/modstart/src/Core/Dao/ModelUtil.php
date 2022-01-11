@@ -887,6 +887,28 @@ class ModelUtil
         }
     }
 
+    public static function decodeRecordsNumberArray(&$records, $keyArray)
+    {
+        if (empty($records)) {
+            return;
+        }
+        if (is_string($keyArray)) {
+            $keyArray = [$keyArray];
+        }
+        foreach ($records as &$record) {
+            foreach ($keyArray as $key) {
+                $values = @json_decode($record[$key], true);
+                if (!empty($values)) {
+                    $record[$key] = array_map(function ($o) {
+                        return intval($o);
+                    }, $values);
+                } else {
+                    $record[$key] = [];
+                }
+            }
+        }
+    }
+
     public static function decodeRecordJson(&$record, $keyArray, $default = [])
     {
         if (empty($record)) {

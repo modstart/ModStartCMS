@@ -33,7 +33,8 @@ class CatController extends Controller
                 $builder->text('url', 'URL')->required()
                     ->hookRendering(function (AbstractField $field, $item, $index) {
                         if ($field->renderMode() == FieldRenderMode::GRID) {
-                            return CatUrlMode::url($item->toArray());
+                            $url = CatUrlMode::url($item->toArray());
+                            return "<a href='$url' target='blank'>$url</a>";
                         }
                         return null;
                     })
@@ -64,16 +65,33 @@ class CatController extends Controller
                 $builder->text('seoTitle', 'SEO标题')->listable(false);
                 $builder->text('seoDescription', 'SEO描述')->listable(false);
                 $builder->textarea('seoKeywords', 'SEO关键词')->listable(false);
-                $builder->switch('visitMemberGroupEnable', '用户分组限制')->listable(false)
+                $builder->switch('visitMemberGroupEnable', '用户分组访问限制')->listable(false)
                     ->when('=', true, function ($builder) {
                         /** @var HasFields $builder */
-                        $builder->checkbox('visitMemberGroups', '允许访问的分组')->optionModel('member_group', 'id', 'title')->listable(false);
+                        $builder->checkbox('visitMemberGroups', '允许访问的用户分组')->optionModel('member_group', 'id', 'title')->listable(false);
                     });
-                $builder->switch('visitMemberVipEnable', '用户VIP限制')->listable(false)
+                $builder->switch('visitMemberVipEnable', '用户VIP访问限制')->listable(false)
                     ->when('=', true, function ($builder) {
                         /** @var HasFields $builder */
-                        $builder->checkbox('visitMemberVips', '允许访问的VIP')->optionModel('member_vip_set', 'id', 'title')->listable(false);
+                        $builder->checkbox('visitMemberVips', '允许访问的用户VIP')->optionModel('member_vip_set', 'id', 'title')->listable(false);
                     });
+                if (modstart_config('Cms_MemberPostEnable', false)) {
+                    $builder->switch('memberUserPostEnable', '允许用户发布')->optionsYesNo()->listable(false)
+                        ->when('=', true, function ($builder) {
+                            /** @var HasFields $builder */
+                            $builder->switch('postMemberGroupEnable', '用户分组发布限制')->listable(false)
+                                ->when('=', true, function ($builder) {
+                                    /** @var HasFields $builder */
+                                    $builder->checkbox('postMemberGroups', '允许发布的分组')->optionModel('member_group', 'id', 'title')->listable(false);
+                                });
+                            /** @var HasFields $builder */
+                            $builder->switch('postMemberVipEnable', '用户VIP发布限制')->listable(false)
+                                ->when('=', true, function ($builder) {
+                                    /** @var HasFields $builder */
+                                    $builder->checkbox('postMemberVips', '允许发布的VIP')->optionModel('member_vip_set', 'id', 'title')->listable(false);
+                                });
+                        });
+                }
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })

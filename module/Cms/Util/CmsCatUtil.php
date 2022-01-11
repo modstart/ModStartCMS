@@ -26,7 +26,7 @@ class CmsCatUtil
     }
 
     /**
-     * @return mixed
+     * @return array
      *
      * @Util 获取所有栏目
      */
@@ -34,13 +34,68 @@ class CmsCatUtil
     {
         return Cache::rememberForever('CmsCatAll', function () {
             $records = ModelUtil::all('cms_cat');
-            ModelUtil::decodeRecordsJson($records, ['visitMemberGroups', 'visitMemberVips']);
+            ModelUtil::decodeRecordsNumberArray($records, [
+                'visitMemberGroups', 'visitMemberVips',
+                'postMemberGroups', 'postMemberVips',
+            ]);
             foreach ($records as $k => $v) {
                 $records[$k]['_model'] = CmsModelUtil::get($v['modelId']);
                 $records[$k]['_url'] = CatUrlMode::url($v);
             }
             return $records;
         });
+    }
+
+    /**
+     * @return array
+     *
+     * @Util 获取所有栏目Tree
+     */
+    public static function tree()
+    {
+        $cats = CmsCatUtil::all();
+        $catTree = TreeUtil::nodesToTree($cats);
+        return $catTree;
+    }
+
+
+    private static function treeMergeMemberCanPost(&$tree, \Closure $callbackCanPost)
+    {
+        foreach ($tree as $i => $v) {
+            $childMemberCanPostCount = 0;
+            if (!empty($v['_child'])) {
+                self::treeMergeMemberCanPost($tree[$i]['_child'], $callbackCanPost);
+                foreach ($tree[$i]['_child'] as $item) {
+                    if ($item['_memberCanPost']) {
+                        $childMemberCanPostCount++;
+                    }
+                }
+            }
+            $tree[$i]['_memberCanPost'] = call_user_func_array($callbackCanPost, [$v]);
+            $tree[$i]['_childMemberCanPostCount'] = $childMemberCanPostCount;
+        }
+    }
+
+    private static function filterMemberCanPost($tree)
+    {
+        $newTree = [];
+        foreach ($tree as $item) {
+            if (!$item['_memberCanPost'] && $item['_childMemberCanPostCount'] <= 0) {
+                continue;
+            }
+            if (!empty($item['_child'])) {
+                $item['_child'] = self::filterMemberCanPost($item['_child']);
+            }
+            $newTree[] = $item;
+        }
+        return $newTree;
+    }
+
+    public static function treeWithPost(\Closure $callbackCanPost)
+    {
+        $catTree = CmsCatUtil::tree();
+        self::treeMergeMemberCanPost($catTree, $callbackCanPost);
+        return self::filterMemberCanPost($catTree);
     }
 
     /**
@@ -148,4 +203,5 @@ class CmsCatUtil
         }
         ModelUtil::insert('cms_cat', $cat);
     }
+
 }
