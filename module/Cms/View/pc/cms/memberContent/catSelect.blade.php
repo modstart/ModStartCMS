@@ -7,8 +7,6 @@
     <div class="ub-panel">
         <div class="head">
             <div class="title">
-                <a href="{{modstart_web_url('member')}}">我</a>
-                <i class="iconfont icon-angle-right ub-text-muted"></i>
                 <span>发布内容</span>
                 <i class="iconfont icon-angle-right ub-text-muted"></i>
                 <span>选择栏目</span>
