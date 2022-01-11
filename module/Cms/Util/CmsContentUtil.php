@@ -151,4 +151,9 @@ class CmsContentUtil
         $paginateData = CmsContentUtil::paginateCat($catId, 1, 1, $option);
         return isset($paginateData['records'][0]) ? $paginateData['records'][0] : null;
     }
+
+    public static function delete($id)
+    {
+
+    }
 }

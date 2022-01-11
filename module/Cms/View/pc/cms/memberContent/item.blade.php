@@ -22,7 +22,7 @@
     <div class="tw-text-right" style="width:15rem;">
         <div class="tw-mt-2">
             <a class="btn" href="{{modstart_web_url('cms_member_content/edit?id='.$item->id)}}"><i class="iconfont icon-edit"></i>修改</a>
-            <a class="btn btn-danger" href="javascript:;" data-confirm="确定删除？" data-ajax-request="{{modstart_web_url('cms_member_content/delete',['id'=>$item->id])}}"><i class="iconfont icon-trash"></i>删除</a>
+            <a class="btn btn-danger" href="javascript:;" data-confirm="确定删除？" data-ajax-request="{{modstart_api_url('cms_member_content/delete',['id'=>$item->id])}}"><i class="iconfont icon-trash"></i>删除</a>
         </div>
     </div>
 </div>

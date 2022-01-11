@@ -99,7 +99,7 @@ class MemberContentController extends MemberFrameController implements MemberLog
             $recordDataValue = [];
             $dataKeys = [];
             foreach ($model['_customFields'] as $field) {
-                $dataKeys = $field['name'];
+                $dataKeys[] = $field['name'];
                 switch ($field['fieldType']) {
                     case CmsModelFieldType::TEXT:
                     case CmsModelFieldType::TEXTAREA:
