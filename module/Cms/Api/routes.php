@@ -6,6 +6,8 @@ $router->group([
     ],
 ], function () use ($router) {
 
+    $router->match(['get', 'post'], 'cat/get', 'CatController@get');
+
     $router->match(['get', 'post'], 'cms_member_content/delete', 'MemberContentController@delete');
 
 });
