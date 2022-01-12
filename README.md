@@ -5,7 +5,7 @@
   </a>
 </p>
 <p align="center">
-  模块化的快速开发框架
+  模块化的极速开发框架
 </p>
 
 <p align="center">  
@@ -31,18 +31,56 @@
 </p>
 
 
-# ModStart是基于Laravel的模块化快速开发框架
+# ModStart是基于Laravel的模块化极速开发框架
 
 
-##  🔥 当前版本
+##  🔥 功能一览
 
-最新版本 <img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/github/v/release/modstart/ModStartCMS?style=flat-square">，功能完善，模块市场丰富，欢迎交流。
+最新版本 <img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/github/v/release/modstart/ModStartCMS?style=flat-square">，功能完善，模块市场丰富，欢迎交流。QQ交流群： [467107293](https://qm.qq.com/cgi-bin/qm/qr?k=JP5GySRSCM8BUVoIGwfXF_bCe6gPajEb&jump_from=webapi)
 
-QQ交流群：467107293
+- 会员模块通用且完整，支持完整的API调用
+- 大文件分片上传，进度条显示，已上传文件管理
+- 强大的模块扩展功能，所有模块可以无缝集成，支持在线安装、卸载模块
+- 完善的开发助手，实现模块、主题的的一键创建
+- 完善的后台权限管理，支持基于RBAC的权限管理系统
+- 后台管理自使用手机、平板、PC，无论何时何地都可方便管理
+- 第三方登录（QQ、微信、微博）
+- 第三方支付支持（微信、支付宝），微信支持PC端扫码支付
+- 第三方云存储支持，支持云储存分片上传（阿里云、百度云、华为云、腾讯云、FTP、七牛云、UCloud、又拍云）
+- 第三方短信支持（阿里云、腾讯云、华为云、百度云、253云通讯、聚合、七牛云、融云、赛邮、UCloud、云片、网易云）
+- 丰富优秀的模块支持：
+  - [视频点播课](https://modstart.com/m/CourseVideo)
+  - [一物一码防伪溯源](https://modstart.com/m/Tracking)
+  - [文章投稿系统](https://modstart.com/m/CmsWriter)
+  - [Markdown文档管理](https://modstart.com/m/Markdown)
+  - [视频管理系统](https://modstart.com/m/Video)
+  - [邮件营销系统](https://modstart.com/m/Edm)
+  - [视频直播系统](https://modstart.com/m/CourseLive)
+  - [文库系统](https://modstart.com/m/Wenku)
+  - [相册系统](https://modstart.com/m/Photo)
+  - [文库系统](https://modstart.com/m/Wenku)
+  - [问答系统](https://modstart.com/m/Wenda)
+  - [IT工具箱](https://modstart.com/m/Tools)
+  - [帮助中心系统](https://modstart.com/m/CmsHelp)
+  - [短连接系统](https://modstart.com/m/ShortLink)
+  - [论坛系统](https://modstart.com/m/Forum)
+  - [个人博客系统](https://modstart.com/m/Blog)
+  - [发卡系统](https://modstart.com/m/Faka)
+  - [积分商城](https://modstart.com/m/CreditShop)
+  - [兼职招聘系统](https://modstart.com/m/Hire)
+  - [课程报名系统](https://modstart.com/m/Course)
+  - [活动报名系统](https://modstart.com/m/Event)
+  - [简单商城系统](https://modstart.com/m/Shop)
+  - [网盘系统](https://modstart.com/m/Pan)
+  - [微信公众号管理系统](https://modstart.com/m/WechatMP)
+  - [在线客服系统](https://modstart.com/m/LiveChat)
 
 ##  💡 系统简介
 
-`ModStart` 是一个基于 `Laravel` 模块化快速开发框架。基于 Apache 2.0 开源协议发布，**免费且不限制商业使用**。模块市场包含了丰富的模块，后台一键快速安装，让开发者能够从冗长的代码中提效。
+`ModStart` 是一个基于 `Laravel` 模块化极速开发框架。模块市场拥有丰富的功能应用，支持后台一键快速安装，让开发者能快的实现业务功能开发。 
+
+系统完全开源，基于 Apache 2.0 开源协议，**免费且不限制商业使用**。
+
 
 <img src="https://ms-assets.modstart.com/data/image/2021/11/07/46017_dv5r_7358.jpg" alt="功能架构" />
 
@@ -55,11 +93,10 @@ QQ交流群：467107293
 **技术栈**
 
 - [Laravel](https://laravel.com/)
-- [jQuery](http://jquery.com)
 - [Vue](https://vuejs.org/)
 - [Element UI](https://element.eleme.io/)
 - [LayUI](https://github.com/sentsin/layui)
-
+- [jQuery](http://jquery.com)
 
 
 ##  💥 系统特性
@@ -86,7 +123,16 @@ QQ交流群：467107293
 
 [http://cms.demo.tecmz.com/admin](http://cms.demo.tecmz.com/admin)
 
-> 账号：`demo` 密码：`123456` （演示账号只可以查看不能操作）
+> 账号：`demo` 密码：`123456` （演示账号为只读权限）
+
+
+
+## 🎁 模块市场
+
+丰富的模块市场，后台一键安装模块应用
+
+![模块市场](https://ms-assets.modstart.com/data/image/2022/01/12/21242_me7h_4616.jpg)
+
 
 
 ## 🌐 开发文档
@@ -105,124 +151,51 @@ QQ交流群：467107293
 
 > 强力推荐使用PHP 5.6 或 7.0 版本，系统稳定性最好
 
-### 安装步骤
-
-1. 配置 apache/nginx 服务器，请将网站的根目录配置到 <网站目录>/public
-2. 访问 `http://www.xxx.com/install.php`
-3. 使用安装引导向导进行安装
-
-<p>
-<img src="https://mz-assets.tecmz.com/data/image/2020/04/21/47617_sqcj_4993.jpg" />
-</p>
-
-
-**Nginx参考配置**
-
-```
-server {
-    listen       80;
-    server_name  xx.com;x
-    charset utf-8;
-    index index.php index.html;
-    root /var/www/html/xxx.com/public;
-    autoindex off;
-    location ^~ /.git {
-        deny all;
-    }
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-    location ~ \.php$ {
-        fastcgi_pass   127.0.0.1:9000;
-        fastcgi_index  index.php;
-        fastcgi_param  PHP_VALUE  "open_basedir=/var/www/html/xxx.com/:/tmp/:/var/tmp/";
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-    location ~ \.(gif|jpg|jpeg|png|bmp|ico|css|js)$ {
-       expires max;
-    }
-    location ~* \.(eot|ttf|woff|woff2)$ {
-        add_header Access-Control-Allow-Origin '*';
-    }
-}
-```
-
-**Apache参考配置**
-
-```
-<VirtualHost *:80>
-    　　ServerName xxx.com
-    　　DocumentRoot d:/wwwroot/xxx.com/public
-</VirtualHost>
-```
-
-### 集成环境
+### 安装说明
 
 - 宝塔一键安装教程：[https://modstart.com/doc/install/baota.html](https://modstart.com/doc/install/baota.html)
 - PHPStudy一键安装教程：[https://modstart.com/doc/install/phpstudy.html](https://modstart.com/doc/install/phpstudy.html)
 - WampServer安装教程：[https://modstart.com/doc/install/wampserver.html](https://modstart.com/doc/install/wampserver.html)
 - Docker一键安装教程：[https://modstart.com/doc/install/docker.html](https://modstart.com/doc/install/docker.html)
-
-### 环境预检
-
-为方便系统环境快速配置，我们提供了服务器端安装环境预检程序。使用方式如下：
-
-- 通过连接下载文件  <a href="https://modstart.com/env_check.zip" target="_blank">https://modstart.com/env_check.zip</a>  ，解压出 `env_check.php` 文件。
-- 将 `env_check.php` 文件上传到服务器空间，配置通过访问 `http://www.xxx.com/env_check.php` 来查看安装环境是否配置成功，如果环境预检成功，可以看到如下提示。
-
-<img src="https://www.ms.modstart.com/vendor/ModStart/images/guide/EnvCheck.jpg?20220103" alt="环境预检" />
+- 原生环境安装教程：[https://modstart.com/doc/install/start.html](https://modstart.com/doc/install/start.html)
 
 
 ### 升级指南
 
 参照 [https://modstart.com/doc/install/upgrade.html](https://modstart.com/doc/install/upgrade.html)
 
-### 版本策略
-
-ModStart 的版本发行将会参考主流 web 框架的发行策略，尽量降低版本升级带来的影响，最大程度的考虑兼容性问题，小版本的升级将尽量不改动任何功能接口；同时我们也将会提供更新日志，详细说明新版本的改动以及可能造成的影响。
-
-对于小版本的发行，开发者可以放心的升级，基本不用担心代码兼容性问题。只有像从 v2.0.0 到 v3.0.0 这样的大版本升级才可能会有兼容性问题，小版本则基本是完全兼容的（小版本升级也可能会有不兼容的情况，但几率很小）。
-
-
-##  🔨 快速开发
-
-
-以一个增删改查页面的基本构成，通过学习下面的内容将可以帮助大家快速理解 `ModStart` 基本使用方法。
 
 
 
-### 创建数据表
+##  🔨 开发速看
 
-在Laravel的迁移目录创建数据库迁移文件
+
+以下以一个简单的新闻增删改查页面为例，快速了解 ModStart 开发的大致流程。
+
+### 数据表迁移文件
 
 ```php
 class CreateNews extends Migration
 {
     public function up()
     {
-            Schema::create('news', function (Blueprint $table) {
-                $table->increments('id');
-                $table->timestamps();
-                $table->string('title', 200)->nullable()->comment('');
-                $table->string('cover', 200)->nullable()->comment('');
-                $table->string('summary', 200)->nullable()->comment('');
-                $table->text('content')->nullable()->comment('');
-            });
-        }
+        Schema::create('news', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->string('title', 200)->nullable()->comment('');
+            $table->string('cover', 200)->nullable()->comment('');
+            $table->string('summary', 200)->nullable()->comment('');
+            $table->text('content')->nullable()->comment('');
+        });
     }
     public function down()
     {
+        //
     }
 }
-
 ```
 
-
-
-### 创建控制器
-
-增加路由控制器代码，同时按照
+### 控制器代码
 
 ```php
 class NewsController extends Controller
@@ -250,18 +223,16 @@ class NewsController extends Controller
 }
 ```
 
-
-
 ### 增加路由和导航
 
 在 `routes.php` 增加路由信息
 
 ```php
-$router->match(['get', 'post'], 'news/news', 'NewsController@index');
-$router->match(['get', 'post'], 'news/news/add', 'NewsController@add');
-$router->match(['get', 'post'], 'news/news/edit', 'NewsController@edit');
-$router->match(['get', 'post'], 'news/news/delete', 'NewsController@delete');
-$router->match(['get', 'post'], 'news/news/show', 'NewsController@show');
+$router->match(['get', 'post'], 'news', 'NewsController@index');
+$router->match(['get', 'post'], 'news/add', 'NewsController@add');
+$router->match(['get', 'post'], 'news/edit', 'NewsController@edit');
+$router->match(['get', 'post'], 'news/delete', 'NewsController@delete');
+$router->match(['get', 'post'], 'news/show', 'NewsController@show');
 ```
 
 
@@ -280,16 +251,9 @@ AdminMenu::register(function () {
 });
 ```
 
-这样一个简单的增删改查页面就开发完成了
+这样一个简单的新闻增删改查页面就开发完成了。
 
 
-##  🌭 开发前必读
-
-### 开发前的配置
-
-开发环境请打开 debug 模式，方便查看日志文件，操作方式如下：
-
-在 `.env` 文件中设置 `APP_DEBUG=true` 
 
 ## 📋 常见问题
 
@@ -301,23 +265,3 @@ AdminMenu::register(function () {
 
 [https://modstart.com/forum](https://modstart.com/forum)
 
-##  ✨ 使用交流
-
-### 加入我们
-
-如果您对这个项目感兴趣，非常欢迎加入项目开发团队，参与这个项目的功能维护与开发。
-
-欢迎任何形式的贡献（包括但不限于以下）：
-
-- 贡献代码
-- 完善文档
-- 撰写教程
-- 完善注释
-- ...
-
-### QQ交流群
-
-**QQ交流群：467107293**
-<p>
-    <img width="200" src="https://ms-assets.modstart.com/data/image/2021/09/25/29009_zsm8_2437.png" />
-</p>
