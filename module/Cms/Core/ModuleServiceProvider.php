@@ -14,8 +14,6 @@ use Module\Cms\Provider\CmsHomePageProvider;
 use Module\Cms\Provider\Theme\CmsThemeProvider;
 use Module\Cms\Provider\Theme\DefaultThemeProvider;
 use Module\Cms\Util\CmsModelUtil;
-use Module\Member\Config\MemberHomeIcon;
-use Module\Member\Config\MemberMenu;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
 use Module\Vendor\Provider\HomePage\HomePageProvider;
@@ -128,48 +126,6 @@ class ModuleServiceProvider extends ServiceProvider
                 modstart_admin_url('cms/model')
             ));
         });
-
-        if (modstart_config('Cms_MemberPostEnable', false)) {
-            MemberMenu::register(function () {
-                return [
-                    [
-                        'icon' => 'list-alt',
-                        'title' => '内容',
-                        'sort' => 900,
-                        'children' => [
-                            [
-                                'title' => '发布内容',
-                                'url' => modstart_web_url('cms_member_content/edit'),
-                            ],
-                            [
-                                'title' => '我的内容',
-                                'url' => modstart_web_url('cms_member_content'),
-                            ],
-                        ],
-                    ],
-                ];
-            });
-            MemberHomeIcon::register(function () {
-                return [
-                    [
-                        'title' => '内容',
-                        'sort' => 900,
-                        'children' => [
-                            [
-                                'icon' => 'iconfont icon-edit',
-                                'title' => '发布内容',
-                                'url' => modstart_web_url('cms_member_content/edit'),
-                            ],
-                            [
-                                'icon' => 'iconfont icon-list-alt',
-                                'title' => '我的内容',
-                                'url' => modstart_web_url('cms_member_content'),
-                            ],
-                        ]
-                    ],
-                ];
-            });
-        }
 
     }
 

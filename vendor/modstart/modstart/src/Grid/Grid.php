@@ -4,6 +4,7 @@
 namespace ModStart\Grid;
 
 use Closure;
+use Illuminate\Support\Facades\Input;
 use ModStart\Core\Dao\DynamicModel;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -24,7 +25,6 @@ use ModStart\Repository\Filter\HasScopeFilter;
 use ModStart\Support\Concern\HasBuilder;
 use ModStart\Support\Concern\HasFields;
 use ModStart\Support\Concern\HasFluentAttribute;
-use ModStart\Support\Concern\HasSetting;
 use ModStart\Support\Manager\FieldManager;
 
 /**
@@ -454,6 +454,7 @@ class Grid
             'filters' => $this->gridFilter->filters(),
             'grid' => $this,
             'scopes' => $this->scopeFilters,
+            'scopeCurrent' => Input::get('_scope', $this->scopeDefault),
         ]);
         return view($this->view, $data)->render();
     }

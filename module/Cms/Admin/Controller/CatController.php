@@ -75,7 +75,7 @@ class CatController extends Controller
                         /** @var HasFields $builder */
                         $builder->checkbox('visitMemberVips', '允许访问的用户VIP')->optionModel('member_vip_set', 'id', 'title')->listable(false);
                     });
-                if (modstart_config('Cms_MemberPostEnable', false)) {
+                if (modstart_config('CmsMemberPost_Enable', false)) {
                     $builder->switch('memberUserPostEnable', '允许用户发布')->optionsYesNo()->listable(false)
                         ->when('=', true, function ($builder) {
                             /** @var HasFields $builder */

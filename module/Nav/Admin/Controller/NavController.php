@@ -65,6 +65,7 @@ class NavController extends Controller
                 return $filter->where('position', $key);
             });
         }
+        $builder->scopeDefault(NavPosition::first());
         $builder
             ->hookSaved(function (Form $form) {
                 /** @var \stdClass $item */

@@ -10,6 +10,8 @@ trait HasScopeFilter
 {
     /** @var array */
     protected $scopeFilters = [];
+    /** @var string null */
+    protected $scopeDefault = null;
 
     /**
      * Set the scope filter.
@@ -31,9 +33,19 @@ trait HasScopeFilter
         return $this;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
+    public function scopeDefault($name)
+    {
+        $this->scopeDefault = $name;
+        return $this;
+    }
+
     public function scopeExecuteQueries(&$query)
     {
-        $scope = Input::get('_scope');
+        $scope = Input::get('_scope', $this->scopeDefault);
         if (empty($scope)) {
             return;
         }

@@ -10,9 +10,6 @@ $router->group([
     ],
 ], function () use ($router) {
 
-    $router->match(['get', 'post'], 'cms_member_content', 'MemberContentController@index');
-    $router->match(['get', 'post'], 'cms_member_content/edit', 'MemberContentController@edit');
-
     $router->match(['get', 'post'], 'cms', 'IndexController@index');
     $router->match(['get', 'post'], 'a/{alias_url}', 'DetailController@index');
     $router->match(['get', 'post'], 'c/{id}', 'ListController@index');

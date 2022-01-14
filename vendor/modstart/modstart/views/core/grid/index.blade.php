@@ -3,7 +3,7 @@
         <div class="tw-pb-3">
             <div class="ub-nav-tab">
                 @foreach($scopes as $scope)
-                    <a class="{{Input::get('_scope')==$scope['name']?'active':''}}" href="?{{\ModStart\Core\Input\Request::mergeQueries(['_scope'=>$scope['name']])}}">
+                    <a class="{{$scopeCurrent==$scope['name']?'active':''}}" href="?{{\ModStart\Core\Input\Request::mergeQueries(['_scope'=>$scope['name']])}}">
                         {{$scope['title']}}
                     </a>
                 @endforeach

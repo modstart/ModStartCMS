@@ -13,4 +13,11 @@ class NavPosition implements BaseType
     {
         return ModuleManager::getModuleConfigKeyValueItems('Nav', 'position');
     }
+
+    public static function first()
+    {
+        $list = self::getList();
+        $keys = array_keys($list);
+        return array_shift($keys);
+    }
 }

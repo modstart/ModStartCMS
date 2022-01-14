@@ -605,7 +605,8 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'modelId' => 3,
         'alias' => NULL,
         'title' => '苹果iPhone 6(16GB)',
-        'summary' => 'iPhone 6采用4.7英寸屏幕，分辨率为1334*750像素，内置64位构架的苹果A8处理器，性能提升非常明显；同时还搭配全新的M8协处理器，专为健康应用所设计；采用后置800万像素镜头，前置120万像素 鞠昀摄影FaceTime HD 高清摄像头；并且加入Touch ID支持指纹识别，首次新增NFC功能；也是一款三网通手机，4G LTE连接速度可达150Mbps，支持多达20个LTE频段。',
+        'summary' => 'iPhone 6采用4.7英寸屏幕，分辨率为1334*750像素，内置64位构架的苹果A8处理器，性能提升非常明显；同时还搭配全新的M8协处理器，专为健康应用所设计；采用后置800万像素镜头，前置120万像素 鞠昀摄影FaceTime HD 高清摄像头；并且加入Touch ID支持指纹识别，首次新增NFC功能；也是一款三网通手机，4G LTE连接速度可达150Mbps，支持多达20个LTE频段。
+',
         'cover' => 'https://mz-demo-assets.tecmz.com/data/image/2021/11/03/40945_hz9e_6444.jpg',
         'seoTitle' => NULL,
         'seoDescription' => NULL,
@@ -669,7 +670,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'status' => 1,
         'commentCount' => NULL,
         'likeCount' => NULL,
-        'isRecommend' => 0,
+        'isRecommend' => 1,
         'isTop' => 0,
         'tags' => '',
         'author' => '',

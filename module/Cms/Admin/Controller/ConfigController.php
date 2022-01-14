@@ -14,7 +14,6 @@ class ConfigController extends Controller
     {
         $builder->pageTitle('CMS设置');
         $builder->radio('Cms_ContentUrlMode', '内容URL模式')->optionType(ContentUrlMode::class)->defaultValue(ContentUrlMode::A);
-        $builder->switch('Cms_MemberPostEnable', '开启用户投稿')->optionsYesNo();
         $builder->formClass('wide');
         return $builder->perform();
     }
