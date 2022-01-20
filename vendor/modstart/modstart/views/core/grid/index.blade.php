@@ -100,7 +100,7 @@
             return items;
         };
         layui.extend({
-            mstable: window.__msCDN + 'asset/layui/lay/ext/mstable'
+            mstable: window.__msCDN + 'asset/layui/lay/ext/mstable.js?v20220119'
         });
         layui.use(['table', 'laypage','mstable'], function () {
             var table = layui.table.render({

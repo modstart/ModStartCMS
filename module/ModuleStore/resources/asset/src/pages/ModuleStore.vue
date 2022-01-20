@@ -35,6 +35,17 @@
                         <i class="iconfont icon-close"></i> 已禁用
                     </span>
                 </el-tab-pane>
+                <el-tab-pane name="local">
+                    <span slot="label">
+                        <i class="iconfont icon-pc"></i> 本地模块
+                        <i class="iconfont icon-warning" data-tip-popover="本地存在且模块市场不存在的模块"></i>
+                    </span>
+                </el-tab-pane>
+                <el-tab-pane name="upgradeable">
+                    <span slot="label">
+                        <i class="iconfont icon-direction-up"></i> 可升级
+                    </span>
+                </el-tab-pane>
             </el-tabs>
             <div class="ub-padding">
                 <div class="tw-float-right">
@@ -455,6 +466,14 @@ export default {
                     case 'disabled':
                         if (!module._isInstalled || module._isEnabled) return false
                         break;
+                    case 'local':
+                        if (!module._isLocal) return false
+                        break
+                    case 'upgradeable':
+                        if(!( module._isInstalled && !module._isLocal && module.latestVersion!==module._localVersion ) ){
+                            return false
+                        }
+                        break
                 }
                 if (this.search.isRecommend) {
                     if (!module.isRecommend) {
@@ -491,6 +510,7 @@ export default {
                 }
                 return true
             })
+            console.log('xxx',results,this.modules)
             return results
         }
     },

@@ -238,7 +238,7 @@ class ModuleManager
             if (!$v['isDir']) {
                 continue;
             }
-            if (starts_with($v['filename'], '_delete_.')) {
+            if (starts_with($v['filename'], '_delete_.') || starts_with($v['filename'], '_')) {
                 continue;
             }
             $modules[$v['filename']] = [

@@ -4,6 +4,28 @@ layui.define([], function (exports) {
         tables = {},
         _BODY = $('body');
 
+    String.prototype.width = function (font, isText) {
+        var html = this;
+        isText = isText || false
+        var f = font || _BODY.css('font'),
+            o = $('<div></div>');
+        if (isText) {
+            o.text(html)
+        } else {
+            o.html(html)
+        }
+        o.css({
+            'position': 'absolute',
+            'float': 'left',
+            'white-space': 'nowrap',
+            'visibility': 'hidden',
+            'font': f
+        }).appendTo(_BODY);
+        var w = o.width();
+        o.remove();
+        return w;
+    }
+
     var mod = {
         render: function (myTable) {
             tables[myTable.id] = myTable
@@ -19,22 +41,6 @@ layui.define([], function (exports) {
                     fixTh = $table.next().children('.layui-table-box').children('.layui-table-fixed').children('.layui-table-header').children('table').children('thead').children('tr').children('th'),
                     $tableBodytr = $table.next().children('.layui-table-box').children('.layui-table-body').children('table').children('tbody').children('tr'),
                     $totalTr = $table.next().children('.layui-table-total').find('tr');
-                String.prototype.width = function (font) {
-                    var f = font || _BODY.css('font'),
-                        o = $('<div>' + this + '</div>')
-                            .css({
-                                'position': 'absolute',
-                                'float': 'left',
-                                'white-space': 'nowrap',
-                                'visibility': 'hidden',
-                                'font': f
-                            })
-                            .appendTo(_BODY),
-                        w = o.width();
-
-                    o.remove();
-                    return w;
-                }
                 th.add(fixTh).on('dblclick', function (e) {
                     var othis = $(this),
                         pLeft = e.clientX - othis.offset().left;
@@ -89,7 +95,6 @@ layui.define([], function (exports) {
                     }
                 }
 
-
                 function computeColumnWidth(myTable, othis, isHandle, config) {
                     var key = othis.data('key')
                         , keyArray = key.split('-')
@@ -105,7 +110,7 @@ layui.define([], function (exports) {
                             if ($(this).children().children() && $(this).children().children().length > 0) {
                                 curWidth += $(this).children().html().width(font)
                             } else {
-                                curWidth = $(this).text().width(font);
+                                curWidth = $(this).text().width(font, true);
                             }
                             if (maxWidth < curWidth) {
                                 maxWidth = curWidth

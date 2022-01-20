@@ -243,7 +243,9 @@ var Form = {
 
             if (Dialog) {
                 var msg = $(this).attr('data-form-loading');
-                Dialog.loadingOn(msg);
+                if ($(this).is('[data-form-loading]')) {
+                    Dialog.loadingOn(msg);
+                }
             }
 
             return true;
