@@ -7,7 +7,7 @@
     "admin"
   ],
   "homepage": "https://github.com/modstart/modstart",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "authors": [
     {
       "name": "ModStart",

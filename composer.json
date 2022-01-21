@@ -20,5 +20,11 @@
   "config": {
     "preferred-install": "dist",
     "secure-http": false
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://modstart.com/composer"
+    }
+  ]
 }
