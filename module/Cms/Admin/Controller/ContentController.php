@@ -253,6 +253,7 @@ class ContentController extends Controller
                 $recordValue = ArrayUtil::keepKeys($data, [
                     'catId', 'title', 'alias', 'title', 'summary', 'cover', 'postTime',
                     'status', 'isRecommend', 'isTop', 'tags', 'author', 'source',
+                    'seoTitle', 'seoDescription', 'seoKeywords'
                 ]);
                 if (modstart_config('CmsUrlMix_Enable', false)) {
                     $recordValue['fullUrl'] = (empty($data['fullUrl']) ? null : $data['fullUrl']);
