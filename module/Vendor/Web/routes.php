@@ -10,3 +10,11 @@ $router->match(['get', 'post'], 'install/lock', 'InstallController@lock');
 $router->match(['get', 'post'], 'captcha/image', 'CaptchaController@image');
 
 $router->match(['get'], 'placeholder/{width}x{height}', '\Module\Vendor\Web\Controller\PlaceholderController@index');
+
+$router->group([
+    'middleware' => [
+        \Module\Vendor\Middleware\NoneLoginOperateAuthMiddleware::class,
+    ],
+], function () use ($router) {
+    $router->match(['get', 'post'], 'content_verify/{name}', 'ContentVerifyController@index');
+});

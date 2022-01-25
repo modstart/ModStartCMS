@@ -11,7 +11,7 @@ class NotifierProvider
     /**
      * @return AbstractNotifierProvider[]
      */
-    public static function get()
+    public static function all()
     {
         static $instances = null;
         if (null === $instances) {
@@ -30,7 +30,7 @@ class NotifierProvider
 
     public static function notify($biz, $title, $content, $param = [])
     {
-        foreach (self::get() as $instance) {
+        foreach (self::all() as $instance) {
             $instance->notify($biz, $title, $content, $param);
         }
     }

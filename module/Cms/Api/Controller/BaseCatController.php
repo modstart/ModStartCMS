@@ -1,8 +1,7 @@
 <?php
 
 
-namespace Module\Cms\Web\Controller;
-
+namespace Module\Cms\Api\Controller;
 
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -13,14 +12,17 @@ use Module\Cms\Util\CmsModelUtil;
 
 class BaseCatController extends ModuleBaseController
 {
-    protected function setup($id = 0)
+    protected function setup($name = 0)
     {
-        $input = InputPackage::buildFromInput();
-        if (empty($id)) {
+        if (empty($name)) {
             // var_dump(Request::path());
             $cat = CmsCatUtil::getByUrl(Request::path());
         } else {
-            $cat = CmsCatUtil::get($id);
+            if (is_numeric($name)) {
+                $cat = CmsCatUtil::get($name);
+            } else {
+                $cat = CmsCatUtil::getByUrl($name);
+            }
         }
         BizException::throwsIfEmpty('分类不存在', $cat);
         $catRoot = CmsCatUtil::root($cat['id']);

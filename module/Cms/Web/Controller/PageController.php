@@ -4,22 +4,18 @@
 namespace Module\Cms\Web\Controller;
 
 
-use Module\Cms\Util\CmsContentUtil;
+use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Input\Response;
+use Module\Cms\Api\Controller\BaseCatController;
 use Module\Cms\Util\CmsTemplateUtil;
 
 class PageController extends BaseCatController
 {
-    public function index($id = 0)
+    public function index(\Module\Cms\Api\Controller\PageController $api,
+                          $id = 0)
     {
-        $data = parent::setup($id);
-        $view = $this->getView($data, 'pageTemplate');
-        $cat = $data['cat'];
-
-        $viewData = $data;
-        $records = CmsContentUtil::allCat($cat['id']);
-        $viewData['record'] = isset($records[0]) ? $records[0] : null;
-        $viewData['records'] = $records;
-        // return $viewData;
-        return $this->view('cms.page.' . CmsTemplateUtil::toBladeView($view), $viewData);
+        InputPackage::mergeToInput('id', $id);
+        $viewData = Response::tryGetData($api->index());
+        return $this->view('cms.page.' . CmsTemplateUtil::toBladeView($viewData['view']), $viewData);
     }
 }

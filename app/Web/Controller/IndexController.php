@@ -14,4 +14,9 @@ class IndexController extends BaseController
         InstallerUtil::checkForInstallRedirect();
         return HomePageProvider::call(__METHOD__, CmsHomePageProvider::ACTION);
     }
+
+    public function test()
+    {
+
+    }
 }

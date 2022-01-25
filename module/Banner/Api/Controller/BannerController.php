@@ -9,8 +9,19 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use Module\Banner\Util\BannerUtil;
 
+/**
+ * Class BannerController
+ * @package Module\Banner\Api\Controller
+ * @Api 通用轮播
+ */
 class BannerController extends Controller
 {
+    /**
+     * @return array
+     *
+     * @Api 获取轮播信息
+     * @ApiBodyParam position string 位置信息
+     */
     public function get()
     {
         $input = InputPackage::buildFromInput();

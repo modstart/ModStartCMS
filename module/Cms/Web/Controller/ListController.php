@@ -3,9 +3,9 @@
 
 namespace Module\Cms\Web\Controller;
 
-
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\PageHtmlUtil;
+use Module\Cms\Api\Controller\BaseCatController;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsTemplateUtil;
 
