@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://modstart.com">
-    <img src="https://ms-assets.modstart.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="ModStart" width="360" />
+    <img src="https://ms-assets.oss-cn-shanghai.aliyuncs.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="ModStart" width="360" />
   </a>
 </p>
 <p align="center">
