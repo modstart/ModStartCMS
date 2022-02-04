@@ -18,6 +18,7 @@ use Module\Member\Util\MemberCmsUtil;
 class AdminMemberInfo extends Text
 {
     protected $view = 'modstart::core.field.text';
+    protected $editable = false;
 
     public function renderView(AbstractField $field, $item, $index = 0)
     {

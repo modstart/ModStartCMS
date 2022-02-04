@@ -1,15 +1,15 @@
 <?php
 
 
-namespace Module\Vendor\Provider\UgcCensor;
+namespace Module\Vendor\Provider\LiveStream;
 
 
 use ModStart\Core\Exception\BizException;
 
-class UgcCensorProvider
+class LiveStreamProvider
 {
     /**
-     * @var AbstractUgcCensorProvider[]
+     * @var AbstractLiveStreamProvider[]
      */
     private static $instances = [
     ];
@@ -20,7 +20,7 @@ class UgcCensorProvider
     }
 
     /**
-     * @return AbstractUgcCensorProvider[]
+     * @return AbstractLiveStreamProvider[]
      */
     public static function all()
     {
@@ -34,9 +34,27 @@ class UgcCensorProvider
         return self::$instances;
     }
 
+    public static function nameTitleMap()
+    {
+        return array_build(self::all(), function ($k, $provider) {
+            return [
+                $provider->name(),
+                $provider->title(),
+            ];
+        });
+    }
+
+    public static function first()
+    {
+        foreach (self::all() as $provider) {
+            return $provider->name();
+        }
+        return null;
+    }
+
     /**
      * @param $name
-     * @return AbstractUgcCensorProvider
+     * @return AbstractLiveStreamProvider
      * @throws BizException
      */
     public static function get($name)
@@ -46,6 +64,6 @@ class UgcCensorProvider
                 return $item;
             }
         }
-        BizException::throws('没有找到AbstractUgcCensorProvider');
+        return null;
     }
 }

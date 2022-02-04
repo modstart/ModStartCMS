@@ -49,7 +49,7 @@
         <table class="table-container" id="{{$id}}Table" lay-filter="{{$id}}Table"></table>
     </div>
     @if($enablePagination)
-        <div class="page-container tw-px-2" id="{{$id}}Pager"></div>
+        <div class="page-container" id="{{$id}}Pager"></div>
     @endif
     <script type="text/html" id="{{$id}}TableHeadToolbar">
         <div class="layui-btn-container">

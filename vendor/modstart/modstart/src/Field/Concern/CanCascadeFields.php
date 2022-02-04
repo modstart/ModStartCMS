@@ -9,6 +9,7 @@ use ModStart\Field\Checkbox;
 use ModStart\Field\Radio;
 use ModStart\Field\Select;
 use ModStart\Field\SwitchField;
+use ModStart\Field\Type;
 use ModStart\Form\Form;
 use ModStart\ModStart;
 
@@ -184,6 +185,7 @@ JS;
         if ($this->context instanceof Form) {
             switch (get_class($this)) {
                 case Select::class:
+                case Type::class:
                     return <<<JS
 $('#{$this->id()} select').on('change', function (e) {
     cascadeChange($(this).val());

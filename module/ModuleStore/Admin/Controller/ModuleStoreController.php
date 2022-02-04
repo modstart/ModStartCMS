@@ -352,7 +352,7 @@ class ModuleStoreController extends Controller
     {
         $basic = ModuleManager::getModuleBasic($module);
         $builder->useDialog();
-        $builder->pageTitle($basic['title'] . ' ' . L('Module Config'));
+        $builder->pageTitle(htmlspecialchars($basic['title']) . ' ' . L('Module Config'));
         $moduleInfo = ModuleManager::getInstalledModuleInfo($module);
         BizException::throwsIfEmpty('Module config error', $basic['config']);
         foreach ($basic['config'] as $key => $callers) {

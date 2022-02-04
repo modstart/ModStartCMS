@@ -44,6 +44,8 @@
                             this.editor.setContent(this.currentData)
                         })
                     },
+                },{
+                    zIndex: 10000,
                 })
                 this.editor.on('contentchange', () => {
                     this.currentData = this.editor.getContent()

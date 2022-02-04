@@ -231,4 +231,38 @@ class Tecmz
         return $this->request('/express', $post);
     }
 
+    /**
+     * 图片审核
+     *
+     * @param string $imageBase64
+     * @param string $imageUrl
+     * @return array|mixed
+     *
+     * 失败 [code=>-1,msg=>'<失败原因>',data=>null]
+     * 成功 [code=>0,msg=>'ok',data=>[ result=>'失败、合规、不合规、疑似、审核失败',messages=>[] ]]
+     */
+    public function censorImage($imageBase64, $imageUrl)
+    {
+        $post = [];
+        $post['imageBase64'] = $imageBase64;
+        $post['imageUrl'] = $imageUrl;
+        return $this->request('/censor_image', $post);
+    }
+
+    /**
+     * 文本审核
+     *
+     * @param string $text
+     * @return array|mixed
+     *
+     * 失败 [code=>-1,msg=>'<失败原因>',data=>null]
+     * 成功 [code=>0,msg=>'ok',data=>[ result=>'失败、合规、不合规、疑似、审核失败',messages=>[] ]]
+     */
+    public function censorText($text)
+    {
+        $post = [];
+        $post['text'] = $text;
+        return $this->request('/censor_text', $post);
+    }
+
 }

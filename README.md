@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://modstart.com">
-    <img src="https://ms-assets.oss-cn-shanghai.aliyuncs.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="ModStart" width="360" />
+    <img src="https://ms-assets.modstart.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="ModStart" width="360" />
   </a>
 </p>
 <p align="center">
@@ -82,7 +82,7 @@
 系统完全开源，基于 Apache 2.0 开源协议，**免费且不限制商业使用**。
 
 
-<img src="https://ms-assets.oss-cn-shanghai.aliyuncs.com/data/image/2021/11/07/46017_dv5r_7358.jpg" alt="功能架构" />
+<img src="https://ms-assets.modstart.com/data/image/2021/11/07/46017_dv5r_7358.jpg" alt="功能架构" />
 
 - [官方网站](https://modstart.com)
 - [在线演示](https://cms.demo.tecmz.com)
@@ -131,7 +131,7 @@
 
 丰富的模块市场，后台一键安装模块应用
 
-![模块市场](https://ms-assets.oss-cn-shanghai.aliyuncs.com/data/image/2022/01/12/21242_me7h_4616.jpg)
+![模块市场](https://ms-assets.modstart.com/data/image/2022/01/12/21242_me7h_4616.jpg)
 
 
 

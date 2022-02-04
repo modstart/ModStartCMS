@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Module\Vendor\Provider\UgcCensor;
+namespace Module\Vendor\Provider\CensorImage;
 
 
 use ModStart\Core\Input\Response;
 
-class DefaultUgcCensorProvider extends AbstractUgcCensorProvider
+class DefaultCensorImageProvider extends AbstractCensorImageProvider
 {
     public function name()
     {

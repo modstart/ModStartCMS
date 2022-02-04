@@ -18,10 +18,8 @@ class ContentVerifyController extends Controller
         $provider = ContentVerifyProvider::get($name);
         BizException::throwsIfEmpty('数据异常', $provider);
         $param = InputPackage::buildFromInputJson('param')->all();
-        $record = $provider->record($param);
-        BizException::throwsIfEmpty('记录不存在', $record);
         $form = Form::make('');
-        $ret = $provider->buildForm($form, $record);
+        $ret = $provider->buildForm($form, $param);
         if (null !== $ret) {
             return $ret;
         }
