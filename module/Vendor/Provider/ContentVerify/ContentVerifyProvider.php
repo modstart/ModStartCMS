@@ -3,9 +3,6 @@
 
 namespace Module\Vendor\Provider\ContentVerify;
 
-
-use ModStart\Core\Exception\BizException;
-
 class ContentVerifyProvider
 {
     /**

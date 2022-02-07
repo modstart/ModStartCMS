@@ -23,6 +23,7 @@ class ContentVerifyJob extends BaseJob
 
     public function handle()
     {
-        ContentVerifyProvider::get($this->name)->run($this->param, $this->body);
+        $provider = ContentVerifyProvider::get($this->name);
+        $provider->run($this->param, $this->body);
     }
 }

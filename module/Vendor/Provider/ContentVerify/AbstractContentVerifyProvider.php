@@ -18,9 +18,23 @@ abstract class AbstractContentVerifyProvider
 
     abstract public function title();
 
+    abstract public function verifyAutoProcess($param);
+
     abstract public function buildForm(Form $form, $param);
 
-    abstract public function autoProcessed($param);
+    abstract public function verifyCount();
+
+    abstract public function verifyRule();
+
+    public function verifyUrl()
+    {
+        return action($this->verifyRule());
+    }
+
+    public function verifyAutoProcessedNotify()
+    {
+        return true;
+    }
 
     public function run($param, $title = null, $body = null)
     {
@@ -29,7 +43,14 @@ abstract class AbstractContentVerifyProvider
                 '标题' => $title,
             ];
         }
-        if ($this->autoProcessed($param)) {
+        if ($this->verifyAutoProcess($param)) {
+            if ($this->verifyAutoProcessedNotify()) {
+                NotifierProvider::notify(
+                    $this->name(),
+                    '[自动审核]' . $this->title() . ($title ? '(' . $title . ')' : ''),
+                    $body
+                );
+            }
             return;
         }
         NotifierProvider::notifyNoneLoginOperateProcessUrl(
@@ -58,23 +79,27 @@ abstract class AbstractContentVerifyProvider
         list($text, $images) = $this->parseRichHtml($content);
         if (!empty($text)) {
             $provider = CensorTextProvider::get(modstart_config($censorProviderKeyPrefix . '_Text', 'default'));
-            $ret = $provider->verify($text);
-            if (Response::isError($ret)) {
-                return false;
-            }
-            if (!$ret['data']['pass']) {
-                return false;
-            }
-        }
-        if (!empty($images)) {
-            $provider = CensorImageProvider::get(modstart_config($censorProviderKeyPrefix . '_Image', 'default'));
-            foreach ($images as $image) {
-                $ret = $provider->verify($image);
+            if ($provider) {
+                $ret = $provider->verify($text);
                 if (Response::isError($ret)) {
                     return false;
                 }
                 if (!$ret['data']['pass']) {
                     return false;
+                }
+            }
+        }
+        if (!empty($images)) {
+            $provider = CensorImageProvider::get(modstart_config($censorProviderKeyPrefix . '_Image', 'default'));
+            if ($provider) {
+                foreach ($images as $image) {
+                    $ret = $provider->verify($image);
+                    if (Response::isError($ret)) {
+                        return false;
+                    }
+                    if (!$ret['data']['pass']) {
+                        return false;
+                    }
                 }
             }
         }
