@@ -216,7 +216,7 @@
                 $lister.find('[data-add-button]').on('click', function () {
                     lister.realtime.dialog.add = layer.open({
                         type: 2,
-                        title: "{{ empty($titleAdd) ? ($title?$title.' '.L('Add'):L('Add')) : $titleAdd }}",
+                        title: "{{ $titleAdd or ($title?$title.' '.L('Add'):L('Add')) }}",
                         shadeClose: true,
                         shade: 0.8,
                         maxmin: false,
@@ -242,7 +242,7 @@
                     var id = getId(this);
                     lister.realtime.dialog.edit = layer.open({
                         type: 2,
-                        title: "{{ empty($titleEdit) ? ($title?$title.' '.L('Edit'):L('Edit')) : $titleEdit }}",
+                        title: "{{ $titleEdit or ($title?$title.' '.L('Edit'):L('Edit')) }}",
                         shadeClose: true,
                         shade: 0.8,
                         maxmin: false,
@@ -284,7 +284,7 @@
                     var id = getId(this);
                     lister.realtime.dialog.show = layer.open({
                         type: 2,
-                        title: "{{ empty($titleShow) ? ($title?$title.' '.L('Show'):L('Show')) : $titleShow }}",
+                        title: "{{ $titleShow or ($title?$title.' '.L('Show'):L('Show')) }}",
                         shadeClose: true,
                         shade: 0.8,
                         maxmin: false,

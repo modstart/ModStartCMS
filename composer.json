@@ -4,7 +4,7 @@
   "require": {
     "ext-json": "*",
     "laravel/framework": "5.1.*",
-    "modstart/modstart": "dev-master"
+    "modstart/modstart-laravel5": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -19,9 +19,17 @@
   },
   "config": {
     "preferred-install": "dist",
-    "secure-http": false
+    "secure-http": false,
+    "allow-plugins": {
+      "easywechat-composer/easywechat-composer": true,
+      "kylekatarnls/update-helper": true
+    }
   },
   "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://gitee.com/modstart-lib/modstart-laravel5.git"
+    },
     {
       "type": "composer",
       "url": "https://modstart.com/composer"

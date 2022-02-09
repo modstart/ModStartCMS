@@ -18,22 +18,23 @@ class ModuleUninstallCommand extends Command
     public function handle()
     {
         $module = $this->argument('module');
-        $isExists = ModuleManager::isExists($module);
+        BizException::throwsIf(L('Module Invalid'), !ModuleManager::isExists($module));
         $installeds = ModuleManager::listAllInstalledModules();
-        if ($isExists) {
-            BizException::throwsIf(L('Module not installed'), !isset($installeds[$module]));
-            foreach ($installeds as $one => $_) {
-                $basic = ModuleManager::getModuleBasic($one);
-                BizException::throwsIf('Module[' . $one . '] config empty', !$basic);
-                if (in_array($module, $basic['require'])) {
-                    return Response::generateError(L('Module %s depend on %s, uninstall fail', $one, $module));
-                }
-            }
-            if (method_exists(ModuleManager::class, 'callHook')) {
-                ModuleManager::callHook($module, 'hookBeforeUninstall');
+        BizException::throwsIf(L('Module not installed'), !isset($installeds[$module]));
+        foreach ($installeds as $one => $_) {
+            $basic = ModuleManager::getModuleBasic($one);
+            BizException::throwsIf('Module[' . $one . '] config empty', !$basic);
+            if (in_array($module, $basic['require'])) {
+                return Response::generateError(L('Module %s depend on %s, uninstall fail', $one, $module));
             }
         }
+
+        if (method_exists(ModuleManager::class, 'callHook')) {
+            ModuleManager::callHook($module, 'hookBeforeUninstall');
+        }
+
         unset($installeds[$module]);
+
         $this->unPublishAsset($module);
         $this->unPublishRoot($module);
 
@@ -43,11 +44,7 @@ class ModuleUninstallCommand extends Command
 
         $event = new ModuleUninstalledEvent();
         $event->name = $module;
-        if (PHP_VERSION_ID >= 80000) {
-            Event::dispatch($event);
-        } else {
-            Event::fire($event);
-        }
+        Event::fire($event);
     }
 
     private function unPublishAsset($module)

@@ -2,7 +2,7 @@
 
 @section('bodyAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminLoginBodyAppend'); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminLoginBodyAppend',$this); !!}
 @endsection
 
 @section('body')

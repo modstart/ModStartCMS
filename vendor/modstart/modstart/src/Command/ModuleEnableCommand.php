@@ -30,11 +30,7 @@ class ModuleEnableCommand extends Command
 
         $event = new ModuleEnabledEvent();
         $event->name = $module;
-        if (PHP_VERSION_ID >= 80000) {
-            Event::dispatch($event);
-        } else {
-            Event::fire($event);
-        }
+        Event::fire($event);
         $this->info('Module Enable Success');
     }
 

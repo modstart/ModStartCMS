@@ -7,12 +7,9 @@ namespace ModStart\Field;
 use Illuminate\Support\Str;
 use ModStart\Core\Type\TypeUtil;
 use ModStart\Core\Util\ConstantUtil;
-use ModStart\Field\Concern\CanCascadeFields;
 
 class Type extends AbstractField
 {
-    use CanCascadeFields;
-
     protected function setup()
     {
         $this->addVariables([
@@ -46,11 +43,5 @@ class Type extends AbstractField
             'colorMap' => $colorMap,
         ]);
         return $this;
-    }
-
-    public function render()
-    {
-        $this->addCascadeScript();
-        return parent::render();
     }
 }

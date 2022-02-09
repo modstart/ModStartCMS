@@ -226,8 +226,7 @@ var Form = {
         $form.on('submit', function () {
 
             // 防止重入
-            var loadingMsg = $(this).attr('data-form-loading');
-            if (loadingMsg && $form.data('submiting')) {
+            if ($form.data('submiting')) {
                 return false;
             }
 
@@ -243,8 +242,9 @@ var Form = {
             $form.data('submiting', true);
 
             if (Dialog) {
+                var msg = $(this).attr('data-form-loading');
                 if ($(this).is('[data-form-loading]')) {
-                    Dialog.loadingOn(loadingMsg);
+                    Dialog.loadingOn(msg);
                 }
             }
 

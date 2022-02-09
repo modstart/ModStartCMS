@@ -47,10 +47,6 @@ abstract class AbstractFilter
      */
     protected $field;
     /**
-     * @var
-     */
-    protected $defaultValue;
-    /**
      * Query for filter.
      *
      * @var string
@@ -100,7 +96,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * 获取字段
+     * Get field object of filter.
      *
      * @return mixed|$this
      */
@@ -113,18 +109,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * 筛选条件默认值
-     * @param $value
-     * @return $this
-     */
-    public function defaultValue($value)
-    {
-        $this->defaultValue = $value;
-        return $this;
-    }
-
-    /**
-     * 筛选字段
+     * Get column name of current filter.
      *
      * @return string
      */
@@ -173,7 +158,6 @@ abstract class AbstractFilter
             'column' => $this->column,
             'label' => $this->label,
             'field' => $this->field,
-            'defaultValue' => $this->defaultValue,
         ];
         if (method_exists($this->field, 'variables')) {
             $variables = array_merge($variables, $this->field()->variables());
