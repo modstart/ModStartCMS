@@ -6,18 +6,18 @@ namespace ModStart\Admin\Controller;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
-use Mews\Captcha\Facades\Captcha;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\StrUtil;
+use ModStart\Misc\Captcha\CaptchaFacade;
 
 class AuthController extends Controller
 {
     public function loginCaptcha()
     {
-        return Captcha::create('default');
+        return CaptchaFacade::create('default');
     }
 
     public function login()
@@ -69,7 +69,7 @@ class AuthController extends Controller
                         return Response::jsonFromGenerate($ret);
                     }
                 } else {
-                    if (!Captcha::check($input->getTrimString('captcha'))) {
+                    if (!CaptchaFacade::check($input->getTrimString('captcha'))) {
                         return Response::json(-1, L('Captcha Incorrect'), null, "[js]$('[data-captcha]').click();");
                     }
                 }

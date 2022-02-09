@@ -30,7 +30,11 @@ class ModuleDisableCommand extends Command
         ModStart::clearCache();
         $event = new ModuleDisabledEvent();
         $event->name = $module;
-        Event::fire($event);
+        if (PHP_VERSION_ID >= 80000) {
+            Event::dispatch($event);
+        } else {
+            Event::fire($event);
+        }
         $this->info('Module Disable Success');
     }
 

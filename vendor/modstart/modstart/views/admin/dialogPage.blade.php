@@ -1,5 +1,5 @@
 @extends('modstart::admin.dialogFrame')
 
 @section('bodyContent')
-    {!! $content or '' !!}
+    {!! empty($content)?'':$content !!}
 @endsection

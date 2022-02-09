@@ -43,7 +43,11 @@ class ModuleUninstallCommand extends Command
 
         $event = new ModuleUninstalledEvent();
         $event->name = $module;
-        Event::fire($event);
+        if (PHP_VERSION_ID >= 80000) {
+            Event::dispatch($event);
+        } else {
+            Event::fire($event);
+        }
     }
 
     private function unPublishAsset($module)

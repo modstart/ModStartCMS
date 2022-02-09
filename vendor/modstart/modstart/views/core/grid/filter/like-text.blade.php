@@ -1,7 +1,7 @@
 <div class="field" data-grid-filter-field="{{$id}}">
     <div class="name">{{$label}}</div>
     <div class="input">
-        <input type="text" class="form" value="{{$defaultValue or ''}}" name="{{$id}}"/>
+        <input type="text" class="form" value="{{empty($defaultValue)?'':$defaultValue}}" name="{{$id}}"/>
     </div>
 </div>
 <script>

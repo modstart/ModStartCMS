@@ -12,7 +12,7 @@
                value="{{$value}}"/>
         <div id="{{$name}}Selector">
             <div class="ub-audio-selector" style="display:inline-block;border:1px solid #EEE;position:relative;border-radius:0.2rem;line-height:1.3rem;padding:0 2rem 0 0.5rem;vertical-align:bottom;">
-                <div data-value>{{$value or L('None')}}</div>
+                <div data-value>{{empty($value)?L('None'):$value}}</div>
                 <a data-close href="javascript:;" style="{{$value?'display:inline-block;':'display:none;'}}position:absolute;right:0px;top:0px;line-height:1.3rem;width:1rem;text-align:center;color:#999;"><i class="iconfont icon-close"></i></a>
             </div>
             <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.35rem;vertical-align:bottom;line-height:1.35rem;"></div>
