@@ -1,15 +1,19 @@
 {
-  "name": "Cms",
-  "title": "通用内容管理系统",
-  "require": [
-    "Vendor:>=1.9.0",
-    "Member",
-    "Banner:>=1.1.0"
-  ],
-  "version": "2.4.0",
-  "modstartVersion": ">=2.4.0",
-  "author": "ModStart",
-  "description": "提供通用的动态模型内容管理系统",
-  "providers": [
-  ]
+    "name": "Cms",
+    "title": "通用内容管理系统",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "require": [
+        "Vendor:>=1.9.0",
+        "Member",
+        "Banner:>=1.1.0"
+    ],
+    "version": "2.4.0",
+    "modstartVersion": ">=2.4.0",
+    "author": "ModStart",
+    "description": "提供通用的动态模型内容管理系统",
+    "providers": [
+    ]
 }

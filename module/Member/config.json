@@ -1,47 +1,51 @@
 {
-  "name": "Member",
-  "title": "通用用户系统",
-  "types": [
-    "PC",
-    "Mobile"
-  ],
-  "require": [
-    "Vendor:>=1.9.0"
-  ],
-  "version": "2.3.0",
-  "modstartVersion": ">=1.4.0",
-  "author": "官方",
-  "description": "提供基础的用户管理服务",
-  "config": {
-    "moneyEnable": [
-      [
-        "switch",
-        "启用钱包"
-      ]
+    "name": "Member",
+    "title": "通用用户系统",
+    "env": [
+        "laravel5",
+        "laravel9"
     ],
-    "creditEnable": [
-      [
-        "switch",
-        "启用积分"
-      ]
+    "types": [
+        "PC",
+        "Mobile"
     ],
-    "vipEnable": [
-      [
-        "switch",
-        "启用VIP"
-      ]
+    "require": [
+        "Vendor:>=1.9.0"
     ],
-    "addressEnable": [
-      [
-        "switch",
-        "启用地址"
-      ]
-    ],
-    "groupEnable": [
-      [
-        "switch",
-        "启用分组"
-      ]
-    ]
-  }
+    "version": "2.3.0",
+    "modstartVersion": ">=1.4.0",
+    "author": "官方",
+    "description": "提供基础的用户管理服务",
+    "config": {
+        "moneyEnable": [
+            [
+                "switch",
+                "启用钱包"
+            ]
+        ],
+        "creditEnable": [
+            [
+                "switch",
+                "启用积分"
+            ]
+        ],
+        "vipEnable": [
+            [
+                "switch",
+                "启用VIP"
+            ]
+        ],
+        "addressEnable": [
+            [
+                "switch",
+                "启用地址"
+            ]
+        ],
+        "groupEnable": [
+            [
+                "switch",
+                "启用分组"
+            ]
+        ]
+    }
 }

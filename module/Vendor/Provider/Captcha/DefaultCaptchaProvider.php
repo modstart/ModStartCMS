@@ -4,9 +4,9 @@
 namespace Module\Vendor\Provider\Captcha;
 
 use Illuminate\Support\Facades\View;
-use Mews\Captcha\Facades\Captcha;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
+use ModStart\Misc\Captcha\CaptchaFacade;
 
 class DefaultCaptchaProvider extends AbstractCaptchaProvider
 {
@@ -30,7 +30,7 @@ class DefaultCaptchaProvider extends AbstractCaptchaProvider
     {
         $input = InputPackage::buildFromInput();
         $captcha = $input->getTrimString('captcha');
-        if (!Captcha::check($captcha)) {
+        if (!CaptchaFacade::check($captcha)) {
             return Response::generate(-1, '图片验证码错误', null, '[js]$(\'[data-captcha]\').click();');
         }
         return Response::generateSuccess();

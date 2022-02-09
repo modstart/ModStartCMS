@@ -7,6 +7,8 @@ use Module\Cms\Util\CmsModelUtil;
 
 class InitCmsData extends Migration
 {
+    public $withinTransaction = false;
+
     public function up()
     {
         CmsModelUtil::build([

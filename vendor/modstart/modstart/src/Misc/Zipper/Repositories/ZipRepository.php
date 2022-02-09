@@ -16,9 +16,9 @@ class ZipRepository implements RepositoryInterface
      * @param bool $create
      * @param $archive
      *
+     * @return ZipRepository
      * @throws \Exception
      *
-     * @return ZipRepository
      */
     public function __construct($filePath, $create = false, $archive = null)
     {
@@ -30,7 +30,7 @@ class ZipRepository implements RepositoryInterface
 
         $res = $this->archive->open($filePath, ($create ? ZipArchive::CREATE : null));
         if ($res !== true) {
-            throw new Exception("Error: Failed to open $filePath! Error: ".$this->getErrorMessage($res));
+            throw new Exception("Error: Failed to open $filePath! Error: " . $this->getErrorMessage($res));
         }
     }
 
@@ -115,8 +115,8 @@ class ZipRepository implements RepositoryInterface
                 continue;
             }
             call_user_func_array($callback, [
-                'file' => $this->archive->getNameIndex($i),
-                'stats' => $this->archive->statIndex($i)
+                 $this->archive->getNameIndex($i),
+                 $this->archive->statIndex($i)
             ]);
         }
     }

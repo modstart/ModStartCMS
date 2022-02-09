@@ -4,16 +4,16 @@
 namespace Module\Member\Api\Controller;
 
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Mews\Captcha\Facades\Captcha;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\FormatUtil;
+use ModStart\Misc\Captcha\CaptchaFacade;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberOauth;
@@ -44,7 +44,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         if ($ret['code']) {
             return Response::generate(-1, $ret['msg']);
         }
-        Event::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'password'));
+        EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'password'));
         return Response::generate(0, '修改成功', null, '[reload]');
     }
 
@@ -76,7 +76,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
                 if ($ret['code']) {
                     return $ret;
                 }
-                Event::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'avatar'));
+                EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'avatar'));
                 return Response::generate(0, '保存成功', null, '[reload]');
             default:
                 $avatar = FileUtil::savePathToLocalTemp($avatar);
@@ -95,14 +95,14 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
                 if ($ret['code']) {
                     return $ret;
                 }
-                Event::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'avatar'));
+                EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'avatar'));
                 return Response::generate(0, '保存成功', null, '[reload]');
         }
     }
 
     public function captchaRaw()
     {
-        return Captcha::create('default');
+        return CaptchaFacade::create('default');
     }
 
     public function captcha()
@@ -152,7 +152,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
             'emailVerified' => true,
             'email' => $email,
         ]);
-        Event::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'email'));
+        EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'email'));
         Session::forget('memberProfileEmailVerify');
         Session::forget('memberProfileEmailVerifyTime');
         Session::forget('memberProfileEmail');
@@ -169,7 +169,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
             return Response::generate(-1, '邮箱格式不正确');
         }
 
-        if (!Captcha::check(Input::get('captcha'))) {
+        if (!CaptchaFacade::check(Input::get('captcha'))) {
             return Response::generate(ResponseCodes::CAPTCHA_ERROR, '验证码错误');
         }
 
@@ -235,7 +235,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
             'phoneVerified' => true,
             'phone' => $phone,
         ]);
-        Event::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'phone'));
+        EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'phone'));
         Session::forget('memberProfilePhoneVerify');
         Session::forget('memberProfilePhoneVerifyTime');
         Session::forget('memberProfilePhone');
@@ -251,7 +251,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         if (!FormatUtil::isPhone($phone)) {
             return Response::generate(-1, '手机格式不正确');
         }
-        if (!Captcha::check(Input::get('captcha'))) {
+        if (!CaptchaFacade::check(Input::get('captcha'))) {
             return Response::generate(ResponseCodes::CAPTCHA_ERROR, '图片验证码错误');
         }
         $memberUserExists = MemberUtil::getByPhone($phone);

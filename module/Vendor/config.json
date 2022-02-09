@@ -1,9 +1,13 @@
 {
-  "name": "Vendor",
-  "title": "通用功能包",
-  "version": "2.6.0",
-  "author": "官方",
-  "description": "提供基础功能",
-  "modstartVersion": ">=1.9.0",
-  "config": []
+    "name": "Vendor",
+    "title": "通用功能包",
+    "version": "2.6.0",
+    "author": "官方",
+    "description": "提供基础功能",
+    "modstartVersion": ">=1.9.0",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "config": []
 }

@@ -6,12 +6,12 @@
 
 @section('headAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberLoginPageHeadAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberLoginPageHeadAppend'); !!}
 @endsection
 
 @section('bodyAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberLoginPageBodyAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberLoginPageBodyAppend'); !!}
 @endsection
 
 @section('bodyContent')
@@ -65,7 +65,7 @@
                     <div class="line">
                         <div class="field">
                             <button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
-                            <input type="hidden" name="redirect" value="{{$redirect or ''}}">
+                            <input type="hidden" name="redirect" value="{{empty($redirect)?'':$redirect}}">
                         </div>
                     </div>
                 </form>

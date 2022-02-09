@@ -1,8 +1,8 @@
 @extends('modstart::layout.frame')
 
-@section('pageTitle'){{$pageTitle or ''}}@endsection
-@section('pageKeywords'){{$pageKeywords or ''}}@endsection
-@section('pageDescription'){{$pageDescription or ''}}@endsection
+@section('pageTitle'){{empty($pageTitle)?'':$pageTitle}}@endsection
+@section('pageKeywords'){{empty($pageKeywords)?'':$pageKeywords}}@endsection
+@section('pageDescription'){{empty($pageDescription)?'':$pageDescription}}@endsection
 
 @section('headAppend')
     @parent

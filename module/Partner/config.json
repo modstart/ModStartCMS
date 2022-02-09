@@ -1,23 +1,27 @@
 {
-  "name": "Partner",
-  "title": "友情链接",
-  "types": [
-    "PC",
-    "Mobile"
-  ],
-  "require": [
-    "Vendor:>=1.4.0"
-  ],
-  "version": "1.1.0",
-  "modstartVersion": ">=2.3.0",
-  "author": "官方",
-  "description": "提供友情链接基础管理功能",
-  "config": {
-    "position": [
-      [
-        "keyValueList",
-        "位置"
-      ]
-    ]
-  }
+    "name": "Partner",
+    "title": "友情链接",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "types": [
+        "PC",
+        "Mobile"
+    ],
+    "require": [
+        "Vendor:>=1.4.0"
+    ],
+    "version": "1.1.0",
+    "modstartVersion": ">=2.3.0",
+    "author": "官方",
+    "description": "提供友情链接基础管理功能",
+    "config": {
+        "position": [
+            [
+                "keyValueList",
+                "位置"
+            ]
+        ]
+    }
 }

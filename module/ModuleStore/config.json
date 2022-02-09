@@ -1,6 +1,10 @@
 {
   "name": "ModuleStore",
   "title": "模块市场",
+  "env": [
+    "laravel5",
+    "laravel9"
+  ],
   "types": [
     "Admin"
   ],

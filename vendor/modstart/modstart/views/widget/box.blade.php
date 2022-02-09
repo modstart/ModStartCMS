@@ -21,7 +21,7 @@
                         @endif
                     @endforeach
                 @else
-                    {!! $title or ' ' !!}
+                    {!! empty($title)?' ':$title !!}
                 @endif
             </div>
         </div>

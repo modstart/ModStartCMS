@@ -6,12 +6,13 @@ namespace Module\Member\Api\Controller;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Mews\Captcha\Facades\Captcha;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
+use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Misc\Captcha\CaptchaFacade;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserLoginedEvent;
@@ -192,7 +193,7 @@ class AuthController extends ModuleBaseController
             'userInfo' => $oauthUserInfo,
         ]);
         BizException::throwsIfResponseError($ret);
-        Event::fire(new MemberUserRegisteredEvent($memberUserId));
+        EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
         if (!empty($oauthUserInfo['avatar'])) {
             $avatarExt = FileUtil::extension($oauthUserInfo['avatar']);
             $avatar = CurlUtil::getRaw($oauthUserInfo['avatar']);
@@ -495,7 +496,7 @@ class AuthController extends ModuleBaseController
                     return $ret;
                 }
             } else {
-                if (!Captcha::check($input->getTrimString('captcha'))) {
+                if (!CaptchaFacade::check($input->getTrimString('captcha'))) {
                     return Response::generate(ResponseCodes::CAPTCHA_ERROR, '图片验证码错误', null, '[js]$(\'[data-captcha]\').click();');
                 }
             }
@@ -523,13 +524,13 @@ class AuthController extends ModuleBaseController
             return Response::generate(ResponseCodes::CAPTCHA_ERROR, '登录失败');
         }
         Session::put('memberUserId', $memberUser['id']);
-        Event::fire(new MemberUserLoginedEvent($memberUser['id']));
+        EventUtil::fire(new MemberUserLoginedEvent($memberUser['id']));
         return Response::generateSuccess();
     }
 
     public function loginCaptchaRaw()
     {
-        return Captcha::create('default');
+        return CaptchaFacade::create('default');
     }
 
     public function loginCaptcha()
@@ -575,7 +576,7 @@ class AuthController extends ModuleBaseController
         }
 
         if (!Session::get('registerCaptchaPass', false)) {
-            if (!Captcha::check($captcha)) {
+            if (!CaptchaFacade::check($captcha)) {
                 SessionUtil::atomicProduce('registerCaptchaPassCount', 1);
                 return Response::generate(-1, '图片验证失败');
             }
@@ -642,7 +643,7 @@ class AuthController extends ModuleBaseController
         if (!empty($update)) {
             MemberUtil::update($memberUserId, $update);
         }
-        Event::fire(new MemberUserRegisteredEvent($memberUserId));
+        EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
         Session::forget('registerCaptchaPass');
         foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
             /** @var AbstractMemberRegisterProcessorProvider $provider */
@@ -743,7 +744,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $captcha = $input->getTrimString('captcha');
-        if (!Captcha::check($captcha)) {
+        if (!CaptchaFacade::check($captcha)) {
             SessionUtil::atomicRemove('registerCaptchaPassCount');
             return Response::generate(ResponseCodes::CAPTCHA_ERROR, '验证码错误');
         }
@@ -762,7 +763,7 @@ class AuthController extends ModuleBaseController
 
     public function registerCaptchaRaw()
     {
-        return Captcha::create('default');
+        return CaptchaFacade::create('default');
     }
 
     public function registerCaptcha()
@@ -824,7 +825,7 @@ class AuthController extends ModuleBaseController
         }
 
         $captcha = $input->getTrimString('captcha');
-        if (!Captcha::check($captcha)) {
+        if (!CaptchaFacade::check($captcha)) {
             return Response::generate(-1, '图片验证码错误');
         }
 
@@ -908,7 +909,7 @@ class AuthController extends ModuleBaseController
         }
 
         $captcha = $input->getTrimString('captcha');
-        if (!Captcha::check($captcha)) {
+        if (!CaptchaFacade::check($captcha)) {
             return Response::generate(-1, '图片验证码错误');
         }
 
@@ -981,14 +982,14 @@ class AuthController extends ModuleBaseController
         if ($ret['code']) {
             return Response::generate(-1, $ret['msg']);
         }
-        Event::fire(new MemberUserPasswordResetedEvent($memberUser['id'], $password));
+        EventUtil::fire(new MemberUserPasswordResetedEvent($memberUser['id'], $password));
         Session::forget('retrieveMemberUserId');
         return Response::generate(0, '成功设置新密码,请您登录');
     }
 
     public function retrieveCaptchaRaw()
     {
-        return Captcha::create('default');
+        return CaptchaFacade::create('default');
     }
 
     public function retrieveCaptcha()

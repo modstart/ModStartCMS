@@ -5,12 +5,12 @@ namespace Module\Vendor\Web\Controller;
 
 
 use Illuminate\Routing\Controller;
-use Mews\Captcha\Facades\Captcha;
+use ModStart\Misc\Captcha\CaptchaFacade;
 
 class CaptchaController extends Controller
 {
     public function image()
     {
-        return Captcha::create('default');
+        return CaptchaFacade::create('default');
     }
 }

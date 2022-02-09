@@ -203,7 +203,7 @@ class MemberUtil
         }
 
         if ($email) {
-            if (!preg_match('/(^[\w-.]+@[\w-]+\.[\w-.]+$)/', $email)) {
+            if (!preg_match('/(^[\w\-.]+@[\w\-]+\.[\w\-.]+$)/', $email)) {
                 return Response::generate(-3, '邮箱格式不正确');
             }
             $where = array(

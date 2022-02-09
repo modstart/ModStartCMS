@@ -1,23 +1,27 @@
 {
-  "name": "Nav",
-  "types": [
-    "PC",
-    "Mobile"
-  ],
-  "require": [
-    "Vendor"
-  ],
-  "modstartVersion": ">=2.5.1",
-  "title": "通用导航配置",
-  "version": "1.2.0",
-  "author": "官方",
-  "description": "提供多位置的导航配置工具",
-  "config": {
-    "position": [
-      [
-        "keyValueList",
-        "位置"
-      ]
-    ]
-  }
+    "name": "Nav",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "types": [
+        "PC",
+        "Mobile"
+    ],
+    "require": [
+        "Vendor"
+    ],
+    "modstartVersion": ">=2.5.1",
+    "title": "通用导航配置",
+    "version": "1.2.0",
+    "author": "官方",
+    "description": "提供多位置的导航配置工具",
+    "config": {
+        "position": [
+            [
+                "keyValueList",
+                "位置"
+            ]
+        ]
+    }
 }

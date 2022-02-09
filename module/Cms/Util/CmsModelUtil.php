@@ -76,7 +76,6 @@ class CmsModelUtil
 
     public static function build($model, $fields = [])
     {
-        ModelUtil::transactionBegin();
         $model = ModelUtil::insert('cms_model', $model);
         self::create($model);
         foreach ($fields as $field) {
@@ -104,7 +103,6 @@ class CmsModelUtil
             ModelUtil::insert('cms_model_field', $field);
             self::addField($model, $field);
         }
-        ModelUtil::transactionCommit();
         self::clearCache();
     }
 

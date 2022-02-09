@@ -106,7 +106,7 @@
                     <div class="line">
                         <div class="label">手机:</div>
                         <div class="field">
-                            <input type="text" class="form" name="phone" value="{{$_memberUser['phone'] or ''}}" />
+                            <input type="text" class="form" name="phone" value="{{ empty($_memberUser['phone']) ? '' : $_memberUser['phone'] }}" />
                         </div>
                     </div>
                     <div class="line">

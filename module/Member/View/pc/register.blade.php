@@ -6,12 +6,12 @@
 
 @section('headAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageHeadAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageHeadAppend'); !!}
 @endsection
 
 @section('bodyAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageBodyAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageBodyAppend'); !!}
 @endsection
 
 @section('bodyAppend')

@@ -38,6 +38,9 @@ class ModuleManager
                 'name' => 'None',
                 'title' => 'None',
                 'version' => '1.0.0',
+                'env' => [
+                    'laravel5'
+                ],
                 'types' => [],
                 'require' => [
                     // 'Xxx:*'
@@ -567,6 +570,18 @@ class ModuleManager
                 call_user_func_array([$hook, $method], $args);
             }
         }
+    }
+
+    /**
+     * 获取
+     * @return string
+     */
+    public static function getEnv()
+    {
+        if (PHP_VERSION_ID >= 80000) {
+            return 'laravel9';
+        }
+        return 'laravel5';
     }
 
 }

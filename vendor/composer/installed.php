@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '73259107b5fb77db7ff4df9fb496f57687407429',
+        'reference' => '5c7b0b37175faffe8bba6b9984ca7184e0de1954',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -26,15 +26,6 @@
             'install_path' => __DIR__ . '/../bacon/bacon-qr-code',
             'aliases' => array(),
             'reference' => '5a91b62b9d37cee635bbf8d553f4546057250bee',
-            'dev_requirement' => false,
-        ),
-        'chumper/zipper' => array(
-            'pretty_version' => 'v1.0.3',
-            'version' => '1.0.3.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../chumper/zipper',
-            'aliases' => array(),
-            'reference' => 'd15207e010f8fe1bdd341376bd86d599c4166423',
             'dev_requirement' => false,
         ),
         'classpreloader/classpreloader' => array(
@@ -138,10 +129,8 @@
             'version' => 'dev-master',
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../easywechat-composer/easywechat-composer',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'reference' => '4d6acc9baa9f02cd80c007f14e22f7e5d6931409',
+            'aliases' => array(),
+            'reference' => 'master',
             'dev_requirement' => false,
         ),
         'elasticsearch/elasticsearch' => array(
@@ -518,7 +507,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '73259107b5fb77db7ff4df9fb496f57687407429',
+            'reference' => '5c7b0b37175faffe8bba6b9984ca7184e0de1954',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(
@@ -526,8 +515,10 @@
             'version' => 'dev-master',
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart',
-            'aliases' => array(),
-            'reference' => 'master',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => '8315515f2c675bce4c23df121b6b5189bcedaa46',
             'dev_requirement' => false,
         ),
         'modstart/modstart-laravel5' => array(
@@ -538,7 +529,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => '7a86674f7e6b448d8595f11dc47e64659fdf0226',
+            'reference' => '3d4964e11f00c061da9951d855c07ed83c5c52cd',
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(
@@ -900,10 +891,8 @@
             'version' => 'dev-master',
             'type' => 'library',
             'install_path' => __DIR__ . '/../w7corp/easywechat',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'reference' => 'a8fe3ae6c2245431e00163537361431a735c2c20',
+            'aliases' => array(),
+            'reference' => 'master',
             'dev_requirement' => false,
         ),
     ),

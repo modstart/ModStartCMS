@@ -339,7 +339,17 @@ if (!function_exists('array_forget')) {
         }
     }
 }
-
+if (!function_exists('ends_with')) {
+    function ends_with($haystack, $needles)
+    {
+        foreach ((array)$needles as $needle) {
+            if ((string)$needle === mb_substr($haystack, -mb_strlen($needle))) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
 
 if (PHP_VERSION_ID >= 80000) {
     require_once __DIR__ . '/Laravel/Input.php';

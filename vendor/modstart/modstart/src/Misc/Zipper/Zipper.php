@@ -59,16 +59,6 @@ class Zipper
     }
 
     /**
-     * Destructor
-     */
-    public function __destruct()
-    {
-        if (is_object($this->repository)) {
-            $this->repository->close();
-        }
-    }
-
-    /**
      * Create a new zip Archive if the file does not exists
      * opens a zip archive if the file exists
      *
@@ -613,7 +603,7 @@ class Zipper
     private function extractOneFileInternal($fileName, $path)
     {
         $tmpPath = str_replace($this->getInternalPath(), '', $fileName);
-        
+
         //Prevent Zip traversal attacks
         if (strpos($fileName, '../') !== false || strpos($fileName, '..\\') !== false) {
             throw new \RuntimeException('Special characters found within filenames');

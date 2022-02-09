@@ -69,6 +69,9 @@ class MCms
     public static function paginateCatByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
     {
         $cat = CmsCatUtil::getByUrl($catUrl);
+        if (empty($cat)) {
+            return [];
+        }
         $paginateData = CmsContentUtil::paginateCat($cat['id'], $page, $pageSize, $option);
         return $paginateData['records'];
     }

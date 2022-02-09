@@ -1,22 +1,26 @@
 {
-  "name": "Article",
-  "types": [
-    "PC",
-    "Mobile"
-  ],
-  "require": [
-    "Vendor"
-  ],
-  "title": "通用文章",
-  "version": "1.1.0",
-  "author": "官方",
-  "description": "提供多位置、单页文章基础管理功能",
-  "config": {
-    "position": [
-      [
-        "keyValueList",
-        "位置"
-      ]
-    ]
-  }
+    "name": "Article",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "types": [
+        "PC",
+        "Mobile"
+    ],
+    "require": [
+        "Vendor"
+    ],
+    "title": "通用文章",
+    "version": "1.1.0",
+    "author": "官方",
+    "description": "提供多位置、单页文章基础管理功能",
+    "config": {
+        "position": [
+            [
+                "keyValueList",
+                "位置"
+            ]
+        ]
+    }
 }

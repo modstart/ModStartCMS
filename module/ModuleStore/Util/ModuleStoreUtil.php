@@ -151,6 +151,17 @@ class ModuleStoreUtil
                 $requires[] = $require;
             }
         }
+        if (empty($config['env'])) {
+            $config['env'] = ['laravel5'];
+        }
+        if (method_exists(ModuleManager::class, 'getEnv')) {
+            $env = ModuleManager::getEnv();
+            BizException::throwsIf(
+                L('Module %s:%s compatible with env %s, current is %s', $module, $config['version'], join(',', $config['env']), $env),
+                !in_array($env, $config['env'])
+            );
+        }
+
         return Response::generateSuccessData([
             'requires' => $requires,
             'errorCount' => count(array_filter($requires, function ($o) {
