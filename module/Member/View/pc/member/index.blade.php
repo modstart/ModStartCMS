@@ -21,7 +21,7 @@
                         {{\Module\Member\Auth\MemberVip::get('title')}}
                     </div>
                 @endif
-                <div class="tw-text-gray-400">{{empty($_memberUser['signature'])?'暂无签名':''}}</div>
+                <div class="tw-text-gray-400">{{empty($_memberUser['signature'])?'暂无签名':$_memberUser['signature']}}</div>
 {{--                <div class="tw-flex tw-mt-3">--}}
 {{--                    <a href="{{modstart_web_url('wenda/member/'.$memberUser['id'].'/replies')}}" class="tw-text-center tw-pr-4 tw-text-sm">--}}
 {{--                        <div class="tw-text-gray-300">回答</div>--}}
