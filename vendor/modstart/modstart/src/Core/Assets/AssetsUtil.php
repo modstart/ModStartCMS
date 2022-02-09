@@ -4,6 +4,7 @@ namespace ModStart\Core\Assets;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
+use ModStart\Core\Exception\BizException;
 
 class AssetsUtil
 {
@@ -82,6 +83,23 @@ class AssetsUtil
             return $schema . ':' . $path;
         }
         return $schema . '://' . Request::server('HTTP_HOST') . $path;
+    }
+
+    public static function fixFullInJob($path, $hash = true)
+    {
+        if (empty($path)) {
+            return $path;
+        }
+        $path = self::fix($path, $hash);
+        if (Str::startsWith($path, 'http://') || Str::startsWith($path, 'https://')) {
+            return $path;
+        }
+        if (Str::startsWith($path, '//')) {
+            return 'http:' . $path;
+        }
+        $domainUrl = config('env.APP_URL');
+        BizException::throwsIfEmpty('APP_URL Required In Job', $domainUrl);
+        return rtrim($domainUrl, '/') . '/' . ltrim($path, '/');
     }
 
     /**

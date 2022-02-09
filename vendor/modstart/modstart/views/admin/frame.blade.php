@@ -1,8 +1,8 @@
 @extends('modstart::layout.frame')
 
-@section('pageTitle'){{$pageTitle or ''}}@endsection
-@section('pageKeywords'){{$pageKeywords or ''}}@endsection
-@section('pageDescription'){{$pageDescription or ''}}@endsection
+@section('pageTitle'){{empty($pageTitle)?'':$pageTitle}}@endsection
+@section('pageKeywords'){{empty($pageKeywords)?'':$pageKeywords}}@endsection
+@section('pageDescription'){{empty($pageDescription)?'':$pageDescription}}@endsection
 {!! \ModStart\ModStart::css('asset/theme/default/admin.css') !!}
 {!! \ModStart\ModStart::js('asset/common/admin.js') !!}
 {!! \ModStart\ModStart::js('asset/vendor/pinyin-match.js') !!}
@@ -13,12 +13,12 @@
         window.__msAdminRoot = "{{modstart_admin_url(null)}}";
         window.__selectorDialogServer = "{{modstart_admin_url('data/file_manager')}}";
     </script>
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageHeadAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageHeadAppend'); !!}
 @endsection
 
 @section('bodyAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageBodyAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageBodyAppend'); !!}
 @endsection
 
 @section('body')
@@ -37,13 +37,13 @@
                     <div class="menu-item @if(!empty($_v1['_active'])) active @endif">
                         @if(empty($_v1['children']))
                             <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v1['url'])}}" class="title" data-keywords-item data-keywords-filter>
-                                {!! $_v1['icon'] or '<i class="icon iconfont icon-list"></i>' !!}
+                                {!! empty($_v1['icon'])?'':'<i class="icon iconfont icon-list"></i>' !!}
                                 <span class="text">{{$_v1['title']}}</span>
                             </a>
                         @else
                             <a href="javascript:;" class="title @if(!empty($_v1['_active'])) open @endif" data-keywords-item onclick="$(this).toggleClass('open')">
                                 <i class="arrow"></i>
-                                {!! $_v1['icon'] or '<i class="icon iconfont icon-list"></i>' !!}
+                                {!! empty($_v1['icon'])?'':'<i class="icon iconfont icon-list"></i>' !!}
                                 <span class="text">{{$_v1['title']}}</span>
                             </a>
                             <div class="children" data-keywords-item>
@@ -103,7 +103,7 @@
                     <div class="menu-item">
                         <a class="title admin-user" href="javascript:;">
                             <i class="iconfont icon-user"></i>
-                            {{$_adminUser['username']}}
+                            {{$_adminUser?$_adminUser['username']:''}}
                         </a>
                         <div class="dropdown">
                             @if(\ModStart\Admin\Auth\AdminPermission::permit('\ModStart\Admin\Controller\ProfileController@changePassword'))
@@ -120,7 +120,7 @@
                     @section('adminPageMenu')
                         <a href="javascript:;" class="active">
                             @section('pageTitle')
-                                {{$pageTitle or ''}}
+                                {{empty($pageTitle)?'':$pageTitle}}
                             @show
                         </a>
                     @show

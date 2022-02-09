@@ -49,7 +49,7 @@
         <table class="table-container" id="{{$id}}Table" lay-filter="{{$id}}Table"></table>
     </div>
     @if($enablePagination)
-        <div class="page-container tw-px-2" id="{{$id}}Pager"></div>
+        <div class="page-container" id="{{$id}}Pager"></div>
     @endif
     <script type="text/html" id="{{$id}}TableHeadToolbar">
         <div class="layui-btn-container">
@@ -190,7 +190,7 @@
             $lister.find('[data-add-button]').on('click', function () {
                 lister.realtime.dialog.add = layer.open({
                     type: 2,
-                    title: "{{ $titleAdd or ($title?L('Add').$title:L('Add')) }}",
+                    title: "{{ empty($titleAdd) ? ($title?L('Add').$title:L('Add')) : $titleAdd }}",
                     shadeClose: true,
                     shade: 0.5,
                     maxmin: false,
@@ -216,7 +216,7 @@
                 var id = getId(this);
                 lister.realtime.dialog.edit = layer.open({
                     type: 2,
-                    title: "{{ $titleEdit or ($title?L('Edit').$title:L('Edit')) }}",
+                    title: "{{ empty($titleEdit) ? ($title?L('Edit').$title:L('Edit')) : $titleEdit }}",
                     shadeClose: true,
                     shade: 0.5,
                     maxmin: false,
@@ -295,7 +295,7 @@
                 var id = getId(this);
                 lister.realtime.dialog.show = layer.open({
                     type: 2,
-                    title: "{{ $titleShow or ($title?L('Show').$title:L('Show')) }}",
+                    title: "{{ empty($titleShow) ? ($title?L('Show').$title:L('Show')) : $titleShow }}",
                     shadeClose: true,
                     shade: 0.5,
                     maxmin: false,

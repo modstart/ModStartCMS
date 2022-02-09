@@ -26,7 +26,7 @@ class TextAction extends AbstractWidget
     public static function getAssets()
     {
         return [
-            'style' => '.ub-text-action{display:inline-block;margin-right:0.5rem;color:#3498db;}',
+            'style' => '.ub-text-action{display:inline-block;margin-right:0.5rem;}',
         ];
     }
 

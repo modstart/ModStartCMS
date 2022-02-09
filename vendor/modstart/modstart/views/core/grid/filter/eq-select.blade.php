@@ -2,9 +2,9 @@
     <div class="name">{{$label}}</div>
     <div class="input">
         <select class="form" id="{{$id}}_select">
-            <option value="">{{L('All')}}</option>
+            <option value="" @if(null===$defaultValue) selected @endif>{{L('All')}}</option>
             @foreach($field->options() as $k=>$v)
-                <option value="{{$k}}">{{$v}}</option>
+                <option value="{{$k}}" @if($defaultValue==$k) selected @endif>{{$v}}</option>
             @endforeach
         </select>
     </div>

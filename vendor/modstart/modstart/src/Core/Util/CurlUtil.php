@@ -19,7 +19,7 @@ class CurlUtil
     private static function removeStringBOF($str)
     {
         if (strlen($str) >= 3) {
-            if ('EFBBBF' == sprintf('%X%X%X', ord($str{0}), ord($str{1}), ord($str{2}))) {
+            if ('EFBBBF' == sprintf('%X%X%X', ord($str[0]), ord($str[1]), ord($str[2]))) {
                 return substr($str, 3);
             }
         }

@@ -63,13 +63,17 @@ class TextDialogRequest extends AbstractWidget
 
     public function render()
     {
+        $type = $this->type;
+        if ('primary' == $type) {
+            $type = 'default';
+        }
         if ($this->disabled) {
-            return '<a href="javascript:;" class="ub-text-dialog-request ub-text-' . $this->type . '">' . $this->text . '</a>';
+            return '<a href="javascript:;" class="ub-text-dialog-request ub-text-' . $type . '">' . $this->text . '</a>';
         } else {
             return '<a href="javascript:;" ' . ($this->confirm ? 'data-confirm="' . $this->confirm . '"' : '')
                 . ' ' . ($this->width ? 'data-dialog-width="' . $this->width . '"' : '')
                 . ' ' . ($this->height ? 'data-dialog-height="' . $this->height . '"' : '')
-                . ' data-dialog-request="' . $this->url . '" class="ub-text-dialog-request ub-text-' . $this->type . '">' . $this->text . '</a>';
+                . ' data-dialog-request="' . $this->url . '" class="ub-text-dialog-request ub-text-' . $type . '">' . $this->text . '</a>';
         }
     }
 }

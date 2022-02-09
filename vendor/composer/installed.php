@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '3a21873f214ec1a78d5ce746fa91bb8f26ddafd5',
+        'reference' => '73259107b5fb77db7ff4df9fb496f57687407429',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -518,7 +518,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '3a21873f214ec1a78d5ce746fa91bb8f26ddafd5',
+            'reference' => '73259107b5fb77db7ff4df9fb496f57687407429',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(

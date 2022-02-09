@@ -253,7 +253,7 @@ class Form implements Renderable
         $this->builder($builder);
     }
 
-    public static function make($model, \Closure $builder = null)
+    public static function make($model = null, \Closure $builder = null)
     {
         if (class_exists($model) && is_subclass_of($model, Model::class)) {
             return new Form($model, $builder);

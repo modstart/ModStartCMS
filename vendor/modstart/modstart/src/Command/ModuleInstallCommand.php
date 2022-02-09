@@ -12,6 +12,7 @@ use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\VersionUtil;
 use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
+use Spatie\LaravelIgnition\Support\LaravelVersion;
 
 class ModuleInstallCommand extends Command
 {
@@ -64,7 +65,11 @@ class ModuleInstallCommand extends Command
 
         $event = new ModuleInstalledEvent();
         $event->name = $module;
-        Event::fire($event);
+        if (PHP_VERSION_ID >= 80000) {
+            Event::dispatch($event);
+        } else {
+            Event::fire($event);
+        }
 
         $this->info('Module Install Success');
     }

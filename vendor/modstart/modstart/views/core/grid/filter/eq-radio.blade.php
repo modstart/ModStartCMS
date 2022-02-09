@@ -2,12 +2,12 @@
     <div class="name">{{$label}}</div>
     <div class="input">
         <label>
-            <input type="radio" name="{{$id}}" checked value=""/>
+            <input type="radio" name="{{$id}}" @if(null===$defaultValue) checked @endif value=""/>
             {{L('All')}}
         </label>
         @foreach($field->options() as $k=>$v)
             <label>
-                <input type="radio" name="{{$id}}" value="{{$k}}"/>
+                <input type="radio" name="{{$id}}" value="{{$k}}" @if($defaultValue==$k) checked @endif />
                 {{$v}}
             </label>
         @endforeach

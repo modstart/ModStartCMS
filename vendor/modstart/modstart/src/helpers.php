@@ -224,3 +224,123 @@ function L($name, ...$params)
     }
     return $name;
 }
+
+if (!function_exists('array_build')) {
+    function array_build($array, callable $callback)
+    {
+        $results = [];
+
+        foreach ($array as $key => $value) {
+            list($innerKey, $innerValue) = call_user_func($callback, $key, $value);
+
+            $results[$innerKey] = $innerValue;
+        }
+
+        return $results;
+    }
+}
+
+if (!function_exists('starts_with')) {
+    function starts_with($haystack, $needles)
+    {
+        foreach ((array)$needles as $needle) {
+            if ($needle != '' && mb_strpos($haystack, $needle) === 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+if (!function_exists('array_get')) {
+    function array_get($array, $key, $default = null)
+    {
+        if (is_null($key)) {
+            return $array;
+        }
+
+        if (isset($array[$key])) {
+            return $array[$key];
+        }
+
+        foreach (explode('.', $key) as $segment) {
+            if (!is_array($array) || !array_key_exists($segment, $array)) {
+                return value($default);
+            }
+
+            $array = $array[$segment];
+        }
+
+        return $array;
+    }
+}
+
+
+if (!function_exists('array_has')) {
+    function array_has($array, $key)
+    {
+        if (empty($array) || is_null($key)) {
+            return false;
+        }
+
+        if (array_key_exists($key, $array)) {
+            return true;
+        }
+
+        foreach (explode('.', $key) as $segment) {
+            if (!is_array($array) || !array_key_exists($segment, $array)) {
+                return false;
+            }
+
+            $array = $array[$segment];
+        }
+
+        return true;
+    }
+}
+
+if (!function_exists('array_except')) {
+    function array_except($array, $keys)
+    {
+        array_forget($array, $keys);
+
+        return $array;
+    }
+}
+
+if (!function_exists('array_forget')) {
+    function array_forget(&$array, $keys)
+    {
+        $original = &$array;
+
+        $keys = (array)$keys;
+
+        if (count($keys) === 0) {
+            return;
+        }
+
+        foreach ($keys as $key) {
+            $parts = explode('.', $key);
+
+            while (count($parts) > 1) {
+                $part = array_shift($parts);
+
+                if (isset($array[$part]) && is_array($array[$part])) {
+                    $array = &$array[$part];
+                } else {
+                    $parts = [];
+                }
+            }
+
+            unset($array[array_shift($parts)]);
+
+            // clean up after each pass
+            $array = &$original;
+        }
+    }
+}
+
+
+if (PHP_VERSION_ID >= 80000) {
+    require_once __DIR__ . '/Laravel/Input.php';
+}
