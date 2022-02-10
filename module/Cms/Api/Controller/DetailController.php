@@ -38,6 +38,7 @@ class DetailController extends ModuleBaseController
             $data = CmsContentUtil::getByAlias($id);
         }
         $cat = CmsCatUtil::get($data['record']['catId']);
+        BizException::throwsIfEmpty('栏目不存在', $cat);
         $view = $cat['detailTemplate'];
         if (empty($view)) {
             $view = $data['model']['detailTemplate'];

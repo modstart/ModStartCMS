@@ -60,7 +60,7 @@ class ContentController extends Controller
         $this->init($modelId);
         $grid = Grid::make($this->modelTable);
         $grid->id('id', 'ID');
-        $grid->select('catId', '栏目')->optionModelTree('cms_cat', 'id', 'title');
+        $grid->select('catId', '栏目')->optionModelTree('cms_cat');
         if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
             if (modstart_config('CmsMemberPost_Enable', false)) {
                 $grid->adminMemberInfo('memberUserId', '用户');
