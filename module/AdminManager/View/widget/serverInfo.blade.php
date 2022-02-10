@@ -1,4 +1,4 @@
-<div class="ub-panel">
+<div class="ub-panel ub-cover">
     <div class="head">
         <div class="title">服务器信息</div>
     </div>
@@ -7,15 +7,17 @@
             <tbody>
             <tr>
                 <td width="100" class="tw-font-bold">
-                    ModStart核心
+                    ModStartCore
                 </td>
-                <td collapse="3">
+                <td>
                     V{{\ModStart\ModStart::$version}}
+                    ( With <b>{{strtoupper(\ModStart\Module\ModuleManager::getEnv())}}</b> )
                 </td>
             </tr>
             <tr>
                 <td class="tw-font-bold">操作系统</td>
                 <td>{{PHP_OS}}</td>
+
             </tr>
             <tr>
                 <td class="tw-font-bold">PHP版本</td>

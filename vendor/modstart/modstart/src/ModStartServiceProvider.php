@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use ModStart\Admin\ModStartAdmin;
 use ModStart\App\Api\ModStartApi;
 use ModStart\App\OpenApi\ModStartOpenApi;
@@ -56,22 +55,11 @@ class ModStartServiceProvider extends ServiceProvider
 
         $this->registerModuleServiceProviders();
 
-        $basePath = \ModStart\Core\Input\Request::basePath();
-        $adminPath = '/' . trim(config('modstart.admin.prefix'), '/');
-        if ($adminPath === '/') {
-            $adminPath = '';
-        }
-//         var_dump([$basePath, $adminPath]);exit();
-        if (Str::startsWith($basePath, $adminPath . '/') || $basePath == $adminPath) {
-            ModStartAdmin::registerAuthRoutes();
-            ModStartAdmin::registerModuleRoutes();
-        } else if (Str::startsWith($basePath, '/' . trim(config('modstart.api.prefix'), '/') . '/')) {
-            ModStartApi::registerModuleRoutes();
-        } else if (Str::startsWith($basePath, '/' . trim(config('modstart.openApi.prefix'), '/') . '/')) {
-            ModStartOpenApi::registerModuleRoutes();
-        } else {
-            ModStartWeb::registerModuleRoutes();
-        }
+        ModStartAdmin::registerAuthRoutes();
+        ModStartAdmin::registerModuleRoutes();
+        ModStartApi::registerModuleRoutes();
+        ModStartOpenApi::registerModuleRoutes();
+        ModStartWeb::registerModuleRoutes();
     }
 
     public function register()
