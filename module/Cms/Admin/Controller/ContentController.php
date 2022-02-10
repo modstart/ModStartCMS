@@ -25,6 +25,7 @@ use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Repository\Filter\RepositoryFilter;
+use ModStart\Widget\TextDialogRequest;
 use ModStart\Widget\TextLink;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsMode;
@@ -99,6 +100,9 @@ class ContentController extends Controller
         $grid->repositoryFilter(function (RepositoryFilter $filter) {
             $filter->where(['modelId' => $this->modelId]);
         });
+//        $grid->hookItemOperateRendering(function (ItemOperate $itemOperate) {
+//            $itemOperate->prepend(TextDialogRequest::primary('审核', modstart_admin_url('cms/content/x/verify')));
+//        });
         $grid->gridFilter(function (GridFilter $filter) {
             $filter->eq('id', 'ID');
             $filter->like('title', '标题');
