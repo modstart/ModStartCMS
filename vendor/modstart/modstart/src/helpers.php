@@ -352,5 +352,9 @@ if (!function_exists('ends_with')) {
 }
 
 if (PHP_VERSION_ID >= 80000) {
-    require_once __DIR__ . '/Laravel/Input.php';
+    require_once __DIR__ . '/Misc/Laravel/Input.php';
+}
+
+if (!class_exists('\\Mews\\Purifier\\PurifierServiceProvider')) {
+    require __DIR__ . '/Misc/Old/PurifierServiceProvider.php';
 }

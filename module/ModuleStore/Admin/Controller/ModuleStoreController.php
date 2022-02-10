@@ -20,18 +20,15 @@ use Module\ModuleStore\Util\ModuleStoreUtil;
 
 class ModuleStoreController extends Controller
 {
-    public function __construct()
-    {
-        AdminPermission::permitCheck('ModuleStoreManage');
-    }
-
     public function index()
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         return view('module::ModuleStore.View.admin.moduleStore.index');
     }
 
     public function all()
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         return Response::generateSuccessData(ModuleStoreUtil::all());
     }
 
@@ -89,6 +86,7 @@ class ModuleStoreController extends Controller
 
     public function disable()
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $step = $input->getTrimString('step');
@@ -110,6 +108,7 @@ class ModuleStoreController extends Controller
 
     public function enable()
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $step = $input->getTrimString('step');
@@ -131,6 +130,7 @@ class ModuleStoreController extends Controller
 
     public function uninstall()
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $step = $input->getTrimString('step');
@@ -172,6 +172,7 @@ class ModuleStoreController extends Controller
 
     public function upgrade()
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $token = $input->getTrimString('token');
@@ -249,6 +250,7 @@ class ModuleStoreController extends Controller
 
     public function install()
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         AdminPermission::demoCheck();
         $input = InputPackage::buildFromInput();
         $token = $input->getTrimString('token');
@@ -350,6 +352,7 @@ class ModuleStoreController extends Controller
 
     public function config(AdminConfigBuilder $builder, $module)
     {
+        AdminPermission::permitCheck('ModuleStoreManage');
         $basic = ModuleManager::getModuleBasic($module);
         $builder->useDialog();
         $builder->pageTitle(htmlspecialchars($basic['title']) . ' ' . L('Module Config'));
