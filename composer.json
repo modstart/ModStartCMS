@@ -27,14 +27,6 @@
   },
   "repositories": [
     {
-      "type": "vcs",
-      "url": "https://gitee.com/modstart-lib/modstart-laravel5.git"
-    },
-    {
-      "type": "vcs",
-      "url": "https://gitee.com/modstart-lib/modstart.git"
-    },
-    {
       "type": "composer",
       "url": "https://modstart.com/composer"
     }

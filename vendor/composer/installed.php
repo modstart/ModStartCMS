@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '8147f6a5190b192369c41d916752d1c209fd2e4b',
+        'reference' => '2e523589d51630a8939ccfe98da8a1eb43763d29',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -477,10 +477,8 @@
             'version' => 'dev-master',
             'type' => 'package',
             'install_path' => __DIR__ . '/../mews/captcha',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'reference' => 'b2998b3f8ad78c022fc6c3960134d346c551f17b',
+            'aliases' => array(),
+            'reference' => 'master',
             'dev_requirement' => false,
         ),
         'mobiledetect/mobiledetectlib' => array(
@@ -498,7 +496,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '8147f6a5190b192369c41d916752d1c209fd2e4b',
+            'reference' => '2e523589d51630a8939ccfe98da8a1eb43763d29',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(
@@ -506,10 +504,8 @@
             'version' => 'dev-master',
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'reference' => '77b6d88fe205d5d3e3880c9ec53ac14487a0b234',
+            'aliases' => array(),
+            'reference' => 'master',
             'dev_requirement' => false,
         ),
         'modstart/modstart-laravel5' => array(
@@ -517,10 +513,8 @@
             'version' => 'dev-master',
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart-laravel5',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'reference' => '48061ab3fefbd6248145c67a3b8cb1ce10c2e099',
+            'aliases' => array(),
+            'reference' => 'master',
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(
