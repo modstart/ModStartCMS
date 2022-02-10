@@ -20,7 +20,8 @@
         "ext-curl": "*",
         "intervention/image": "^2.3",
         "doctrine/dbal": "^2.5",
-        "jenssegers/agent": "v2.6.4"
+        "jenssegers/agent": "v2.6.4",
+        "ezyang/htmlpurifier": "v4.14.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

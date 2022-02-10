@@ -4,6 +4,7 @@ namespace ModStart\Core\Util;
 
 use Illuminate\Support\Str;
 use ModStart\Core\Assets\AssetsUtil;
+use ModStart\Misc\Html\Purifier;
 
 class HtmlUtil
 {
@@ -82,8 +83,8 @@ class HtmlUtil
         if (empty($content)) {
             return '';
         }
-        return clean($content, [
-            'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre,code',
+        return Purifier::cleanHtml($content, [
+            'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
             'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align,max-width,border,width',
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => true,
@@ -106,8 +107,8 @@ class HtmlUtil
         }
         $content = str_replace($replaces['search'], $replaces['replace'], $content);
 
-        $content = clean($content, [
-            'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre,code',
+        $content = Purifier::cleanHtml($content, [
+            'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
             'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align,max-width,border,width',
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => true,

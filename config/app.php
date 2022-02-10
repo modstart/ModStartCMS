@@ -141,7 +141,6 @@ return [
         \Jenssegers\Agent\AgentServiceProvider::class,
         \Mews\Captcha\CaptchaServiceProvider::class,
         \Intervention\Image\ImageServiceProvider::class,
-        \Mews\Purifier\PurifierServiceProvider::class,
 
         /*
          * Application Service Providers...

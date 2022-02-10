@@ -42,7 +42,6 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Module\\' => array($baseDir . '/module'),
     'ModStart\\' => array($vendorDir . '/modstart/modstart/src'),
-    'Mews\\Purifier\\' => array($vendorDir . '/mews/purifier/src'),
     'Mews\\Captcha\\' => array($vendorDir . '/mews/captcha/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'League\\CommonMark\\' => array($vendorDir . '/league/commonmark/src'),

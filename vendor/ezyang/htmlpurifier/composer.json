@@ -4,7 +4,7 @@
     "type": "library",
     "keywords": ["html"],
     "homepage": "http://htmlpurifier.org/",
-    "license": "LGPL",
+    "license": "LGPL-2.1-or-later",
     "authors": [
         {
             "name": "Edward Z. Yang",
@@ -15,11 +15,11 @@
     "require": {
         "php": ">=5.2"
     },
-    "require-dev": {
-        "simpletest/simpletest": "^1.1"
-    },
     "autoload": {
         "psr-0": { "HTMLPurifier": "library/" },
-        "files": ["library/HTMLPurifier.composer.php"]
+        "files": ["library/HTMLPurifier.composer.php"],
+        "exclude-from-classmap": [
+            "/library/HTMLPurifier/Language/"
+        ]
     }
 }

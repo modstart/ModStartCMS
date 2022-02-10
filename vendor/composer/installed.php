@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '5c7b0b37175faffe8bba6b9984ca7184e0de1954',
+        'reference' => '4a2a5e7933b850b4d08cfa36ee53dd8f59d96ee7',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -143,12 +143,12 @@
             'dev_requirement' => false,
         ),
         'ezyang/htmlpurifier' => array(
-            'pretty_version' => 'v4.9.3',
-            'version' => '4.9.3.0',
+            'pretty_version' => 'v4.14.0',
+            'version' => '4.14.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../ezyang/htmlpurifier',
             'aliases' => array(),
-            'reference' => '95e1bae3182efc0f3422896a3236e991049dac69',
+            'reference' => '12ab42bd6e742c70c0a52f7b82477fcd44e64b75',
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
@@ -483,15 +483,6 @@
             'reference' => 'b2998b3f8ad78c022fc6c3960134d346c551f17b',
             'dev_requirement' => false,
         ),
-        'mews/purifier' => array(
-            'pretty_version' => 'v2.0.8',
-            'version' => '2.0.8.0',
-            'type' => 'package',
-            'install_path' => __DIR__ . '/../mews/purifier',
-            'aliases' => array(),
-            'reference' => '2a81746eb933c0c4338786f99a9cf66f24c02a6a',
-            'dev_requirement' => false,
-        ),
         'mobiledetect/mobiledetectlib' => array(
             'pretty_version' => '2.8.37',
             'version' => '2.8.37.0',
@@ -507,7 +498,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '5c7b0b37175faffe8bba6b9984ca7184e0de1954',
+            'reference' => '4a2a5e7933b850b4d08cfa36ee53dd8f59d96ee7',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(
@@ -518,7 +509,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => '8315515f2c675bce4c23df121b6b5189bcedaa46',
+            'reference' => '4f5b22c65dfc3e2298bbd235c667c8a194b75897',
             'dev_requirement' => false,
         ),
         'modstart/modstart-laravel5' => array(
@@ -529,7 +520,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => '3d4964e11f00c061da9951d855c07ed83c5c52cd',
+            'reference' => 'b25497dfff12702b83767affe5e9e23b92eaa749',
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(
