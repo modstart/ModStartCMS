@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '2e523589d51630a8939ccfe98da8a1eb43763d29',
+        'reference' => 'fbe288481ae5423db130021bc93d016e54806fda',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -130,7 +130,7 @@
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../easywechat-composer/easywechat-composer',
             'aliases' => array(),
-            'reference' => 'master',
+            'reference' => '4d6acc9baa9f02cd80c007f14e22f7e5d6931409',
             'dev_requirement' => false,
         ),
         'elasticsearch/elasticsearch' => array(
@@ -478,7 +478,7 @@
             'type' => 'package',
             'install_path' => __DIR__ . '/../mews/captcha',
             'aliases' => array(),
-            'reference' => 'master',
+            'reference' => 'b2998b3f8ad78c022fc6c3960134d346c551f17b',
             'dev_requirement' => false,
         ),
         'mobiledetect/mobiledetectlib' => array(
@@ -496,7 +496,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '2e523589d51630a8939ccfe98da8a1eb43763d29',
+            'reference' => 'fbe288481ae5423db130021bc93d016e54806fda',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(
@@ -505,7 +505,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart',
             'aliases' => array(),
-            'reference' => 'master',
+            'reference' => '14ac5c9d2a2463c1a110baa1e71f7e32e7a3d2b0',
             'dev_requirement' => false,
         ),
         'modstart/modstart-laravel5' => array(
@@ -514,7 +514,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart-laravel5',
             'aliases' => array(),
-            'reference' => 'master',
+            'reference' => '48061ab3fefbd6248145c67a3b8cb1ce10c2e099',
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(
@@ -877,7 +877,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../w7corp/easywechat',
             'aliases' => array(),
-            'reference' => 'master',
+            'reference' => '0ae20c1f24731ebacc59d7da29518098223043de',
             'dev_requirement' => false,
         ),
     ),
