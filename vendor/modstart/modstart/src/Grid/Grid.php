@@ -169,11 +169,24 @@ class Grid
 
     private $isBuilt = false;
 
+    /**
+     * @var bool 是否是使用数据表名称快速生成的动态模型
+     */
+    private $isDynamicModel = false;
+    /**
+     * @var string 动态模型数据表名称
+     */
+    private $dynamicModelTableName;
+
+    /**
+     * @var string Grid页面视图
+     */
     private $view = 'modstart::core.grid.index';
 
     /**
-     * Form constructor.
-     * @param Model $model
+     * Grid constructor.
+     * @param null $repository
+     * @param Closure|null $builder
      */
     public function __construct($repository = null, \Closure $builder = null)
     {
@@ -197,7 +210,10 @@ class Grid
         if (class_exists($model) && is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)) {
             return new Grid($model, $builder);
         }
-        return new Grid(DynamicModel::make($model), $builder);
+        $grid = new Grid(DynamicModel::make($model), $builder);
+        $grid->isDynamicModel = true;
+        $grid->dynamicModelTableName = $model;
+        return $grid;
     }
 
     /**
@@ -468,6 +484,21 @@ class Grid
         }
     }
 
+    /**
+     * @return bool
+     */
+    public function isDynamicModel()
+    {
+        return $this->isDynamicModel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDynamicModelTableName()
+    {
+        return $this->dynamicModelTableName;
+    }
 
     /**
      * Generate a Field object and add to form builder if Field exists.

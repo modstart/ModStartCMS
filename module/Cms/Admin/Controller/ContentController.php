@@ -25,7 +25,6 @@ use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Repository\Filter\RepositoryFilter;
-use ModStart\Widget\TextDialogRequest;
 use ModStart\Widget\TextLink;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsMode;
@@ -100,13 +99,23 @@ class ContentController extends Controller
         $grid->repositoryFilter(function (RepositoryFilter $filter) {
             $filter->where(['modelId' => $this->modelId]);
         });
-//        $grid->hookItemOperateRendering(function (ItemOperate $itemOperate) {
-//            $itemOperate->prepend(TextDialogRequest::primary('审核', modstart_admin_url('cms/content/x/verify')));
-//        });
-        $grid->gridFilter(function (GridFilter $filter) {
+        $filterFields = array_filter($this->model['_customFields'], function ($o) {
+            return $o['isSearch'];
+        });
+        $tableName = null;
+        if (!empty($filterFields)) {
+            $tableName = 'cms_m_' . $this->model['name'];
+            $grid->gridFilterJoinAdd('left', $tableName, $tableName . '.id', '=', 'cms_content.id');
+        }
+        $grid->gridFilter(function (GridFilter $filter) use ($filterFields, $tableName) {
             $filter->eq('id', 'ID');
             $filter->like('title', '标题');
             $filter->eq('status', '状态')->select(CmsModelContentStatus::class);
+            if (!empty($filterFields)) {
+                foreach ($filterFields as $filterField) {
+                    $filter->like($tableName . '.' . $filterField['name'], $filterField['title']);
+                }
+            }
         });
         if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
             $grid->canAdd(true)->urlAdd(action('\\' . __CLASS__ . '@edit', ['modelId' => $this->modelId]));

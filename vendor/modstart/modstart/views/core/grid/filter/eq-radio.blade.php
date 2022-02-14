@@ -7,7 +7,7 @@
         </label>
         @foreach($field->options() as $k=>$v)
             <label>
-                <input type="radio" name="{{$id}}" value="{{$k}}" @if($defaultValue==$k) checked @endif />
+                <input type="radio" name="{{$id}}" value="{{$k}}" @if(null!==$defaultValue&&$defaultValue==$k) checked @endif />
                 {{$v}}
             </label>
         @endforeach

@@ -12,8 +12,9 @@
         "Vendor"
     ],
     "title": "通用文章",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "author": "官方",
+    "modstartVersion": ">=2.6.0",
     "description": "提供多位置、单页文章基础管理功能",
     "config": {
         "position": [

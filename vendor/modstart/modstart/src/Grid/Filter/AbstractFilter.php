@@ -7,6 +7,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\IdUtil;
 use ModStart\Grid\Filter;
 use ModStart\Grid\Filter\Field\Text;
+use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFluentAttribute;
 
@@ -26,6 +27,11 @@ abstract class AbstractFilter
         'hookRendering',
     ];
     private $hookRendering;
+
+    /**
+     * @var Grid
+     */
+    private $grid;
 
     /**
      * @var
@@ -141,7 +147,7 @@ abstract class AbstractFilter
     protected function buildCondition()
     {
         $column = explode('.', $this->column);
-        if (count($column) == 1) {
+        if (count($column) == 1 || $this->grid->isDynamicModel()) {
             return [$this->query => func_get_args()];
         }
         return call_user_func_array([$this, 'buildRelationCondition'], func_get_args());
@@ -199,6 +205,19 @@ abstract class AbstractFilter
         $view = 'modstart::core.grid.filter.'
             . lcfirst(end($class)) . '-' . lcfirst(end($fieldClass));
         return View::make($view, $this->variables())->render();
+    }
+
+    /**
+     * @param null $grid
+     * @return $this|Grid
+     */
+    public function grid($grid = null)
+    {
+        if (null === $grid) {
+            return $this->grid;
+        }
+        $this->grid = $grid;
+        return $this;
     }
 
     public function __call($name, $arguments)

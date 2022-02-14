@@ -102,7 +102,11 @@ class DashboardItemA extends AbstractWidget
 </a>
 HTML;
             case 2:
-                $number = number_format($this->number);
+                if (!is_string($this->number)) {
+                    $number = number_format($this->number);
+                } else {
+                    $number = $this->number;
+                }
                 return <<<HTML
 <a href="{$this->link}" class="ub-dashboard-item-a" {$this->formatAttributes()}>
     <div class="icon" style="color:{$this->color}">

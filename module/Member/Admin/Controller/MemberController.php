@@ -61,7 +61,7 @@ class MemberController extends Controller
                     $builder->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
                 }
                 if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
-                    $builder->radio('groupId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
+                    $builder->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
                 }
                 $builder->display('created_at', '注册时间');
             })

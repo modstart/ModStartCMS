@@ -510,7 +510,6 @@ export default {
                 }
                 return true
             })
-            console.log('xxx',results,this.modules)
             return results
         }
     },

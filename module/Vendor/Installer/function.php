@@ -42,7 +42,14 @@ if (!file_exists(ENV_FILE)) {
 
 function php_version_requires()
 {
+    if (INSTALL_APP_NAME == 'CMS9') {
+        return join('，', [
+            '8.0.x',
+            '8.1.x',
+        ]);
+    }
     return join(', ', [
+        INSTALL_APP_NAME,
         '5.6.x',
         '7.0.x',
     ]);
@@ -50,6 +57,12 @@ function php_version_requires()
 
 function php_version_ok()
 {
+    if (INSTALL_APP_NAME == 'CMS9') {
+        if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+            return false;
+        }
+        return true;
+    }
     if (version_compare(PHP_VERSION, '5.5.9', '<')) {
         return false;
     }

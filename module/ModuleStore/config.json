@@ -1,18 +1,18 @@
 {
-  "name": "ModuleStore",
-  "title": "模块市场",
-  "env": [
-    "laravel5",
-    "laravel9"
-  ],
-  "types": [
-    "Admin"
-  ],
-  "require": [
-    "Vendor:>=1.4.0"
-  ],
-  "modstartVersion": ">=1.8.0",
-  "version": "1.5.0",
-  "author": "官方",
-  "description": "提供各种各样的应用模块，方便应用快速集成"
+    "name": "ModuleStore",
+    "title": "模块市场",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "types": [
+        "Admin"
+    ],
+    "require": [
+        "Vendor:>=1.4.0"
+    ],
+    "modstartVersion": ">=2.6.0",
+    "version": "1.6.0",
+    "author": "官方",
+    "description": "提供各种各样的应用模块，方便应用快速集成"
 }

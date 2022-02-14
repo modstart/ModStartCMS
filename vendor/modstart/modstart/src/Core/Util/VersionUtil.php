@@ -52,6 +52,8 @@ class VersionUtil
      */
     public static function isVersion($versionString)
     {
-        return preg_match('/^\\d+\\.\\d+\\.\\d+$/i', $versionString) || preg_match('/^\\d+\\.\\d+\\.\\d+\\-(alpha|beta|release)$/i', $versionString);
+        return preg_match('/^\\d+\\.\\d+\\.\\d+$/i', $versionString)
+            || preg_match('/^\\d+\\.\\d+\\.\\d+\\-(alpha|beta|release)$/i', $versionString)
+            || preg_match('/^\\d+\\.\\d+\\.\\d+\\-(alpha|beta|release)\\-\\d+$/i', $versionString);
     }
 }

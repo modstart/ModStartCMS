@@ -4,6 +4,7 @@
 namespace Module\Vendor\Provider\ContentVerify;
 
 
+use Illuminate\Support\Str;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\HtmlUtil;
@@ -40,23 +41,21 @@ abstract class AbstractContentVerifyProvider
     {
         if (null === $body) {
             $body = [
-                '标题' => $title,
+                '内容' => $title,
             ];
+            $shortTitle = Str::substr(HtmlUtil::text2html($title), 0, 100);
+        } else {
+            $shortTitle = $title;
         }
+        $shortTitle = $this->title() . ($shortTitle ? '(' . $shortTitle . ')' : '');
         if ($this->verifyAutoProcess($param)) {
             if ($this->verifyAutoProcessedNotify()) {
-                NotifierProvider::notify(
-                    $this->name(),
-                    '[自动审核]' . $this->title() . ($title ? '(' . $title . ')' : ''),
-                    $body
-                );
+                NotifierProvider::notify($this->name(), '[自动审核]' . $shortTitle, $body);
             }
             return;
         }
         NotifierProvider::notifyNoneLoginOperateProcessUrl(
-            $this->name(),
-            '[审核]' . $this->title() . ($title ? '(' . $title . ')' : ''),
-            $body,
+            $this->name(), '[审核]' . $shortTitle, $body,
             'content_verify/' . $this->name(), $param
         );
     }

@@ -2,12 +2,8 @@
 
 namespace ModStart\Grid;
 
-use ModStart\Grid\Filter\AbstractFilter;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Request;
-use ModStart\Grid\Filter\DatetimeRange;
+use ModStart\Grid\Filter\AbstractFilter;
 use ModStart\Grid\Filter\Eq;
 use ModStart\Grid\Filter\Field\AbstractFilterField;
 use ModStart\Grid\Filter\Like;
@@ -172,7 +168,10 @@ class GridFilter
         if (in_array($method, $this->supports)) {
             $className = '\\ModStart\\Grid\\Filter\\' . ucfirst($method);
             $reflection = new ReflectionClass($className);
-            return $this->addFilter($reflection->newInstanceArgs($arguments));
+            /** @var AbstractFilter $filter */
+            $filter = $reflection->newInstanceArgs($arguments);
+            $filter->grid($this->model->grid());
+            return $this->addFilter($filter);
         }
     }
 }

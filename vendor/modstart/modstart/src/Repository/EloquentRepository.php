@@ -174,11 +174,32 @@ class EloquentRepository extends Repository
         }
         $model->grid()->repositoryFilter()->executeQueries($query);
         $model->grid()->scopeExecuteQueries($query);
-        $model->getQueries()->each(function ($value) use (&$query) {
+        $tableColumns = $this->getTableColumns();
+        if ($model->grid()->isDynamicModel()) {
+            foreach ($tableColumns as $k => $v) {
+                if ($v == '*') {
+                    $tableColumns[$k] = $model->grid()->getDynamicModelTableName() . '.*';
+                }
+            }
+        }
+        $joins = $model->grid()->gridFilterJoins();
+        if (!empty($joins)) {
+            $methodMap = [
+                'left' => 'leftJoin',
+                'right' => 'rightJoin',
+                'inner' => 'innerJoin',
+            ];
+            foreach ($joins as $join) {
+                $mode = $join[0];
+                array_shift($join);
+                call_user_func_array([$query, $methodMap[$mode]], $join);
+            }
+        }
+        $model->getQueries()->each(function ($value) use (&$query, $tableColumns) {
             if ($value['method'] == 'paginate') {
-                $value['arguments'][1] = $this->getTableColumns();
+                $value['arguments'][1] = $tableColumns;
             } elseif ($value['method'] == 'get') {
-                $value['arguments'] = [$this->getTableColumns()];
+                $value['arguments'] = [$tableColumns];
             }
             $query = call_user_func_array([$query, $value['method']], $value['arguments'] ? $value['arguments'] : []);
         });

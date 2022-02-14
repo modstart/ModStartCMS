@@ -4,7 +4,7 @@
         <select class="form" id="{{$id}}_select">
             <option value="" @if(null===$defaultValue) selected @endif>{{L('All')}}</option>
             @foreach($field->options() as $k=>$v)
-                <option value="{{$k}}" @if($defaultValue==$k) selected @endif>{{$v}}</option>
+                <option value="{{$k}}" @if(null!==$defaultValue&&$defaultValue==$k) selected @endif>{{$v}}</option>
             @endforeach
         </select>
     </div>

@@ -12,8 +12,8 @@
     "require": [
         "Vendor:>=1.9.0"
     ],
-    "version": "2.3.0",
-    "modstartVersion": ">=1.4.0",
+    "version": "2.4.1",
+    "modstartVersion": ">=2.6.0",
     "author": "官方",
     "description": "提供基础的用户管理服务",
     "config": {

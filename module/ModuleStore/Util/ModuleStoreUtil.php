@@ -25,9 +25,15 @@ class ModuleStoreUtil
         $memberUserId = $input->getInteger('memberUserId');
         $apiToken = $input->getTrimString('apiToken');
         return Cache::remember('ModuleStore_Modules:' . $memberUserId, 60, function () use ($apiToken) {
-            return CurlUtil::getJSONData(self::REMOTE_BASE . '/api/store/module', [
+            $app = 'cms';
+            if (class_exists('\App\Constant\AppConstant')) {
+                $app = \App\Constant\AppConstant::APP;
+            }
+            $ret = CurlUtil::getJSONData(self::REMOTE_BASE . '/api/store/module', [
+                'app' => $app,
                 'api_token' => $apiToken,
             ]);
+            return $ret;
         });
     }
 
