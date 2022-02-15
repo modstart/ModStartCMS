@@ -13,19 +13,17 @@ use Module\Member\Auth\MemberVip;
 use Module\Member\Constant\PayConstant;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberVipUtil;
-use Module\PayCenter\Traits\PayCenterPerformTrait;
+use Module\PayCenter\Support\PayCenterPerform;
 use Module\Vendor\Type\OrderStatus;
 
 class MemberVipController extends Controller implements MemberLoginCheck
 {
-    use PayCenterPerformTrait;
-
     public function all()
     {
         return Response::generateSuccessData(MemberVipUtil::all());
     }
 
-    public function buy()
+    public function buy(PayCenterPerform $payCenterPerform)
     {
         $input = InputPackage::buildFromInput();
         $vipId = $input->getInteger('vipId');
@@ -52,7 +50,7 @@ class MemberVipController extends Controller implements MemberLoginCheck
             'expire' => $priceInfoRet['data']['expire'],
             'type' => $priceInfoRet['data']['type'],
         ]);
-        return $this->performSubmitOrder(
+        return $payCenterPerform->performSubmitOrder(
             PayConstant::MEMBER_VIP,
             $memberVipOrder['id'],
             $memberVipOrder['payFee'],

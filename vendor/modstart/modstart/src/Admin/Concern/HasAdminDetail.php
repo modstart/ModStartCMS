@@ -12,7 +12,7 @@ trait HasAdminDetail
     private function computeTitleDetail($subject, $langId)
     {
         $title = ($subject ? $subject . ' ' . L($langId) : L($langId));
-        return $this->pageTitle ? $this->pageTitle : $title;
+        return isset($this->pageTitle) ? $this->pageTitle : $title;
     }
 
     public function show(AdminDialogPage $page)

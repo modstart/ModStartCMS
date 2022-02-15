@@ -15,7 +15,7 @@ trait HasAdminForm
     private function computeTitleForm($subject, $langId)
     {
         $title = ($subject ? $subject . ' ' . L($langId) : L($langId));
-        return $this->pageTitle ? $this->pageTitle : $title;
+        return isset($this->pageTitle) ? $this->pageTitle : $title;
     }
 
     /**

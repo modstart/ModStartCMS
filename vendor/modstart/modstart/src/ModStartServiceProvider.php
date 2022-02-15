@@ -3,9 +3,11 @@
 
 namespace ModStart;
 
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -164,15 +166,23 @@ class ModStartServiceProvider extends ServiceProvider
             }
         });
 
-        Event::listen('illuminate.query', function ($query, $bindings, $time, $connectionName) use (&$queryCountPerRequest, &$queryCountPerRequestSqls) {
+        DB::listen(function ($query, $bindings = null, $time = null, $connectionName = null) use (&$queryCountPerRequest, &$queryCountPerRequestSqls) {
             $queryCountPerRequest++;
-            $queryCountPerRequestSqls[] = "$query, " . json_encode($bindings);
-            // Log::info("SQL $query, " . json_encode($bindings));
+            $sql = $query;
+            if (\ModStart\ModStart::env() == 'laravel9') {
+                /** @var QueryExecuted $query */
+                $sql = $query->sql;
+                $bindings = $query->bindings;
+                $time = $query->time;
+            }
+            $queryCountPerRequestSqls[] = "$sql, " . json_encode($bindings);
+            // Log::info("SQL $sql, " . json_encode($bindings));
             if ($time > 500) {
                 $param = json_encode($bindings);
-                Log::warning("LONG_SQL ${time}ms, $query, $param");
+                Log::warning("LONG_SQL ${time}ms, $sql, $param");
             }
         });
+
     }
 
     private function registerRouteMiddleware()

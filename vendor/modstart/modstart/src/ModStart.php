@@ -162,4 +162,17 @@ class ModStart
         );
         return view('modstart::part.js', ['js' => array_unique(static::$js)]);
     }
+
+
+    /**
+     * 获取当前运行环境
+     * @return string laravel5|laravel9
+     */
+    public static function env()
+    {
+        if (PHP_VERSION_ID >= 80000) {
+            return 'laravel9';
+        }
+        return 'laravel5';
+    }
 }
