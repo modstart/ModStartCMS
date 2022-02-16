@@ -12,17 +12,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \ModStart\Core\Monitor\ModStartMonitorMiddleware::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Cookie\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
     ];
 
-    /**
-     * The application's route middleware.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-    ];
 }

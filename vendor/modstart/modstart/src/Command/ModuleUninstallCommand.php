@@ -29,9 +29,7 @@ class ModuleUninstallCommand extends Command
                     return Response::generateError(L('Module %s depend on %s, uninstall fail', $one, $module));
                 }
             }
-            if (method_exists(ModuleManager::class, 'callHook')) {
-                ModuleManager::callHook($module, 'hookBeforeUninstall');
-            }
+            ModuleManager::callHook($module, 'hookBeforeUninstall');
         }
         unset($installeds[$module]);
         $this->unPublishAsset($module);

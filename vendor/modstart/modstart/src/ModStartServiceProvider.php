@@ -3,14 +3,9 @@
 
 namespace ModStart;
 
-use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -146,43 +141,9 @@ class ModStartServiceProvider extends ServiceProvider
 
     private function setupMonitor()
     {
-        static $queryCountPerRequest = 0;
-        static $queryCountPerRequestSqls = [];
-
-        Event::listen('router.after', function () use (&$queryCountPerRequest, &$queryCountPerRequestSqls) {
-            $time = round((microtime(true) - LARAVEL_START) * 1000, 2);
-            $param = json_encode(Request::input());
-            $url = Request::url();
-            $method = Request::getMethod();
-            if ($time > 1000) {
-                $param = json_encode(Request::input());
-                $url = Request::url();
-                $method = Request::getMethod();
-                Log::warning("LONG_REQUEST $method [$url] ${time}ms $param");
-            }
-            if ($queryCountPerRequest > 10) {
-                Log::warning("MASS_REQUEST_SQL $queryCountPerRequest $method [$url] $param -> " . json_encode($queryCountPerRequestSqls));
-                // Log::warning("MASS_REQUEST_SQL $queryCountPerRequest $method [$url] $param");
-            }
-        });
-
-        DB::listen(function ($query, $bindings = null, $time = null, $connectionName = null) use (&$queryCountPerRequest, &$queryCountPerRequestSqls) {
-            $queryCountPerRequest++;
-            $sql = $query;
-            if (\ModStart\ModStart::env() == 'laravel9') {
-                /** @var QueryExecuted $query */
-                $sql = $query->sql;
-                $bindings = $query->bindings;
-                $time = $query->time;
-            }
-            $queryCountPerRequestSqls[] = "$sql, " . json_encode($bindings);
-            // Log::info("SQL $sql, " . json_encode($bindings));
-            if ($time > 500) {
-                $param = json_encode($bindings);
-                Log::warning("LONG_SQL ${time}ms, $sql, $param");
-            }
-        });
-
+        if (class_exists('\\ModStart\\Core\\Monitor\\DataBaseMonitor')) {
+            \ModStart\Core\Monitor\DatabaseMonitor::init();
+        }
     }
 
     private function registerRouteMiddleware()
