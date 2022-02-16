@@ -9,8 +9,9 @@ use ModStart\App\Web\Layout\WebPage;
 use ModStart\Layout\Row;
 use ModStart\Widget\Box;
 use Module\Member\Config\MemberHomeIcon;
+use Module\Member\Support\MemberLoginCheck;
 
-class MemberController extends MemberFrameController
+class MemberController extends MemberFrameController implements MemberLoginCheck
 {
     public function index(WebPage $page)
     {

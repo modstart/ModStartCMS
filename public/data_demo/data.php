@@ -33,19 +33,6 @@
         'key' => 'siteDescription',
         'value' => 'ModStart是一个开源内容开发框架，免费且永久商用，基于配置+模块化开发，可以帮您快速完成网站系统的搭建。',
       ),
-      37 =>
-      array (
-        'key' => 'systemCounter',
-        'value' => '<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?c1367ea4c1f7fe05cfe5a84a76691976";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>',
-      ),
       40 =>
       array (
         'key' => 'Cms_HomeInfoTitle',
