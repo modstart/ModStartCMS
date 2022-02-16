@@ -7,6 +7,7 @@ namespace ModStart\Core\Monitor;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class DatabaseMonitor
 {
@@ -28,10 +29,15 @@ class DatabaseMonitor
                 $bindings = $query->bindings;
                 $time = $query->time;
             }
-            self::$queryCountPerRequestSqls[] = "$sql, " . json_encode($bindings);
+            foreach ($bindings as $i => $binding) {
+                if (is_string($binding)) {
+                    $bindings[$i] = Str::limit($binding, 100);
+                }
+            }
+            $param = json_encode($bindings, JSON_UNESCAPED_UNICODE);
+            self::$queryCountPerRequestSqls[] = "$sql, $param";
             // Log::info("SQL $sql, " . json_encode($bindings));
             if ($time > 500) {
-                $param = json_encode($bindings);
                 Log::warning("LONG_SQL ${time}ms, $sql, $param");
             }
         });
