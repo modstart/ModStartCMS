@@ -141,6 +141,7 @@ class ModStartServiceProvider extends ServiceProvider
 
     private function setupMonitor()
     {
+        /** @remove if condition after 20220417 */
         if (class_exists('\\ModStart\\Core\\Monitor\\DataBaseMonitor')) {
             \ModStart\Core\Monitor\DatabaseMonitor::init();
         }
