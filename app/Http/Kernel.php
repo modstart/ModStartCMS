@@ -12,7 +12,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \ModStart\Core\Monitor\ModStartMonitorMiddleware::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Cookie\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,

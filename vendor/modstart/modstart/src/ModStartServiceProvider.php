@@ -144,6 +144,9 @@ class ModStartServiceProvider extends ServiceProvider
         if (class_exists('\\ModStart\\Core\\Monitor\\DataBaseMonitor')) {
             \ModStart\Core\Monitor\DatabaseMonitor::init();
         }
+        if (class_exists('\\ModStart\\Core\\Monitor\\HttpMonitor')) {
+            \ModStart\Core\Monitor\HttpMonitor::init();
+        }
     }
 
     private function registerRouteMiddleware()
