@@ -65,7 +65,7 @@ trait HasItemOperate
     }
 
     /**
-     * @param null $callback = function(ItemOperate $itemOperate){  }
+     * @param \Closure $callback function(ItemOperate $itemOperate){  }
      * @return $this|\Closure
      */
     public function hookItemOperateRendering($callback = null)

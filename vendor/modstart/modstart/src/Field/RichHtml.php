@@ -4,6 +4,8 @@
 namespace ModStart\Field;
 
 
+use ModStart\Core\Util\HtmlUtil;
+
 class RichHtml extends AbstractField
 {
     protected $listable = false;
@@ -23,4 +25,11 @@ class RichHtml extends AbstractField
         $this->addVariables(['server' => $server]);
         return $this;
     }
+
+    public function prepareInput($value, $dataSubmitted)
+    {
+        return HtmlUtil::filter2($value);
+    }
+
+
 }

@@ -1,181 +1,181 @@
 
 .ub-form {
-  font-size: var(--font-size);
+    font-size: var(--font-size);
 
-  &.view {
-    .line {
-      .field {
-        border-bottom: 0.05rem solid #EEE;
-        min-height: 1.5rem;
-      }
+    &.view {
+        .line {
+            .field {
+                border-bottom: 0.05rem solid #EEE;
+                min-height: 1.5rem;
+            }
+        }
     }
-  }
 
-  &.vertical {
-    .line {
-      padding-left: 0;
-      padding-right: 0;
-      margin: 0;
+    &.vertical {
+        .line {
+            padding-left: 0;
+            padding-right: 0;
+            margin: 0;
 
-      .label {
-        float: none;
-        display: block;
-        text-align: left;
-        margin-left: 0;
-        width: 100%;
-      }
+            .label {
+                float: none;
+                display: block;
+                text-align: left;
+                margin-left: 0;
+                width: 100%;
+            }
+        }
     }
-  }
-
-  &.wide {
-    .line {
-      padding-left: 8rem;
-
-      .label {
-        width: 7.5rem;
-        margin-left: -7.5rem;
-      }
-    }
-  }
-
-  &.wide-lg {
-    .line {
-      padding-left: 12rem;
-
-      .label {
-        width: 11.5rem;
-        margin-left: -11.5rem;
-      }
-    }
-  }
-
-  .line {
-    padding: 0.25rem 1.5rem 0.25rem 5rem;
-    overflow: hidden;
-    position: relative;
 
     &.wide {
-      padding-left: 8rem;
+        .line {
+            padding-left: 8rem;
 
-      .label {
-        width: 7.5rem;
-        margin-left: -7.5rem;
-      }
-    }
-
-    .label {
-      display: block;
-      float: left;
-      text-align: right;
-      line-height: 1.5rem;
-      padding: 0 0.5rem 0 0;
-      margin: 0 0 0 -4.5rem;
-      width: 4.5rem;
-      color: #6C7A87;
-
-      &.label-lg {
-        line-height: 2rem;
-      }
-
-      span {
-        color: red;
-        display: inline-block;
-        line-height: 1.5rem;
-        font-size: 0.6rem;
-      }
-    }
-
-    .field {
-      line-height: 1.5rem;
-      margin-left: 0;
-      min-height: 1.5rem;
-
-      input[type=text], input[type=password] {
-        width: 100%;
-      }
-
-      label {
-        border: 0.05rem solid #EEE;
-        border-radius: 0.15rem;
-        padding: 0 0.5rem;
-      }
-
-      .help {
-        color: #999;
-        line-height: 0.9rem;
-        padding: 0.25rem 0;
-        font-size: 0.6rem;
-
-        p {
-          margin: 0;
-          line-height: 1.5em;
+            .label {
+                width: 7.5rem;
+                margin-left: -7.5rem;
+            }
         }
-      }
-
-      textarea {
-        line-height: 1.5em;
-        width: 100%;
-      }
-
-      .captcha {
-        height: 1.5rem;
-        width: 100%;
-        border: 0.05rem solid #CCC;
-        border-radius: 0.15rem;
-        cursor: pointer;
-
-        &.captcha-lg {
-          height: 2rem;
-        }
-      }
-
-      .tag {
-        border: 0.05rem solid #EEE;
-        display: inline-block;
-        line-height: 1rem;
-        border-radius: 0.15rem;
-        padding: 0 0.15rem;
-        background: #EEE;
-        color: #666;
-        margin-right: 0.15rem;
-        font-size: 0.6rem;
-        white-space: nowrap;
-      }
     }
-  }
 
-  &.flat {
+    &.wide-lg {
+        .line {
+            padding-left: 12rem;
+
+            .label {
+                width: 11.5rem;
+                margin-left: -11.5rem;
+            }
+        }
+    }
+
     .line {
-      padding: 0.5rem;
+        padding: 0.25rem 1.5rem 0.25rem 5rem;
+        //overflow: hidden;
+        position: relative;
 
-      .label {
-        float: none;
-        margin: 0;
-        width: 100%;
-        text-align: left;
-        line-height: inherit !important;
-        padding-bottom: 0.25rem;
-      }
+        &.wide {
+            padding-left: 8rem;
+
+            .label {
+                width: 7.5rem;
+                margin-left: -7.5rem;
+            }
+        }
+
+        .label {
+            display: block;
+            float: left;
+            text-align: right;
+            line-height: 1.5rem;
+            padding: 0 0.5rem 0 0;
+            margin: 0 0 0 -4.5rem;
+            width: 4.5rem;
+            color: #6C7A87;
+
+            &.label-lg {
+                line-height: 2rem;
+            }
+
+            span {
+                color: red;
+                display: inline-block;
+                line-height: 1.5rem;
+                font-size: 0.6rem;
+            }
+        }
+
+        .field {
+            line-height: 1.5rem;
+            margin-left: 0;
+            min-height: 1.5rem;
+
+            input[type=text], input[type=password] {
+                width: 100%;
+            }
+
+            label {
+                border: 0.05rem solid #EEE;
+                border-radius: 0.15rem;
+                padding: 0 0.5rem;
+            }
+
+            .help {
+                color: #999;
+                line-height: 0.9rem;
+                padding: 0.25rem 0;
+                font-size: 0.6rem;
+
+                p {
+                    margin: 0;
+                    line-height: 1.5em;
+                }
+            }
+
+            textarea {
+                line-height: 1.5em;
+                width: 100%;
+            }
+
+            .captcha {
+                height: 1.5rem;
+                width: 100%;
+                border: 0.05rem solid #CCC;
+                border-radius: 0.15rem;
+                cursor: pointer;
+
+                &.captcha-lg {
+                    height: 2rem;
+                }
+            }
+
+            .tag {
+                border: 0.05rem solid #EEE;
+                display: inline-block;
+                line-height: 1rem;
+                border-radius: 0.15rem;
+                padding: 0 0.15rem;
+                background: #EEE;
+                color: #666;
+                margin-right: 0.15rem;
+                font-size: 0.6rem;
+                white-space: nowrap;
+            }
+        }
     }
-  }
+
+    &.flat {
+        .line {
+            padding: 0.5rem;
+
+            .label {
+                float: none;
+                margin: 0;
+                width: 100%;
+                text-align: left;
+                line-height: inherit !important;
+                padding-bottom: 0.25rem;
+            }
+        }
+    }
 }
 
 @media (max-width: 38.35rem) {
-  .ub-form {
-    &.wide .line, &.wide-lg .line, .line {
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-      margin: 0;
+    .ub-form {
+        &.wide .line, &.wide-lg .line, .line {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            margin: 0;
 
-      .label {
-        float: none;
-        display: block;
-        text-align: left;
-        margin-left: 0;
-        width: 100%;
-      }
+            .label {
+                float: none;
+                display: block;
+                text-align: left;
+                margin-left: 0;
+                width: 100%;
+            }
+        }
     }
-  }
 }
 
 

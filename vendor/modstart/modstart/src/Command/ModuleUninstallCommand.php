@@ -24,7 +24,9 @@ class ModuleUninstallCommand extends Command
             BizException::throwsIf(L('Module not installed'), !isset($installeds[$module]));
             foreach ($installeds as $one => $_) {
                 $basic = ModuleManager::getModuleBasic($one);
-                BizException::throwsIf('Module[' . $one . '] config empty', !$basic);
+                if (empty($basic)) {
+                    break;
+                }
                 if (in_array($module, $basic['require'])) {
                     return Response::generateError(L('Module %s depend on %s, uninstall fail', $one, $module));
                 }

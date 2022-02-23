@@ -4,7 +4,10 @@ namespace ModStart\Layout;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Arr;
+use ModStart\Core\Input\Request;
+use ModStart\Core\Input\Response;
+use ModStart\Form\Form;
+use ModStart\Grid\Grid;
 
 class Page implements Renderable
 {
@@ -142,6 +145,32 @@ class Page implements Renderable
         ob_end_clean();
 
         return $contents;
+    }
+
+    /**
+     * @param Grid $grid
+     * @return $this
+     */
+    public function handleGrid($grid)
+    {
+        if (Request::isPost()) {
+            return $grid->request();
+        }
+        return $this;
+    }
+
+    /**
+     * @param Form $form
+     * @param $callback Closure function(Form $form){ $data = $form->dataForming(); return Response::generateSuccess(); }
+     * @param array|null $data
+     * @return $this
+     */
+    public function handleForm($form, $callback, array $data = null)
+    {
+        if (Request::isPost()) {
+            return $form->formRequest($callback, $data);
+        }
+        return $this;
     }
 
     /**

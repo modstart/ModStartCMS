@@ -4,6 +4,7 @@ namespace ModStart\Core\Input;
 
 use Illuminate\Support\Facades\Input;
 use ModStart\Core\Util\FormatUtil;
+use ModStart\Core\Util\HtmlUtil;
 use ModStart\Core\Util\TimeUtil;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -158,7 +159,9 @@ class InputPackage
             if (!is_string($this->data[$key])) {
                 return $defaultValue;
             }
-            return trim($this->data[$key]);
+            $content = trim($this->data[$key]);
+            $content = HtmlUtil::filter2($content);
+            return $content;
         }
         return $defaultValue;
     }

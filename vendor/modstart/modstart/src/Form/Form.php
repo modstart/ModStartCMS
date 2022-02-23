@@ -417,7 +417,7 @@ class Form implements Renderable
     }
 
     /**
-     * @param $callback = function(Form $form){ $data = $form->dataForming(); return Response::generateSuccess(); }
+     * @param $callback Closure function(Form $form){ $data = $form->dataForming(); return Response::generateSuccess(); }
      * @param array|null $data
      * @return mixed
      *

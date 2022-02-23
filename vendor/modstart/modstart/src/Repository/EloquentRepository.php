@@ -344,7 +344,7 @@ class EloquentRepository extends Repository
         }
         $this->model = $query
             ->with($this->getRelations())
-            ->findOrFail($detail->itemId(), $this->getShowColumns());
+            ->find($detail->itemId(), $this->getShowColumns());
 
         return $this->model;
     }

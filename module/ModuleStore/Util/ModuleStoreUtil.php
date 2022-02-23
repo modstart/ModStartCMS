@@ -216,7 +216,7 @@ class ModuleStoreUtil
             try {
                 rename($moduleDir, $moduleBackupDir);
             } catch (\Exception $e) {
-                BizException::throws("备份模块 $module 到 $moduleBackup 失败，请确保模块 $module 中没有文件正在被使用");
+                BizException::throws("备份模块 $module 到 $moduleBackup 失败（确保模块中所有文件和目录已关闭）");
             }
             BizException::throwsIf('备份模块旧文件失败', !file_exists($moduleBackupDir));
             $results[] = "备份模块 $module 到 $moduleBackup";

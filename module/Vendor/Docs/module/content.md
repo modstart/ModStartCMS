@@ -23,4 +23,22 @@
 - SmsSender 短信发送提供者
 - SmsTemplate 短信模板提供者
 
+## 使用教程
 
+### Notifier 通知提供者
+
+可以为网站提供一个即时通知的功能，目前通知提供者支持邮件通知等
+
+第一步，注册通知类型
+
+在 `ModuleServiceProvider::boot` 中注册业务
+
+```php
+NotifierBizWidget::register('Xxx_NewOrder', 'XXX-新订单');
+```
+
+第二步，在业务处调用通知
+
+```php
+NotifierProvider::notify('Xxx_NewOrder', 'XXX-新订单', "订单号：xxx，支付金额：xxx");
+```

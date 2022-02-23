@@ -21,6 +21,8 @@ trait ResponsiveViewTrait
             $cls = get_class($this);
             if (preg_match('/^Module\\\\([\\w]+).*?/', $cls, $mat)) {
                 $module = $mat[1];
+            } else if (method_exists($this, 'getCurrentModule')) {
+                $module = $this->getCurrentModule();
             } else {
                 $module = '';
             }
