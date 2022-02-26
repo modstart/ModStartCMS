@@ -5,6 +5,7 @@ namespace ModStart\Data\Storage;
 
 use ModStart\Core\Input\Response;
 use ModStart\Data\AbstractDataStorage;
+use ModStart\Data\Event\DataFileUploadedEvent;
 
 class FileDataStorage extends AbstractDataStorage
 {
@@ -88,9 +89,7 @@ class FileDataStorage extends AbstractDataStorage
                     return Response::generate(-1, 'MultiPartUpload combile file failed (' . $hashFileSize . ',' . $token['size'] . ')');
                 }
                 $this->move($hashFile, $token['fullPath']);
-                if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
-                    \ModStart\Data\Event\DataFileUploadedEvent::fire(null, $category, $token['fullPath']);
-                }
+                DataFileUploadedEvent::fire(null, $category, $token['fullPath']);
                 $dataTemp = $this->repository->addTemp($category, $token['path'], $token['name'], $token['size']);
                 $data['data'] = $dataTemp;
                 $data['path'] = $token['fullPath'];

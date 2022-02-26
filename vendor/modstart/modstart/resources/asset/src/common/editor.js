@@ -98,37 +98,43 @@ var Editor = {
             }
         }, option);
 
+        var editorBasicToolBars = [
+            // 'fullscreen',
+            'source',
+            'autotypeset',
+            //'selectall', 'undo', 'redo',
+            'removeformat',
+            //'formatmatch',
+            //'pasteplain',
+            // 'template', '|',
+            'paragraph',
+            //'fontfamily',
+            'fontsize', 'forecolor', //'backcolor', //'|',
+            //'simpleupload', 'insertimage',
+            'uploadimage',
+            'insertvideo',
+            //'attachment', 'map',
+            'bold', 'italic', 'underline', //'fontborder',
+            'strikethrough',
+            //'superscript', 'subscript', 'blockquote',
+            //'insertorderedlist', 'insertunorderedlist',
+            //'rowspacingtop', 'rowspacingbottom', 'lineheight',
+            'indent', 'justifyleft', 'justifycenter', 'justifyright', //'justifyjustify', '|',
+            'link', 'unlink',
+            'insertcode',
+            //'imagenone', 'imageleft', 'imageright', 'imagecenter', //'|',
+            //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
+            //'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',
+            // 'formula', 'wechatcustomemotion'
+        ];
+
+        if ('__editorBasicToolBars' in window) {
+            editorBasicToolBars = window.__editorBasicToolBars;
+        }
+
         var editorOpt = $.extend({
             toolbars: [
-                [
-                    // 'fullscreen',
-                    'source',
-                    'autotypeset',
-                    //'selectall', 'undo', 'redo',
-                    'removeformat',
-                    //'formatmatch',
-                    //'pasteplain',
-                    // 'template', '|',
-                    'paragraph',
-                    //'fontfamily',
-                    'fontsize', 'forecolor', //'backcolor', //'|',
-                    //'simpleupload', 'insertimage',
-                    'uploadimage',
-                    'insertvideo',
-                    //'attachment', 'map',
-                    'bold', 'italic', 'underline', //'fontborder',
-                    'strikethrough',
-                    //'superscript', 'subscript', 'blockquote',
-                    //'insertorderedlist', 'insertunorderedlist',
-                    //'rowspacingtop', 'rowspacingbottom', 'lineheight',
-                    'indent', 'justifyleft', 'justifycenter', 'justifyright', //'justifyjustify', '|',
-                    'link', 'unlink',
-                    'insertcode',
-                    //'imagenone', 'imageleft', 'imageright', 'imagecenter', //'|',
-                    //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
-                    //'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',
-                    // 'formula', 'wechatcustomemotion'
-                ]
+                editorBasicToolBars
             ],
             serverUrl: opt.server,
             wordCount: false,
@@ -160,18 +166,23 @@ var Editor = {
             }
         }, option);
 
+        var editorSimpleToolBars = [
+            'fontsize', 'forecolor',
+            //'backcolor', '|',
+            'uploadimage', 'bold', 'italic', 'underline',
+            //'fontborder',
+            'strikethrough',
+            'insertcode',
+            //'superscript', 'subscript',
+            // 'emotion','wechatcustomemotion'
+        ];
+        if ('__editorSimpleToolBars' in window) {
+            editorSimpleToolBars = window.__editorSimpleToolBars;
+        }
+
         var editorOpt = $.extend({
             toolbars: [
-                [
-                    'fontsize', 'forecolor',
-                    //'backcolor', '|',
-                    'uploadimage', 'bold', 'italic', 'underline',
-                    //'fontborder',
-                    'strikethrough',
-                    'insertcode',
-                    //'superscript', 'subscript',
-                    // 'emotion','wechatcustomemotion'
-                ]
+                editorSimpleToolBars
             ],
             serverUrl: opt.server,
             wordCount: false,

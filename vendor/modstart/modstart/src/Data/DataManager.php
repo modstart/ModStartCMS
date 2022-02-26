@@ -4,12 +4,12 @@
 namespace ModStart\Data;
 
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Data\Event\DataFileUploadedEvent;
 use ModStart\Data\Storage\FileDataStorage;
 
 class DataManager
@@ -167,6 +167,7 @@ class DataManager
             return Response::generate(-7, 'Upload fail');
         }
         $storage->put($fullPath, $content);
+        DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath);
         $dataTemp = $storage->repository()->addTemp($category, $path, $filename, $size);
         $path = '/' . AbstractDataStorage::DATA_TEMP . '/' . $dataTemp['category'] . '/' . $dataTemp['path'];
         $fullPath = $path;
@@ -227,6 +228,7 @@ class DataManager
             return Response::generate(-7, 'Upload fail');
         }
         $storage->put($fullPath, $content);
+        DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath);
         $data = $storage->repository()->addData($category, $path, $filename, $size);
         $data = $storage->updateDriverDomain($data);
         $path = '/' . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];

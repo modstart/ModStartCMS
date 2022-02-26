@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7239636",
+      "name": "alipay",
+      "font_class": "alipay",
+      "unicode": "e715",
+      "unicode_decimal": 59157
+    },
+    {
       "icon_id": "380331",
       "name": "dot",
       "font_class": "dot-sm",

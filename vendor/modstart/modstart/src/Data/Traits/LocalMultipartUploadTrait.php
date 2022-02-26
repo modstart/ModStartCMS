@@ -5,6 +5,7 @@ namespace ModStart\Data\Traits;
 
 
 use ModStart\Core\Input\Response;
+use ModStart\Data\Event\DataFileUploadedEvent;
 
 trait LocalMultipartUploadTrait
 {
@@ -50,9 +51,7 @@ trait LocalMultipartUploadTrait
                 }
                 $this->saveLocalToRemote($hashFile, $token['fullPath']);
                 @unlink(public_path($hashFile));
-                if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
-                    \ModStart\Data\Event\DataFileUploadedEvent::fire($this->remoteType, $category, $token['fullPath']);
-                }
+                DataFileUploadedEvent::fire($this->remoteType, $category, $token['fullPath']);
                 $dataTemp = $this->repository->addTemp($category, $token['path'], $token['name'], $token['size']);
                 $data['data'] = $dataTemp;
                 $data['path'] = $token['fullPath'];

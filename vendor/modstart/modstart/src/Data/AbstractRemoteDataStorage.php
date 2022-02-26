@@ -10,6 +10,12 @@ abstract class AbstractRemoteDataStorage extends AbstractDataStorage
 {
     protected $remoteType = '';
 
+    public function driverName()
+    {
+        return $this->remoteType;
+    }
+
+
     public function domain()
     {
         return modstart_config()->getWithEnv($this->remoteType . '_Domain');

@@ -220,6 +220,9 @@ class AuthController extends ModuleBaseController
         }
         $code = $input->getTrimString('code');
         if (empty($code)) {
+            $code = $input->getTrimString('auth_code');
+        }
+        if (empty($code)) {
             return Response::generate(-1, '登录失败(code为空)', null, '/');
         }
         /** @var AbstractOauth $oauth */

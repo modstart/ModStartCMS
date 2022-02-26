@@ -23,6 +23,7 @@ use ModStart\Form\Type\FormMode;
 use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
+use Module\Member\Config\MemberAdminList;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Type\MemberStatus;
 use Module\Member\Util\MemberGroupUtil;
@@ -41,6 +42,7 @@ class MemberController extends Controller
             ->field(function ($builder) {
                 /** @var HasFields $builder */
                 $builder->id('id', 'ID');
+                MemberAdminList::callGridField($builder);
                 $builder->display('avatar', '头像')->hookRendering(function (AbstractField $field, $item, $index) {
                     $avatarSmall = AssetsUtil::fixOrDefault($item->avatar, 'asset/image/avatar.png');
                     $avatarBig = AssetsUtil::fixOrDefault($item->avatarBig, 'asset/image/avatar.png');
@@ -62,6 +64,7 @@ class MemberController extends Controller
                 }
                 if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
                     $builder->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
+                    $builder->date('vipExpire', 'VIP过期');
                 }
                 $builder->display('created_at', '注册时间');
             })

@@ -33,9 +33,6 @@ class MemberVipUtil
             $map = [];
             foreach (ModelUtil::all('member_vip_set', [], ['*'], ['sort', 'asc']) as $item) {
                 $map[intval($item['id'])] = $item;
-                if (!empty($item['isDefault'])) {
-                    $map[0] = $item;
-                }
             }
             return $map;
         });
@@ -59,6 +56,16 @@ class MemberVipUtil
         return self::get(null);
     }
 
+    public static function getDefaultVip()
+    {
+        foreach (self::map() as $vipId => $vip) {
+            if (!empty($vip['isDefault'])) {
+                return $vip;
+            }
+        }
+        return null;
+    }
+
     public static function get($vipId, $key = null)
     {
         $map = self::map();
@@ -66,15 +73,14 @@ class MemberVipUtil
             if (isset($map[$vipId])) {
                 return $map[$vipId];
             }
-            if (isset($map[0])) {
-                return $map[0];
-            }
+            return self::getDefaultVip();
         } else {
             if (isset($map[$vipId][$key])) {
                 return $map[$vipId][$key];
             }
-            if (isset($map[0][$key])) {
-                return $map[0][$key];
+            $vip = self::getDefaultVip();
+            if (isset($vip[$key])) {
+                return $vip[$key];
             }
         }
         return null;

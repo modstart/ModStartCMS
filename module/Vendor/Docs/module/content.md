@@ -9,7 +9,7 @@
 - Captcha 人机验证提供者
 - CensorImage 图片智能审核提供者
 - CensorText 文字智能审核提供者
-- ContentVerify 内容人工审核提供者
+- ContentVerify 内容审核提供者
 - HomePage 首页提供者
 - IDManager ID管理提供者
 - LiveStream 直播流提供者
@@ -25,9 +25,27 @@
 
 ## 使用教程
 
+### ContentVerify 内容审核提供者
+
+可以为网站提供一个审核系统，目前支持人工审核和智能审核，智能审核需要搭配 `CensorImage` 和 `CensorText` 可以实现智能审核
+
+目前图片智能审核提供者支持：
+
+- [魔众图片审核](/m/CensorImageTecmz)
+
+目前文字智能审核提供者支持：
+
+- [魔众文字审核](/m/CensorTextTecmz)
+
+使用方式请参见 [如何实现一个内容审核提供者](/m/Vendor/doc/ContentVerifyManual)
+
 ### Notifier 通知提供者
 
-可以为网站提供一个即时通知的功能，目前通知提供者支持邮件通知等
+可以为网站提供一个即时通知的功能，目前通知提供者支持：
+
+- [邮件消息通知](/m/NotifierEmail)
+- [钉钉消息通知](/m/NotifierDingTalk)
+- [企业微信消息通知](/m/NotifierWorkWeixin)
 
 第一步，注册通知类型
 
@@ -40,5 +58,13 @@ NotifierBizWidget::register('Xxx_NewOrder', 'XXX-新订单');
 第二步，在业务处调用通知
 
 ```php
+// 使用单一内容
 NotifierProvider::notify('Xxx_NewOrder', 'XXX-新订单', "订单号：xxx，支付金额：xxx");
+// 或者数组内容
+NotifierProvider::notify('Xxx_NewOrder', '有新的咨询', [
+    '单号' => 'xxxxxxxxx',
+    '时间' => date('Y-m-d H:i:s'),
+    '内容' => '想请问一下消息通知靠谱吗？',
+    'QQ' => '2131311518',
+]);
 ```

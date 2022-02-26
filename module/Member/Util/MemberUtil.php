@@ -445,6 +445,9 @@ class MemberUtil
         $imageMedium = (string)Image::make($avatarData)->resize(200, 200)->encode($avatarExt, 75);
         $image = (string)Image::make($avatarData)->resize(50, 50)->encode($avatarExt, 75);
 
+        if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
+            \ModStart\Data\Event\DataFileUploadedEvent::setParam('imageCompressIgnore', true);
+        }
         $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig);
         if ($retBig['code']) {
             return Response::generate(-1, '头像存储失败（' . $retBig['msg'] . '）');
@@ -463,6 +466,9 @@ class MemberUtil
             if ($retBig['code']) {
                 return Response::generate(-1, '头像存储失败（' . $ret['msg'] . '）');
             }
+        }
+        if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
+            \ModStart\Data\Event\DataFileUploadedEvent::forgetParam('imageCompressIgnore');
         }
         self::update($memberUser['id'], [
             'avatarBig' => $retBig['data']['fullPath'],

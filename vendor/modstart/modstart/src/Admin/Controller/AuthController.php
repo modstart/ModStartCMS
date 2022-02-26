@@ -7,9 +7,12 @@ namespace ModStart\Admin\Controller;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
 use ModStart\Admin\Auth\Admin;
+use ModStart\Admin\Event\AdminUserLoginedEvent;
+use ModStart\Admin\Event\AdminUserLogoutEvent;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Misc\Captcha\CaptchaFacade;
 
@@ -110,6 +113,7 @@ class AuthController extends Controller
             Admin::addInfoLog($adminUser['id'], L('Login Success'), [
                 'IP' => Request::ip(),
             ]);
+            AdminUserLoginedEvent::fire($adminUser['id'], Request::ip(), AgentUtil::getUserAgent());
             $redirect = $input->getTrimString('redirect', modstart_admin_url());
             return Response::redirect($redirect);
         }
@@ -122,7 +126,9 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $adminUserId = Admin::id();
         Session::forget(Admin::ADMIN_USER_ID_SESSION_KEY);
+        AdminUserLogoutEvent::fire($adminUserId, Request::ip(), AgentUtil::getUserAgent());
         if (modstart_config('adminSSOClientEnable', false)) {
             $input = InputPackage::buildFromInput();
             if ($input->getTrimString('server', '') != 'true') {

@@ -40,6 +40,11 @@ abstract class AbstractDataStorage
         $this->repository = new DatabaseDataRepository();
     }
 
+    public function driverName()
+    {
+        return null;
+    }
+
     abstract public function init();
 
     abstract public function has($file);

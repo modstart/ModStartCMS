@@ -7,10 +7,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use ModStart\Admin\Event\AdminUserLoginFailedEvent;
 use ModStart\Admin\Type\AdminLogType;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\AgentUtil;
 
 class Admin
 {
@@ -62,6 +64,7 @@ class Admin
     {
         $adminUser = ModelUtil::get('admin_user', ['phone' => $phone]);
         if (empty($adminUser)) {
+            AdminUserLoginFailedEvent::fire(0, $username, Request::ip(), AgentUtil::getUserAgent());
             return Response::generate(-1, L('User Not Exists'));
         }
         ModelUtil::update('admin_user', $adminUser['id'], [
@@ -75,9 +78,11 @@ class Admin
     {
         $adminUser = ModelUtil::get('admin_user', ['username' => $username]);
         if (empty($adminUser)) {
+            AdminUserLoginFailedEvent::fire(0, $username, Request::ip(), AgentUtil::getUserAgent());
             return Response::generate(-1, L('User Not Exists'));
         }
         if ($adminUser['password'] != self::passwordEncrypt($password, $adminUser['passwordSalt'])) {
+            AdminUserLoginFailedEvent::fire($adminUser['id'], $username, Request::ip(), AgentUtil::getUserAgent());
             return Response::generate(-2, L('Password Incorrect'));
         }
         ModelUtil::update('admin_user', $adminUser['id'], [
