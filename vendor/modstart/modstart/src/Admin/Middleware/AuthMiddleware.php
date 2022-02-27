@@ -9,11 +9,22 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
+use ModStart\App\Core\AccessGate;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 
 class AuthMiddleware
 {
+    /**
+     * @var AccessGate[]
+     */
+    private static $gates = [];
+
+    public static function addGate($cls)
+    {
+        self::$gates[] = $cls;
+    }
+
     protected $authIgnores = [
         '\ModStart\Admin\Controller\AuthController',
         '\ModStart\Admin\Controller\UtilController',
@@ -197,6 +208,15 @@ class AuthMiddleware
         View::share('_adminUser', $adminUser);
         View::share('_adminUserId', $adminUserId);
         View::share('_controllerMethod', $urlControllerMethod);
+
+        foreach (self::$gates as $item) {
+            /** @var AccessGate $instance */
+            $instance = app($item);
+            $ret = $instance->check($request);
+            if (Response::isError($ret)) {
+                return $ret;
+            }
+        }
 
         return $next($request);
     }

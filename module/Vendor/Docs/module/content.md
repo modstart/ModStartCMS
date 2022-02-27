@@ -12,6 +12,7 @@
 - ContentVerify 内容审核提供者
 - HomePage 首页提供者
 - IDManager ID管理提供者
+- LBS 地理位置服务提供者
 - LiveStream 直播流提供者
 - MailSender 邮件发送提供者
 - Notifier 通知提供者

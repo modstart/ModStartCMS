@@ -265,4 +265,20 @@ class Tecmz
         return $this->request('/censor_text', $post);
     }
 
+    /**
+     * IP地址查询
+     *
+     * @param string $ip
+     * @return array|mixed
+     *
+     * 失败 [code=>-1,msg=>'<失败原因>',data=>null]
+     * 成功 [code=>0,msg=>'ok',data=>[ country=>'',province=>'',city=>'',district=>'',isp=>'', ]]
+     */
+    public function ipToLocation($ip)
+    {
+        $post = [];
+        $post['ip'] = $ip;
+        return $this->request('/ip_to_location', $post);
+    }
+
 }
