@@ -18,29 +18,31 @@ class DatabaseMonitor
     {
         self::$queryCountPerRequest = 0;
         self::$queryCountPerRequestSqls = [];
-
-        DB::listen(function ($query, $bindings = null, $time = null, $connectionName = null) {
-            self::$queryCountPerRequest++;
-            $sql = $query;
-            if (method_exists(\ModStart\ModStart::class, 'env')
-                && \ModStart\ModStart::env() == 'laravel9') {
-                /** @var QueryExecuted $query */
-                $sql = $query->sql;
-                $bindings = $query->bindings;
-                $time = $query->time;
-            }
-            foreach ($bindings as $i => $binding) {
-                if (is_string($binding)) {
-                    $bindings[$i] = Str::limit($binding, 100);
+        try {
+            DB::listen(function ($query, $bindings = null, $time = null, $connectionName = null) {
+                self::$queryCountPerRequest++;
+                $sql = $query;
+                if (method_exists(\ModStart\ModStart::class, 'env')
+                    && \ModStart\ModStart::env() == 'laravel9') {
+                    /** @var QueryExecuted $query */
+                    $sql = $query->sql;
+                    $bindings = $query->bindings;
+                    $time = $query->time;
                 }
-            }
-            $param = json_encode($bindings, JSON_UNESCAPED_UNICODE);
-            self::$queryCountPerRequestSqls[] = "$sql, $param";
-            // Log::info("SQL $sql, " . json_encode($bindings));
-            if ($time > 500) {
-                Log::warning("LONG_SQL ${time}ms, $sql, $param");
-            }
-        });
+                foreach ($bindings as $i => $binding) {
+                    if (is_string($binding)) {
+                        $bindings[$i] = Str::limit($binding, 100);
+                    }
+                }
+                $param = json_encode($bindings, JSON_UNESCAPED_UNICODE);
+                self::$queryCountPerRequestSqls[] = "$sql, $param";
+                // Log::info("SQL $sql, " . json_encode($bindings));
+                if ($time > 500) {
+                    Log::warning("LONG_SQL ${time}ms, $sql, $param");
+                }
+            });
+        } catch (\Exception $e) {
+        }
     }
 
     public static function getQueryCountPerRequest()
