@@ -22,7 +22,12 @@
                 </a>
             @endif
         @endif
-            {!! $gridOperateAppend !!}
+        @if($canImport)
+            <a href="javascript:;" class="btn btn-primary" data-import-button>
+                <i class="iconfont icon-upload"></i> {{L('Import')}}
+            </a>
+        @endif
+        {!! $gridOperateAppend !!}
     </div>
     <div data-search class="ub-lister-search">
         @foreach($filters as $filter)
@@ -40,6 +45,11 @@
                 </button>
                 <button class="btn" data-reset-search-button>
                     <i class="iconfont icon-refresh"></i> {{L('Reset')}}
+                </button>
+            @endif
+            @if($canExport)
+                <button class="btn" data-export-button>
+                    <i class="iconfont icon-download"></i> {{L('Export')}}
                 </button>
             @endif
         </div>
@@ -177,6 +187,7 @@
                     delete: '{{$urlDelete}}',
                     show: '{{$urlShow}}',
                     export: '{{$urlExport}}',
+                    import: '{{$urlImport}}',
                     sort: '{{$urlSort}}',
                 },
                 dialog: {
@@ -184,6 +195,7 @@
                     addWindow: null,
                     edit: null,
                     editWindow: null,
+                    import: null
                 }
             };
             @if($canAdd)
@@ -342,6 +354,32 @@
                         }
                     });
                 })
+            });
+            @endif
+            @if($canExport)
+            $lister.find('[data-export-button]').on('click', function () {
+                lister.prepareSearch();
+                var param = JSON.stringify(lister.getParam());
+                var url = lister.realtime.url.export + '?_param='+MS.util.urlencode(param);
+                window.open(url,'_blank');
+            });
+            @endif
+            @if($canImport)
+            $lister.find('[data-import-button]').on('click', function () {
+                lister.realtime.dialog.import = layer.open({
+                    type: 2,
+                    title: "{{ empty($titleImport) ? ($title?L('Import').$title:L('Import')) : $titleImport }}",
+                    shadeClose: true,
+                    shade: 0.5,
+                    maxmin: false,
+                    scrollbar: false,
+                    area: {!! json_encode($importDialogSize) !!},
+                    content: lister.realtime.url.import,
+                    success: function (layerDom, index) {
+                    },
+                    end: function () {
+                    }
+                });
             });
             @endif
             $lister.data('lister', lister);

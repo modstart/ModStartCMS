@@ -73,6 +73,12 @@ class CRUDUtil
         if ($grid->canSort() && ($url = action($class . '@sort', $param))) {
             $grid->urlSort($url);
         }
+        if ($grid->canExport() && ($url = action($class . '@export', $param))) {
+            $grid->urlExport($url);
+        }
+        if ($grid->canImport() && ($url = action($class . '@import', $param))) {
+            $grid->urlImport($url);
+        }
     }
 
     public static function jsGridRefresh($index = 0)

@@ -35,11 +35,14 @@ use ModStart\Support\Manager\FieldManager;
  * @method  Grid|mixed titleAdd($value = null)
  * @method  Grid|mixed titleEdit($value = null)
  * @method  Grid|mixed titleShow($value = null)
+ * @method  Grid|mixed titleExport($value = null)
+ * @method  Grid|mixed titleImport($value = null)
  * @method  Grid|mixed canAdd($value = null)
  * @method  Grid|mixed canEdit($value = null)
  * @method  Grid|mixed canDelete($value = null)
  * @method  Grid|mixed canShow($value = null)
  * @method  Grid|mixed canExport($value = null)
+ * @method  Grid|mixed canImport($value = null)
  * @method  Grid|mixed canMultiSelectItem($value = null)
  * @method  Grid|mixed canSingleSelectItem($value = null)
  * @method  Grid|mixed urlAdd($value = null)
@@ -47,10 +50,12 @@ use ModStart\Support\Manager\FieldManager;
  * @method  Grid|mixed urlDelete($value = null)
  * @method  Grid|mixed urlShow($value = null)
  * @method  Grid|mixed urlExport($value = null)
+ * @method  Grid|mixed urlImport($value = null)
  * @method  Grid|mixed urlSort($value = null)
  * @method  Grid|mixed addDialogSize($value = null)
  * @method  Grid|mixed editDialogSize($value = null)
  * @method  Grid|mixed showDialogSize($value = null)
+ * @method  Grid|mixed importDialogSize($value = null)
  * @method  Grid|mixed addBlankPage($value = null)
  * @method  Grid|mixed editBlankPage($value = null)
  * @method  Grid|mixed defaultOrder($value = null)
@@ -93,11 +98,13 @@ class Grid
         'titleAdd',
         'titleEdit',
         'titleShow',
+        'titleImport',
         'canAdd',
         'canEdit',
         'canDelete',
         'canShow',
         'canExport',
+        'canImport',
         'canMultiSelectItem',
         'canSingleSelectItem',
         'canBatchDelete',
@@ -108,10 +115,12 @@ class Grid
         'urlDelete',
         'urlShow',
         'urlExport',
+        'urlImport',
         'urlSort',
         'addDialogSize',
         'editDialogSize',
         'showDialogSize',
+        'importDialogSize',
         'addBlankPage',
         'editBlankPage',
         'enablePagination',
@@ -132,11 +141,13 @@ class Grid
     private $titleAdd;
     private $titleEdit;
     private $titleShow;
+    private $titleImport;
     private $canAdd = true;
     private $canEdit = true;
     private $canDelete = true;
     private $canShow = true;
     private $canExport = false;
+    private $canImport = false;
     private $canMultiSelectItem = false;
     private $canSingleSelectItem = false;
     private $canBatchDelete = false;
@@ -147,10 +158,12 @@ class Grid
     private $urlDelete;
     private $urlShow;
     private $urlExport;
+    private $urlImport;
     private $urlSort;
     private $addDialogSize = ['95%', '95%'];
     private $editDialogSize = ['95%', '95%'];
     private $showDialogSize = ['95%', '95%'];
+    private $importDialogSize = ['95%', '95%'];
     private $addBlankPage = false;
     private $editBlankPage = false;
     private $enablePagination = true;

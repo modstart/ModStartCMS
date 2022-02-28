@@ -690,6 +690,8 @@ class Form implements Renderable
             case 'enablePagination':
             case 'defaultOrder':
             case 'canShow':
+            case 'canExport':
+            case 'canImport':
             case 'canBatchDelete':
             case 'canMultiSelectItem':
             case 'addBlankPage':

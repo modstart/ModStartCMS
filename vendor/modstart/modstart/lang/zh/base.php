@@ -185,5 +185,7 @@ return [
     'Expand All' => '展开全部',
     'Phone' => '手机',
     'Email' => '邮箱',
+    'Export' => '导出',
+    'Import' => '导入',
     'Copy Links' => '复制链接',
 ];

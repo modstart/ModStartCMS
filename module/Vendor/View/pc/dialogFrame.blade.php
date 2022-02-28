@@ -15,6 +15,8 @@
                 $foot.find('[data-submit]').show().on('click', function () {
                     $dialog.find('[data-ajax-form]').submit();
                 });
+            }else{
+                $foot.hide();
             }
             $foot.find('[data-close]').on('click', function () {
                 parent.layer.closeAll();

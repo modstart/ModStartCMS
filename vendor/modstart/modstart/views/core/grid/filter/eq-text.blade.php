@@ -8,9 +8,13 @@
     (function () {
         var $field = $('[data-grid-filter-field={{$id}}]');
         $field.data('get', function () {
+            var value = $('[data-grid-filter-field={{$id}}] input').val();
+            if(''===value){
+                return null;
+            }
             return {
                 '{{$column}}': {
-                    eq: $('[data-grid-filter-field={{$id}}] input').val()
+                    eq: value
                 }
             };
         });
