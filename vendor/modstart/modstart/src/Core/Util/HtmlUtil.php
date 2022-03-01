@@ -85,7 +85,6 @@ class HtmlUtil
         }
         return Purifier::cleanHtml($content, [
             'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
-            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align,max-width,border,width',
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => true,
             'CSS.MaxImgLength' => null,
@@ -94,28 +93,35 @@ class HtmlUtil
 
     public static function filter2($content)
     {
-        preg_match_all('/<iframe.*?<\\/iframe>/i', $content, $mat1);
-        preg_match_all('/<audio.*?<\\/audio>/i', $content, $mat2);
         $replaces = [
+            'index' => 0,
             'search' => [],
             'replace' => [],
+            'newReplace' => [],
         ];
-        $index = 0;
-        foreach (array_merge($mat1[0], $mat2[0]) as $v) {
-            $replaces['search'][] = $v;
-            $replaces['replace'][] = '--iframe--' . ($index++) . '--';
-        }
-        $content = str_replace($replaces['search'], $replaces['replace'], $content);
 
+        preg_match_all('%<audio.*?src="((http://|https://|//)?[a-zA-Z0-9\\./]+)">.*?</audio>%i', $content, $audioMat);
+        foreach ($audioMat[0] as $i => $v) {
+            $replaces['search'][] = $v;
+            $replaces['replace'][] = '--custom-element--' . ($replaces['index']++) . '--';
+            $src = $audioMat[1][$i];
+            $replaces['newReplace'][] = "<audio src=\"$src\"></audio>";
+        }
+
+        $content = str_replace($replaces['search'], $replaces['replace'], $content);
         $content = Purifier::cleanHtml($content, [
-            'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
-            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align,max-width,border,width',
+            'HTML.Allowed' => join(',', [
+                'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
+                'table[style|cellspacing|width],tbody[style],tr[style],td[style|width|valign]',
+                'iframe[src]',
+            ]),
+            'HTML.SafeIframe' => true,
+            'URI.SafeIframeRegexp' => "%^(http://|https://|//)?([a-zA-Z0-9\\./]+)$%",
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => true,
             'CSS.MaxImgLength' => null,
         ]);
-
-        return str_replace($replaces['replace'], $replaces['search'], $content);
+        return str_replace($replaces['replace'], $replaces['newReplace'], $content);
     }
 
     /**

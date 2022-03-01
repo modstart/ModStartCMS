@@ -3,6 +3,7 @@
 
 namespace App\Web\Controller;
 
+use ModStart\Core\Util\HtmlUtil;
 use Module\Vendor\Installer\Util\InstallerUtil;
 use Module\Vendor\Provider\HomePage\HomePageProvider;
 
@@ -14,8 +15,8 @@ class IndexController extends BaseController
         return HomePageProvider::call(__METHOD__, '\\Module\\Cms\\Web\\Controller\\IndexController@index');
     }
 
-    public function test()
+    public function testx()
     {
-
+        return HtmlUtil::filter2(file_get_contents(__DIR__ . '/aa.html'));
     }
 }

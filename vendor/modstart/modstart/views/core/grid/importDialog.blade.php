@@ -28,7 +28,7 @@
 @section('bodyAppend')
     <script src="@asset('asset/vendor/vue.js')"></script>
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
-    <script src="@asset('asset/entry/gridImport.js')"></script>
+    <script src="@asset('asset/entry/gridExcelWork.js')"></script>
     <script>
         $(function (){
             new Vue({
@@ -71,7 +71,7 @@
                             data.shift()
                             let processed = 0
                             let total = data.length
-                            new window.__gridImport.ListDispatcher()
+                            new window.__gridExcelWork.ListDispatcher()
                                 .set(data)
                                 .chunk(1)
                                 .error((msg, me) => {
@@ -111,12 +111,12 @@
                                 })
                                 .start()
                         }
-                        new window.__gridImport.ExcelReader().file(this.file).parse((data) => {
+                        new window.__gridExcelWork.ExcelReader().file(this.file).parse((data) => {
                             upload(data)
                         })
                     },
                     doDownloadTemplate() {
-                        new window.__gridImport.ExcelWriter()
+                        new window.__gridExcelWork.ExcelWriter()
                             .data([this.importHeader].concat({!! json_encode($template) !!}))
                             .filename('{{$templateName}}.xlsx')
                             .download();
