@@ -17,6 +17,7 @@
                 });
             }else{
                 $foot.hide();
+                $dialog.addClass('no-foot');
             }
             $foot.find('[data-close]').on('click', function () {
                 parent.layer.closeAll();

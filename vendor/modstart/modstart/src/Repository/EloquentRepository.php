@@ -182,6 +182,7 @@ class EloquentRepository extends Repository
                 }
             }
         }
+        // var_dump($model->grid()->isDynamicModel());exit();
         $joins = $model->grid()->gridFilterJoins();
         if (!empty($joins)) {
             $methodMap = [
@@ -195,6 +196,7 @@ class EloquentRepository extends Repository
                 call_user_func_array([$query, $methodMap[$mode]], $join);
             }
         }
+        // var_dump($model->getQueries());exit();
         $model->getQueries()->each(function ($value) use (&$query, $tableColumns) {
             if ($value['method'] == 'paginate') {
                 $value['arguments'][1] = $tableColumns;

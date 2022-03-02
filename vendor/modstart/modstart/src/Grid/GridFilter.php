@@ -122,7 +122,10 @@ class GridFilter
         $conditions = [];
         $search = $this->search;
         if (!empty($search)) {
-            while ($searchGroup = array_shift($search)) {
+            foreach ($search as $searchGroup) {
+                if (!is_array($searchGroup)) {
+                    continue;
+                }
                 foreach ($searchGroup as $columnName => $queryInfo) {
                     foreach ($this->filters() as $filter) {
                         if ($columnName === $filter->column() && isset($queryInfo[$filter->name()])) {
@@ -140,6 +143,7 @@ class GridFilter
                 }
             }
         }
+        // var_dump($search);exit();
         return array_filter($conditions);
     }
 

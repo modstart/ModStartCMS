@@ -365,6 +365,7 @@ class Grid
                 'grid' => $this,
             ])->render();
         }
+        // print_r($input->getArray('search'));exit();
         $this->gridFilter->setSearch($input->getArray('search'));
         $items = $this->gridFilter->execute();
         if ($this->engine == GridEngine::TREE) {

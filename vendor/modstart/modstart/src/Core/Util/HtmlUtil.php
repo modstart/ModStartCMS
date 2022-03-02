@@ -112,8 +112,9 @@ class HtmlUtil
         $content = Purifier::cleanHtml($content, [
             'HTML.Allowed' => join(',', [
                 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
-                'table[style|cellspacing|width],tbody[style],tr[style],td[style|width|valign]',
+                'table[style|cellspacing|width],tbody[style],tr[style],td[style|rowspan|colspan|width|valign]',
                 'iframe[src]',
+//                'section[style]',
             ]),
             'HTML.SafeIframe' => true,
             'URI.SafeIframeRegexp' => "%^(http://|https://|//)?([a-zA-Z0-9\\./]+)$%",

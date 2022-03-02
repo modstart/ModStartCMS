@@ -209,3 +209,7 @@ var Editor = {
 };
 
 window.api.editor = Editor;
+if(!('MS' in window)){
+    window.MS = {}
+}
+window.MS.editor = Editor;
