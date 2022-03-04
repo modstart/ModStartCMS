@@ -181,6 +181,7 @@ var UploadButton = function (selector, option) {
 
 window.api.uploadButton = UploadButton
 
-MS.uploadButton = {
-
+if(!('MS' in window)){
+    window.MS = {}
 }
+window.MS.uploadButton = UploadButton
