@@ -475,7 +475,7 @@ export default {
                     category: this.category,
                     name: '',
                     path: this.input.path,
-                    fullPath: '',
+                    fullPath: this.input.path,
                     type: '',
                 })
                 this.$emit('on-select', records)

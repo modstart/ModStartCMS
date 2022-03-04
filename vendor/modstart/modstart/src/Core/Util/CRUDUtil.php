@@ -54,7 +54,7 @@ class CRUDUtil
                     $input = InputPackage::buildFromInput();
                     $query = [];
                     $query['_pid'] = $input->get('_pid', $grid->treeRootPid());
-                    $grid->urlAdd($url . '?' . http_build_query($query));
+                    $grid->urlAdd($url . (strpos($url, '?') > 0 ? '&' : '?') . http_build_query($query));
                     break;
                 default:
                     $grid->urlAdd($url);

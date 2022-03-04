@@ -3,7 +3,8 @@
         <div class="tw-pb-3">
             <div class="ub-nav-tab">
                 @foreach($scopes as $scope)
-                    <a class="{{$scopeCurrent==$scope['name']?'active':''}}" href="?{{\ModStart\Core\Input\Request::mergeQueries(['_scope'=>$scope['name']])}}">
+                    <a class="{{$scopeCurrent==$scope['name']?'active':''}}"
+                       href="?{{\ModStart\Core\Input\Request::mergeQueries(['_scope'=>$scope['name']])}}">
                         {{$scope['title']}}
                     </a>
                 @endforeach
@@ -80,12 +81,12 @@
             total: 1,
             head: []
         };
-        var processArea = function(area) {
-            if(/^(\d+)px$/.test(area[0])){
-                area[0] = Math.min($(window).width(),parseInt(area[0]))+'px';
+        var processArea = function (area) {
+            if (/^(\d+)px$/.test(area[0])) {
+                area[0] = Math.min($(window).width(), parseInt(area[0])) + 'px';
             }
-            if(/^(\d+)px$/.test(area[1])){
-                area[1] = Math.min($(window).height(),parseInt(area[1]))+'px';
+            if (/^(\d+)px$/.test(area[1])) {
+                area[1] = Math.min($(window).height(), parseInt(area[1])) + 'px';
             }
             return area;
         };
@@ -112,12 +113,12 @@
         layui.extend({
             mstable: window.__msCDN + 'asset/layui/lay/ext/mstable.js?v20220119'
         });
-        layui.use(['table', 'laypage','mstable'], function () {
+        layui.use(['table', 'laypage', 'mstable'], function () {
             var table = layui.table.render({
                 id: '{{$id}}Table',
                 elem: '#{{$id}}Table',
                 @if($canMultiSelectItem && ( $batchOperatePrepend || ($canDelete && $canBatchDelete)  ))
-                    toolbar: '#{{$id}}TableHeadToolbar',
+                toolbar: '#{{$id}}TableHeadToolbar',
                 @endif
                 defaultToolbar: [],
                 page: false,
@@ -130,7 +131,7 @@
                 cellMinWidth: 100,
                 cols: [[]],
                 data: [],
-                done: function() {
+                done: function () {
                     layui.mstable.render(this);
                 }
             });
@@ -153,9 +154,9 @@
                 render: function (data) {
                     listerData = data;
                     @if($canSingleSelectItem)
-                        data.head.splice(0, 0, {type: 'radio'});
+                    data.head.splice(0, 0, {type: 'radio'});
                     @elseif($canMultiSelectItem)
-                        data.head.splice(0, 0, {type: 'checkbox'});
+                    data.head.splice(0, 0, {type: 'checkbox'});
                     @endif
                     $grid.find('[data-addition]').html(data.addition || '');
                     layui.table.reload('{{$id}}Table', {
@@ -168,8 +169,8 @@
                         curr: data.page,
                         count: data.total,
                         limit: data.pageSize,
-                        limits: [10,20,50,100],
-                        layout: [ 'limit', 'prev', 'page', 'next','count',],
+                        limits: [10, 20, 50, 100],
+                        layout: ['limit', 'prev', 'page', 'next', 'count',],
                         jump: function (obj, first) {
                             if (!first) {
                                 lister.setPage(obj.curr);
@@ -207,7 +208,7 @@
                     shade: 0.5,
                     maxmin: false,
                     scrollbar: false,
-                    area: processArea( {!! json_encode($addDialogSize) !!} ),
+                    area: processArea({!! json_encode($addDialogSize) !!}),
                     content: lister.realtime.url.add,
                     success: function (layerDom, index) {
                         lister.realtime.dialog.addWindow = $(layerDom).find('iframe').get(0).contentWindow;
@@ -233,8 +234,8 @@
                     shade: 0.5,
                     maxmin: false,
                     scrollbar: false,
-                    area: processArea( {!! json_encode($editDialogSize) !!} ),
-                    content: lister.realtime.url.edit + '?_id=' + id,
+                    area: processArea({!! json_encode($editDialogSize) !!}),
+                    content: lister.realtime.url.edit + (lister.realtime.url.edit && lister.realtime.url.edit.indexOf('?') >= 0 ? '&' : '?') + '_id=' + id,
                     success: function (layerDom, index) {
                         lister.realtime.dialog.editWindow = $(layerDom).find('iframe').get(0).contentWindow;
                         lister.realtime.dialog.editWindow.addEventListener('modstart:form.submitted', function (e) {
@@ -313,7 +314,7 @@
                     maxmin: false,
                     scrollbar: false,
                     area: {!! json_encode($showDialogSize) !!},
-                    content: lister.realtime.url.show + '?_id=' + id,
+                    content: lister.realtime.url.show + (lister.realtime.url.show && lister.realtime.url.show.indexOf('?') >= 0 ? '&' : '?') + '_id=' + id,
                     success: function (layerDom, index) {
                     },
                     end: function () {
@@ -360,8 +361,8 @@
             $lister.find('[data-export-button]').on('click', function () {
                 lister.prepareSearch();
                 var param = JSON.stringify(lister.getParam());
-                var url = lister.realtime.url.export + '?_param='+MS.util.urlencode(param);
-                window.open(url,'_blank');
+                var url = lister.realtime.url.export + '?_param=' + MS.util.urlencode(param);
+                window.open(url, '_blank');
             });
             @endif
             @if($canImport)
@@ -407,16 +408,16 @@
             };
         });
         @if($canBatchSelect || $canSingleSelectItem || $canMultiSelectItem)
-            setTimeout(function () {
-                $('body > .ub-panel-dialog .panel-dialog-foot [data-submit]').show().on('click',function(){
-                    var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
-                    var items = window.__grids.instances['{{$id}}'].getCheckedItems();
-                    // console.log('itemSelected',ids, items);
-                    window.parent.__dialogSelectIds = ids;
-                    window.parent.__dialogSelectItems = items;
-                    parent.layer.closeAll();
-                });
-            },0);
+        setTimeout(function () {
+            $('body > .ub-panel-dialog .panel-dialog-foot [data-submit]').show().on('click', function () {
+                var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
+                var items = window.__grids.instances['{{$id}}'].getCheckedItems();
+                // console.log('itemSelected',ids, items);
+                window.parent.__dialogSelectIds = ids;
+                window.parent.__dialogSelectItems = items;
+                parent.layer.closeAll();
+            });
+        }, 0);
         @endif
     })();
 </script>
