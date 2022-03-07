@@ -4,7 +4,7 @@ namespace ModStart\Core\Util;
 
 class StrUtil
 {
-    
+
     public static function mask($subject, $startIndex = null, $endIndex = null, $maskChar = '*')
     {
         $strLen = strlen($subject);
@@ -95,6 +95,20 @@ class StrUtil
             }
         }
         return false;
+    }
+
+    /**
+     * 特殊字符处理<200b><200c><200d>
+     * @param string $value
+     */
+    public static function filterSpecialChars($value)
+    {
+        $chars = [
+            "\xe2\x80\x8b",
+            "\xe2\x80\x8c",
+            "\xe2\x80\x8b",
+        ];
+        return str_replace($chars, '', $value);
     }
 
 }
