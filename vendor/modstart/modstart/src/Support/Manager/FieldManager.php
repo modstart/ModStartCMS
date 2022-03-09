@@ -58,6 +58,7 @@ class FieldManager
             'icon' => \ModStart\Field\Icon::class,
 
             'layoutGrid' => \ModStart\Layout\LayoutGrid::class,
+            'layoutTab' => \ModStart\Layout\LayoutTab::class,
         ];
 
         foreach ($map as $abstract => $class) {

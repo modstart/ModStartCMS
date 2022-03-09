@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use ModStart\Field\AbstractField;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Layout\LayoutGrid;
+use ModStart\Layout\LayoutTab;
 
 /**
  * 字段管理能力
@@ -56,8 +57,10 @@ use ModStart\Layout\LayoutGrid;
  * @method \ModStart\Field\Icon           icon($column, $label = '')
  * @method \ModStart\Field\Custom         custom($column, $label = '')
  *
- * $callback = function (LayoutGrid $grid) { $grid->layoutColumn(4, function ($builder) { }); });
+ * $callback = function (LayoutGrid $layout) { $layout->layoutColumn(4, function ($builder) { }); });
  * @method \ModStart\Layout\LayoutGrid    layoutGrid($callback)
+ * $callback = function (LayoutTab $layout) { $layout->tab('title',closure});
+ * @method \ModStart\Layout\LayoutTab     layoutTab($callback)
  */
 trait HasFields
 {

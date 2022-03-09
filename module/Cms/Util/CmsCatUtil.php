@@ -6,6 +6,7 @@ namespace Module\Cms\Util;
 
 use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TreeUtil;
 use Module\Cms\Type\CatUrlMode;
 
@@ -123,7 +124,7 @@ class CmsCatUtil
                 $children[] = $cat;
             }
         }
-        return $children;
+        return ArrayUtil::sortByKey($children, 'sort', 'asc');
     }
 
     public static function root($catId)

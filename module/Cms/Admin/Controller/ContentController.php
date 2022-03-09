@@ -24,6 +24,7 @@ use ModStart\Form\Form;
 use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
+use ModStart\Layout\LayoutTab;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Widget\TextLink;
 use Module\Cms\Type\CmsContentVerifyStatus;
@@ -126,6 +127,7 @@ class ContentController extends Controller
                 ]);
             })->width(500);
         }
+        $grid->display('updated_at', L('Updated At'));
         if (modstart_config('CmsMemberPost_Enable', false)) {
             $grid->hookItemOperateRendering(function (ItemOperate $itemOperate) {
                 /** @var \stdClass $item */
@@ -212,93 +214,108 @@ class ContentController extends Controller
             'modelId' => 'modelId',
         ]);
         $list = TreeUtil::treeToListWithLevel($tree, 'id', 'title', 'pid', 0, ['modelId' => 'modelId']);
-        $options = array_build(array_filter($list, function ($v) {
+        $catOptions = array_build(array_filter($list, function ($v) {
             return $v['modelId'] == $this->modelId;
         }), function ($k, $v) {
             return [$v['id'], str_repeat('|--', $v['level']) . $v['title']];
         });
-        $form->select('catId', '栏目')->options($options);
-        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
-            $form->text('title', '标题')->required();
-        }
-        if (!empty($this->model['_customFields'])) {
-            $fields = $this->model['_customFields'];
-            foreach ($fields as $field) {
-                $f = null;
-                $options = [];
-                if (!empty($field['fieldData']['options'])) {
-                    $options = array_build($field['fieldData']['options'], function ($k, $v) {
-                        return [$v, $v];
-                    });
+        $form->layoutTab(function (LayoutTab $layout) use ($form, $catOptions) {
+            $layout->tab('基本信息', function () use ($form, $catOptions) {
+                $form->select('catId', '栏目')->options($catOptions);
+                if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+                    $form->text('title', '标题')->required();
                 }
-                switch ($field['fieldType']) {
-                    case CmsModelFieldType::TEXT:
-                        $f = $form->text($field['name'], $field['title']);
-                        break;
-                    case CmsModelFieldType::TEXTAREA:
-                        $f = $form->textarea($field['name'], $field['title']);
-                        break;
-                    case CmsModelFieldType::RADIO:
-                        $f = $form->radio($field['name'], $field['title'])->options($options);
-                        break;
-                    case CmsModelFieldType::SELECT:
-                        $f = $form->select($field['name'], $field['title'])->options($options);
-                        break;
-                    case CmsModelFieldType::CHECKBOX:
-                        $f = $form->checkbox($field['name'], $field['title'])->options($options);
-                        break;
-                    case CmsModelFieldType::IMAGE:
-                        $f = $form->image($field['name'], $field['title']);
-                        break;
-                    case CmsModelFieldType::FILE:
-                        $f = $form->file($field['name'], $field['title']);
-                        break;
-                    case CmsModelFieldType::DATE:
-                        $f = $form->date($field['name'], $field['title']);
-                        break;
-                    case CmsModelFieldType::DATETIME:
-                        $f = $form->datetime($field['name'], $field['title']);
-                        break;
-                    case CmsModelFieldType::RICH_TEXT:
-                        $f = $form->richHtml($field['name'], $field['title']);
-                        break;
+                if (!empty($this->model['_customFields'])) {
+                    $fields = $this->model['_customFields'];
+                    foreach ($fields as $field) {
+                        $f = null;
+                        $options = [];
+                        if (!empty($field['fieldData']['options'])) {
+                            $options = array_build($field['fieldData']['options'], function ($k, $v) {
+                                return [$v, $v];
+                            });
+                        }
+                        switch ($field['fieldType']) {
+                            case CmsModelFieldType::TEXT:
+                                $f = $form->text($field['name'], $field['title']);
+                                break;
+                            case CmsModelFieldType::TEXTAREA:
+                                $f = $form->textarea($field['name'], $field['title']);
+                                break;
+                            case CmsModelFieldType::RADIO:
+                                $f = $form->radio($field['name'], $field['title'])->options($options);
+                                break;
+                            case CmsModelFieldType::SELECT:
+                                $f = $form->select($field['name'], $field['title'])->options($options);
+                                break;
+                            case CmsModelFieldType::CHECKBOX:
+                                $f = $form->checkbox($field['name'], $field['title'])->options($options);
+                                break;
+                            case CmsModelFieldType::IMAGE:
+                                $f = $form->image($field['name'], $field['title']);
+                                break;
+                            case CmsModelFieldType::FILE:
+                                $f = $form->file($field['name'], $field['title']);
+                                break;
+                            case CmsModelFieldType::DATE:
+                                $f = $form->date($field['name'], $field['title']);
+                                break;
+                            case CmsModelFieldType::DATETIME:
+                                $f = $form->datetime($field['name'], $field['title']);
+                                break;
+                            case CmsModelFieldType::RICH_TEXT:
+                                $f = $form->richHtml($field['name'], $field['title']);
+                                break;
+                        }
+                        if (empty($f)) {
+                            BizException::throws('未知的字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
+                        }
+                        if ($field['isRequired']) {
+                            $f->required();
+                        }
+                    }
                 }
-                if (empty($f)) {
-                    BizException::throws('未知的字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
+                $form->richHtml('content', '内容');
+                if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+                    $form->textarea('summary', '摘要');
+                    $form->image('cover', '封面');
+                    $form->datetime('postTime', '发布时间')->required()->help('可以是未来时间，在未来发布')->defaultValue(Carbon::now());
+                    $form->radio('status', '状态')->optionType(CmsModelContentStatus::class)->required()->defaultValue(CmsModelContentStatus::SHOW);
+                    if (modstart_config('CmsMemberPost_Enable', false)) {
+                        $form->radio('verifyStatus', '审核状态')->optionType(CmsContentVerifyStatus::class)->required()->defaultValue(CmsContentVerifyStatus::VERIFY_PASS);
+                    }
+                    $form->switch('isRecommend', '推荐');
+                    $form->switch('isTop', '置顶');
+                    $form->tags('tags', '标签')->serializeType(Tags::SERIALIZE_TYPE_COLON_SEPARATED);
+                    $form->text('author', '作者');
+                    $form->text('source', '来源');
                 }
-                if ($field['isRequired']) {
-                    $f->required();
-                }
+            });
+            if (
+                in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])
+                || modstart_config('CmsUrlMix_Enable', false)
+            ) {
+                $layout->tab('内容访问', function () use ($form) {
+                    if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+                        $form->text('alias', '别名')
+                            ->ruleUnique($this->modelTable)
+                            ->ruleRegex('/^[a-z0-9_]*[a-z][a-z0-9_]*$/')
+                            ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
+                    }
+                    if (modstart_config('CmsUrlMix_Enable', false)) {
+                        $form->text('fullUrl', '[增强]全路径')->listable(false)
+                            ->help('如 product/view/1.html');
+                    }
+                });
             }
-        }
-        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
-            $form->text('alias', '别名')
-                ->ruleUnique($this->modelTable)
-                ->ruleRegex('/^[a-z0-9_]*[a-z][a-z0-9_]*$/')
-                ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
-        }
-        if (modstart_config('CmsUrlMix_Enable', false)) {
-            $form->text('fullUrl', '[增强]全路径')->listable(false)
-                ->help('如 product/view/1.html');
-        }
-        $form->richHtml('content', '内容');
-        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
-            $form->textarea('summary', '摘要');
-            $form->image('cover', '封面');
-            $form->datetime('postTime', '发布时间')->required()->help('可以是未来时间，在未来发布')->defaultValue(Carbon::now());
-            $form->radio('status', '状态')->optionType(CmsModelContentStatus::class)->required()->defaultValue(CmsModelContentStatus::SHOW);
-            if (modstart_config('CmsMemberPost_Enable', false)) {
-                $form->radio('verifyStatus', '审核状态')->optionType(CmsContentVerifyStatus::class)->required()->defaultValue(CmsContentVerifyStatus::VERIFY_PASS);
+            if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+                $layout->tab('SEO信息', function () use ($form) {
+                    $form->text('seoTitle', 'SEO标题');
+                    $form->text('seoDescription', 'SEO描述');
+                    $form->textarea('seoKeywords', 'SEO关键词');
+                });
             }
-            $form->switch('isRecommend', '推荐');
-            $form->switch('isTop', '置顶');
-            $form->tags('tags', '标签')->serializeType(Tags::SERIALIZE_TYPE_COLON_SEPARATED);
-            $form->text('author', '作者');
-            $form->text('source', '来源');
-            $form->text('seoTitle', 'SEO标题');
-            $form->text('seoDescription', 'SEO描述');
-            $form->textarea('seoKeywords', 'SEO关键词');
-        }
+        });
         $form->item($record)->fillFields();
         $form->showReset(false)->showSubmit(false);
         if (Request::isPost()) {
