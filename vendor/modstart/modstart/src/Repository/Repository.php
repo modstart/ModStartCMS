@@ -84,37 +84,37 @@ abstract class Repository implements RepositoryInterface, SortRepositoryInterfac
 
     public function add(Form $form)
     {
-        throw new RuntimeException('This repository does not support "add" method.');
+        throw new \RuntimeException('This repository does not support "add" method.');
     }
 
     public function editing(Form $form)
     {
-        throw new RuntimeException('This repository does not support "editing" method.');
+        throw new \RuntimeException('This repository does not support "editing" method.');
     }
 
     public function edit(Form $form)
     {
-        throw new RuntimeException('This repository does not support "edit" method.');
+        throw new \RuntimeException('This repository does not support "edit" method.');
     }
 
     public function show(Detail $detail)
     {
-        throw new RuntimeException('This repository does not support "show" method.');
+        throw new \RuntimeException('This repository does not support "show" method.');
     }
 
     public function deleting(Form $form)
     {
-        throw new RuntimeException('This repository does not support "delete" method.');
+        throw new \RuntimeException('This repository does not support "delete" method.');
     }
 
     public function delete(Form $form, Arrayable $deletingData)
     {
-        throw new RuntimeException('This repository does not support "delete" method.');
+        throw new \RuntimeException('This repository does not support "delete" method.');
     }
 
     public function get(Model $model)
     {
-        throw new RuntimeException('This repository does not support "get" method.');
+        throw new \RuntimeException('This repository does not support "get" method.');
     }
 
     private $sortColumn = 'sort';

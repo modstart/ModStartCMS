@@ -77,4 +77,9 @@ class ShellUtil
         // /usr/bin/find / -maxdepth 1 -mmin +1 -name "core.*" -exec rm -rfv {} \;
         shell_exec("/usr/bin/find $dir -maxdepth 1 -mmin +$keepMinute -name \"$pattern\" -exec rm -rfv {} \;");
     }
+
+    public static function isCli()
+    {
+        return php_sapi_name() == "cli";
+    }
 }

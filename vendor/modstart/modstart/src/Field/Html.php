@@ -18,6 +18,12 @@ class Html extends AbstractField
         return $this;
     }
 
+    public function htmlContent($html)
+    {
+        $this->html = '<div class="ub-html">' . $html . '</div>';
+        return $this;
+    }
+
     public function plain()
     {
         $this->plain = true;

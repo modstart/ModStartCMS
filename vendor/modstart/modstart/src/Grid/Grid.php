@@ -22,6 +22,7 @@ use ModStart\Grid\Concerns\HasSort;
 use ModStart\Grid\Type\GridEngine;
 use ModStart\Repository\Filter\HasRepositoryFilter;
 use ModStart\Repository\Filter\HasScopeFilter;
+use ModStart\Repository\Repository;
 use ModStart\Support\Concern\HasBuilder;
 use ModStart\Support\Concern\HasFields;
 use ModStart\Support\Concern\HasFluentAttribute;
@@ -220,8 +221,14 @@ class Grid
      */
     public static function make($model, \Closure $builder = null)
     {
-        if (class_exists($model) && is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)) {
-            return new Grid($model, $builder);
+        if (class_exists($model)) {
+            if (
+                is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)
+                ||
+                is_subclass_of($model, Repository::class)
+            ) {
+                return new Grid($model, $builder);
+            }
         }
         $grid = new Grid(DynamicModel::make($model), $builder);
         $grid->isDynamicModel = true;

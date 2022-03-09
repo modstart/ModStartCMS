@@ -162,6 +162,7 @@ class InputPackage
             }
             $content = trim($this->data[$key]);
             $content = HtmlUtil::filter2($content);
+            $content = StrUtil::filterSpecialChars($content);
             return $content;
         }
         return $defaultValue;

@@ -47,6 +47,7 @@ abstract class AbstractContentVerifyProvider
         } else {
             $shortTitle = $title;
         }
+        $shortTitle = HtmlUtil::text($shortTitle);
         $shortTitle = $this->title() . ($shortTitle ? '(' . $shortTitle . ')' : '');
         if ($this->verifyAutoProcess($param)) {
             if ($this->verifyAutoProcessedNotify()) {

@@ -162,6 +162,14 @@ class GridFilter
     }
 
     /**
+     * @return array
+     */
+    public function getSearch()
+    {
+        return $this->search;
+    }
+
+    /**
      * @param $method
      * @param $arguments
      * @return AbstractFilter
