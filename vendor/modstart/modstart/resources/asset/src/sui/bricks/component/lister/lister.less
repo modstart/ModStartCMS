@@ -1,348 +1,348 @@
 
 .ub-lister-bottom {
-  overflow: hidden;
-  text-align: left;
+    overflow: hidden;
+    text-align: left;
 
-  .right {
-    float: right;
-  }
+    .right {
+        float: right;
+    }
 }
 
 .ub-lister-batch {
-  overflow: hidden;
-  position: relative;
+    overflow: hidden;
+    position: relative;
 
-  .text {
-    display: block;
-    margin: 0 0.5rem 0.5rem 0;
-    float: left;
-    line-height: 28px;
-  }
+    .text {
+        display: block;
+        margin: 0 0.5rem 0.5rem 0;
+        float: left;
+        line-height: 28px;
+    }
 }
 
 .ub-lister-search {
-  overflow: hidden;
-  position: relative;
-
-  .field {
-    float: left;
-    display: block;
-    margin: 0 0.5rem 0.5rem 0;
     overflow: hidden;
+    position: relative;
 
-    &.right {
-      float: right;
-      margin-right: 0;
+    .field {
+        float: left;
+        display: block;
+        margin: 0 0.5rem 0.5rem 0;
+        overflow: hidden;
+
+        &.right {
+            float: right;
+            margin-right: 0;
+        }
+
+        &.full {
+            width: 100%;
+        }
+
+        &.flex {
+            display: flex;
+
+            .input {
+                flex: 1;
+            }
+        }
+
+        .btn + .btn {
+            margin-left: 0.2rem;
+        }
+
+        .name {
+            display: inline-block;
+            vertical-align: top;
+            line-height: 1.5rem;
+        }
+
+        .input {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .connector, .unit {
+            display: inline-block;
+            color: #999;
+        }
+
+        label {
+            border: 0.05rem solid #EEE;
+            border-radius: 0.15rem;
+            padding: 0 0.5rem;
+            line-height: 1.45rem;
+            vertical-align: middle;
+            background: #FFF;
+            margin-bottom: 0;
+
+            input {
+                vertical-align: middle;
+            }
+        }
+
+        .el-checkbox {
+            margin-right: 0.5rem;
+            margin-bottom: 0;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 
-    &.full {
-      width: 100%;
+    .full {
+        overflow: hidden;
     }
 
-    &.flex {
-      display: flex;
-
-      .input {
-        flex: 1;
-      }
+    .more {
+        float: right;
     }
 
-    .btn + .btn {
-      margin-left: 0.2rem;
+    .search {
+        clear: both;
     }
 
-    .name {
-      display: inline-block;
-      vertical-align: top;
-      line-height: 1.5rem;
+    .batch {
+        position: absolute;
+        right: 0.5rem;
+        bottom: 0.5rem;
     }
 
-    .input {
-      display: inline-block;
-      vertical-align: middle;
+    .batch-tr {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
     }
-
-    .connector, .unit {
-      display: inline-block;
-      color: #999;
-    }
-
-    label {
-      border: 0.05rem solid #EEE;
-      border-radius: 0.15rem;
-      padding: 0 0.5rem;
-      line-height: 1.45rem;
-      vertical-align: middle;
-      background: #FFF;
-      margin-bottom: 0;
-
-      input {
-        vertical-align: middle;
-      }
-    }
-
-    .el-checkbox {
-      margin-right: 0.5rem;
-      margin-bottom: 0;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
-  .full {
-    overflow: hidden;
-  }
-
-  .more {
-    float: right;
-  }
-
-  .search {
-    clear: both;
-  }
-
-  .batch {
-    position: absolute;
-    right: 0.5rem;
-    bottom: 0.5rem;
-  }
-
-  .batch-tr {
-    position: absolute;
-    right: 0.5rem;
-    top: 0.5rem;
-  }
 }
 
 .ub-lister-table, .ub-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  color: #666;
-  font-size: var(--font-size, 0.65rem);
-  border-radius: 3px;
-
-  &.mini {
-    font-size: 12px;
-
-    td {
-      font-size: 12px;
-    }
-  }
-
-  &.list {
-    td, th {
-      padding: 5px;
-      line-height: 1.2em;
-    }
-  }
-
-  &.border {
-    border: 1px solid #EEE;
-    border-radius: 3px;
-  }
-
-  &.record-border {
-    tr {
-      border-bottom: 1px solid #EEE;
-    }
-  }
-
-  &.head-dark {
-    thead {
-      tr {
-        th {
-          background: #EEE;
-        }
-      }
-    }
-  }
-
-  &.foot-dark {
-    tfoot {
-      tr {
-        th {
-          background: #EEE;
-        }
-      }
-    }
-  }
-
-  th, td {
-    padding: 8px 5px;
-    line-height: 20px;
-  }
-
-  thead {
-    tr {
-      display: table-row;
-
-      th {
-        border-bottom: 2px solid #EEE;
-        color: #999;
-      }
-    }
-  }
-
-  tbody {
-    tr {
-      display: table-row;
-
-      &.muted {
-        .muted-content {
-          opacity: 0.5;
-        }
-      }
-
-      &.checked {
-        td {
-          background: #FED493;
-        }
-      }
-
-      &.focus {
-        td {
-          background: #F4F8FB;
-        }
-      }
-
-      &.empty {
-        td {
-          text-align: center;
-          color: #999;
-          line-height: 100px;
-        }
-      }
-
-      .pointer, &.pointer {
-        cursor: pointer;
-      }
-
-      td {
-        border-bottom: 1px solid #EEE;
-        font-size: var(--font-size, 0.65rem);
-      }
-    }
-  }
-
-  .tag-group {
-    padding: 0 0 0.5em 7em;
-    overflow: hidden;
-    font-size: 12px;
-
-    .label {
-      float: left;
-      margin-left: -7em;
-      display: block;
-      width: 6em;
-      text-align: center;
-    }
-  }
-
-  .tag {
-    border: 1px solid #EEE;
-    display: inline-block;
-    line-height: 20px;
-    border-radius: 3px;
-    padding: 0 3px;
-    background: #EEE;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
     color: #666;
-    margin-right: 3px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
+    font-size: var(--font-size, 0.65rem);
+    border-radius: 3px;
 
-  .page {
-    text-align: center;
+    &.mini {
+        font-size: 12px;
 
-    .el-pagination {
-      margin-top: 0.5rem;
+        td {
+            font-size: 12px;
+        }
     }
-  }
 
-  .el-cell {
-    padding: 0;
-
-    .cell {
-      padding: 5px 0.5rem;
-
-      .el-checkbox {
-        margin: 0;
-      }
+    &.list {
+        td, th {
+            padding: 5px;
+            line-height: 1.2em;
+        }
     }
-  }
 
-  .el-header-cell {
-    padding: 0;
-    background: #F8F8F8;
-
-    .cell {
-      padding: 5px 0.5rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    &.border {
+        border: 1px solid #EEE;
+        border-radius: 3px;
     }
-  }
 
-  .el-checkbox {
-    margin-bottom: 0;
-  }
+    &.record-border {
+        tr {
+            border-bottom: 1px solid #EEE;
+        }
+    }
+
+    &.head-dark {
+        thead {
+            tr {
+                th {
+                    background: #EEE;
+                }
+            }
+        }
+    }
+
+    &.foot-dark {
+        tfoot {
+            tr {
+                th {
+                    background: #EEE;
+                }
+            }
+        }
+    }
+
+    th, td {
+        padding: 8px 5px;
+        line-height: 20px;
+    }
+
+    thead {
+        tr {
+            display: table-row;
+
+            th {
+                border-bottom: 2px solid #EEE;
+                color: #999;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            display: table-row;
+
+            &.muted {
+                .muted-content {
+                    opacity: 0.5;
+                }
+            }
+
+            &.checked {
+                td {
+                    background: #FED493;
+                }
+            }
+
+            &.focus {
+                td {
+                    background: #F4F8FB;
+                }
+            }
+
+            &.empty {
+                td {
+                    text-align: center;
+                    color: #999;
+                    line-height: 100px;
+                }
+            }
+
+            .pointer, &.pointer {
+                cursor: pointer;
+            }
+
+            td {
+                border-bottom: 1px solid #EEE;
+                font-size: var(--font-size, 0.65rem);
+            }
+        }
+    }
+
+    .tag-group {
+        padding: 0 0 0.5em 7em;
+        overflow: hidden;
+        font-size: 12px;
+
+        .label {
+            float: left;
+            margin-left: -7em;
+            display: block;
+            width: 6em;
+            text-align: center;
+        }
+    }
+
+    .tag {
+        border: 1px solid #EEE;
+        display: inline-block;
+        line-height: 20px;
+        border-radius: 3px;
+        padding: 0 3px;
+        background: #EEE;
+        color: #666;
+        margin-right: 3px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .page {
+        text-align: center;
+
+        .el-pagination {
+            margin-top: 0.5rem;
+        }
+    }
+
+    .el-cell {
+        padding: 0;
+
+        .cell {
+            padding: 5px 0.5rem;
+
+            .el-checkbox {
+                margin: 0;
+            }
+        }
+    }
+
+    .el-header-cell {
+        padding: 0;
+        background: #F8F8F8;
+
+        .cell {
+            padding: 5px 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .el-checkbox {
+        margin-bottom: 0;
+    }
 }
 
 .ub-lister-action {
-  display: inline-block;
-  margin-right: 0.5rem;
-  color: var(--color-link);
-  line-height: 26px;
-  cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--color-link);
+    line-height: 26px;
+    cursor: pointer;
 
-  &:last-child {
-    margin-right: 0;
-  }
-
-  &.clicked {
-    color: var(--color-link-light);
-  }
-
-  &:hover {
-    color: var(--color-link-light);
-  }
-
-  &.danger {
-    color: #f5222d;
+    &:last-child {
+        margin-right: 0;
+    }
 
     &.clicked {
-      color: lighten(#f5222d, 30%);
+        color: var(--color-link-light);
     }
 
     &:hover {
-      color: darken(#f5222d, 30%);
+        color: var(--color-link-light);
     }
-  }
 
-  &.disabled {
-    color: #c4cfdb;
-  }
+    &.danger {
+        color: #f5222d;
+
+        &.clicked {
+            color: lighten(#f5222d, 30%);
+        }
+
+        &:hover {
+            color: darken(#f5222d, 30%);
+        }
+    }
+
+    &.disabled {
+        color: #c4cfdb;
+    }
 }
 
 .ub-lister-fix-foot-placeholder {
-  height: 53px;
+    height: 53px;
 }
 
 .ub-lister-fix-foot {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top: 1px solid #EEE;
-  background: #FFF;
-  padding: 0.5rem;
-  z-index: 1000;
-  overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #EEE;
+    background: #FFF;
+    padding: 0.5rem;
+    z-index: 1000;
+    overflow: hidden;
 
-  .right {
-    float: right;
-  }
+    .right {
+        float: right;
+    }
 }

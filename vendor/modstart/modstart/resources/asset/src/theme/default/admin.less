@@ -1,149 +1,50 @@
 body {
-  min-height: 100%;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  line-height: 1.5;
-  color: #495060;
-  -webkit-font-smoothing: antialiased;
-  background: #222D32;
+    min-height: 100%;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    line-height: 1.5;
+    color: #495060;
+    -webkit-font-smoothing: antialiased;
+    background: #222D32;
 }
 
 html {
-  background: #222D32;
-}
-
-.ub-panel-frame {
-  .left {
-    overflow: visible;
-
-    .menu {
-      mark {
-        color: red;
-        background: none;
-      }
-
-      [data-keywords-item="hide"], [data-keywords-filter="hide"] {
-        display: none !important;
-      }
-
-      [data-keywords-item="show"] {
-        display: block !important;
-      }
-
-      .menu-search-container {
-        width: 100%;
-        height: 30px;
-        position: relative;
-        overflow: hidden;
-        padding: 5px;
-
-        input {
-          height: 20px;
-          background: #444;
-          border: none;
-          font-size: 12px;
-          width: 100%;
-          color: #FFF;
-          padding-left: 20px;
-
-          &::-webkit-input-placeholder {
-            color: #999;
-            font-size: 12px;
-          }
-
-          &::-moz-placeholder {
-            color: #999;
-            font-size: 12px;
-          }
-
-          &::-ms-input-placeholder {
-            color: #999;
-            font-size: 12px;
-          }
-        }
-
-        i {
-          display: block;
-          position: absolute;
-          z-index: 1000;
-          left: 0;
-          top: 0;
-          height: 30px;
-          line-height: 30px;
-          width: 30px;
-          text-align: center;
-          color: #EEE;
-          font-size: 12px;
-        }
-      }
-    }
-
-    &:hover {
-      .toolbar {
-        display: block;
-      }
-    }
-
-    .toolbar {
-      position: absolute;
-      right: -1.5rem;
-      border: 0;
-      width: 1.5rem;
-      bottom: 0;
-      border-radius: 0 0.5rem 0.5rem 0;
-      background: #FFF;
-      box-shadow: 1px 1px 3px #999;
-      display: none;
-
-      a {
-        display: inline-block;
-        line-height: 1.5rem;
-        height: 1.5rem;
-        width: 1.5rem;
-        text-align: center;
-        color: #999;
-
-        &:hover {
-          color: #CCC;
-        }
-      }
-    }
-  }
+    background: #222D32;
 }
 
 .ub-admin-login {
-  width: 300px;
-  margin: 0 auto;
+    width: 300px;
+    margin: 0 auto;
 
-  .head {
-    color: #FFF;
-    text-align: center;
-    font-size: 20px;
-    padding: 50px 0 20px 0;
-  }
-
-  .form {
-    background: #FFF;
-    padding: 20px;
-    border-radius: 3px;
-
-    .line {
-      padding: 15px 10px;
-
-      input {
-        width: 100%;
-        font-size: 14px;
-        line-height: 40px;
-        height: 40px;
-      }
+    .head {
+        color: #FFF;
+        text-align: center;
+        font-size: 20px;
+        padding: 50px 0 20px 0;
     }
-  }
 
-  .btn {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+    .form {
+        background: #FFF;
+        padding: 20px;
+        border-radius: 3px;
 
-    &:hover, &:active, &:focus {
-      background: var(--color-primary);
+        .line {
+            padding: 15px 10px;
+
+            input {
+                width: 100%;
+                font-size: 14px;
+                line-height: 40px;
+                height: 40px;
+            }
+        }
     }
-  }
+
+    .btn {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+
+        &:hover, &:active, &:focus {
+            background: var(--color-primary);
+        }
+    }
 }
