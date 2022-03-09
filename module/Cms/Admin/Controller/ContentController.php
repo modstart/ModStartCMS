@@ -73,6 +73,48 @@ class ContentController extends Controller
             if (modstart_config('CmsMemberPost_Enable', false)) {
                 $grid->type('verifyStatus', '审核')->type(CmsContentVerifyStatus::class);
             }
+            $listFields = array_filter($this->model['_customFields'], function ($o) {
+                return $o['isList'];
+            });
+            foreach ($listFields as $field) {
+                $options = [];
+                if (!empty($field['fieldData']['options'])) {
+                    $options = array_build($field['fieldData']['options'], function ($k, $v) {
+                        return [$v, $v];
+                    });
+                }
+                $grid->display($field['name'], $field['title'])->hookRendering(function (AbstractField $field, $item, $index) use ($field, $options) {
+                    $data = ModelUtil::get($this->modelDataTable, $item->id);
+                    if (empty($data)) {
+                        return AutoRenderedFieldValue::make('');
+                    }
+                    $viewData = [
+                        'value' => $data[$field['name']],
+                        'options' => $options,
+                    ];
+                    switch ($field['fieldType']) {
+                        case CmsModelFieldType::TEXT:
+                        case CmsModelFieldType::TEXTAREA:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.text-grid', $viewData);
+                        case CmsModelFieldType::RADIO:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.radio-grid', $viewData);
+                        case CmsModelFieldType::SELECT:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.select-grid', $viewData);
+                        case CmsModelFieldType::CHECKBOX:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.checkbox-grid', $viewData);
+                        case CmsModelFieldType::IMAGE:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.image-grid', $viewData);
+                        case CmsModelFieldType::FILE:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.file-grid', $viewData);
+                        case CmsModelFieldType::DATE:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.date-grid', $viewData);
+                        case CmsModelFieldType::DATETIME:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.datetime-grid', $viewData);
+                        case CmsModelFieldType::RICH_TEXT:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.richHtml-grid', $viewData);
+                    }
+                });
+            }
         } else {
             $customFields = isset($this->model['_customFields']) ? $this->model['_customFields'] : [];
             $grid->display('_content', '内容')->hookRendering(function (AbstractField $field, $item, $index) use ($customFields) {

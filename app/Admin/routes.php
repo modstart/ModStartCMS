@@ -7,6 +7,8 @@ Route::group(
         'namespace' => '\App\Admin\Controller',
     ], function () {
 
-     Route::match(['get', 'post'], '', 'IndexController@index');
+    Route::match(['get', 'post'], '', 'IndexController@index');
+
+    Route::match(['get', 'post'], 'grid_test', 'GridTestController@index');
 
 });

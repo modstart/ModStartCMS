@@ -81,7 +81,7 @@ class HtmlUtil
     public static function filter($content)
     {
         if (empty($content)) {
-            return '';
+            return $content;
         }
         return Purifier::cleanHtml($content, [
             'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
@@ -93,6 +93,9 @@ class HtmlUtil
 
     public static function filter2($content)
     {
+        if (empty($content)) {
+            return $content;
+        }
         $replaces = [
             'index' => 0,
             'search' => [],

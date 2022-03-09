@@ -24,7 +24,13 @@ class ModuleServiceProvider extends ServiceProvider
                     'icon' => 'home',
                     'sort' => 50,
                     'url' => '\App\Admin\Controller\IndexController@index',
-                ]
+                ],
+//                [
+//                    'title' => 'Grid测试',
+//                    'icon' => 'home',
+//                    'sort' => 50,
+//                    'url' => '\App\Admin\Controller\GridTestController@index',
+//                ]
             ];
         });
     }
