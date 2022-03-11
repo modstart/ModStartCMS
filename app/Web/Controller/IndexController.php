@@ -3,6 +3,7 @@
 
 namespace App\Web\Controller;
 
+use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\HtmlUtil;
 use ModStart\Core\Util\StrUtil;
 use Module\Vendor\Installer\Util\InstallerUtil;
@@ -18,6 +19,5 @@ class IndexController extends BaseController
 
     public function testx()
     {
-        // return HtmlUtil::filter2(file_get_contents(__DIR__ . '/aa.html'));
     }
 }

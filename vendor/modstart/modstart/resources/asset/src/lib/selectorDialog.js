@@ -26,22 +26,24 @@ var SelectorDialog = function (option) {
 SelectorDialog.prototype.show = function () {
     var me = this;
     window.__selectorDialogOption = me.opt
+    window.__dialogSelectIds = [];
     window.__selectorDialogItems = [];
     this.runtime.dialog = this.dialog.dialog(this.opt.server, {
         width: this.opt.dialogWidth,
         height: this.opt.dialogHeight,
         closeCallback: function () {
-            if (!window.__selectorDialogItems.length) {
+            var items = window.__selectorDialogItems;
+            if (!items.length) {
                 return;
             }
-            if (window.__selectorDialogItems.length > me.opt.limitMax) {
+            if (items.length > me.opt.limitMax) {
                 me.dialog.tipError('Select limit max ' + me.opt.limitMax + ' item(s)');
                 return;
-            } else if (window.__selectorDialogItems.length < me.opt.limitMin) {
+            } else if (items.length < me.opt.limitMin) {
                 me.dialog.tipError('Select limit min ' + me.opt.limitMin + ' item(s)');
                 return;
             }
-            me.opt.callback(window.__selectorDialogItems);
+            me.opt.callback(items);
         }
     });
     return me;

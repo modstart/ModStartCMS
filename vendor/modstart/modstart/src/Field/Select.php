@@ -26,6 +26,14 @@ class Select extends AbstractField
         return $this;
     }
 
+    public function optionsValue($options)
+    {
+        $this->addVariables(['options' => array_build($options, function ($k, $v) {
+            return [$v, $v];
+        })]);
+        return $this;
+    }
+
     public function optionArray($options, $idName = 'id', $titleName = 'title')
     {
         $options = array_build($options, function ($k, $v) use ($idName, $titleName) {

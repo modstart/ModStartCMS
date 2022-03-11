@@ -154,7 +154,7 @@ class InputPackage
         return min(max($pageSize, $min), $max);
     }
 
-    public function getRichContent($key, $defaultValue = 0)
+    public function getRichContent($key, $defaultValue = null)
     {
         if (isset($this->data[$key])) {
             if (!is_string($this->data[$key])) {

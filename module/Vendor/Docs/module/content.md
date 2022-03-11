@@ -23,6 +23,7 @@
 - SiteUrl 网站链接提供者
 - SmsSender 短信发送提供者
 - SmsTemplate 短信模板提供者
+- VideoStream 视频点播提供者
 
 ## 使用教程
 

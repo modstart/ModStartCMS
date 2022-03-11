@@ -409,12 +409,12 @@
         });
         @if($canBatchSelect || $canSingleSelectItem || $canMultiSelectItem)
         setTimeout(function () {
-            $('body > .ub-panel-dialog .panel-dialog-foot [data-submit]').show().on('click', function () {
+            $('body > .ub-panel-dialog .panel-dialog-foot').show().find('[data-submit]').show().on('click', function () {
                 var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
                 var items = window.__grids.instances['{{$id}}'].getCheckedItems();
                 // console.log('itemSelected',ids, items);
                 window.parent.__dialogSelectIds = ids;
-                window.parent.__dialogSelectItems = items;
+                window.parent.__selectorDialogItems = items;
                 parent.layer.closeAll();
             });
         }, 0);

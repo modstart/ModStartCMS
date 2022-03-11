@@ -10,25 +10,31 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                value="{{$value}}"/>
-        <div id="{{$name}}Selector">
-            <div class="ub-video-selector" style="display:inline-block;border:1px solid #EEE;position:relative;border-radius:0.2rem;line-height:1.3rem;padding:0 2rem 0 0.5rem;vertical-align:bottom;">
-                <div data-value>{{empty($value)?L('None'):$value}}</div>
-                <a data-close href="javascript:;" style="{{$value?'display:inline-block;':'display:none;'}}position:absolute;right:0px;top:0px;line-height:1.3rem;width:1rem;text-align:center;color:#999;"><i class="iconfont icon-close"></i></a>
+        <div id="{{$name}}Selector" class="ub-file-selector">
+            <div class="ub-file-selector__value" data-value>
+                {{empty($value)?L('None'):$value}}
             </div>
-            <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.35rem;vertical-align:bottom;line-height:1.35rem;"></div>
+            <div data-close class="ub-file-selector__close {{empty($value)?'hidden':''}}">
+                <i class="iconfont icon-close"></i>
+            </div>
+            <div class="ub-file-selector__action {{empty($value)?'':'hidden'}}">
+                <div id="{{$id}}Uploader" class="ub-upload-button"></div>
+            </div>
             @if($mode=='default')
-                <a href="javascript:;" class="btn" data-gallery style="display:inline-block;vertical-align:bottom;">
-                    <i class="iconfont icon-category"></i>
-                    {{L('Video Gallery')}}
-                </a>
+                <div class="ub-file-selector__action {{empty($value)?'':'hidden'}}">
+                    <a href="javascript:;" class="btn" data-gallery>
+                        <i class="iconfont icon-category"></i>
+                        {{L('Video Gallery')}}
+                    </a>
+                </div>
             @endif
         </div>
         {!! \ModStart\ModStart::js('asset/common/uploadButton.js') !!}
         <script>
             $(function () {
                 var $field = $('#{{$id}}');
-                var $selector = $('#{{$name}}Selector .ub-video-selector');
-                var $gallery = $('#{{$name}}Selector [data-gallery]')
+                var $selector = $('#{{$name}}Selector');
+                var $gallery = $selector.find('[data-gallery]');
                 function setValue(path) {
                     try {
                         $field.find('[name="{{$name}}"]').val(path);
@@ -36,10 +42,12 @@
                     }
                     if (path) {
                         $selector.find('[data-value]').html(path);
-                        $selector.find('[data-close]').css('display','inline-block');
+                        $selector.find('.ub-file-selector__action').addClass('hidden');
+                        $selector.find('.ub-file-selector__close').removeClass('hidden');
                     } else {
                         $selector.find('[data-value]').html("{{L('None')}}");
-                        $selector.find('[data-close]').css('display','none');
+                        $selector.find('.ub-file-selector__action').removeClass('hidden');
+                        $selector.find('.ub-file-selector__close').addClass('hidden');
                     }
                 }
                 $selector.find('[data-close]').on('click', function () {

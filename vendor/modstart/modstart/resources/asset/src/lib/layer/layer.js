@@ -354,7 +354,8 @@
         }
     }, r.closeAll = function (e) {
         i.each(i("." + l[0]), function () {
-            var t = i(this), n = e ? t.attr("type") === e : 1;
+            var t = i(this),
+                n = e ? t.attr("type") === e : 1;
             n && r.close(t.attr("times")), n = null
         })
     };
