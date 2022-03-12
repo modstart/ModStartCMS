@@ -4,6 +4,7 @@
 namespace ModStart\Data;
 
 
+use Illuminate\Support\Facades\Input;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
@@ -11,6 +12,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UeditorManager
 {
@@ -91,31 +93,71 @@ class UeditorManager
         return $config;
     }
 
+    private static function saveToUser($uploadTable, $userId, $data)
+    {
+        ModelUtil::insert($uploadTable, [
+            'category' => $data['category'],
+            'dataId' => $data['id'],
+            'uploadCategoryId' => 0,
+            'userId' => $userId,
+        ]);
+    }
+
+    private static function resultError($result = null, $error = 'ERROR')
+    {
+        if (null == $result) {
+            $result = [
+                'state' => '',
+            ];
+        }
+        $result['state'] = $error;
+        return Response::jsonRaw($result);
+    }
+
     public static function handle($uploadTable, $uploadCategoryTable, $userId, $option = null)
     {
         $config = self::basicConfig();
         $input = InputPackage::buildFromInput();
         $action = $input->getTrimString('action');
+        if (in_array($action, ['image', 'catch'])) {
+            set_time_limit(60);
+            if ($uploadTable == 'admin_upload' && AdminPermission::isDemo()) {
+                return self::resultError();
+            }
+        }
         switch ($action) {
             case 'config':
                 return Response::jsonRaw($config);
+            case 'image':
+                $editorRet = [
+                    'state' => 'SUCCESS',
+                    'url' => null
+                ];
+                /** @var UploadedFile $file */
+                $file = Input::file('file');
+                if (empty($file)) {
+                    return self::resultError($editorRet, 'File Empty');
+                }
+                $filename = $file->getClientOriginalName();
+                $content = file_get_contents($file->getRealPath());
+                $ret = DataManager::upload('image', $filename, $content, $option);
+                if ($ret['code']) {
+                    return self::resultError($editorRet, $ret['msg']);
+                }
+                self::saveToUser($uploadTable, $userId, $ret['data']['data']);
+                $editorRet['url'] = $ret['data']['fullPath'];
+                return Response::jsonRaw($editorRet);
             case 'catch':
-                set_time_limit(30);
-                $sret = array(
+                $editorRet = [
                     'state' => '',
                     'list' => null
-                );
-                if ($uploadTable == 'admin_upload' && AdminPermission::isDemo()) {
-                    $sret ['state'] = 'ERROR';
-                    return Response::jsonRaw($sret);
-                }
-                $savelist = array();
+                ];
+                $saveList = [];
                 $list = $input->getArray($config ['catcherFieldName']);
                 if (empty ($list)) {
-                    $sret ['state'] = 'ERROR';
-                    return Response::jsonRaw($sret);
+                    return self::resultError($editorRet);
                 }
-                $sret ['state'] = 'SUCCESS';
+                $editorRet ['state'] = 'SUCCESS';
                 $ignores = array_filter([
                     trim(AssetsUtil::cdn(), '/') ? AssetsUtil::cdn() : null,
                 ]);
@@ -136,22 +178,15 @@ class UeditorManager
                                 if ($ret['code']) {
                                     $ret['state'] = $ret['msg'];
                                 } else {
-                                    $data = $ret['data']['data'];
-                                    $fullPath = $ret['data']['fullPath'];
-                                    ModelUtil::insert($uploadTable, [
-                                        'category' => $data['category'],
-                                        'dataId' => $data['id'],
-                                        'uploadCategoryId' => 0,
-                                        'userId' => $userId,
-                                    ]);
-                                    $savelist [] = array(
+                                    self::saveToUser($uploadTable, $userId, $ret['data']['data']);
+                                    $saveList [] = [
                                         'state' => 'SUCCESS',
-                                        'url' => $fullPath,
+                                        'url' => $ret['data']['fullPath'],
                                         'size' => strlen($imageContent),
                                         'title' => '',
                                         'original' => '',
                                         'source' => htmlspecialchars($f)
-                                    );
+                                    ];
                                 }
                             } else {
                                 $ret ['state'] = 'Get remote file error';
@@ -160,7 +195,7 @@ class UeditorManager
                             $ret ['state'] = 'File ext not allowed';
                         }
                     } else {
-                        $savelist [] = array(
+                        $saveList [] = array(
                             'state' => 'not remote image',
                             'url' => '',
                             'size' => '',
@@ -170,8 +205,8 @@ class UeditorManager
                         );
                     }
                 }
-                $sret ['list'] = $savelist;
-                return Response::jsonRaw($sret);
+                $editorRet ['list'] = $saveList;
+                return Response::jsonRaw($editorRet);
         }
     }
 }

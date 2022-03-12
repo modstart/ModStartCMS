@@ -489,6 +489,7 @@ class Grid
         $data = array_merge($this->fluentAttributeVariables(), [
             'id' => $this->id,
             'filters' => $this->gridFilter->filters(),
+            'hasAutoHideFilters' => $this->gridFilter->hasAutoHideFilters(),
             'grid' => $this,
             'scopes' => $this->scopeFilters,
             'scopeCurrent' => Input::get('_scope', $this->scopeDefault),

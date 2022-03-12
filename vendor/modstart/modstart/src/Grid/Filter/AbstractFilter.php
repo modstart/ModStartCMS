@@ -66,6 +66,11 @@ abstract class AbstractFilter
      * @var GridFilter
      */
     private $tableFilter;
+    /**
+     * 是否自动展开
+     * @var bool
+     */
+    private $autoHide = false;
 
     /**
      * AbstractFilter constructor.
@@ -130,6 +135,20 @@ abstract class AbstractFilter
     }
 
     /**
+     * 是否自动收缩
+     * @param $autoHide
+     * @return $this|boolean
+     */
+    public function autoHide($autoHide = null)
+    {
+        if (null === $autoHide) {
+            return $this->autoHide;
+        }
+        $this->autoHide = $autoHide;
+        return $this;
+    }
+
+    /**
      * 筛选字段
      *
      * @return string
@@ -180,6 +199,7 @@ abstract class AbstractFilter
             'label' => $this->label,
             'field' => $this->field,
             'defaultValue' => $this->defaultValue,
+            'autoHide' => $this->autoHide,
         ];
         if (method_exists($this->field, 'variables')) {
             $variables = array_merge($variables, $this->field()->variables());

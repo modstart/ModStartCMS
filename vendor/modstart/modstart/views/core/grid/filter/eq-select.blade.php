@@ -1,4 +1,4 @@
-<div class="field" data-grid-filter-field="{{$id}}">
+<div class="field auto" data-grid-filter-field="{{$id}}">
     <div class="name">{{$label}}</div>
     <div class="input">
         <select class="form" id="{{$id}}_select">

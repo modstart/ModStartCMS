@@ -12,13 +12,15 @@
             @endif
         @endif
     </div>
-    <div data-search class="ub-lister-search" style="min-height:2rem;">
+    <div data-search class="ub-lister-search">
         @foreach($filters as $filter)
-            {!! $filter->render() !!}
+            @if(!$filter->autoHide())
+                {!! $filter->render() !!}
+            @endif
         @endforeach
         <div class="field">
             @if(!count($filters))
-                <button class="btn" data-refresh-button>
+                <button class="btn" data-search-button>
                     <i class="iconfont icon-refresh"></i> {{L('Refresh')}}
                 </button>
             @endif
@@ -30,6 +32,24 @@
                     <i class="iconfont icon-refresh"></i> {{L('Reset')}}
                 </button>
             @endif
+            @if($canExport)
+                <button class="btn" data-export-button>
+                    <i class="iconfont icon-download"></i> {{L('Export')}}
+                </button>
+            @endif
+            @if($hasAutoHideFilters)
+                <button class="btn" data-expand-search-button>
+                    <i class="iconfont icon-filter"></i>
+                    {{L('More')}}
+                </button>
+            @endif
+        </div>
+        <div class="field-more-expand">
+            @foreach($filters as $filter)
+                @if($filter->autoHide())
+                    {!! $filter->render() !!}
+                @endif
+            @endforeach
         </div>
     </div>
 {{--    <div data-addition class="table-addition-container"></div>--}}

@@ -32,11 +32,13 @@
     </div>
     <div data-search class="ub-lister-search">
         @foreach($filters as $filter)
-            {!! $filter->render() !!}
+            @if(!$filter->autoHide())
+                {!! $filter->render() !!}
+            @endif
         @endforeach
         <div class="field">
             @if(!count($filters))
-                <button class="btn btn-primary" data-search-button>
+                <button class="btn" data-search-button>
                     <i class="iconfont icon-refresh"></i> {{L('Refresh')}}
                 </button>
             @endif
@@ -53,6 +55,19 @@
                     <i class="iconfont icon-download"></i> {{L('Export')}}
                 </button>
             @endif
+            @if($hasAutoHideFilters)
+                <button class="btn" data-expand-search-button>
+                    <i class="iconfont icon-filter"></i>
+                    {{L('More')}}
+                </button>
+            @endif
+        </div>
+        <div class="field-more-expand">
+            @foreach($filters as $filter)
+                @if($filter->autoHide())
+                    {!! $filter->render() !!}
+                @endif
+            @endforeach
         </div>
     </div>
     <div data-addition class="table-addition-container"></div>
@@ -110,10 +125,7 @@
             }
             return items;
         };
-        layui.extend({
-            mstable: window.__msCDN + 'asset/layui/lay/ext/mstable.js?v20220119'
-        });
-        layui.use(['table', 'laypage', 'mstable'], function () {
+        layui.use(['table', 'laypage'], function () {
             var table = layui.table.render({
                 id: '{{$id}}Table',
                 elem: '#{{$id}}Table',
@@ -131,8 +143,8 @@
                 cellMinWidth: 100,
                 cols: [[]],
                 data: [],
+                autoColumnWidth: true,
                 done: function () {
-                    layui.mstable.render(this);
                 }
             });
             layui.table.on('sort({{$id}}Table)', function (obj) {

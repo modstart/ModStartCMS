@@ -27,7 +27,7 @@ class GridFilter
     protected $model;
 
     /**
-     * @var array
+     * @var AbstractFilter[]
      */
     protected $filters = [];
 
@@ -115,6 +115,16 @@ class GridFilter
     public function filters()
     {
         return $this->filters;
+    }
+
+    public function hasAutoHideFilters()
+    {
+        foreach ($this->filters as $filter) {
+            if ($filter->autoHide()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getConditions()

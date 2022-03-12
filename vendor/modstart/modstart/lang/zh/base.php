@@ -188,4 +188,5 @@ return [
     'Export' => '导出',
     'Import' => '导入',
     'Copy Links' => '复制链接',
+    'More' => '更多',
 ];

@@ -79,11 +79,7 @@ let Lister = function (container, option) {
             return false;
         });
         $searchContainer.on('click', '[data-expand-search-button]', function () {
-            if ($searchContainer.find('.field.field-auto-hide').is(':visible')) {
-                $searchContainer.find('.field.field-auto-hide').hide();
-            } else {
-                $searchContainer.find('.field.field-auto-hide').css('display', 'inline-block');
-            }
+            $searchContainer.find('.field-more-expand').toggleClass('field-more-expand__active');
             return false;
         });
         $searchContainer.find('[data-grid-filter-field]').each(function (i, o) {

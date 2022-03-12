@@ -24,11 +24,27 @@
     overflow: hidden;
     position: relative;
 
+    .field-more-expand {
+        display: none;
+        overflow: hidden;
+        clear: both;
+
+    }
+
+    .field-more-expand__active {
+        display: block;
+    }
+
     .field {
         float: left;
-        display: block;
+        display: flex;
         margin: 0 0.5rem 0.5rem 0;
         overflow: hidden;
+        min-width: 9rem;
+
+        &.auto {
+            min-width: auto;
+        }
 
         &.right {
             float: right;
@@ -39,14 +55,6 @@
             width: 100%;
         }
 
-        &.flex {
-            display: flex;
-
-            .input {
-                flex: 1;
-            }
-        }
-
         .btn + .btn {
             margin-left: 0.2rem;
         }
@@ -55,11 +63,18 @@
             display: inline-block;
             vertical-align: top;
             line-height: 1.5rem;
+            margin-right: 0.25rem;
+            min-width: 1.4rem;
         }
 
         .input {
             display: inline-block;
             vertical-align: middle;
+            flex-grow: 1;
+
+            input[type="text"] {
+                width: 100%;
+            }
         }
 
         .connector, .unit {

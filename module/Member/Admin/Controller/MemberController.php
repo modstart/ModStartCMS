@@ -71,14 +71,14 @@ class MemberController extends Controller
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('username', '用户名');
-                $filter->like('email', '邮箱');
-                $filter->like('phone', '手机');
-                $filter->eq('status', '状态')->select(MemberStatus::class);
+                $filter->like('email', '邮箱')->autoHide(true);
+                $filter->like('phone', '手机')->autoHide(true);
+                $filter->eq('status', '状态')->autoHide(true)->select(MemberStatus::class);
                 if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
-                    $filter->eq('groupId', '分组')->select(MemberGroupUtil::mapIdTitle());
+                    $filter->eq('groupId', '分组')->autoHide(true)->select(MemberGroupUtil::mapIdTitle());
                 }
                 if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
-                    $filter->eq('vipId', 'VIP')->select(MemberVipUtil::mapTitle());
+                    $filter->eq('vipId', 'VIP')->autoHide(true)->select(MemberVipUtil::mapTitle());
                 }
             })
             ->hookSaved(function (Form $form) {
