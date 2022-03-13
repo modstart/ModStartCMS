@@ -15,14 +15,16 @@ class DatabaseDataRepository extends AbstractDataRepository
     }
 
 
-    public function addTemp($category, $path, $filename, $size)
+    public function addTemp($category, $path, $filename, $size, $md5 = null)
     {
-        return ModelUtil::insert('data_temp', [
+        $data = [
             'category' => $category,
             'path' => $path,
             'filename' => $filename,
             'size' => $size,
-        ]);
+            'md5' => $md5,
+        ];
+        return ModelUtil::insert('data_temp', $data);
     }
 
     public function getTemp($category, $path)
@@ -47,14 +49,16 @@ class DatabaseDataRepository extends AbstractDataRepository
         ModelUtil::delete('data_temp', ['id' => $id]);
     }
 
-    public function addData($category, $path, $filename, $size)
+    public function addData($category, $path, $filename, $size, $md5 = null)
     {
-        return ModelUtil::insert('data', [
+        $data = [
             'category' => $category,
             'path' => $path,
             'filename' => $filename,
             'size' => $size,
-        ]);
+            'md5' => $md5
+        ];
+        return ModelUtil::insert('data', $data);
     }
 
     public function updateData($dataId, $update)

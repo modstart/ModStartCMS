@@ -2,6 +2,14 @@ var $ = require('jquery');
 var WebUploader = require('./../webuploader/webuploader.js');
 import Cookies from 'js-cookie'
 
+const tipError = function (msg) {
+    if (MS && MS.dialog) {
+        MS.dialog.alertError(msg)
+    } else {
+        alert(msg)
+    }
+}
+
 let apiStore = null
 
 WebUploader.Uploader.register({
@@ -19,37 +27,47 @@ WebUploader.Uploader.register({
     },
     beforeSendFile: function (file) {
         var task = new $.Deferred();
-
+        var me = this;
         var input = {
             'action': 'init',
             'name': file.name,
             'type': file.type,
-            'lastModifiedDate': file.lastModifiedDate,
-            'size': file.size
+            'lastModifiedDate': file.lastModifiedDate.toString(),
+            'size': file.size,
+            'md5': null
         };
-        var me = this;
-        input.lastModifiedDate = input.lastModifiedDate.toString()
-        $.ajax({
-            type: 'POST',
-            url: this.options.server,
-            headers: this.options.headers,
-            data: JSON.stringify(input),
-            contentType: "application/json",
-            dataType: 'json',
-        })
-            .done(function (res) {
-                if (res.code) {
-                    alert(res.msg);
+
+        (new WebUploader.Uploader())
+            .md5File(file)
+            .then(function (val) {
+                input.md5 = val;
+                file.fileMd5 = val;
+                // console.log('uploader', file, input)
+                $.ajax({
+                    type: 'POST',
+                    url: me.options.server,
+                    headers: me.options.headers,
+                    data: JSON.stringify(input),
+                    contentType: "application/json",
+                    dataType: 'json',
+                }).done(function (res) {
+                    if (res.code) {
+                        tipError(res.msg);
+                        task.reject();
+                    } else {
+                        me.options.chunkUploaded = res.data.chunkUploaded;
+                        task.resolve();
+                    }
+                }).fail(function (res) {
+                    tipError('上传出错');
                     task.reject();
-                } else {
-                    me.options.chunkUploaded = res.data.chunkUploaded;
-                    task.resolve();
-                }
+                });
             })
-            .fail(function (res) {
-                alert('上传出错');
-                task.reject();
+            .fail(function (error) {
+                tipError('上传出错:' + error)
+                task.reject()
             });
+
         return $.when(task);
     }
 });
@@ -64,7 +82,11 @@ export const UploadButtonUploader = function (selector, option) {
         chunked: true,
         chunkSize: 5 * 1024 * 1024,
         tipError: function (msg) {
-            alert(msg);
+            if (MS && MS.dialog) {
+                MS.dialog.alertError(msg)
+            } else {
+                alert(msg)
+            }
         },
         callback: function (file, me) {
             // file.name
@@ -117,6 +139,7 @@ export const UploadButtonUploader = function (selector, option) {
                 '</li>';
             var $li = $(html);
             $list.append($li);
+
         });
 
         uploader.on('uploadProgress', function (file, percentage) {
@@ -147,6 +170,9 @@ export const UploadButtonUploader = function (selector, option) {
             opt.callback(f, me);
         });
 
+        uploader.on('uploadBeforeSend', function (file, data) {
+            data.md5 = file.file.fileMd5
+        });
 
         uploader.on('uploadError', function (file) {
             this.removeFile(file);

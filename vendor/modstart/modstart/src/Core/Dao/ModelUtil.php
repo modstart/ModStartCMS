@@ -82,7 +82,7 @@ class ModelUtil
      * @param $model
      * @param $where
      * @param $data
-     * @return int| null -> return the records count updated
+     * @return int| null -> 返回更新的数量，如果是0或null表示没有更新数据
      */
     public static function update($model, $where, $data)
     {
@@ -1161,7 +1161,7 @@ class ModelUtil
      */
     public static function increase($model, $where, $field, $value = 1)
     {
-        ModelUtil::update($model, $where, [
+        return ModelUtil::update($model, $where, [
             $field => DB::raw('IFNULL(' . $field . ',0)' . ($value > 0 ? '+' . $value : '-' . abs($value)))
         ]);
     }

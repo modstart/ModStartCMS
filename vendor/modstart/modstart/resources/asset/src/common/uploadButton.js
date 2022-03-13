@@ -2,6 +2,14 @@ var WebUploader = require('./../vendor/webuploader/webuploader.js');
 
 require('./../vendor/webuploader/css.css');
 
+const tipError = function (msg) {
+    if (MS && MS.dialog) {
+        MS.dialog.alertError(msg)
+    } else {
+        alert(msg)
+    }
+}
+
 WebUploader.Uploader.register({
     'before-send': 'beforeBlockSend',
     'before-send-file': 'beforeSendFile'
@@ -17,29 +25,59 @@ WebUploader.Uploader.register({
     },
     beforeSendFile: function (file) {
         var task = new $.Deferred();
-
+        var me = this;
         var input = {
             'action': 'init',
             'name': file.name,
             'type': file.type,
-            'lastModifiedDate': file.lastModifiedDate,
-            'size': file.size
+            'lastModifiedDate': file.lastModifiedDate.toString(),
+            'size': file.size,
+            'md5': null
         };
-        var me = this;
 
-        $.post(this.options.server, input)
-            .done(function (res) {
-                if (res.code) {
-                    alert(res.msg);
+        (new WebUploader.Uploader())
+            .md5File(file)
+            .then(function (val) {
+                input.md5 = val
+                file.fileMd5 = val;
+                // console.log('uploadButton', file, input)
+                $.ajax({
+                    type: 'POST',
+                    url: me.options.server,
+                    headers: me.options.headers,
+                    data: JSON.stringify(input),
+                    contentType: "application/json",
+                    dataType: 'json',
+                }).done(function (res) {
+                    if (res.code) {
+                        tipError(res.msg);
+                        task.reject();
+                    } else {
+                        me.options.chunkUploaded = res.data.chunkUploaded;
+                        task.resolve();
+                    }
+                }).fail(function (res) {
+                    tipError('上传出错');
                     task.reject();
-                } else {
-                    me.options.chunkUploaded = res.data.chunkUploaded;
-                    task.resolve();
-                }
+                });
+                // $.post(me.options.server, input)
+                //     .done(function (res) {
+                //         if (res.code) {
+                //             tipError(res.msg);
+                //             task.reject();
+                //         } else {
+                //             me.options.chunkUploaded = res.data.chunkUploaded;
+                //             task.resolve();
+                //         }
+                //     })
+                //     .fail(function (res) {
+                //         tipError('上传出错');
+                //         task.reject();
+                //     });
             })
-            .fail(function (res) {
-                alert('上传出错');
-                task.reject();
+            .fail(function (error) {
+                tipError('上传出错:' + error)
+                task.reject()
             });
         return $.when(task);
     }
@@ -58,10 +96,10 @@ var UploadButton = function (selector, option) {
         showFileQueue: true,
         fileNumLimit: 1000,
         tipError: function (msg) {
-            if (window.api && window.api.dialog) {
-                window.api.dialog.tipError(msg);
+            if (MS && MS.dialog) {
+                MS.dialog.alertError(msg)
             } else {
-                alert(msg);
+                alert(msg)
             }
         },
         callback: function (file, me) {
@@ -157,6 +195,9 @@ var UploadButton = function (selector, option) {
             opt.callback(f, me);
         });
 
+        uploader.on('uploadBeforeSend', function (file, data) {
+            data.md5 = file.file.fileMd5
+        });
 
         uploader.on('uploadError', function (file) {
             this.removeFile(file);
@@ -181,7 +222,7 @@ var UploadButton = function (selector, option) {
 
 window.api.uploadButton = UploadButton
 
-if(!('MS' in window)){
+if (!('MS' in window)) {
     window.MS = {}
 }
 window.MS.uploadButton = UploadButton

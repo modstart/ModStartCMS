@@ -90,7 +90,7 @@ class FileDataStorage extends AbstractDataStorage
                 }
                 $this->move($hashFile, $token['fullPath']);
                 DataFileUploadedEvent::fire(null, $category, $token['fullPath']);
-                $dataTemp = $this->repository->addTemp($category, $token['path'], $token['name'], $token['size']);
+                $dataTemp = $this->repository->addTemp($category, $token['path'], $token['name'], $token['size'], empty($token['md5']) ? null : $token['md5']);
                 $data['data'] = $dataTemp;
                 $data['path'] = $token['fullPath'];
                 $data['preview'] = $this->getDriverFullPath($token['fullPath']);

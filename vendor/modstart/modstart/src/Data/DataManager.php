@@ -93,6 +93,9 @@ class DataManager
             }
             $file[$k] = $input[$k] . '';
         }
+        if (!empty($input['md5'])) {
+            $file['md5'] = $input['md5'];
+        }
         $file = array_merge($file, $extra);
         if (empty(self::$config[$category])) {
             return Response::generate(-2, 'Unknown category : ' . $category);
@@ -229,7 +232,8 @@ class DataManager
         }
         $storage->put($fullPath, $content);
         DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath);
-        $data = $storage->repository()->addData($category, $path, $filename, $size);
+        $md5 = md5($content);
+        $data = $storage->repository()->addData($category, $path, $filename, $size, $md5);
         $data = $storage->updateDriverDomain($data);
         $path = '/' . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
         $fullPath = $path;
@@ -296,7 +300,7 @@ class DataManager
         }
 
         $storage->move($from, $to);
-        $data = $storage->repository()->addData($dataTemp['category'], $path, $dataTemp['filename'], $dataTemp['size']);
+        $data = $storage->repository()->addData($dataTemp['category'], $path, $dataTemp['filename'], $dataTemp['size'], $dataTemp['md5']);
         $data = $storage->updateDriverDomain($data);
         $storage->repository()->deleteTempById($dataTemp['id']);
         $path = '/' . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
@@ -498,42 +502,5 @@ class DataManager
         $storage = self::storage($option);
         return AssetsUtil::fixFull($storage->getDriverFullPath($path), false);
     }
-//
-//    public static function repairContent($content)
-//    {
-//        $urls = [];
-//        preg_match_all('/\\((\\/?' . self::PATTERN_DATA_STRING . ')\\)/', $content, $mat);
-//        if (!empty($mat[1])) {
-//            $urls = array_merge($urls, $mat[1]);
-//        }
-//        preg_match_all('/"(\\/?' . self::PATTERN_DATA_STRING . ')"/', $content, $mat);
-//        if (!empty($mat[1])) {
-//            $urls = array_merge($urls, $mat[1]);
-//        }
-//        if (empty($urls)) {
-//            return $content;
-//        }
-//        $map = array_build($urls, function ($k, $o) {
-//            return [$o, self::fix($o)];
-//        });
-//        $searchs = [];
-//        $replaces = [];
-//        foreach ($map as $old => $new) {
-//            $searchs[] = $old;
-//            $replaces[] = $new;
-//        }
-//        return str_replace($searchs, $replaces, $content);
-//    }
-//
-//    public static function repairJsonArray($json)
-//    {
-//        $arr = @json_decode($json, true);
-//        if (empty($arr)) {
-//            return $json;
-//        }
-//        foreach ($arr as $i => $v) {
-//            $arr[$i] = self::fix($v);
-//        }
-//        return json_encode($arr);
-//    }
+    
 }
