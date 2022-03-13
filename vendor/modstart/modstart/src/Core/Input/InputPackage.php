@@ -232,7 +232,9 @@ class InputPackage
             if (!is_string($this->data[$key])) {
                 return $defaultValue;
             }
-            return trim($this->data[$key]);
+            $value = trim($this->data[$key]);
+            $value = StrUtil::filterSpecialChars($value);
+            return $value;
         }
         return $defaultValue;
     }
