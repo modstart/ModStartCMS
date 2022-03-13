@@ -5,7 +5,6 @@ namespace ModStart\Core\Dao;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class ModelUtil
 {
@@ -1153,8 +1152,25 @@ class ModelUtil
 //    }
 //
 
+    /**
+     * 增加或减少数值，会考虑到NULL的情况
+     * @param $model
+     * @param $where
+     * @param $field
+     * @param int $value
+     */
+    public static function increase($model, $where, $field, $value = 1)
+    {
+        ModelUtil::update($model, $where, [
+            $field => DB::raw('IFNULL(' . $field . ',0)' . ($value > 0 ? '+' . $value : '-' . abs($value)))
+        ]);
+    }
+
     public static function change($model, $where, $field, $value)
     {
+        if (is_numeric($where) || is_string($where)) {
+            $where = ['id' => $where];
+        }
         if ($value > 0) {
             self::model($model)->where($where)->increment($field, $value);
         } else {

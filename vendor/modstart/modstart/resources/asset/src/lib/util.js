@@ -184,14 +184,30 @@ Util.fullscreen = {
     }
 };
 
-Util.scrollTo = function (selector) {
+/**
+ * 滚动到指定位置
+ * @param selector
+ * @param container
+ */
+Util.scrollTo = function (selector, container) {
     var $target = $(selector);
     if (!$target.length) {
         console.warn('Util.scroll target=( ' + selector + ' ) not found');
         return;
     }
     var top = $target.offset().top;
-    $('html,body').animate({scrollTop: top}, 200);
+    if (container) {
+        var $container = $(container)
+        if (!$target.length) {
+            console.warn('Util.scroll container=( ' + container + ' ) not found');
+            return;
+        }
+        var containerTop = $container.offset().top
+        var containerScrollTop = $container.scrollTop()
+        $container.stop().animate({scrollTop: containerScrollTop + top - containerTop}, 200);
+    } else {
+        $('html,body').stop().animate({scrollTop: top}, 200);
+    }
 };
 
 /**

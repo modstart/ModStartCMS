@@ -58,23 +58,44 @@ class CustomField extends AbstractField
         return $value;
     }
 
-    public static function buildRecordNameValue($keyRedord, $valueRedord, $prefix = 'fieldCustom', $fieldCount = 5)
+    public static function buildRecordNameValue($keyRecord, $valueRecord, $prefix = 'fieldCustom', $fieldCount = 5)
     {
         $pairs = [];
         for ($i = 1; $i <= $fieldCount; $i++) {
-            if (empty($keyRedord[$prefix . $i])) {
+            if (empty($keyRecord[$prefix . $i])) {
                 continue;
             }
-            $module = @json_decode($keyRedord[$prefix . $i], true);
-            if (empty($module)) {
+            $field = $keyRecord[$prefix . $i];
+            if (is_string($field)) {
+                $field = @json_decode($field, true);
+            }
+            if (empty($field['type']) || empty($field['title'])) {
                 continue;
             }
             $pairs[] = [
-                'name' => $module['title'],
-                'value' => $valueRedord[$prefix . $i],
+                'name' => $field['title'],
+                'value' => $valueRecord[$prefix . $i],
             ];
         }
         return $pairs;
+    }
+
+    public static function hasFields($data, $prefix = 'fieldCustom', $fieldCount = 5)
+    {
+        for ($i = 1; $i <= $fieldCount; $i++) {
+            if (empty($data[$prefix . $i])) {
+                continue;
+            }
+            $field = $data[$prefix . $i];
+            if (is_string($field)) {
+                $field = @json_decode($field, true);
+            }
+            if (empty($field['type']) || empty($field['title'])) {
+                continue;
+            }
+            return true;
+        }
+        return false;
     }
 
     public static function unbuildTableFieldRow(&$data, $prefix = 'fieldCustom', $fieldCount = 5)
@@ -84,11 +105,15 @@ class CustomField extends AbstractField
             if (empty($data[$prefix . $i])) {
                 continue;
             }
-            $module = @json_decode($data[$prefix . $i], true);
-            if (empty($module)) {
+            $field = $data[$prefix . $i];
+            if (is_string($field)) {
+                $field = @json_decode($field, true);
+            }
+            if (empty($field['type']) || empty($field['title'])) {
                 continue;
             }
-            $fieldModules[] = $module;
+            $field['_name'] = $prefix . $i;
+            $fieldModules[] = $field;
         }
         $data['_' . $prefix] = $fieldModules;
     }
