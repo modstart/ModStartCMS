@@ -105,14 +105,12 @@ class ContentController extends Controller
                             return AutoRenderedFieldValue::makeView('modstart::core.field.checkbox-grid', $viewData);
                         case CmsModelFieldType::IMAGE:
                             return AutoRenderedFieldValue::makeView('modstart::core.field.image-grid', $viewData);
-                        case CmsModelFieldType::FILE:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.file-grid', $viewData);
-                        case CmsModelFieldType::DATE:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.date-grid', $viewData);
-                        case CmsModelFieldType::DATETIME:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.datetime-grid', $viewData);
                         case CmsModelFieldType::RICH_TEXT:
                             return AutoRenderedFieldValue::makeView('modstart::core.field.richHtml-grid', $viewData);
+                        case CmsModelFieldType::FILE:
+                        case CmsModelFieldType::DATE:
+                        case CmsModelFieldType::DATETIME:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.text-grid', $viewData);
                     }
                 });
             }
