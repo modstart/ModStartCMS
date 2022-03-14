@@ -33,6 +33,10 @@ export default {
         size: {
             type: String,
             default: null
+        },
+        uploadBeforeCheck: {
+            type: Function,
+            default: null
         }
     },
     data() {
@@ -77,6 +81,7 @@ export default {
                 extensions: this.dataUploadConfig.category[this.category].extensions.join(','),
                 sizeLimit: this.dataUploadConfig.category[this.category].maxSize,
                 chunkSize: this.dataUploadConfig.chunkSize,
+                uploadBeforeCheck: this.uploadBeforeCheck,
                 callback: function (file, me) {
                     $this.$emit('success', file)
                 },

@@ -34,46 +34,42 @@ WebUploader.Uploader.register({
             'size': file.size,
             'md5': null
         };
-
         (new WebUploader.Uploader())
             .md5File(file)
             .then(function (val) {
-                input.md5 = val
+                input.md5 = val;
                 file.fileMd5 = val;
-                // console.log('uploadButton', file, input)
-                $.ajax({
-                    type: 'POST',
-                    url: me.options.server,
-                    headers: me.options.headers,
-                    data: JSON.stringify(input),
-                    contentType: "application/json",
-                    dataType: 'json',
-                }).done(function (res) {
-                    if (res.code) {
-                        tipError(res.msg);
+                var continueUpload = function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: me.options.server,
+                        headers: me.options.headers,
+                        data: JSON.stringify(input),
+                        contentType: "application/json",
+                        dataType: 'json',
+                    }).done(function (res) {
+                        if (res.code) {
+                            tipError(res.msg);
+                            task.reject();
+                        } else {
+                            me.options.chunkUploaded = res.data.chunkUploaded;
+                            task.resolve();
+                        }
+                    }).fail(function (res) {
+                        tipError('上传出错');
                         task.reject();
-                    } else {
-                        me.options.chunkUploaded = res.data.chunkUploaded;
-                        task.resolve();
-                    }
-                }).fail(function (res) {
-                    tipError('上传出错');
-                    task.reject();
-                });
-                // $.post(me.options.server, input)
-                //     .done(function (res) {
-                //         if (res.code) {
-                //             tipError(res.msg);
-                //             task.reject();
-                //         } else {
-                //             me.options.chunkUploaded = res.data.chunkUploaded;
-                //             task.resolve();
-                //         }
-                //     })
-                //     .fail(function (res) {
-                //         tipError('上传出错');
-                //         task.reject();
-                //     });
+                    });
+                };
+                if (me.options.uploadBeforeCheck) {
+                    me.options.uploadBeforeCheck(input, file, function () {
+                        continueUpload();
+                    }, function () {
+                        me.owner.cancelFile(file)
+                        task.reject();
+                    })
+                } else {
+                    continueUpload();
+                }
             })
             .fail(function (error) {
                 tipError('上传出错:' + error)
@@ -95,6 +91,7 @@ var UploadButton = function (selector, option) {
         chunkSize: 5 * 1024 * 1024,
         showFileQueue: true,
         fileNumLimit: 1000,
+        uploadBeforeCheck: null,
         tipError: function (msg) {
             if (MS && MS.dialog) {
                 MS.dialog.alertError(msg)
@@ -141,10 +138,9 @@ var UploadButton = function (selector, option) {
                 extensions: opt.extensions
             },
             fileNumLimit: opt.fileNumLimit,
-            // formData: {
-            //     _token: ('__env' in window) ? __env.token : ''
-            // },
-            duplicate: false
+            formData: {},
+            duplicate: false,
+            uploadBeforeCheck: opt.uploadBeforeCheck,
         });
 
         uploader.on('fileQueued', function (file) {
@@ -159,6 +155,12 @@ var UploadButton = function (selector, option) {
                 '</li>';
             var $li = $(html);
             $list.append($li);
+        });
+
+        uploader.on('fileDequeued', function (file) {
+            $('#' + file.id).fadeOut(function () {
+                $('#' + file.id).remove();
+            });
         });
 
         uploader.on('uploadProgress', function (file, percentage) {
