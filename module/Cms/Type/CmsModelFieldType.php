@@ -14,6 +14,7 @@ class CmsModelFieldType implements BaseType
     const SELECT = 'select';
     const CHECKBOX = 'checkbox';
     const IMAGE = 'image';
+    const IMAGES = 'images';
     const FILE = 'file';
     const DATE = 'date';
     const DATETIME = 'datetime';
@@ -28,6 +29,7 @@ class CmsModelFieldType implements BaseType
             self::SELECT => '下拉选择',
             self::CHECKBOX => '多选按钮',
             self::IMAGE => '图片',
+            self::IMAGES => '多图',
             self::FILE => '文件',
             self::DATE => '日期',
             self::DATETIME => '日期时间',

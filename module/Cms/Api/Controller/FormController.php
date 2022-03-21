@@ -70,6 +70,9 @@ class FormController extends BaseCatController
                     case CmsModelFieldType::IMAGE:
                         $submitData[$customField['name']] = $input->getImagePath($customField['name']);
                         break;
+                    case CmsModelFieldType::IMAGES:
+                        $submitData[$customField['name']] = $input->getImagesPath($customField['name']);
+                        break;
                     case CmsModelFieldType::FILE:
                         $submitData[$customField['name']] = $input->getFilePath($customField['name']);
                         break;

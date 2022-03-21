@@ -98,6 +98,9 @@ class ModelController extends Controller
                 case CmsModelFieldType::FILE:
                     $data['maxLength'] = 200;
                     break;
+                case CmsModelFieldType::IMAGES:
+                    $data['maxLength'] = 1000;
+                    break;
             }
             $data['fieldData'] = json_encode($data['fieldData']);
             ModelUtil::transactionBegin();

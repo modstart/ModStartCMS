@@ -26,6 +26,7 @@ use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Layout\LayoutTab;
 use ModStart\Repository\Filter\RepositoryFilter;
+use ModStart\Support\Manager\FieldManager;
 use ModStart\Widget\TextLink;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsMode;
@@ -93,6 +94,12 @@ class ContentController extends Controller
                         'value' => $data[$field['name']],
                         'options' => $options,
                     ];
+                    $fieldClass = FieldManager::findFieldClass($field['fieldType']);
+                    if (!empty($fieldClass)) {
+                        /** @var AbstractField $fieldInstance */
+                        $fieldInstance = new $fieldClass('_empty_');
+                        $viewData['value'] = $fieldInstance->unserializeValue($viewData['value'], $fieldInstance);
+                    }
                     switch ($field['fieldType']) {
                         case CmsModelFieldType::TEXT:
                         case CmsModelFieldType::TEXTAREA:
@@ -105,6 +112,8 @@ class ContentController extends Controller
                             return AutoRenderedFieldValue::makeView('modstart::core.field.checkbox-grid', $viewData);
                         case CmsModelFieldType::IMAGE:
                             return AutoRenderedFieldValue::makeView('modstart::core.field.image-grid', $viewData);
+                        case CmsModelFieldType::IMAGES:
+                            return AutoRenderedFieldValue::makeView('modstart::core.field.images-grid', $viewData);
                         case CmsModelFieldType::RICH_TEXT:
                             return AutoRenderedFieldValue::makeView('modstart::core.field.richHtml-grid', $viewData);
                         case CmsModelFieldType::FILE:
@@ -251,6 +260,9 @@ class ContentController extends Controller
                                 break;
                             case CmsModelFieldType::IMAGE:
                                 $f = $form->image($field['name'], $field['title']);
+                                break;
+                            case CmsModelFieldType::IMAGES:
+                                $f = $form->images($field['name'], $field['title']);
                                 break;
                             case CmsModelFieldType::FILE:
                                 $f = $form->file($field['name'], $field['title']);

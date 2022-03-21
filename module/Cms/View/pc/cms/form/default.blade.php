@@ -77,6 +77,8 @@
                                         @endforeach
                                     @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::IMAGE)
                                         <div class="ub-text-muted">暂不支持</div>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::IMAGES)
+                                        <div class="ub-text-muted">暂不支持</div>
                                     @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::FILE)
                                         <div class="ub-text-muted">暂不支持</div>
                                     @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::DATE)

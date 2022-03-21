@@ -135,6 +135,7 @@ class CmsModelUtil
             case CmsModelFieldType::SELECT:
             case CmsModelFieldType::CHECKBOX:
             case CmsModelFieldType::IMAGE:
+            case CmsModelFieldType::IMAGES:
             case CmsModelFieldType::FILE:
                 return "VARCHAR($field[maxLength])";
             case CmsModelFieldType::DATE:
