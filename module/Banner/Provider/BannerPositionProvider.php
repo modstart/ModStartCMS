@@ -6,6 +6,11 @@ namespace Module\Banner\Provider;
 
 use Module\Vendor\Provider\ProviderTrait;
 
+/**
+ * Class BannerPositionProvider
+ * @package Module\Banner\Provider
+ * @deprecated
+ */
 class BannerPositionProvider
 {
     use ProviderTrait;

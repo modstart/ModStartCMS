@@ -25,20 +25,35 @@ class MemberMemberVipInit extends Migration
                 [
                     'id' => 2,
                     'flag' => 'vip1',
-                    'title' => 'VIP黄金会员',
-                    'price' => '9.99',
+                    'title' => '黄金月卡',
+                    'price' => '19.99',
                     'vipDays' => 30,
                     'isDefault' => false,
-                    'content' => '<p>VIP黄金会员说明</p>',
+                    'content' => '<p>黄金月卡会员</p>
+<p>30天有效期</p>
+<p>享受黄金会员福利</p>',
                 ],
                 [
                     'id' => 3,
                     'flag' => 'vip2',
-                    'title' => 'VIP钻石会员',
-                    'price' => '99.99',
+                    'title' => '钻石季卡',
+                    'price' => '49.99',
+                    'vipDays' => 90,
+                    'isDefault' => false,
+                    'content' => '<p>钻石季卡会员</p>
+<p>90天有效期</p>
+<p>享受钻石会员福利</p>',
+                ],
+                [
+                    'id' => 4,
+                    'flag' => 'vip3',
+                    'title' => '至尊年卡',
+                    'price' => '189.99',
                     'vipDays' => 365,
                     'isDefault' => false,
-                    'content' => '<p>VIP钻石会员说明</p>',
+                    'content' => '<p>至尊年卡会员</p>
+<p>365天有效期</p>
+<p>享受至尊会员福利</p>',
                 ],
             ]);
         }

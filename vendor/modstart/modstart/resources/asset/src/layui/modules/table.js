@@ -243,6 +243,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     ,loading: true //请求数据时，是否显示 loading
     ,cellMinWidth: 60 //所有单元格默认最小宽度
     ,defaultToolbar: ['filter', 'exports', 'print'] //工具栏右侧图标
+    ,autoScrollTop: true // 表格刷新自动滚动到顶部
+    ,autoColumnWidth: false // 表格列宽自动计算
     ,autoSort: true //是否前端自动排序。如果否，则需自主排序（通常为服务端处理好排序）
     ,text: {
       none: '无数据'
@@ -652,19 +654,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
       });
     }
 
-    function autoFixedHeight(){
-      var $fixedTables = that.elem.children('.layui-table-box').children('.layui-table-fixed')
-      var $tableTrs = that.elem.find('.layui-table-body:first table > tbody > tr')
-      $fixedTables.each(function(i,table){
-        $(table).find('table > tbody > tr').each(function(ii,tr){
-          var height = $tableTrs.find('td:first').get(ii).getBoundingClientRect().height
-          // height = $tableTrs.eq(ii).height()
-          $(tr).find('td:first').css({height:height+'px'})
-        })
-      })
-    }
-    autoFixedHeight()
-
     function autoCalcColumnWidth() {
       var _BODY = $('body')
       var th = that.elem.children('.layui-table-box').children('.layui-table-header').children('table').children('thead').children('tr').children('th'),
@@ -773,6 +762,20 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     if(options.autoColumnWidth){
       autoCalcColumnWidth(that)
     }
+
+    // 自动计算高度
+    function autoFixedHeight(){
+      var $fixedTables = that.elem.children('.layui-table-box').children('.layui-table-fixed')
+      var $tableTrs = that.elem.find('.layui-table-body:first table > tbody > tr')
+      $fixedTables.each(function(i,table){
+        $(table).find('table > tbody > tr').each(function(ii,tr){
+          var height = $tableTrs.find('td:first').get(ii).getBoundingClientRect().height
+          // height = $tableTrs.eq(ii).height()
+          $(tr).find('td:first').css({height:height+'px'})
+        })
+      })
+    }
+    autoFixedHeight()
 
     that.loading(!0);
   };
@@ -1019,7 +1022,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
         trs_fixed_r.push('<tr data-index="'+ i1 +'">'+ tds_fixed_r.join('') + '</tr>');
       });
 
-      that.layBody.scrollTop(0);
+      if(options.autoScrollTop){
+        that.layBody.scrollTop(0);
+      }
       that.layMain.find('.'+ NONE).remove();
       that.layMain.find('tbody').html(trs.join(''));
       that.layFixLeft.find('tbody').html(trs_fixed.join(''));

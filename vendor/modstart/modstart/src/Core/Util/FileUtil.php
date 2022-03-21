@@ -376,6 +376,12 @@ class FileUtil
      */
     public static function savePathToLocalTemp($path, $ext = '')
     {
+        if (file_exists($path)) {
+            return $path;
+        }
+        if (empty($ext)) {
+            $ext = self::extension($path);
+        }
         $tempPath = public_path('temp/' . md5($path) . (starts_with($ext, '.') ? $ext : '.' . $ext));
         if (file_exists($tempPath)) {
             return $tempPath;

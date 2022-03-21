@@ -1,6 +1,6 @@
 @extends('modstart::admin.dialogFrame')
 
-@section('pageTitle')用户「ID={{$record['id']}}」信息@endsection
+@section('pageTitle')用户 {{$record['username']}} （ID={{$record['id']}}）的信息@endsection
 
 @section('bodyContent')
 
@@ -31,13 +31,27 @@
             @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member','moneyEnable',false))
                 <div class="ub-pair">
                     <div class="name">余额</div>
-                    <div class="value">￥{{\Module\Member\Util\MemberMoneyUtil::getTotal($record['id'])}}</div>
+                    <div class="value">
+                        <span class="tw-inline-block" style="min-width:4rem;">
+                            ￥{{\Module\Member\Util\MemberMoneyUtil::getTotal($record['id'])}}
+                        </span>
+                        <a href="javascript:;" class="tw-ml-4" data-dialog-request="{{modstart_admin_url('member_money/charge',['memberUserId'=>$record['id']])}}">
+                            [余额变更]
+                        </a>
+                    </div>
                 </div>
             @endif
             @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member','creditEnable',false))
                 <div class="ub-pair">
                     <div class="name">积分</div>
-                    <div class="value">{{\Module\Member\Util\MemberCreditUtil::getTotal($record['id'])}}</div>
+                    <div class="value">
+                        <span class="tw-inline-block" style="min-width:4rem;">
+                            {{\Module\Member\Util\MemberCreditUtil::getTotal($record['id'])}}
+                        </span>
+                        <a href="javascript:;" class="tw-ml-4" data-dialog-request="{{modstart_admin_url('member_credit/charge',['memberUserId'=>$record['id']])}}">
+                            [积分变更]
+                        </a>
+                    </div>
                 </div>
             @endif
         </div>

@@ -23,7 +23,7 @@ return [
                 'ppt', 'pptx',
                 'doc', 'docx',
                 'xls', 'xlsx',
-                'zip',
+                'zip', 'csv',
             ]
         ],
         'document' => [

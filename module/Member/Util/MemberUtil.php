@@ -11,6 +11,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EncodeUtil;
 use ModStart\Data\DataManager;
+use ModStart\Data\Event\DataFileUploadedEvent;
 use Module\Member\Type\MemberMessageStatus;
 use Module\Member\Type\MemberStatus;
 
@@ -446,7 +447,8 @@ class MemberUtil
         $image = (string)Image::make($avatarData)->resize(50, 50)->encode($avatarExt, 75);
 
         if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
-            \ModStart\Data\Event\DataFileUploadedEvent::setParam('imageCompressIgnore', true);
+            DataFileUploadedEvent::setParam('imageCompressIgnore', true);
+            DataFileUploadedEvent::setParam('imageWatermarkIgnore', true);
         }
         $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig);
         if ($retBig['code']) {
@@ -468,7 +470,8 @@ class MemberUtil
             }
         }
         if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
-            \ModStart\Data\Event\DataFileUploadedEvent::forgetParam('imageCompressIgnore');
+            DataFileUploadedEvent::forgetParam('imageCompressIgnore');
+            DataFileUploadedEvent::forgetParam('imageWatermarkIgnore');
         }
         self::update($memberUser['id'], [
             'avatarBig' => $retBig['data']['fullPath'],

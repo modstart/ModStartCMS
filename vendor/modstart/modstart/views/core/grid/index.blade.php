@@ -136,7 +136,7 @@
                 page: false,
                 skin: 'line',
                 text: {
-                    none: '{{L('No Records')}}'
+                    none: '<div class="ub-text-muted"><i class="iconfont icon-empty-box" style="font-size:2rem;"></i><br />{{L('No Records')}}</div>'
                 },
                 // size: 'sm',
                 loading: true,
@@ -144,6 +144,7 @@
                 cols: [[]],
                 data: [],
                 autoColumnWidth: true,
+                autoScrollTop: false,
                 done: function () {
                 }
             });
@@ -156,6 +157,7 @@
                 lister.setPage(1);
                 lister.load();
             })
+            var isFirst = true;
             var $lister = $('#{{$id}}');
             var lister = new window.api.lister({
                 search: $lister.find('[data-search]'),

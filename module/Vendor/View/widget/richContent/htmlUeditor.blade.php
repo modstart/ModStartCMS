@@ -2,6 +2,8 @@
 <script src="@asset('asset/common/editor.js')"></script>
 <script>
     $(function () {
-        window.api.editor.basic('{{$name}}');
+        window.api.editor.basic('{{$name}}',{
+            server:"{{modstart_web_url('member_data/ueditor')}}"
+        });
     });
 </script>

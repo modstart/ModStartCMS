@@ -109,6 +109,7 @@ class ModuleServiceProvider extends ServiceProvider
             return AdminWidgetLink::build('会员', [
                 ['注册', modstart_web_url('register')],
                 ['登录', modstart_web_url('login')],
+                ['找回密码', modstart_web_url('retrieve')],
                 ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? ['用户钱包', modstart_web_url('member_money')] : null,
                 ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? ['用户积分', modstart_web_url('login')] : null,
             ]);
@@ -137,7 +138,7 @@ class ModuleServiceProvider extends ServiceProvider
                             ] : null,
                         ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ?
                             [
-                                'title' => '资金提现申请',
+                                'title' => '钱包提现申请',
                                 'url' => '\Module\Member\Admin\Controller\MemberMoneyCashController@index',
                             ] : null,
                     ]
@@ -159,7 +160,7 @@ class ModuleServiceProvider extends ServiceProvider
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@agreement',
                                 ],
                                 ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? [
-                                    'title' => '资金设置',
+                                    'title' => '钱包设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@money',
                                 ] : null,
                                 ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [

@@ -62,4 +62,6 @@ $router->group([
     $router->match(['get', 'post'], 'member_favorite/favorite', 'MemberFavoriteController@favorite');
     $router->match(['get', 'post'], 'member_favorite/unfavorite', 'MemberFavoriteController@unfavorite');
 
+    $router->match(['get', 'post'], 'member_doc/get', 'MemberDocController@get');
+
 });

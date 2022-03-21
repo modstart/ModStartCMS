@@ -1,7 +1,7 @@
 <script>
     $(function () {
         @foreach($script as $s)
-            {!! $s !!}
+            {!! $s !!};
         @endforeach
     });
 </script>

@@ -56,4 +56,24 @@ class EncodeUtil
     {
         return md5(md5($password) . md5($passwordSalt));
     }
+
+    public static function detectCharset($content, $checks = ['gbk', 'utf-8'])
+    {
+        $encoding = strtolower(mb_detect_encoding($content, $checks));
+        switch ($encoding) {
+            case 'cp936':
+                return 'gbk';
+            case 'utf-8':
+                return 'utf-8';
+            default:
+                return $encoding;
+        }
+    }
+
+    public static function toUTF8($content, $froms = ['gbk', 'utf-8'])
+    {
+        $encoding = mb_detect_encoding($content, $froms);
+        return iconv($encoding, 'UTF-8', $content);
+    }
+
 }

@@ -5,6 +5,8 @@ namespace ModStart\Core\Dao;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Util\PageHtmlUtil;
 
 class ModelUtil
 {
@@ -52,6 +54,12 @@ class ModelUtil
         DB::table($model)->insert($datas);
     }
 
+    /**
+     * 删除记录
+     * @param $model
+     * @param $where
+     * @return int 被删除的记录数量
+     */
     public static function delete($model, $where)
     {
         if (is_string($where) || is_numeric($where)) {
@@ -60,15 +68,30 @@ class ModelUtil
         return self::model($model)->where($where)->delete();
     }
 
+    /**
+     * 删除记录
+     * @param $model
+     * @param $field
+     * @param $operator
+     * @param $value
+     * @return int 被删除的记录数量
+     */
     public static function deleteOperator($model, $field, $operator, $value)
     {
-        self::model($model)->where($field, $operator, $value)->delete();
+        return self::model($model)->where($field, $operator, $value)->delete();
     }
 
+    /**
+     * 删除记录
+     * @param $model
+     * @param $values
+     * @param string $field
+     * @return int 被删除的记录数量
+     */
     public static function deleteIn($model, $values, $field = 'id')
     {
         if (empty($values)) {
-            return;
+            return 0;
         }
         return self::model($model)->whereIn($field, $values)->delete();
     }
@@ -128,6 +151,15 @@ class ModelUtil
             return null;
         }
         return $m->toArray();
+    }
+
+    public static function getOr404($model, $where, $fields = ['*'], $order = null)
+    {
+        $one = self::get($model, $where, $fields, $order);
+        if (empty($one)) {
+            abort(404, L('Page Not Found'));
+        }
+        return $one;
     }
 
     public static function getOrCreate($model, $where)
@@ -548,7 +580,7 @@ class ModelUtil
         /**
          * $search = [];
          * $search[] = ['field1'=>['equal'=>value],'field2'=>['equal'=>value]];
-         * $search[] = ['field1'=>['exp'=>'or','equal'=>value1,'like'=>'value2'],'field2'=>['equal'=>value]];
+         * $search[] = ['field1'=>['exp'=>'or', 'equal'=>value1, 'like'=>'value2'],'field2'=>['equal'=>value]];
          * $search[] = ['__exp'=>'and|or','field1'=>[...],'field2'=>[...],];
          */
         if (!empty($option['search']) && is_array($option['search'])) {
@@ -733,11 +765,29 @@ class ModelUtil
         }
     }
 
+    public static function paginateQuick($model, $page = null, $pageSize = null, $option = [], $pageUrl = '?page={page}')
+    {
+        if (null === $page) {
+            $page = InputPackage::buildFromInput()->getPage();
+        }
+        if (null === $pageSize) {
+            $pageSize = InputPackage::buildFromInput()->getPageSize();
+        }
+        $paginateData = self::paginate($model, $page, $pageSize, $option);
+
+        return [
+            'records' => $paginateData['records'],
+            'total' => $paginateData['total'],
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'pageHtml' => PageHtmlUtil::render($paginateData['total'], $pageSize, $page, $pageUrl)
+        ];
+    }
+
 
     public static function paginate($model, $page, $pageSize, $option = [])
     {
         $m = self::model($model);
-
         if (!empty($option['joins'])) {
             $select = [];
             $select[] = $model . '.*';
@@ -1157,7 +1207,7 @@ class ModelUtil
      * @param $model
      * @param $where
      * @param $field
-     * @param int $value
+     * @param int $value 记录更新数量
      */
     public static function increase($model, $where, $field, $value = 1)
     {

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use ModStart\Core\Util\FormatUtil;
 use ModStart\Core\Util\HtmlUtil;
 use ModStart\Core\Util\StrUtil;
+use ModStart\Core\Util\TagUtil;
 use ModStart\Core\Util\TimeUtil;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -193,6 +194,16 @@ class InputPackage
             }
         }
         return $defaultValue;
+    }
+
+    public function getSeperatedTagsString($key, $seperator = ',')
+    {
+        return TagUtil::seperated2String($this->getTrimString($key), $seperator);
+    }
+
+    public function getSeperatedTagsArray($key, $seperator = ',')
+    {
+        return TagUtil::seperated2Array($this->getTrimString($key), $seperator);
     }
 
     public function getMultiTrimString($keys, $defaultValue = '')

@@ -1,140 +1,143 @@
 @import "../../component/form/form";
 
 .ub-account {
-  .box {
-    background: #FFF;
-    max-width: 17rem;
-    box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    border-radius: var(--size-radius);
-    padding: 1rem 0;
-    margin: 2rem auto;
-    text-align: center;
+    min-height: calc(100vh - 240px);
 
-    // @since 1.6.0
-    &.wide {
-      max-width: 34rem;
-      width: 34rem;
-    }
+    .box {
+        background: #FFF;
+        max-width: 17rem;
+        box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        border-radius: var(--size-radius);
+        padding: 1rem 0;
+        margin: 2rem auto;
+        text-align: center;
 
-    .logo {
-      text-align: center;
-
-      a {
-        display: inline-block;
-        text-decoration: none;
-
-        img {
-          height: 2rem;
-          vertical-align: middle;
+        // @since 1.6.0
+        &.wide {
+            max-width: 34rem;
+            width: 34rem;
         }
-      }
+
+        .logo {
+            text-align: center;
+
+            a {
+                display: inline-block;
+                text-decoration: none;
+
+                img {
+                    height: 2rem;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .nav {
+            font-size: var(--font-size-large);
+            color: #999;
+            margin-top: 1rem;
+
+            a {
+                color: #999;
+                text-decoration: none;
+                font-size: var(--font-size-large);
+
+                &.active {
+                    color: var(--color-primary);
+                }
+            }
+        }
+
+        .ub-form {
+            padding: 1.5rem 1.5rem 0 1.5rem;
+
+            .line {
+                .field {
+                    .help {
+                        text-align: left;
+                    }
+                }
+            }
+        }
     }
 
-    .nav {
-      font-size: var(--font-size-large);
-      color: #999;
-      margin-top: 1rem;
-
-      a {
+    .oauth {
+        padding-top: 1rem;
+        text-align: center;
         color: #999;
-        text-decoration: none;
-        font-size: var(--font-size-large);
 
-        &.active {
-          color: var(--color-primary);
+        .title {
+
         }
-      }
+
+        .body {
+            padding: 1rem 0;
+        }
+
+        a {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: #999;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            margin: 0 0.5rem;
+            text-decoration: none;
+
+            i {
+                font-size: 1.5rem;
+                line-height: 2.5rem;
+            }
+
+            &.qq {
+                background: #498ad5;
+
+                &:hover {
+                    background: darken(#498ad5, 10%);
+                }
+            }
+
+            &.weibo {
+                background: #e05244;
+
+                &:hover {
+                    background: darken(#e05244, 10%);
+                }
+            }
+
+            &.wechat {
+                background: #00bb29;
+
+                &:hover {
+                    background: darken(#00bb29, 10%);
+                }
+            }
+        }
     }
 
-    .ub-form {
-      padding: 1.5rem 1.5rem 0 1.5rem;
-
-      .line {
-        .field {
-          .help {
-            text-align: left;
-          }
-        }
-      }
+    .retrieve {
+        text-align: center;
+        color: #999;
     }
-  }
-
-  .oauth {
-    padding-top: 1rem;
-    text-align: center;
-    color: #999;
-
-    .title {
-
-    }
-
-    .body {
-      padding: 1rem 0;
-    }
-
-    a {
-      display: inline-block;
-      width: 2.5rem;
-      height: 2.5rem;
-      background: #999;
-      color: #FFF;
-      border-radius: 50%;
-      text-align: center;
-      margin: 0 0.5rem;
-      text-decoration: none;
-
-      i {
-        font-size: 1.5rem;
-        line-height: 2.5rem;
-      }
-
-      &.qq {
-        background: #498ad5;
-
-        &:hover {
-          background: darken(#498ad5, 10%);
-        }
-      }
-
-      &.weibo {
-        background: #e05244;
-
-        &:hover {
-          background: darken(#e05244, 10%);
-        }
-      }
-
-      &.wechat {
-        background: #00bb29;
-
-        &:hover {
-          background: darken(#00bb29, 10%);
-        }
-      }
-    }
-  }
-
-  .retrieve {
-    text-align: center;
-    color: #999;
-  }
 }
 
 @media (max-width: 38.35rem) {
-  .ub-account {
-    padding: 0;
+    .ub-account {
+        padding: 0;
+        min-height: calc(100vh - 190px);
 
-    .box {
-      margin: 0;
-      max-width: 100%;
-      box-shadow: none;
-      background: transparent;
+        .box {
+            margin: 0;
+            max-width: 100%;
+            box-shadow: none;
+            background: transparent;
 
-      // @since 1.6.0
-      &.wide {
-        width: auto;
-      }
+            // @since 1.6.0
+            &.wide {
+                width: auto;
+            }
+        }
     }
-  }
 }

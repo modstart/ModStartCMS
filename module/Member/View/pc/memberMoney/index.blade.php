@@ -9,7 +9,7 @@
     <div class="ub-panel transparent">
         <div class="body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="ub-dashboard-item-a">
                         <div class="icon">
                             <i class="font iconfont icon-pay"></i>

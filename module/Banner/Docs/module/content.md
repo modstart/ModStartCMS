@@ -48,3 +48,23 @@ if (class_exists(BannerPositionProvider::class)) {
 ```
 
 如此便可在通用轮播管理的页面进行轮播的管理
+
+## 如何调整轮播的比例和大小
+
+```html
+@include('module::Partner.View.pc.public.partner',['position'=>'位置','bannerRatio'=>'5-2'])
+```
+
+默认情况下，轮播使用了 `5-2` 的比例，还支持的内置比例有，调用时候只需要添加 `宽-高` 的 `bannerRatio` 变量即可。
+
+- `3-2`
+- `4-3`
+- `2-1`
+- `1-1`
+- `3-1`
+- `4-1`
+- `5-1`
+- `5-2`
+- `10-1`
+
+如果需要其他尺寸，可自行在 `module/Banner/View/pc/public/banner.blade.php` 模板文件中调整。

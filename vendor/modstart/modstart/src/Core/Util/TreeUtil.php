@@ -2,7 +2,6 @@
 
 namespace ModStart\Core\Util;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use ModStart\Core\Dao\ModelUtil;
@@ -269,6 +268,36 @@ class TreeUtil
         }
         return array_reverse($chain);
     }
+
+    public static function nodesChainWithItems(&$nodes, $id, $pk_name = 'id', $pid_name = 'pid')
+    {
+        $categoryChain = self::nodesChain($nodes, $id);
+        if (empty($categoryChain)) {
+            $categoryChain[] = [
+                'id' => -1,
+                'pid' => 0,
+                'title' => 'ROOT',
+            ];
+        }
+        foreach ($categoryChain as $k => $v) {
+            $categoryChain[$k]['_items'] = array_values(array_filter($nodes, function ($o) use ($v) {
+                return $o['pid'] == $v['pid'];
+            }));
+        }
+        $categoryChainNext = array_values(array_filter($nodes, function ($o) use ($id) {
+            return $o['pid'] == $id;
+        }));
+        if (!empty($categoryChainNext) && $id > 0) {
+            $categoryChain[] = [
+                'id' => -1,
+                'pid' => $id,
+                'title' => 'NEXT',
+                '_items' => $categoryChainNext,
+            ];
+        }
+        return $categoryChain;
+    }
+
 
     public static function itemsMergeLevel($items, $idName = 'id', $pidName = 'pid', $sortName = 'sort', $pid = 0, $level = 1, $newItems = null)
     {

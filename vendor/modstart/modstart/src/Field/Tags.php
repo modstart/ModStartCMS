@@ -7,7 +7,6 @@ namespace ModStart\Field;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Core\Util\TagUtil;
-use ModStart\Field\Type\FieldRenderMode;
 
 class Tags extends AbstractField
 {
@@ -39,6 +38,12 @@ class Tags extends AbstractField
     public function serializeType($value)
     {
         $this->addVariables(['serializeType' => $value]);
+        return $this;
+    }
+
+    public function serializeAsColonSeparated()
+    {
+        $this->serializeType(self::SERIALIZE_TYPE_COLON_SEPARATED);
         return $this;
     }
 

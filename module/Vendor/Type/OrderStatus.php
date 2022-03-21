@@ -38,4 +38,13 @@ class OrderStatus implements BaseType
         }
         return $filtered;
     }
+
+    public static function simple()
+    {
+        return self::filterList([
+            self::WAIT_PAY,
+            self::COMPLETED,
+            self::CANCEL_EXPIRED,
+        ]);
+    }
 }

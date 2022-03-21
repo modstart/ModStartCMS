@@ -16,7 +16,7 @@
 
 @section('bodyContent')
 
-    <div class="ub-account pb-member-login-account" style="min-height:calc( 100vh - 250px );">
+    <div class="ub-account pb-member-login-account">
 
         <div class="box" data-member-login-box>
             <div class="nav">

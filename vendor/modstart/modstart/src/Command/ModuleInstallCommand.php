@@ -22,7 +22,7 @@ class ModuleInstallCommand extends Command
         $installeds = ModuleManager::listAllInstalledModules();
         $basic = ModuleManager::getModuleBasic($module);
         BizException::throwsIf('Module basic empty', !$basic);
-        BizException::throwsIf(L('Module %s:%s company on ModStart:%s, install fail', $module, $basic['version'], $basic['modstartVersion']), !VersionUtil::match(ModStart::$version, $basic['modstartVersion']));
+        BizException::throwsIf(L('Module %s:%s depends on ModStart:%s, install fail', $module, $basic['version'], $basic['modstartVersion']), !VersionUtil::match(ModStart::$version, $basic['modstartVersion']));
         if (method_exists(ModuleManager::class, 'getEnv')) {
             $env = ModuleManager::getEnv();
             BizException::throwsIf(

@@ -50,6 +50,14 @@ class ModuleManager
                     // 'Xxx:>*'
                     // 'Xxx:<*'
                 ],
+                'suggest' => [
+                    // 'Xxx:*'
+                    // 'Xxx:>=*'
+                    // 'Xxx:==*'
+                    // 'Xxx:<=*'
+                    // 'Xxx:>*'
+                    // 'Xxx:<*'
+                ],
                 // 已知冲突模块
                 'conflicts' => [
                     // 'Xxx:*'
@@ -326,6 +334,15 @@ class ModuleManager
         } catch (\Exception $e) {
             return [];
         }
+    }
+
+    /**
+     * 列出所有已安装的模块名称
+     * @return string[]
+     */
+    public static function listAllEnableModuleNames()
+    {
+        return array_keys(self::listAllEnabledModules());
     }
 
     /**

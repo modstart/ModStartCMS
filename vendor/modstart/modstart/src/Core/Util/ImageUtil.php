@@ -3,6 +3,7 @@
 namespace ModStart\Core\Util;
 
 use Intervention\Image\ImageManagerStatic as Image;
+use ModStart\Core\Exception\BizException;
 
 class ImageUtil
 {
@@ -75,6 +76,98 @@ class ImageUtil
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * 为图片加水印
+     * @param $image
+     * @param $type
+     * @param $content
+     * @param array $option
+     * @return mixed|void
+     * @throws BizException
+     */
+    public static function watermark($image, $type, $content, $option = [])
+    {
+        switch ($type) {
+            case 'text':
+            case 'image':
+                break;
+            default:
+                BizException::throws('Unknown watermark type');
+        }
+        if (!isset($option['return'])) {
+            $option['return'] = false;
+        }
+        if (empty($option['position'])) {
+            $option['position'] = 'bottom-right';
+        }
+        BizException::throwsIf('Unknown water position', !in_array($option['position'], [
+            'center', 'bottom-right', 'top-right', 'bottom-left', 'top-left',
+        ]));
+        $changed = false;
+        $img = Image::make($image);
+        $width = $img->width();
+        $height = $img->height();
+        if ($width < 100 || $height < 100) {
+            return;
+        }
+        $gap = intval(min($width, $height) / 50);
+        switch ($type) {
+            case 'text':
+                if (empty($content)) {
+                    return;
+                }
+                $img->text($content, $width - $gap, $height - $gap,
+                    function ($font) use ($width, $height) {
+                        $fontSize = max(min($width, $height) / 30, 10);
+                        $font->file(base_path('vendor/modstart/modstart/resources/font/SourceHanSansCN-Medium.ttf'));
+                        $font->size($fontSize);
+                        $font->color('rgba(255, 255, 255, 0.5)');
+                        $font->align('right');
+                        $font->valign('bottom');
+                    });
+                $changed = true;
+                break;
+            case 'image':
+                $localWater = FileUtil::savePathToLocalTemp($content);
+                if (empty($localWater) || !file_exists($localWater)) {
+                    return;
+                }
+                $watermark = Image::make($localWater);
+                $limit = max(min($width, $height) / 10, 10);
+                $waterWidth = $watermark->width();
+                $waterHeight = $watermark->height();
+                if ($waterWidth > $waterHeight) {
+                    $waterHeight = intval($limit * $waterHeight / $waterWidth);
+                    $waterWidth = $limit;
+                } else {
+                    $waterWidth = intval($limit * $waterWidth / $waterHeight);
+                    $waterHeight = $limit;
+                }
+                $watermark->resize($waterWidth, $waterHeight);
+                $watermark->opacity(50);
+                $img->insert($watermark, $option['position'], $gap, $gap);
+                $changed = true;
+                break;
+        }
+        if ($option['return']) {
+            return $img->response('png');
+        }
+        if ($changed) {
+            $img->save($image);
+        }
+    }
+
+    public static function info($file)
+    {
+        $img = Image::make($file);
+        $width = $img->width();
+        $height = $img->height();
+        return [
+            'width' => $width,
+            'height' => $height,
+        ];
     }
 
 }

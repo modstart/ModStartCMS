@@ -225,6 +225,11 @@ function L($name, ...$params)
     return $name;
 }
 
+function modstart_module_enabled($module)
+{
+    return \ModStart\Module\ModuleManager::isModuleEnabled($module);
+}
+
 if (!function_exists('array_build')) {
     function array_build($array, callable $callback)
     {

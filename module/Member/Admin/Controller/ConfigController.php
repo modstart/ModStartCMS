@@ -4,7 +4,6 @@ namespace Module\Member\Admin\Controller;
 
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminConfigBuilder;
-use ModStart\Core\Input\Request;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
@@ -53,6 +52,8 @@ class ConfigController extends Controller
     {
         $builder->pageTitle('用户VIP设置');
         $builder->switch('moduleMemberVipEnable', '用户VIP功能开启');
+        $builder->text('Member_VipTitle', 'VIP开通标题')->help('默认为 开通尊贵VIP 享受更多权益');
+        $builder->text('Member_VipSubTitle', 'VIP开通副标题')->help('默认为 会员权益1 丨 会员权益2 丨 会员权益3 丨 会员权益4');
         $builder->formClass('wide');
         return $builder->perform();
     }
@@ -67,7 +68,7 @@ class ConfigController extends Controller
 
     public function money(AdminConfigBuilder $builder)
     {
-        $builder->pageTitle('用户资金设置');
+        $builder->pageTitle('用户钱包设置');
         $builder->switch('Member_MoneyEnable', '启用钱包功能');
         if (ModuleManager::getModuleConfig('Member', 'moneyEnable', false)) {
             $builder->switch('Member_MoneyCashEnable', '开启用户提现')->when('=', 1, function (Form $form) {

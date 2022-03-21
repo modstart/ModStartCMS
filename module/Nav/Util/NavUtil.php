@@ -55,6 +55,12 @@ class NavUtil
         });
     }
 
+    public static function hasData($position = 'header')
+    {
+        $values = self::listByPositionWithCache($position);
+        return !empty($values);
+    }
+
     public static function clearCache()
     {
         foreach (NavPosition::getList() as $k => $_) {

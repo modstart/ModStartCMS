@@ -6,12 +6,17 @@ use Illuminate\Support\Str;
 
 class TagUtil
 {
-    public static function seperated2String($tags, $seperator = ',')
+    public static function seperated2Array($tags, $seperator = ',')
     {
         if (',' == $seperator) {
             $tags = str_replace(['，'], ',', $tags);
         }
-        $results = array_filter(explode(',', $tags));
+        return array_filter(explode(',', $tags));
+    }
+
+    public static function seperated2String($tags, $seperator = ',')
+    {
+        $results = self::seperated2Array($tags, $seperator);
         return self::array2String($results);
     }
 

@@ -45,15 +45,28 @@ class MemberVipUtil
         });
     }
 
-    public static function getMemberVip($memberUser)
+    public static function getMemberVipById($memberUserId, $key = null, $defaultValue = null)
+    {
+        $memberUser = MemberUtil::get($memberUserId);
+        return self::getMemberVip($memberUser, $key, $defaultValue);
+    }
+
+    public static function getMemberVip($memberUser, $key = null, $defaultValue = null)
     {
         if (empty($memberUser)) {
-            return self::get(null);
+            $vip = self::get(null);
+        } else if (!empty($memberUser['vipExpire']) && strtotime($memberUser['vipExpire']) > time()) {
+            $vip = self::get($memberUser['vipId']);
+        } else {
+            $vip = self::get(null);
         }
-        if (!empty($memberUser['vipExpire']) && strtotime($memberUser['vipExpire']) > time()) {
-            return self::get($memberUser['vipId']);
+        if (empty($vip)) {
+            return null;
         }
-        return self::get(null);
+        if (null === $key) {
+            return $vip;
+        }
+        return isset($vip[$key]) ? $vip[$key] : $defaultValue;
     }
 
     public static function getDefaultVip()

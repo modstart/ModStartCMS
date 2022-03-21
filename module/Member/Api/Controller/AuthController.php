@@ -4,6 +4,7 @@
 namespace Module\Member\Api\Controller;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
@@ -231,7 +232,12 @@ class AuthController extends ModuleBaseController
             'code' => $code,
             'callback' => $callback,
         ]);
-        BizException::throwsIfResponseError($ret);
+        if (!isset($ret['code'])) {
+            return Response::generate(-1, '登录失败(返回结果为空)');
+        }
+        if (0 != $ret['code']) {
+            return $ret;
+        }
         $userInfo = $ret['data']['userInfo'];
         $view = $input->getBoolean('view', false);
         if ($view) {

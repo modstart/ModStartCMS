@@ -15,23 +15,61 @@ use Module\Vendor\Provider\Notifier\NotifierProvider;
 
 abstract class AbstractContentVerifyProvider
 {
+    /**
+     * 审核业务唯一标识
+     * @return string
+     * @example post
+     */
     abstract public function name();
 
+    /**
+     * 审核业务名称
+     * @return string
+     * @example 文章
+     */
     abstract public function title();
 
+    /**
+     * 是否启用自动审核
+     * @param $param
+     * @return boolean
+     */
     abstract public function verifyAutoProcess($param);
 
-    abstract public function buildForm(Form $form, $param);
-
+    /**
+     * 待审核数量
+     * @return int
+     * @example return ModelUtil::count('post', ['status' => PostStatus::VERIFYING])
+     */
     abstract public function verifyCount();
 
+    /**
+     * 审核权限规则（用户首页是否显示待审核数量的权限判断）
+     * @return string
+     * @example '\Module\Post\Admin\Controller\PostController@verifyList'
+     */
     abstract public function verifyRule();
 
+    /**
+     * 构建审核表单
+     * @param Form $form
+     * @param $param
+     */
+    abstract public function buildForm(Form $form, $param);
+
+    /**
+     * 后台审核路径
+     * @return string
+     */
     public function verifyUrl()
     {
         return action($this->verifyRule());
     }
 
+    /**
+     * 自动审核成功是否通知
+     * @return bool
+     */
     public function verifyAutoProcessedNotify()
     {
         return true;

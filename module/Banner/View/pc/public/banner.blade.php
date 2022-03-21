@@ -7,6 +7,9 @@ if(empty($bannerSize)){
 if(empty($bannerRatio)){
     $bannerRatio = '5-2';
 }
+if(!isset($round)){
+    $round = false;
+}
 ?>
 {!! \ModStart\ModStart::css('asset/vendor/swiper/swiper.css') !!}
 {!! \ModStart\ModStart::js('asset/vendor/swiper/swiper.js') !!}
@@ -15,17 +18,17 @@ if(empty($bannerRatio)){
     <div class="swiper-container">
         <div class="swiper-wrapper">
             @if(empty($banners))
-                <div class="swiper-slide" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
-                <div class="swiper-slide" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
-                <div class="swiper-slide" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
+                <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
+                <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
+                <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
             @else
                 @foreach($banners as $banner)
                     @if($banner['type']==\Module\Banner\Type\BannerType::IMAGE)
-                        <a class="swiper-slide"
+                        <a class="swiper-slide {{$round?'tw-rounded':''}}"
                            style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});"
                            @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif></a>
                     @elseif($banner['type']==\Module\Banner\Type\BannerType::IMAGE_TITLE_SLOGAN_LINK)
-                        <div class="swiper-slide a" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});">
+                        <div class="swiper-slide {{$round?'tw-rounded':''}} a" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});">
                             <div class="content @if(!empty($banner['colorReverse'])) reverse @endif">
                                 <div class="title">{{$banner['title']}}</div>
                                 <div class="slogan">
@@ -37,7 +40,7 @@ if(empty($bannerRatio)){
                             </div>
                         </div>
                     @elseif($banner['type']==\Module\Banner\Type\BannerType::VIDEO && !\ModStart\Core\Util\AgentUtil::isMobile())
-                        <a class="swiper-slide video"
+                        <a class="swiper-slide {{$round?'tw-rounded':''}} video"
                            @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif>
                             <video class="video-player"
                                    src="{{\ModStart\Core\Assets\AssetsUtil::fix($banner['video'])}}"

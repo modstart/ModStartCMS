@@ -26,9 +26,19 @@ class AdminWidgetLink
                         $results = array_merge($results, $result);
                     }
                 }
+            } else {
+                $results[] = $item;
             }
         }
-        return $results;
+        $resultMap = [];
+        foreach ($results as $k => $v) {
+            if (isset($resultMap[$v['title']])) {
+                $resultMap[$v['title']]['list'] = array_merge($resultMap[$v['title']]['list'], $v['list']);
+            } else {
+                $resultMap[$v['title']] = $v;
+            }
+        }
+        return array_values($resultMap);
     }
 
     public static function build($groupName, $titleLinks)

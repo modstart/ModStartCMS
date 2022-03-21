@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use ModStart\Core\Exception\BizException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\View;
+use ModStart\Core\Util\FileUtil;
 
 class Response
 {
@@ -271,6 +272,9 @@ class Response
 
     public static function download($filename, $content, $headers = [], $filenameFallback = null)
     {
+        if (empty($filenameFallback)) {
+            $filenameFallback = 'file.' . FileUtil::extension($filename);
+        }
         $response = new \Illuminate\Http\Response($content);
         $disposition = $response->headers->makeDisposition(
             \Symfony\Component\HttpFoundation\ResponseHeaderBag::DISPOSITION_ATTACHMENT,

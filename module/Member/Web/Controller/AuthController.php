@@ -244,7 +244,7 @@ class AuthController extends ModuleBaseController
         $callback = Request::domainUrl() . '/oauth_callback_' . $oauthType;
         $ret = $this->api->oauthCallback($oauthType, $callback);
         if ($ret['code']) {
-            return Response::send(-1, $ret['msg']);
+            return Response::sendFromGenerate($ret);
         }
         $view = Session::get('oauthLoginView', false);
         Session::forget('oauthLoginView');

@@ -47,3 +47,6 @@ $router->match(['get', 'post'], 'member_group/delete', 'MemberGroupController@de
 $router->match(['get', 'post'], 'member_group/show', 'MemberGroupController@show');
 $router->match(['get', 'post'], 'member_group/sort', 'MemberGroupController@sort');
 
+$router->match(['get', 'post'], 'member_credit/charge', 'MemberCreditController@charge');
+
+$router->match(['get', 'post'], 'member_money/charge', 'MemberMoneyController@charge');

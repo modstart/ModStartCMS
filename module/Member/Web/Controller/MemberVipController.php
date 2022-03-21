@@ -9,7 +9,7 @@ use ModStart\Module\ModuleManager;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberVipUtil;
 
-class MemberVipController extends ModuleBaseController implements MemberLoginCheck
+class MemberVipController extends ModuleBaseController
 {
     /** @var \Module\Member\Api\Controller\MemberVipController */
     private $api;

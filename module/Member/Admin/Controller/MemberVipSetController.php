@@ -7,9 +7,11 @@ namespace Module\Member\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
+use ModStart\Core\Dao\ModelUtil;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
+use Module\Member\Biz\Vip\MemberVipBiz;
 use Module\Member\Util\MemberVipUtil;
 
 class MemberVipSetController extends Controller
@@ -22,14 +24,19 @@ class MemberVipSetController extends Controller
             ->init('member_vip_set')
             ->field(function ($builder) {
                 /** @var HasFields $builder */
-                $builder->id('id', 'ID')->addable(true)->editable(true);
-                $builder->text('title', '名称');
+                $builder->id('id', 'ID')->addable(true)->editable(true)
+                    ->ruleUnique('member_vip_set')->required()
+                    ->defaultValue(ModelUtil::sortNext('member_vip_set', [], 'id'));
+                $builder->text('title', '名称')->required()->ruleUnique('member_vip_set');
+                $builder->text('flag', '英文标识')->required()->ruleUnique('member_vip_set');
+                $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级')->required();
                 $builder->image('icon', '图标');
-                $builder->text('flag', '英文标识');
-                $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级');
-                $builder->currency('price', '价格');
-                $builder->number('vipDays', '天数');
-                $builder->richHtml('content', '说明');
+                $builder->currency('price', '价格')->required();
+                $builder->number('vipDays', '时间')->required()->help('单位为天，365表示1年');
+                foreach (MemberVipBiz::all() as $biz) {
+                    $biz->vipField($builder);
+                }
+                $builder->richHtml('content', '说明')->required();
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })
