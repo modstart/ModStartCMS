@@ -6,6 +6,11 @@ namespace Module\Partner\Provider;
 
 use Module\Vendor\Provider\ProviderTrait;
 
+/**
+ * Class PartnerPositionProvider
+ * @package Module\Partner\Provider
+ * @deprecated
+ */
 class PartnerPositionProvider
 {
     use ProviderTrait;

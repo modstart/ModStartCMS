@@ -3,8 +3,6 @@
 
 namespace Module\Member\Api\Controller;
 
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
@@ -133,8 +131,13 @@ class AuthController extends ModuleBaseController
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');
         }
+        if (empty($oauthType)) {
+            $input = InputPackage::buildFromInput();
+            $oauthType = $input->getTrimString('type');
+        }
+        BizException::throwsIfEmpty('授权类型为空', $oauthType);
         /** @var AbstractOauth $oauth */
-        $oauth = MemberOauth::get($oauthType);
+        $oauth = MemberOauth::getOrFail($oauthType);
         $ret = $oauth->processTryLogin([
             'userInfo' => $oauthUserInfo,
         ]);
@@ -159,7 +162,7 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, '用户授权数据为空');
         }
         /** @var AbstractOauth $oauth */
-        $oauth = MemberOauth::get($oauthType);
+        $oauth = MemberOauth::getOrFail($oauthType);
         //如果用户已经登录直接关联到当前用户
         $loginedMemberUserId = Session::get('memberUserId', 0);
         if ($loginedMemberUserId > 0) {
@@ -227,7 +230,7 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, '登录失败(code为空)', null, '/');
         }
         /** @var AbstractOauth $oauth */
-        $oauth = MemberOauth::get($oauthType);
+        $oauth = MemberOauth::getOrFail($oauthType);
         $ret = $oauth->processLogin([
             'code' => $code,
             'callback' => $callback,
@@ -261,7 +264,7 @@ class AuthController extends ModuleBaseController
         }
         $silence = $input->getBoolean('silence', false);
         /** @var AbstractOauth $oauth */
-        $oauth = MemberOauth::get($oauthType);
+        $oauth = MemberOauth::getOrFail($oauthType);
         $ret = $oauth->processRedirect([
             'callback' => $callback,
             'silence' => $silence,

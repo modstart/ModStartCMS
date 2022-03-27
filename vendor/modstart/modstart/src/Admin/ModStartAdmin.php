@@ -86,7 +86,9 @@ class ModStartAdmin
                 'middleware' => ['admin.bootstrap', 'admin.auth'],
                 'namespace' => "\\Module\\$module\\Admin\\Controller",
             ], function ($router) use ($file) {
-                require $file;
+                if (file_exists($file)) {
+                    require $file;
+                }
             });
         }
         if (file_exists($routes = modstart_admin_path('routes.php'))) {

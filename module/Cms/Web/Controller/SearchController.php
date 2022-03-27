@@ -18,11 +18,7 @@ class SearchController extends ModuleBaseController
         $keywords = $input->getTrimString('keywords');
         $option = [];
         if (!empty($keywords)) {
-            $option['whereOperate'] = [
-                [
-                    'title', 'like', "%$keywords%"
-                ]
-            ];
+            $option['search'][] = ['__exp' => 'or', 'title' => ['like' => "%$keywords%"], 'tags' => ['like' => "%:$keywords:%"]];
         }
         $paginateData = CmsContentUtil::paginate($page, $pageSize, $option);
         $viewData = [];

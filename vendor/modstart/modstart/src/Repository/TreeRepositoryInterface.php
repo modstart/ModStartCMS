@@ -41,6 +41,6 @@ interface TreeRepositoryInterface
      *
      * @return Collection
      */
-    public function getTreeItems();
-    
+    public function getTreeItems($context);
+
 }

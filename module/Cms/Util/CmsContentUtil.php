@@ -49,7 +49,7 @@ class CmsContentUtil
         foreach ($paginateData['records'] as $k => $record) {
             $paginateData['records'][$k]['_url'] = ContentUrlMode::url($record);
             $paginateData['records'][$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
-            $paginateData['records'][$k]['tags'] = TagUtil::string2Array($record['tags']);
+            $paginateData['records'][$k]['_tags'] = TagUtil::string2Array($record['tags']);
         }
         return $paginateData;
     }
@@ -73,7 +73,7 @@ class CmsContentUtil
         foreach ($records as $k => $record) {
             $records[$k]['_url'] = ContentUrlMode::url($record);
             $records[$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
-            $records[$k]['tags'] = TagUtil::string2Array($record['tags']);
+            $records[$k]['_tags'] = TagUtil::string2Array($record['tags']);
             $model = CmsModelUtil::get($record['modelId']);
             $records[$k]['_data'] = CmsContentUtil::getModelData($model, $record['id']);
         }
@@ -104,6 +104,11 @@ class CmsContentUtil
             'record' => $record,
             'model' => $model,
         ];
+    }
+
+    public static function increaseView($id)
+    {
+        ModelUtil::increase('cms_content', $id, 'viewCount');
     }
 
     public static function getModelData($model, $id)

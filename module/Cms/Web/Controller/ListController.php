@@ -34,9 +34,7 @@ class ListController extends BaseCatController
             $pageTemplate = modstart_web_url($cat['pageFullUrl']);
         }
         $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, $pageTemplate);
-
         // return $viewData;
-
         return $this->view('cms.list.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

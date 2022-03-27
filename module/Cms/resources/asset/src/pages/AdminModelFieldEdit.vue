@@ -162,7 +162,11 @@
             }
         },
         mounted() {
-            $('.panel-dialog-foot [data-submit]').show().on('click', () => this.doSubmit());
+            $(() => {
+                $('.ub-panel-dialog').removeClass('no-foot')
+                    .find('.panel-dialog-foot').show()
+                    .find('[data-submit]').show().on('click', () => this.doSubmit())
+            })
         },
         methods: {
             capitalizeFirstLetter(string) {

@@ -8,14 +8,23 @@ use ModStart\Core\Dao\ModelUtil;
 
 class TreeUtil
 {
+    /**
+     * 默认子元素键
+     * @var string
+     */
     static $CHILD_KEY = '_child';
 
+    /**
+     * 设置子元素建
+     * @param $key
+     */
     public static function setChildKey($key)
     {
         self::$CHILD_KEY = $key;
     }
 
     /**
+     * 将模型所有数据转换为Tree
      * @param $model
      * @param array $fieldsMap $fieldsMap = [title=>titleField,...]
      * @param string $keyId
@@ -46,7 +55,7 @@ class TreeUtil
     }
 
     /**
-     * 读取模型节点，组装成为一个树
+     * 读取模型部分节点（根据pid筛选），组装成为一个Tree
      * @param $pid
      * @param $model
      * @param array $fieldsMap
@@ -139,6 +148,16 @@ class TreeUtil
         return true;
     }
 
+    /**
+     * 将数组转换为Tree
+     * @param $nodes
+     * @param int $pid
+     * @param string $idName
+     * @param string $pidName
+     * @param string $sortName
+     * @param string $sortDirection
+     * @return array
+     */
     public static function nodesToTree(&$nodes, $pid = 0, $idName = 'id', $pidName = 'pid', $sortName = 'sort', $sortDirection = 'asc')
     {
         if ($sortName && $sortDirection) {
@@ -156,9 +175,20 @@ class TreeUtil
                 $tree[] = &$items[$item[$idName]];
             }
         }
-        return $tree;
+        return array_values(array_filter($tree, function ($o) use ($pidName, $pid) {
+            return $o[$pidName] == $pid;
+        }));
     }
 
+    /**
+     * 将Tree转换为带缩进的List，主要用于select操作
+     * @param $tree
+     * @param string $keyId
+     * @param string $keyTitle
+     * @param int $level
+     * @param array $keepKeys
+     * @return array
+     */
     public static function treeToListWithIndent(&$tree, $keyId = 'id', $keyTitle = 'title', $level = 0, $keepKeys = [])
     {
         $options = array();
@@ -208,6 +238,28 @@ class TreeUtil
         return $options;
     }
 
+    /**
+     * 将Tree转换为Map，键为title-title，值为id
+     * @param $tree
+     * @param string $keyId
+     * @param string $keyTitle
+     * @param string $keyPid
+     * @param string $join
+     * @param array $prefix
+     * @return array
+     */
+    public static function treeToTitleIdMap(&$tree, $keyId = 'id', $keyTitle = 'title', $keyPid = 'pid', $join = '-', $prefix = [])
+    {
+        $map = array();
+        foreach ($tree as &$r) {
+            $map[join($join, array_merge($prefix, [$r[$keyTitle]]))] = $r[$keyId];
+            if (!empty($r[self::$CHILD_KEY])) {
+                $map = array_merge($map, self::treeToTitleIdMap($r[self::$CHILD_KEY], $keyId, $keyTitle, $keyPid, $join, array_merge($prefix, [$r[$keyTitle]])));
+            }
+        }
+        return $map;
+    }
+
     public static function nodesChildrenIds(&$nodes, $id, $pk_name = 'id', $pid_name = 'pid')
     {
         $ids = [];
@@ -223,6 +275,16 @@ class TreeUtil
         return $ids;
     }
 
+    /**
+     * 根据id计算Tree的所有上级
+     * @param $tree
+     * @param $id
+     * @param string $pk_name
+     * @param string $pid_name
+     * @param array $chain
+     * @param int $level
+     * @return array|mixed
+     */
     public static function treeChain(&$tree, $id, $pk_name = 'id', $pid_name = 'pid', $chain = [], $level = 0)
     {
         // echo json_encode($tree, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);exit();
@@ -245,11 +307,20 @@ class TreeUtil
                 if (!empty($results)) {
                     return $results;
                 }
+                array_pop($chain);
             }
         }
         return [];
     }
 
+    /**
+     * 根据id计算节点的所有上级
+     * @param $nodes
+     * @param $id
+     * @param string $pk_name
+     * @param string $pid_name
+     * @return array
+     */
     public static function nodesChain(&$nodes, $id, $pk_name = 'id', $pid_name = 'pid')
     {
         $chain = [];
@@ -269,36 +340,56 @@ class TreeUtil
         return array_reverse($chain);
     }
 
-    public static function nodesChainWithItems(&$nodes, $id, $pk_name = 'id', $pid_name = 'pid')
+    /**
+     * 根据id计算节点所有上级，同时附带每一级的可选元素，通常用于无线级的分类前端展示
+     * @param $nodes array
+     * @param $id integer
+     * @param string $idName
+     * @param string $pidName
+     * @param string $titleName
+     * @param string $itemName
+     * @return array
+     */
+    public static function nodesChainWithItems(&$nodes, $id, $idName = 'id', $pidName = 'pid', $titleName = 'title', $itemName = '_items')
     {
         $categoryChain = self::nodesChain($nodes, $id);
         if (empty($categoryChain)) {
             $categoryChain[] = [
-                'id' => -1,
-                'pid' => 0,
-                'title' => 'ROOT',
+                $idName => -1,
+                $pidName => 0,
+                $titleName => 'ROOT',
             ];
         }
         foreach ($categoryChain as $k => $v) {
-            $categoryChain[$k]['_items'] = array_values(array_filter($nodes, function ($o) use ($v) {
-                return $o['pid'] == $v['pid'];
+            $categoryChain[$k][$itemName] = array_values(array_filter($nodes, function ($o) use ($v, $pidName) {
+                return $o[$pidName] == $v[$pidName];
             }));
         }
-        $categoryChainNext = array_values(array_filter($nodes, function ($o) use ($id) {
-            return $o['pid'] == $id;
+        $categoryChainNext = array_values(array_filter($nodes, function ($o) use ($id, $pidName) {
+            return $o[$pidName] == $id;
         }));
         if (!empty($categoryChainNext) && $id > 0) {
             $categoryChain[] = [
-                'id' => -1,
-                'pid' => $id,
-                'title' => 'NEXT',
-                '_items' => $categoryChainNext,
+                $idName => -1,
+                $pidName => $id,
+                $titleName => 'NEXT',
+                $itemName => $categoryChainNext,
             ];
         }
         return $categoryChain;
     }
-
-
+    
+    /**
+     * 为列表增加_level属性
+     * @param $items
+     * @param string $idName
+     * @param string $pidName
+     * @param string $sortName
+     * @param int $pid
+     * @param int $level
+     * @param null $newItems
+     * @return Collection|mixed|null
+     */
     public static function itemsMergeLevel($items, $idName = 'id', $pidName = 'pid', $sortName = 'sort', $pid = 0, $level = 1, $newItems = null)
     {
         if (!($items instanceof Collection)) {

@@ -177,18 +177,19 @@ abstract class Repository implements RepositoryInterface, SortRepositoryInterfac
         $this->treeSortColumn = $value;
     }
 
-    public function getTreeItems()
+    public function getTreeItems($context)
     {
-        throw new RuntimeException('This repository does not support "getTreeItems" method.');
+        throw new \RuntimeException('This repository does not support "getTreeItems" method.');
     }
 
     public function getTreeAncestorItems()
     {
-        throw new RuntimeException('This repository does not support "getTreeAncestorItems" method.');
+        throw new \RuntimeException('This repository does not support "getTreeAncestorItems" method.');
     }
 
     /**
-     * @param 构建Repository
+     * 构建 Repository
+     * @param $params string
      *
      * @return $this
      */

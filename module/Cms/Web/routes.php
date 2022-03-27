@@ -11,6 +11,7 @@ $router->group([
 ], function () use ($router) {
 
     $router->match(['get', 'post'], 'cms', 'IndexController@index');
+    $router->match(['get', 'post'], 'tag/{tag}', 'TagController@index');
     $router->match(['get', 'post'], 'a/{alias_url}', 'DetailController@index');
     $router->match(['get', 'post'], 'c/{id}', 'ListController@index');
 

@@ -1,10 +1,10 @@
 {
     "name": "Vendor",
     "title": "通用功能包",
-    "version": "2.9.0",
+    "version": "3.1.0",
     "author": "官方",
     "description": "提供基础功能",
-    "modstartVersion": ">=2.7.0",
+    "modstartVersion": ">=3.0.0",
     "env": [
         "laravel5",
         "laravel9"

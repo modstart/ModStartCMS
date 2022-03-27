@@ -376,7 +376,7 @@ class FileUtil
      */
     public static function savePathToLocalTemp($path, $ext = '')
     {
-        if (file_exists($path)) {
+        if (@file_exists($path)) {
             return $path;
         }
         if (empty($ext)) {

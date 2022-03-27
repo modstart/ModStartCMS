@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2778046 */
-  src: url('iconfont.woff2?t=1645678775607') format('woff2'),
-       url('iconfont.woff?t=1645678775607') format('woff'),
-       url('iconfont.ttf?t=1645678775607') format('truetype');
+  src: url('iconfont.woff2?t=1648021726043') format('woff2'),
+       url('iconfont.woff?t=1648021726043') format('woff'),
+       url('iconfont.ttf?t=1648021726043') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-star-alt:before {
+  content: "\e7df";
+}
+
+.icon-star:before {
+  content: "\e65e";
 }
 
 .icon-alipay:before {
@@ -231,10 +239,6 @@
 
 .icon-copy:before {
   content: "\e620";
-}
-
-.icon-star:before {
-  content: "\e613";
 }
 
 .icon-cny:before {

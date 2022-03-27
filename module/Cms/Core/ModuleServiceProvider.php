@@ -10,10 +10,12 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
+use ModStart\Module\ModuleManager;
 use Module\Cms\Provider\CmsHomePageProvider;
 use Module\Cms\Provider\Theme\CmsThemeProvider;
 use Module\Cms\Provider\Theme\DefaultThemeProvider;
 use Module\Cms\Util\CmsModelUtil;
+use Module\TagManager\Biz\TagManagerBiz;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
 use Module\Vendor\Provider\HomePage\HomePageProvider;
@@ -126,6 +128,10 @@ class ModuleServiceProvider extends ServiceProvider
                 modstart_admin_url('cms/model')
             ));
         });
+
+        if (ModuleManager::isModuleEnabled('TagManager')) {
+            TagManagerBiz::register(CmsTagManagerBiz::class);
+        }
 
     }
 

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4766954",
+      "name": "star",
+      "font_class": "star-alt",
+      "unicode": "e7df",
+      "unicode_decimal": 59359
+    },
+    {
+      "icon_id": "1222755",
+      "name": "eglass-star",
+      "font_class": "star",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
       "icon_id": "7239636",
       "name": "alipay",
       "font_class": "alipay",
@@ -389,13 +403,6 @@
       "font_class": "copy",
       "unicode": "e620",
       "unicode_decimal": 58912
-    },
-    {
-      "icon_id": "885495",
-      "name": "star",
-      "font_class": "star",
-      "unicode": "e613",
-      "unicode_decimal": 58899
     },
     {
       "icon_id": "185178",

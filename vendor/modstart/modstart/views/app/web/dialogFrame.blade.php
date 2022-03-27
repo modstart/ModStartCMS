@@ -29,6 +29,12 @@
             $foot.find('[data-close]').on('click', function () {
                 parent.layer.closeAll();
             });
+            window.__dialogFootSubmiting = function(cb){
+                $dialog.removeClass('no-foot');
+                $foot.show().find('[data-submit]').show().on('click',function(){
+                    cb && cb();
+                });
+            };
             window.__dialogClose = function(){
                 parent.layer.closeAll();
             };

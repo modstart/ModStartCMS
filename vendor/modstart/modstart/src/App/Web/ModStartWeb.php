@@ -37,7 +37,9 @@ class ModStartWeb
                 'middleware' => ['web.bootstrap'],
                 'namespace' => "\\Module\\$module\\Web\\Controller",
             ], function ($router) use ($file) {
-                require $file;
+                if(file_exists($file)){
+                    require $file;
+                }
             });
         }
         if (file_exists($routes = modstart_web_path('routes.php'))) {

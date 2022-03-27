@@ -72,10 +72,11 @@
                                         </div>
                                         <div class="info">
                                             <div class="left">
-                                                @if(!empty($record['tags']))
+                                                @if(!empty($record['_tags']))
                                                     <i><i class="iconfont icon-tag"></i></i>
-                                                    @foreach($record['tags'] as $t)
-                                                        <span class="ub-tag sm">{{$t}}</span>
+                                                    @foreach($record['_tags'] as $t)
+                                                        <a href="{{modstart_web_url('tag/'.urlencode($t))}}"
+                                                           class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2">{{$t}}</a>
                                                     @endforeach
                                                 @endif
                                             </div>

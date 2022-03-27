@@ -502,5 +502,5 @@ class DataManager
         $storage = self::storage($option);
         return AssetsUtil::fixFull($storage->getDriverFullPath($path), false);
     }
-    
+
 }

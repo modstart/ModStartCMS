@@ -5,6 +5,7 @@ namespace Module\Vendor\Provider\HomePage;
 
 
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Util\AgentUtil;
 
 class HomePageProvider
 {
@@ -13,6 +14,7 @@ class HomePageProvider
      */
     private static $instances = [
         DefaultHomePageProvider::class,
+        DefaultMobileHomePageProvider::class,
     ];
 
     public static function register($provider)
@@ -37,11 +39,19 @@ class HomePageProvider
 
     public static function call($contextMethod, $defaultAction)
     {
-        $controller = $defaultAction;
+        $controller = null;
         if (modstart_config('HomePage_Enable', false)) {
-            $controller = modstart_config('HomePage_Home');
-            BizException::throwsIfEmpty('首页不存在', $controller);
+            if (AgentUtil::isMobile()) {
+                $controller = modstart_config('HomePage_HomeMobile');
+            }
+            if (empty($controller)) {
+                $controller = modstart_config('HomePage_Home');
+            }
         }
+        if (empty($controller)) {
+            $controller = $defaultAction;
+        }
+        BizException::throwsIfEmpty('首页不存在', $controller);
         list($c, $a) = explode('@', $controller);
         list($contextC, $contextA) = explode('::', $contextMethod);
         if (!starts_with($contextC, '\\')) {

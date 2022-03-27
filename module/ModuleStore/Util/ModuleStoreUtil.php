@@ -126,12 +126,12 @@ class ModuleStoreUtil
         $requires = [];
         if (!empty($config['modstartVersion'])) {
             $require = [
-                'name' => "<a href='https://modstart.com/download' class='ub-text-white tw-underline' target='_blank'>ModStart</a>:" . htmlspecialchars($config['modstartVersion']),
+                'name' => "<a href='https://modstart.com/download' class='ub-text-white tw-underline' target='_blank'>MSCore</a>:" . htmlspecialchars($config['modstartVersion']),
                 'success' => VersionUtil::match(ModStart::$version, $config['modstartVersion']),
                 'resolve' => null,
             ];
             if (!$require['success']) {
-                $require['resolve'] = '请使用版本 ' . $config['modstartVersion'] . ' 的ModStart核心';
+                $require['resolve'] = '请使用 MSCore' . $config['modstartVersion'] . ' 的版本';
             }
             $requires[] = $require;
         }

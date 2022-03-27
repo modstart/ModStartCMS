@@ -9,11 +9,11 @@
         "Mobile"
     ],
     "require": [
-        "Vendor:>=1.4.0"
+        "Vendor:>=3.0.0"
     ],
     "modstartVersion": ">=2.6.0",
     "title": "通用轮播",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "author": "官方",
     "description": "提供多位置轮播图片基础管理功能",
     "config": {

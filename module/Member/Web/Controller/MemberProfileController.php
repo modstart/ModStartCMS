@@ -86,7 +86,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     public function oauth($type)
     {
-        $oauth = MemberOauth::get($type);
+        $oauth = MemberOauth::getOrFail($type);
         BizException::throwsIfEmpty('授权登录不存在', $oauth);
         $oauthRecord = MemberUtil::getOauth(MemberUser::id(), $oauth->name());
         $viewData = [

@@ -56,8 +56,16 @@ $router->group([
 
     $router->match(['get', 'post'], 'member_data/file_manager/{category}', 'MemberDataController@fileManager');
 
+    $router->match(['get', 'post'], 'member_money/get', 'MemberMoneyController@get');
+    $router->match(['get', 'post'], 'member_money/log', 'MemberMoneyController@log');
+
+    $router->match(['get', 'post'], 'member_money/cash/get', 'MemberMoneyCashController@get');
     $router->match(['get', 'post'], 'member_money/cash/calc', 'MemberMoneyCashController@calc');
     $router->match(['get', 'post'], 'member_money/cash/submit', 'MemberMoneyCashController@submit');
+    $router->match(['get', 'post'], 'member_money/cash/log', 'MemberMoneyCashController@log');
+
+    $router->match(['get', 'post'], 'member_credit/get', 'MemberCreditController@get');
+    $router->match(['get', 'post'], 'member_credit/log', 'MemberCreditController@log');
 
     $router->match(['get', 'post'], 'member_favorite/favorite', 'MemberFavoriteController@favorite');
     $router->match(['get', 'post'], 'member_favorite/unfavorite', 'MemberFavoriteController@unfavorite');

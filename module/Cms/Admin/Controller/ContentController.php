@@ -16,6 +16,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\TagUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
@@ -25,6 +26,7 @@ use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Layout\LayoutTab;
+use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Widget\TextLink;
@@ -35,6 +37,7 @@ use Module\Cms\Type\CmsModelFieldType;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Member\Util\MemberFieldUtil;
+use Module\TagManager\Model\TagManager;
 
 class ContentController extends Controller
 {
@@ -85,7 +88,7 @@ class ContentController extends Controller
                         return [$v, $v];
                     });
                 }
-                $grid->display($field['name'], $field['title'])->hookRendering(function (AbstractField $field, $item, $index) use ($field, $options) {
+                $grid->display($field['name'], $field['title'])->hookRendering(function (AbstractField $f, $item, $index) use ($field, $options) {
                     $data = ModelUtil::get($this->modelDataTable, $item->id);
                     if (empty($data)) {
                         return AutoRenderedFieldValue::make('');
@@ -197,7 +200,8 @@ class ContentController extends Controller
         $record = false;
         if ($id) {
             $record = ModelUtil::get($this->modelTable, $id);
-            BizException::throwsIfEmpty('记录不存在', $id);
+            BizException::throwsIfEmpty('记录不存在', $record);
+            $record['_tags'] = TagUtil::string2Array($record['tags']);
             $recordData = ModelUtil::get($this->modelDataTable, $id);
             if (!empty($recordData)) {
                 foreach ($recordData as $k => $v) {
@@ -359,11 +363,17 @@ class ContentController extends Controller
                 if ($record) {
                     ModelUtil::update($this->modelTable, $record['id'], $recordValue);
                     ModelUtil::update($this->modelDataTable, $record['id'], $recordDataValue);
+                    if (ModuleManager::isModuleEnabled('TagManager')) {
+                        TagManager::updateTags('cms', $record['_tags'], $recordValue['tags']);
+                    }
                 } else {
                     $recordValue['modelId'] = $this->model['id'];
                     $recordValue = ModelUtil::insert($this->modelTable, $recordValue);
                     $recordDataValue['id'] = $recordValue['id'];
                     ModelUtil::insert($this->modelDataTable, $recordDataValue);
+                    if (ModuleManager::isModuleEnabled('TagManager')) {
+                        TagManager::putTags('cms', $recordValue['tags']);
+                    }
                 }
                 ModelUtil::transactionCommit();
                 return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
@@ -379,10 +389,14 @@ class ContentController extends Controller
         $ids = CRUDUtil::ids();
         foreach ($ids as $id) {
             $record = ModelUtil::get($this->modelTable, $id);
+            $record['_tags'] = TagUtil::string2Array($record['tags']);
             BizException::throwsIfEmpty('记录不存在', $id);
             ModelUtil::transactionBegin();
             ModelUtil::delete($this->modelTable, $record['id']);
             ModelUtil::delete($this->modelDataTable, $record['id']);
+            if (ModuleManager::isModuleEnabled('TagManager')) {
+                TagManager::deleteTags('cms', $record['_tags']);
+            }
             ModelUtil::transactionCommit();
         }
         return Response::redirect(CRUDUtil::jsGridRefresh());

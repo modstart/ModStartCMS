@@ -37,7 +37,9 @@ class ModStartOpenApi
                 'middleware' => ['openApi.bootstrap'],
                 'namespace' => "\\Module\\$module\\OpenApi\\Controller",
             ], function ($router) use ($file) {
-                require $file;
+                if(file_exists($file)){
+                    require $file;
+                }
             });
         }
         if (file_exists($routes = modstart_open_api_path('routes.php'))) {

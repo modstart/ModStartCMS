@@ -7,7 +7,7 @@
             <tbody>
             <tr>
                 <td width="100" class="tw-font-bold">
-                    ModStartCore
+                    MSCore
                 </td>
                 <td>
                     V{{\ModStart\ModStart::$version}}

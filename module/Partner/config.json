@@ -10,10 +10,10 @@
         "Mobile"
     ],
     "require": [
-        "Vendor:>=1.4.0"
+        "Vendor:>=3.0.0"
     ],
-    "version": "1.2.0",
-    "modstartVersion": ">=2.6.0",
+    "version": "1.3.0",
+    "modstartVersion": ">=3.0.0",
     "author": "官方",
     "description": "提供友情链接基础管理功能",
     "config": {

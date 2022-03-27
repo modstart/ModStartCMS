@@ -1,5 +1,8 @@
 <?php
 
+include __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/PlatformUtil.php';
+include __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/ReUtil.php';
+
 function shell_module_base()
 {
     return realpath(__DIR__ . '/../..');
@@ -51,6 +54,12 @@ function shell_throws_if($msg, $boolean)
         shell_echo_error($msg);
         exit(-1);
     }
+}
+
+function shell_command_check($command)
+{
+    @exec($command, $output, $ret);
+    return $ret === 0;
 }
 
 function shell_file_write($filepath, $content)

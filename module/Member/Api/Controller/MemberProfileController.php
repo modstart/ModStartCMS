@@ -284,7 +284,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
     {
         $input = InputPackage::buildFromInput();
         $type = $input->getTrimString('type');
-        $oauth = MemberOauth::get($type);
+        $oauth = MemberOauth::getOrFail($type);
         BizException::throwsIfEmpty('授权方式不存在', $oauth);
         $openId = MemberUtil::getOauthOpenId(MemberUser::id(), $oauth->name());
         if ($openId) {

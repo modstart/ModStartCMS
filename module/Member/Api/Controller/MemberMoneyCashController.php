@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
-use ModStart\Module\ModuleManager;
+use ModStart\Core\Type\TypeUtil;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Type\MemberMoneyCashType;
@@ -16,6 +16,21 @@ use Module\Member\Util\MemberMoneyUtil;
 
 class MemberMoneyCashController extends Controller implements MemberLoginCheck
 {
+    public function get()
+    {
+        $total = MemberMoneyUtil::getTotal(MemberUser::id());
+        $min = modstart_config('Member_MoneyCashMin', 100);
+        return Response::generateSuccessData([
+            'total' => $total,
+            'desc' => modstart_config('Member_MoneyCashDescription'),
+            'min' => sprintf('%0.2f', $min),
+            'rate' => modstart_config('Member_MoneyCashTaxRate', 0),
+            'types' => TypeUtil::dump(MemberMoneyCashType::class),
+            'canCash' => $total >= $min,
+            'defaultType' => MemberMoneyCashType::ALIPAY,
+        ]);
+    }
+
     public function calc()
     {
         $input = InputPackage::buildFromInput();
@@ -79,5 +94,22 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
             throw $e;
         }
         return Response::generate(0, '提交成功', null, modstart_web_url('member_money/cash/log'));
+    }
+
+    public function log()
+    {
+        $input = InputPackage::buildFromInput();
+        $option = [];
+        $paginateData = MemberMoneyUtil::paginateCash(
+            MemberUser::id(),
+            $input->getPage(),
+            $input->getPageSize(),
+            $option
+        );
+        return Response::generateSuccessPaginate(
+            $input->getPage(),
+            $input->getPageSize(),
+            $paginateData
+        );
     }
 }

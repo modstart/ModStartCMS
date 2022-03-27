@@ -387,6 +387,9 @@ class EloquentRepository extends Repository
                         $model->setAttribute($sortColumn, $this->getMaxValue($sortColumn, $form) + 1);
                     }
                 }
+                foreach ($form->scopeAddedParam() as $k => $v) {
+                    $model->setAttribute($k, $v);
+                }
                 $result = $model->save();
                 $this->updateRelation($form, $model, $relations, $relationKeyMap);
                 $form->item($model);
@@ -642,12 +645,13 @@ class EloquentRepository extends Repository
         return parent::getTreeSortColumn();
     }
 
-    public function getTreeItems()
+    public function getTreeItems($context)
     {
         $query = $this->newQuery();
         if ($this->relations) {
             $query->with($this->relations);
         }
+        $context->scopeExecuteQueries($query);
         /** @var Collection $collection */
         $collection = $query
             ->orderBy($this->getTreeSortColumn(), 'ASC')

@@ -67,7 +67,7 @@ class Select extends AbstractField
 
     public function optionRepositoryTreeItems(TreeRepositoryInterface $repository, $treeMaxLevel = 0)
     {
-        $items = $repository->getTreeItems();
+        $items = $repository->getTreeItems($this->context);
         return $this->optionItems($items, $repository->getKeyName(), $repository->getTreeTitleColumn(), $treeMaxLevel);
     }
 

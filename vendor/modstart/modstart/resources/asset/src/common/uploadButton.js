@@ -63,9 +63,9 @@ WebUploader.Uploader.register({
                 if (me.options.uploadBeforeCheck) {
                     me.options.uploadBeforeCheck(input, file, function () {
                         continueUpload();
-                    }, function () {
+                    }, function (msg) {
                         me.owner.cancelFile(file)
-                        task.reject();
+                        task.reject(msg);
                     })
                 } else {
                     continueUpload();
@@ -94,7 +94,7 @@ var UploadButton = function (selector, option) {
         uploadBeforeCheck: null,
         tipError: function (msg) {
             if (MS && MS.dialog) {
-                MS.dialog.alertError(msg)
+                MS.dialog.tipError(msg)
             } else {
                 alert(msg)
             }
@@ -207,6 +207,13 @@ var UploadButton = function (selector, option) {
 
         uploader.on('uploadFinished', function () {
             opt.finish();
+        });
+
+        uploader.on('uploadError', function (file, msg) {
+            if (null !== msg) {
+                msg || '上传出现错误，请联系后台管理员'
+                opt.tipError(msg);
+            }
         });
 
         uploader.on('error', function (type) {

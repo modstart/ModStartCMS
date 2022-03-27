@@ -1,205 +1,227 @@
 
 .ub-search-block {
-  background: var(--color-primary, #419488);
-  padding: 2rem 0.5rem 3rem 0.5rem;
-  text-align: center;
+    background: var(--color-primary, #419488);
+    padding: 2rem 0.5rem 3rem 0.5rem;
+    text-align: center;
 
-  .title {
-    font-size: 1.5rem;
-    padding: 0 0 0 0;
-    color: #FFF;
-  }
-
-  .sub-title {
-    font-size: var(--font-size-large, 1rem);
-    color: #FFF;
-  }
-
-  .form {
-    padding-top: 1rem;
-
-    .box {
-      max-width: 25rem;
-      margin: 0 auto;
-      position: relative;
-      height: 2.5rem;
-
-      &.captcha {
-        img {
-          height: 2.4rem;
-          line-height: 2.4rem;
-          position: absolute;
-          right: 5rem;
-          top: 0.05rem;
-          border-radius: 0.25rem;
-          cursor: pointer;
-        }
-      }
-
-      input {
-        width: 100%;
-        border-radius: 2.5rem;
-        line-height: 2.5rem;
-        height: 2.5rem;
-        padding: 0 1rem;
-      }
-
-      button {
-        position: absolute;
-        right: 0;
-        top: 0.05rem;
+    &.white {
         background: #FFF;
-        border: none;
-        border-radius: 1.25rem;
-        color: var(--color-primary, #419488);
-        height: 2.4rem;
-        line-height: 2.4rem;
-        padding: 0 1rem;
-        margin: 0;
-      }
+
+        .title {
+            color: #34495e;
+        }
+
+        .form {
+            .box {
+                input {
+                    border-color: var(--color-primary);
+                    outline: 1px solid var(--color-primary);
+                }
+
+                button {
+                    background: var(--color-primary);
+                    color: #FFF;
+                }
+            }
+        }
     }
-  }
+
+    .title {
+        font-size: 1.5rem;
+        padding: 0 0 0 0;
+        color: #FFF;
+    }
+
+    .sub-title {
+        font-size: var(--font-size-large, 1rem);
+        color: #FFF;
+    }
+
+    .form {
+        padding-top: 1rem;
+
+        .box {
+            max-width: 25rem;
+            margin: 0 auto;
+            position: relative;
+            height: 2.5rem;
+
+            &.captcha {
+                img {
+                    height: 2.4rem;
+                    line-height: 2.4rem;
+                    position: absolute;
+                    right: 5rem;
+                    top: 0.05rem;
+                    border-radius: 0.25rem;
+                    cursor: pointer;
+                }
+            }
+
+            input {
+                width: 100%;
+                border-radius: 2.5rem;
+                line-height: 2.5rem;
+                height: 2.5rem;
+                padding: 0 1rem;
+            }
+
+            button {
+                position: absolute;
+                right: 0;
+                top: 0.05rem;
+                background: #FFF;
+                border: none;
+                border-radius: 1.25rem;
+                color: var(--color-primary, #419488);
+                height: 2.4rem;
+                line-height: 2.4rem;
+                padding: 0 1rem;
+                margin: 0;
+            }
+        }
+    }
 }
 
 .ub-search-mobile-bar {
-  display: flex;
-  height: 2rem;
-  overflow: hidden;
-  background: #FFF;
-  line-height: 2rem;
-  padding: 0 0.5rem;
+    display: flex;
+    height: 2rem;
+    overflow: hidden;
+    background: #FFF;
+    line-height: 2rem;
+    padding: 0 0.5rem;
 
-  .left, .center, .right {
-    .item {
-      display: inline-block;
-      min-width: 2rem;
-      line-height: 2rem;
-      text-align: center;
-      color: #666;
+    .left, .center, .right {
+        .item {
+            display: inline-block;
+            min-width: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            color: #666;
 
-      .icon {
-        display: inline-block;
-        font-size: var(--font-size-large, 1rem);
-      }
+            .icon {
+                display: inline-block;
+                font-size: var(--font-size-large, 1rem);
+            }
+        }
     }
-  }
 
-  .center {
-    flex: 1;
-    line-height: 1.4rem;
+    .center {
+        flex: 1;
+        line-height: 1.4rem;
 
-    .box {
-      margin-top: 0.3rem;
-      position: relative;
-      height: 1.4rem;
-      background: #EEE;
-      border-radius: 0.7rem;
+        .box {
+            margin-top: 0.3rem;
+            position: relative;
+            height: 1.4rem;
+            background: #EEE;
+            border-radius: 0.7rem;
 
-      .icon {
-        position: absolute;
-        display: block;
-        left: 0.5rem;
-        top: 0.4rem;
-        line-height: 1em;
-        height: 1rem;
-        width: 1rem;
-        text-align: center;
-        font-size: var(--font-size, 0.65rem);
-      }
+            .icon {
+                position: absolute;
+                display: block;
+                left: 0.5rem;
+                top: 0.4rem;
+                line-height: 1em;
+                height: 1rem;
+                width: 1rem;
+                text-align: center;
+                font-size: var(--font-size, 0.65rem);
+            }
 
-      .input {
-        position: absolute;
-        display: block;
-        left: 1.6rem;
-        top: 0.2rem;
-        border: none;
-        width: calc(100% - 2rem);
-        height: 1rem;
-        line-height: 1rem;
-        background: transparent;
-        outline: none;
-        padding: 0;
-      }
+            .input {
+                position: absolute;
+                display: block;
+                left: 1.6rem;
+                top: 0.2rem;
+                border: none;
+                width: calc(100% - 2rem);
+                height: 1rem;
+                line-height: 1rem;
+                background: transparent;
+                outline: none;
+                padding: 0;
+            }
+        }
     }
-  }
 }
 
 .ub-search-history {
-  .item {
-    display: flex;
+    .item {
+        display: flex;
 
-    .time, .text, .remove {
-      display: inline-block;
-      min-width: 1.5rem;
-      text-align: center;
-      line-height: 1.5rem;
-      color: #999;
-    }
+        .time, .text, .remove {
+            display: inline-block;
+            min-width: 1.5rem;
+            text-align: center;
+            line-height: 1.5rem;
+            color: #999;
+        }
 
-    .text {
-      flex: 1;
-      text-align: left;
-      color: #333;
+        .text {
+            flex: 1;
+            text-align: left;
+            color: #333;
+        }
     }
-  }
 }
 
 .ub-search-result {
-  background: #FFF;
-  padding: var(--size-margin, 0.5rem);
+    background: #FFF;
+    padding: var(--size-margin, 0.5rem);
 
-  .keyword {
-    color: var(--color-primary, #419488);
-    font-weight: bold;
-  }
+    .keyword {
+        color: var(--color-primary, #419488);
+        font-weight: bold;
+    }
 
-  .count {
-    color: var(--color-primary, #419488);
-    font-weight: bold;
-  }
+    .count {
+        color: var(--color-primary, #419488);
+        font-weight: bold;
+    }
 }
 
 .ub-search-block-a {
-  position: relative;
-  border: 1px solid #CCC;
-  border-radius: 3px;
-  padding: 0;
+    position: relative;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    padding: 0;
 
-  &.mini {
+    &.mini {
+        .search-btn {
+            padding: 0 0.5rem;
+            font-size: 0.7rem;
+        }
+    }
+
+    .input {
+        outline: none;
+        height: 2rem;
+        width: 100%;
+        line-height: 2rem;
+        border: none;
+        padding: 0 0.5rem;
+        font-size: 0.65rem;
+        box-sizing: border-box;
+    }
+
     .search-btn {
-      padding: 0 0.5rem;
-      font-size: 0.7rem;
+        display: block;
+        height: 2rem;
+        padding: 0 1rem;
+        line-height: 2rem;
+        background-color: var(--color-primary, #419488);
+        color: #FFF;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        font-size: 0.8rem;
+        border-radius: 0.2rem;
+
+        &:hover {
+            color: #FFF;
+        }
     }
-  }
-
-  .input {
-    outline: none;
-    height: 2rem;
-    width: 100%;
-    line-height: 2rem;
-    border: none;
-    padding: 0 0.5rem;
-    font-size: 0.65rem;
-    box-sizing: border-box;
-  }
-
-  .search-btn {
-    display: block;
-    height: 2rem;
-    padding: 0 1rem;
-    line-height: 2rem;
-    background-color: var(--color-primary, #419488);
-    color: #FFF;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    font-size: 0.8rem;
-    border-radius: 0.2rem;
-
-    &:hover {
-      color: #FFF;
-    }
-  }
 }
 
 

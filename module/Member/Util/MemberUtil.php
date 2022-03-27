@@ -248,7 +248,7 @@ class MemberUtil
         for ($i = 0; $i < 10; $i++) {
             $ret = self::register($suggestionUsername, '', '', '', true);
             if ($ret['code']) {
-                $suggestionUsername = $username . Str::random(3);
+                $suggestionUsername = $suggestionUsername . Str::random(1);
             } else {
                 return $ret;
             }

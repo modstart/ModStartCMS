@@ -37,7 +37,9 @@ class ModStartApi
                 'middleware' => ['api.bootstrap', 'api.session'],
                 'namespace' => "\\Module\\$module\\Api\\Controller",
             ], function ($router) use ($file) {
-                require $file;
+                if (file_exists($file)) {
+                    require $file;
+                }
             });
         }
         if (file_exists($routes = modstart_api_path('routes.php'))) {

@@ -6,7 +6,7 @@
 
 {!! \ModStart\ModStart::js('asset/vendor/jqueryMark.js') !!}
 {!! \ModStart\ModStart::style('[data-markjs]{color:red !important;background:transparent;}') !!}
-{!! \ModStart\ModStart::script("$('.ub-list-items .title').mark(".json_encode($keywords).",{});") !!}
+{!! \ModStart\ModStart::script("$('.ub-list-items .title,.ub-list-items .tag').mark(".json_encode($keywords).",{});") !!}
 
 @section('bodyContent')
 
@@ -52,12 +52,25 @@
                             <div class="item-d">
                                 <a class="title" target="_blank" href="{{$record['_url']}}">{{$record['title']}}</a>
                                 <div class="attr">
+                                    <i class="iconfont icon-eye"></i>
+                                    {{$record['viewCount']?$record['viewCount']:'-'}}
+                                    &nbsp;&nbsp;
                                     <i class="iconfont icon-time"></i>
                                     {{$record['_day']}}
                                 </div>
                                 <div class="summary">
                                     {{$record['summary']}}
                                 </div>
+                                @if(!empty($record['_tags']))
+                                    <div class="tw-mt-2 tag">
+                                        @foreach($record['_tags'] as $tag)
+                                            <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
+                                               href="{{modstart_web_url('tag/'.urlencode($tag))}}">
+                                                {{$tag}}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
                     </div>
