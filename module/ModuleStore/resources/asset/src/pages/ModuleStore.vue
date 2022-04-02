@@ -13,7 +13,7 @@
             您还没有登录，登录后才能从模块市场安装、升级模块
             <a href="javascript:;" @click="doMemberLoginShow()"><i class="iconfont icon-user"></i>立即登录</a>
         </div>
-        <div class="tw-bg-white tw-rounded">
+        <div class="tw-bg-white tw-rounded tw-relative">
             <el-tabs v-model="search.tab" style="height:45px;">
                 <el-tab-pane name="store">
                     <span slot="label">
@@ -47,6 +47,10 @@
                     </span>
                 </el-tab-pane>
             </el-tabs>
+            <a href="javascript:;" @click="search.tab='system'"
+               class="ub-text-muted tw-leading-10 tw-px-3 tw-absolute tw-right-0 tw-top-0">
+                <i class="iconfont icon-cog"></i> 系统模块
+            </a>
             <div class="ub-padding">
                 <div class="tw-float-right">
                     <el-button round style="padding:0.25rem 0.5rem;" :loading="memberUserLoading"
@@ -67,18 +71,18 @@
                         </span>
                     </el-button>
                 </div>
-                <el-radio-group v-model="search.priceType">
+                <el-radio-group v-model="search.priceType" v-if="search.tab!=='system'">
                     <el-radio-button label="all"><i class="iconfont icon-list-alt"></i> 全部</el-radio-button>
                     <el-radio-button label="free"><i class="iconfont icon-gift"></i> 免费</el-radio-button>
                     <el-radio-button label="fee"><i class="iconfont icon-cny"></i> 付费</el-radio-button>
                 </el-radio-group>
-                <el-checkbox v-model="search.isRecommend" border>推荐</el-checkbox>
+                <el-checkbox v-model="search.isRecommend" border v-if="search.tab!=='system'">推荐</el-checkbox>
                 <el-input prefix-icon="el-icon-search"
                           v-model="search.keywords"
                           style="width:10rem;"
                           placeholder="搜索模块"></el-input>
             </div>
-            <div class="tw-px-2" v-if="categories.length>0">
+            <div class="tw-px-2" v-if="categories.length>0 && search.tab!=='system'">
                 <i class="iconfont icon-category tw-ml-1 tw-text-gray-600 tw-inline-block tw-w-4"></i>
                 分类：
                 <a href="javascript:;" class="tw-text-gray-500 tw-mr-1"
@@ -91,7 +95,7 @@
                     {{cat.title}}
                 </a>
             </div>
-            <div class="tw-px-2 tw-pt-2" v-if="types.length>0">
+            <div class="tw-px-2 tw-pt-2" v-if="types.length>0 && search.tab!=='system'">
                 <i class="iconfont icon-desktop tw-ml-1 tw-text-gray-600 tw-inline-block tw-w-4"></i>
                 类型：
                 <a href="javascript:;" class="tw-text-gray-500 tw-mr-1"
@@ -124,9 +128,10 @@
                             <div style="padding-left:6rem;">
                                 <div class="tw-w-28 tw-float-left" style="margin-left:-6rem;">
                                     <a v-if="module.url"
-                                       :href="module.url"
-                                       target="_blank"
-                                       class="ub-cover-3-2 tw-shadow tw-w-28 tw-rounded"
+                                       :href="module._isSystem?'javascript:;':module.url"
+                                       :target="module._isSystem?'':'_blank'"
+                                       class="ub-cover-3-2 tw-shadow  tw-rounded"
+                                       :class="{'tw-w-24 tw-cursor-default':module._isSystem,'tw-w-28':!module._isSystem}"
                                        :style="{'background-image':'url('+module.cover+')'}"></a>
                                     <div v-else
                                          class="tw-shadow tw-w-28 tw-rounded ub-text-center tw-text-gray-300">
@@ -135,14 +140,16 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a :href="module.url" target="_blank"
+                                    <a :href="module._isSystem?'javascript:;':module.url"
+                                       :target="module._isSystem?'':'_blank'"
+                                       :class="{'tw-cursor-default':module._isSystem}"
                                        class="tw-font-bold tw-text-gray-700 ub-text-truncate tw-block">
                                         <span v-if="module._isLocal" class="ub-tag primary sm ub-bg-a">本地模块</span>
                                         <span v-html="$highlight(module.title,search.keywords)"></span>
                                     </a>
-                                    <div>
-                                    <span v-if="!module.isFee && !module._isLocal"
-                                          class="ub-text-success">免费</span>
+                                    <div v-if="!module._isSystem">
+                                        <span v-if="!module.isFee && !module._isLocal"
+                                              class="ub-text-success">免费</span>
                                         <div v-if="module.isFee" class="ub-text-danger">
                                             <span v-if="module.priceYearEnable">￥{{module.priceYear}}</span>
                                             <span v-else-if="module.priceSuperEnable">￥{{module.priceSuper}}</span>
@@ -209,16 +216,18 @@
                                         <i class="iconfont icon-cog"></i>配置
                                     </a>
                                 </div>
-                                <a v-if="module._isInstalled && !module._isLocal && module.latestVersion && versionCompare(module.latestVersion,module._localVersion)>0"
+                                <a v-if="module._isInstalled && !module._isLocal && !module._isSystem && module.latestVersion && versionCompare(module.latestVersion,module._localVersion)>0"
                                    :data-tk-event="'ModuleStore,UpgradeSystem,'+module.name"
                                    @click="doUpgrade(module)"
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
                                     <i class="iconfont icon-direction-up"></i>升级
                                 </a>
-                                &nbsp;
+                                <div v-if="module._isSystem" class="ub-text-muted tw-inline-block"><i
+                                    class="iconfont icon-tag"></i><span
+                                    v-html="$highlight(module.name,search.keywords)"></span></div>
                             </div>
-                            <div
-                                class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
+                            <div v-if="!module._isSystem"
+                                 class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">
                                 <div class="ub-text-muted tw-inline-block"><i class="iconfont icon-tag"></i><span
                                     v-html="$highlight(module.name,search.keywords)"></span></div>
                                 <span class="ub-text-muted">|</span>
@@ -228,7 +237,7 @@
                                 <span class="ub-text-muted" v-else-if="module._isInstalled">
                                     已安装V{{module._localVersion}}，最新版V{{module.latestVersion}}
                                 </span>
-                                <span class="ub-text-muted" v-else>
+                                <span class="ub-text-muted">
                                     最新版V{{module.latestVersion}}
                                 </span>
                             </div>
@@ -302,6 +311,12 @@
                         </div>
                         <div class="line">
                             <div class="field">
+                                <div class="tw-float-right">
+                                    <a href="javascript:;" style="color:#19B84D;" @click="doScanLogin()">
+                                        <i class="iconfont icon-wechat"></i>
+                                        微信扫一扫
+                                    </a>
+                                </div>
                                 还没有账号？<a href="https://modstart.com" target="_blank">立即注册</a>
                             </div>
                         </div>
@@ -456,23 +471,32 @@ export default {
                 switch (this.search.tab) {
                     case 'store':
                         if (module._isLocal) return false
+                        if (module._isSystem) return false
                         break
                     case 'installed':
                         if (!module._isInstalled) return false
+                        if (module._isSystem) return false
                         break;
                     case 'enabled':
                         if (!module._isEnabled) return false
+                        if (module._isSystem) return false
                         break;
                     case 'disabled':
                         if (!module._isInstalled || module._isEnabled) return false
+                        if (module._isSystem) return false
                         break;
                     case 'local':
                         if (!module._isLocal) return false
+                        if (module._isSystem) return false
+                        break
+                    case 'system':
+                        if (!module._isSystem) return false
                         break
                     case 'upgradeable':
-                        if(!( module._isInstalled && !module._isLocal && module.latestVersion!==module._localVersion ) ){
+                        if (!(module._isInstalled && !module._isLocal && module.latestVersion !== module._localVersion)) {
                             return false
                         }
+                        if (module._isSystem) return false
                         break
                 }
                 if (this.search.isRecommend) {
@@ -742,6 +766,51 @@ export default {
         },
         doConfig(module) {
             this.$dialog.dialog(this.$url.admin(`module_store/config/${module.name}`))
+        },
+        doScanLogin() {
+            if (!this.memberLoginInfo.agree) {
+                this.$dialog.tipError('请先同意相关协议')
+                return
+            }
+            this.$dialog.loadingOn()
+            this.doStoreRequest('store/login_wechatmp_qrcode', {}, res => {
+                this.$dialog.loadingOff()
+                let isOpen = false
+                let dialog = null
+                const checkLogin = () => {
+                    if (!isOpen) {
+                        return
+                    }
+                    this.doStoreRequest('store/login_wechatmp_info', {}, res => {
+                        if (res.data.memberUserId) {
+                            this.doLoadStoreMember()
+                            this.$dialog.dialogClose(dialog)
+                            this.$dialog.tipSuccess('登录成功')
+                        } else if (res.data.oauthUserInfo) {
+                            this.$dialog.dialogClose(dialog)
+                            this.$dialog.alertError('当前微信未绑定账号，请先注册')
+                        } else {
+                            setTimeout(() => {
+                                checkLogin()
+                            }, 3000)
+                        }
+                    })
+                }
+                checkLogin();
+                dialog = this.$dialog.dialogContent(`<img style="width:200px;height:200px;" src="${res.data.qrcode}" />`, {
+                    openCallback: () => {
+                        isOpen = true
+                        setTimeout(() => {
+                            checkLogin()
+                        }, 3000)
+                    },
+                    closeCallback: () => {
+                        isOpen = false
+                    },
+                })
+            }, res => {
+                this.$dialog.loadingOff()
+            })
         }
     }
 }

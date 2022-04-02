@@ -5,6 +5,34 @@ namespace ModStart\Core\Util;
 
 class FormatUtil
 {
+    public static function mainDomain($domain)
+    {
+        if (strpos($domain, '//') === 0
+            || strpos($domain, 'http://') === 0
+            || strpos($domain, 'https://') === 0) {
+        } else {
+            $domain = 'http://' . $domain;
+        }
+        $ret = parse_url($domain);
+        if (isset($ret['host'])) {
+            $domain = $ret['host'];
+            $pcs = [];
+            foreach (array_reverse(explode('.', $domain)) as $p) {
+                if (in_array($p, ['cn', 'com', 'org', 'gov', 'edu'])) {
+                    $pcs[] = $p;
+                    continue;
+                } else {
+                    $pcs[] = $p;
+                }
+                if (count($pcs) >= 2) {
+                    break;
+                }
+            }
+            return join('.', array_reverse($pcs));
+        }
+        return null;
+    }
+
     public static function telephone($number)
     {
         $number = str_replace([

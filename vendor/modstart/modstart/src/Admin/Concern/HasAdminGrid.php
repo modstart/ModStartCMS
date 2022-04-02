@@ -53,6 +53,10 @@ trait HasAdminGrid
         if (Request::isPost()) {
             return $grid->request();
         }
-        return $page->pageTitle($grid->title())->body($grid);
+        $pageTitle = $grid->title();
+        if (null === $pageTitle) {
+            $pageTitle = $this->computeTitleGrid($grid->title(), 'List');
+        }
+        return $page->pageTitle($pageTitle)->body($grid);
     }
 }

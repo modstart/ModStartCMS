@@ -2,9 +2,8 @@
 
 namespace Module\AdminManager\Widget;
 
-use ModStart\ModStart;
-use ModStart\Module\ModuleManager;
 use ModStart\Widget\AbstractWidget;
+use Module\AdminManager\Util\ModuleUtil;
 
 class ServerInfoWidget extends AbstractWidget
 {
@@ -12,15 +11,9 @@ class ServerInfoWidget extends AbstractWidget
 
     protected function variables()
     {
-        $modules = [];
-        $modules[] = "ModStart:" . ModStart::$version;
-        foreach (ModuleManager::listAllEnabledModules() as $m => $_) {
-            $info = ModuleManager::getModuleBasic($m);
-            $modules[] = "$m:$info[version]";
-        }
         $phpExtensions = get_loaded_extensions();
         return [
-            'modules' => $modules,
+            'modules' => ModuleUtil::modules(),
             'attributes' => $this->formatAttributes(),
             'phpExtensions' => $phpExtensions,
         ];

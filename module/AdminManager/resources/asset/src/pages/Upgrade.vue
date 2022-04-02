@@ -51,7 +51,7 @@
                                 <i class="iconfont icon-direction-right"></i>
                                 v{{info.latestVersion || '-'}} 不能自动升级，
                                 请 <a href="https://modstart.com/download" target="_blank"><i
-                                    class="iconfont icon-download"></i> 手动下载</a> 最新安装包升级
+                                class="iconfont icon-download"></i> 手动下载</a> 最新安装包升级
                             </span>
                             <a href="javascript:;" class="btn btn-warning"
                                v-if="info.autoUpgrade&&!upgradeDetailShow"
@@ -109,7 +109,7 @@
                 <div style="max-width:300px;margin:0 auto 2rem auto;">
                     <div class="tw-text-center">
                         <a href="https://modstart.com" target="_blank">
-                            <img class="tw-h-20" :src="$url.cdn('vendor/AdminManager/image/logo_modstart.png')" />
+                            <img class="tw-h-20" :src="$url.cdn('vendor/AdminManager/image/logo_modstart.png')"/>
                         </a>
                     </div>
                     <div class="tw-font-bold tw-py-2 tw-text-center tw-text-lg">
@@ -165,6 +165,12 @@
                         </div>
                         <div class="line">
                             <div class="field">
+                                <div class="tw-float-right">
+                                    <a href="javascript:;" style="color:#19B84D;" @click="doScanLogin()">
+                                        <i class="iconfont icon-wechat"></i>
+                                        微信扫一扫
+                                    </a>
+                                </div>
                                 还没有账号？<a href="https://modstart.com" target="_blank">立即注册</a>
                             </div>
                         </div>
@@ -173,7 +179,8 @@
             </div>
             <div v-else>
                 <div>
-                    <div class="tw-bg-white tw-rounded-sm tw-mb-2 tw-box tw-px-5 tw-py-3 tw-mb-3 tw-flex tw-items-center tw-zoom-in">
+                    <div
+                        class="tw-bg-white tw-rounded-sm tw-mb-2 tw-box tw-px-5 tw-py-3 tw-mb-3 tw-flex tw-items-center tw-zoom-in">
                         <div class="tw-w-10 tw-h-10 tw-flex-none tw-image-fit tw-rounded-full tw-overflow-hidden">
                             <div class="circle tw-border tw-border-gray-200 tw-border-solid tw-shadow ub-cover-1-1"
                                  :style="{backgroundImage:`url(${memberUser.avatar||'/asset/image/avatar.png'})`}"></div>
@@ -202,220 +209,265 @@
 </template>
 
 <script>
-    import {BeanUtil} from '@ModStartAsset/svue/lib/util'
-    import {Storage} from '@ModStartAsset/svue/lib/storage'
+import {BeanUtil} from '@ModStartAsset/svue/lib/util'
+import {Storage} from '@ModStartAsset/svue/lib/storage'
 
-    export default {
-        name: "Upgrade",
-        data() {
-            return {
-                loading: true,
-                memberUserShow: false,
-                memberUserLoading: false,
-                memberLoginCaptchaImage: null,
-                memberLoginInfo: {
-                    username: '',
-                    password: '',
-                    captcha: '',
-                    agree: false,
+export default {
+    name: "Upgrade",
+    data() {
+        return {
+            loading: true,
+            memberUserShow: false,
+            memberUserLoading: false,
+            memberLoginCaptchaImage: null,
+            memberLoginInfo: {
+                username: '',
+                password: '',
+                captcha: '',
+                agree: false,
+            },
+            storeApiToken: Storage.get('storeApiToken', ''),
+            memberUser: {
+                id: 0,
+                username: '',
+                avatar: '',
+            },
+
+            infoLoading: true,
+            info: {
+                version: null,
+                latestVersion: null,
+                autoUpgrade: null,
+            },
+            upgradeDetailShow: false,
+
+            upgradeRunning: false,
+            upgradeRunStart: 0,
+            upgradeRunElapse: 0,
+            upgradeMsgs: [],
+            upgradeFinish: false,
+            upgradeLogs: [],
+
+        }
+    },
+    mounted() {
+        this.$api.post(this.$url.admin('upgrade/info'), {}, res => {
+            this.info = Object.assign(this.info, res.data)
+            this.infoLoading = false
+        })
+        setInterval(() => {
+            this.upgradeRunElapse = parseInt(((new Date()).getTime() - this.upgradeRunStart) / 1000)
+        }, 1000)
+        this.doLoadStore()
+    },
+    methods: {
+        doStoreRequest(url, data, cbSuccess, cbError) {
+            const cbErrorDefault = (res) => {
+                this.$dialog.tipError(res.msg)
+            }
+            if (!cbError) {
+                cbError = cbErrorDefault
+            }
+            $.ajax({
+                url: `${window.__data.apiBase}/api/${url}`,
+                dataType: 'jsonp',
+                timeout: 10 * 1000,
+                data: Object.assign(data, {
+                    api_token: this.storeApiToken,
+                    modstartParam: JSON.stringify(window.__data.modstartParam),
+                }),
+                success: (res) => {
+                    if (res.code) {
+                        if (res.code === 1002) {
+                            this.doMemberLoginCaptchaRefresh()
+                        }
+                        if (true !== cbError(res)) {
+                            cbErrorDefault(res)
+                        }
+                    } else {
+                        cbSuccess(res)
+                    }
                 },
-                storeApiToken: Storage.get('storeApiToken', ''),
-                memberUser: {
-                    id: 0,
-                    username: '',
-                    avatar: '',
+                error: (res) => {
+                    if (true !== cbError({code: -1, msg: '请求出现错误'})) {
+                        cbErrorDefault({code: -1, msg: '请求出现错误'})
+                    }
                 },
-
-                infoLoading: true,
-                info: {
-                    version: null,
-                    latestVersion: null,
-                    autoUpgrade: null,
-                },
-                upgradeDetailShow: false,
-
-                upgradeRunning: false,
-                upgradeRunStart: 0,
-                upgradeRunElapse: 0,
-                upgradeMsgs: [],
-                upgradeFinish: false,
-                upgradeLogs: [],
-
+                jsonp: 'callback',
+            });
+        },
+        doLoadStore() {
+            this.loading = false
+            if (!!this.storeApiToken) {
+                this.doLoadStoreMember()
+            } else {
+                this.doStoreRequest('store/config', {}, res => {
+                    this.storeApiToken = res.data.apiToken
+                    Storage.set('storeApiToken', res.data.apiToken)
+                    this.doLoadStoreMember()
+                })
             }
         },
-        mounted() {
-            this.$api.post(this.$url.admin('upgrade/info'), {}, res => {
-                this.info = Object.assign(this.info, res.data)
-                this.infoLoading = false
+        doMemberUserLogout() {
+            this.$dialog.confirm('确认退出？', () => {
+                this.storeApiToken = ''
+                Storage.set('storeApiToken', '')
+                this.memberUserShow = false
+                this.doLoadStore()
             })
-            setInterval(() => {
-                this.upgradeRunElapse = parseInt(((new Date()).getTime() - this.upgradeRunStart) / 1000)
-            }, 1000)
-            this.doLoadStore()
         },
-        methods: {
-            doStoreRequest(url, data, cbSuccess, cbError) {
-                const cbErrorDefault = (res) => {
-                    this.$dialog.tipError(res.msg)
-                }
-                if (!cbError) {
-                    cbError = cbErrorDefault
-                }
-                $.ajax({
-                    url: `${window.__data.apiBase}/api/${url}`,
-                    dataType: 'jsonp',
-                    timeout: 10 * 1000,
-                    data: Object.assign(data, {
-                        api_token: this.storeApiToken,
-                        modstartParam: JSON.stringify(window.__data.modstartParam),
-                    }),
-                    success: (res) => {
-                        if (res.code) {
-                            if (res.code === 1002) {
-                                this.doMemberLoginCaptchaRefresh()
-                            }
-                            if (true !== cbError(res)) {
-                                cbErrorDefault(res)
-                            }
-                        } else {
-                            cbSuccess(res)
-                        }
-                    },
-                    error: (res) => {
-                        if (true !== cbError({code: -1, msg: '请求出现错误'})) {
-                            cbErrorDefault({code: -1, msg: '请求出现错误'})
-                        }
-                    },
-                    jsonp: 'callback',
-                });
-            },
-            doLoadStore() {
-                this.loading = false
-                if (!!this.storeApiToken) {
-                    this.doLoadStoreMember()
-                } else {
-                    this.doStoreRequest('store/config', {}, res => {
-                        this.storeApiToken = res.data.apiToken
-                        Storage.set('storeApiToken', res.data.apiToken)
-                        this.doLoadStoreMember()
-                    })
-                }
-            },
-            doMemberUserLogout() {
-                this.$dialog.confirm('确认退出？', () => {
-                    this.storeApiToken = ''
-                    Storage.set('storeApiToken', '')
-                    this.memberUserShow = false
-                    this.doLoadStore()
-                })
-            },
-            doMemberLoginCaptchaRefresh(cb) {
-                this.doStoreRequest('store/login_captcha', {}, res => {
-                    this.memberLoginCaptchaImage = res.data.image
-                    cb && cb()
-                })
-            },
-            doMemberLoginShow() {
-                if (this.memberUser.id > 0) {
-                    this.memberUserShow = true
-                } else {
-                    this.$dialog.loadingOn()
-                    this.doMemberLoginCaptchaRefresh(() => {
-                        this.$dialog.loadingOff()
-                        this.memberUserShow = true
-                    })
-                }
-            },
-            doLoadStoreMember() {
-                this.memberUserLoading = true
-                this.doStoreRequest('store/member', {}, res => {
-                    this.memberUserLoading = false
-                    BeanUtil.update(this.memberUser, res.data)
-                }, res => {
-                    this.memberUserLoading = false
-                })
-            },
-            doSubmitCheck(e) {
-                if (e.keyCode === 13) {
-                    this.doMemberLoginSubmit()
-                }
-            },
-            doMemberLoginSubmit() {
-                if (!this.memberLoginInfo.agree) {
-                    this.$dialog.tipError('请先同意使用协议')
-                    return
-                }
+        doMemberLoginCaptchaRefresh(cb) {
+            this.doStoreRequest('store/login_captcha', {}, res => {
+                this.memberLoginCaptchaImage = res.data.image
+                cb && cb()
+            })
+        },
+        doMemberLoginShow() {
+            if (this.memberUser.id > 0) {
+                this.memberUserShow = true
+            } else {
                 this.$dialog.loadingOn()
-                this.doStoreRequest('store/login', this.memberLoginInfo, res => {
+                this.doMemberLoginCaptchaRefresh(() => {
                     this.$dialog.loadingOff()
-                    this.$dialog.tipSuccess('登录成功')
-                    this.doLoadStoreMember()
-                    this.memberLoginInfo.username = ''
-                    this.memberLoginInfo.password = ''
-                    this.memberLoginInfo.captcha = ''
-                    this.memberUserShow = false
-                }, res => {
-                    this.$dialog.loadingOff()
+                    this.memberUserShow = true
                 })
-            },
-            doUpgradeSubmit() {
-                if (this.memberUser.id > 0) {
-                    this.doCommand({
-                        toVersion: this.info.autoUpgrade.version,
-                    }, null, `系统升级到 V${this.info.autoUpgrade.version}`)
+            }
+        },
+        doLoadStoreMember() {
+            this.memberUserLoading = true
+            this.doStoreRequest('store/member', {}, res => {
+                this.memberUserLoading = false
+                BeanUtil.update(this.memberUser, res.data)
+            }, res => {
+                this.memberUserLoading = false
+            })
+        },
+        doSubmitCheck(e) {
+            if (e.keyCode === 13) {
+                this.doMemberLoginSubmit()
+            }
+        },
+        doMemberLoginSubmit() {
+            if (!this.memberLoginInfo.agree) {
+                this.$dialog.tipError('请先同意使用协议')
+                return
+            }
+            this.$dialog.loadingOn()
+            this.doStoreRequest('store/login', this.memberLoginInfo, res => {
+                this.$dialog.loadingOff()
+                this.$dialog.tipSuccess('登录成功')
+                this.doLoadStoreMember()
+                this.memberLoginInfo.username = ''
+                this.memberLoginInfo.password = ''
+                this.memberLoginInfo.captcha = ''
+                this.memberUserShow = false
+            }, res => {
+                this.$dialog.loadingOff()
+            })
+        },
+        doUpgradeSubmit() {
+            if (this.memberUser.id > 0) {
+                this.doCommand({
+                    toVersion: this.info.autoUpgrade.version,
+                }, null, `系统升级到 V${this.info.autoUpgrade.version}`)
+            } else {
+                this.$dialog.loadingOn()
+                this.doMemberLoginCaptchaRefresh(() => {
+                    this.$dialog.loadingOff()
+                    this.memberUserShow = true
+                })
+            }
+        },
+        doCommand(data, step, title) {
+            step = step || null
+            title = title || null
+            if (null === step) {
+                this.upgradeMsgs = []
+                this.upgradeFinish = false
+                this.upgradeLogs = []
+            }
+            if (title) {
+                this.upgradeMsgs.push('<i class="iconfont icon-hr"></i> ' + title)
+            }
+            this.upgradeRunning = true
+            this.upgradeRunStart = (new Date()).getTime()
+            this.upgradeRunElapse = 0
+            this.$api.post(this.$url.admin(`upgrade`), {
+                token: this.storeApiToken,
+                step: step,
+                data: JSON.stringify(data)
+            }, res => {
+                if (Array.isArray(res.data.msg)) {
+                    this.upgradeMsgs = this.upgradeMsgs.concat(res.data.msg)
                 } else {
-                    this.$dialog.loadingOn()
-                    this.doMemberLoginCaptchaRefresh(() => {
-                        this.$dialog.loadingOff()
-                        this.memberUserShow = true
+                    this.upgradeMsgs.push(res.data.msg)
+                }
+                if (res.data.logs) {
+                    if (Array.isArray(res.data.logs)) {
+                        this.upgradeLogs = this.upgradeLogs.concat(res.data.logs)
+                    } else {
+                        this.upgradeLogs.push(res.data.logs)
+                    }
+                }
+                if (res.data.finish) {
+                    this.upgradeFinish = true
+                } else {
+                    setTimeout(() => {
+                        this.doCommand(res.data.data, res.data.step)
+                    }, 1000)
+                }
+            }, res => {
+                this.upgradeMsgs.push('<i class="iconfont icon-close ub-text-danger"></i> <span class="ub-text-danger">' + res.msg + '</span>')
+                this.upgradeFinish = true
+                return true
+            })
+        },
+        doScanLogin() {
+            if (!this.memberLoginInfo.agree) {
+                this.$dialog.tipError('请先同意相关协议')
+                return
+            }
+            this.$dialog.loadingOn()
+            this.doStoreRequest('store/login_wechatmp_qrcode', {}, res => {
+                this.$dialog.loadingOff()
+                let isOpen = false
+                let dialog = null
+                const checkLogin = () => {
+                    if (!isOpen) {
+                        return
+                    }
+                    this.doStoreRequest('store/login_wechatmp_info', {}, res => {
+                        if (res.data.memberUserId) {
+                            this.doLoadStoreMember()
+                            this.$dialog.dialogClose(dialog)
+                            this.$dialog.tipSuccess('登录成功')
+                        } else if (res.data.oauthUserInfo) {
+                            this.$dialog.dialogClose(dialog)
+                            this.$dialog.alertError('当前微信未绑定账号，请先注册')
+                        } else {
+                            setTimeout(() => {
+                                checkLogin()
+                            }, 3000)
+                        }
                     })
                 }
-            },
-            doCommand(data, step, title) {
-                step = step || null
-                title = title || null
-                if (null === step) {
-                    this.upgradeMsgs = []
-                    this.upgradeFinish = false
-                    this.upgradeLogs = []
-                }
-                if (title) {
-                    this.upgradeMsgs.push('<i class="iconfont icon-hr"></i> ' + title)
-                }
-                this.upgradeRunning = true
-                this.upgradeRunStart = (new Date()).getTime()
-                this.upgradeRunElapse = 0
-                this.$api.post(this.$url.admin(`upgrade`), {
-                    token: this.storeApiToken,
-                    step: step,
-                    data: JSON.stringify(data)
-                }, res => {
-                    if (Array.isArray(res.data.msg)) {
-                        this.upgradeMsgs = this.upgradeMsgs.concat(res.data.msg)
-                    } else {
-                        this.upgradeMsgs.push(res.data.msg)
-                    }
-                    if (res.data.logs) {
-                        if (Array.isArray(res.data.logs)) {
-                            this.upgradeLogs = this.upgradeLogs.concat(res.data.logs)
-                        } else {
-                            this.upgradeLogs.push(res.data.logs)
-                        }
-                    }
-                    if (res.data.finish) {
-                        this.upgradeFinish = true
-                    } else {
+                checkLogin();
+                dialog = this.$dialog.dialogContent(`<img style="width:200px;height:200px;" src="${res.data.qrcode}" />`, {
+                    openCallback: () => {
+                        isOpen = true
                         setTimeout(() => {
-                            this.doCommand(res.data.data, res.data.step)
-                        }, 1000)
-                    }
-                }, res => {
-                    this.upgradeMsgs.push('<i class="iconfont icon-close ub-text-danger"></i> <span class="ub-text-danger">' + res.msg + '</span>')
-                    this.upgradeFinish = true
-                    return true
+                            checkLogin()
+                        }, 3000)
+                    },
+                    closeCallback: () => {
+                        isOpen = false
+                    },
                 })
-            },
+            }, res => {
+                this.$dialog.loadingOff()
+            })
         }
     }
+}
 </script>
 

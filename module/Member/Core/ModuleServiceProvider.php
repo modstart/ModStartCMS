@@ -65,6 +65,10 @@ class ModuleServiceProvider extends ServiceProvider
                             'title' => '账号绑定',
                             'url' => modstart_web_url('member_profile/bind'),
                         ],
+                        [
+                            'title' => '退出登录',
+                            'url' => modstart_web_url('logout'),
+                        ],
                     ]
                 ],
             ];

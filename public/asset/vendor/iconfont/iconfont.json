@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3164378",
+      "name": "list_库存明细查询",
+      "font_class": "empty-box",
+      "unicode": "e671",
+      "unicode_decimal": 58993
+    },
+    {
       "icon_id": "4766954",
       "name": "star",
       "font_class": "star-alt",
@@ -571,13 +578,6 @@
       "font_class": "tools",
       "unicode": "e639",
       "unicode_decimal": 58937
-    },
-    {
-      "icon_id": "586868",
-      "name": "empty-box",
-      "font_class": "empty-box",
-      "unicode": "e716",
-      "unicode_decimal": 59158
     },
     {
       "icon_id": "587086",

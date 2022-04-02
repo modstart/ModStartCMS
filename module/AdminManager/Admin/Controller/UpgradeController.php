@@ -12,6 +12,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Module\ModuleManager;
+use Module\AdminManager\Util\ModuleUtil;
 use Module\AdminManager\Util\UpgradeUtil;
 use Module\ModuleStore\Util\ModuleStoreUtil;
 
@@ -20,6 +21,7 @@ class UpgradeController extends Controller
     public static $PermitMethodMap = [
         'index' => '@SystemUpgrade',
         'info' => '@SystemUpgrade',
+        'auth' => '@SystemUpgrade',
     ];
 
     private function doFinish($msgs, $logs = null)
@@ -97,6 +99,13 @@ class UpgradeController extends Controller
             }
         }
         return view('module::AdminManager.View.admin.upgrade');
+    }
+
+    public function auth()
+    {
+        return view('module::AdminManager.View.admin.auth', [
+            'modules' => ModuleUtil::modules(),
+        ]);
     }
 
     public function info()

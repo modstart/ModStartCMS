@@ -54,6 +54,11 @@ class Response
         return !self::isSuccess($result);
     }
 
+    public static function generateRedirect($redirect)
+    {
+        return self::generate(-1, null, null, $redirect);
+    }
+
     public static function generate($code, $msg, $data = null, $redirect = null)
     {
         if (null === $redirect) {

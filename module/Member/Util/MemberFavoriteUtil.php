@@ -4,6 +4,11 @@ namespace Module\Member\Util;
 
 use ModStart\Core\Dao\ModelUtil;
 
+/**
+ * Class MemberFavoriteUtil
+ * @package Module\Member\Util
+ * @deprecated
+ */
 class MemberFavoriteUtil
 {
     public static function urlFavorite($category, $categoryId, $redirect = '')

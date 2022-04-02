@@ -1,15 +1,35 @@
 <?php
 
+use ModStart\Admin\Config\AdminConfig;
+use ModStart\Core\Input\Request;
+use ModStart\ModStart;
+use ModStart\Module\ModuleManager;
+
+/**
+ * 获取MSCore版本
+ * @return string
+ */
 function modstart_version()
 {
-    return \ModStart\ModStart::$version;
+    return ModStart::$version;
 }
 
+/**
+ * 生成Admin的文件绝对路径
+ * @param string $path
+ * @return string
+ */
 function modstart_admin_path($path = '')
 {
     return ucfirst(config('modstart.admin.directory')) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 }
 
+/**
+ * 生成Admin的URL
+ * @param string $url
+ * @param array $param
+ * @return string
+ */
 function modstart_admin_url($url = '', $param = [])
 {
     if (!empty($param)) {
@@ -23,11 +43,22 @@ function modstart_admin_url($url = '', $param = [])
     return $prefix . $url;
 }
 
+/**
+ * 生成Web的文件绝对路径
+ * @param string $path
+ * @return string
+ */
 function modstart_web_path($path = '')
 {
     return ucfirst(config('modstart.web.directory')) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 }
 
+/**
+ * 生成Web链接
+ * @param string $url
+ * @param array $param
+ * @return string
+ */
 function modstart_web_url($url = '', $param = [])
 {
     if (!empty($param)) {
@@ -38,11 +69,22 @@ function modstart_web_url($url = '', $param = [])
     return $prefix . $url;
 }
 
+/**
+ * 生成Api文件绝对路径
+ * @param string $path
+ * @return string
+ */
 function modstart_api_path($path = '')
 {
     return ucfirst(config('modstart.api.directory')) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 }
 
+/**
+ * 生成Api的URL
+ * @param string $url
+ * @param array $param
+ * @return string
+ */
 function modstart_api_url($url = '', $param = [])
 {
     if (!empty($param)) {
@@ -53,11 +95,21 @@ function modstart_api_url($url = '', $param = [])
     return $prefix . '/' . $url;
 }
 
+/**
+ * 生成OpenApi的文件绝对路径
+ * @param string $path
+ * @return string
+ */
 function modstart_open_api_path($path = '')
 {
     return ucfirst(config('modstart.openApi.directory')) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 }
 
+/**
+ * 生成OpenApi的URL
+ * @param string $url
+ * @return string
+ */
 function modstart_open_api_url($url = '')
 {
     $prefix = config('modstart.openApi.prefix');
@@ -67,18 +119,18 @@ function modstart_open_api_url($url = '')
 
 function modstart_admin_config($key = null, $default = null)
 {
-    return \ModStart\Admin\Config\AdminConfig::get($key, $default);
+    return AdminConfig::get($key, $default);
 }
 
-function modstart_base_apth()
+function modstart_base_path()
 {
-    return \ModStart\Core\Input\Request::basePath();
+    return Request::basePath();
 }
 
 function modstart_baseurl_active($match, $output = 'active')
 {
     $pass = false;
-    $url = \ModStart\Core\Input\Request::basePathWithQueries();
+    $url = Request::basePathWithQueries();
     if (is_string($match)) {
         if (!starts_with($match, '/')) {
             $match = modstart_web_url($match);
@@ -148,11 +200,11 @@ function LM($module, $name, ...$params)
     static $langs = [];
     if (!isset($langs[$module])) {
         $langs[$module] = [];
-        if ($sessionLocale && file_exists($file = \ModStart\Module\ModuleManager::path($module, "Lang/$sessionLocale.php"))) {
+        if ($sessionLocale && file_exists($file = ModuleManager::path($module, "Lang/$sessionLocale.php"))) {
             $langs[$module] = (require $file);
-        } else if (file_exists($file = \ModStart\Module\ModuleManager::path($module, "Lang/$locale.php"))) {
+        } else if (file_exists($file = ModuleManager::path($module, "Lang/$locale.php"))) {
             $langs[$module] = (require $file);
-        } else if (file_exists($file = \ModStart\Module\ModuleManager::path($module, "Lang/$fallbackLocale.php"))) {
+        } else if (file_exists($file = ModuleManager::path($module, "Lang/$fallbackLocale.php"))) {
             $langs[$module] = (require $file);
         }
     }
@@ -175,7 +227,7 @@ function L($name, ...$params)
         $locale = config('app.locale');
         $fallbackLocale = config('app.fallback_locale');
         $trackMissing = config('modstart.lang.track_missing', false);
-        if (\ModStart\Module\ModuleManager::isModuleInstalled('I18n') && \ModStart\Core\Dao\ModelManageUtil::hasTable('lang_trans')) {
+        if (ModuleManager::isModuleInstalled('I18n') && \ModStart\Core\Dao\ModelManageUtil::hasTable('lang_trans')) {
             $langTrans = \Module\I18n\Util\LangTransUtil::map();
         }
     }
@@ -225,9 +277,19 @@ function L($name, ...$params)
     return $name;
 }
 
-function modstart_module_enabled($module)
+/**
+ * 判断模块是否已启用
+ * @param $module string
+ * @param $version string
+ * @return bool
+ */
+function modstart_module_enabled($module, $version = null)
 {
-    return \ModStart\Module\ModuleManager::isModuleEnabled($module);
+    if (null === $version) {
+        return ModuleManager::isModuleEnabled($module);
+    } else {
+        return ModuleManager::isModuleEnableMatch($module, $version);
+    }
 }
 
 if (!function_exists('array_build')) {

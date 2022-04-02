@@ -144,6 +144,22 @@ class ArrayUtil
         return $newArr;
     }
 
+    public static function remove($array, $record)
+    {
+        return array_filter($array, function ($o) use ($record) {
+            return $o != $record;
+        });
+    }
+
+    public static function add($array, $record, $unique = true)
+    {
+        $array = array_merge($array, [$record]);
+        if ($unique) {
+            $array = array_unique($array);
+        }
+        return $array;
+    }
+
     /**
      * 重命名Keys
      *

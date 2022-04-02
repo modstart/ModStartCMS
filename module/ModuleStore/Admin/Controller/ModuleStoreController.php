@@ -73,7 +73,7 @@ class ModuleStoreController extends Controller
         return Response::generateSuccessData([
             'msg' => array_map(function ($item) {
                 if (!starts_with($item, '<')) {
-                    $item = "<span class='ub-text-default'>$item</span>";
+                    $item = "<span class='ub-text-white'>$item</span>";
                 }
                 return '<i class="iconfont icon-hr"></i> ' . $item;
             }, $msgs),
@@ -208,14 +208,14 @@ class ModuleStoreController extends Controller
                 BizException::throwsIfResponseError($ret);
                 return $this->doNext('upgrade', 'installModule', array_merge([
                     '<span class="ub-text-success">模块解压完成</span>',
-                    '<span class="ub-text-default">开始安装...</span>',
+                    '<span class="ub-text-white">开始安装...</span>',
                 ], $ret['data']));
             case 'downloadPackage':
                 $ret = ModuleStoreUtil::downloadPackage($token, $module, $version);
                 BizException::throwsIfResponseError($ret);
                 return $this->doNext('upgrade', 'unpackPackage', [
                     '<span class="ub-text-success">获取安装包完成，大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
-                    '<span class="ub-text-default">开始解压安装包...</span>'
+                    '<span class="ub-text-white">开始解压安装包...</span>'
                 ], [
                     'package' => $ret['data']['package'],
                     'licenseKey' => $ret['data']['licenseKey'],
@@ -236,14 +236,14 @@ class ModuleStoreController extends Controller
                         '<span class="ub-text-danger">预检失败，' . $ret['data']['errorCount'] . '个依赖不满足要求</span>',
                     ]));
                 }
-                $msgs[] = '<span class="ub-text-default">开始下载安装包...</span>';
+                $msgs[] = '<span class="ub-text-white">开始下载安装包...</span>';
                 return $this->doNext('upgrade', 'downloadPackage', array_merge([
                     '<span class="ub-text-success">预检成功，' . count($ret['data']['requires']) . '个依赖满足要求，安装包大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
                 ], $msgs));
             default:
                 return $this->doNext('upgrade', 'checkPackage', [
                     '<span class="ub-text-success">开始升级到远程模块 ' . $module . ' V' . $version . '</span>',
-                    '<span class="ub-text-default">开始模块安装预检...</span>'
+                    '<span class="ub-text-white">开始模块安装预检...</span>'
                 ]);
         }
     }
@@ -278,7 +278,7 @@ class ModuleStoreController extends Controller
                 default:
                     return $this->doNext('install', 'installModule', [
                         '<span class="ub-text-success">开始安装本地模块 ' . $module . ' V' . $version . '</span>',
-                        '<span class="ub-text-default">开始安装..</span>'
+                        '<span class="ub-text-white">开始安装..</span>'
                     ]);
             }
         } else {
@@ -308,14 +308,14 @@ class ModuleStoreController extends Controller
                     BizException::throwsIfResponseError($ret);
                     return $this->doNext('install', 'installModule', array_merge([
                         '<span class="ub-text-success">模块解压完成</span>',
-                        '<span class="ub-text-default">开始安装...</span>',
+                        '<span class="ub-text-white">开始安装...</span>',
                     ], $ret['data']));
                 case 'downloadPackage':
                     $ret = ModuleStoreUtil::downloadPackage($token, $module, $version);
                     BizException::throwsIfResponseError($ret);
                     return $this->doNext('install', 'unpackPackage', [
                         '<span class="ub-text-success">获取安装包完成，大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
-                        '<span class="ub-text-default">开始解压安装包...</span>'
+                        '<span class="ub-text-white">开始解压安装包...</span>'
                     ], [
                         'package' => $ret['data']['package'],
                         'licenseKey' => $ret['data']['licenseKey'],
@@ -336,7 +336,7 @@ class ModuleStoreController extends Controller
                             '<span class="ub-text-danger">预检失败，' . $ret['data']['errorCount'] . '个依赖不满足要求</span>',
                         ]));
                     }
-                    $msgs[] = '<span class="ub-text-default">开始下载安装包...</span>';
+                    $msgs[] = '<span class="ub-text-white">开始下载安装包...</span>';
                     return $this->doNext('install', 'downloadPackage', array_merge([
                         '<span class="ub-text-success">预检成功，' . count($ret['data']['requires']) . '个依赖满足要求，安装包大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
                     ], $msgs));
@@ -344,7 +344,7 @@ class ModuleStoreController extends Controller
                 default:
                     return $this->doNext('install', 'checkPackage', [
                         '<span class="ub-text-success">开始安装远程模块 ' . $module . ' V' . $version . '</span>',
-                        '<span class="ub-text-default">开始模块安装预检...</span>'
+                        '<span class="ub-text-white">开始模块安装预检...</span>'
                     ]);
             }
         }

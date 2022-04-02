@@ -422,16 +422,18 @@
             };
         });
         @if($canBatchSelect || $canSingleSelectItem || $canMultiSelectItem)
-        setTimeout(function () {
-            $('body > .ub-panel-dialog .panel-dialog-foot').show().find('[data-submit]').show().on('click', function () {
-                var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
-                var items = window.__grids.instances['{{$id}}'].getCheckedItems();
-                // console.log('itemSelected',ids, items);
-                window.parent.__dialogSelectIds = ids;
-                window.parent.__selectorDialogItems = items;
-                parent.layer.closeAll();
-            });
-        }, 0);
+        $(function(){
+            setTimeout(function () {
+                window.__dialogFootSubmiting(function () {
+                    var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
+                    var items = window.__grids.instances['{{$id}}'].getCheckedItems();
+                    // console.log('itemSelected',ids, items);
+                    window.parent.__dialogSelectIds = ids;
+                    window.parent.__selectorDialogItems = items;
+                    parent.layer.closeAll();
+                });
+            }, 0);
+        })
         @endif
     })();
 </script>

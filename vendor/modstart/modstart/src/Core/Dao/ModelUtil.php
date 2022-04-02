@@ -96,6 +96,12 @@ class ModelUtil
         return self::model($model)->whereIn($field, $values)->delete();
     }
 
+    /**
+     * 更新表中全部数据，慎用
+     * @param $model
+     * @param $data
+     * @param string[] $where
+     */
     public static function updateAll($model, $data, $where = ['id', '>', '0'])
     {
         self::model($model)->where($where[0], $where[1], $where[2])->update($data);

@@ -127,4 +127,11 @@ class AssetsUtil
         }
         return self::fixFull($path);
     }
+
+    public static function recordsFixFullOrDefault(&$records, $key, $default = null)
+    {
+        foreach ($records as $k => $v) {
+            $records[$k][$key] = self::fixFullOrDefault($v[$key], $default);
+        }
+    }
 }
