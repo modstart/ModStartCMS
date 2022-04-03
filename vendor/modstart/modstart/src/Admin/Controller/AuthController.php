@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Event\AdminUserLoginedEvent;
 use ModStart\Admin\Event\AdminUserLogoutEvent;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
@@ -122,6 +123,25 @@ class AuthController extends Controller
             'captchaProviderName' => $captchaProviderName,
             'captchaProvider' => $captchaProvider,
         ]);
+    }
+
+    public function loginQuick()
+    {
+        BizException::throwsIf('快速登录未开启', !config('env.ADMIN_LOGIN_QUICK_ENABLE', false));
+        $input = InputPackage::buildFromInput();
+        $id = $input->getInteger('id');
+        $ts = $input->getInteger('ts');
+        BizException::throwsIf('请求超时', $ts < time() - 1800 || $ts > time() + 1800);
+        $adminUser = Admin::get($id);
+        BizException::throwsIfEmpty('登录失败', $adminUser);
+        $sign = md5($id . ':' . $ts . ':' . $adminUser['password'] . ':' . $adminUser['passwordSalt']);
+        BizException::throwsIf('登录失败', $sign != $input->getTrimString('sign'));
+        Session::put(Admin::ADMIN_USER_ID_SESSION_KEY, $adminUser['id']);
+        Admin::addInfoLog($adminUser['id'], L('Login Success'), [
+            'IP' => Request::ip(),
+        ]);
+        $redirect = $input->getTrimString('redirect', modstart_admin_url());
+        return Response::redirect($redirect);
     }
 
     public function logout()

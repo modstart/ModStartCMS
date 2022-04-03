@@ -21,6 +21,7 @@ class ModStartAdmin
 
             /* @var \Illuminate\Routing\Router $router */
             $router->match(['get', 'post'], 'login', 'AuthController@login');
+            $router->match(['get', 'post'], 'login_quick', 'AuthController@loginQuick');
             $router->match(['get', 'post'], 'logout', 'AuthController@logout');
             $router->match(['get', 'post'], 'login/captcha', 'AuthController@loginCaptcha');
 

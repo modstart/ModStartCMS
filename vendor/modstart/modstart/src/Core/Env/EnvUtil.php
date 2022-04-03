@@ -6,6 +6,7 @@ class EnvUtil
 {
     public static function all($file = null)
     {
+        global $__msConfig;
         if (!empty($__msConfig)) {
             return $__msConfig;
         }
