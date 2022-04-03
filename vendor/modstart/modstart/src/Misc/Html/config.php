@@ -7,11 +7,18 @@ return [
     'cacheFileMode' => 0755,
     'settings' => [
         'default' => [
-            'HTML.Doctype' => 'HTML 4.01 Transitional',
-            'HTML.Allowed' => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
-            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+            'HTML.Allowed' => join(',', [
+                'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
+                'table[style|cellspacing|width],tbody[style],tr[style],td[style|rowspan|colspan|width|valign]',
+                'iframe[src|width|height|frameborder|style]',
+                'video[controls|height|poster|preload|src|width|crossorigin]',
+                'audio[controls|preload|src|crossorigin]',
+            ]),
+            'HTML.SafeIframe' => true,
+            'URI.SafeIframeRegexp' => "%^(http://|https://|//)?([a-zA-Z0-9\\./=\\%]+)$%",
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => true,
+            'CSS.MaxImgLength' => null,
         ],
         'test' => [
             'Attr.EnableID' => 'true',

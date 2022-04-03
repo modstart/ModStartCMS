@@ -80,6 +80,7 @@ class HTMLPurifier_HTMLModuleManager
         // setup basic modules
         $common = array(
             'CommonAttributes', 'Text', 'Hypertext', 'List',
+            'Media',
             'Presentation', 'Edit', 'Bdo', 'Tables', 'Image',
             'StyleAttribute',
             // Unsafe:

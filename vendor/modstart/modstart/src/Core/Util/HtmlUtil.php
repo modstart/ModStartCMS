@@ -83,49 +83,20 @@ class HtmlUtil
         if (empty($content)) {
             return $content;
         }
-        return Purifier::cleanHtml($content, [
-            'HTML.Allowed' => 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
-            'AutoFormat.AutoParagraph' => true,
-            'AutoFormat.RemoveEmpty' => true,
-            'CSS.MaxImgLength' => null,
-        ]);
+        return Purifier::cleanHtml($content);
     }
 
+    /**
+     * @param $content
+     * @return mixed
+     * @deprecated
+     */
     public static function filter2($content)
     {
         if (empty($content)) {
             return $content;
         }
-        $replaces = [
-            'index' => 0,
-            'search' => [],
-            'replace' => [],
-            'newReplace' => [],
-        ];
-
-        preg_match_all('%<audio.*?src="((http://|https://|//)?[a-zA-Z0-9\\./]+)">.*?</audio>%i', $content, $audioMat);
-        foreach ($audioMat[0] as $i => $v) {
-            $replaces['search'][] = $v;
-            $replaces['replace'][] = '--custom-element--' . ($replaces['index']++) . '--';
-            $src = $audioMat[1][$i];
-            $replaces['newReplace'][] = "<audio src=\"$src\"></audio>";
-        }
-
-        $content = str_replace($replaces['search'], $replaces['replace'], $content);
-        $content = Purifier::cleanHtml($content, [
-            'HTML.Allowed' => join(',', [
-                'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[style|width|height|alt|src],span,br,h1,h2,h3,h4,h5,blockquote,pre[class],code',
-                'table[style|cellspacing|width],tbody[style],tr[style],td[style|rowspan|colspan|width|valign]',
-                'iframe[src]',
-//                'section[style]',
-            ]),
-            'HTML.SafeIframe' => true,
-            'URI.SafeIframeRegexp' => "%^(http://|https://|//)?([a-zA-Z0-9\\./]+)$%",
-            'AutoFormat.AutoParagraph' => true,
-            'AutoFormat.RemoveEmpty' => true,
-            'CSS.MaxImgLength' => null,
-        ]);
-        return str_replace($replaces['replace'], $replaces['newReplace'], $content);
+        return Purifier::cleanHtml($content);
     }
 
     /**

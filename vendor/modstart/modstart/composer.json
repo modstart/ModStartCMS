@@ -21,7 +21,7 @@
         "intervention/image": "^2.3",
         "doctrine/dbal": "^2.5",
         "jenssegers/agent": "v2.6.4",
-        "ezyang/htmlpurifier": "v4.14.0",
+        "ezyang/htmlpurifier": "dev-master",
         "predis/predis": "^1.1",
         "bacon/bacon-qr-code": "*",
         "arvenil/ninja-mutex": "^0.6.0",

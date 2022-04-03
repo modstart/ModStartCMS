@@ -28,7 +28,7 @@ class RichHtml extends AbstractField
 
     public function prepareInput($value, $dataSubmitted)
     {
-        return HtmlUtil::filter2($value);
+        return HtmlUtil::filter($value);
     }
 
 
