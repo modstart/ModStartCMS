@@ -65,7 +65,7 @@ class TextDialogRequest extends AbstractWidget
     {
         $type = $this->type;
         if ('primary' == $type) {
-            $type = 'default';
+            $type = 'link';
         }
         if ($this->disabled) {
             return '<a href="javascript:;" class="ub-text-dialog-request ub-text-' . $type . '">' . $this->text . '</a>';

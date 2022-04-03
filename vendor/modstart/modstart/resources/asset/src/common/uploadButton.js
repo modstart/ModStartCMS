@@ -83,7 +83,6 @@ var UploadButton = function (selector, option) {
 
     var opt = $.extend({
         text: '选择文件',
-        swf: '/assets/webuploader/Uploader.swf',
         server: '/path/to/server',
         sizeLimit: 2 * 1024 * 1024,
         extensions: 'gif,jpg,png,jpeg',

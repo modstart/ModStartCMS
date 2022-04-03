@@ -10,7 +10,7 @@ class InstallerUtil
     {
         $envPath = base_path('.env');
         $installLockPath = storage_path('install.lock');
-        if (!file_exists($envPath) || !file_exists($installLockPath)) {
+        if (!file_exists($installLockPath)) {
             header('Location: ' . modstart_web_url('install.php'));
             exit();
         }

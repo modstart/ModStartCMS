@@ -6,6 +6,9 @@ class EnvUtil
 {
     public static function all($file = null)
     {
+        if (!empty($__msConfig)) {
+            return $__msConfig;
+        }
         if (null === $file) {
             $file = base_path('.env');
         }

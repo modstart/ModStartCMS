@@ -278,7 +278,7 @@ class FileManager
         foreach ($paginateData['records'] as $record) {
             $item = [];
             $item['id'] = $record['id'];
-            $item['path'] = '/' . AbstractDataStorage::DATA . '/' . $record['_data']['category'] . '/' . $record['_data']['path'];
+            $item['path'] = config('data.baseUrl', '/') . AbstractDataStorage::DATA . '/' . $record['_data']['category'] . '/' . $record['_data']['path'];
             if (!empty($record['_data']['domain'])) {
                 $item['path'] = $record['_data']['domain'] . $item['path'];
             }

@@ -90,6 +90,7 @@ var Convenient = {
             var title = $this.attr('data-dialog-title') || null;
             var option = {
                 title: title,
+                shadeClose: false,
                 closeCallback: function () {
                     $this.trigger('dialog.close', [$this]);
                 }

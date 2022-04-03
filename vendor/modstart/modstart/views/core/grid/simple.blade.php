@@ -237,7 +237,7 @@
                     lister.realtime.dialog.add = layer.open({
                         type: 2,
                         title: "{{ empty($titleAdd) ? ($title?$title.' '.L('Add'):L('Add')) : $titleAdd }}",
-                        shadeClose: true,
+                        shadeClose: false,
                         shade: 0.8,
                         maxmin: false,
                         scrollbar: false,
@@ -263,7 +263,7 @@
                     lister.realtime.dialog.edit = layer.open({
                         type: 2,
                         title: "{{ empty($titleEdit) ? ($title?$title.' '.L('Edit'):L('Edit')) : $titleEdit }}",
-                        shadeClose: true,
+                        shadeClose: false,
                         shade: 0.8,
                         maxmin: false,
                         scrollbar: false,
@@ -305,7 +305,7 @@
                     lister.realtime.dialog.show = layer.open({
                         type: 2,
                         title: "{{ empty($titleShow) ? ($title?$title.' '.L('Show'):L('Show')) : $titleShow }}",
-                        shadeClose: true,
+                        shadeClose: false,
                         shade: 0.8,
                         maxmin: false,
                         scrollbar: false,

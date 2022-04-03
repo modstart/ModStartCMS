@@ -218,7 +218,7 @@
                 lister.realtime.dialog.add = layer.open({
                     type: 2,
                     title: "{{ empty($titleAdd) ? ($title?L('Add').$title:L('Add')) : $titleAdd }}",
-                    shadeClose: true,
+                    shadeClose: false,
                     shade: 0.5,
                     maxmin: false,
                     scrollbar: false,
@@ -244,7 +244,7 @@
                 lister.realtime.dialog.edit = layer.open({
                     type: 2,
                     title: "{{ empty($titleEdit) ? ($title?L('Edit').$title:L('Edit')) : $titleEdit }}",
-                    shadeClose: true,
+                    shadeClose: false,
                     shade: 0.5,
                     maxmin: false,
                     scrollbar: false,
@@ -323,7 +323,7 @@
                 lister.realtime.dialog.show = layer.open({
                     type: 2,
                     title: "{{ empty($titleShow) ? ($title?L('Show').$title:L('Show')) : $titleShow }}",
-                    shadeClose: true,
+                    shadeClose: false,
                     shade: 0.5,
                     maxmin: false,
                     scrollbar: false,
@@ -384,7 +384,7 @@
                 lister.realtime.dialog.import = layer.open({
                     type: 2,
                     title: "{{ empty($titleImport) ? ($title?L('Import').$title:L('Import')) : $titleImport }}",
-                    shadeClose: true,
+                    shadeClose: false,
                     shade: 0.5,
                     maxmin: false,
                     scrollbar: false,
@@ -423,16 +423,18 @@
         });
         @if($canBatchSelect || $canSingleSelectItem || $canMultiSelectItem)
         $(function(){
-            setTimeout(function () {
-                window.__dialogFootSubmiting(function () {
-                    var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
-                    var items = window.__grids.instances['{{$id}}'].getCheckedItems();
-                    // console.log('itemSelected',ids, items);
-                    window.parent.__dialogSelectIds = ids;
-                    window.parent.__selectorDialogItems = items;
-                    parent.layer.closeAll();
-                });
-            }, 0);
+            if(window.__dialogFootSubmiting){
+                setTimeout(function () {
+                    window.__dialogFootSubmiting(function () {
+                        var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
+                        var items = window.__grids.instances['{{$id}}'].getCheckedItems();
+                        // console.log('itemSelected',ids, items);
+                        window.parent.__dialogSelectIds = ids;
+                        window.parent.__selectorDialogItems = items;
+                        parent.layer.closeAll();
+                    });
+                }, 0);
+            }
         })
         @endif
     })();

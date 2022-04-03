@@ -36,6 +36,7 @@ return [
     'Click To Refresh' => '点击刷新',
     'Description' => '描述',
     'Login Success' => '登录成功',
+    'Login Error' => '登录失败',
     'Module Manage' => '模块管理',
     'Operate' => '操作',
     'Password' => '密码',

@@ -103,7 +103,7 @@ abstract class AbstractDataStorage
         if (PathUtil::isPublicNetPath($path)) {
             return $path;
         }
-        return '/' . $path;
+        return config('data.baseUrl', '/') . $path;
     }
 
     /**
@@ -123,7 +123,7 @@ abstract class AbstractDataStorage
         if (PathUtil::isPublicNetPath($path)) {
             return $path;
         }
-        return '/' . $path;
+        return config('data.baseUrl', '/'). $path;
     }
 
     public function repository()

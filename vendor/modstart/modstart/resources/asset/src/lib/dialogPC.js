@@ -5,7 +5,7 @@ if ('layer' in window) {
 }
 
 let layer = require('./layer/layer.js');
-let layerCss = require('./layer/theme/default/layer.css');
+let layerLess = require('./layer/theme/default/layer.less');
 let Util = require('./util.js');
 
 let Dialog = {

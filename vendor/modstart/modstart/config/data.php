@@ -1,5 +1,6 @@
 <?php
 return [
+    'baseUrl' => env('DATA_BASE_URL', '/'),
     'upload' => [
         'image' => [
             'maxSize' => 1024 * 1024 * 1024,

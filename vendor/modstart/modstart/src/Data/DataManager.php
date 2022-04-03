@@ -172,7 +172,7 @@ class DataManager
         $storage->put($fullPath, $content);
         DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath);
         $dataTemp = $storage->repository()->addTemp($category, $path, $filename, $size);
-        $path = '/' . AbstractDataStorage::DATA_TEMP . '/' . $dataTemp['category'] . '/' . $dataTemp['path'];
+        $path = config('data.baseUrl', '/') . AbstractDataStorage::DATA_TEMP . '/' . $dataTemp['category'] . '/' . $dataTemp['path'];
         $fullPath = $path;
         if (!empty($option['domain'])) {
             $fullPath = $option['domain'] . $path;
@@ -235,7 +235,7 @@ class DataManager
         $md5 = md5($content);
         $data = $storage->repository()->addData($category, $path, $filename, $size, $md5);
         $data = $storage->updateDriverDomain($data);
-        $path = '/' . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
+        $path = config('data.baseUrl', '/') . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
         $fullPath = $path;
         if (!empty($data['domain'])) {
             $fullPath = $data['domain'] . $path;
@@ -303,7 +303,7 @@ class DataManager
         $data = $storage->repository()->addData($dataTemp['category'], $path, $dataTemp['filename'], $dataTemp['size'], $dataTemp['md5']);
         $data = $storage->updateDriverDomain($data);
         $storage->repository()->deleteTempById($dataTemp['id']);
-        $path = '/' . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
+        $path = config('data.baseUrl', '/') . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
         $fullPath = $path;
         if (!empty($data['domain'])) {
             $fullPath = $data['domain'] . $path;

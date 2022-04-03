@@ -13,6 +13,10 @@
 |
 */
 
+if (@file_exists($f = __DIR__ . '/../env.php')) {
+    require($f);
+}
+
 require __DIR__.'/bootstrap/autoload.php';
 
 $app = require_once __DIR__.'/bootstrap/app.php';

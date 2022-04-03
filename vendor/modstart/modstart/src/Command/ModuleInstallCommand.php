@@ -83,7 +83,7 @@ class ModuleInstallCommand extends Command
             return;
         }
         $this->info('Module Migrate Success');
-        $this->call('migrate', ['--path' => ModuleManager::relativePath($module, 'Migrate')]);
+        $this->call('migrate', ['--path' => ModuleManager::relativePath($module, 'Migrate'), '--force' => true]);
     }
 
     private function publishRoot($module)

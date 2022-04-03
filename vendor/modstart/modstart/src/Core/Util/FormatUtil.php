@@ -16,6 +16,9 @@ class FormatUtil
         $ret = parse_url($domain);
         if (isset($ret['host'])) {
             $domain = $ret['host'];
+            if (preg_match('/^\d+\.\d+\.\d+\.\d+$/', $domain)) {
+                return $domain;
+            }
             $pcs = [];
             foreach (array_reverse(explode('.', $domain)) as $p) {
                 if (in_array($p, ['cn', 'com', 'org', 'gov', 'edu'])) {
