@@ -2,15 +2,7 @@
     <div class="ub-container">
         <div class="menu">
             @if(\Module\Member\Auth\MemberUser::id())
-                <a href="{{modstart_web_url('member_message')}}">
-                    <i class="iconfont icon-bell"></i>
-                    <?php $count = \Module\Member\Util\MemberMessageUtil::getUnreadMessageCount(\Module\Member\Auth\MemberUser::id()); ?>
-                    @if($count)
-                        <span class="badge" data-member-unread-message-count>{{$count}}</span>
-                    @endif
-                </a>
                 <a href="{{modstart_web_url('member')}}"><i class="iconfont icon-user"></i> {{\Module\Member\Auth\MemberUser::get('username')}}</a>
-                <a href="javascript:;" data-confirm="确认退出？" data-href="/logout">退出</a>
             @else
                 <a href="{{modstart_web_url('login')}}">登录</a>
                 @if(!modstart_config('registerDisable',false))

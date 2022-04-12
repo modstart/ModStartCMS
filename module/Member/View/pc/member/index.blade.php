@@ -11,16 +11,32 @@
             </div>
             <div class="tw-flex-grow">
                 <div class="tw-text-bold">{{$_memberUser['username']}}</div>
-                @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') && modstart_config('moduleMemberVipEnable'))
-                    <div class="tw-py-1 ub-text-primary">
-                        @if(\Module\Member\Auth\MemberVip::get('icon'))
-                            <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(\Module\Member\Auth\MemberVip::get('icon'))}}"
-                                 class="tw-h-4"
-                                 alt="{{\Module\Member\Auth\MemberVip::get('title')}}" />
+                <div>
+                    @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') && modstart_config('moduleMemberVipEnable'))
+                        <span class="tw-my-1 tw-mr-2 tw-inline-block ub-text-primary">
+                            @if(\Module\Member\Auth\MemberVip::get('icon'))
+                                <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(\Module\Member\Auth\MemberVip::get('icon'))}}"
+                                     class="tw-h-4 tw-w-4 tw-overflow-hidden" />
+                            @endif
+                            {{\Module\Member\Auth\MemberVip::get('title')}}
+                        </span>
+                    @endif
+                    @if(modstart_module_enabled('MemberCert'))
+                        <?php $certType = \Module\MemberCert\Util\MemberCertUtil::getCertType(\Module\Member\Auth\MemberUser::id()); ?>
+                        @if($certType==\Module\MemberCert\Type\CertType::INDIVIDUAL)
+                            <span class="tw-my-1 tw-mr-2 tw-inline-block ub-text-primary">
+                                <i class="iconfont icon-user"></i>
+                                个人认证
+                            </span>
                         @endif
-                        {{\Module\Member\Auth\MemberVip::get('title')}}
-                    </div>
-                @endif
+                        @if($certType==\Module\MemberCert\Type\CertType::CORP)
+                            <span class="tw-my-1 tw-mr-2 tw-inline-block ub-text-primary">
+                                <i class="iconfont icon-corp"></i>
+                                企业认证
+                            </span>
+                        @endif
+                    @endif
+                </div>
                 <div class="tw-text-gray-400">{{empty($_memberUser['signature'])?'暂无签名':$_memberUser['signature']}}</div>
 {{--                <div class="tw-flex tw-mt-3">--}}
 {{--                    <a href="{{modstart_web_url('wenda/member/'.$memberUser['id'].'/replies')}}" class="tw-text-center tw-pr-4 tw-text-sm">--}}
