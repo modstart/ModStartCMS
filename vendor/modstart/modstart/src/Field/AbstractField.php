@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\IdUtil;
 use ModStart\Detail\Detail;
@@ -282,6 +283,15 @@ class AbstractField implements Renderable
     }
 
     /**
+     * 匹配 Url
+     * @return $this|string
+     */
+    public function ruleUrl()
+    {
+        return $this->ruleRegex('/^https?:\/\//');
+    }
+
+    /**
      * @return $this|string
      */
     public function ruleUnique($table, $field = null)
@@ -440,7 +450,12 @@ class AbstractField implements Renderable
         if (is_array($item)) {
             $value = array_get($item, $this->column);
         } else {
-            $value = isset($item->{$this->column}) ? $item->{$this->column} : null;
+            if (str_contains($this->column, '.')) {
+                $value = ModelUtil::traverse($item, $this->column);
+            } else {
+                $value = isset($item->{$this->column}) ? $item->{$this->column} : null;
+            }
+            // echo $this->column . " - " . json_encode($item) . "\n";
         }
         if ($this->hookValueUnserialize) {
             $value = call_user_func($this->hookValueUnserialize, $value, $this);

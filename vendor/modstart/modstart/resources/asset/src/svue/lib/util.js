@@ -240,7 +240,7 @@ export const JsonUtil = {
 
 export const BeanUtil = {
     /**
-     * 从 valuePool 取出 bean 需要的数据更新
+     * 使用 valuePool 更新 bean ，valuePool要包含全部字段
      *
      * @param bean
      * @param valuePool
@@ -254,7 +254,7 @@ export const BeanUtil = {
         })
     },
     /**
-     * 使用 beanNewValue 的所有值赋给 bean
+     * 使用 beanNewValue 更新 bean，beanNewValue可以是部分字段
      * @param bean
      * @param beanNewValue
      */

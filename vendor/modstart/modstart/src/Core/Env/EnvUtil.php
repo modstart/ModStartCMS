@@ -20,9 +20,10 @@ class EnvUtil
                     if (substr($line, 0, 1) === '#') {
                         continue;
                     }
-                    list($k, $v) = explode('=', $line);
-                    $k = trim($k);
-                    $v = trim($v);
+                    $pcs = explode('=', $line);
+                    $k = trim($pcs[0]);
+                    array_shift($pcs);
+                    $v = trim(join('=', $pcs));
                     switch (strtolower($v)) {
                         case 'true':
                         case '(true)':

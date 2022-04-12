@@ -136,7 +136,7 @@
                 page: false,
                 skin: 'line',
                 text: {
-                    none: '<div class="ub-text-muted"><i class="iconfont icon-empty-box" style="font-size:2rem;"></i><br />{{L('No Records')}}</div>'
+                    none: '<div class="ub-text-muted tw-py-4"><i class="iconfont icon-refresh tw-animate-spin tw-inline-block" style="font-size:2rem;"></i><br />{{L('Loading')}}</div>'
                 },
                 // size: 'sm',
                 loading: true,
@@ -159,12 +159,21 @@
             })
             var isFirst = true;
             var $lister = $('#{{$id}}');
+            var first = true;
             var lister = new window.api.lister({
                 search: $lister.find('[data-search]'),
                 table: $lister.find('[data-table]')
             }, {
                 hashUrl: false,
                 server: window.location.href,
+                showLoading: false,
+                customLoading: function(loading){
+                    if(first){
+                        first = false;
+                        return;
+                    }
+                    table.loading(loading);
+                },
                 render: function (data) {
                     listerData = data;
                     @if($canSingleSelectItem)
@@ -174,6 +183,9 @@
                     @endif
                     $grid.find('[data-addition]').html(data.addition || '');
                     layui.table.reload('{{$id}}Table', {
+                        text: {
+                            none: '<div class="ub-text-muted"><i class="iconfont icon-empty-box" style="font-size:2rem;"></i><br />{{L('No Records')}}</div>'
+                        },
                         cols: [data.head],
                         data: data.records,
                         limit: data.pageSize,
@@ -423,8 +435,8 @@
         });
         @if($canBatchSelect || $canSingleSelectItem || $canMultiSelectItem)
         $(function(){
-            if(window.__dialogFootSubmiting){
-                setTimeout(function () {
+            setTimeout(function () {
+                if(window.__dialogFootSubmiting){
                     window.__dialogFootSubmiting(function () {
                         var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
                         var items = window.__grids.instances['{{$id}}'].getCheckedItems();
@@ -433,8 +445,8 @@
                         window.parent.__selectorDialogItems = items;
                         parent.layer.closeAll();
                     });
-                }, 0);
-            }
+                }
+            }, 0);
         })
         @endif
     })();

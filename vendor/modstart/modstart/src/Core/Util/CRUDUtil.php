@@ -28,6 +28,9 @@ class CRUDUtil
         $id = $input->getTrimString('_id');
         if (!$id) {
             $id = $input->getTrimString('id');
+            if (empty($id)) {
+                $id = $input->getTrimString('ids');
+            }
         }
         $ids = [];
         foreach (explode(',', $id) as $i) {

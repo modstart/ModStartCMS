@@ -18,6 +18,18 @@ class TypeUtil
         return null;
     }
 
+    public static function filter($typeCls, $values)
+    {
+        $list = $typeCls::getList();
+        $filter = [];
+        foreach ($list as $k => $v) {
+            if (in_array($k, $values)) {
+                $filter[$k] = $v;
+            }
+        }
+        return $filter;
+    }
+
     public static function dump($cls)
     {
         $keys = ConstantUtil::dump($cls);
@@ -50,6 +62,7 @@ class TypeUtil
             'reject' => 'danger',
             'wait' => 'muted',
             'canceled' => 'muted',
+            'disabled' => 'muted',
             'completed' => 'success',
             'finish' => 'success',
             'converting' => 'warning',
@@ -65,6 +78,8 @@ class TypeUtil
             'payed' => 'success',
             'wait_process' => 'warning',
             'deleted' => 'muted',
+            'invalid' => 'warning',
+            'valid' => 'success',
         ];
         foreach (ConstantUtil::dump($typeClass) as $k => $v) {
             $k = strtolower($k);

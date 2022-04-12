@@ -231,10 +231,12 @@ class AuthController extends ModuleBaseController
         }
         /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::getOrFail($oauthType);
-        $ret = $oauth->processLogin([
+        $param = Session::get('oauthLoginParam', []);
+        Session::forget('oauthLoginParam');
+        $ret = $oauth->processLogin(array_merge($param, [
             'code' => $code,
             'callback' => $callback,
-        ]);
+        ]));
         if (!isset($ret['code'])) {
             return Response::generate(-1, '登录失败(返回结果为空)');
         }
@@ -265,10 +267,12 @@ class AuthController extends ModuleBaseController
         $silence = $input->getBoolean('silence', false);
         /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::getOrFail($oauthType);
-        $ret = $oauth->processRedirect([
+        $param = [
             'callback' => $callback,
             'silence' => $silence,
-        ]);
+        ];
+        Session::put('oauthLoginParam', $param);
+        $ret = $oauth->processRedirect($param);
         BizException::throwsIfResponseError($ret);
         return Response::generate(0, 'ok', [
             'redirect' => $ret['data']['redirect'],

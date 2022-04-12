@@ -20,8 +20,8 @@
     </script>
 @else
     @if(!empty($value))
-        <span class="ub-text-success">{{$options[1]}}</span>
+        <span class="ub-text-success"><i class="iconfont icon-dot-sm"></i>{{$options[1]}}</span>
     @else
-        <span class="ub-text-muted">{{$options[0]}}</span>
+        <span class="ub-text-muted"><i class="iconfont icon-dot-sm"></i>{{$options[0]}}</span>
     @endif
 @endif

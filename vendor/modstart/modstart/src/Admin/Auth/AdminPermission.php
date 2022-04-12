@@ -13,6 +13,9 @@ use ModStart\Core\Input\Response;
 
 class AdminPermission
 {
+    /**
+     * @deprecated
+     */
     public static function demoPostCheck()
     {
         if (self::isDemo() && Request::isPost()) {
@@ -204,7 +207,8 @@ class AdminPermission
                 continue;
             }
             if (empty($v['children'])) {
-                if ($controllerMethod === $v['url'] || $currentUrl === $v['url']) {
+                // echo "$controllerMethod - $v[url] - $currentUrl\n";
+                if ($controllerMethod === $v['url'] || $currentUrl === $v['url'] || ends_with($currentUrl, $v['url'])) {
                     $v['_active'] = true;
                 }
                 if (self::permit($v['rule'])) {

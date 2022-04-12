@@ -60,7 +60,7 @@ class MemberMessageController extends ModuleBaseController implements MemberLogi
         }
         ModStart::scriptFile('module/Member/Web/Controller/memberMessage.js');
         list($view, $frame) = $this->viewPaths('member.frame');
-        return $page->pageTitle('消息中心')->view($view)->body(new Box($grid, '消息中心'));
+        return $page->pageTitle('我的消息')->view($view)->body(new Box($grid, '我的消息'));
     }
 
     public function delete()

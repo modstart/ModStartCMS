@@ -1250,5 +1250,29 @@ class ModelUtil
 //    }
 //
 
+    public static function traverse($model, $key, $default = null)
+    {
+        if (is_array($model)) {
+            return array_get($model, $key, $default);
+        }
+
+        if (is_null($key)) {
+            return $model;
+        }
+
+        if (isset($model[$key])) {
+            return $model[$key];
+        }
+
+        foreach (explode('.', $key) as $segment) {
+            try {
+                $model = $model->$segment;
+            } catch (\Exception $e) {
+                return value($default);
+            }
+        }
+
+        return $model;
+    }
 
 }

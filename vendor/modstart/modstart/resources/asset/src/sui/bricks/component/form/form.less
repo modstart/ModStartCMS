@@ -67,11 +67,11 @@
             display: block;
             float: left;
             text-align: right;
-            line-height: 1.5rem;
-            padding: 0 0.5rem 0 0;
+            line-height: 0.7rem;
+            padding: 0.4rem 0.5rem 0.4rem 0;
             margin: 0 0 0 -4.5rem;
             width: 4.5rem;
-            color: #6C7A87;
+            overflow: hidden;
 
             &.label-lg {
                 line-height: 2rem;
@@ -80,7 +80,7 @@
             span {
                 color: red;
                 display: inline-block;
-                line-height: 1.5rem;
+                line-height: 0.7rem;
                 font-size: 0.6rem;
             }
         }
@@ -101,7 +101,7 @@
             }
 
             .help {
-                color: #c4cfdb;
+                color: var(--color-tertiary);
                 line-height: 0.9rem;
                 padding: 0.25rem 0;
                 font-size: 0.6rem;
@@ -160,7 +160,7 @@
     }
 }
 
-@media (max-width: 38.35rem) {
+@media (max-width: 40rem) {
     .ub-form {
         &.wide .line, &.wide-lg .line, .line {
             padding-left: 0.5rem;

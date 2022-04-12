@@ -2,14 +2,15 @@ body {
     min-height: 100%;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     line-height: 1.5;
-    color: #495060;
+    color: var(--color-text);
     -webkit-font-smoothing: antialiased;
-    background: #222D32;
+    //background: #222D32;
 }
 
-html {
-    background: #222D32;
-}
+//
+//html {
+//    background: #222D32;
+//}
 
 .ub-admin-login {
     width: 300px;
@@ -18,14 +19,16 @@ html {
     .head {
         color: #FFF;
         text-align: center;
-        font-size: 20px;
+        font-size: 1.3rem;
         padding: 50px 0 20px 0;
+        font-weight: bold;
     }
 
     .form {
         background: #FFF;
         padding: 20px;
-        border-radius: 3px;
+        border-radius: 0.5rem;
+        box-shadow: #333 0 0 0.25rem;
 
         .line {
             padding: 15px 10px;

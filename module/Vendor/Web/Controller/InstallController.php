@@ -47,6 +47,13 @@ class InstallController extends Controller
         if (file_exists(storage_path('install.lock'))) {
             return Response::jsonError("系统不能重复安装（请删除install.lock文件后重试）");
         }
+        if (file_exists($p = base_path('.env'))) {
+            $content = file_get_contents($p);
+            if (str_contains($content, 'DB_HOST')) {
+                return Response::jsonError('请先清空.env文件');
+            }
+        }
+
         $input = InputPackage::buildFromInput();
         $dbHost = $input->getTrimString('db_host');
         $dbDatabase = $input->getTrimString('db_database');

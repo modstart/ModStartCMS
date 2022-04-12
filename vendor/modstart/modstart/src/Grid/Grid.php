@@ -6,6 +6,7 @@ namespace ModStart\Grid;
 use Closure;
 use Illuminate\Support\Facades\Input;
 use ModStart\Core\Dao\DynamicModel;
+use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
@@ -422,6 +423,9 @@ class Grid
                     $item->{$field->column()} = $value;
                 } else {
                     $field->item($item);
+                    if (str_contains($field->column(), '.')) {
+                        $value = ModelUtil::traverse($item, $field->column());
+                    }
                     if ($field->hookValueUnserialize()) {
                         $value = call_user_func($field->hookValueUnserialize(), $value, $field);
                     }
@@ -429,6 +433,7 @@ class Grid
                     if ($field->hookFormatValue()) {
                         $value = call_user_func($field->hookFormatValue(), $value, $field);
                     }
+                    // echo $field->column() . ' - ' . json_encode($value) . "\n";
                 }
                 $field->setValue($value);
                 // echo $field->column() . ' ' . json_encode($value) . "\n";

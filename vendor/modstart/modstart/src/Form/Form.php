@@ -56,7 +56,7 @@ use stdClass;
  * > edit模式：当前编辑数据
  * > delete模式：当前删除的数据集合
  *
- * @method  Form|Model|stdClass|Collection item($value = null)
+ * @method  stdClass|Form|Model|Collection item($value = null)
  *
  * @method  Form|mixed engine($value = null)
  *
@@ -113,7 +113,7 @@ class Form implements Renderable
     /**
      * @var string
      */
-    private $id;
+    public $id;
     /**
      * @var Repository
      */

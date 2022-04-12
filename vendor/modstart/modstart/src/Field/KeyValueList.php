@@ -4,6 +4,16 @@
 namespace ModStart\Field;
 
 
+/**
+ * Json多组键值对字段
+ * [
+ *   {"k":"键","v":"值"},
+ *   ...
+ * ]
+ *
+ * Class KeyValueList
+ * @package ModStart\Field
+ */
 class KeyValueList extends AbstractField
 {
     protected $value = [];

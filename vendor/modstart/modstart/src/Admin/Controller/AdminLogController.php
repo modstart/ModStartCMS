@@ -26,10 +26,7 @@ class AdminLogController extends Controller
             $grid->display('created_at', L('Created At'))->width(160);
             $grid->type('type', L('Type'))->type(AdminLogType::class)->width(100);
             $grid->display('summary', L('Title'));
-            $grid->code('data', L('Data'))->hookValueUnserialize(function ($value, AbstractField $field) {
-                if (!$value) return '';
-                return @json_encode(json_decode($value->content, true), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            });
+            $grid->jsonKeyValue('data.content', L('Data'));
             $grid->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('summary', L('Title'));
@@ -58,10 +55,7 @@ class AdminLogController extends Controller
             $detail->display('created_at', L('Created At'));
             $detail->type('type', L('Type'))->type(AdminLogType::class);
             $detail->display('summary', L('Title'));
-            $detail->code('data', L('Data'))->hookValueUnserialize(function ($value, AbstractField $field) {
-                if (!$value) return '';
-                return json_encode(json_decode($value->content, true), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            });
+            $detail->jsonKeyValue('data.content', L('Data'));
         });
         $detail->title(L('Admin Log'));
         return $detail;

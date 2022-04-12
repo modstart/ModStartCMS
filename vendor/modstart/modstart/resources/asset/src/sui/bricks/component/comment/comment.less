@@ -1,119 +1,119 @@
 
 .ub-comment-list {
-  .comment-item {
-    padding-left: 2.25rem;
+    .comment-item {
+        padding-left: 2.25rem;
 
-    &:hover {
-      & > .comment-foot {
-        .action {
-          display: block;
+        &:hover {
+            & > .comment-foot {
+                .action {
+                    display: block;
+                }
+            }
         }
-      }
+
+        .comment-head {
+            position: relative;
+
+            .user-avatar {
+                width: 1.8rem;
+                height: 1.8rem;
+                display: block;
+                position: absolute;
+                left: -2.25rem;
+                top: 0.25rem;
+
+                .image {
+                    width: 1.8rem;
+                    height: 1.8rem;
+                    border: 1px solid #FFF;
+                    border-radius: 50%;
+                }
+            }
+
+            .user-name {
+                display: inline-block;
+                color: var(--color-text);
+            }
+
+            .time {
+                display: inline-block;
+                color: #c4cfdb;
+                margin-left: 1rem;
+            }
+        }
+
+        .comment-body {
+            padding-top: 0.75rem;
+
+            .content {
+                color: var(--color-text);
+            }
+        }
+
+        .comment-foot {
+            padding-top: 0.75rem;
+            overflow: hidden;
+            border-bottom: 1px solid #e8e8e8;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+
+            .action {
+                float: right;
+                display: none;
+
+                .item {
+                    margin: 0 0 0 1rem;
+                }
+            }
+
+            .item {
+                color: #c4cfdb;
+                display: inline-block;
+                margin: 0 1rem 0 0;
+            }
+        }
     }
+}
 
-    .comment-head {
-      position: relative;
+.ub-comment-editor-box {
+    padding-left: 2.5rem;
+    position: relative;
+    padding-top: 1rem;
 
-      .user-avatar {
+    .user-avatar {
         width: 1.8rem;
         height: 1.8rem;
         display: block;
         position: absolute;
-        left: -2.25rem;
-        top: 0.25rem;
+        left: 0;
+        top: 1rem;
 
         .image {
-          width: 1.8rem;
-          height: 1.8rem;
-          border: 1px solid #FFF;
-          border-radius: 50%;
+            width: 1.8rem;
+            height: 1.8rem;
+            border: 1px solid #FFF;
+            border-radius: 50%;
         }
-      }
-
-      .user-name {
-        display: inline-block;
-        color: #666;
-      }
-
-      .time {
-        display: inline-block;
-        color: #c4cfdb;
-        margin-left: 1rem;
-      }
     }
 
-    .comment-body {
-      padding-top: 0.75rem;
-
-      .content {
-        color: #444;
-      }
+    .editor {
     }
 
-    .comment-foot {
-      padding-top: 0.75rem;
-      overflow: hidden;
-      border-bottom: 1px solid #e8e8e8;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-
-      .action {
-        float: right;
-        display: none;
-
-        .item {
-          margin: 0 0 0 1rem;
-        }
-      }
-
-      .item {
-        color: #c4cfdb;
-        display: inline-block;
-        margin: 0 1rem 0 0;
-      }
+    .submit {
+        padding-top: 0.5rem;
     }
-  }
-}
-
-.ub-comment-editor-box {
-  padding-left: 2.5rem;
-  position: relative;
-  padding-top: 1rem;
-
-  .user-avatar {
-    width: 1.8rem;
-    height: 1.8rem;
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 1rem;
-
-    .image {
-      width: 1.8rem;
-      height: 1.8rem;
-      border: 1px solid #FFF;
-      border-radius: 50%;
-    }
-  }
-
-  .editor {
-  }
-
-  .submit {
-    padding-top: 0.5rem;
-  }
 }
 
 @media screen and (max-width: 40rem) {
-  .ub-comment-list {
-    .comment-item {
-      padding-left: 2.25rem;
+    .ub-comment-list {
+        .comment-item {
+            padding-left: 2.25rem;
 
-      & > .comment-foot {
-        .action {
-          display: block;
+            & > .comment-foot {
+                .action {
+                    display: block;
+                }
+            }
         }
-      }
     }
-  }
 }

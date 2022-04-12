@@ -1,6 +1,6 @@
 @extends('modstart::admin.dialogFrame')
 
-@section('pageTitle')用户 {{$record['username']}} （ID={{$record['id']}}）的信息@endsection
+@section('pageTitle')用户 {{$record['username']}} [ID={{$record['id']}}] 的资料@endsection
 
 @section('bodyContent')
 

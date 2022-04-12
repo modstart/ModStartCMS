@@ -54,6 +54,11 @@ class ModuleServiceProvider extends ServiceProvider
                             'url' => modstart_web_url('member_address'),
                         ] : null,
                         [
+                            'icon' => 'iconfont icon-comment',
+                            'title' => '我的消息',
+                            'url' => modstart_web_url('member_message'),
+                        ],
+                        [
                             'title' => '账号安全',
                             'url' => modstart_web_url('member_profile/security'),
                         ],
@@ -66,6 +71,7 @@ class ModuleServiceProvider extends ServiceProvider
                             'url' => modstart_web_url('member_profile/bind'),
                         ],
                         [
+                            'sort' => 999999,
                             'title' => '退出登录',
                             'url' => modstart_web_url('logout'),
                         ],

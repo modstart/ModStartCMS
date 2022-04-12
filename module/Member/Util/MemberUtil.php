@@ -488,12 +488,33 @@ class MemberUtil
      */
     public static function findUsers($userIds)
     {
+        if (empty($userIds)) {
+            return [];
+        }
         $userMemberMap = [];
         $memberUsers = ModelUtil::model('member_user')->whereIn('id', $userIds)->get();
         foreach ($memberUsers as &$r) {
             $userMemberMap[$r->id] = $r->toArray();
         }
         return $userMemberMap;
+    }
+
+    /**
+     * 过滤用户ID为真实用户ID
+     * @param $userIds
+     * @return int[]
+     */
+    public static function filterUserIds($userIds)
+    {
+        if (empty($userIds)) {
+            return [];
+        }
+        $map = [];
+        $memberUsers = ModelUtil::model('member_user')->whereIn('id', $userIds)->get(['id']);
+        foreach ($memberUsers as &$r) {
+            $map[$r->id] = true;
+        }
+        return array_keys($map);
     }
 
     public static function mergeMemberUsers(&$records, $memberUserIdKey = 'memberUserId', $memberUserMergeKey = '_memberUser')

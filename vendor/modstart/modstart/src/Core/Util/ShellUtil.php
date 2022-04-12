@@ -82,4 +82,9 @@ class ShellUtil
     {
         return php_sapi_name() == "cli";
     }
+
+    public static function pathQuote($path)
+    {
+        return '"' . str_replace('"', '\\"', $path) . '"';
+    }
 }

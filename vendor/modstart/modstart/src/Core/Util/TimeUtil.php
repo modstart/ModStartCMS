@@ -222,4 +222,26 @@ class TimeUtil
         }
         return true;
     }
+
+    /**
+     * 将周期转换为秒
+     * 25:12:00 转换为
+     * @param $period
+     * @return int
+     */
+    public static function periodToSecond($period)
+    {
+        $seconds = 0;
+        $pcs = explode(':', $period);
+        if (isset($pcs[0])) {
+            $seconds += intval($pcs[0]) * 3600;
+        }
+        if (isset($pcs[1])) {
+            $seconds += intval($pcs[1]) * 60;
+        }
+        if (isset($pcs[2])) {
+            $seconds += intval($pcs[1]);
+        }
+        return $seconds;
+    }
 }

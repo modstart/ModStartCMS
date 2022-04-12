@@ -107,6 +107,7 @@ class MemberController extends Controller
                 }
             })
             ->title('用户')
+            ->canShow(false)
             ->canDelete(false);
     }
 

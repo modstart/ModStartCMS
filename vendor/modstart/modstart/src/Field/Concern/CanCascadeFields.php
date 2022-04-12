@@ -32,7 +32,7 @@ trait CanCascadeFields
     /**
      * @param $operator
      * @param $value
-     * @param $closure \Closure function(Form $form) { }
+     * @param $closure \Closure function($builder) { }
      *
      * @return $this
      */
@@ -161,6 +161,7 @@ trait CanCascadeFields
        cascadeGroups.forEach(function (group) {
            var groupDom = $('#{$this->id()}_group_' + group.index);
            groupDom.addClass('cascade-group-hide');
+           groupDom.find('input,textarea').prop('disabled',true)
        });
        cascadeGroups.forEach(function (group) {
            var groupDom = $('#{$this->id()}_group_' + group.index);
@@ -168,6 +169,7 @@ trait CanCascadeFields
            // console.log(value, group.operator, group.value, pass);
            if (pass) {
                groupDom.removeClass('cascade-group-hide');
+               groupDom.find('input,textarea').prop('disabled',false);
            }
         });
    };

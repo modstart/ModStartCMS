@@ -215,6 +215,18 @@ class InputPackage
         return $values;
     }
 
+    public function getStringSeperatedIntegerArray($key, $defaultValue = [], $separated = ',')
+    {
+        $values = $this->getStringSeparatedArray($key, $defaultValue, $separated);
+        return array_values(array_filter($values, function ($v) {
+            $v = intval($v);
+            if (empty($v)) {
+                return null;
+            }
+            return $v;
+        }));
+    }
+
     public function getStringSeparatedArray($key, $defaultValue = [], $separated = ',')
     {
         $value = $this->getTrimString($key);

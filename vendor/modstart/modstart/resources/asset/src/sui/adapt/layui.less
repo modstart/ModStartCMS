@@ -81,8 +81,8 @@
 }
 
 .layui-form-checked[lay-skin=primary] i {
-    border-color: var(--color-primary, #419488) !important;
-    background-color: var(--color-primary, #419488);
+    border-color: var(--color-primary) !important;
+    background-color: var(--color-primary);
 }
 
 .layui-form-switch {
@@ -94,7 +94,7 @@
 }
 
 .layui-form-radio > i:hover, .layui-form-radioed > i {
-    color: var(--color-primary, #419488);
+    color: var(--color-primary);
 }
 
 .layui-table td, .layui-table th {
@@ -102,6 +102,33 @@
 }
 
 .layui-form-onswitch {
-    background-color: var(--color-primary, #419488);
-    border-color: var(--color-primary, #419488);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
+    background-color: #FFF;
+}
+
+.layui-table {
+    color: var(--color-text);
+}
+
+.layui-table th {
+    font-weight: bold;
+}
+
+.layui-table-header th .layui-table-cell {
+    position: relative;
+}
+
+.layui-table-header th .layui-table-cell:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 1px;
+    bottom: 0;
+    right: 5px;
+    top: 0;
+    background-image: linear-gradient(to bottom, #FFF, #EEE, #FFF);
 }

@@ -54,7 +54,7 @@
 
         .ub-dropdown-list-item {
             display: block;
-            color: #333;
+            color: var(--color-text);
             padding: 0 0.5rem;
             line-height: 1.5rem;
             margin: 0;
@@ -71,9 +71,11 @@
 .ub-breadcrumb {
     min-height: 2rem;
     padding: 0.5rem 0;
+    white-space: nowrap;
+    overflow: auto;
 
     span, .text {
-        color: #c4cfdb;
+        color: var(--color-tertiary);
 
         &.active {
             color: var(--color-primary);
@@ -81,7 +83,7 @@
     }
 
     a, .item {
-        color: #606266;
+        color: var(--color-tertiary);
         display: inline-block;
         padding-right: 0.5rem;
         line-height: 1rem;
@@ -90,7 +92,7 @@
             content: '/';
             display: inline-block;
             margin-left: 0.5rem;
-            color: #c0c4cc;
+            color: var(--color-tertiary-light);
         }
 
         &:last-child {
@@ -174,7 +176,7 @@
 
     a, .item {
         display: inline-block;
-        color: #333;
+        color: var(--color-text);
         border-radius: 0.15rem;
         line-height: 1rem;
         padding: 0.25rem 0.4rem;
@@ -229,9 +231,9 @@
             padding: 0.5rem 0.5rem 0.25rem 0.5rem;
             border-bottom: 1px solid #EEE;
 
-            a,.item {
+            a, .item {
                 display: inline-block;
-                color: #333;
+                color: var(--color-text);
                 line-height: 1rem;
                 padding: 0.25rem 0.4rem;
                 margin: 0 0.15rem 0.25rem 0;
@@ -273,7 +275,7 @@
             .items {
                 position: static;
 
-                a,.item {
+                a, .item {
                     min-width: auto;
                 }
             }
@@ -286,9 +288,9 @@
     border-radius: var(--size-radius) var(--size-radius) 0 0;
     border-bottom: 0.05rem solid #EEE;
 
-    a,.item {
+    a, .item {
         display: inline-block;
-        color: #333;
+        color: var(--color-text);
         line-height: 1.4rem;
         padding: var(--size-margin);
         margin: 0 0.25rem 0 0;

@@ -38,6 +38,13 @@ class HtmlUtil
         return $content;
     }
 
+    public static function recordsReplaceImageSrcToFull(&$records, $key, $useAssets = false, $useUrl = null)
+    {
+        foreach ($records as $k => $v) {
+            $records[$k][$key] = self::replaceImageSrcToFull($v[$key], $useAssets, $useUrl);
+        }
+    }
+
     public static function extractTextAndImages($content)
     {
         $summary = [

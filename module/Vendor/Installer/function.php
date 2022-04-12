@@ -22,7 +22,9 @@ if (file_exists($demoData = APP_PATH . '/public/data_demo/data.php')) {
 }
 
 if (class_exists(\App\Constant\AppConstant::class)) {
-    if (defined('\\App\\Constant\\AppConstant::APP')) {
+    if (defined('\\App\\Constant\\AppConstant::APP_NAME')) {
+        define('INSTALL_APP_NAME', strtoupper(\App\Constant\AppConstant::APP_NAME));
+    } else if (defined('\\App\\Constant\\AppConstant::APP')) {
         define('INSTALL_APP_NAME', strtoupper(\App\Constant\AppConstant::APP));
     }
     if (defined('\\App\\Constant\\AppConstant::VERSION')) {
