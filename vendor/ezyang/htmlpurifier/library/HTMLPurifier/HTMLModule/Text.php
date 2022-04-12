@@ -31,6 +31,7 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
      */
     public function setup($config)
     {
+
         // Inline Phrasal -------------------------------------------------
         $this->addElement('abbr', 'Inline', 'Inline', 'Common');
         $this->addElement('acronym', 'Inline', 'Inline', 'Common');
@@ -81,6 +82,11 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
         );
 
         $this->addElement('div', 'Block', 'Flow', 'Common');
+
+        $this->addElement('section', 'Block', 'Flow', 'Common');
+        $this->addElement('nav', 'Block', 'Flow', 'Common');
+        $this->addElement('article', 'Block', 'Flow', 'Common');
+        $this->addElement('aside', 'Block', 'Flow', 'Common');
     }
 }
 

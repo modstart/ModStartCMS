@@ -25,7 +25,7 @@ class Client extends BaseClient
      *
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      */
-    public function list()
+    public function lists()
     {
         return $this->httpGet('cgi-bin/customservice/getkflist');
     }

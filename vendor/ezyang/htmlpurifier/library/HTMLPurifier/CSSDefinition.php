@@ -27,24 +27,24 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         );
 
         $border_style =
-            $this->info['border-bottom-style'] =
-            $this->info['border-right-style'] =
-            $this->info['border-left-style'] =
-            $this->info['border-top-style'] = new HTMLPurifier_AttrDef_Enum(
-                array(
-                    'none',
-                    'hidden',
-                    'dotted',
-                    'dashed',
-                    'solid',
-                    'double',
-                    'groove',
-                    'ridge',
-                    'inset',
-                    'outset'
-                ),
-                false
-            );
+        $this->info['border-bottom-style'] =
+        $this->info['border-right-style'] =
+        $this->info['border-left-style'] =
+        $this->info['border-top-style'] = new HTMLPurifier_AttrDef_Enum(
+            array(
+                'none',
+                'hidden',
+                'dotted',
+                'dashed',
+                'solid',
+                'double',
+                'groove',
+                'ridge',
+                'inset',
+                'outset'
+            ),
+            false
+        );
 
         $this->info['border-style'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_style);
 
@@ -126,31 +126,31 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         );
 
         $border_color =
-            $this->info['border-top-color'] =
-            $this->info['border-bottom-color'] =
-            $this->info['border-left-color'] =
-            $this->info['border-right-color'] =
-            $this->info['background-color'] = new HTMLPurifier_AttrDef_CSS_Composite(
-                array(
-                    new HTMLPurifier_AttrDef_Enum(array('transparent')),
-                    new HTMLPurifier_AttrDef_CSS_Color()
-                )
-            );
+        $this->info['border-top-color'] =
+        $this->info['border-bottom-color'] =
+        $this->info['border-left-color'] =
+        $this->info['border-right-color'] =
+        $this->info['background-color'] = new HTMLPurifier_AttrDef_CSS_Composite(
+            array(
+                new HTMLPurifier_AttrDef_Enum(array('transparent')),
+                new HTMLPurifier_AttrDef_CSS_Color()
+            )
+        );
 
         $this->info['background'] = new HTMLPurifier_AttrDef_CSS_Background($config);
 
         $this->info['border-color'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_color);
 
         $border_width =
-            $this->info['border-top-width'] =
-            $this->info['border-bottom-width'] =
-            $this->info['border-left-width'] =
-            $this->info['border-right-width'] = new HTMLPurifier_AttrDef_CSS_Composite(
-                array(
-                    new HTMLPurifier_AttrDef_Enum(array('thin', 'medium', 'thick')),
-                    new HTMLPurifier_AttrDef_CSS_Length('0') //disallow negative
-                )
-            );
+        $this->info['border-top-width'] =
+        $this->info['border-bottom-width'] =
+        $this->info['border-left-width'] =
+        $this->info['border-right-width'] = new HTMLPurifier_AttrDef_CSS_Composite(
+            array(
+                new HTMLPurifier_AttrDef_Enum(array('thin', 'medium', 'thick')),
+                new HTMLPurifier_AttrDef_CSS_Length('0') //disallow negative
+            )
+        );
 
         $this->info['border-width'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_width);
 
@@ -198,30 +198,30 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         );
 
         $margin =
-            $this->info['margin-top'] =
-            $this->info['margin-bottom'] =
-            $this->info['margin-left'] =
-            $this->info['margin-right'] = new HTMLPurifier_AttrDef_CSS_Composite(
-                array(
-                    new HTMLPurifier_AttrDef_CSS_Length(),
-                    new HTMLPurifier_AttrDef_CSS_Percentage(),
-                    new HTMLPurifier_AttrDef_Enum(array('auto'))
-                )
-            );
+        $this->info['margin-top'] =
+        $this->info['margin-bottom'] =
+        $this->info['margin-left'] =
+        $this->info['margin-right'] = new HTMLPurifier_AttrDef_CSS_Composite(
+            array(
+                new HTMLPurifier_AttrDef_CSS_Length(),
+                new HTMLPurifier_AttrDef_CSS_Percentage(),
+                new HTMLPurifier_AttrDef_Enum(array('auto'))
+            )
+        );
 
         $this->info['margin'] = new HTMLPurifier_AttrDef_CSS_Multiple($margin);
 
         // non-negative
         $padding =
-            $this->info['padding-top'] =
-            $this->info['padding-bottom'] =
-            $this->info['padding-left'] =
-            $this->info['padding-right'] = new HTMLPurifier_AttrDef_CSS_Composite(
-                array(
-                    new HTMLPurifier_AttrDef_CSS_Length('0'),
-                    new HTMLPurifier_AttrDef_CSS_Percentage(true)
-                )
-            );
+        $this->info['padding-top'] =
+        $this->info['padding-bottom'] =
+        $this->info['padding-left'] =
+        $this->info['padding-right'] = new HTMLPurifier_AttrDef_CSS_Composite(
+            array(
+                new HTMLPurifier_AttrDef_CSS_Length('0'),
+                new HTMLPurifier_AttrDef_CSS_Percentage(true)
+            )
+        );
 
         $this->info['padding'] = new HTMLPurifier_AttrDef_CSS_Multiple($padding);
 
@@ -378,6 +378,13 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
             array('nowrap', 'normal', 'pre', 'pre-wrap', 'pre-line')
         );
 
+        $this->info['box-sizing'] = new HTMLPurifier_AttrDef_Enum(
+            array(
+                'content-box',
+                'border-box',
+            )
+        );
+
         if ($config->get('CSS.Proprietary')) {
             $this->doSetupProprietary($config);
         }
@@ -442,9 +449,9 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         $this->info['border-top-right-radius'] =
         $this->info['border-bottom-right-radius'] =
         $this->info['border-bottom-left-radius'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_radius, 2);
+
         // TODO: support SLASH syntax
         $this->info['border-radius'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_radius, 4);
-
     }
 
     /**
@@ -474,6 +481,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                 'none'
             )
         );
+
         $this->info['visibility'] = new HTMLPurifier_AttrDef_Enum(
             array('visible', 'hidden', 'collapse')
         );
