@@ -123,7 +123,7 @@ class MCms
     }
 
     /**
-     * @param array $record 基础内容
+     * @param $record array 基础内容
      * @return array
      *
      * @Util 获取记录副表数据
@@ -138,9 +138,9 @@ class MCms
     }
 
     /**
-     * @param array $record 基础内容
-     * @param string $fieldName 字段名
-     * @param mixed $default 默认值
+     * @param $record  array 基础内容
+     * @param $fieldName string 字段名
+     * @param $default mixed 默认值
      * @return mixed
      *
      * @Util 获取记录副表数据
