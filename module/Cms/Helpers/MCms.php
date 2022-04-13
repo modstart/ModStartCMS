@@ -3,7 +3,6 @@
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsMemberPermitUtil;
-use Module\Member\Auth\MemberUser;
 
 /**
  * Class MCms
@@ -124,6 +123,44 @@ class MCms
     }
 
     /**
+     * @param array $record 基础内容
+     * @return array
+     *
+     * @Util 获取记录副表数据
+     */
+    public static function getContentData($record)
+    {
+        if (empty($record)) {
+            return null;
+        }
+        $cat = self::getCat($record['catId']);
+        return CmsContentUtil::getData($cat, $record['id']);
+    }
+
+    /**
+     * @param array $record 基础内容
+     * @param string $fieldName 字段名
+     * @param mixed $default 默认值
+     * @return mixed
+     *
+     * @Util 获取记录副表数据
+     */
+    public static function getContentDataField($record, $fieldName, $default = null)
+    {
+        static $pool = [];
+        if (empty($record)) {
+            return null;
+        }
+        if (isset($pool[$record['id']])) {
+            $data = $pool[$record['id']];
+        } else {
+            $data = self::getContentData($record);
+            $pool[$record['id']] = $data;
+        }
+        return isset($data[$fieldName]) ? $data[$fieldName] : $default;
+    }
+
+    /**
      * @param $catId int 栏目ID
      * @param $recordId int 记录ID
      * @return array|null
@@ -146,6 +183,7 @@ class MCms
     {
         return CmsContentUtil::prevOne($catId, $recordId);
     }
+
 
     /**
      * @param $cat array 栏目

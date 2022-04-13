@@ -106,6 +106,16 @@ class CmsContentUtil
         ];
     }
 
+    public static function getData($cat, $id)
+    {
+        if (empty($cat) || empty($id)) {
+            return null;
+        }
+        $model = CmsModelUtil::get($cat['modelId']);
+        $table = "cms_m_$model[name]";
+        return ModelUtil::get($table, $id);
+    }
+
     public static function increaseView($id)
     {
         ModelUtil::increase('cms_content', $id, 'viewCount');
