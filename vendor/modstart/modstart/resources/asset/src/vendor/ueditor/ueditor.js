@@ -29707,7 +29707,7 @@
                 this.getDom('toolbarmsg').style.display = 'none';
             },
             mapUrl: function (url) {
-                return url ? url.replace('~/', this.editor.options.UEDITOR_HOME_URL || '') : ''
+                return url ? url.replace('~/', window.__msRoot + 'asset/vendor/ueditor/') : ''
             },
             triggerLayout: function () {
                 var dom = this.getDom();
@@ -29728,7 +29728,7 @@
             var editor = new UE.Editor(options);
             editor.options.editor = editor;
             utils.loadFile(document, {
-                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20211222",
+                href: editor.options.themePath + editor.options.theme + "/css/ueditor.css?20220427",
                 tag: "link",
                 type: "text/css",
                 rel: "stylesheet"
