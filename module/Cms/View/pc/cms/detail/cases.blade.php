@@ -28,21 +28,28 @@
                 <a href="javascript:;" class="active">{{$record['title']}}</a>
             </div>
         </div>
-        <div class="ub-container tw-bg-white tw-rounded tw-py-10">
-            <div class="ub-article">
-                <h1 class="ub-text-center">{{$record['title']}}</h1>
-                <div class="tw-p-10">
-                    <div>
-                        <img style="max-width:100%;" src="{{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}}" />
+        @if(!\MCms::canVisitCat($cat))
+            <div class="ub-alert ub-alert-danger">
+                <i class="iconfont icon-warning"></i>
+                您没有权限访问该栏目内容
+            </div>
+        @else
+            <div class="ub-container tw-bg-white tw-rounded tw-py-10">
+                <div class="ub-article">
+                    <h1 class="ub-text-center">{{$record['title']}}</h1>
+                    <div class="tw-p-10">
+                        <div>
+                            <img style="max-width:100%;" src="{{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}}" />
+                        </div>
                     </div>
-                </div>
-                <div class="content">
-                    <div class="ub-html" style="padding:1rem;font-size:0.8rem;">
-                        {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                    <div class="content">
+                        <div class="ub-html" style="padding:1rem;font-size:0.8rem;">
+                            {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
 @endsection

@@ -11,6 +11,7 @@ use ModStart\Module\ModuleBaseController;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
+use Module\Cms\Util\CmsMemberPermitUtil;
 use Module\Member\Auth\MemberUser;
 
 /**
@@ -49,7 +50,11 @@ class DetailController extends ModuleBaseController
         $catRootChildren = CmsCatUtil::children($catRoot['id']);
         $viewData = [];
         $viewData['view'] = $view;
-        $viewData['record'] = $data['record'];
+        if (CmsMemberPermitUtil::canVisitCat($cat)) {
+            $viewData['record'] = $data['record'];
+        } else {
+            $viewData['record'] = null;
+        }
         $viewData['cat'] = $cat;
         $viewData['catRoot'] = $catRoot;
         $viewData['catChain'] = $catChain;

@@ -35,30 +35,36 @@
         <div class="row">
             <div class="col-md-9">
 
-                <div class="ub-panel" style="padding:1rem;">
-                    <div class="ub-article">
-                        <h1>{{$record['title']}}</h1>
-                        <div class="attr">
-                            <i class="iconfont icon-eye"></i>
-                            {{$record['viewCount']?$record['viewCount']:'-'}}
-                            &nbsp;&nbsp;
-                            <i class="iconfont icon-time"></i>
-                            {{($record['postTime'])}}
-                            &nbsp;&nbsp;
-                            @foreach($record['_tags'] as $tag)
-                                <i class="iconfont icon-tag"></i>
-                                <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
-                                   href="{{modstart_web_url('tag/'.urlencode($tag))}}">
-                                    {{$tag}}
-                                </a>
-                            @endforeach
-                        </div>
-                        <div class="content ub-html" style="font-size:0.8rem;">
-                            {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                @if(!\MCms::canVisitCat($cat))
+                    <div class="ub-alert ub-alert-danger">
+                        <i class="iconfont icon-warning"></i>
+                        您没有权限访问该栏目内容
+                    </div>
+                @else
+                    <div class="ub-panel" style="padding:1rem;">
+                        <div class="ub-article">
+                            <h1>{{$record['title']}}</h1>
+                            <div class="attr">
+                                <i class="iconfont icon-eye"></i>
+                                {{$record['viewCount']?$record['viewCount']:'-'}}
+                                &nbsp;&nbsp;
+                                <i class="iconfont icon-time"></i>
+                                {{($record['postTime'])}}
+                                &nbsp;&nbsp;
+                                @foreach($record['_tags'] as $tag)
+                                    <i class="iconfont icon-tag"></i>
+                                    <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
+                                       href="{{modstart_web_url('tag/'.urlencode($tag))}}">
+                                        {{$tag}}
+                                    </a>
+                                @endforeach
+                            </div>
+                            <div class="content ub-html" style="font-size:0.8rem;">
+                                {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                            </div>
                         </div>
                     </div>
-                </div>
-
+                @endif
             </div>
             <div class="col-md-3">
 

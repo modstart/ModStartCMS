@@ -2,6 +2,7 @@
 
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
+use Module\Cms\Util\CmsMemberPermitUtil;
 use Module\Member\Auth\MemberUser;
 
 /**
@@ -152,19 +153,9 @@ class MCms
      *
      * @Util 判断是否可以访问栏目内容
      */
-    public static function canAccessCatContent($cat)
+    public static function canVisitCat($cat)
     {
-        if ($cat['visitMemberGroupEnable']) {
-            if (!MemberUser::isGroup($cat['visitMemberGroups'])) {
-                return false;
-            }
-        }
-        if ($cat['visitMemberVipEnable']) {
-            if (!MemberUser::isVip($cat['visitMemberVips'])) {
-                return false;
-            }
-        }
-        return true;
+        return CmsMemberPermitUtil::canVisitCat($cat);
     }
 
     /**
@@ -175,20 +166,7 @@ class MCms
      */
     public static function canPostCat($cat)
     {
-        if (!$cat['memberUserPostEnable']) {
-            return false;
-        }
-        if ($cat['postMemberGroupEnable']) {
-            if (!MemberUser::isGroup($cat['postMemberGroups'])) {
-                return false;
-            }
-        }
-        if ($cat['postMemberVipEnable']) {
-            if (!MemberUser::isVip($cat['postMemberVips'])) {
-                return false;
-            }
-        }
-        return true;
+        return CmsMemberPermitUtil::canPostCat($cat);
     }
 
 
