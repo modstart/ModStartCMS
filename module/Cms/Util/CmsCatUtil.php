@@ -35,7 +35,9 @@ class CmsCatUtil
     public static function all()
     {
         return Cache::rememberForever('CmsCatAll', function () {
-            $records = ModelUtil::all('cms_cat');
+            $records = ModelUtil::all('cms_cat', [
+                'enable' => true,
+            ]);
             ModelUtil::decodeRecordsNumberArray($records, [
                 'visitMemberGroups', 'visitMemberVips',
                 'postMemberGroups', 'postMemberVips',

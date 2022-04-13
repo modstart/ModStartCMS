@@ -75,15 +75,9 @@ class CmsModelUtil
 
     public static function build($model, $fields = [])
     {
-        if (!isset($model['enable'])) {
-            $model['enable'] = true;
-        }
         $model = ModelUtil::insert('cms_model', $model);
         self::create($model);
         foreach ($fields as $field) {
-            if (!isset($field['enable'])) {
-                $field['enable'] = true;
-            }
             $field['modelId'] = $model['id'];
             if (!isset($field['sort'])) {
                 $field['sort'] = ModelUtil::sortNext('cms_model_field', [

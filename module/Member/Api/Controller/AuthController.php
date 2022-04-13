@@ -122,6 +122,7 @@ use Module\Vendor\Support\ResponseCodes;
 /**
  * Class AuthController
  * @package Module\Member\Api\Controller
+ * @Api 用户授权
  */
 class AuthController extends ModuleBaseController
 {
@@ -485,12 +486,26 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @return array
+     *
+     * @Api 登录-退出登录
+     */
     public function logout()
     {
         Session::forget('memberUserId');
         return Response::generateSuccess();
     }
 
+    /**
+     * @return array
+     * @throws BizException
+     *
+     * @Api 登录-用户登录
+     * @ApiBodyParam username string required 用户名
+     * @ApiBodyParam password string required 密码
+     * @ApiBodyParam captcha string 验证码（如果验证码开启需要传递）
+     */
     public function login()
     {
         $input = InputPackage::buildFromInput();
@@ -549,6 +564,14 @@ class AuthController extends ModuleBaseController
         return CaptchaFacade::create('default');
     }
 
+    /**
+     * @return array
+     *
+     * @Api 登录-图片验证码
+     * @ApiResponseData {
+     *   "image":"图片Base64"
+     * }
+     */
     public function loginCaptcha()
     {
         $captcha = $this->loginCaptchaRaw();
@@ -557,6 +580,20 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @return array
+     *
+     * @Api 注册-用户注册
+     * @ApiBodyParam username string 用户名
+     * @ApiBodyParam password string 密码
+     * @ApiBodyParam passwordRepeat string 重复密码
+     * @ApiBodyParam phone string 手机号（如果开启手机注册需要传递）
+     * @ApiBodyParam phoneVerify string 手机验证码（如果开启手机注册需要传递）
+     * @ApiBodyParam email string 邮箱（如果开启邮箱注册需要传递）
+     * @ApiBodyParam emailVerify string 邮箱验证码（如果开启邮箱注册需要传递）
+     * @ApiBodyParam captcha string 验证码
+     * @ApiBodyParam agreement boolean 是否同意协议
+     */
     public function register()
     {
         if (modstart_config('registerDisable', false)) {
@@ -670,6 +707,11 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @return array
+     * @Api 注册-获取注册邮箱验证码
+     * @ApiBodyParam target string 邮箱地址
+     */
     public function registerEmailVerify()
     {
         if (modstart_config('registerDisable', false)) {
@@ -713,6 +755,12 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, '验证码发送成功');
     }
 
+
+    /**
+     * @return array
+     * @Api 注册-获取注册手机验证码
+     * @ApiBodyParam target string 手机号
+     */
     public function registerPhoneVerify()
     {
         if (modstart_config('registerDisable', false)) {
@@ -756,6 +804,12 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, '验证码发送成功');
     }
 
+    /**
+     * @return array
+     *
+     * @Api 注册-图片验证码验证
+     * @ApiBodyParam captcha string 图片验证码
+     */
     public function registerCaptchaVerify()
     {
         $input = InputPackage::buildFromInput();
@@ -782,6 +836,14 @@ class AuthController extends ModuleBaseController
         return CaptchaFacade::create('default');
     }
 
+    /**
+     * @return array
+     *
+     * @Api 注册-获取注册验证码图片
+     * @ApiResponseData {
+     *   "image":"图片Base64"
+     * }
+     */
     public function registerCaptcha()
     {
         Session::forget('registerCaptchaPass');
@@ -791,6 +853,13 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @return array
+     *
+     * @Api 找回密码-根据手机号找回
+     * @ApiBodyParam phone string 手机号
+     * @ApiBodyParam verify string 手机验证码
+     */
     public function retrievePhone()
     {
         if (modstart_config('retrieveDisable', false)) {
@@ -828,6 +897,13 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, null);
     }
 
+    /**
+     * @return array
+     *
+     * @Api 找回密码-发送手机验证码
+     * @ApiBodyParam target string 手机号
+     * @ApiBodyParam captcha string 图片验证码
+     */
     public function retrievePhoneVerify()
     {
         if (modstart_config('retrieveDisable', false)) {
@@ -866,6 +942,13 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, '验证码发送成功');
     }
 
+    /**
+     * @return array
+     *
+     * @Api 找回密码-根据邮箱找回
+     * @ApiBodyParam email string 邮箱
+     * @ApiBodyParam verify string 邮箱验证码
+     */
     public function retrieveEmail()
     {
         if (modstart_config('retrieveDisable', false)) {
@@ -911,6 +994,13 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, null);
     }
 
+    /**
+     * @return array
+     *
+     * @Api 找回密码-发送邮箱验证码
+     * @ApiBodyParam target string 邮箱地址
+     * @ApiBodyParam captcha string 图片验证码
+     */
     public function retrieveEmailVerify()
     {
         if (modstart_config('retrieveDisable', false)) {
@@ -950,6 +1040,16 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, '验证码发送成功');
     }
 
+    /**
+     * @return array
+     *
+     * @Api 找回密码-获取已验证账户信息
+     * @ApiResponseData {
+     *   "memberUser":{
+     *     "username": "用户名"
+     *   }
+     * }
+     */
     public function retrieveResetInfo()
     {
         $retrieveMemberUserId = Session::get('retrieveMemberUserId');
@@ -971,6 +1071,13 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @return array
+     *
+     * @Api 找回密码-重置密码
+     * @ApiBodyParam password string 新密码
+     * @ApiBodyParam passwordRepeat string 重复新密码
+     */
     public function retrieveReset()
     {
         if (modstart_config('retrieveDisable', false)) {
@@ -1008,6 +1115,14 @@ class AuthController extends ModuleBaseController
         return CaptchaFacade::create('default');
     }
 
+    /**
+     * @return array
+     *
+     * @Api 找回密码-图片验证码
+     * @ApiResponseData {
+     *   "image":"验证码图片Base64"
+     * }
+     */
     public function retrieveCaptcha()
     {
         $captcha = $this->retrieveCaptchaRaw();
