@@ -27430,8 +27430,18 @@
 //                uiUtils.removeStyle(popBodyEl, 'height');
 //            }
                 var size = this.mesureSize();
-                popBodyEl.style.width = size.width + 'px';
-                popBodyEl.style.height = size.height + 'px';
+                var width = Math.min(size.width,$(window).width());
+                var height = size.height;
+                if(width<size.width){
+                    height = size.height * width / size.width;
+                }
+                popBodyEl.style.width = width + 'px';
+                popBodyEl.style.height = height + 'px';
+                var scale = (width / size.width);
+                $(popBodyEl).find('iframe').css({
+                    transformOrigin: '0 0',
+                    transform: 'scale('+scale+')',
+                })
                 return size;
             },
             safeSetOffset: function (offset) {
@@ -28181,7 +28191,7 @@
 
         var iframeUrlMap = {
             'anchor': '~/dialogs/anchor/anchor.html',
-            'insertimage': '~/dialogs/image/image.html',
+            'insertimage': '~/dialogs/image/image.html?20220413',
             'link': '~/dialogs/link/link.html',
             'spechars': '~/dialogs/spechars/spechars.html',
             'searchreplace': '~/dialogs/searchreplace/searchreplace.html',

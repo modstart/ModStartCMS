@@ -110,7 +110,8 @@ var Editor = {
             'paragraph',
             //'fontfamily',
             'fontsize', 'forecolor', //'backcolor', //'|',
-            //'simpleupload', 'insertimage',
+            //'simpleupload',
+            'insertimage',
             'uploadimage',
             'insertvideo',
             //'attachment', 'map',
@@ -122,7 +123,7 @@ var Editor = {
             'indent', 'justifyleft', 'justifycenter', 'justifyright', //'justifyjustify', '|',
             'link', 'unlink',
             'insertcode',
-            //'imagenone', 'imageleft', 'imageright', 'imagecenter', //'|',
+            // 'imagenone', 'imageleft', 'imageright', 'imagecenter', //'|',
             //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
             //'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',
             // 'formula', 'wechatcustomemotion'
@@ -169,6 +170,7 @@ var Editor = {
         var editorSimpleToolBars = [
             'fontsize', 'forecolor',
             //'backcolor', '|',
+            'insertimage',
             'uploadimage', 'bold', 'italic', 'underline',
             //'fontborder',
             'strikethrough',
