@@ -17,7 +17,7 @@ class LayoutGrid extends AbstractField
      */
     public function __construct($closure)
     {
-        parent::__construct(IdUtil::generate('GridLayout'));
+        parent::__construct(IdUtil::generate('LayoutGrid'));
         $this->layoutClosure = $closure;
     }
 

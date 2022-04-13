@@ -38,6 +38,7 @@ class ModelController extends Controller
         $record = [
             'title' => '',
             'name' => '',
+            'enable' => true,
             'fieldType' => 'text',
             'fieldData' => new \stdClass(),
             'isRequired' => true,
@@ -50,7 +51,7 @@ class ModelController extends Controller
             $record = ModelUtil::get('cms_model_field', $id);
             BizException::throwsIfEmpty('记录不存在', $record);
             ModelUtil::decodeRecordJson($record, ['fieldData']);
-            ModelUtil::decodeRecordBoolean($record, ['isRequired', 'isSearch', 'isList']);
+            ModelUtil::decodeRecordBoolean($record, ['enable', 'isRequired', 'isSearch', 'isList']);
         }
         if (Request::isPost()) {
             AdminPermission::demoCheck();
@@ -58,6 +59,7 @@ class ModelController extends Controller
             $data = [];
             $data['title'] = $input->getTrimString('title');
             $data['name'] = $input->getTrimString('name');
+            $data['enable'] = $input->getBoolean('enable');
             $data['fieldType'] = $input->getType('fieldType', CmsModelFieldType::class);
             $data['fieldData'] = $input->getArray('fieldData');
             $data['isRequired'] = $input->getBoolean('isRequired');
@@ -148,6 +150,7 @@ class ModelController extends Controller
         });
         $grid->text('title', '名称');
         $grid->text('name', '标识');
+        $grid->switch('enable', '启用')->optionsYesNo()->required();
         $grid->title('字段')->dialogSizeSmall();
         $grid->defaultOrder(['sort', 'asc']);
         $grid->canAdd(true)->urlAdd(action('\\' . __CLASS__ . '@fieldEdit', ['modelId' => $modelId]));
@@ -164,6 +167,7 @@ class ModelController extends Controller
         $grid = Grid::make('cms_model');
         $grid->text('title', '名称');
         $grid->text('name', '标识');
+        $grid->switch('enable', '启用')->optionsYesNo()->listable(true);
         $grid->type('mode', '类型')->type(CmsMode::class);
         $grid->display('_mode', '模式')->hookRendering(function (AbstractField $field, $item, $index) {
             return AutoRenderedFieldValue::makeView('module::Cms.View.admin.model.field.mode', [
@@ -207,6 +211,7 @@ class ModelController extends Controller
         if ($record) {
             $nameField->readonly(true);
         }
+        $form->switch('enable', '启用')->optionsYesNo()->required();
         $form->radio('mode', '显示模式')->optionType(CmsMode::class)
             ->when('=', CmsMode::LIST_DETAIL, function (Form $form) {
                 $form->select('listTemplate', '默认列表模板')->options(CmsTemplateUtil::allListTemplateMap());
@@ -228,7 +233,7 @@ class ModelController extends Controller
                 ModelUtil::transactionBegin();
                 if ($record) {
                     ModelUtil::update('cms_model', $record['id'], ArrayUtil::keepKeys($data, [
-                        'title', 'form', 'listTemplate', 'detailTemplate', 'pageTemplate',
+                        'title', 'enable', 'form', 'listTemplate', 'detailTemplate', 'pageTemplate',
                     ]));
                 } else {
                     $data = ModelUtil::insert('cms_model', $data);

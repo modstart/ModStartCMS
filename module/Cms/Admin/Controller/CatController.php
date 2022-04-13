@@ -59,6 +59,7 @@ class CatController extends Controller
                     $builder->select('formTemplate', '表单模板')->options(CmsTemplateUtil::allFormTemplateMap())->required()->listable(false);
                 });
                 $builder->text('subTitle', '子标题')->required()->listable(false);
+                $builder->switch('enable', '启用')->optionsYesNo()->required()->listable(true)->gridEditable(true);
                 $builder->image('bannerBg', 'Banner背景')->listable(false);
                 $builder->image('icon', '图标')->listable(false);
                 $builder->image('cover', '封面')->listable(false);

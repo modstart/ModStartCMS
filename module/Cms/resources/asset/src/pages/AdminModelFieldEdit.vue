@@ -25,15 +25,24 @@
             <div class="line">
                 <div class="label">
                     <span>*</span>
+                    启用
+                </div>
+                <div class="field">
+                    <el-switch v-model="data.enable"></el-switch>
+                </div>
+            </div>
+            <div class="line">
+                <div class="label">
+                    <span>*</span>
                     类型
                 </div>
                 <div class="field">
                     <el-select v-model="data.fieldType">
                         <el-option
-                                v-for="k in Object.keys(ModelFieldType)"
-                                :key="k"
-                                :label="ModelFieldType[k].name"
-                                :value="ModelFieldType[k].value">
+                            v-for="k in Object.keys(ModelFieldType)"
+                            :key="k"
+                            :label="ModelFieldType[k].name"
+                            :value="ModelFieldType[k].value">
                         </el-option>
                     </el-select>
                 </div>
@@ -123,65 +132,79 @@
 </template>
 
 <script>
-    const pinyin = require('pinyin')
-    const ModelFieldType = window.__data.ModelFieldType
-    export default {
-        name: "AdminModelFieldEdit",
-        data() {
-            return {
-                ModelFieldType,
-                data: Object.assign({
-                    "title": "",
-                    "name": "",
-                    "fieldType": "text",
-                    "fieldData": {},
-                    "maxLength": 100,
-                    "isRequired": true,
-                    "isSearch": true,
-                    "isList": true,
-                    "placeholder": ""
-                }, window.__data.record),
-                nameReadOnly: false
-            }
-        },
-        watch: {
-            data: {
-                handler(n, o) {
-                    switch (this.data.fieldType) {
-                        case ModelFieldType.RADIO.value:
-                        case ModelFieldType.SELECT.value:
-                        case ModelFieldType.CHECKBOX.value:
-                            if (!('options' in this.data.fieldData)) {
-                                this.$set(this.data, 'fieldData', {options: []})
-                            }
-                            break
-                    }
-                },
-                immediate: true,
-                deep: true
-            }
-        },
-        mounted() {
-            $(() => {
-                $('.ub-panel-dialog').removeClass('no-foot')
-                    .find('.panel-dialog-foot').show()
-                    .find('[data-submit]').show().on('click', () => this.doSubmit())
-            })
-        },
-        methods: {
-            capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
+const pinyin = require('pinyin')
+const ModelFieldType = window.__data.ModelFieldType
+export default {
+    name: "AdminModelFieldEdit",
+    data() {
+        return {
+            ModelFieldType,
+            data: Object.assign({
+                title: "",
+                name: "",
+                enable: true,
+                fieldType: "text",
+                fieldData: {},
+                maxLength: 100,
+                isRequired: true,
+                isSearch: true,
+                isList: true,
+                placeholder: ""
+            }, window.__data.record),
+            nameReadOnly: false
+        }
+    },
+    watch: {
+        data: {
+            handler(n, o) {
+                switch (this.data.fieldType) {
+                    case ModelFieldType.RADIO.value:
+                    case ModelFieldType.SELECT.value:
+                    case ModelFieldType.CHECKBOX.value:
+                        if (!('options' in this.data.fieldData)) {
+                            this.$set(this.data, 'fieldData', {options: []})
+                        }
+                        break
+                }
             },
-            doGenerateName() {
-                if (this.nameReadOnly) {
-                    return
+            immediate: true,
+            deep: true
+        }
+    },
+    mounted() {
+        $(() => {
+            $('.ub-panel-dialog').removeClass('no-foot')
+                .find('.panel-dialog-foot').show()
+                .find('[data-submit]').show().on('click', () => this.doSubmit())
+        })
+    },
+    methods: {
+        capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+        doGenerateName() {
+            if (this.nameReadOnly) {
+                return
+            }
+            if (!this.data.title) {
+                return
+            }
+            let value, s, i
+            value = pinyin(this.data.title, {
+                style: pinyin.STYLE_NORMAL,
+            })
+            s = []
+            for (i = 0; i < value.length; i++) {
+                if (s.length) {
+                    s.push(this.capitalizeFirstLetter(value[i].join('')))
+                } else {
+                    s.push(value[i].join(''))
                 }
-                if (!this.data.title) {
-                    return
-                }
-                let value, s, i
+            }
+            s = s.join('')
+            if (s.length > 50) {
                 value = pinyin(this.data.title, {
-                    style: pinyin.STYLE_NORMAL,
+                    style: pinyin.STYLE_INITIALS,
                 })
                 s = []
                 for (i = 0; i < value.length; i++) {
@@ -192,33 +215,20 @@
                     }
                 }
                 s = s.join('')
-                if (s.length > 50) {
-                    value = pinyin(this.data.title, {
-                        style: pinyin.STYLE_INITIALS,
-                    })
-                    s = []
-                    for (i = 0; i < value.length; i++) {
-                        if (s.length) {
-                            s.push(this.capitalizeFirstLetter(value[i].join('')))
-                        } else {
-                            s.push(value[i].join(''))
-                        }
-                    }
-                    s = s.join('')
-                }
-                this.data.name = s
-            },
-            doSubmit() {
-                this.$dialog.loadingOn()
-                this.$api.post(window.location.href, {data: JSON.stringify(this.data)}, res => {
-                    this.$dialog.loadingOff()
-                    parent.__grids.get(0).lister.refresh()
-                    parent.layer.closeAll()
-                }, res => {
-                    this.$dialog.loadingOff()
-                })
             }
+            this.data.name = s
+        },
+        doSubmit() {
+            this.$dialog.loadingOn()
+            this.$api.post(window.location.href, {data: JSON.stringify(this.data)}, res => {
+                this.$dialog.loadingOff()
+                parent.__grids.get(0).lister.refresh()
+                parent.layer.closeAll()
+            }, res => {
+                this.$dialog.loadingOff()
+            })
         }
     }
+}
 </script>
 

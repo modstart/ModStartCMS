@@ -10,7 +10,6 @@ use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use Module\Cms\Type\CmsMode;
-use Module\Cms\Type\CmsModelContentStatus;
 use Module\Cms\Type\CmsModelFieldType;
 
 class CmsModelUtil
@@ -56,8 +55,8 @@ class CmsModelUtil
     {
         return Cache::rememberForever('CmsModelAll', function () {
             try {
-                $models = ModelUtil::all('cms_model');
-                $fields = ModelUtil::all('cms_model_field');
+                $models = ModelUtil::all('cms_model', ['enable' => true]);
+                $fields = ModelUtil::all('cms_model_field', ['enable' => true]);
                 ModelUtil::decodeRecordsJson($fields, ['fieldData']);
                 foreach ($models as $k => $model) {
                     $models[$k]['_customFields'] = [];
@@ -76,9 +75,15 @@ class CmsModelUtil
 
     public static function build($model, $fields = [])
     {
+        if (!isset($model['enable'])) {
+            $model['enable'] = true;
+        }
         $model = ModelUtil::insert('cms_model', $model);
         self::create($model);
         foreach ($fields as $field) {
+            if (!isset($field['enable'])) {
+                $field['enable'] = true;
+            }
             $field['modelId'] = $model['id'];
             if (!isset($field['sort'])) {
                 $field['sort'] = ModelUtil::sortNext('cms_model_field', [

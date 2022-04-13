@@ -38,7 +38,9 @@ class ModuleServiceProvider extends ServiceProvider
         AdminWidgetLink::register(function () {
             $menu = [];
             $menu[] = ['首页', modstart_web_url('cms')];
-            $tree = TreeUtil::modelToTree('cms_cat', ['title' => 'title', 'url' => 'url']);
+            $tree = TreeUtil::modelToTree('cms_cat', ['title' => 'title', 'url' => 'url'], 'id', 'pid', 'sort', [
+                'enable' => true,
+            ]);
             $categories = TreeUtil::treeToListWithIndent($tree, 'id', 'title', 0, ['url']);
             $menu = array_merge($menu, array_map(function ($record) {
                 return [
