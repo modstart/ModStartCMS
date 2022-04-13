@@ -27430,18 +27430,33 @@
 //                uiUtils.removeStyle(popBodyEl, 'height');
 //            }
                 var size = this.mesureSize();
-                var width = Math.min(size.width,$(window).width());
+                var maxWidth = $(window).width() - 4;
+                var maxHeight = $(window).height() - 90 - 27 - 20;
+                var width = Math.min(size.width,maxWidth);
                 var height = size.height;
                 if(width<size.width){
                     height = size.height * width / size.width;
                 }
-                popBodyEl.style.width = width + 'px';
-                popBodyEl.style.height = height + 'px';
+                if(height>maxHeight){
+                    width = width * maxHeight / height;
+                    height = maxHeight;
+                }
+                // popBodyEl.style.width = width + 'px';
+                // popBodyEl.style.height = height + 'px';
                 var scale = (width / size.width);
+                console.log('size', {width,height,width});
+                $(popBodyEl).find('.edui-dialog-content').css({
+                    width:width+'px',
+                    height:height+'px',
+                })
                 $(popBodyEl).find('iframe').css({
                     transformOrigin: '0 0',
                     transform: 'scale('+scale+')',
+                    width: size.width+'px',
+                    height: size.height+'px',
                 })
+                size.width = width
+                size.height = height
                 return size;
             },
             safeSetOffset: function (offset) {

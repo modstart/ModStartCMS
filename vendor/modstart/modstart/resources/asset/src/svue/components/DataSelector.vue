@@ -13,6 +13,9 @@
                 <div class="pb-data-upload-button" v-if="permission['Upload']">
                     <UploadButton :url="url" :category="category" @success="onUploadButtonSuccess"/>
                 </div>
+                <el-button v-if="smallWindow" @click="menuShow=!menuShow">
+                    <i class="iconfont icon-list"></i>
+                </el-button>
                 <el-button :type="tab==='list'?'primary':''" @click="tab='list'">
                     <i class="iconfont icon-category"></i> {{L('File Gallery')}}
                 </el-button>
@@ -23,7 +26,8 @@
                     <el-checkbox v-model="reverseSelectOrder">{{L('Reverse Select Order')}}</el-checkbox>
                 </span>
             </div>
-            <div class="pb-data-selector-gallery" v-show="tab==='list'">
+            <div class="pb-data-selector-gallery" :class="{'small-window':smallWindow,'menu-show':menuShow}"
+                 v-show="tab==='list'">
                 <div class="pb-data-selector-category" v-loading="categoryLoading">
                     <div class="action">
                         <a v-if="permission['Add/Edit']"
@@ -56,6 +60,7 @@
                                  :filter-node-method="categoryFilterCallback"
                                  @node-click="doCategorySelect"></el-tree>
                     </div>
+                    <div class="mask" @click="menuShow=false"></div>
                 </div>
                 <div class="pb-data-selector-list" v-loading="categoryLoading">
                     <div class="action">
@@ -83,7 +88,7 @@
                             {{L('No Records')}}
                         </div>
                         <el-row :gutter="10">
-                            <el-col :sm="6" :xs="24" v-for="(listItem,listIndex) in records" :key="listIndex">
+                            <el-col :sm="6" :xs="6" v-for="(listItem,listIndex) in records" :key="listIndex">
                                 <div class="item" :class="{active:listItem.checked}">
                                     <div @click="doClickItem(listIndex)">
                                         <ImageCover v-if="isImage(listItem.fullPath)"
@@ -232,6 +237,8 @@ export default {
             tab: 'list',
             currentCategoryId: 0,
             fileVisible: false,
+            smallWindow: $(window).width() < 600,
+            menuShow: false,
             fileEdit: {
                 categoryId: 0,
             },
@@ -427,6 +434,7 @@ export default {
             })
         },
         doCategorySelect(data) {
+            this.menuShow = false
             this.currentCategoryId = data.id
             this.doList(1)
         },
@@ -515,6 +523,36 @@ export default {
 .pb-data-selector-gallery {
     padding: 10px 10px 10px 210px;
     background: #FFF;
+
+    &.small-window {
+        padding-left: 10px;
+
+        .pb-data-selector-category {
+            left: -200px;
+
+            .mask {
+                content: '';
+                display: none;
+                position: fixed;
+                background: rgba(0, 0, 0, 0.5);
+                right: 0;
+                top: 45px;
+                bottom: 0;
+                z-index: 10000;
+                left: 200px;
+            }
+        }
+
+        &.menu-show {
+            .pb-data-selector-category {
+                left: 0px;
+
+                .mask {
+                    display: block;
+                }
+            }
+        }
+    }
 }
 
 .pb-data-selector-category {
@@ -522,6 +560,7 @@ export default {
     border-right: 1px solid #EEE;
     padding: 10px;
     overflow: auto;
+    background: #FFF;
 
     .action {
         border-bottom: 1px solid #EEE;
