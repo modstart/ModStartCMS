@@ -10,5 +10,5 @@
         </table>
     </div>
 @else
-    <pre style="margin:0;overflow:auto;width:{{$width}};max-height:{{$maxHeight}}">{{json_encode($value,JSON_PRETTY_PRINT)}}</pre>
+    <pre style="margin:0;overflow:auto;width:{{$width}};">{{json_encode($value,JSON_PRETTY_PRINT)}}</pre>
 @endif
