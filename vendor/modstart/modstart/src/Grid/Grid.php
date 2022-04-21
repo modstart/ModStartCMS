@@ -5,12 +5,14 @@ namespace ModStart\Grid;
 
 use Closure;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 use ModStart\Core\Dao\DynamicModel;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\IdUtil;
+use ModStart\Core\Util\RenderUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Detail\Detail;
 use ModStart\Field\AbstractField;
@@ -178,10 +180,15 @@ class Grid
     private $gridOperateAppend = '';
     /** @var array simple模式下栅格所占用的栅格大小null:表示不启用，[6,12]:表示md,sm栅格占比 */
     private $gridRowCols = null;
-
     /** @var Closure 渲染前置处理Items */
     private $hookPrepareItems = null;
-
+    /** @var array 渲染在Table顶部的区域 */
+    private $gridTableTops = [];
+    /** @var Closure 请求处理额外脚本 */
+    private $gridRequestScript = null;
+    /** @var Closure 请求处理额外脚本 */
+    private $gridBeforeRequestScript = null;
+    /** @var bool */
     private $isBuilt = false;
 
     /**
@@ -336,6 +343,61 @@ class Grid
     }
 
     /**
+     * @param $closure
+     * @return $this
+     */
+    public function gridRequestScript($closure)
+    {
+        $this->gridRequestScript = $closure;
+        return $this;
+    }
+
+    /**
+     * @param $view string
+     * @return $this
+     */
+    public function gridBeforeRequestScriptView($view)
+    {
+        return $this->gridBeforeRequestScript(
+            RenderUtil::viewScript($view)
+        );
+    }
+
+    /**
+     * @param $script string
+     * @return $this
+     */
+    public function gridBeforeRequestScript($script)
+    {
+        $this->gridBeforeRequestScript = $script;
+        return $this;
+    }
+
+    /**
+     * 渲染在顶部
+     * @param $view
+     * @return $this
+     */
+    public function gridTableTopView($view)
+    {
+        return $this->gridTableTop(View::make($view, [])->render());
+    }
+
+    /**
+     * 渲染在顶部
+     * @param $content
+     * @return $this
+     */
+    public function gridTableTop($content)
+    {
+        if ($content instanceof Closure) {
+            $content = call_user_func($content, $this);
+        }
+        $this->gridTableTops[] = $content;
+        return $this;
+    }
+
+    /**
      * 开始构建Grid，主要处理回调等操作
      */
     public function build()
@@ -345,6 +407,20 @@ class Grid
             $this->prepareItemOperateField();
             $this->isBuilt = true;
         }
+    }
+
+    public function executeQuery()
+    {
+        $this->build();
+        $input = InputPackage::buildFromInput();
+        $this->repository()->setArgument([
+            'page' => $input->getPage(),
+            'pageSize' => $input->getPageSize(),
+            'order' => $input->getArray($this->model->getOrderName()),
+            'orderDefault' => $this->defaultOrder,
+        ]);
+        $this->gridFilter->setSearch($input->getArray('search'));
+        return $this->gridFilter->executeQuery();
     }
 
     public function request()
@@ -478,6 +554,10 @@ class Grid
             }
             $head[] = $record;
         }
+        $script = null;
+        if (!is_null($this->gridRequestScript)) {
+            $script = call_user_func($this->gridRequestScript, $this);
+        }
         return Response::jsonSuccessData([
             'head' => $head,
             'page' => $paginator ? $paginator->currentPage() : 1,
@@ -485,6 +565,7 @@ class Grid
             'total' => $paginator ? $paginator->total() : count($records),
             'records' => $records,
             'addition' => $addition,
+            'script' => $script,
         ]);
     }
 
@@ -497,6 +578,8 @@ class Grid
             'hasAutoHideFilters' => $this->gridFilter->hasAutoHideFilters(),
             'grid' => $this,
             'scopes' => $this->scopeFilters,
+            'gridTableTops' => $this->gridTableTops,
+            'gridBeforeRequestScript' => $this->gridBeforeRequestScript,
             'scopeCurrent' => Input::get('_scope', $this->scopeDefault),
         ]);
         return view($this->view, $data)->render();

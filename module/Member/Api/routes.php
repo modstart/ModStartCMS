@@ -54,6 +54,11 @@ $router->group([
     $router->match(['get', 'post'], 'member_vip/calc', 'MemberVipController@calc');
     $router->match(['get', 'post'], 'member_vip/buy', 'MemberVipController@buy');
 
+    $router->match(['post'], 'member_address/all', 'MemberAddressController@all');
+    $router->match(['post'], 'member_address/get_default', 'MemberAddressController@getDefault');
+    $router->match(['post'], 'member_address/edit', 'MemberAddressController@edit');
+    $router->match(['post'], 'member_address/delete', 'MemberAddressController@delete');
+
     $router->match(['get', 'post'], 'member_data/file_manager/{category}', 'MemberDataController@fileManager');
 
     $router->match(['get', 'post'], 'member_money/get', 'MemberMoneyController@get');

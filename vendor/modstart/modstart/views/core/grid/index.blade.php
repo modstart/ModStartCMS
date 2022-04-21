@@ -70,6 +70,13 @@
             @endforeach
         </div>
     </div>
+    @if(!empty($gridTableTops))
+        <div data-table-top>
+            @foreach($gridTableTops as $c)
+                {!! $c !!}
+            @endforeach
+        </div>
+    @endif
     <div data-addition class="table-addition-container"></div>
     <div data-table class="table-container">
         <table class="table-container" id="{{$id}}Table" lay-filter="{{$id}}Table"></table>
@@ -168,6 +175,9 @@
                 server: window.location.href,
                 showLoading: false,
                 customLoading: function(loading){
+                    @if(!empty($gridBeforeRequestScript))
+                        {!! $gridBeforeRequestScript !!};
+                    @endif
                     if(first){
                         first = false;
                         return;
@@ -205,6 +215,9 @@
                             }
                         }
                     });
+                    if(data.script){
+                        eval(data.script);
+                    }
                 }
             });
             lister.realtime = {

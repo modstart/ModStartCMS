@@ -2,6 +2,7 @@
 
 namespace ModStart\Repository;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -152,18 +153,10 @@ class EloquentRepository extends Repository
         return $this;
     }
 
-
-    /**
-     * 查询Table表格数据.
-     *
-     * @param \ModStart\Grid\Model $model
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
-     */
-    public function get(\ModStart\Grid\Model $model)
+    public function getQuery(\ModStart\Grid\Model $model)
     {
         $this->setOrder($model);
-        $this->setPaginate($model);
+        // $this->setPaginate($model);
         $query = $this->newQuery();
         if ($this->relations) {
             $query->with($this->relations);
@@ -182,6 +175,65 @@ class EloquentRepository extends Repository
                 }
             }
         }
+        // var_dump($model->getQueries());exit();
+        // var_dump($model->grid()->isDynamicModel());exit();
+        $joins = $model->grid()->gridFilterJoins();
+        if (!empty($joins)) {
+            $methodMap = [
+                'left' => 'leftJoin',
+                'right' => 'rightJoin',
+                'inner' => 'innerJoin',
+            ];
+            foreach ($joins as $join) {
+                $mode = $join[0];
+                array_shift($join);
+                call_user_func_array([$query, $methodMap[$mode]], $join);
+            }
+        }
+        // var_dump($model->getQueries());exit();
+        $model->getQueries()->each(function ($value) use (&$query, $tableColumns) {
+            if ($value['method'] == 'paginate') {
+                $value['arguments'][1] = $tableColumns;
+            } elseif ($value['method'] == 'get') {
+                $value['arguments'] = [$tableColumns];
+            }
+            $query = call_user_func_array([$query, $value['method']], $value['arguments'] ? $value['arguments'] : []);
+        });
+        return $query;
+    }
+
+
+    /**
+     * execute paginate or get all records.
+     *
+     * @param \ModStart\Grid\Model $model
+     *
+     * @return LengthAwarePaginator|Collection|array
+     */
+    public function get(\ModStart\Grid\Model $model)
+    {
+        $this->setOrder($model);
+        $this->setPaginate($model);
+        $query = $this->newQuery();
+        if ($this->relations) {
+            $query->with($this->relations);
+        }
+
+        $treePid = $this->getArgument('treePid', null);
+        if (null !== $treePid) {
+            $query->where($this->getTreePidColumn(), $treePid);
+        }
+        $model->grid()->repositoryFilter()->executeQueries($query);
+        $model->grid()->scopeExecuteQueries($query);
+        $tableColumns = $this->getTableColumns();
+        if ($model->grid()->isDynamicModel()) {
+            foreach ($tableColumns as $k => $v) {
+                if ($v == '*') {
+                    $tableColumns[$k] = $model->grid()->getDynamicModelTableName() . '.*';
+                }
+            }
+        }
+        // var_dump($model->getQueries());exit();
         // var_dump($model->grid()->isDynamicModel());exit();
         $joins = $model->grid()->gridFilterJoins();
         if (!empty($joins)) {
@@ -212,7 +264,7 @@ class EloquentRepository extends Repository
     /**
      * 设置表格数据排序.
      *
-     * @param Grid\Model $model
+     * @param \ModStart\Grid\Model $model
      *
      * @return void
      */
@@ -267,7 +319,7 @@ class EloquentRepository extends Repository
     /**
      * 设置分页参数.
      *
-     * @param Grid\Model $model
+     * @param \ModStart\Grid\Model $model
      *
      * @return void
      */
@@ -285,7 +337,7 @@ class EloquentRepository extends Repository
     /**
      * 获取分页参数.
      *
-     * @param Grid\Model $model
+     * @param \ModStart\Grid\Model $model
      * @param array|null $paginate
      *
      * @return array

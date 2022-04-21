@@ -130,8 +130,10 @@ class AssetsUtil
 
     public static function recordsFixFullOrDefault(&$records, $key, $default = null)
     {
-        foreach ($records as $k => $v) {
-            $records[$k][$key] = self::fixFullOrDefault($v[$key], $default);
+        foreach ((array)$key as $kk) {
+            foreach ($records as $k => $v) {
+                $records[$k][$kk] = self::fixFullOrDefault($v[$kk], $default);
+            }
         }
     }
 }

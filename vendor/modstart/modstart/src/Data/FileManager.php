@@ -42,6 +42,7 @@ class FileManager
             call_user_func($permitCheck, $action);
         }
         switch ($action) {
+            case 'config':
             case 'uploadDirect':
             case 'uploadDirectRaw':
             case 'categoryEdit':
@@ -59,6 +60,12 @@ class FileManager
                 return self::$func($input, $category, $uploadTable, $uploadCategoryTable, $userId, $option);
         }
         return Response::jsonError('Unknown action');
+    }
+
+    private static function configExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    {
+        $data = DataManager::uploadConfig($category);
+        return Response::generateSuccessData($data);
     }
 
     private static function fileDeleteExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)

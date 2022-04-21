@@ -4,8 +4,23 @@
 namespace ModStart\Core\Util;
 
 
+/**
+ * Class IdUtil
+ * @package ModStart\Core\Util
+ * @Util ID生成
+ */
 class IdUtil
 {
+    /**
+     * @Util 带前缀的ID
+     * @param string $group
+     * @return string 生成的ID字符串
+     * @desc 一般用于页面渲染时页面元素唯一ID
+     * @example
+     * // 将生成 Aaa_1 Aaa_2 Aaa_3
+     * IdUtil::generate('Aaa')
+     *
+     */
     public static function generate($group = 'Default')
     {
         static $map = [];
@@ -16,6 +31,10 @@ class IdUtil
         return $group . '_' . $map[$group];
     }
 
+    /**
+     * @Util  获取64位ID
+     * @return string ID字符串
+     */
     public static function next64BitId()
     {
         return intval(microtime(true) * 10000) . (getmypid() % 10) . sprintf('%04d', rand(0, 9999));
@@ -48,10 +67,12 @@ class IdUtil
     }
 
     /**
-     * 生成一个19位长的订单号（BigInteger）
+     * @Util 生成订单号
      * @return string
+     * @desc 一个19位长的（BigInteger）
      * @example
-     * 20210101010101+12121
+     * // 生成 20210101010101+12121
+     * IdUtil::generateSN()
      */
     public static function generateSN()
     {

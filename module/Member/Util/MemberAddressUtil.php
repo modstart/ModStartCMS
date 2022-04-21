@@ -8,17 +8,26 @@ class MemberAddressUtil
 {
     public static function getUserAddress($memberUserId, $id)
     {
-        return ModelUtil::get('member_address', ['id' => $id, 'memberUserId' => $memberUserId]);
+        $record = ModelUtil::get('member_address', ['id' => $id, 'memberUserId' => $memberUserId]);
+        ModelUtil::decodeRecordBoolean($record, ['isDefault']);
+        return $record;
     }
 
     public static function listUserAddresses($memberUserId)
     {
-        return ModelUtil::model('member_address')->where(['memberUserId' => $memberUserId])->orderBy('id', 'desc')->orderBy('isDefault', 'desc')->get()->toArray();
+        $records = ModelUtil::model('member_address')->where(['memberUserId' => $memberUserId])->orderBy('id', 'desc')->orderBy('isDefault', 'desc')->get()->toArray();
+        ModelUtil::decodeRecordsBoolean($records, ['isDefault']);
+        return $records;
     }
 
     public static function delete($id)
     {
         ModelUtil::delete('member_address', ['id' => $id]);
+    }
+
+    public static function resetDefault($memberUserId)
+    {
+        ModelUtil::update('member_address', ['memberUserId' => $memberUserId], ['isDefault' => false]);
     }
 
     public static function update($id, $data)

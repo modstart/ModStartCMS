@@ -5,6 +5,6 @@
     @if($item->change>0)
         <div class="tw-text-green-600"><span class="tw-text-gray-400 tw-mr-3">收入</span> +￥{{$item->change}}</div>
     @else
-        <div class="tw-text-red-600"><span class="tw-text-gray-400 tw-mr-3">支出</span> -￥{{-$item->change}}</div>
+        <div class="tw-text-red-600"><span class="tw-text-gray-400 tw-mr-3">支出</span> -￥{{sprintf('%.2f',-$item->change)}}</div>
     @endif
 </div>

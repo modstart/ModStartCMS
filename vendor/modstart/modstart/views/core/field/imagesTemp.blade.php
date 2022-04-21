@@ -59,11 +59,10 @@
         });
         window.api.uploadButton('#{{$id}}Uploader', {
             text: '<div style="width:100%;box-sizing:border-box;line-height:1.5rem;height:1.5rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.5rem;height:1.5rem;"></span> 上传</div>',
-            swf: "@asset('asset/vendor/webuploader/Uploader.swf')",
             server: "{{$server}}",
-            extensions: window.__dataConfig.category.image.extensions.join(','),
-            sizeLimit: window.__dataConfig.category.image.maxSize,
-            chunkSize: window.__dataConfig.chunkSize,
+            extensions: {!! json_encode(join(',',config('data.upload.image.extensions'))) !!},
+            sizeLimit: {!! json_encode(config('data.upload.image.maxSize')) !!},
+            chunkSize: {!! json_encode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
             callback: function (file, me) {
                 images.push(file.path);
                 previews.push(file.preview);

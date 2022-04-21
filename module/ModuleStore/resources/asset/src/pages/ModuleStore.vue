@@ -237,7 +237,7 @@
                                 <span class="ub-text-muted" v-else-if="module._isInstalled">
                                     已安装V{{module._localVersion}}，最新版V{{module.latestVersion}}
                                 </span>
-                                <span class="ub-text-muted">
+                                <span class="ub-text-muted" v-else>
                                     最新版V{{module.latestVersion}}
                                 </span>
                             </div>

@@ -268,7 +268,7 @@ class Tecmz
     /**
      * IP地址查询
      *
-     * @param string $ip
+     * @param $ip string
      * @return array|mixed
      *
      * 失败 [code=>-1,msg=>'<失败原因>',data=>null]
@@ -279,6 +279,21 @@ class Tecmz
         $post = [];
         $post['ip'] = $ip;
         return $this->request('/ip_to_location', $post);
+    }
+
+    /**
+     * 文档转图片
+     *
+     * @param $docPath string
+     * @param $pageLimit int
+     * @return array|mixed
+     */
+    public function docToImage($docPath, $pageLimit = 0)
+    {
+        $post = [];
+        $post['docPath'] = $docPath;
+        $post['pageLimit'] = $pageLimit;
+        return $this->request('/doc_to_image', $post);
     }
 
 }

@@ -31,6 +31,9 @@ var Convenient = {
             var jsonStr = $(this).attr('data-request');
             var jsonp = $(this).is('[data-ajax-jsonp]');
             var callback = $(this).data('callback');
+            if (!method) {
+                method = 'post';
+            }
             if (!callback) {
                 callback = Form.defaultCallback;
             }

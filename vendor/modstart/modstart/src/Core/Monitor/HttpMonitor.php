@@ -13,6 +13,9 @@ class HttpMonitor
 {
     public static function init()
     {
+        if (!config('modstart.trackPerformance', false)) {
+            return;
+        }
         $eventName = 'kernel.handled';
         if (class_exists('Illuminate\\Foundation\\Http\\Events\\RequestHandled')) {
             $eventName = 'Illuminate\\Foundation\\Http\\Events\\RequestHandled';

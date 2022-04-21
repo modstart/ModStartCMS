@@ -439,14 +439,14 @@ class ModuleManager
                     $requires = $moduleInfoMap[$insert];
                     foreach ($requires as $one) {
                         if (!in_array($one, $orderedModules)) {
-                            $errors[] = "Module <$insert> Depends On <$one>";
+                            $errors[] = L('Module %s Depends On %s', $insert, $one);
                         }
                     }
                 }
                 if (!empty($errors)) {
-                    BizException::throws('Module Not Fully Installed! ' . join('; ', $errors));
+                    BizException::throws(L('Module Not Fully Installed') . ' ' . join('; ', $errors));
                 } else {
-                    BizException::throws('Module Not Fully Installed! requires ' . json_encode($modules));
+                    BizException::throws(L('Module Not Fully Installed') . ' ' . L('Requires') . '  ' . json_encode($modules));
                 }
             }
         }

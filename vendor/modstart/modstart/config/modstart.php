@@ -6,6 +6,8 @@ return [
         'track_missing' => false,
     ],
 
+    'trackPerformance' => env('TRACK_PERFORMANCE', false),
+
     'forceSchema' => env('FORCE_SCHEMA', null),
     'subdirUrl' => env('SUBDIR_URL', null),
     'subdir' => env('SUBDIR', '/'),

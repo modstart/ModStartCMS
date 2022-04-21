@@ -18,7 +18,10 @@
     </div>
     <div class="ub-panel">
         <div class="head">
-            <div class="title">历史记录</div>
+            <div class="title">
+                <i class="iconfont icon-list"></i>
+                积分流水
+            </div>
         </div>
         <div class="body">
             {!! $content !!}

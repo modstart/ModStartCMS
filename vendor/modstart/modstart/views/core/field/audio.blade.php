@@ -47,11 +47,10 @@
                 });
                 window.api.uploadButton('#{{$id}}Uploader', {
                     text: '<a href="javascript:;" class="btn" style="display:inline-block;vertical-align:bottom;"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
-                    swf: "@asset('asset/vendor/webuploader/Uploader.swf')",
                     server: "{{$server}}",
-                    extensions: window.__dataConfig.category.audio.extensions.join(','),
-                    sizeLimit: window.__dataConfig.category.audio.maxSize,
-                    chunkSize: window.__dataConfig.chunkSize,
+                    extensions: {!! json_encode(join(',',config('data.upload.audio.extensions'))) !!},
+                    sizeLimit: {!! json_encode(config('data.upload.audio.maxSize')) !!},
+                    chunkSize: {!! json_encode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
                     showFileQueue: true,
                     fileNumLimit: 1,
                     callback: function (file, me) {

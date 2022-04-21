@@ -6,8 +6,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Event;
 use ModStart\Core\Events\ModuleUninstalledEvent;
 use ModStart\Core\Exception\BizException;
-use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\VersionUtil;
 use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
 
@@ -27,8 +27,11 @@ class ModuleUninstallCommand extends Command
                 if (empty($basic)) {
                     break;
                 }
-                if (in_array($module, $basic['require'])) {
-                    return Response::generateError(L('Module %s depend on %s, uninstall fail', $one, $module));
+                if (!empty($basic['require'])) {
+                    foreach ($basic['require'] as $require) {
+                        list($m, $v) = VersionUtil::parse($require);
+                        BizException::throwsIf(L('Module %s depend on %s, uninstall fail', $one, $module), $module == $m);
+                    }
                 }
             }
             ModuleManager::callHook($module, 'hookBeforeUninstall');

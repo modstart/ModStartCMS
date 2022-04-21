@@ -23,9 +23,37 @@ class KeyValueList extends AbstractField
     protected function setup()
     {
         $this->addVariables([
+            'keyTitle' => L('Key'),
+            'valueTitle' => L('Value'),
+            'keyPlaceholder' => L('Please Input'),
+            'valuePlaceholder' => L('Please Input'),
             'keyLabel' => 'k',
             'valueLabel' => 'v',
         ]);
+    }
+
+    public function keyPlaceholder($value)
+    {
+        $this->addVariables(['keyPlaceholder' => $value]);
+        return $this;
+    }
+
+    public function valuePlaceholder($value)
+    {
+        $this->addVariables(['valuePlaceholder' => $value]);
+        return $this;
+    }
+
+    public function keyTitle($value)
+    {
+        $this->addVariables(['keyTitle' => $value]);
+        return $this;
+    }
+
+    public function valueTitle($value)
+    {
+        $this->addVariables(['valueTitle' => $value]);
+        return $this;
     }
 
     public function keyLabel($keyLabel)

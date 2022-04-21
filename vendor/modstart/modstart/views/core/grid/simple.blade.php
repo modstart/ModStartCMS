@@ -52,10 +52,6 @@
             @endforeach
         </div>
     </div>
-{{--    <div data-addition class="table-addition-container"></div>--}}
-{{--    <div data-table class="table-container">--}}
-{{--        <table class="table-container" id="{{$id}}Table" lay-filter="{{$id}}Table"></table>--}}
-{{--    </div>--}}
     <div style="overflow:hidden;" data-table></div>
     @if($enablePagination)
         <div id="{{$id}}Pager" class="padding-top"></div>
@@ -115,51 +111,7 @@
             var index = parseInt($(o).closest('[data-index]').attr('data-index'));
             return listerData.records[index]._id;
         };
-        {{--var getCheckedIds = function () {--}}
-        {{--    var data = layui.table.checkStatus('{{$id}}Table').data;--}}
-        {{--    var ids = [];--}}
-        {{--    for (var i = 0; i < data.length; i++) {--}}
-        {{--        ids.push(data[i]._id);--}}
-        {{--    }--}}
-        {{--    return ids;--}}
-        {{--};--}}
-        {{--var getCheckedItems = function () {--}}
-        {{--    var data = layui.table.checkStatus('{{$id}}Table').data;--}}
-        {{--    var items = [];--}}
-        {{--    for (var i = 0; i < data.length; i++) {--}}
-        {{--        items.push(data[i]);--}}
-        {{--    }--}}
-        {{--    return items;--}}
-        {{--};--}}
         layui.use(['laytpl'], function () {
-            {{--var table = layui.table.render({--}}
-            {{--    id: '{{$id}}Table',--}}
-            {{--    elem: '#{{$id}}Table',--}}
-            {{--    @if($canMultiSelectItem && ( $batchOperatePrepend || ($canDelete && $canBatchDelete)  ))--}}
-            {{--        toolbar: '#{{$id}}TableHeadToolbar',--}}
-            {{--    @endif--}}
-            {{--    defaultToolbar: [],--}}
-            {{--    page: false,--}}
-            {{--    skin: 'line',--}}
-            {{--    text: {--}}
-            {{--        none: '{{L('No Records')}}'--}}
-            {{--    },--}}
-            {{--    // size: 'sm',--}}
-            {{--    loading: true,--}}
-            {{--    cellMinWidth: 100,--}}
-            {{--    cols: [[]],--}}
-            {{--    data: []--}}
-            {{--});--}}
-            {{--layui.table.on('sort({{$id}}Table)', function (obj) {--}}
-            {{--    if (null == obj.type) {--}}
-            {{--        lister.setParam('order', []);--}}
-            {{--    } else {--}}
-            {{--        lister.setParam('order', [[obj.field, obj.type]]);--}}
-            {{--    }--}}
-            {{--    lister.setPage(1);--}}
-            {{--    lister.load();--}}
-            {{--})--}}
-
             $('#{{$id}}Pager').on('click','[data-page-action]',function(){
                 var action = $(this).attr('data-page-action');
                 switch(action){
@@ -202,18 +154,6 @@
                     if(!data.records.length){
                         $grid.find('[data-table]').html(emptyHtml);
                     }
-                    // console.log('render', html, data);
-{{--                    @if($canSingleSelectItem)--}}
-{{--                        data.head.splice(0, 0, {type: 'radio'});--}}
-{{--                    @elseif($canMultiSelectItem)--}}
-{{--                        data.head.splice(0, 0, {type: 'checkbox'});--}}
-{{--                    @endif--}}
-{{--                    $grid.find('[data-addition]').html(data.addition || '');--}}
-{{--                    layui.table.reload('{{$id}}Table', {--}}
-{{--                        cols: [data.head],--}}
-{{--                        data: data.records,--}}
-{{--                        limit: data.pageSize,--}}
-{{--                    });--}}
                 }
             });
             lister.realtime = {
@@ -318,42 +258,6 @@
                     });
                 });
             @endif
-            {{--@if($canDelete && $canBatchDelete)--}}
-            {{--$lister.find('[data-table]').on('click', '[data-batch-delete]', function () {--}}
-            {{--    var ids = getCheckedIds();--}}
-            {{--    if (!ids.length) {--}}
-            {{--        window.api.dialog.tipError("{{L('Please Select Records')}}");--}}
-            {{--        return;--}}
-            {{--    }--}}
-            {{--    window.api.dialog.confirm("{{L('Confirm Delete %d records ?')}}".replace('%d', ids.length), function () {--}}
-            {{--        window.api.dialog.loadingOn();--}}
-            {{--        window.api.base.post(lister.realtime.url.delete, {_id: ids.join(',')}, function (res) {--}}
-            {{--            window.api.dialog.loadingOff();--}}
-            {{--            window.api.base.defaultFormCallback(res, {--}}
-            {{--                success: function (res) {--}}
-            {{--                    lister.refresh();--}}
-            {{--                }--}}
-            {{--            });--}}
-            {{--        })--}}
-            {{--    });--}}
-            {{--});--}}
-            {{--@endif--}}
-            {{--@if($canSort)--}}
-            {{--$lister.find('[data-table]').on('click', '[data-sort]', function () {--}}
-            {{--    var id = getId(this);--}}
-            {{--    var direction = $(this).attr('data-sort');--}}
-            {{--    window.api.dialog.loadingOn();--}}
-            {{--    window.api.base.post(lister.realtime.url.sort, {_id: id, direction: direction}, function (res) {--}}
-            {{--        window.api.dialog.loadingOff();--}}
-            {{--        window.api.base.defaultFormCallback(res, {--}}
-            {{--            success: function (res) {--}}
-            {{--                lister.refresh();--}}
-            {{--            }--}}
-            {{--        });--}}
-            {{--    })--}}
-            {{--});--}}
-            {{--@endif--}}
-            {{--$lister.data('lister', lister);--}}
             window.__grids = window.__grids || {
                 instances: {},
                 get: function (key) {
@@ -371,23 +275,8 @@
             };
             window.__grids.instances['{{$id}}'] = {
                 $lister: $lister,
-                lister: lister //,
-                // getCheckedIds: getCheckedIds,
-                // getCheckedItems: getCheckedItems,
-                // getId: getId
+                lister: lister
             };
         });
-{{--        @if($canBatchSelect || $canSingleSelectItem || $canMultiSelectItem)--}}
-{{--            setTimeout(function () {--}}
-{{--                $('body > .ub-panel-dialog .panel-dialog-foot [data-submit]').show().on('click',function(){--}}
-{{--                    var ids = window.__grids.instances['{{$id}}'].getCheckedIds();--}}
-{{--                    var items = window.__grids.instances['{{$id}}'].getCheckedItems();--}}
-{{--                    // console.log('itemSelected',ids, items);--}}
-{{--                    window.parent.__dialogSelectIds = ids;--}}
-{{--                    window.parent.__dialogSelectItems = items;--}}
-{{--                    parent.layer.closeAll();--}}
-{{--                });--}}
-{{--            },0);--}}
-{{--        @endif--}}
     })();
 </script>

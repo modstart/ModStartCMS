@@ -120,6 +120,7 @@ class ModuleServiceProvider extends ServiceProvider
                 ['注册', modstart_web_url('register')],
                 ['登录', modstart_web_url('login')],
                 ['找回密码', modstart_web_url('retrieve')],
+                ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? ['开通VIP', modstart_web_url('member_vip')] : null,
                 ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? ['用户钱包', modstart_web_url('member_money')] : null,
                 ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? ['用户积分', modstart_web_url('login')] : null,
             ]);

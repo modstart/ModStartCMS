@@ -16,6 +16,9 @@ class DatabaseMonitor
 
     public static function init()
     {
+        if (!config('modstart.trackPerformance', false)) {
+            return;
+        }
         self::$queryCountPerRequest = 0;
         self::$queryCountPerRequestSqls = [];
         try {

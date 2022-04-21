@@ -22,17 +22,25 @@ if (file_exists($demoData = APP_PATH . '/public/data_demo/data.php')) {
 }
 
 if (class_exists(\App\Constant\AppConstant::class)) {
+    if (defined('\\App\\Constant\\AppConstant::APP')) {
+        define('INSTALL_APP', strtoupper(\App\Constant\AppConstant::APP));
+    }
     if (defined('\\App\\Constant\\AppConstant::APP_NAME')) {
-        define('INSTALL_APP_NAME', strtoupper(\App\Constant\AppConstant::APP_NAME));
-    } else if (defined('\\App\\Constant\\AppConstant::APP')) {
-        define('INSTALL_APP_NAME', strtoupper(\App\Constant\AppConstant::APP));
+        define('INSTALL_APP_NAME', \App\Constant\AppConstant::APP_NAME);
     }
     if (defined('\\App\\Constant\\AppConstant::VERSION')) {
         define('INSTALL_APP_VERSION', \App\Constant\AppConstant::VERSION);
     }
 }
+if (!defined('INSTALL_APP')) {
+    define('INSTALL_APP', 'APP');
+}
 if (!defined('INSTALL_APP_NAME')) {
-    define('INSTALL_APP_NAME', 'APP');
+    if(defined('INSTALL_APP')){
+        define('INSTALL_APP_NAME', INSTALL_APP);
+    }else{
+        define('INSTALL_APP_NAME', 'APP');
+    }
 }
 if (!defined('INSTALL_APP_VERSION')) {
     define('INSTALL_APP_VERSION', '0.0.0');
@@ -44,14 +52,13 @@ if (!file_exists(ENV_FILE)) {
 
 function php_version_requires()
 {
-    if (INSTALL_APP_NAME == 'CMS9') {
+    if (INSTALL_APP == 'CMS9') {
         return join('，', [
             '8.0.x',
             '8.1.x',
         ]);
     }
     return join(', ', [
-        INSTALL_APP_NAME,
         '5.6.x',
         '7.0.x',
     ]);
@@ -59,7 +66,7 @@ function php_version_requires()
 
 function php_version_ok()
 {
-    if (INSTALL_APP_NAME == 'CMS9') {
+    if (INSTALL_APP == 'CMS9') {
         if (version_compare(PHP_VERSION, '8.0.0', '<')) {
             return false;
         }

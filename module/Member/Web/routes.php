@@ -64,6 +64,7 @@ $router->group([
     $router->match(['get', 'post'], 'member_money', 'MemberMoneyController@index');
     $router->match(['get', 'post'], 'member_money/cash', 'MemberMoneyCashController@index');
     $router->match(['get', 'post'], 'member_money/cash/log', 'MemberMoneyCashController@log');
+    $router->match(['get', 'post'], 'member_money/charge_desc', 'MemberMoneyController@chargeDesc');
 
     $router->match(['get', 'post'], 'member_credit', 'MemberCreditController@index');
 

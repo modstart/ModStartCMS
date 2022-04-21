@@ -85,6 +85,11 @@ class HtmlUtil
         ], $text);
     }
 
+    /**
+     * 富文本过滤
+     * @param $content
+     * @return mixed
+     */
     public static function filter($content)
     {
         if (empty($content)) {

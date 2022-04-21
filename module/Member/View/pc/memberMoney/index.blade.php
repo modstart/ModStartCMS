@@ -26,11 +26,26 @@
         <div class="head">
             @if(modstart_config('Member_MoneyCashEnable',false))
                 <div class="more">
-                    <a href="{{modstart_web_url('member_money/cash')}}">提现申请</a>
-                    <a href="{{modstart_web_url('member_money/cash/log')}}">提现记录</a>
+                    @if(modstart_config('Member_MoneyChargeDesc',false))
+                        <a class="tw-ml-2" href="javascript:;" data-dialog-request="{{modstart_web_url('member_money/charge_desc')}}">
+                            <i class="iconfont icon-cny"></i>
+                            钱包充值说明
+                        </a>
+                    @endif
+                    <a class="tw-ml-2" href="{{modstart_web_url('member_money/cash')}}">
+                        <i class="iconfont icon-pay"></i>
+                        提现申请
+                    </a>
+                    <a class="tw-ml-2" href="{{modstart_web_url('member_money/cash/log')}}">
+                        <i class="iconfont icon-time"></i>
+                        提现记录
+                    </a>
                 </div>
             @endif
-            <div class="title">记录</div>
+            <div class="title">
+                <i class="iconfont icon-list"></i>
+                钱包流水
+            </div>
         </div>
         <div class="body">
             {!! $content !!}

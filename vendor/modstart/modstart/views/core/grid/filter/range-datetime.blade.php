@@ -1,9 +1,9 @@
 <div class="field" data-grid-filter-field="{{$id}}">
     <div class="name">{{$label}}</div>
     <div class="input">
-        <input type="text" class="form" data-min style="width:11em;"/>
+        <input type="text" class="form" data-min value="{{empty($defaultValue['min'])?'':$defaultValue['min']}}" style="width:11em;"/>
         -
-        <input type="text" class="form" data-max style="width:11em;"/>
+        <input type="text" class="form" data-max value="{{empty($defaultValue['max'])?'':$defaultValue['max']}}" style="width:11em;"/>
     </div>
 </div>
 <script>

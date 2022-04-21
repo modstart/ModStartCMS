@@ -13,10 +13,6 @@
     <script>
         window.__msCDN = "{{\ModStart\Core\Assets\AssetsUtil::cdn()}}";
         window.__msRoot = "{{modstart_web_url()}}";
-        window.__dataConfig = {
-            chunkSize: {{\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')}},
-            category: {!! json_encode(config('data.upload')) !!}
-        };
     </script>
     <script src="@asset('asset/vendor/jquery.js')"></script>
     <script src="@asset('asset/common/base.js')"></script>

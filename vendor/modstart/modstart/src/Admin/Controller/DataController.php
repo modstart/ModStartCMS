@@ -24,6 +24,8 @@ class DataController extends Controller
                 null,
                 function ($action) {
                     switch ($action) {
+                        case 'config':
+                            break;
                         case 'categoryDelete':
                         case 'fileDelete':
                             AdminPermission::demoCheck();

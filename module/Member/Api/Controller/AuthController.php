@@ -258,6 +258,9 @@ class AuthController extends ModuleBaseController
 
     public function oauthLogin($oauthType = null, $callback = null)
     {
+        if ($disableText = modstart_config()->getWithEnv('oauthDisableText')) {
+            return Response::generateError($disableText);
+        }
         $input = InputPackage::buildFromInput();
         if (empty($oauthType)) {
             $oauthType = $input->getTrimString('type');

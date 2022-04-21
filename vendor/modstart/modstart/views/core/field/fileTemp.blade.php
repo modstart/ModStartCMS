@@ -46,11 +46,10 @@
         });
         window.api.uploadButton('#{{$id}}Uploader', {
             text: '<div style="width:100%;box-sizing:border-box;line-height:1.5rem;height:1.5rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.5rem;height:1.5rem;"></span> 上传</div>',
-            swf: "@asset('asset/vendor/webuploader/Uploader.swf')",
             server: "{{$server}}",
-            extensions: window.__dataConfig.category.file.extensions.join(','),
-            sizeLimit: window.__dataConfig.category.file.maxSize,
-            chunkSize: window.__dataConfig.chunkSize,
+            extensions: {!! json_encode(join(',',config('data.upload.file.extensions'))) !!},
+            sizeLimit: {!! json_encode(config('data.upload.file.maxSize')) !!},
+            chunkSize: {!! json_encode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
             callback: function (file, me) {
                 // console.log('file',file);
                 fileValue = file.path;

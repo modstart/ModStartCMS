@@ -42,6 +42,7 @@ export default {
     data() {
         return {
             id: 'UploadButtonUploader_' + StrUtil.randomString(10),
+            dataConfigFromServer: null,
         }
     },
     computed: {
@@ -52,31 +53,37 @@ export default {
             if (!!this.$store) {
                 return this.$store.state.base.config.dataUpload
             }
-            if (!!window.__dataConfig) {
-                return window.__dataConfig
+            if (!window.__dataConfigLoading) {
+                window.__dataConfigLoading = true
+                this.initConfig()
             }
-            return {
-                chunkSize: 0,
-                category: {
-                    [this.category]: {
-                        extensions: [],
-                        maxSize: 0
-                    }
-                }
-            }
+            return this.dataConfigFromServer
         }
     },
     mounted() {
-        var $this = this
-        const init = () => {
+        this.init()
+    },
+    methods: {
+        initConfig() {
+            this.$api.post(`${this.url}/${this.category}`, {action: 'config'}, res => {
+                this.dataConfigFromServer = res.data
+            })
+        },
+        init() {
+            if (!this.dataUploadConfig) {
+                setTimeout(() => {
+                    this.init()
+                }, 100)
+                return
+            }
             const url = `${this.url}/${this.category}`
             let text = '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200" style="display:block;line-height:28px;"><i class="iconfont icon-upload"></i> ' + this.L('Select Local File') + '</span>'
             if (this.size === 'lg') {
                 text = '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg tw-py-10" style="display:block;"><i class="iconfont icon-upload" style="font-size:2rem;"></i><br /> ' + this.L('Select Local File') + '</span>'
             }
+            const $this = this
             UploadButtonUploader('#' + this.id, {
                 text,
-                // swf: '/static/webuploader/Uploader.swf',
                 server: this.$api.url ? this.$api.url(url) : url,
                 extensions: this.dataUploadConfig.category[this.category].extensions.join(','),
                 sizeLimit: this.dataUploadConfig.category[this.category].maxSize,
@@ -90,12 +97,6 @@ export default {
                 }
             })
         }
-        const check = () => {
-            setTimeout(() => {
-                init()
-            }, 1000)
-        }
-        check()
     }
 }
 

@@ -34,12 +34,36 @@ const Tree = {
     //     } while (node)
     //     return list
     // },
+    /**
+     * 查找所有子节点ID（包括自己）
+     * @param nodes
+     * @param id
+     * @param idKey
+     * @param pidKey
+     * @returns {*[]}
+     */
     findChildrenIdsIncludeSelf: function (nodes, id, idKey, pidKey) {
         return [id].concat(Tree.findChildren(nodes, id, idKey, pidKey).map(o => o[idKey]))
     },
+    /**
+     * 查找所有子节点ID
+     * @param nodes
+     * @param id
+     * @param idKey
+     * @param pidKey
+     * @returns {*[]}
+     */
     findChildrenIds: function (nodes, id, idKey, pidKey) {
         return Tree.findChildren(nodes, id, idKey, pidKey).map(o => o[idKey])
     },
+    /**
+     * 查找所有子节点
+     * @param nodes
+     * @param id
+     * @param idKey
+     * @param pidKey
+     * @returns {*[]}
+     */
     findChildren: function (nodes, id, idKey, pidKey) {
         let children = []
         for (let node of nodes) {
@@ -50,6 +74,14 @@ const Tree = {
         }
         return children
     },
+    /**
+     * 找到所有祖先
+     * @param nodes
+     * @param id
+     * @param idKey
+     * @param pidKey
+     * @returns {*[]}
+     */
     findAncestors: function (nodes, id, idKey, pidKey) {
         let ancestors = []
         for (let node of nodes) {
@@ -63,12 +95,21 @@ const Tree = {
         }
         return ancestors.reverse()
     },
-    sort: function (list, id, idKey, pidKey, sortKey) {
+    /**
+     * nodes sort
+     * @param nodes
+     * @param id
+     * @param idKey
+     * @param pidKey
+     * @param sortKey
+     * @returns {*[]}
+     */
+    sort: function (nodes, id, idKey, pidKey, sortKey) {
         id = id || ''
         idKey = idKey || 'id'
         pidKey = pidKey || 'pid'
         sortKey = sortKey || 'sort'
-        list.forEach(o => {
+        nodes.forEach(o => {
             if (!o[idKey]) {
                 o[idKey] = ''
             }
@@ -76,11 +117,11 @@ const Tree = {
                 o[pidKey] = ''
             }
         })
-        list = list.sort((a, b) => {
+        nodes = nodes.sort((a, b) => {
             return a[sortKey] - b[sortKey]
         })
 
-        return Tree._sort(list, id, idKey, pidKey, sortKey)
+        return Tree._sort(nodes, id, idKey, pidKey, sortKey)
     },
     _sort: function (list, id, idKey, pidKey, sortKey, level, ids) {
         level = level || 1

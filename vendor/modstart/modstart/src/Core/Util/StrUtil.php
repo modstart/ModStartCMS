@@ -2,6 +2,10 @@
 
 namespace ModStart\Core\Util;
 
+/**
+ * Class StrUtil
+ * @package ModStart\Core\Util
+ */
 class StrUtil
 {
 

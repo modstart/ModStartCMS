@@ -160,6 +160,23 @@ class ArrayUtil
         return $array;
     }
 
+    public static function removeAll($records, $recordsRemoved)
+    {
+        return array_values(array_filter($records, function ($o) use ($recordsRemoved) {
+            return !in_array($o, $recordsRemoved);
+        }));
+    }
+
+    public static function hasAny($records, $recordsCheck)
+    {
+        foreach ($recordsCheck as $item) {
+            if (in_array($item, $records)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 重命名Keys
      *
@@ -248,6 +265,12 @@ class ArrayUtil
             $ret = $o1[$key] > $o2[$key] ? 1 : -1;
             return $sort == 'asc' ? $ret : -$ret;
         });
+        return $records;
+    }
+
+    public static function sortNumber($records)
+    {
+        sort($records, SORT_NUMERIC);
         return $records;
     }
 

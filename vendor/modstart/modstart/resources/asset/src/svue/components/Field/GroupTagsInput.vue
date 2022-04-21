@@ -5,14 +5,14 @@
         </div>
         <table v-else>
             <tr v-for="(groupTagItem,groupTagIndex) in option" :key="groupTagIndex">
-                <td style="width:6em;vertical-align:top;">{{groupTagItem.groupTitle}}</td>
+                <td style="width:6em;vertical-align:top;">{{ groupTagItem[groupTitleKey] }}</td>
                 <td>
-                    <el-checkbox v-for="(groupTagItemItem,groupTagItemIndex) in groupTagItem.groupTags"
+                    <el-checkbox v-for="(groupTagItemItem,groupTagItemIndex) in groupTagItem[childKey]"
                                  :key="groupTagItemIndex"
                                  :value="currentData.includes(groupTagItemItem.id)"
                                  @change="checked=>onQuestionTagChange(checked,groupTagItemItem.id)"
                     >
-                        {{groupTagItemItem.title}}
+                        {{ groupTagItemItem.title }}
                     </el-checkbox>
                 </td>
             </tr>
@@ -26,6 +26,16 @@ import {FieldInputMixin, FieldVModel} from "../../lib/fields-config";
 export default {
     name: "GroupTagsInput",
     mixins: [FieldInputMixin, FieldVModel],
+    props: {
+        groupTitleKey: {
+            type: String,
+            default: 'groupTitle'
+        },
+        childKey: {
+            type: String,
+            default: 'groupTags'
+        }
+    },
     methods: {
         onQuestionTagChange(checked, id) {
             if (checked) {

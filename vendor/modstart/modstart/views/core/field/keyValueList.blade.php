@@ -9,14 +9,14 @@
             <el-table
                     :data="value" size="mini" border
                     style="width:100%;margin:0;border-radius:3px;">
-                <el-table-column width="200" label="{{L('Key')}}">
+                <el-table-column width="200" label="{{$keyTitle}}">
                     <template slot-scope="scope">
-                        <input type="text" v-model="scope.row.{{$keyLabel}}" />
+                        <input type="text" v-model="scope.row.{{$keyLabel}}" placeholder="{{$keyPlaceholder}}" />
                     </template>
                 </el-table-column>
-                <el-table-column label="{{L('Value')}}">
+                <el-table-column label="{{$valueTitle}}">
                     <template slot-scope="scope">
-                        <input type="text" v-model="scope.row.{{$valueLabel}}" />
+                        <input type="text" v-model="scope.row.{{$valueLabel}}" placeholder="{{$valuePlaceholder}}" />
                     </template>
                 </el-table-column>
                 <el-table-column width="50"  align="center">
@@ -40,7 +40,7 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! json_encode($value) !!}
+                value: {!! !empty($value)?json_encode($value):json_encode($defaultValue?$defaultValue:[]) !!}
             },
             computed:{
                 jsonValue:function(){
