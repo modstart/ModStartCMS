@@ -18,7 +18,9 @@ return [
                 'section[style],blockquote[style]',
             ]),
             'HTML.SafeIframe' => true,
-            'URI.SafeIframeRegexp' => "%^(http://|https://|//|/)?([a-zA-Z0-9\\./=\\%_]+)$%",
+            // https://xxx.com/data/video/xxxx/xx/xx/xxxxxx.mp4
+            // /data/xxxx.mp4
+            'URI.SafeIframeRegexp' => "%^(http://|https://|//|/)?([a-zA-Z0-9\\./=\\%_\\-]+)$%",
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => false,
             'CSS.AllowImportant' => true,
