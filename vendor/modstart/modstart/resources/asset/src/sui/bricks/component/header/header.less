@@ -542,6 +542,67 @@
             width: 16em;
             border: 0.05rem solid #EEE;
 
+            &.has-drop {
+                .box {
+                    input {
+                        padding-left: 2.3rem;
+                    }
+                }
+            }
+
+            .search-select {
+                position: absolute;
+                width: 1.6rem;
+                top: 0;
+                overflow: visible;
+
+                &.show {
+                    .search-select-drop {
+                        display: block;
+                    }
+                }
+
+                .search-select-box {
+                    height: 1.5rem;
+                    line-height: 1.5rem;
+                    white-space: nowrap;
+                    color: var(--color-tertiary-light);
+                    cursor: pointer;
+
+                    .iconfont {
+                        margin: 0;
+                        color: var(--color-muted);
+                    }
+                }
+
+
+                .search-select-drop {
+                    position: absolute;
+                    background: #FFF;
+                    box-shadow: 0 0 5px #999;
+                    border-radius: 0.25rem;
+                    left: -0.5rem;
+                    top: 1.5rem;
+                    display: none;
+                    z-index: 1000;
+
+                    .search-select-item {
+                        display: block;
+                        color: var(--color-text);
+                        white-space: nowrap;
+                        padding: 0;
+                        margin-left: 0;
+                        width: 2.5rem;
+                        text-align: center;
+                        line-height: 1.5rem;
+
+                        &:hover {
+                            color: var(--color-primary);
+                        }
+                    }
+                }
+            }
+
             .box {
                 vertical-align: middle;
                 position: relative;

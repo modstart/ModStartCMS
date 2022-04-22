@@ -12,7 +12,7 @@
     <div id="videoTab">
         <div id="tabHeads" class="tabhead">
             <span tabSrc="video" class="focus" data-content-id="video"><var id="lang_tab_insertV"></var></span>
-            <!--<span style="display:none;" tabSrc="upload" data-content-id="upload"><var id="lang_tab_uploadV"></var></span>-->
+            <span tabSrc="upload" data-content-id="upload"><var id="lang_tab_uploadV"></var></span>
         </div>
         <div id="tabBodys" class="tabbody">
             <div id="video" class="panel focus">
@@ -44,24 +44,33 @@
             <div id="upload" class="panel">
                 <div id="upload_left">
                     <div id="queueList" class="queueList">
-                        <div class="statusBar element-invisible">
-                            <div class="progress">
-                                <span class="text">0%</span>
-                                <span class="percentage"></span>
-                            </div><div class="info"></div>
-                            <div class="btns">
-                                <div id="filePickerBtn"></div>
-                                <div class="uploadBtn"><var id="lang_start_upload"></var></div>
-                            </div>
+<!--                        <div class="statusBar element-invisible">-->
+<!--                            <div class="progress">-->
+<!--                                <span class="text">0%</span>-->
+<!--                                <span class="percentage"></span>-->
+<!--                            </div><div class="info"></div>-->
+<!--                            <div class="btns">-->
+<!--                                <div id="filePickerBtn"></div>-->
+<!--                                <div class="uploadBtn"><var id="lang_start_upload"></var></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div style="padding:10px 0 0 10px;display:flex;">
+                            <input type="text" id="videoUploadUrl" placeholder="输入MP4视频路径" style="outline:none;flex-grow: 1;margin-right: 10px;border: 1px solid #EEE;" />
+                            <a id="videoDialogSelector" href="javascript:;" style="color:#333;text-decoration: none;background: #f7f7f7;border-radius: 5px;line-height: 30px;display: inline-block;padding: 0 10px;">
+                                选择视频文件
+                            </a>
                         </div>
                         <div id="dndArea" class="placeholder">
-                            <div class="filePickerContainer">
-                                <div id="filePickerReady"></div>
-                            </div>
+                            <video id="videoPreview" controls="true" style="display:none;position:absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                                <source src="" type="video/mp4"/>
+                            </video>
+<!--                            <div class="filePickerContainer">-->
+<!--                                <div id="filePickerReady"></div>-->
+<!--                            </div>-->
                         </div>
-                        <ul class="filelist element-invisible">
-                            <li id="filePickerBlock" class="filePickerBlock"></li>
-                        </ul>
+<!--                        <ul class="filelist element-invisible">-->
+<!--                            <li id="filePickerBlock" class="filePickerBlock"></li>-->
+<!--                        </ul>-->
                     </div>
                 </div>
                 <div id="uploadVideoInfo">
@@ -90,6 +99,6 @@
 <!--<link rel="stylesheet" type="text/css" href="../../third-party/webuploader/webuploader.css">-->
 
 <!-- video -->
-<script type="text/javascript" src="video.js?20211028"></script>
+<script type="text/javascript" src="video.js?20220422"></script>
 </body>
 </html>

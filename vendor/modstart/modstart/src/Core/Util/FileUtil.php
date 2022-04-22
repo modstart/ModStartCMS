@@ -3,6 +3,7 @@
 namespace ModStart\Core\Util;
 
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
 
 class FileUtil
 {
@@ -86,6 +87,37 @@ class FileUtil
         ];
         $type = strtolower($type);
         return isset($mimeMap[$type]) ? $mimeMap[$type] : null;
+    }
+
+    public static function filePathWritableCheck($paths)
+    {
+        if (empty($paths)) {
+            return Response::generateSuccess();
+        }
+        $paths = array_unique(array_map(function ($f) {
+            return dirname($f);
+        }, $paths));
+        $paths = array_filter($paths, function ($f) use ($paths) {
+            foreach ($paths as $ff) {
+                if ($ff != $f && starts_with($ff, $f)) {
+                    return false;
+                }
+            }
+            return true;
+        });
+        if (empty($paths)) {
+            return Response::generateSuccess();
+        }
+        foreach ($paths as $file) {
+            $checkFile = base_path($file . '/._write_check_');
+            FileUtil::write($checkFile, 'ok');
+            // echo "$checkFile\n";
+            if (!file_exists($checkFile)) {
+                return Response::generateError('目录' . $file . '测试写入失败，请检查权限');
+            }
+            @unlink($checkFile);
+        }
+        return Response::generateSuccess();
     }
 
     public static function write($path, $content)

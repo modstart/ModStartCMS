@@ -17,14 +17,7 @@
         </div>
         <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>
         <div class="nav">
-            <div class="search">
-                <div class="box">
-                    <form action="{{modstart_web_url('search')}}" method="get">
-                        <input type="text" name="keywords" placeholder="搜索内容"/>
-                        <button type="submit"><i class="iconfont icon-search"></i></button>
-                    </form>
-                </div>
-            </div>
+            @include('module::Vendor.View.searchBox.header')
             @foreach(\Module\Nav\Util\NavUtil::listByPositionWithCache('head') as $nav)
                 @if(empty($nav['_child']))
                     <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue($nav)}}>{{$nav['name']}}</a>

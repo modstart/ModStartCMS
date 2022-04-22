@@ -69,6 +69,15 @@ class UpgradeUtil
         BizException::throwsIf('diffContentFile不存在', !file_exists($diffContentFile));
         $diffContent = @json_decode(file_get_contents($diffContentFile), true);
         BizException::throwsIf('diffContent为空', empty($diffContent));
+        $checkFiles = [];
+        if (!empty($diffContent['add'])) {
+            $checkFiles = array_merge($checkFiles, $diffContent['add']);
+        }
+        if (!empty($diffContent['update'])) {
+            $checkFiles = array_merge($checkFiles, $diffContent['update']);
+        }
+        $ret = FileUtil::filePathWritableCheck($checkFiles);
+        BizException::throwsIfResponseError($ret);
         $zipper = new Zipper();
         $zipper->make($package);
         $logs = [];

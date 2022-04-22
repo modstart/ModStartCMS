@@ -20,12 +20,40 @@
         <div class="nav-mask"
              onclick="$(this).closest('.ub-header-b').removeClass('show');$('body').removeClass('scroll-lock');"></div>
         <div class="nav">
-            <div class="search">
+            <div class="search has-drop">
                 <div class="box">
                     <form action="#" method="get">
                         <input type="text" name="keyword" placeholder="搜索内容"/>
                         <button type="submit"><i class="iconfont icon-search"></i></button>
                     </form>
+                    <div class="search-select">
+                        <div class="search-select-box">
+                            <span class="text">内容</span>
+                            <i class="iconfont icon-angle-down"></i>
+                        </div>
+                        <div class="search-select-drop">
+                            <a class="search-select-item" href="javascript:;" data-search-url="/aaa">
+                                文档
+                            </a>
+                            <a class="search-select-item" href="javascript:;" data-search-url="/bbb">
+                                文库
+                            </a>
+                        </div>
+                    </div>
+                    <script>
+                        $(function(){
+                            var $search = $('header .search.has-drop .box');
+                            $search.on('click','.search-select-item',function(){
+                                $search.find('form').attr('action',$(this).attr('data-search-url'));
+                                $search.find('.search-select-box .text').html($(this).html());
+                                $search.find('.search-select').removeClass('show');
+                                return false;
+                            });
+                            $search.find('.search-select-box').on('click',function(){
+                                $search.find('.search-select').addClass('show');
+                            });
+                        });
+                    </script>
                 </div>
             </div>
             <a href="#" class="active">首页</a>
@@ -50,80 +78,80 @@
 </header>
 <div class="ub-header-b-placeholder"></div>
 
-<header class="ub-header-b transparent">
-    <div class="ub-container">
-        <div class="menu">
-            <a href="/member_message">
-                <i class="iconfont icon-bell"></i>
-                <span class="badge">5</span>
-            </a>
-            <a href="/member"><i class="iconfont icon-user"></i> 用户</a>
-            <a href="#">退出</a>
-            <a href="#">登录</a>
-            <a href="#">注册</a>
-        </div>
-        <div class="logo">
-            <a href="#">
-                <img data-src="placeholder/400x100"/>
-            </a>
-        </div>
-        <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>
-        <div class="nav">
-            <div class="search">
-                <div class="box">
-                    <form action="#" method="get">
-                        <input type="text" name="keyword" placeholder="搜索内容"/>
-                        <button type="submit"><i class="iconfont icon-search"></i></button>
-                    </form>
-                </div>
-            </div>
-            <a href="#">首页</a>
-            <a href="#" class="active">导航A</a>
-        </div>
-        <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">
-            <i class="show iconfont icon-list"></i>
-            <i class="close iconfont icon-close"></i>
-        </a>
-    </div>
-</header>
+<!--<header class="ub-header-b transparent">-->
+<!--    <div class="ub-container">-->
+<!--        <div class="menu">-->
+<!--            <a href="/member_message">-->
+<!--                <i class="iconfont icon-bell"></i>-->
+<!--                <span class="badge">5</span>-->
+<!--            </a>-->
+<!--            <a href="/member"><i class="iconfont icon-user"></i> 用户</a>-->
+<!--            <a href="#">退出</a>-->
+<!--            <a href="#">登录</a>-->
+<!--            <a href="#">注册</a>-->
+<!--        </div>-->
+<!--        <div class="logo">-->
+<!--            <a href="#">-->
+<!--                <img data-src="placeholder/400x100"/>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>-->
+<!--        <div class="nav">-->
+<!--            <div class="search">-->
+<!--                <div class="box">-->
+<!--                    <form action="#" method="get">-->
+<!--                        <input type="text" name="keyword" placeholder="搜索内容"/>-->
+<!--                        <button type="submit"><i class="iconfont icon-search"></i></button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <a href="#">首页</a>-->
+<!--            <a href="#" class="active">导航A</a>-->
+<!--        </div>-->
+<!--        <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">-->
+<!--            <i class="show iconfont icon-list"></i>-->
+<!--            <i class="close iconfont icon-close"></i>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</header>-->
 
 
-<header class="ub-header-b primary">
-    <div class="ub-container">
-        <div class="menu">
-            <a href="/member_message">
-                <i class="iconfont icon-bell"></i>
-                <span class="badge">5</span>
-            </a>
-            <a href="/member"><i class="iconfont icon-user"></i> 用户</a>
-            <a href="#">退出</a>
-            <a href="#">登录</a>
-            <a href="#">注册</a>
-        </div>
-        <div class="logo">
-            <a href="#">
-                <img data-src="placeholder/400x100"/>
-            </a>
-        </div>
-        <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>
-        <div class="nav">
-            <div class="search">
-                <div class="box">
-                    <form action="#" method="get">
-                        <input type="text" name="keyword" placeholder="搜索内容"/>
-                        <button type="submit"><i class="iconfont icon-search"></i></button>
-                    </form>
-                </div>
-            </div>
-            <a href="#">首页</a>
-            <a href="#" class="active">导航A</a>
-        </div>
-        <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">
-            <i class="show iconfont icon-list"></i>
-            <i class="close iconfont icon-close"></i>
-        </a>
-    </div>
-</header>
+<!--<header class="ub-header-b primary">-->
+<!--    <div class="ub-container">-->
+<!--        <div class="menu">-->
+<!--            <a href="/member_message">-->
+<!--                <i class="iconfont icon-bell"></i>-->
+<!--                <span class="badge">5</span>-->
+<!--            </a>-->
+<!--            <a href="/member"><i class="iconfont icon-user"></i> 用户</a>-->
+<!--            <a href="#">退出</a>-->
+<!--            <a href="#">登录</a>-->
+<!--            <a href="#">注册</a>-->
+<!--        </div>-->
+<!--        <div class="logo">-->
+<!--            <a href="#">-->
+<!--                <img data-src="placeholder/400x100"/>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>-->
+<!--        <div class="nav">-->
+<!--            <div class="search">-->
+<!--                <div class="box">-->
+<!--                    <form action="#" method="get">-->
+<!--                        <input type="text" name="keyword" placeholder="搜索内容"/>-->
+<!--                        <button type="submit"><i class="iconfont icon-search"></i></button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <a href="#">首页</a>-->
+<!--            <a href="#" class="active">导航A</a>-->
+<!--        </div>-->
+<!--        <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">-->
+<!--            <i class="show iconfont icon-list"></i>-->
+<!--            <i class="close iconfont icon-close"></i>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</header>-->
 
 <div class="ub-container">
     <div class="block-placeholder">

@@ -330,19 +330,37 @@
                 align: align
             });
         }
-
-        var count = uploadFile.getQueueCount();
-        if (count) {
-            $('.info', '#queueList').html('<span style="color:red;">' + '还有2个未上传文件'.replace(/[\d]/, count) + '</span>');
-            return false;
-        } else {
-            editor.execCommand('insertvideo', videoObjs, 'upload');
-        }
+        videoObjs.push({
+            url: $('#videoUploadUrl').val(),
+            width: width,
+            height: height,
+            align: align
+        });
+        // var count = uploadFile.getQueueCount();
+        // if (count) {
+        //     $('.info', '#queueList').html('<span style="color:red;">' + '还有2个未上传文件'.replace(/[\d]/, count) + '</span>');
+        //     return false;
+        // } else {
+        editor.execCommand('insertvideo', videoObjs, 'upload');
+        // }
     }
 
     /*初始化上传标签*/
     function initUpload() {
-        uploadFile = new UploadFile('queueList');
+        $('#videoDialogSelector').on('click',function(){
+            parent.__selectorDialog = new parent.MS.selectorDialog({
+                server: parent.__selectorDialogServer + '/video',
+                callback: function (items) {
+                    if(items.length>0){
+                        $('#videoUploadUrl').val(items[0].fullPath);
+                        $('#videoPreview').show().html('<source src="'+items[0].fullPath+'" type="video/mp4"/>');
+                    }
+                }
+            }).show();
+        });
+        $('#videoUploadUrl').on('change',function(){
+            $('#videoPreview').show().html('<source src="'+this.value+'" type="video/mp4"/>');
+        });
     }
 
 

@@ -27444,7 +27444,7 @@
                 // popBodyEl.style.width = width + 'px';
                 // popBodyEl.style.height = height + 'px';
                 var scale = (width / size.width);
-                console.log('size', {width,height,width});
+                // console.log('size', {width,height,width});
                 $(popBodyEl).find('.edui-dialog-content').css({
                     width:width+'px',
                     height:height+'px',
@@ -28212,7 +28212,7 @@
             'searchreplace': '~/dialogs/searchreplace/searchreplace.html',
             'map': '~/dialogs/map/map.html',
             'gmap': '~/dialogs/gmap/gmap.html',
-            'insertvideo': '~/dialogs/video/video.html?20211028',
+            'insertvideo': '~/dialogs/video/video.html?20220422',
             'help': '~/dialogs/help/help.html',
             'preview': '~/dialogs/preview/preview.html',
             'emotion': '~/dialogs/emotion/emotion.html',

@@ -19,6 +19,8 @@ use Module\TagManager\Biz\TagManagerBiz;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
 use Module\Vendor\Provider\HomePage\HomePageProvider;
+use Module\Vendor\Provider\SearchBox\SearchBoxProvider;
+use Module\Vendor\Provider\SearchBox\QuickSearchBoxProvider;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,9 @@ class ModuleServiceProvider extends ServiceProvider
         if (method_exists(ModuleClassLoader::class, 'addClass')) {
             ModuleClassLoader::addClass('MCms', __DIR__ . '/../Helpers/MCms.php');
         }
+        SearchBoxProvider::register(
+            QuickSearchBoxProvider::make('cms','内容',modstart_web_url('search'),100)
+        );
         CmsThemeProvider::register(DefaultThemeProvider::class);
         HomePageProvider::register(CmsHomePageProvider::class);
 

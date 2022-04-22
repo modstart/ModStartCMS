@@ -208,6 +208,8 @@ class ModuleStoreUtil
     {
         $results = [];
         BizException::throwsIf('文件不存在 ' . $package, empty($package) || !file_exists($package));
+        $ret = FileUtil::filePathWritableCheck(['module/._write_check_']);
+        BizException::throwsIfResponseError($ret);
         $moduleDir = base_path('module/' . $module);
         if (file_exists($moduleDir)) {
             $moduleBackup = '_delete_.' . date('Ymd_His') . '.' . $module;
