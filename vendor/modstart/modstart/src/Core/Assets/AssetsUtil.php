@@ -48,6 +48,11 @@ class AssetsUtil
 
     public static function fixCurrentDomain($path)
     {
+        if (is_array($path)) {
+            return array_values(array_map(function ($p) {
+                return self::fixCurrentDomain($p);
+            }, $path));
+        }
         if (Str::startsWith($path, 'http://') || Str::startsWith($path, 'https://')) {
             return $path;
         }
@@ -67,6 +72,11 @@ class AssetsUtil
 
     public static function fixFull($path, $hash = true)
     {
+        if (is_array($path)) {
+            return array_values(array_map(function ($p) use ($hash) {
+                return self::fixFull($p, $hash);
+            }, $path));
+        }
         if (empty($path)) {
             return $path;
         }
@@ -111,6 +121,11 @@ class AssetsUtil
      */
     public static function fixFullWithCdn($path, $cdn, $hash = true)
     {
+        if (is_array($path)) {
+            return array_values(array_map(function ($p) use ($cdn, $hash) {
+                return self::fixFullWithCdn($p, $cdn, $hash);
+            }, $path));
+        }
         if (empty($path)) {
             return $path;
         }
@@ -122,6 +137,11 @@ class AssetsUtil
 
     public static function fixFullOrDefault($path, $default = null)
     {
+        if (is_array($path)) {
+            return array_values(array_map(function ($p) use ($default) {
+                return self::fixFullOrDefault($p, $default);
+            }, $path));
+        }
         if (empty($path)) {
             return self::fixFull($default);
         }

@@ -22,6 +22,13 @@ class HomePageProvider
         self::$instances[] = $provider;
     }
 
+    public static function registerQuick($title, $action, $type = [AbstractHomePageProvider::TYPE_PC, AbstractHomePageProvider::TYPE_MOBILE])
+    {
+        self::register(
+            QuickHomePageProvider::make($title, $action, $type)
+        );
+    }
+
     /**
      * @return AbstractHomePageProvider[]
      */

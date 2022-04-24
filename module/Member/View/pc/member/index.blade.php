@@ -12,7 +12,7 @@
             <div class="tw-flex-grow">
                 <div class="tw-text-bold">{{$_memberUser['username']}}</div>
                 <div>
-                    @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') && modstart_config('moduleMemberVipEnable'))
+                    @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable'))
                         <span class="tw-my-1 tw-mr-2 tw-inline-block ub-text-primary">
                             @if(\Module\Member\Auth\MemberVip::get('icon'))
                                 <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(\Module\Member\Auth\MemberVip::get('icon'))}}"

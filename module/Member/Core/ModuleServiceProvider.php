@@ -34,11 +34,11 @@ class ModuleServiceProvider extends ServiceProvider
                     'title' => '资产',
                     'sort' => 900,
                     'children' => [
-                        ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') && modstart_config('Member_MoneyEnable', false) ? [
+                        ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? [
                             'title' => '我的钱包',
                             'url' => modstart_web_url('member_money'),
                         ] : null,
-                        ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') && modstart_config('Member_CreditEnable', false) ? [
+                        ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [
                             'title' => '我的积分',
                             'url' => modstart_web_url('member_credit'),
                         ] : null,
@@ -174,10 +174,10 @@ class ModuleServiceProvider extends ServiceProvider
                                     'title' => '钱包设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@money',
                                 ] : null,
-                                ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [
-                                    'title' => '积分设置',
-                                    'url' => '\Module\Member\Admin\Controller\ConfigController@credit',
-                                ] : null,
+//                                ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [
+//                                    'title' => '积分设置',
+//                                    'url' => '\Module\Member\Admin\Controller\ConfigController@credit',
+//                                ] : null,
                                 ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? [
                                     'title' => 'VIP设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@vip',

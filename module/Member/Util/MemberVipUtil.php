@@ -5,13 +5,14 @@ namespace Module\Member\Util;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
+use ModStart\Module\ModuleManager;
 use Module\Vendor\Cache\CacheUtil;
 
 class MemberVipUtil
 {
     public static function isEnable()
     {
-        return modstart_config('moduleMemberVipEnable', false);
+        return ModuleManager::getModuleConfigBoolean('Member', 'vipEnable');
     }
 
     public static function all()

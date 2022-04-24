@@ -51,33 +51,30 @@ class ConfigController extends Controller
     public function vip(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('用户VIP设置');
-        $builder->switch('moduleMemberVipEnable', '用户VIP功能开启');
         $builder->text('Member_VipTitle', 'VIP开通标题')->help('默认为 开通尊贵VIP 享受更多权益');
         $builder->text('Member_VipSubTitle', 'VIP开通副标题')->help('默认为 会员权益1 丨 会员权益2 丨 会员权益3 丨 会员权益4');
         $builder->formClass('wide');
         return $builder->perform();
     }
 
-    public function credit(AdminConfigBuilder $builder)
-    {
-        $builder->pageTitle('积分设置');
-        $builder->switch('Member_CreditEnable', '启用积分功能');
-        $builder->formClass('wide');
-        return $builder->perform();
-    }
+//    public function credit(AdminConfigBuilder $builder)
+//    {
+//        $builder->pageTitle('积分设置');
+//        $builder->switch('Member_CreditEnable', '启用积分功能');
+//        $builder->formClass('wide');
+//        return $builder->perform();
+//    }
 
     public function money(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('用户钱包设置');
-        $builder->switch('Member_MoneyEnable', '启用钱包功能');
-        if (ModuleManager::getModuleConfig('Member', 'moneyEnable', false)) {
-            $builder->switch('Member_MoneyCashEnable', '开启用户提现')->when('=', 1, function (Form $form) {
-                $form->number('Member_MoneyCashMin', '最小提现金额')->help('默认为 100');
-                $form->number('Member_MoneyCashTaxRate', '用户提现手续费')->help('如 1.00 表示手续费为 1.00%');
-                $form->richHtml('Member_MoneyCashDescription', '用户提现说明');
-            });
-            $builder->richHtml('Member_MoneyChargeDesc', '钱包充值说明');
-        }
+//        $builder->switch('Member_MoneyEnable', '启用钱包功能');
+        $builder->switch('Member_MoneyCashEnable', '开启用户提现')->when('=', 1, function (Form $form) {
+            $form->number('Member_MoneyCashMin', '最小提现金额')->help('默认为 100');
+            $form->number('Member_MoneyCashTaxRate', '用户提现手续费')->help('如 1.00 表示手续费为 1.00%');
+            $form->richHtml('Member_MoneyCashDescription', '用户提现说明');
+        });
+        $builder->richHtml('Member_MoneyChargeDesc', '钱包充值说明');
         $builder->formClass('wide');
         return $builder->perform();
     }

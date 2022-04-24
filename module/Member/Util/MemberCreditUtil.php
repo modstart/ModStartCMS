@@ -9,6 +9,7 @@ class MemberCreditUtil
     public static function paginateLog($memberUserId, $page, $pageSize, $option = [])
     {
         $option['where']['memberUserId'] = $memberUserId;
+        $option['order'] = ['id', 'desc'];
         return ModelUtil::paginate('member_credit_log', $page, $pageSize, $option);
     }
 
