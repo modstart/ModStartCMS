@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\CurlUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 

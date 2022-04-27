@@ -19,10 +19,12 @@
 - RandomImage 随机图片提供者
 - RichContent 富文本内容提供者
 - Schedule 调度提供者
+- SearchBox 多搜提供者
 - SiteTemplate 网站模板提供者
 - SiteUrl 网站链接提供者
 - SmsSender 短信发送提供者
 - SmsTemplate 短信模板提供者
+- SuperSearch 超级搜索
 - VideoStream 视频点播提供者
 
 ## 使用者 Biz

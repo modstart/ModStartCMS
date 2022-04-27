@@ -14,8 +14,10 @@
                     @endforeach
                 </table>
             </div>
+        @elseif(!empty($value))
+            <pre style="margin:0;overflow:auto;">{{json_encode($value,JSON_PRETTY_PRINT)}}</pre>
         @else
-            <pre style="margin:0;overflow:auto;">{{$value?json_encode($value,JSON_PRETTY_PRINT):''}}</pre>
+            <span class="ub-text-muted">-</span>
         @endif
 
     </div>

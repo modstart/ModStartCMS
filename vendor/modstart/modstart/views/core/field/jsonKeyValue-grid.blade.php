@@ -9,6 +9,6 @@
             @endforeach
         </table>
     </div>
-@else
-    <pre style="margin:0;overflow:auto;width:{{$width}};">{{$value?json_encode($value,JSON_PRETTY_PRINT):''}}</pre>
+@elseif(!empty($value))
+    <pre style="margin:0;overflow:auto;width:{{$width}};">{{json_encode($value,JSON_PRETTY_PRINT)}}</pre>
 @endif

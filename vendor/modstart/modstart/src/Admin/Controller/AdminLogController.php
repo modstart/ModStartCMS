@@ -10,7 +10,6 @@ use ModStart\Admin\Concern\HasAdminCRUD;
 use ModStart\Admin\Model\AdminLog;
 use ModStart\Admin\Type\AdminLogType;
 use ModStart\Detail\Detail;
-use ModStart\Field\AbstractField;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
@@ -23,12 +22,13 @@ class AdminLogController extends Controller
     {
         $grid = new Grid(AdminLog::class, function (Grid $grid) {
             $grid->display('id', L('ID'))->width(80);
-            $grid->display('created_at', L('Created At'))->width(160);
+            $grid->select('adminUserId', L('Admin User'))->optionModel('admin_user', 'id', 'username');
             $grid->type('type', L('Type'))->type(AdminLogType::class)->width(100);
             $grid->display('summary', L('Title'));
             $grid->jsonKeyValue('data.content', L('Data'));
+            $grid->display('created_at', L('Created At'))->width(160);
             $grid->gridFilter(function (GridFilter $filter) {
-                $filter->eq('id', L('ID'));
+                $filter->eq('adminUserId', L('Admin User'))->selectModel('admin_user', 'id', 'username');
                 $filter->like('summary', L('Title'));
                 $filter->eq('type', L('Type'))->radio(AdminLogType::class);
             });

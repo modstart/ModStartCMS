@@ -145,7 +145,7 @@ let Dialog = {
                 }
                 try {
                     let title = $(layero).find('iframe')[0].contentWindow.document.title;
-                    layer.title(title, index);
+                    layer.title(Util.specialchars(title), index);
                 } catch (e) {
                 }
             },

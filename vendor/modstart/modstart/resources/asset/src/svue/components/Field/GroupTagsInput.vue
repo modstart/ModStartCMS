@@ -1,7 +1,7 @@
 <template>
     <div class="pb-group-tags-input">
         <div v-if="!option.length" class="ub-text-muted">
-            暂无标签
+            无
         </div>
         <table v-else>
             <tr v-for="(groupTagItem,groupTagIndex) in option" :key="groupTagIndex">

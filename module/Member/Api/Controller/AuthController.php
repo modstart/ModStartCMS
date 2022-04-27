@@ -749,11 +749,12 @@ class AuthController extends ModuleBaseController
         }
 
         $verify = rand(100000, 999999);
+
+        MailSendJob::create($email, '注册账户验证码', 'verify', ['code' => $verify]);
+
         Session::put('registerEmailVerify', $verify);
         Session::put('registerEmailVerifyTime', time());
         Session::put('registerEmail', $email);
-
-        MailSendJob::create($email, '注册账户验证码', 'verify', ['code' => $verify]);
 
         return Response::generate(0, '验证码发送成功');
     }
@@ -798,11 +799,15 @@ class AuthController extends ModuleBaseController
         }
 
         $verify = rand(100000, 999999);
+
+        $ret = SmsUtil::send($phone, 'verify', ['code' => $verify]);
+        if (Response::isError($ret)) {
+            return $ret;
+        }
+
         Session::put('registerPhoneVerify', $verify);
         Session::put('registerPhoneVerifyTime', time());
         Session::put('registerPhone', $phone);
-
-        $ret = SmsUtil::send($phone, 'verify', ['code' => $verify]);
 
         return Response::generate(0, '验证码发送成功');
     }
@@ -1034,11 +1039,12 @@ class AuthController extends ModuleBaseController
         }
 
         $verify = rand(100000, 999999);
+
+        MailSendJob::create($email, '找回密码验证码', 'verify', ['code' => $verify]);
+
         Session::put('retrieveEmailVerify', $verify);
         Session::put('retrieveEmailVerifyTime', time());
         Session::put('retrieveEmail', $email);
-
-        MailSendJob::create($email, '找回密码验证码', 'verify', ['code' => $verify]);
 
         return Response::generate(0, '验证码发送成功');
     }
