@@ -3,7 +3,7 @@
     <div class="search @if(count($searchBoxProviders)>1) has-drop @endif">
         <div class="box">
             <form action="{{$searchBoxProviders[0]->url()}}" method="get">
-                <input type="text" name="keywords" placeholder="搜索内容"/>
+                <input type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索内容"/>
                 <button type="submit"><i class="iconfont icon-search"></i></button>
             </form>
             @if(count($searchBoxProviders)>1)

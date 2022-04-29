@@ -1,6 +1,6 @@
 @extends('modstart::admin.frame')
 
-@section('pageTitle'){{'超级搜索'}}@endsection
+@section('pageTitle'){{'超级搜索索引同步'}}@endsection
 
 @section('bodyAppend')
     @parent
@@ -65,7 +65,7 @@
 
     <div class="ub-panel">
         <div class="head">
-            <div class="title">超级搜索同步</div>
+            <div class="title">超级搜索索引同步</div>
         </div>
         <div class="body">
             <table class="ub-table">

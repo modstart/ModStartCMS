@@ -16,14 +16,6 @@ abstract class AbstractAdminSuperSearchController extends Controller
 {
     /**
      * @param AbstractSuperSearchProvider $provider
-     * @param $bucket
-     * @param $nextId
-     * @return mixed
-     */
-    abstract public function sync($provider, $bucket, $nextId);
-
-    /**
-     * @param AbstractSuperSearchProvider $provider
      * @param array $bizList
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      * @throws BizException
@@ -50,7 +42,11 @@ abstract class AbstractAdminSuperSearchController extends Controller
                         $provider->bucketDelete($bucket);
                         $provider->bucketCreate($bucket, $biz->fields());
                     }
-                    return $this->sync($provider, $bucket, $nextId);
+                    $ret = $biz->syncBatch($provider, $nextId);
+                    $data = [];
+                    $data['count'] = $ret['count'];
+                    $data['nextId'] = $ret['nextId'];
+                    return Response::generateSuccessData($data);
             }
         }
         return view('module::Vendor.View.superSearch.admin.index', [

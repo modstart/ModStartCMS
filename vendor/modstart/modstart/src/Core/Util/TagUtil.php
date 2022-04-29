@@ -63,6 +63,36 @@ class TagUtil
         return array_unique($filterTags);
     }
 
+    public static function recordsString2Array(&$records, $keyArray, $format = 'auto')
+    {
+        if (empty($records)) {
+            return;
+        }
+        if (is_string($keyArray)) {
+            $keyArray = [$keyArray];
+        }
+        foreach ($records as &$record) {
+            foreach ($keyArray as $key) {
+                $record[$key] = self::string2Array($record[$key], $format);
+            }
+        }
+    }
+
+    public static function recordsArray2String(&$records, $keyArray)
+    {
+        if (empty($records)) {
+            return;
+        }
+        if (is_string($keyArray)) {
+            $keyArray = [$keyArray];
+        }
+        foreach ($records as &$record) {
+            foreach ($keyArray as $key) {
+                $record[$key] = self::array2String($record[$key]);
+            }
+        }
+    }
+
     public static function mapInfo($tags, array $tagMap = [])
     {
         foreach ($tags as &$tag) {

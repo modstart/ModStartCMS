@@ -328,6 +328,9 @@ class ModelUtil
 
     public static function allInWithOrder($model, $field, $in, $fields = ['*'])
     {
+        if (empty($in)) {
+            return [];
+        }
         $map = array_build(self::allIn($model, $field, $in, $fields), function ($k, $v) use ($field) {
             return [$v[$field], $v];
         });

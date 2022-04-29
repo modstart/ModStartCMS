@@ -85,6 +85,15 @@ class InputPackage
         return new InputPackage(Input::all());
     }
 
+    /**
+     * @return InputPackage
+     */
+    public static function buildFromJsonBody()
+    {
+        $content = file_get_contents('php://input');
+        return self::build(@json_decode($content, true));
+    }
+
     public function set($name, $value)
     {
         $this->data[$name] = $value;

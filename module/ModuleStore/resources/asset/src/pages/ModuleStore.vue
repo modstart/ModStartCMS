@@ -216,15 +216,15 @@
                                         <i class="iconfont icon-cog"></i>配置
                                     </a>
                                 </div>
-                                <a v-if="module._isInstalled && !module._isLocal && !module._isSystem && module.latestVersion && versionCompare(module.latestVersion,module._localVersion)>0"
+                                <div v-if="module._isSystem" class="ub-text-muted tw-inline-block"><i
+                                    class="iconfont icon-tag"></i><span
+                                    v-html="$highlight(module.name,search.keywords)"></span></div>
+                                <a v-if="module._isInstalled && !module._isLocal && module.latestVersion && versionCompare(module.latestVersion,module._localVersion)>0"
                                    :data-tk-event="'ModuleStore,UpgradeSystem,'+module.name"
                                    @click="doUpgrade(module)"
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
                                     <i class="iconfont icon-direction-up"></i>升级
                                 </a>
-                                <div v-if="module._isSystem" class="ub-text-muted tw-inline-block"><i
-                                    class="iconfont icon-tag"></i><span
-                                    v-html="$highlight(module.name,search.keywords)"></span></div>
                             </div>
                             <div v-if="!module._isSystem"
                                  class="tw-border-0 tw-border-solid tw-border-t tw-border-gray-100 tw-mt-2 tw-pt-2 tw-text-gray-500">

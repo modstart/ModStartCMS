@@ -4,6 +4,11 @@
 namespace Module\Vendor\Provider\SuperSearch;
 
 
+/**
+ * Class QuickSuperSearchBiz
+ * @package Module\Vendor\Provider\SuperSearch
+ * @deprecated
+ */
 class QuickSuperSearchBiz extends AbstractSuperSearchBiz
 {
     protected $name;
