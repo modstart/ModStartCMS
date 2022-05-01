@@ -16,8 +16,20 @@ class RichHtml extends AbstractField
     protected function setup()
     {
         $this->addVariables([
+            'editorMode' => 'default',
             'server' => modstart_admin_url('data/ueditor'),
         ]);
+    }
+
+    /**
+     * 编辑器模式
+     * @param $mode string default|simple
+     * @return $this
+     */
+    public function editorMode($mode)
+    {
+        $this->addVariables(['editorMode'=>$mode]);
+        return $this;
     }
 
     public function server($server)

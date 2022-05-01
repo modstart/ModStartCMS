@@ -14,11 +14,20 @@
 </div>
 <script>
     $(function () {
-        window.api.editor.basic('{{$id}}Editor', {
-            server: "{{$server}}",
-            ready: function () {
-                // console.log('ready');
-            }
-        }, {topOffset: 0});
+        @if($editorMode=='simple')
+            window.api.editor.simple('{{$id}}Editor', {
+                server: "{{$server}}",
+                ready: function () {
+                    // console.log('ready');
+                }
+            }, {topOffset: 0});
+        @else
+            window.api.editor.basic('{{$id}}Editor', {
+                server: "{{$server}}",
+                ready: function () {
+                    // console.log('ready');
+                }
+            }, {topOffset: 0});
+        @endif
     });
 </script>

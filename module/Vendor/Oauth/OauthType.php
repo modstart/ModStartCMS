@@ -1,10 +1,14 @@
 <?php
-//
-//namespace Module\Vendor\Oauth;
-//
-//
-//class OauthType
-//{
+
+namespace Module\Vendor\Oauth;
+
+/**
+ * Class OauthType
+ * @package Module\Vendor\Oauth
+ * @deprecated
+ */
+class OauthType
+{
 //    const WECHAT_UNION = 'wechatunion';
 //
 //    const WECHAT_MOBILE = 'wechatmobile';
@@ -25,4 +29,4 @@
 //            self::WECHAT_MINI_PROGRAM => '微信小程序',
 //        ];
 //    }
-//}
+}

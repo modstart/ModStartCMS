@@ -47,8 +47,5 @@ return [
         'Cms' => [
             'enable' => true,
         ],
-        'TagManager' => [
-            'enable' => true,
-        ],
     ],
 ];
