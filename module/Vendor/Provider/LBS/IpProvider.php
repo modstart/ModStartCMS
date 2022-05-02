@@ -26,4 +26,34 @@ class IpProvider
     {
         return self::getByName($name);
     }
+
+    public static function first()
+    {
+        foreach (self::all() as $provider) {
+            return $provider;
+        }
+        return null;
+    }
+
+    public static function firstResponse($ip)
+    {
+        $provider = self::first();
+        if (!$provider) {
+            return null;
+        }
+        return $provider->getLocation($ip);
+    }
+
+    public static function firstResponseKey($ip, $keys = ['province'])
+    {
+        $res = self::firstResponse($ip);
+        if (empty($res)) {
+            return '';
+        }
+        $result = [];
+        foreach ($keys as $key) {
+            $result[] = $res->{$key};
+        }
+        return join('', $result);
+    }
 }

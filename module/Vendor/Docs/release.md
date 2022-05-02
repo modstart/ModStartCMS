@@ -1,5 +1,6 @@
 ## 3.4.0
 
+- 新增：LBS定位Provider功能增强
 - 新增：日志新增Rotate特性
 - 新增：超级搜索同步策略调整
 - 新增：LiveStream新增pushFields自定义字段

@@ -76,7 +76,7 @@ class Tecmz
             $param['sign'] = SignUtil::common($param, $this->appSecret);
         }
         if ($this->debug) {
-            Log::debug('SoftAPI -> ' . self::$API_BASE . $gate . ' -> ' . json_encode($param));
+            Log::debug('TecmzApi -> ' . self::$API_BASE . $gate . ' -> ' . json_encode($param));
         }
         return CurlUtil::postJSONBody(self::$API_BASE . $gate, $param);
     }
