@@ -1,7 +1,7 @@
 /*!
  * ueditor
  * version: 2.0.0
- * build: Tue May 03 2022 20:47:11 GMT+0800 (China Standard Time)
+ * build: Tue May 03 2022 21:14:00 GMT+0800 (China Standard Time)
  */
 
 (function(){
@@ -8812,7 +8812,7 @@ UE.Editor.defaultOptions = function(editor) {
     initialContent: "",
     initialStyle: "",
     autoClearinitialContent: false,
-    iframeCssUrl: _url + "themes/iframe.css",
+    iframeCssUrl: _url + "themes/iframe.css?20220503",
     textarea: "editorValue",
     focus: false,
     focusInEnd: true,
@@ -30234,25 +30234,25 @@ UE.ui = baidu.editor.ui = {};
   };
 
   var iframeUrlMap = {
-    anchor: "~/dialogs/anchor/anchor.html?1651582031031",
-    insertimage: "~/dialogs/image/image.html?1651582031031",
-    link: "~/dialogs/link/link.html?1651582031031",
-    spechars: "~/dialogs/spechars/spechars.html?1651582031031",
-    searchreplace: "~/dialogs/searchreplace/searchreplace.html?1651582031031",
-    map: "~/dialogs/map/map.html?1651582031031",
-    insertvideo: "~/dialogs/video/video.html?1651582031031",
-    help: "~/dialogs/help/help.html?1651582031031",
-    preview: "~/dialogs/preview/preview.html?1651582031031",
-    emotion: "~/dialogs/emotion/emotion.html?1651582031031",
-    wordimage: "~/dialogs/wordimage/wordimage.html?1651582031031",
-    attachment: "~/dialogs/attachment/attachment.html?1651582031031",
-    insertframe: "~/dialogs/insertframe/insertframe.html?1651582031031",
-    edittip: "~/dialogs/table/edittip.html?1651582031031",
-    edittable: "~/dialogs/table/edittable.html?1651582031031",
-    edittd: "~/dialogs/table/edittd.html?1651582031031",
-    scrawl: "~/dialogs/scrawl/scrawl.html?1651582031031",
-    template: "~/dialogs/template/template.html?1651582031031",
-    background: "~/dialogs/background/background.html?1651582031031",
+    anchor: "~/dialogs/anchor/anchor.html?20220503",
+    insertimage: "~/dialogs/image/image.html?20220503",
+    link: "~/dialogs/link/link.html?20220503",
+    spechars: "~/dialogs/spechars/spechars.html?20220503",
+    searchreplace: "~/dialogs/searchreplace/searchreplace.html?20220503",
+    map: "~/dialogs/map/map.html?20220503",
+    insertvideo: "~/dialogs/video/video.html?20220503",
+    help: "~/dialogs/help/help.html?20220503",
+    preview: "~/dialogs/preview/preview.html?20220503",
+    emotion: "~/dialogs/emotion/emotion.html?20220503",
+    wordimage: "~/dialogs/wordimage/wordimage.html?20220503",
+    attachment: "~/dialogs/attachment/attachment.html?20220503",
+    insertframe: "~/dialogs/insertframe/insertframe.html?20220503",
+    edittip: "~/dialogs/table/edittip.html?20220503",
+    edittable: "~/dialogs/table/edittable.html?20220503",
+    edittd: "~/dialogs/table/edittd.html?20220503",
+    scrawl: "~/dialogs/scrawl/scrawl.html?20220503",
+    template: "~/dialogs/template/template.html?20220503",
+    background: "~/dialogs/background/background.html?20220503",
   };
   //为工具栏添加按钮，以下都是统一的按钮触发命令，所以写在一起
   var btnCmds = [
