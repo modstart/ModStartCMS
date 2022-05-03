@@ -1,7 +1,7 @@
 /*!
  * ueditor
  * version: 2.0.0
- * build: Tue May 03 2022 20:26:22 GMT+0800 (China Standard Time)
+ * build: Tue May 03 2022 20:47:11 GMT+0800 (China Standard Time)
  */
 
 (function(){
@@ -30234,25 +30234,25 @@ UE.ui = baidu.editor.ui = {};
   };
 
   var iframeUrlMap = {
-    anchor: "~/dialogs/anchor/anchor.html",
-    insertimage: "~/dialogs/image/image.html",
-    link: "~/dialogs/link/link.html",
-    spechars: "~/dialogs/spechars/spechars.html",
-    searchreplace: "~/dialogs/searchreplace/searchreplace.html",
-    map: "~/dialogs/map/map.html",
-    insertvideo: "~/dialogs/video/video.html",
-    help: "~/dialogs/help/help.html",
-    preview: "~/dialogs/preview/preview.html",
-    emotion: "~/dialogs/emotion/emotion.html",
-    wordimage: "~/dialogs/wordimage/wordimage.html",
-    attachment: "~/dialogs/attachment/attachment.html",
-    insertframe: "~/dialogs/insertframe/insertframe.html",
-    edittip: "~/dialogs/table/edittip.html",
-    edittable: "~/dialogs/table/edittable.html",
-    edittd: "~/dialogs/table/edittd.html",
-    scrawl: "~/dialogs/scrawl/scrawl.html",
-    template: "~/dialogs/template/template.html",
-    background: "~/dialogs/background/background.html",
+    anchor: "~/dialogs/anchor/anchor.html?1651582031031",
+    insertimage: "~/dialogs/image/image.html?1651582031031",
+    link: "~/dialogs/link/link.html?1651582031031",
+    spechars: "~/dialogs/spechars/spechars.html?1651582031031",
+    searchreplace: "~/dialogs/searchreplace/searchreplace.html?1651582031031",
+    map: "~/dialogs/map/map.html?1651582031031",
+    insertvideo: "~/dialogs/video/video.html?1651582031031",
+    help: "~/dialogs/help/help.html?1651582031031",
+    preview: "~/dialogs/preview/preview.html?1651582031031",
+    emotion: "~/dialogs/emotion/emotion.html?1651582031031",
+    wordimage: "~/dialogs/wordimage/wordimage.html?1651582031031",
+    attachment: "~/dialogs/attachment/attachment.html?1651582031031",
+    insertframe: "~/dialogs/insertframe/insertframe.html?1651582031031",
+    edittip: "~/dialogs/table/edittip.html?1651582031031",
+    edittable: "~/dialogs/table/edittable.html?1651582031031",
+    edittd: "~/dialogs/table/edittd.html?1651582031031",
+    scrawl: "~/dialogs/scrawl/scrawl.html?1651582031031",
+    template: "~/dialogs/template/template.html?1651582031031",
+    background: "~/dialogs/background/background.html?1651582031031",
   };
   //为工具栏添加按钮，以下都是统一的按钮触发命令，所以写在一起
   var btnCmds = [
@@ -31970,7 +31970,7 @@ UE.ui = baidu.editor.ui = {};
     },
     mapUrl: function(url) {
       return url
-        ? url.replace("~/", this.editor.options.UEDITOR_HOME_URL || "")
+        ? url.replace("~/", this.editor.options.UEDITOR_CORS_URL || "")
         : "";
     },
     triggerLayout: function() {
