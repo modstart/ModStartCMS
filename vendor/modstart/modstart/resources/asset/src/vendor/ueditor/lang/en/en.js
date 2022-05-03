@@ -7,7 +7,7 @@
  */
 UE.I18N['en'] = {
     'labelMap':{
-        'anchor':'Anchor', 'undo':'Undo', 'redo':'Redo', 'bold':'Bold', 'indent':'Indent', 'snapscreen':'SnapScreen',
+        'anchor':'Anchor', 'undo':'Undo', 'redo':'Redo', 'bold':'Bold', 'indent':'Indent',
         'italic':'Italic', 'underline':'Underline', 'strikethrough':'Strikethrough', 'subscript':'SubScript','fontborder':'text border',
         'superscript':'SuperScript', 'formatmatch':'Format Match', 'source':'Source', 'blockquote':'BlockQuote',
         'pasteplain':'PastePlain', 'selectall':'SelectAll', 'print':'Print', 'preview':'Preview',
@@ -17,15 +17,14 @@ UE.I18N['en'] = {
         'splittocols':'SplitToCols', 'splittocells':'SplitToCells','deletecaption':'DeleteCaption','inserttitle':'InsertTitle',
         'mergecells':'MergeCells', 'deletetable':'DeleteTable', 'cleardoc':'Clear', 'insertparagraphbeforetable':"InsertParagraphBeforeTable",
         'fontfamily':'FontFamily', 'fontsize':'FontSize', 'paragraph':'Paragraph','simpleupload':'Single Image','insertimage':'Multi Image','edittable':'Edit Table', 'edittd':'Edit Td','link':'Link',
-        'emotion':'Emotion', 'spechars':'Spechars', 'searchreplace':'SearchReplace', 'map':'BaiduMap', 'gmap':'GoogleMap',
+        'emotion':'Emotion', 'spechars':'Spechars', 'searchreplace':'SearchReplace', 'map':'BaiduMap',
         'insertvideo':'Video', 'help':'Help', 'justifyleft':'JustifyLeft', 'justifyright':'JustifyRight', 'justifycenter':'JustifyCenter',
         'justifyjustify':'Justify', 'forecolor':'FontColor', 'backcolor':'BackColor', 'insertorderedlist':'OL',
         'insertunorderedlist':'UL', 'fullscreen':'FullScreen', 'directionalityltr':'EnterFromLeft', 'directionalityrtl':'EnterFromRight',
         'rowspacingtop':'RowSpacingTop', 'rowspacingbottom':'RowSpacingBottom', 'pagebreak':'PageBreak', 'insertframe':'Iframe', 'imagenone':'Default',
         'imageleft':'ImageLeft', 'imageright':'ImageRight', 'attachment':'Attachment', 'imagecenter':'ImageCenter', 'wordimage':'WordImage',
         'lineheight':'LineHeight','edittip':'EditTip','customstyle':'CustomStyle', 'scrawl':'Scrawl', 'autotypeset':'AutoTypeset',
-        'webapp':'WebAPP', 'touppercase':'UpperCase', 'tolowercase':'LowerCase','template':'Template','background':'Background','inserttable':'InsertTable',
-        'music':'Music', 'charts': 'charts','drafts': 'Load from Drafts'
+        'touppercase':'UpperCase', 'tolowercase':'LowerCase','template':'Template','background':'Background','inserttable':'InsertTable',
     },
     'insertorderedlist':{
         'num':'1,2,3...',
@@ -95,11 +94,6 @@ UE.I18N['en'] = {
     'loadconfigError': 'Get server config error.',
     'loadconfigFormatError': 'Server config format error.',
     'loadconfigHttpError': 'Get server config http error.',
-    'snapScreen_plugin':{
-        'browserMsg':"Only IE supported!",
-        'callBackErrorMsg':"The callback data is wrong,please check the config!",
-        'uploadErrorMsg':"Upload error,please check your server environment! "
-    },
     'insertcode':{
         'as3':'ActionScript 3',
         'bash':'Bash/Shell',
@@ -426,12 +420,6 @@ UE.I18N['en'] = {
         'errorHttp':'Http Error',
         'errorServerUpload':'Server Result Error.'
     },
-    'webapp':{
-        'tip1':"This function provided by Baidu APP,please apply for baidu APPKey webmaster first!",
-        'tip2':"And then open the file ueditor.config.js to set it! ",
-        'applyFor':"APPLY FOR",
-        'anthorApi':"Baidu API"
-    },
     'template':{
         'static':{
             'lang_template_bkcolor':'Background Color',
@@ -460,43 +448,9 @@ UE.I18N['en'] = {
         'imageError':"Image failed to load!",
         'backgroundUploading':'Image is uploading,please wait...'
     },
-    'music':{
-        'static':{
-            'lang_input_tips':"Input singer/song/album, search you interested in music!",
-            'J_searchBtn':{value:'Search songs'}
-        },
-        'emptyTxt':'Not search to the relevant music results, please change a keyword try.',
-        'chapter':'Songs',
-        'singer':'Singer',
-        'special':'Album',
-        'listenTest':'Audition'
-    },
     anchor:{
         'static':{
             'lang_input_anchorName':'Anchor Name:'
-        }
-    },
-    'charts':{
-        'static':{
-            'lang_data_source':'Data source:',
-            'lang_chart_format': 'Chart format:',
-            'lang_data_align': 'Align',
-            'lang_chart_align_same': 'Consistent with the X-axis Y-axis',
-            'lang_chart_align_reverse': 'X-axis Y-axis opposite',
-            'lang_chart_title': 'Title',
-            'lang_chart_main_title': 'main title:',
-            'lang_chart_sub_title': 'sub title:',
-            'lang_chart_x_title': 'X-axis title:',
-            'lang_chart_y_title': 'Y-axis title:',
-            'lang_chart_tip': 'Prompt',
-            'lang_cahrt_tip_prefix': 'prefix:',
-            'lang_cahrt_tip_description': '仅饼图有效， 当鼠标移动到饼图中相应的块上时，提示框内的文字的前缀',
-            'lang_chart_data_unit': 'Unit',
-            'lang_chart_data_unit_title': 'unit:',
-            'lang_chart_data_unit_description': '显示在每个数据点上的数据的单位， 比如： 温度的单位 ℃',
-            'lang_chart_type': 'Chart type:',
-            'lang_prev_btn': 'Previous',
-            'lang_next_btn': 'Next'
         }
     },
     emotion:{
@@ -510,19 +464,11 @@ UE.I18N['en'] = {
             'lang_input_youa':'YouA'
         }
     },
-    gmap:{
-        'static':{
-            'lang_input_address':'Address:',
-            'lang_input_search':'Search',
-            'address':{value:"Beijing"}
-        },
-        searchError:'Unable to locate the address!'
-    },
     help:{
         'static':{
-            'lang_input_about':'About',
+            'lang_input_about':'About UEditor Plus',
             'lang_input_shortcuts':'Shortcuts',
-            'lang_input_introduction':"UEditor is developed by Baidu Co.ltd.  It is lightweight, customizable , focusing on user experience and etc. , UEditor is based on open source BSD license , allowing free use and redistribution.",
+            'lang_input_introduction':"UEditor Plus is based on UEditor.",
             'lang_Txt_shortcuts':'Shortcuts',
             'lang_Txt_func':'Function',
             'lang_Txt_bold':'Bold',
@@ -592,14 +538,6 @@ UE.I18N['en'] = {
         getEnd:"Has the search to the bottom!",
         getStart:"Has the search to the top!",
         countMsg:"Altogether replaced {#count} character(s)!"
-    },
-    snapscreen:{
-        'static':{
-            lang_showMsg:"You should install the UEditor screenshots program first!",
-            lang_download:"Download!",
-            lang_step1:"Step1:Download the program and then run it",
-            lang_step2:"Step2:After complete install,try to click the button again"
-        }
     },
     spechars:{
         'static':{},
@@ -678,7 +616,4 @@ UE.I18N['en'] = {
             buttonURL:'button.png'
         }
     },
-    'autosave': {
-        'success':'Local conservation success'
-    }
 };

@@ -6,6 +6,7 @@ Homestead.json
 /composer.lock
 .project
 /public/temp/
+/public/ueditor/
 /storage/install.lock
 /storage/backup/
 .DS_Store

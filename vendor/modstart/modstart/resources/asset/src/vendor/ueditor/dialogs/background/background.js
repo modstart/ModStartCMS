@@ -19,9 +19,6 @@
                         tabs[j].className = "focus";
                         var contentId = tabs[j].getAttribute('data-content-id');
                         $G(contentId).style.display = "block";
-                        if(contentId == 'imgManager') {
-                            initImagePanel();
-                        }
                     }else {
                         tabs[j].className = "";
                         $G(tabs[j].getAttribute('data-content-id')).style.display = "none";
@@ -110,11 +107,6 @@
         domUtils.on(window, 'scroll', function () {
             UE.ui.Popup.postHide();
         });
-    }
-
-    /* 初始化在线图片列表 */
-    function initImagePanel() {
-        onlineImage = onlineImage || new OnlineImage('imageList');
     }
 
     /* 更新背景色设置面板 */

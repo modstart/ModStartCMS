@@ -7,7 +7,7 @@
  */
 UE.I18N['zh-cn'] = {
     'labelMap':{
-        'anchor':'锚点', 'undo':'撤销', 'redo':'重做', 'bold':'加粗', 'indent':'首行缩进', 'snapscreen':'截图',
+        'anchor':'锚点', 'undo':'撤销', 'redo':'重做', 'bold':'加粗', 'indent':'首行缩进',
         'italic':'斜体', 'underline':'下划线', 'strikethrough':'删除线', 'subscript':'下标','fontborder':'字符边框',
         'superscript':'上标', 'formatmatch':'格式刷', 'source':'源代码', 'blockquote':'引用',
         'pasteplain':'纯文本粘贴模式', 'selectall':'全选', 'print':'打印', 'preview':'预览',
@@ -16,16 +16,16 @@ UE.I18N['zh-cn'] = {
         'deleterow':'删除行', 'deletecol':'删除列', 'splittorows':'拆分成行',
         'splittocols':'拆分成列', 'splittocells':'完全拆分单元格','deletecaption':'删除表格标题','inserttitle':'插入标题',
         'mergecells':'合并多个单元格', 'deletetable':'删除表格', 'cleardoc':'清空文档','insertparagraphbeforetable':"表格前插入行",'insertcode':'代码语言',
-        'fontfamily':'字体', 'fontsize':'字号', 'paragraph':'段落格式', 'simpleupload':'单图上传', 'insertimage':'图片','edittable':'表格属性','edittd':'单元格属性', 'link':'超链接',
-        'emotion':'表情', 'spechars':'特殊字符', 'searchreplace':'查询替换', 'map':'Baidu地图', 'gmap':'Google地图',
+        'fontfamily':'字体', 'fontsize':'字号', 'paragraph':'段落格式', 'simpleupload':'单图上传', 'insertimage':'插入图片','edittable':'表格属性','edittd':'单元格属性', 'link':'超链接',
+        'emotion':'表情', 'spechars':'特殊字符', 'searchreplace':'查询替换', 'map':'Baidu地图',
         'insertvideo':'视频', 'help':'帮助', 'justifyleft':'居左对齐', 'justifyright':'居右对齐', 'justifycenter':'居中对齐',
         'justifyjustify':'两端对齐', 'forecolor':'字体颜色', 'backcolor':'背景色', 'insertorderedlist':'有序列表',
         'insertunorderedlist':'无序列表', 'fullscreen':'全屏', 'directionalityltr':'从左向右输入', 'directionalityrtl':'从右向左输入',
         'rowspacingtop':'段前距', 'rowspacingbottom':'段后距',  'pagebreak':'分页', 'insertframe':'插入Iframe', 'imagenone':'默认',
         'imageleft':'左浮动', 'imageright':'右浮动', 'attachment':'附件', 'imagecenter':'居中', 'wordimage':'图片转存',
         'lineheight':'行间距','edittip' :'编辑提示','customstyle':'自定义标题', 'autotypeset':'自动排版',
-        'webapp':'百度应用','touppercase':'字母大写', 'tolowercase':'字母小写','background':'背景','template':'模板','scrawl':'涂鸦',
-        'music':'音乐','inserttable':'插入表格','drafts': '从草稿箱加载', 'charts': '图表'
+        'touppercase':'字母大写', 'tolowercase':'字母小写','background':'背景','template':'模板','scrawl':'涂鸦',
+        'inserttable':'插入表格',
     },
     'insertorderedlist':{
         'num':'1,2,3...',
@@ -95,11 +95,6 @@ UE.I18N['zh-cn'] = {
     'loadconfigError': '获取后台配置项请求出错，上传功能将不能正常使用！',
     'loadconfigFormatError': '后台配置项返回格式出错，上传功能将不能正常使用！',
     'loadconfigHttpError': '请求后台配置项http错误，上传功能将不能正常使用！',
-    'snapScreen_plugin':{
-        'browserMsg':"仅支持IE浏览器！",
-        'callBackErrorMsg':"服务器返回数据有误，请检查配置项之后重试。",
-        'uploadErrorMsg':"截图上传失败，请检查服务器端环境! "
-    },
     'insertcode':{
         'as3':'ActionScript 3',
         'bash':'Bash/Shell',
@@ -258,7 +253,6 @@ UE.I18N['zh-cn'] = {
             'lang_tab_remote':"插入图片", //节点
             'lang_tab_upload':"本地上传",
             'lang_tab_online':"在线管理",
-            'lang_tab_search':"图片搜索",
             'lang_input_url':"地 址：",
             'lang_input_size':"大 小：",
             'lang_input_width':"宽度",
@@ -426,12 +420,6 @@ UE.I18N['zh-cn'] = {
         'errorHttp':'http请求错误',
         'errorServerUpload':'服务器返回出错'
     },
-    'webapp':{
-        'tip1':"本功能由百度APP提供，如看到此页面，请各位站长首先申请百度APPKey!",
-        'tip2':"申请完成之后请至ueditor.config.js中配置获得的appkey! ",
-        'applyFor':"点此申请",
-        'anthorApi':"百度API"
-    },
     'template':{
         'static':{
             'lang_template_bkcolor':'背景颜色',
@@ -462,43 +450,9 @@ UE.I18N['zh-cn'] = {
         'imageError':"糟糕，图片读取失败了！",
         'backgroundUploading':'背景图片上传中,别急哦~'
     },
-    'music':{
-        'static':{
-            'lang_input_tips':"输入歌手/歌曲/专辑，搜索您感兴趣的音乐！",
-            'J_searchBtn':{value:'搜索歌曲'}
-        },
-        'emptyTxt':'未搜索到相关音乐结果，请换一个关键词试试。',
-        'chapter':'歌曲',
-        'singer':'歌手',
-        'special':'专辑',
-        'listenTest':'试听'
-    },
     'anchor':{
         'static':{
             'lang_input_anchorName':'锚点名字：'
-        }
-    },
-    'charts':{
-        'static':{
-            'lang_data_source':'数据源：',
-            'lang_chart_format': '图表格式：',
-            'lang_data_align': '数据对齐方式',
-            'lang_chart_align_same': '数据源与图表X轴Y轴一致',
-            'lang_chart_align_reverse': '数据源与图表X轴Y轴相反',
-            'lang_chart_title': '图表标题',
-            'lang_chart_main_title': '主标题：',
-            'lang_chart_sub_title': '子标题：',
-            'lang_chart_x_title': 'X轴标题：',
-            'lang_chart_y_title': 'Y轴标题：',
-            'lang_chart_tip': '提示文字',
-            'lang_cahrt_tip_prefix': '提示文字前缀：',
-            'lang_cahrt_tip_description': '仅饼图有效， 当鼠标移动到饼图中相应的块上时，提示框内的文字的前缀',
-            'lang_chart_data_unit': '数据单位',
-            'lang_chart_data_unit_title': '单位：',
-            'lang_chart_data_unit_description': '显示在每个数据点上的数据的单位， 比如： 温度的单位 ℃',
-            'lang_chart_type': '图表类型：',
-            'lang_prev_btn': '上一个',
-            'lang_next_btn': '下一个'
         }
     },
     'emotion':{
@@ -512,19 +466,11 @@ UE.I18N['zh-cn'] = {
             'lang_input_youa':'有啊'
         }
     },
-    'gmap':{
-        'static':{
-            'lang_input_address':'地址',
-            'lang_input_search':'搜索',
-            'address':{value:"北京"}
-        },
-        searchError:'无法定位到该地址!'
-    },
     'help':{
         'static':{
-            'lang_input_about':'关于UEditor',
+            'lang_input_about':'关于 UEditor Plus',
             'lang_input_shortcuts':'快捷键',
-            'lang_input_introduction':'UEditor是由百度web前端研发部开发的所见即所得富文本web编辑器，具有轻量，可定制，注重用户体验等特点。开源基于BSD协议，允许自由使用和修改代码。',
+            'lang_input_introduction':'UEditor Plus 是基于百度UEditor二次开发的所见即所得富文本web编辑器，主要丰富也界面样式，注重用户体验等特点。基于Apache 2.0协议开源，允许自由使用和修改代码。',
             'lang_Txt_shortcuts':'快捷键',
             'lang_Txt_func':'功能',
             'lang_Txt_bold':'给选中字设置为加粗',
@@ -595,14 +541,6 @@ UE.I18N['zh-cn'] = {
         getStart:"已经搜索到文章头部",
         countMsg:"总共替换了{#count}处！"
     },
-    'snapscreen':{
-        'static':{
-            lang_showMsg:"截图功能需要首先安装UEditor截图插件！ ",
-            lang_download:"点此下载",
-            lang_step1:"第一步，下载UEditor截图插件并运行安装。",
-            lang_step2:"第二步，插件安装完成后即可使用，如不生效，请重启浏览器后再试！"
-        }
-    },
     'spechars':{
         'static':{},
         tsfh:"特殊字符",
@@ -662,8 +600,4 @@ UE.I18N['zh-cn'] = {
         'copySuccess':"图片地址已经复制！",
         'flashI18n':{} //留空默认中文
     },
-    'autosave': {
-        'saving':'保存中...',
-        'success':'本地保存成功'
-    }
 };
