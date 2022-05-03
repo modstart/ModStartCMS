@@ -7,6 +7,8 @@
                 @if(in_array($customField['fieldType'],[
                     \Module\Cms\Type\CmsModelFieldType::TEXT,
                     \Module\Cms\Type\CmsModelFieldType::TEXTAREA,
+                    \Module\Cms\Type\CmsModelFieldType::VIDEO,
+                    \Module\Cms\Type\CmsModelFieldType::AUDIO,
                 ]))
                     {{$data[$customField['name']] or '-'}}
                 @else

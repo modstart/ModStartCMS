@@ -114,6 +114,10 @@
                                         </script>
                                     @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::RICH_TEXT)
                                         <div class="ub-text-muted">暂不支持</div>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::VIDEO)
+                                        <div class="ub-text-muted">暂不支持</div>
+                                    @elseif($customField['fieldType']==\Module\Cms\Type\CmsModelFieldType::AUDIO)
+                                        <div class="ub-text-muted">暂不支持</div>
                                     @else
                                         <pre>{{json_encode($customField,JSON_PRETTY_PRINT)}}</pre>
                                     @endif

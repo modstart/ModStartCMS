@@ -136,6 +136,8 @@ class CmsModelUtil
             case CmsModelFieldType::IMAGE:
             case CmsModelFieldType::IMAGES:
             case CmsModelFieldType::FILE:
+            case CmsModelFieldType::VIDEO:
+            case CmsModelFieldType::AUDIO:
                 return "VARCHAR($field[maxLength])";
             case CmsModelFieldType::DATE:
                 return "DATE";

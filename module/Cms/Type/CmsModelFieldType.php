@@ -19,6 +19,8 @@ class CmsModelFieldType implements BaseType
     const DATE = 'date';
     const DATETIME = 'datetime';
     const RICH_TEXT = 'richText';
+    const VIDEO = 'video';
+    const AUDIO = 'audio';
 
     public static function getList()
     {
@@ -34,6 +36,8 @@ class CmsModelFieldType implements BaseType
             self::DATE => '日期',
             self::DATETIME => '日期时间',
             self::RICH_TEXT => '富文本',
+            self::VIDEO => '视频',
+            self::AUDIO => '音频',
         ];
     }
 }

@@ -74,6 +74,8 @@ class FormController extends BaseCatController
                         $submitData[$customField['name']] = $input->getImagesPath($customField['name']);
                         break;
                     case CmsModelFieldType::FILE:
+                    case CmsModelFieldType::VIDEO:
+                    case CmsModelFieldType::AUDIO:
                         $submitData[$customField['name']] = $input->getFilePath($customField['name']);
                         break;
                     case CmsModelFieldType::DATE:

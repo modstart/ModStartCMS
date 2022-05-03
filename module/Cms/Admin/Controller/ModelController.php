@@ -98,6 +98,8 @@ class ModelController extends Controller
                     break;
                 case CmsModelFieldType::IMAGE:
                 case CmsModelFieldType::FILE:
+                case CmsModelFieldType::VIDEO:
+                case CmsModelFieldType::AUDIO:
                     $data['maxLength'] = 200;
                     break;
                 case CmsModelFieldType::IMAGES:

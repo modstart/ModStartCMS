@@ -119,6 +119,8 @@ class ContentController extends Controller
                             return AutoRenderedFieldValue::makeView('modstart::core.field.images-grid', $viewData);
                         case CmsModelFieldType::RICH_TEXT:
                             return AutoRenderedFieldValue::makeView('modstart::core.field.richHtml-grid', $viewData);
+                        case CmsModelFieldType::VIDEO:
+                        case CmsModelFieldType::AUDIO:
                         case CmsModelFieldType::FILE:
                         case CmsModelFieldType::DATE:
                         case CmsModelFieldType::DATETIME:
@@ -283,6 +285,12 @@ class ContentController extends Controller
                                     break;
                                 case CmsModelFieldType::RICH_TEXT:
                                     $f = $form->richHtml($field['name'], $field['title']);
+                                    break;
+                                case CmsModelFieldType::VIDEO:
+                                    $f = $form->video($field['name'], $field['title']);
+                                    break;
+                                case CmsModelFieldType::AUDIO:
+                                    $f = $form->audio($field['name'], $field['title']);
                                     break;
                             }
                             if (empty($f)) {

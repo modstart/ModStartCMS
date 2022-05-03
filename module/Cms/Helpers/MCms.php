@@ -113,8 +113,39 @@ class MCms
     public static function latestContentByCat($catId, $limit = 10)
     {
         $paginateData = CmsContentUtil::paginateCat($catId, 1, $limit);
-        $latestRecords = $paginateData['records'];
-        return $latestRecords;
+        $records = $paginateData['records'];
+        return $records;
+    }
+
+    /**
+     * @param $cateUrl string 栏目URL
+     * @param $limit int 数量
+     *
+     * @Util 根据栏目URL获取最近推荐记录
+     */
+    public static function latestRecommendContentByCatUrl($cateUrl, $limit = 10)
+    {
+        $cat = self::getCatByUrl($cateUrl);
+        return self::latestRecommendContentByCat($cat['id'], $limit);
+    }
+
+    /**
+     * @param $catId int 栏目ID
+     * @param $limit int 数量
+     * @return array
+     *
+     * @Util 根据栏目ID获取最近推荐记录
+     */
+    public static function latestRecommendContentByCat($catId, $limit = 10)
+    {
+        $option = [
+            'where' => [
+                'isRecommend' => true,
+            ]
+        ];
+        $paginateData = CmsContentUtil::paginateCat($catId, 1, $limit, $option);
+        $records = $paginateData['records'];
+        return $records;
     }
 
     public static function latestCat($catId, $limit = 10)
