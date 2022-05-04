@@ -1,7 +1,7 @@
 /*!
  * ueditor
  * version: 2.0.0
- * build: Tue May 03 2022 21:14:00 GMT+0800 (China Standard Time)
+ * build: Wed May 04 2022 14:30:30 GMT+0800 (China Standard Time)
  */
 
 (function(){
@@ -7566,7 +7566,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               "px";
 
         container.style.zIndex = options.zIndex;
-
+        var additionCssHtml = [];
+        for(var i in options.iframeCssUrlsAddition){
+            additionCssHtml.push("<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrlsAddition[i]) + "'/>")
+        }
         var html =
           (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
           "<html xmlns='http://www.w3.org/1999/xhtml' class='view' >" +
@@ -7587,6 +7590,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           (options.initialStyle
             ? "<style>" + options.initialStyle + "</style>"
             : "") +
+          additionCssHtml.join("") +
           "</head>" +
           "<body class='view' ></body>" +
           "<script type='text/javascript' " +
@@ -8813,6 +8817,7 @@ UE.Editor.defaultOptions = function(editor) {
     initialStyle: "",
     autoClearinitialContent: false,
     iframeCssUrl: _url + "themes/iframe.css?20220503",
+      iframeCssUrlsAddition: [],
     textarea: "editorValue",
     focus: false,
     focusInEnd: true,
@@ -31416,8 +31421,7 @@ UE.ui = baidu.editor.ui = {};
           ) {
             var html = popup.formatHtml(
               "<nobr>" +
-                editor.getLang("property") +
-                ': <span onclick=$$._setIframeAlign(-2) class="edui-clickable">' +
+                '<span onclick=$$._setIframeAlign(-2) class="edui-clickable">' +
                 editor.getLang("default") +
                 '</span>&nbsp;&nbsp;<span onclick=$$._setIframeAlign(-1) class="edui-clickable">' +
                 editor.getLang("justifyleft") +
@@ -31458,8 +31462,7 @@ UE.ui = baidu.editor.ui = {};
               dialogName = "anchorDialog";
               html = popup.formatHtml(
                 "<nobr>" +
-                  editor.getLang("property") +
-                  ': <span onclick=$$._onImgEditButtonClick("anchorDialog") class="edui-clickable">' +
+                  '<span onclick=$$._onImgEditButtonClick("anchorDialog") class="edui-clickable">' +
                   editor.getLang("modify") +
                   "</span>&nbsp;&nbsp;" +
                   "<span onclick=$$._onRemoveButtonClick('anchor') class=\"edui-clickable\">" +
@@ -31483,8 +31486,6 @@ UE.ui = baidu.editor.ui = {};
             }
             str =
               "<nobr>" +
-              editor.getLang("property") +
-              ": " +
               '<span onclick=$$._onImgSetFloat("none") class="edui-clickable">' +
               editor.getLang("default") +
               "</span>&nbsp;&nbsp;" +
@@ -31521,7 +31522,7 @@ UE.ui = baidu.editor.ui = {};
               }
               html += popup.formatHtml(
                 "<nobr>" +
-                  editor.getLang("anthorMsg") +
+                  editor.getLang("anchorMsg") +
                   ': <a target="_blank" href="' +
                   url +
                   '" title="' +

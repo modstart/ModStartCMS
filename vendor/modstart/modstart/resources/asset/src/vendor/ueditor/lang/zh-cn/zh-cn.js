@@ -190,7 +190,7 @@ UE.I18N['zh-cn'] = {
     },
     'copymsg': "浏览器不支持,请使用 'Ctrl + c'",
     'pastemsg': "浏览器不支持,请使用 'Ctrl + v'",
-    'anthorMsg':"链接",
+    'anchorMsg':"链接",
     'clearColor':'清空颜色',
     'standardColor':'标准颜色',
     'themeColor':'主题颜色',

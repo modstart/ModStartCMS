@@ -190,7 +190,7 @@ UE.I18N['en'] = {
     },
     'copymsg': "Browser does not support. Please use 'Ctrl + c' instead!",
     'pastemsg': "Browser does not support. Please use 'Ctrl + v' instead!",
-    'anthorMsg':"Link",
+    'anchorMsg':"Link",
     'clearColor':'Clear',
     'standardColor':'Standard color',
     'themeColor':'Theme color',

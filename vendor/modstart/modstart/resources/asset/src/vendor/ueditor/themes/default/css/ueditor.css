@@ -117,9 +117,12 @@ div.edui-box {
 }
 
 .edui-default span.edui-clickable {
-    color: blue;
+    color: #CCC;
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
+}
+.edui-default span.edui-clickable:hover{
+    color: #FFF;
 }
 
 .edui-default span.edui-unclickable {
@@ -263,10 +266,13 @@ div.edui-box {
 }
 
 .edui-default .edui-bubble .edui-popup-content {
-  background-color: #FFF;
-  padding: 5px;
-  font-size: 10pt;
+  font-size: 13px;
   box-shadow: 0 0 10px #0000001f;
+  transition: .25s;
+  color: #FFF;
+  background-color: rgba(70,79,96,.95);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .edui-default .edui-bubble .edui-shadow {
@@ -1076,14 +1082,13 @@ div.edui-box {
 }
 
 .edui-default .edui-popup-content {
-    border:1px solid #EEE;
-    border-radius: 3px;
-    box-shadow: 0 2px 10px #0000001f;
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    padding: 5px;
-    background:#ffffff;
+    font-size: 13px;
+    box-shadow: 0 0 10px #0000001f;
+    transition: .25s;
+    color: #FFF;
+    background-color: rgba(70,79,96,.95);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .edui-default .edui-popup .edui-bordereraser {

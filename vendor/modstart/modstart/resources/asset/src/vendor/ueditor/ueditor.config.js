@@ -19,12 +19,12 @@
      * window.UEDITOR_HOME_URL = "/xxxx/xxxx/";
      */
   var URL, CORS_URL;
-  if(window.__msCDN){
+  if(window.UEDITOR_HOME_URL){
+    URL = window.UEDITOR_HOME_URL;
+  }else if(window.__msCDN){
     URL = window.__msCDN + 'asset/vendor/ueditor/';
   }else if(window.__msRoot){
     URL = window.__msRoot + 'asset/vendor/ueditor/';
-  }else if(window.UEDITOR_HOME_URL){
-    URL = window.UEDITOR_HOME_URL;
   }else{
     URL = getUEBasePath();
   }
@@ -234,6 +234,8 @@
 
     //,iframeJsUrl: '' //给编辑区域的iframe引入一个js文件
     //,iframeCssUrl: URL + '/themes/iframe.css' //给编辑区域的iframe引入一个css文件
+    // 给编辑器引入更多样式文件
+    //,iframeCssUrlsAddition: []
 
     //indentValue
     //首行缩进距离,默认是2em

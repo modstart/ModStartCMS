@@ -347,6 +347,30 @@ export const DomUtil = {
         }
         document.getElementsByTagName('head')[0].appendChild(script)
     },
+    loadScripts(urls, cb) {
+        let loads = {};
+        for (let url of urls) {
+            loads[url] = null
+            DomUtil.loadScript(url, data => {
+                loads[url] = data
+            })
+        }
+        let watch = () => {
+            for (let o in loads) {
+                if (!loads[o]) {
+                    setTimeout(() => {
+                        watch()
+                    }, 100)
+                    return
+                }
+            }
+            cb && cb()
+        }
+        setTimeout(() => {
+            watch()
+        }, 100)
+    }
+    ,
     // 动态加载CSS
     loadStylesheet(url, cb) {
         let id = 's_' + md5(url)
