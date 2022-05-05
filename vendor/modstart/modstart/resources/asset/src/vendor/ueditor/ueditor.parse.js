@@ -1,7 +1,7 @@
 /*!
  * ueditor parse
  * version: 2.0.0
- * build: Wed May 04 2022 14:30:30 GMT+0800 (China Standard Time)
+ * build: Thu May 05 2022 18:18:44 GMT+0800 (China Standard Time)
  */
 
 (function(){

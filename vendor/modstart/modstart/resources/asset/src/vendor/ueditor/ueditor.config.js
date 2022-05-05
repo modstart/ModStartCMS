@@ -398,7 +398,36 @@
     //]
 
     //快捷菜单
-    //,shortcutMenu:["fontfamily", "fontsize", "bold", "italic", "underline", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist"]
+    ,shortcutMenu:[
+          "fontfamily",
+          "fontsize",
+          "bold",
+          "italic",
+          "underline",
+          "strikethrough",
+          "fontborder",
+          "forecolor",
+          // "shadowcolor",
+          // "backcolor",
+          "justifyleft",//居左对齐
+          "justifycenter",//居中对齐
+          "justifyright",//居右对齐
+          "justifyjustify",//两端对齐
+          // "textindent",//首行缩进
+          // "rowspacingtop",//段前距
+          // "rowspacingbottom",//段后距
+          // "outpadding",//两侧距离
+          "lineheight",//行间距
+          // "letterspacing" ,//字间距
+          "insertorderedlist",
+          "insertunorderedlist",
+          "superscript",
+          "subscript",
+          "link",
+          "unlink",
+          "touppercase",
+          "tolowercase"
+    ]
 
     //elementPathEnabled
     //是否启用元素路径，默认是显示

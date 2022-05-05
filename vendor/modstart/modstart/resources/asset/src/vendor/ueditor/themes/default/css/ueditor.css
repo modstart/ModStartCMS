@@ -1085,8 +1085,8 @@ div.edui-box {
     font-size: 13px;
     box-shadow: 0 0 10px #0000001f;
     transition: .25s;
-    color: #FFF;
-    background-color: rgba(70,79,96,.95);
+    color: #333;
+    background-color: #FFF;
     padding: 10px;
     border-radius: 5px;
 }
@@ -1582,17 +1582,19 @@ div.edui-box {
     margin-left: 1px;
     width: 128px;
     float: left;
+    border-radius:3px;
 }
 
 .edui-default .edui-colorpicker-nocolor {
     float: right;
     margin-right: 1px;
     font-size: 12px;
-    line-height: 14px;
-    height: 14px;
+    line-height: 20px;
+    height: 20px;
     border: 1px solid #333;
     padding: 3px 5px;
     cursor: pointer;
+    border-radius: 3px;
 }
 
 .edui-default .edui-colorpicker-tablefirstrow {
@@ -1605,6 +1607,7 @@ div.edui-box {
     display: block;
     margin: 0;
     cursor: pointer;
+    border-radius:2px;
 }
 
 .edui-default .edui-colorpicker-colorcell:hover {
@@ -1688,6 +1691,7 @@ div.edui-box {
     background: white;
     opacity: .8;
 }
+
 /*自动排版弹出菜单*/
 .edui-default .edui-autotypesetpicker .edui-autotypesetpicker-body {
     font-size: 12px;
@@ -1854,8 +1858,8 @@ div.edui-box {
 /*弹出菜单*/
 .edui-default .edui-shortcutmenu {
     padding: 2px;
-    width: 190px;
-    height: 50px;
+    width: 300px;
+    height: auto;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;

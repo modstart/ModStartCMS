@@ -1,7 +1,7 @@
 /*!
  * ueditor
  * version: 2.0.0
- * build: Wed May 04 2022 14:30:30 GMT+0800 (China Standard Time)
+ * build: Thu May 05 2022 18:18:44 GMT+0800 (China Standard Time)
  */
 
 (function(){
@@ -7802,6 +7802,23 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               true
             );
       form && setValue(form, me);
+    },
+
+    /**
+     * 手动触发更新按钮栏状态
+     */
+    syncCommandState: function(){
+      this.fireEvent("selectionchange");
+    },
+
+    /**
+     * 设置编辑器宽度
+     * @param width
+     */
+    setWidth: function(width){
+      if (width !== parseInt(this.iframe.parentNode.parentNode.style.width)) {
+        this.iframe.parentNode.parentNode.style.width = width + "px";
+      }
     },
 
     /**
@@ -15645,10 +15662,10 @@ UE.plugins["undo"] = function() {
       };
     };
     this.save = function(notCompareRange, notSetCursor) {
+
       clearTimeout(saveSceneTimer);
       var currentScene = this.getScene(notSetCursor),
         lastScene = this.list[this.index];
-
       if (lastScene && lastScene.content != currentScene.content) {
         me.trigger("contentchange");
       }
@@ -24972,6 +24989,10 @@ UE.plugins["shortcutmenu"] = function() {
     setTimeout(function() {
       var rng = me.selection.getRange();
       if (rng.collapsed === false || type == "contextmenu") {
+        // 未选中文字情况下不显示
+        if(!me.selection.getText()){
+          return
+        }
         if (!menu) {
           menu = new baidu.editor.ui.ShortCutMenu({
             editor: me,
@@ -27340,6 +27361,7 @@ UE.ui = baidu.editor.ui = {};
           holder = document.getElementById(holder);
         }
         holder = holder || uiUtils.getFixedLayer();
+        // console.log('Uibase.render',holder,el);
         domUtils.addClass(holder, theme);
         holder.appendChild(el);
       }
@@ -29887,6 +29909,7 @@ UE.ui = baidu.editor.ui = {};
       var me = this,
         doc = me.editor.document;
 
+      /*
       domUtils.on(doc, "mousemove", function(e) {
         if (me.isHidden === false) {
           //有pop显示就不隐藏快捷菜单
@@ -29917,13 +29940,15 @@ UE.ui = baidu.editor.ui = {};
             } else if (x > distanceX && x < distanceX + 70) {
               me.setOpacity(el, "0.5");
             } else if (x > distanceX + 70 && x < distanceX + 140) {
+                console.log('hide')
               me.hide();
             }
           });
         }
       });
-
+      */
       //ie\ff下 mouseout不准
+      /*
       if (browser.chrome) {
         domUtils.on(doc, "mouseout", function(e) {
           var relatedTgt = e.relatedTarget || e.toElement;
@@ -29933,6 +29958,7 @@ UE.ui = baidu.editor.ui = {};
           }
         });
       }
+       */
 
       me.editor.addListener("afterhidepop", function() {
         if (!me.isHidden) {
@@ -30025,7 +30051,7 @@ UE.ui = baidu.editor.ui = {};
         offset.top -= el.offsetHeight + me.SPACE;
         offset.left += me.SPACE + 20;
         setPos(offset);
-        me.setOpacity(el, 0.2);
+        me.setOpacity(el, 1);
       }
 
       me.isHidden = false;
@@ -30323,6 +30349,7 @@ UE.ui = baidu.editor.ui = {};
           uiReady
         ) {
           var state = editor.queryCommandState(cmd);
+          // console.log('selectionchange',cmd,uiReady,state);
           if (state == -1) {
             ui.setDisabled(true);
             ui.setChecked(false);
