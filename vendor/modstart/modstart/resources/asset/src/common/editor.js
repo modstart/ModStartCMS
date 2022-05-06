@@ -20,7 +20,7 @@ var EditorConfig = {
                 return true
         }
     },
-    image: {
+    imageConfig: {
         disableUpload: true,
         disableOnline: true,
         selectCallback: function (editor, cb) {
@@ -37,7 +37,7 @@ var EditorConfig = {
             }).show();
         }
     },
-    video: {
+    videoConfig: {
         disableUpload: true,
         selectCallback: function (editor, cb) {
             window.__selectorDialog = new window.api.selectorDialog({

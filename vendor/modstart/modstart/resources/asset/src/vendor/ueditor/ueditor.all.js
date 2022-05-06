@@ -1,9 +1,7 @@
 /*!
- * ueditor
+ * UEditorPlus
  * version: 2.0.0
- * build: Thu May 05 2022 18:18:44 GMT+0800 (China Standard Time)
- */
-
+*/
 (function(){
 
 // editor.js
@@ -19,7 +17,7 @@ window.UE = baidu.editor = {
   instants: {},
   I18N: {},
   _customizeUI: {},
-  version: "1.5.0"
+  version: "2.0.0"
 };
 var dom = (UE.dom = {});
 
