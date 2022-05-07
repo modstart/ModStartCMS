@@ -3,7 +3,7 @@ var UEditor = require('./../vendor/ueditor/ueditor.all.js');
 require('./../lib/ueditor/wechatcustomemotion.js');
 require('./../lib/ueditor/formula.js');
 
-var EditorConfig = {
+var EditorUploadConfig = {
     toolbarCallback: function (cmd, editor) {
         switch (cmd) {
             case 'insertimage':
@@ -114,7 +114,7 @@ var Editor = {
             pasteplain: false,
             autoHeightEnabled: true,
             focus: false
-        }, EditorConfig, editorOption);
+        }, EditorUploadConfig, editorOption);
 
         var ueditor = UE.getEditor(id, editorOpt);
 
@@ -164,7 +164,7 @@ var Editor = {
             retainOnlyLabelPasted: true,
             autoHeightEnabled: true,
             focus: false
-        }, EditorConfig, editorOption);
+        }, EditorUploadConfig, editorOption);
 
         var ueditor = UE.getEditor(id, editorOpt);
 
@@ -183,3 +183,4 @@ if (!('MS' in window)) {
     window.MS = {}
 }
 window.MS.editor = Editor;
+window.MS.editorUploadConfig = EditorUploadConfig;

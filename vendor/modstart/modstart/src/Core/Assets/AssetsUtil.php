@@ -116,7 +116,7 @@ class AssetsUtil
      * @param $path
      * @param $cdn
      * @param bool $hash
-     * @return string
+     * @return string|array
      * @since 1.5.0
      */
     public static function fixFullWithCdn($path, $cdn, $hash = true)

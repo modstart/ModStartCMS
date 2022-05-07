@@ -100,7 +100,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         );
         $this->info['color'] = new HTMLPurifier_AttrDef_CSS_Color();
 
-        $this->info['background-image'] = $uri_or_none;
+        $this->info['background-image'] = new HTMLPurifier_AttrDef_Text();
         $this->info['background-repeat'] = new HTMLPurifier_AttrDef_Enum(
             array('repeat', 'repeat-x', 'repeat-y', 'no-repeat')
         );
@@ -137,7 +137,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
             )
         );
 
-        $this->info['background'] = new HTMLPurifier_AttrDef_CSS_Background($config);
+        $this->info['background'] = new HTMLPurifier_AttrDef_Text();
 
         $this->info['border-color'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_color);
 
@@ -385,6 +385,40 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
             )
         );
 
+        $styleList = [
+            'justify-content',
+            'align-items',
+            'flex-direction',
+            'flex',
+            'align-self',
+            'transform',
+            'grid-template-columns',
+            'writing-mode',
+            '-webkit-writing-mode',
+            'writing-mode',
+            'writing-mode',
+            'writing-mode',
+            'box-shadow',
+            'place-items',
+            'grid-column-gap',
+            'text-shadow',
+            'pointer-events',
+            '-webkit-tap-highlight-color',
+            '-webkit-transform',
+            '-moz-transform',
+            '-ms-transform',
+            '-o-transform',
+            'grid-row-start',
+            'grid-column-start',
+            'background-size',
+            '-webkit-border-image',
+            '-webkit-background-clip',
+            '-webkit-text-fill-color',
+        ];
+        foreach ($styleList as $s) {
+            $this->info[$s] = new HTMLPurifier_AttrDef_Text();
+        }
+
         if ($config->get('CSS.Proprietary')) {
             $this->doSetupProprietary($config);
         }
@@ -478,7 +512,9 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                 'table-column',
                 'table-cell',
                 'table-caption',
-                'none'
+                'none',
+                'flex',
+                'grid',
             )
         );
 

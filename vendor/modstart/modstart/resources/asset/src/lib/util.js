@@ -281,4 +281,72 @@ Util.md5 = function (data) {
     return md5(data)
 };
 
+/**
+ * 框架消息通讯
+ */
+Util.iframeMessage = {
+    queue: [],
+    serve: {},
+    win: {
+        recv: null,
+        send: null,
+    },
+    mount: function (recvWin, sendWin) {
+        if (MS.util.iframeMessage.win.recv !== recvWin) {
+            recvWin.addEventListener('message', function (e) {
+                if (!e.data || !e.data.group || !e.data.id) {
+                    return
+                }
+                for (var i = 0; i < MS.util.iframeMessage.queue.length; i++) {
+                    if (MS.util.iframeMessage.queue[i].id === e.data.id) {
+                        MS.util.iframeMessage.queue[i].cb(e.data.data)
+                        MS.util.iframeMessage.queue.splide(i, 1)
+                        return
+                    }
+                }
+                if (!(e.data.group in e.data, MS.util.iframeMessage.serve)) {
+                    return
+                }
+                var data = e.data
+                MS.util.iframeMessage.serve[data.group](data.action, data.data, function (result) {
+                    MS.util.iframeMessage.safeSend({
+                        id: data.id,
+                        group: data.group,
+                        data: result,
+                    })
+                });
+            }, false)
+        }
+        MS.util.iframeMessage.win.recv = recvWin
+        MS.util.iframeMessage.win.send = sendWin
+    },
+    safeSend(data) {
+        if (!MS.util.iframeMessage.win.send) {
+            setTimeout(function () {
+                MS.util.iframeMessage.safeSend(data)
+            }, 100)
+            return
+        }
+        MS.util.iframeMessage.win.send.postMessage(data)
+    },
+    server: function (group, callback) {
+        MS.util.iframeMessage.serve[group] = callback
+    },
+    rpc: function (group, action, data, cb) {
+        cb = cb || null
+        var payload = {
+            id: window.MS.util.randomString(10),
+            expire: (new Date()).getTime() + 60 * 1000,
+            group: group,
+            action: action,
+            data: data,
+            cb: cb,
+        }
+        if (cb) {
+            MS.util.iframeMessage.queue.push(payload)
+        }
+        MS.util.iframeMessage.win.send.postMessage(JSON.parse(JSON.stringify(payload)))
+    }
+};
+
 module.exports = Util;

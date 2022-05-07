@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '8f1f03dbfce8376c90e022f321af0bfac3df6a2c',
+        'reference' => 'd403a91a90e619e8a293ffbc38a6b1c0888d2d15',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -139,7 +139,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../ezyang/htmlpurifier',
             'aliases' => array(),
-            'reference' => '1908252b2d7c86f959019d2b2e88629da70f28c7',
+            'reference' => '1ab79098bbbdc616f27132779355a7cb86be442b',
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
@@ -469,7 +469,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '8f1f03dbfce8376c90e022f321af0bfac3df6a2c',
+            'reference' => 'd403a91a90e619e8a293ffbc38a6b1c0888d2d15',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(
@@ -478,7 +478,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart',
             'aliases' => array(),
-            'reference' => '8aea518c2c64a5e6415e2ff500dbf78bba79feee',
+            'reference' => 'e461aaa8a4ecaedacb32dce695457955a4076c17',
             'dev_requirement' => false,
         ),
         'modstart/modstart-laravel5' => array(

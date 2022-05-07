@@ -55,6 +55,14 @@ trait ResponsiveViewTrait
         return null;
     }
 
+    /**
+     * @param $view
+     * @return array
+     * @throws BizException
+     *
+     * @example
+     * list($view, $viewFrame) = $this->viewPaths('member.index')
+     */
     protected function viewPaths($view)
     {
         static $templateName = null;

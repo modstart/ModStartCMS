@@ -87,6 +87,81 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
         $this->addElement('nav', 'Block', 'Flow', 'Common');
         $this->addElement('article', 'Block', 'Flow', 'Common');
         $this->addElement('aside', 'Block', 'Flow', 'Common');
+        $this->addElement('svg', 'Block', 'Flow', 'Common', [
+            'viewbox' => 'Text',
+            'xmlns' => 'Text',
+            'style' => 'Text',
+            'xml:space' => 'Text',
+            'xmlns:xlink' => 'Text',
+            'x' => 'Text',
+            'y' => 'Text',
+            'version' => 'Text',
+            'space' => 'Text',
+        ]);
+        $this->addElement('g', 'Block', 'Flow', 'Common', [
+            'transform' => 'Text',
+        ]);
+        $this->addElement('animatetransform', 'Block', 'Flow', 'Common', [
+            'attributename' => 'Text',
+            'type' => 'Text',
+            'values' => 'Text',
+            'calcmode' => 'Text',
+            'keytimes' => 'Text',
+            'keysplines' => 'Text',
+            'dur' => 'Text',
+            'repeatcount' => 'Text',
+            'begin' => 'Text',
+            'restart' => 'Text',
+            'fill' => 'Text',
+        ]);
+        $this->addElement('foreignobject', 'Block', 'Flow', 'Common', [
+            'x' => 'Text',
+            'y' => 'Text',
+            'width' => 'Text',
+            'height' => 'Text',
+        ]);
+        $this->addElement('animate', 'Block', 'Flow', 'Common', [
+            'attributename' => 'Text',
+            'begin' => 'Text',
+            'dur' => 'Text',
+            'values' => 'Text',
+            'fill' => 'Text',
+            'from' => 'Text',
+            'to' => 'Text',
+            'duration' => 'Text',
+        ]);
+        $this->addElement('rect', 'Block', 'Flow', 'Common', [
+            'x' => 'Text',
+            'y' => 'Text',
+            'width' => 'Text',
+            'height' => 'Text',
+            'style' => 'Text',
+            'fill' => 'Text',
+            'opacity' => 'Text',
+        ]);
+        $this->addElement('set', 'Block', 'Flow', 'Common', [
+            'attributename' => 'Text',
+            'from' => 'Text',
+            'to' => 'Text',
+            'begin' => 'Text',
+        ]);
+        $this->addElement('ellipse', 'Block', 'Flow', 'Common', [
+            'style' => 'Text',
+            'cx' => 'Text',
+            'cy' => 'Text',
+            'rx' => 'Text',
+            'ry' => 'Text',
+        ]);
+        $this->addElement('path', 'Block', 'Flow', 'Common', [
+            'style' => 'Text',
+            'd' => 'Text',
+        ]);
+        $this->addElement('text', 'Block', 'Flow', 'Common', [
+            'x' => 'Text',
+            'y' => 'Text',
+            'fill' => 'Text',
+            'style' => 'Text',
+        ]);
     }
 }
 

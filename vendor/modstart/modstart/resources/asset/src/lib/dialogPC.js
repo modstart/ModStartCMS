@@ -120,6 +120,8 @@ let Dialog = {
             width: '600px',
             height: '80%',
             shadeClose: true,
+            openCallback: function (param) {
+            },
             closeCallback: function () {
             }
         }, option);
@@ -139,6 +141,10 @@ let Dialog = {
             scrollbar: false,
             content: url,
             success: function (layero, index) {
+                opt.openCallback({
+                    layero: layero,
+                    index: index,
+                });
                 if (null !== opt.title) {
                     layer.title(opt.title, index);
                     return;

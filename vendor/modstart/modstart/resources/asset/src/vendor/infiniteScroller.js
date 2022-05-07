@@ -4,8 +4,8 @@
  * @example
  *
 
-var $lister = $('.lister');
-var lister = new InfiniteScroller({
+ var $lister = $('.lister');
+ var lister = new InfiniteScroller({
     container: window,
     tail: $lister.find('.ub-loading'),
     autoStart: false,
@@ -14,7 +14,7 @@ var lister = new InfiniteScroller({
     nextCallback: (page) => {
         this.$api.post('?', {page, pageSize}, res => {
             //TODO process res.data.records
-            if (res.data.pageSize === res.data.records) {
+            if (res.data.pageSize === res.data.records.length) {
                 lister.nextDone();
             } else {
                 lister.done();
@@ -34,8 +34,9 @@ var lister = new InfiniteScroller({
     }
 });
 
-lister.setPage(1);
-lister.start();
+ lister.setPage(1);
+ lister.start();
+
 
  */
 
@@ -222,7 +223,9 @@ lister.start();
         _nextCheck: function () {
             if (this.runtime.started && !this.runtime.done && !this.runtime.processNext && this._isTailOnScreen()) {
                 this._next();
+                return true;
             }
+            return false;
         },
         _next: function () {
             this.runtime.processNext = true;
