@@ -58,6 +58,7 @@ $router->group([
 
     $router->match(['get', 'post'], 'member_data/file_manager/{category}', 'MemberDataController@fileManager');
     $router->match(['get', 'post'], 'member_data/ueditor', 'MemberDataController@ueditor');
+    $router->match(['get', 'post'], 'member_data/ueditor_guest', 'MemberDataController@ueditorGuest');
 
     $router->match(['get', 'post'], 'member_vip', 'MemberVipController@index');
 

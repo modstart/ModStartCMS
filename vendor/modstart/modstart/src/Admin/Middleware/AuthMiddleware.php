@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\App\Core\AccessGate;
+use ModStart\App\Core\CurrentApp;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 
@@ -204,6 +205,7 @@ class AuthMiddleware
 
         Session::put('_adminUserId', $adminUserId);
         Session::flash('_adminUser', $adminUser);
+        Session::flash('_currentApp', CurrentApp::ADMIN);
 
         View::share('_adminUser', $adminUser);
         View::share('_adminUserId', $adminUserId);

@@ -31,3 +31,10 @@
         @endif
     });
 </script>
+@foreach(\ModStart\Field\Plugin\RichHtmlPlugin::all() as $plugin)
+    {!! $plugin->render([
+        'currentApp'=>\Illuminate\Support\Facades\Session::get('_currentApp'),
+        'fieldId'=>$id,
+        'name'=>$name
+    ]) !!}
+@endforeach

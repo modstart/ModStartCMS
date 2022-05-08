@@ -12,6 +12,10 @@ use Module\Member\Support\MemberLoginCheck;
 
 class MemberDataController extends Controller implements MemberLoginCheck
 {
+    public static $memberLoginCheckIgnores = [
+        'ueditorGuest'
+    ];
+
     public function fileManager($category)
     {
         if (Request::isPost()) {
@@ -29,6 +33,11 @@ class MemberDataController extends Controller implements MemberLoginCheck
     }
 
     public function ueditor()
+    {
+        return UeditorManager::handle('member_upload', 'member_upload_category', MemberUser::id());
+    }
+
+    public function ueditorGuest()
     {
         return UeditorManager::handle('member_upload', 'member_upload_category', MemberUser::id());
     }
