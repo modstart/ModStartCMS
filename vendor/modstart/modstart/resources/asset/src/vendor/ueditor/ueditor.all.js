@@ -19464,6 +19464,8 @@ UE.plugins["autofloat"] = function() {
     toolbarBox.style.cssText = bakCssText;
   }
 
+  me.unsetFloating = unsetFloating;
+
   function updateFloating() {
     var rect3 = getPosition(me.container);
     var offset = me.options.toolbarTopOffset || 0;
@@ -22211,7 +22213,7 @@ UE.plugins["table"] = function() {
     singleClickState = 0,
     userActionStatus = null,
     //双击允许的时间范围
-    dblclickTime = 360,
+    dblclickTime = 200,
     UT = UE.UETable,
     getUETable = function(tdOrTable) {
       return UT.getUETable(tdOrTable);
