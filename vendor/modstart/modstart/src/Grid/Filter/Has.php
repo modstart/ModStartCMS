@@ -33,4 +33,11 @@ class Has extends AbstractFilter
         $this->field->options($options);
         return $this;
     }
+
+    public function cascader($options)
+    {
+        $this->field = new Field\Cascader($this);
+        $this->field->nodes($options);
+        return $this;
+    }
 }

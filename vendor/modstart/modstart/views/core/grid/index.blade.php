@@ -464,3 +464,4 @@
         @endif
     })();
 </script>
+{!! $bodyAppend !!}

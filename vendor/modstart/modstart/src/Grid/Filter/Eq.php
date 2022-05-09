@@ -6,6 +6,13 @@ use ModStart\Core\Dao\ModelUtil;
 
 class Eq extends AbstractFilter
 {
+    public function cascader($options)
+    {
+        $this->field = new Field\Cascader($this);
+        $this->field->options($options);
+        return $this;
+    }
+
     /**
      * @param mixed $options array | BaseType
      * @return $this

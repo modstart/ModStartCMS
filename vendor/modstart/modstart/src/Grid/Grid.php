@@ -204,6 +204,10 @@ class Grid
      * @var string Grid页面视图
      */
     private $view = 'modstart::core.grid.index';
+    /**
+     * @var string 追加视图内容
+     */
+    private $bodyAppend = '';
 
     /**
      * Grid constructor.
@@ -397,6 +401,12 @@ class Grid
         return $this;
     }
 
+    public function bodyAppend($content)
+    {
+        $this->bodyAppend = $content;
+        return $this;
+    }
+
     /**
      * 开始构建Grid，主要处理回调等操作
      */
@@ -581,6 +591,7 @@ class Grid
             'gridTableTops' => $this->gridTableTops,
             'gridBeforeRequestScript' => $this->gridBeforeRequestScript,
             'scopeCurrent' => Input::get('_scope', $this->scopeDefault),
+            'bodyAppend' => $this->bodyAppend,
         ]);
         return view($this->view, $data)->render();
     }

@@ -4,6 +4,7 @@ const Dialog = require('./../lib/dialogPC');
 const Lister = require('./../lib/lister');
 const Util = require('./../lib/util');
 const SelectorDialog = require('./../lib/selectorDialog');
+import {Tree} from './../svue/lib/tree';
 
 const Header = {
     trigger: function (selector, showClass) {
@@ -58,7 +59,8 @@ const MS = {
         post: Base.post
     },
     selectorDialog: SelectorDialog,
-    header: Header
+    header: Header,
+    tree: Tree,
 }
 
 window.api = window.api || {}

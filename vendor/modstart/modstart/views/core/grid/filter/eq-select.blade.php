@@ -1,7 +1,7 @@
-<div class="field auto" data-grid-filter-field="{{$id}}">
+<div class="field auto" data-grid-filter-field="{{$id}}" data-grid-filter-field-column="{{$column}}">
     <div class="name">{{$label}}</div>
     <div class="input">
-        <select class="form" id="{{$id}}_select">
+        <select class="form" id="{{$id}}Select">
             <option value="" @if(null===$defaultValue) selected @endif>{{L('All')}}</option>
             @foreach($field->options() as $k=>$v)
                 <option value="{{$k}}" @if(null!==$defaultValue&&$defaultValue==$k) selected @endif>{{$v}}</option>
@@ -15,18 +15,18 @@
         $field.data('get', function () {
             return {
                 '{{$column}}': {
-                    eq: $('#{{$id}}_select').val()
+                    eq: $('#{{$id}}Select').val()
                 }
             };
         });
         $field.data('reset', function () {
-            $('#{{$id}}_select').val('');
+            $('#{{$id}}Select').val('');
         });
         $field.data('init', function (data) {
             for (var i = 0; i < data.length; i++) {
                 for (var k in data[i]) {
                     if (k === '{{$column}}' && ('eq' in data[i][k])) {
-                        $('#{{$id}}_select').val(data[i][k].eq);
+                        $('#{{$id}}Select').val(data[i][k].eq);
                     }
                 }
             }

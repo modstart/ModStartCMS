@@ -191,7 +191,7 @@ abstract class AbstractFilter
      *
      * @return array
      */
-    private function variables()
+    public function variables()
     {
         $variables = [
             'id' => $this->id,
