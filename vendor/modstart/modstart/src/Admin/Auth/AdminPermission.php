@@ -120,7 +120,7 @@ class AdminPermission
 
     private static function sort()
     {
-        static $sort = 1000;
+        static $sort = 10000;
         return $sort++;
     }
 
@@ -177,12 +177,47 @@ class AdminPermission
         return $flatten;
     }
 
+    private static function menuClean($menu, $menuFlat)
+    {
+        $newMenu = [];
+        foreach ($menu as $item) {
+            if (!empty($item['url'])) {
+                if (in_array($item['url'], $menuFlat)) {
+                    continue;
+                }
+            }
+            if (!empty($item['children'])) {
+                $item['children'] = self::menuClean($item['children'], $menuFlat);
+            }
+            $newMenu[] = $item;
+        }
+        return $newMenu;
+    }
+
+    private static function flatMenuUrl($menu)
+    {
+        $urls = [];
+        foreach ($menu as $item) {
+            if (!empty($item['url'])) {
+                $urls[] = $item['url'];
+            }
+            if (!empty($item['children'])) {
+                $urls = array_merge($urls, self::flatMenuUrl($item['children']));
+            }
+        }
+        return $urls;
+    }
+
     public static function menuAll(\Closure $filter = null, $ruleMode = false)
     {
         $menu = AdminConfig::get('menu', []);
         $moduleMenu = AdminMenu::get();
         // print_r($moduleMenu);exit();
         $menuAll = array_merge($menu, $moduleMenu);
+        $menuCustom = modstart_config()->getArray('adminMenuCustom', []);
+        $menuCustomFlat = self::flatMenuUrl($menuCustom);
+        $menuAfterCustom = self::menuClean($menuAll, $menuCustomFlat);
+        $menuAll = array_merge($menuCustom, $menuAfterCustom);
         // print_r($menuAll);exit();
         $menu = self::mergeMenu($menuAll, '', 1, $filter, $ruleMode);
         // print_r($menu);exit();

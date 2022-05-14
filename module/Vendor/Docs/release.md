@@ -1,4 +1,10 @@
-## 3.4.0
+## 
+
+- 新增：视频选择组件前端export
+
+---
+
+## 3.4.0 日志Rotate、QuickRun支持
 
 - 新增：LBS定位Provider功能增强
 - 新增：日志新增Rotate特性

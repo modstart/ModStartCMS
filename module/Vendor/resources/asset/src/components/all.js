@@ -1,5 +1,6 @@
 import ImagesSelector from "@ModStartAsset/svue/components/ImagesSelector.vue"
 import ImageSelector from "@ModStartAsset/svue/components/ImageSelector.vue"
+import VideoSelector from "@ModStartAsset/svue/components/VideoSelector.vue"
 import FileSelector from "@ModStartAsset/svue/components/FileSelector.vue"
 
 const AudioSelector = Object.assign({}, FileSelector)
@@ -31,6 +32,7 @@ const buildFilesSelectorDialog = (type) => {
 
 ImageSelector.props.doSelectCustom.default = buildSelectorDialog('image')
 FileSelector.props.doSelectCustom.default = buildSelectorDialog('file')
+VideoSelector.props.doSelectCustom.default = buildSelectorDialog('video')
 AudioSelector.props.doSelectCustom.default = buildSelectorDialog('audio')
 AudioSelector.props.selectText.default = '选择音频'
 ImagesSelector.props.doSelectCustom.default = buildFilesSelectorDialog('image')
@@ -43,6 +45,7 @@ export default (Vue) => {
     Vue.component("images-selector", ImagesSelector)
     Vue.component("image-selector", ImageSelector)
     Vue.component("file-selector", FileSelector)
+    Vue.component("video-selector", VideoSelector)
     Vue.component("audio-selector", AudioSelector)
     Vue.component('rich-editor', () => import('./RichEditor'))
     Vue.component('name-value-list-editor', () => import('./NameValueListEditor'))

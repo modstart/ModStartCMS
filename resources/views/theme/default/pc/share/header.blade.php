@@ -15,27 +15,12 @@
                 <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(modstart_config('siteLogo'))}}"/>
             </a>
         </div>
-        <div class="nav-mask" onclick="$(this).closest('.ub-header-b').removeClass('show')"></div>
+        <div class="nav-mask" onclick="MS.header.hide()"></div>
         <div class="nav">
             @include('module::Vendor.View.searchBox.header')
-            @foreach(\Module\Nav\Util\NavUtil::listByPositionWithCache('head') as $nav)
-                @if(empty($nav['_child']))
-                    <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue($nav)}}>{{$nav['name']}}</a>
-                @else
-                    <div class="nav-item">
-                        <div class="sub-title">
-                            <a class="{{modstart_baseurl_active($nav['link'])}}" href="{{$nav['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue($nav)}}>{{$nav['name']}}</a>
-                        </div>
-                        <div class="sub-nav">
-                            @foreach($nav['_child'] as $child)
-                                <a class="sub-nav-item {{modstart_baseurl_active($child['link'])}}" href="{{$child['link']}}" {{\Module\Nav\Type\NavOpenType::getBlankAttributeFromValue($child)}}>{{$child['name']}}</a>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
-            @endforeach
+            {!! \Module\Nav\Render\NavRender::position('head') !!}
         </div>
-        <a class="nav-toggle" href="javascript:;" onclick="$(this).closest('.ub-header-b').toggleClass('show')">
+        <a class="nav-toggle" href="javascript:;" onclick="MS.header.trigger()">
             <i class="show iconfont icon-list"></i>
             <i class="close iconfont icon-close"></i>
         </a>

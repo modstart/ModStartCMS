@@ -13,12 +13,16 @@
         window.__msAdminRoot = "{{modstart_admin_url(null)}}";
         window.__selectorDialogServer = "{{modstart_admin_url('data/file_manager')}}";
     </script>
+    @if(\ModStart\Admin\Auth\Admin::isLogin())
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageHeadAppend'); !!}
+    @endif
 @endsection
 
 @section('bodyAppend')
     @parent
+    @if(\ModStart\Admin\Auth\Admin::isLogin())
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageBodyAppend'); !!}
+    @endif
 @endsection
 
 @section('body')

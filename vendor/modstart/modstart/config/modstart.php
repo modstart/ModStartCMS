@@ -7,6 +7,7 @@ return [
     ],
 
     'trackPerformance' => env('TRACK_PERFORMANCE', false),
+    'statisticServer' => env('STATISTIC_SERVER', null),
 
     'forceSchema' => env('FORCE_SCHEMA', null),
     'subdirUrl' => env('SUBDIR_URL', null),

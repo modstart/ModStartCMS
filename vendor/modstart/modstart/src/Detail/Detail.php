@@ -196,6 +196,7 @@ class Detail implements Renderable
             case 'gridFilter':
             case 'canMultiSelectItem':
             case 'gridOperateAppend':
+            case 'bodyAppend':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

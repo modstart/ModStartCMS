@@ -192,7 +192,7 @@ class ModelUtil
     /**
      * 获取单条记录
      * @param $model string 数据表
-     * @param $where id|array 条件
+     * @param $where int|array 条件
      * @param  $fields array 数据表字段
      * @param $order array 排序，如 ['id','asc']
      * @return array|null 数据记录

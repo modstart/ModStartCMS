@@ -5,6 +5,7 @@ namespace Module\Cms\Util;
 
 
 use Carbon\Carbon;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\ArrayUtil;
@@ -42,11 +43,15 @@ class CmsContentUtil
         if (empty($option['order'])) {
             $option['order'] = [
                 ['isTop', 'desc'],
+                ['isRecommend', 'desc'],
                 ['postTime', 'desc'],
             ];
         }
         $paginateData = ModelUtil::paginate('cms_content', $page, $pageSize, $option);
         foreach ($paginateData['records'] as $k => $record) {
+            if (!empty($record['cover'])) {
+                $paginateData['records'][$k]['cover'] = AssetsUtil::fixFull($record['cover']);
+            }
             $paginateData['records'][$k]['_url'] = ContentUrlMode::url($record);
             $paginateData['records'][$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
             $paginateData['records'][$k]['_tags'] = TagUtil::string2Array($record['tags']);
@@ -71,6 +76,9 @@ class CmsContentUtil
             ->orderBy('postTime', 'desc')
             ->get()->toArray();
         foreach ($records as $k => $record) {
+            if (!empty($record['cover'])) {
+                $records[$k]['cover'] = AssetsUtil::fixFull($record['cover']);
+            }
             $records[$k]['_url'] = ContentUrlMode::url($record);
             $records[$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
             $records[$k]['_tags'] = TagUtil::string2Array($record['tags']);
@@ -100,6 +108,9 @@ class CmsContentUtil
         $recordData = ModelUtil::get($table, $record['id']);
         $record['_tags'] = TagUtil::string2Array($record['tags']);
         $record['_data'] = $recordData;
+        if (!empty($record['cover'])) {
+            $record['cover'] = AssetsUtil::fixFull($record['cover']);
+        }
         return [
             'record' => $record,
             'model' => $model,
@@ -137,6 +148,9 @@ class CmsContentUtil
         $recordData = ModelUtil::get($table, $record['id']);
         $record['_tags'] = TagUtil::string2Array($record['tags']);
         $record['_data'] = $recordData;
+        if (!empty($record['cover'])) {
+            $record['cover'] = AssetsUtil::fixFull($record['cover']);
+        }
         return [
             'record' => $record,
             'model' => $model,

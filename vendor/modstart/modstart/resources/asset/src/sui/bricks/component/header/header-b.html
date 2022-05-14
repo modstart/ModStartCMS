@@ -7,10 +7,7 @@
                 <i class="iconfont icon-bell"></i>
                 <span class="badge">5</span>
             </a>
-            <a href="/member"><i class="iconfont icon-user"></i> 用户</a>
-            <a href="#">退出</a>
-            <a href="#">登录</a>
-            <a href="#">注册</a>
+            <a href="/member"><i class="iconfont icon-user"></i>我的</a>
         </div>
         <div class="logo">
             <a href="#">
@@ -18,7 +15,7 @@
             </a>
         </div>
         <div class="nav-mask"
-             onclick="$(this).closest('.ub-header-b').removeClass('show');$('body').removeClass('scroll-lock');"></div>
+             onclick="MS.header.hide()"></div>
         <div class="nav">
             <div class="search has-drop">
                 <div class="box">
@@ -70,7 +67,7 @@
             <a href="#">导航B</a>
         </div>
         <a class="nav-toggle" href="javascript:;"
-           onclick="$(this).closest('.ub-header-b').toggleClass('show');$('body').addClass('scroll-lock');">
+           onclick="MS.header.trigger();">
             <i class="show iconfont icon-list"></i>
             <i class="close iconfont icon-close"></i>
         </a>

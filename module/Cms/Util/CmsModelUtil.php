@@ -56,7 +56,7 @@ class CmsModelUtil
         return Cache::rememberForever('CmsModelAll', function () {
             try {
                 $models = ModelUtil::all('cms_model', ['enable' => true]);
-                $fields = ModelUtil::all('cms_model_field', ['enable' => true]);
+                $fields = ModelUtil::all('cms_model_field', ['enable' => true], ['*'], ['sort', 'asc']);
                 ModelUtil::decodeRecordsJson($fields, ['fieldData']);
                 foreach ($models as $k => $model) {
                     $models[$k]['_customFields'] = [];

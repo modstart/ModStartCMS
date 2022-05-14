@@ -171,7 +171,7 @@ class InputPackage
                 return $defaultValue;
             }
             $content = trim($this->data[$key]);
-            $content = HtmlUtil::filter2($content);
+            $content = HtmlUtil::filter($content);
             $content = StrUtil::filterSpecialChars($content);
             return $content;
         }

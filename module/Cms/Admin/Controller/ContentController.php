@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Admin\Layout\AdminPage;
+use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -26,6 +27,7 @@ use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Layout\LayoutGrid;
+use ModStart\Layout\Row;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Manager\FieldManager;
@@ -57,6 +59,23 @@ class ContentController extends Controller
         $this->model = CmsModelUtil::get($modelId);
         $this->modelTable = 'cms_content';
         $this->modelDataTable = "cms_m_" . $this->model['name'];
+    }
+
+    private function getCatOptions()
+    {
+        $tree = TreeUtil::modelToTree('cms_cat', [
+            'title' => 'title',
+            'modelId' => 'modelId',
+        ], 'id', 'pid', 'sort', [
+            'enable' => true,
+        ]);
+        $list = TreeUtil::treeToListWithLevel($tree, 'id', 'title', 'pid', 0, ['modelId' => 'modelId']);
+        $catOptions = array_build(array_filter($list, function ($v) {
+            return $v['modelId'] == $this->modelId;
+        }), function ($k, $v) {
+            return [$v['id'], str_repeat('|--', $v['level']) . $v['title']];
+        });
+        return $catOptions;
     }
 
     public function index(AdminPage $page, $modelId)
@@ -166,6 +185,7 @@ class ContentController extends Controller
         $grid->gridFilter(function (GridFilter $filter) use ($filterFields, $tableName) {
             $filter->eq('id', 'ID');
             $filter->like('title', '标题');
+            $filter->eq('catId', '栏目')->select($this->getCatOptions());
             $filter->eq('status', '状态')->select(CmsModelContentStatus::class);
             if (!empty($filterFields)) {
                 foreach ($filterFields as $filterField) {
@@ -184,15 +204,16 @@ class ContentController extends Controller
         if (Request::isPost()) {
             return $grid->request();
         }
-        return $page->pageTitle($this->model['title'] . '管理')
+        return $page->pageTitle($this->model['title'])
 //            ->row(function (Row $row) {
-//                $row->column(3, DashboardItemA::makeIconNumberTitle(
+//                $row->column(12, DashboardItemA::makeIconNumberTitle(
 //                    'iconfont icon-details', ModelUtil::count('cms_content', ['modelId' => $this->model['id']]), '总数',
 //                    modstart_admin_url('cms/content/' . $this->model['id'])
 //                ));
 //            })
             ->append($grid);
     }
+
 
     public function edit(AdminDialogPage $page, $modelId)
     {
@@ -222,18 +243,7 @@ class ContentController extends Controller
             }
         }
         $form = Form::make(null);
-        $tree = TreeUtil::modelToTree('cms_cat', [
-            'title' => 'title',
-            'modelId' => 'modelId',
-        ], 'id', 'pid', 'sort', [
-            'enable' => true,
-        ]);
-        $list = TreeUtil::treeToListWithLevel($tree, 'id', 'title', 'pid', 0, ['modelId' => 'modelId']);
-        $catOptions = array_build(array_filter($list, function ($v) {
-            return $v['modelId'] == $this->modelId;
-        }), function ($k, $v) {
-            return [$v['id'], str_repeat('|--', $v['level']) . $v['title']];
-        });
+        $catOptions = $this->getCatOptions();
         $form->layoutGrid(function (LayoutGrid $layout) use ($catOptions) {
             $layout->layoutColumn(8, function (Form $form) use ($catOptions) {
 
@@ -389,7 +399,12 @@ class ContentController extends Controller
                 ModelUtil::transactionBegin();
                 if ($record) {
                     ModelUtil::update($this->modelTable, $record['id'], $recordValue);
-                    ModelUtil::update($this->modelDataTable, $record['id'], $recordDataValue);
+                    $recordDataValue['updated_at'] = Carbon::now();
+                    if (ModelUtil::update($this->modelDataTable, $record['id'], $recordDataValue) < 1) {
+                        ModelUtil::insert($this->modelDataTable, array_merge($recordDataValue, [
+                            'id' => $record['id']
+                        ]));
+                    }
                     if (ModuleManager::isModuleEnabled('TagManager')) {
                         TagManager::updateTags('cms', $record['_tags'], $recordValue['tags']);
                     }

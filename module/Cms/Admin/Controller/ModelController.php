@@ -72,6 +72,12 @@ class ModelController extends Controller
             BizException::throwsIf('标识格式不正确', !preg_match('/^[a-zA-Z][a-zA-Z0-9]*$/', $data['name']));
             BizException::throwsIf('标识不能为系统关键字段', in_array($data['name'], [
                 'id', 'created_at', 'updated_at', 'content',
+                'catId', 'modelId', 'alias', 'title', 'summary', 'cover',
+                'seoTitle', 'seoDescription', 'seoKeywords',
+                'postTime', 'wordCount', 'viewCount',
+                'status', 'commentCount', 'likeCount',
+                'isRecommend', 'isTop', 'tags',
+                'author', 'source', 'memberUserId', 'verifyStatus'
             ]));
             $unique = ModelUtil::isFieldUniqueForInsertOrUpdate('cms_model_field', $id, 'name', $data['name'], ['modelId' => $model['id']]);
             BizException::throwsIf('标识重复', !$unique);
@@ -126,6 +132,22 @@ class ModelController extends Controller
         ]);
     }
 
+    public function fieldSort($modelId)
+    {
+        AdminPermission::demoCheck();
+        $model = ModelUtil::get('cms_model', $modelId);
+        BizException::throwsIfEmpty('模型不存在', $model);
+        $id = CRUDUtil::id();
+        $record = ModelUtil::get('cms_model_field', $id);
+        BizException::throwsIfEmpty('记录不存在', $record);
+        $form = Form::make('cms_model_field');
+        $form->repositoryFilter(function (RepositoryFilter $filter) use ($modelId) {
+            $filter->where(['modelId' => $modelId]);
+        });
+        $form->canSort(true);
+        return $form->sortRequest($id);
+    }
+
     public function fieldDelete($modelId)
     {
         AdminPermission::demoCheck();
@@ -158,6 +180,7 @@ class ModelController extends Controller
         $grid->canAdd(true)->urlAdd(action('\\' . __CLASS__ . '@fieldEdit', ['modelId' => $modelId]));
         $grid->canEdit(true)->urlEdit(action('\\' . __CLASS__ . '@fieldEdit', ['modelId' => $modelId]));
         $grid->canDelete(true)->urlDelete(action('\\' . __CLASS__ . '@fieldDelete', ['modelId' => $modelId]));
+        $grid->canSort(true)->urlSort(action('\\' . __CLASS__ . '@fieldSort', ['modelId' => $modelId]));
         if (Request::isPost()) {
             return $grid->request();
         }
@@ -256,6 +279,7 @@ class ModelController extends Controller
         $record = ModelUtil::get('cms_model', $id);
         BizException::throwsIfEmpty('记录不存在', $record);
         BizException::throwsIf('有栏目使用，不能删除', ModelUtil::exists('cms_cat', ['modelId' => $record['id']]));
+        BizException::throwsIf('该模型有数据，不能删除', ModelUtil::exists('cms_content', ['modelId' => $record['id']]));
         ModelUtil::transactionBegin();
         CmsModelUtil::drop($record);
         ModelUtil::delete('cms_model', $record['id']);

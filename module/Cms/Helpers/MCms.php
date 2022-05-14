@@ -148,6 +148,37 @@ class MCms
         return $records;
     }
 
+    /**
+     * @param $cateUrl string 栏目URL
+     * @param $limit int 数量
+     *
+     * @Util 根据栏目URL获取最近置顶记录
+     */
+    public static function latestTopContentByCatUrl($cateUrl, $limit = 10)
+    {
+        $cat = self::getCatByUrl($cateUrl);
+        return self::latestTopContentByCat($cat['id'], $limit);
+    }
+
+    /**
+     * @param $catId int 栏目ID
+     * @param $limit int 数量
+     * @return array
+     *
+     * @Util 根据栏目ID获取最近置顶记录
+     */
+    public static function latestTopContentByCat($catId, $limit = 10)
+    {
+        $option = [
+            'where' => [
+                'isTop' => true,
+            ]
+        ];
+        $paginateData = CmsContentUtil::paginateCat($catId, 1, $limit, $option);
+        $records = $paginateData['records'];
+        return $records;
+    }
+
     public static function latestCat($catId, $limit = 10)
     {
         return self::latestContentByCat($catId, $limit);

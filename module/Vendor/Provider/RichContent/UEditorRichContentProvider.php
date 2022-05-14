@@ -33,7 +33,7 @@ class UEditorRichContentProvider extends AbstractRichContentProvider
 
     public function toHtml($value, $htmlInterceptors = null)
     {
-        $value = HtmlUtil::filter2($value);
+        $value = HtmlUtil::filter($value);
         return parent::toHtml($value, $htmlInterceptors);
     }
 

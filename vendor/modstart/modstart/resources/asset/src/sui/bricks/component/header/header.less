@@ -8,12 +8,20 @@
         background: transparent;
         border-bottom-color: transparent;
 
+        .menu-toggle {
+            color: #FFF;
+        }
+
         .menu {
             .item {
                 color: #EEE;
 
                 &:hover {
                     color: #FFF;
+                }
+
+                &.active {
+                    color: #BBB;
                 }
             }
         }
@@ -652,6 +660,13 @@
             position: relative;
             height: 2rem;
 
+            .icon, .iconfont {
+                line-height: 2rem;
+                vertical-align: top;
+                width: 1rem;
+                display: inline-block;
+            }
+
             .badge {
                 position: absolute;
                 top: 0;
@@ -692,10 +707,8 @@
         height: 2.5rem;
 
         .logo {
-            float: none;
-            //display: inline-block;
+            display: inline-block;
             margin-left: 2.5rem;
-            display: none;
 
             a {
                 height: 2.5rem;
@@ -1163,7 +1176,7 @@
 
                 transition: border-bottom-color 0.5s;
 
-                &:hover {
+                &:hover, &.active {
                     border-bottom: 0.25rem solid var(--color-primary);
                 }
             }
@@ -1347,4 +1360,3 @@
         }
     }
 }
-

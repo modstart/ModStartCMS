@@ -13,19 +13,18 @@ const Header = {
         var $header = $(selector)
         if ($header.hasClass(showClass)) {
             $header.removeClass(showClass)
+            $('html').removeClass('body-scroll-lock')
         } else {
             $header.addClass(showClass)
+            $('html').addClass('body-scroll-lock')
         }
-        // 页面部分组件在手机上会出现被系统自动置顶的情况（比如Video），这时候需要自动隐藏
-        $('[data-header-shown-auto-hide]').css('visibility', $header.hasClass(showClass) ? 'hidden' : 'visible')
     },
     hide: function (selector, showClass) {
         selector = selector || 'header'
         showClass = showClass || 'show'
         var $header = $(selector)
         $header.removeClass(showClass)
-        // 页面部分组件在手机上会出现被系统自动置顶的情况（比如Video），这时候需要自动隐藏
-        $('[data-header-shown-auto-hide]').css('visibility', 'visible')
+        $('html').removeClass('body-scroll-lock')
     }
 }
 

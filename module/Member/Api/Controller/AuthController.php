@@ -156,7 +156,7 @@ class AuthController extends ModuleBaseController
     public function oauthBind($oauthType = null)
     {
         $input = InputPackage::buildFromInput();
-        $redirect = $input->getTrimString('redirect', modstart_web_url(''));
+        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         $oauthType = $input->getTrimString('type', $oauthType);
         $oauthUserInfo = Session::get('oauthUserInfo', []);
         if (empty($oauthUserInfo)) {

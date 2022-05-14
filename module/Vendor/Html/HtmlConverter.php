@@ -19,7 +19,7 @@ class HtmlConverter
     {
         switch ($contentType) {
             case HtmlType::RICH_TEXT:
-                $html = HtmlUtil::filter2($content);
+                $html = HtmlUtil::filter($content);
                 break;
             case HtmlType::MARKDOWN:
                 $html = MarkdownUtil::convertToHtml($content);
