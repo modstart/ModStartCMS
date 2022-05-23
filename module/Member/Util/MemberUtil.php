@@ -297,6 +297,9 @@ class MemberUtil
             if ($ret['code']) {
                 return $ret;
             }
+            if (strlen($username) < 3) {
+                return Response::generate(-1, '用户名至少3个字符');
+            }
             // 为了统一登录时区分邮箱
             if (Str::contains($username, '@')) {
                 return Response::generate(-1, '用户名不能包含特殊字符');
