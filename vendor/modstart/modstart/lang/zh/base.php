@@ -110,6 +110,7 @@ return [
     'Loading' => '加载中',
     'No Records' => '没有记录',
     'Page Not Found' => '页面不存在',
+    'Api Not Found' => '接口不存在',
     'Parent' => '上级',
     'Please Select' => '请选择',
     'Select %d item(s) at most' => '最多选择 %d 条',
@@ -198,4 +199,6 @@ return [
     'Json Format Error' => 'JSON格式错误',
     'TempPath Not Exists, Please Upload Again' => '临时文件不存在，请重新上传',
     'File Not Exists' => '文件不存在',
+    'Upload Error : %s' => '上传错误:%s',
+    'Server Error' => '服务器错误',
 ];

@@ -87,7 +87,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
                 if (!in_array($avatarExt, config('data.upload.image.extensions'))) {
                     return Response::generate(-1, '头像格式不合法');
                 }
-                $avatar = file_get_contents($avatar);
+                $avatar = FileUtil::safeGetContent($avatar);
                 if (empty($avatar)) {
                     return Response::generate(-1, '读取头像文件失败:-2');
                 }

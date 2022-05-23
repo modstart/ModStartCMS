@@ -400,6 +400,48 @@ class FileUtil
         }
     }
 
+    public static function safePath($path, $permit = ['public/temp', 'public/data'])
+    {
+        $path = realpath($path);
+        if (empty($path)) {
+            BizException::throws('FileSafePath File Not Exists');
+        }
+        $whiteList = [];
+        foreach ($permit as $p) {
+            $whiteList[] = realpath(base_path($p));
+        }
+        $whiteList = array_map(function ($p) {
+            if (PlatformUtil::isWindows()) {
+                return str_replace('/', '\\', $p);
+            } else {
+                return str_replace('\\', '/', $p);
+            }
+        }, $whiteList);
+        $found = false;
+        foreach ($whiteList as $item) {
+            if (starts_with($path, $item)) {
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            BizException::throws('FileSafePath Not Permit');
+        }
+        return $path;
+    }
+
+    /**
+     * Safe get user generated file content
+     * @param $path
+     * @return false|string
+     * @throws BizException
+     */
+    public static function safeGetContent($path, $permit = ['public/temp', 'public/data'])
+    {
+        $path = self::safePath($path, $permit);
+        return file_get_contents($path);
+    }
+
     /**
      * 将远程文件保存为本地可用
      * @param $path string 可以为 http://example.com/xxxxx.xxx /data/xxxxx.xxx

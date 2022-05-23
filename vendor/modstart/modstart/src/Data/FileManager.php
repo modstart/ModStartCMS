@@ -13,6 +13,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\ImageUtil;
+use ModStart\Core\Util\PathUtil;
 use ModStart\Core\Util\TreeUtil;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -43,7 +44,9 @@ class FileManager
         }
         switch ($action) {
             case 'config':
+                // upload and save to user space
             case 'uploadDirect':
+                // update and not save to user space
             case 'uploadDirectRaw':
             case 'categoryEdit':
             case 'categoryDelete':
@@ -141,12 +144,16 @@ class FileManager
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
-        return Response::jsonSuccessData([
+        $data = [
             'path' => $ret['data']['path'],
             'fullPath' => $ret['data']['fullPath'],
             'filename' => $retSaveUser['data']['filename'],
             'data' => $retSaveUser['data'],
-        ]);
+        ];
+        if (Input::get('fullPath', false)) {
+            $data['fullPath'] = PathUtil::fixFull($data['fullPath']);
+        }
+        return Response::jsonSuccessData($data);
     }
 
     /**

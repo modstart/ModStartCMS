@@ -2,11 +2,10 @@
 
 namespace ModStart\Core\Input;
 
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Log;
-use ModStart\Core\Exception\BizException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\FileUtil;
 
 class Response
@@ -209,8 +208,8 @@ class Response
 
     public static function page404()
     {
-        if (\Illuminate\Support\Facades\Request::ajax()) {
-            return self::json(-1, L('Page Not Found'));
+        if (Request::isAjax()) {
+            return self::json(-1, L('Api Not Found'));
         } else {
             return abort(404, L('Page Not Found'));
         }
@@ -218,7 +217,7 @@ class Response
 
     public static function pagePermissionDenied($msg = null)
     {
-        if (\Illuminate\Support\Facades\Request::ajax()) {
+        if (Request::isAjax()) {
             return self::json(-1, $msg ? $msg : L('No Permission'));
         } else {
             return abort(403, $msg ? $msg : L('No Permission'));

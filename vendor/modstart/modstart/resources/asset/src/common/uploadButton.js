@@ -200,19 +200,22 @@ var UploadButton = function (selector, option) {
             data.md5 = file.file.fileMd5
         });
 
-        uploader.on('uploadError', function (file) {
+        uploader.on('uploadError', function (file, typeOrMsg) {
             this.removeFile(file);
+            if (typeOrMsg) {
+                switch (typeOrMsg) {
+                    case 'server':
+                        opt.tipError(MS.L('Upload Error : %s', MS.L('Server Error')));
+                        break
+                    default:
+                        opt.tipError(MS.L('Upload Error : %s', typeOrMsg));
+                        break
+                }
+            }
         });
 
         uploader.on('uploadFinished', function () {
             opt.finish();
-        });
-
-        uploader.on('uploadError', function (file, msg) {
-            if (null !== msg) {
-                msg || '上传出现错误，请联系后台管理员'
-                opt.tipError(msg);
-            }
         });
 
         uploader.on('error', function (type) {

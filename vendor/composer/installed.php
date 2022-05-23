@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '22c5c423418d6788fb587f89b47439dd5b5ff90e',
+        'reference' => 'fdcac8ccbc32664c6dfa11c2df33d32f818b410e',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -469,7 +469,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '22c5c423418d6788fb587f89b47439dd5b5ff90e',
+            'reference' => 'fdcac8ccbc32664c6dfa11c2df33d32f818b410e',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(
@@ -478,7 +478,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart',
             'aliases' => array(),
-            'reference' => '87a26ed8689af40810544af300a48b9ada5442af',
+            'reference' => '011a5401ae5c5a2ab4c520e8b761f4cfa46cf25a',
             'dev_requirement' => false,
         ),
         'modstart/modstart-laravel5' => array(
@@ -487,7 +487,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../modstart/modstart-laravel5',
             'aliases' => array(),
-            'reference' => 'be19212b2c2b11eed2a0891cf07480982a241e38',
+            'reference' => '95f4f6164ebed0ab639708e5519d352d8d4635cc',
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(

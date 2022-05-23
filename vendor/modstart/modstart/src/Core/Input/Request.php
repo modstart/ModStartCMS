@@ -175,7 +175,7 @@ class Request
 
     public static function isAjax()
     {
-        return \Illuminate\Support\Facades\Request::ajax();
+        return \Illuminate\Support\Facades\Request::ajax() || self::headerGet('is-ajax');
     }
 
     /**

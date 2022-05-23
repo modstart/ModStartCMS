@@ -14,23 +14,29 @@ class StatisticMonitor
 {
     protected static $timeMap = array();
     protected static $client = null;
+    private static $inited = false;
     private static $reportAddress = null;
+
+    public static function isEnable()
+    {
+        if (!defined('LARAVEL_START')) {
+            return false;
+        }
+        if (!self::$inited) {
+            self::$reportAddress = config('modstart.statisticServer', null);
+            self::$inited = true;
+        }
+        return !empty(self::$reportAddress);
+    }
 
     public static function init()
     {
-        $address = config('modstart.statisticServer', null);
-        if (!$address) {
-            return;
-        }
-        self::$reportAddress = $address;
+        if (!self::isEnable()) return;
         $eventName = 'kernel.handled';
         if (class_exists('Illuminate\\Foundation\\Http\\Events\\RequestHandled')) {
             $eventName = 'Illuminate\\Foundation\\Http\\Events\\RequestHandled';
         }
         Event::listen($eventName, function ($eventOrRequest = null, $response = null) use ($eventName) {
-            if (!defined('LARAVEL_START')) {
-                return;
-            }
             /** @var Request $request */
             /** @var Response $request */
             $request = $eventOrRequest;
@@ -44,23 +50,20 @@ class StatisticMonitor
             $url = $request->url();
             $method = $request->method();
             $routeAction = Route::currentRouteAction();
-            self::tick(\ModStart\Core\Input\Request::domain(), "$method." . $routeAction, $time);
+            $domain = \ModStart\Core\Input\Request::domain();
+            self::tick($domain, "$method." . $routeAction, $time);
         });
     }
 
     public static function tickStart($module, $group)
     {
-        if (!self::$reportAddress) {
-            return;
-        }
+        if (!self::isEnable()) return;
         return self::$timeMap[$module][$group] = microtime(true);
     }
 
     public static function tickEnd($module, $group, $success = true, $code = 0, $msg = null)
     {
-        if (!self::$reportAddress) {
-            return;
-        }
+        if (!self::isEnable()) return;
         if (isset(self::$timeMap[$module][$group]) && self::$timeMap[$module][$group] > 0) {
             $timeStart = self::$timeMap[$module][$group];
             self::$timeMap[$module][$group] = 0;
@@ -72,9 +75,7 @@ class StatisticMonitor
 
     public static function tick($module, $group, $costMS, $success = true, $code = 0, $msg = null)
     {
-        if (!self::$reportAddress) {
-            return;
-        }
+        if (!self::isEnable()) return;
         self::send($module, $group, round($costMS, 2), $success, $code, $msg);
     }
 

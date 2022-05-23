@@ -76,7 +76,11 @@ class FileDataStorage extends AbstractDataStorage
 
         $hashFile = self::DATA_CHUNK . '/data/' . $token['hash'];
         if ($data['chunk'] < $data['chunks']) {
-            $content = file_get_contents($data['file']->getRealPath());
+            $p = $data['file']->getRealPath();
+            if (false === $p) {
+                $p = $data['file']->getPathname();
+            }
+            $content = file_get_contents($p);
             $this->localStorage->put($hashFile . '.' . $data['chunk'], $content);
             $token['chunkUploaded'] = $data['chunk'] + 1;
             $this->uploadChunkTokenAndUpdateToken($token);

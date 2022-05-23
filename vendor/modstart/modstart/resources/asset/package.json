@@ -42,6 +42,7 @@
     "axios": "^0.23.0",
     "dateformat": "^4.5.1",
     "element-ui": "^2.15.1",
+    "file-saver": "^2.0.5",
     "isutf8": "^3.0.0",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",

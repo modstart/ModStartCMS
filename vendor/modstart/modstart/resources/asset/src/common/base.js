@@ -6,6 +6,8 @@ const Util = require('./../lib/util');
 const SelectorDialog = require('./../lib/selectorDialog');
 import {Tree} from './../svue/lib/tree';
 
+const sprintf = require('sprintf-js').sprintf;
+
 const Header = {
     trigger: function (selector, showClass) {
         selector = selector || 'header'
@@ -60,6 +62,14 @@ const MS = {
     selectorDialog: SelectorDialog,
     header: Header,
     tree: Tree,
+    L: function () {
+        var lang = arguments[0]
+        if (MS.trans && (lang in MS.trans)) {
+            arguments[0] = MS.trans[lang]
+            return sprintf.call(null, ...arguments)
+        }
+        return sprintf.call(null, ...arguments)
+    }
 }
 
 window.api = window.api || {}

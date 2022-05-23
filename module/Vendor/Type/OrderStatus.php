@@ -22,7 +22,7 @@ class OrderStatus implements BaseType
             self::WAIT_SHIPPING => '待发货',
             self::WAIT_CONFIRM => '待收货',
 
-            self::COMPLETED => '订单完成',
+            self::COMPLETED => '已完成',
 
             self::CANCEL_EXPIRED => '订单过期取消',
             self::CANCEL => '订单取消',
