@@ -6,7 +6,7 @@ return [
             'maxSize' => 1024 * 1024 * 1024,
             'maxWidth' => 9999,
             'maxHeight' => 9999,
-            'extensions' => ['jpg', 'png', 'gif', 'jpeg', 'ico'],
+            'extensions' => ['jpg', 'png', 'gif', 'jpeg', 'ico', 'webp'],
             'compress' => true,
         ],
         'video' => [

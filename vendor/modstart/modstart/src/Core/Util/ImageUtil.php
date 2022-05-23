@@ -19,7 +19,9 @@ class ImageUtil
     {
         try {
             $changed = false;
-
+            if (ends_with(strtolower($path), '.webp')) {
+                return;
+            }
             $exif = @exif_read_data($path);
             $image = Image::make($path);
             if (!empty($exif['Orientation'])) {

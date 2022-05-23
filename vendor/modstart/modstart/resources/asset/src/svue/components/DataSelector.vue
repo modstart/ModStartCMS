@@ -4,10 +4,10 @@
                    width="60%" @close="()=>{this.visible=false}"
                    append-to-body>
             <div slot="title">
-                <span>{{L('Please Select')}}</span>
+                <span>{{ L('Please Select') }}</span>
             </div>
             <div slot="footer">
-                <el-button type="primary" @click="doSubmit">{{L('Confirm')}}</el-button>
+                <el-button type="primary" @click="doSubmit">{{ L('Confirm') }}</el-button>
             </div>
             <div style="border-bottom:1px solid #EEE;padding-bottom:7px;">
                 <div class="pb-data-upload-button" v-if="permission['Upload']">
@@ -17,13 +17,13 @@
                     <i class="iconfont icon-list"></i>
                 </el-button>
                 <el-button :type="tab==='list'?'primary':''" @click="tab='list'">
-                    <i class="iconfont icon-category"></i> {{L('File Gallery')}}
+                    <i class="iconfont icon-category"></i> {{ L('File Gallery') }}
                 </el-button>
                 <el-button :type="tab==='input'?'primary':''" @click="tab='input'">
-                    <i class="iconfont icon-edit"></i> {{L('Custom Link')}}
+                    <i class="iconfont icon-edit"></i> {{ L('Custom Link') }}
                 </el-button>
                 <span class="tw-ml-4" v-if="max>1 && tab==='list' && listChecked.length>1">
-                    <el-checkbox v-model="reverseSelectOrder">{{L('Reverse Select Order')}}</el-checkbox>
+                    <el-checkbox v-model="reverseSelectOrder">{{ L('Reverse Select Order') }}</el-checkbox>
                 </span>
             </div>
             <div class="pb-data-selector-gallery" :class="{'small-window':smallWindow,'menu-show':menuShow}"
@@ -85,7 +85,7 @@
                     </div>
                     <div class="records" style="min-height:5rem;" v-loading="listLoading">
                         <div class="ub-empty" v-if="!listLoading && records.length===0">
-                            {{L('No Records')}}
+                            {{ L('No Records') }}
                         </div>
                         <el-row :gutter="10">
                             <el-col :sm="6" :xs="6" v-for="(listItem,listIndex) in records" :key="listIndex">
@@ -95,11 +95,11 @@
                                                     :src="listItem.fullPath"></ImageCover>
                                         <div class="file-cover" v-if="!isImage(listItem.fullPath)">
                                             <div class="text">
-                                                {{fileExt(listItem.fullPath)}}{{L('File(s)')}}
+                                                {{ fileExt(listItem.fullPath) }}{{ L('File(s)') }}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="title">{{listItem.filename}}</div>
+                                    <div class="title">{{ listItem.filename }}</div>
                                     <div class="action">
                                         <a href="javascript:;" :title="L('Copy Link')"
                                            v-clipboard:copy="listItem.path"
@@ -155,7 +155,7 @@
                 <el-button :loading="categoryEditLoading"
                            size="mini" type="primary"
                            @click="doCategoryEditSubmit">
-                    {{L('Confirm')}}
+                    {{ L('Confirm') }}
                 </el-button>
               </span>
         </el-dialog>
@@ -179,7 +179,7 @@
             <span slot="footer" class="dialog-footer">
                 <el-button :loading="fileEditLoading"
                            size="mini" type="primary"
-                           @click="doFileEditSubmit">{{L('Confirm')}}</el-button>
+                           @click="doFileEditSubmit">{{ L('Confirm') }}</el-button>
               </span>
         </el-dialog>
     </div>
@@ -301,7 +301,7 @@ export default {
             return file.substring(file.lastIndexOf('.') + 1).toLocaleLowerCase()
         },
         isImage(file) {
-            return ['jpg', 'png', 'gif', 'jpeg'].includes(this.fileExt(file))
+            return ['jpg', 'png', 'gif', 'jpeg', 'webp'].includes(this.fileExt(file))
         },
         show() {
             this.visible = true
