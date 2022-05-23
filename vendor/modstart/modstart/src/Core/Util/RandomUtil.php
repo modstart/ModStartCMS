@@ -23,6 +23,7 @@ class RandomUtil
         return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
     }
 
+
     /**
      * 随机字符串
      * @param $length int 长度

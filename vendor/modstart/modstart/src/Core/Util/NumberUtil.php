@@ -30,4 +30,21 @@ class NumberUtil
         }
         return $dec;
     }
+
+    public static function randomInt($min, $max)
+    {
+        if ($min == $max) {
+            return $min;
+        }
+        return rand($min, $max);
+    }
+
+    public static function randomDecimal($min, $max)
+    {
+        if ($min == $max) {
+            return $min;
+        }
+        $value = rand(intval(bcmul($min, 100)), intval(bcmul($max, 100)));
+        return bcdiv($value,100,2);
+    }
 }

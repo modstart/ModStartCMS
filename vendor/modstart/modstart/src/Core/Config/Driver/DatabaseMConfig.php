@@ -18,7 +18,7 @@ class DatabaseMConfig extends MConfig
         if ($useCache) {
             $value = Cache::get($cacheFlag);
             if (null !== $value) {
-                if (empty($value)) {
+                if (null === $value || '' === $value) {
                     return $defaultValue;
                 }
                 return $value;
@@ -28,7 +28,7 @@ class DatabaseMConfig extends MConfig
             $config = ModelUtil::get('config', ['key' => $key]);
             if ($config) {
                 Cache::forever($cacheFlag, $config['value']);
-                if (empty($config['value'])) {
+                if (null === $config['value'] || '' === $config['value']) {
                     return $defaultValue;
                 }
                 return $config['value'];

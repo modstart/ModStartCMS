@@ -41,6 +41,11 @@ export default {
                 this.option = res.data
             })
         }
+    },
+    methods: {
+        getOptions() {
+            return this.option
+        }
     }
 }
 </script>
