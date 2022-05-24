@@ -9,7 +9,7 @@
     <script>
         window.__selectorDialogServer = "{{modstart_web_url('data/file_manager')}}";
     </script>
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('PageHeadAppend'); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('DialogPageHeadAppend'); !!}
 @endsection
 
 @section('bodyAppend')
@@ -41,7 +41,7 @@
             };
         });
     </script>
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('PageBodyAppend'); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('DialogPageBodyAppend'); !!}
 @endsection
 
 @section('body')

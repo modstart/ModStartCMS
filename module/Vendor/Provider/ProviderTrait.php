@@ -45,4 +45,16 @@ trait ProviderTrait
             ];
         });
     }
+
+    public static function allDefaultMap()
+    {
+        return array_merge(
+            ['' => L('None')],
+            array_build(self::all(), function ($k, $v) {
+                return [
+                    $v->name(), $v->title()
+                ];
+            })
+        );
+    }
 }

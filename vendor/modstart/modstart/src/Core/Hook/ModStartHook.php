@@ -11,20 +11,25 @@ class ModStartHook
     private static $listeners = [];
 
     /**
-     * 订阅一个行为
-     * @param $name
-     * @param $callable
+     * subscribe hook
+     * @param $name string|array PageHeadAppend,DialogPageHeadAppend
+     * @param $callable \Closure
      */
     public static function subscribe($name, $callable)
     {
-        if (!isset(self::$listeners[$name])) {
-            self::$listeners[$name] = [];
+        if (!is_array($name)) {
+            $name = [$name];
         }
-        self::$listeners[$name][] = $callable;
+        foreach ($name as $item) {
+            if (!isset(self::$listeners[$item])) {
+                self::$listeners[$item] = [];
+            }
+            self::$listeners[$item][] = $callable;
+        }
     }
 
     /**
-     * 获取一个行为
+     * get hook listeners
      * @param string $name
      * @return array|mixed
      */
@@ -37,7 +42,7 @@ class ModStartHook
     }
 
     /**
-     * 触发一个行为
+     * fire one hook and get array result
      * @param $name
      * @param null $param
      * @param null $extra
@@ -53,6 +58,7 @@ class ModStartHook
     }
 
     /**
+     * fire one hook and get string result
      * @param $name
      * @param null $param
      * @param null $extra

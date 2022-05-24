@@ -26,6 +26,7 @@
 - SmsTemplate 短信模板提供者
 - SuperSearch 超级搜索
 - VideoStream 视频点播提供者
+- OCR 图片文字识别
 
 ## 使用者 Biz
 

@@ -296,4 +296,34 @@ class Tecmz
         return $this->request('/doc_to_image', $post);
     }
 
+    /**
+     * OCR
+     *
+     * @param $format string
+     * @param $imageData string binary
+     * @return array|mixed
+     */
+    public function imageCompress($format, $imageData)
+    {
+        $post = [];
+        $post['format'] = $format;
+        $post['imageData'] = base64_encode($imageData);
+        return $this->request('/image_compress', $post);
+    }
+
+    /**
+     * OCR
+     *
+     * @param $format string
+     * @param $imageData string binary
+     * @return array|mixed
+     */
+    public function ocr($format, $imageData)
+    {
+        $post = [];
+        $post['format'] = $format;
+        $post['imageData'] = base64_encode($imageData);
+        return $this->request('/ocr', $post);
+    }
+
 }
