@@ -40,10 +40,10 @@ class MCms
      *
      * @Util 根据栏目URL获取子栏目
      */
-    public static function listChildrenCatByUrl($catUrl)
+    public static function paginateChildrenCatByUrl($catUrl)
     {
         $cat = CmsCatUtil::getByUrl($catUrl);
-        return self::listChildrenCat($cat['id']);
+        return self::paginateChildrenCat($cat['id']);
     }
 
     /**
@@ -52,9 +52,53 @@ class MCms
      *
      * @Util 根据栏目ID获取子栏目
      */
-    public static function listChildrenCat($catId)
+    public static function paginateChildrenCat($catId)
     {
         return CmsCatUtil::children($catId);
+    }
+
+    /**
+     * @param $catId int 栏目ID
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
+     * @param $option array 其他选项
+     * @return array
+     *
+     * @Util 根据栏目ID获取内容列表（包含副表字段），不包含子栏目
+     */
+    public static function pageCatWithData($catId, $page = 1, $pageSize = 10, $option = [])
+    {
+        $cat = CmsCatUtil::get($catId);
+        if (empty($cat)) {
+            return [
+                'total' => 0,
+                'records' => [],
+            ];
+        }
+        return CmsContentUtil::paginateCatsWithData([$cat], $page, $pageSize, $option);
+    }
+
+    /**
+     * @param $catIds int[] 栏目ID
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
+     * @param $option array 其他选项
+     * @return array
+     *
+     * @Util 根据多个栏目ID获取内容列表（包含副表字段），不包含子栏目，多个栏目必须为相同的模型
+     */
+    public static function pageCatsWithData($catIds, $page = 1, $pageSize = 10, $option = [])
+    {
+        $cats = array_values(array_filter(array_map(function ($o) {
+            return CmsCatUtil::get($o);
+        }, $catIds)));
+        if (empty($cats)) {
+            return [
+                'total' => 0,
+                'records' => [],
+            ];
+        }
+        return CmsContentUtil::paginateCatsWithData($cats, $page, $pageSize, $option);
     }
 
     /**
@@ -64,15 +108,69 @@ class MCms
      * @param $option array 其他选项
      * @return array
      *
-     * @Util 根据栏目URL获取列表
+     * @Util 根据栏目URL获取内容列表（包含副表字段），不包含子栏目
      */
-    public static function paginateCatByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
+    public static function pageCatWithDataByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
     {
         $cat = CmsCatUtil::getByUrl($catUrl);
         if (empty($cat)) {
-            return [];
+            return [
+                'total' => 0,
+                'records' => [],
+            ];
         }
-        $paginateData = CmsContentUtil::paginateCat($cat['id'], $page, $pageSize, $option);
+        return CmsContentUtil::paginateCatsWithData([$cat], $page, $pageSize, $option);
+    }
+
+    /**
+     * @param $catUrls string[] 栏目URL
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
+     * @param $option array 其他选项
+     * @return array
+     *
+     * @Util 根据多个栏目URL获取列表（包含副表字段），不包含子栏目，多个栏目必须为相同的模型
+     */
+    public static function pageCatsWithDataByUrl($catUrls, $page = 1, $pageSize = 10, $option = [])
+    {
+        $cats = array_values(array_filter(array_map(function ($o) {
+            return CmsCatUtil::getByUrl($o);
+        }, $catUrls)));
+        if (empty($cats)) {
+            return [
+                'total' => 0,
+                'records' => [],
+            ];
+        }
+        return CmsContentUtil::paginateCatsWithData($cats, $page, $pageSize, $option);
+    }
+
+    /**
+     * @param $catUrl string 栏目URL
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
+     * @param $option array 其他选项
+     * @return array
+     *
+     * @Util 根据栏目URL获取内容列表（不包含副表字段），包含子栏目
+     */
+    public static function listCatByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
+    {
+        $paginateData = self::pageCatByUrl($catUrl, $page, $pageSize, $option);
+        return $paginateData['records'];
+    }
+
+    /**
+     * @param $catUrl
+     * @param int $page
+     * @param int $pageSize
+     * @param array $option
+     * @return mixed
+     * @deprecated
+     */
+    public static function paginateCatByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
+    {
+        $paginateData = self::pageCatByUrl($catUrl, $page, $pageSize, $option);
         return $paginateData['records'];
     }
 
@@ -83,12 +181,61 @@ class MCms
      * @param $option array 其他选项
      * @return array
      *
-     * @Util 根据栏目ID获取列表
+     * @Util 根据栏目ID获取内容列表（不包含副表字段），包含子栏目
+     */
+    public static function listCat($catId, $page = 1, $pageSize = 10, $option = [])
+    {
+        $paginateData = self::pageCat($catId, $page, $pageSize, $option);
+        return $paginateData['records'];
+    }
+
+    /**
+     * @param $catId
+     * @param int $page
+     * @param int $pageSize
+     * @param array $option
+     * @return mixed
+     * @deprecated
      */
     public static function paginateCat($catId, $page = 1, $pageSize = 10, $option = [])
     {
-        $paginateData = CmsContentUtil::paginateCat($catId, $page, $pageSize, $option);
+        $paginateData = self::pageCat($catId, $page, $pageSize, $option);
         return $paginateData['records'];
+    }
+
+    /**
+     * @param $catUrl string 栏目URL
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
+     * @param $option array 其他选项
+     * @return array
+     *
+     * @Util 根据栏目URL获取内容列表（不包含副表字段），包含子栏目
+     */
+    public static function pageCatByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
+    {
+        $cat = CmsCatUtil::getByUrl($catUrl);
+        if (empty($cat)) {
+            return [
+                'total' => 0,
+                'records' => [],
+            ];
+        }
+        return CmsContentUtil::paginateCat($cat['id'], $page, $pageSize, $option);
+    }
+
+    /**
+     * @param $catId int 栏目ID
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
+     * @param $option array 其他选项
+     * @return array
+     *
+     * @Util 根据栏目ID获取内容列表（不包含副表字段），包含子栏目
+     */
+    public static function pageCat($catId, $page = 1, $pageSize = 10, $option = [])
+    {
+        return CmsContentUtil::paginateCat($catId, $page, $pageSize, $option);
     }
 
     /**
@@ -179,6 +326,13 @@ class MCms
         return $records;
     }
 
+    /**
+     * @param $catId int 栏目ID
+     * @param  $limit int 条数，默认10
+     * @return array
+     *
+     * @Util 根据栏目ID获取最新内容列表（不包含副表字段），包含子目录
+     */
     public static function latestCat($catId, $limit = 10)
     {
         return self::latestContentByCat($catId, $limit);

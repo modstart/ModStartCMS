@@ -88,6 +88,65 @@ class CmsContentUtil
         return $records;
     }
 
+    public static function paginateCatsWithData($cats, $page, $pageSize, $option = [])
+    {
+        $catIds = array_map(function ($o) {
+            return $o['id'];
+        }, $cats);
+        $option['whereIn'] = [
+            [
+                'catId', $catIds,
+            ]
+        ];
+        $option['where']['status'] = CmsModelContentStatus::SHOW;
+        $option['where']['verifyStatus'] = CmsContentVerifyStatus::VERIFY_PASS;
+        if (!isset($option['whereOperate'])) {
+            $option['whereOperate'] = [];
+        }
+        $option['whereOperate'][] = ['postTime', '<', date('Y-m-d H:i:s')];
+        if (empty($option['order'])) {
+            $option['order'] = [
+                ['isTop', 'desc'],
+                ['isRecommend', 'desc'],
+                ['postTime', 'desc'],
+            ];
+        }
+        $dataFields = [
+            'content' => 'content',
+        ];
+        $dataModel = null;
+        foreach ($cats as $cat) {
+            if (empty($dataModel)) {
+                $dataModel = $cat['_model'];
+            } else {
+                if ($cat['id'] != $dataModel['id']) {
+                    BizException::throws('只能为同一模型');
+                }
+            }
+        }
+        BizException::throwsIfEmpty('模型为空', $dataModel);
+        foreach ($dataModel['_customFields'] as $f) {
+            $dataFields[$f['name']] = $f['name'];
+        }
+        $option['joins'] = [
+            [
+                'table' => ['cms_m_news', 'cms_content.id', '=', 'cms_m_news.id',],
+                'fields' => $dataFields,
+            ]
+        ];
+        $paginateData = ModelUtil::paginate('cms_content', $page, $pageSize, $option);
+        foreach ($paginateData['records'] as $k => $record) {
+            if (!empty($record['cover'])) {
+                $paginateData['records'][$k]['cover'] = AssetsUtil::fixFull($record['cover']);
+            }
+            $paginateData['records'][$k]['_url'] = ContentUrlMode::url($record);
+            $paginateData['records'][$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
+            $paginateData['records'][$k]['_tags'] = TagUtil::string2Array($record['tags']);
+            $paginateData['records'][$k] = CmsModelUtil::decodeCustomField($dataModel, $paginateData['records'][$k]);
+        }
+        return $paginateData;
+    }
+
     public static function paginateCat($catId, $page, $pageSize, $option = [])
     {
         $catIds = CmsCatUtil::childrenIds($catId);

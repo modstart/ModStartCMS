@@ -6,6 +6,7 @@ namespace Module\Cms\Util;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Cache;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
@@ -174,5 +175,51 @@ class CmsModelUtil
     {
         $table = "cms_m_$model[name]";
         ModelManageUtil::ddlFieldDrop($table, $field['name']);
+    }
+
+
+    public static function decodeCustomField($model, $record)
+    {
+        foreach ($model['_customFields'] as $f) {
+            $value = isset($record[$f['name']]) ? $record[$f['name']] : null;
+            switch ($f['fieldType']) {
+                case CmsModelFieldType::TEXT:
+                case CmsModelFieldType::TEXTAREA:
+                case CmsModelFieldType::RADIO:
+                case CmsModelFieldType::SELECT:
+                case CmsModelFieldType::RICH_TEXT:
+                case CmsModelFieldType::DATE:
+                case CmsModelFieldType::DATETIME:
+                    $record[$f['name']] = $value;
+                    break;
+                case CmsModelFieldType::CHECKBOX:
+                    $record[$f['name']] = @json_decode($value, true);
+                    if (empty($record[$f['name']])) {
+                        $record[$f['name']] = [];
+                    }
+                    break;
+                case CmsModelFieldType::VIDEO:
+                case CmsModelFieldType::AUDIO:
+                case CmsModelFieldType::IMAGE:
+                case CmsModelFieldType::FILE:
+                    $record[$f['name']] = $value;
+                    if (!empty($record[$f['name']])) {
+                        $record[$f['name']] = AssetsUtil::fixFull($record[$f['name']]);
+                    }
+                    break;
+                case CmsModelFieldType::IMAGES:
+                    $record[$f['name']] = @json_decode($value, true);
+                    if (empty($record[$f['name']])) {
+                        $record[$f['name']] = [];
+                    }
+                    if (!empty($record[$f['name']])) {
+                        $record[$f['name']] = array_map(function ($v) {
+                            return AssetsUtil::fixFull($v);
+                        }, $record[$f['name']]);
+                    }
+                    break;
+            }
+        }
+        return $record;
     }
 }
