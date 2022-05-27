@@ -549,6 +549,12 @@
             padding: 0.2rem 0.5rem 0.2rem 0.75rem;
             width: 16em;
             border: 0.05rem solid #EEE;
+            transition: all 0.2s;
+
+            &:hover, &:focus-within {
+                box-shadow: 0 0 10px #ccc;
+                border-color: transparent;
+            }
 
             &.has-drop {
                 .box {

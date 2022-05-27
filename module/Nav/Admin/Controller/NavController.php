@@ -56,7 +56,7 @@ class NavController extends Controller
                     });
                 $builder->text('name', '名称');
                 $builder->link('link', '链接');
-                $builder->switch('enable', '启用')->optionsYesNo()->gridEditable(true);
+                $builder->switch('enable', '启用')->optionsYesNo()->gridEditable(true)->defaultValue(true);
                 $builder->radio('openType', '打开方式')->optionType(NavOpenType::class)->defaultValue(NavOpenType::CURRENT_WINDOW);
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);

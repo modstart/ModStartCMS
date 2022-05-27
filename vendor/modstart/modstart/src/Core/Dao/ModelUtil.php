@@ -1276,7 +1276,7 @@ class ModelUtil
     /**
      * 增加或减少数值，会考虑到NULL的情况
      * @param $model string
-     * @param $where id|where
+     * @param $where int|array
      * @param $field string
      * @param $value int 记录更新数量
      */
