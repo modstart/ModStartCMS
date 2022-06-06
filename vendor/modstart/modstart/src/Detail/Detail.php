@@ -197,6 +197,9 @@ class Detail implements Renderable
             case 'canMultiSelectItem':
             case 'gridOperateAppend':
             case 'bodyAppend':
+            case 'operateFixed':
+            case 'defaultPageSize':
+            case 'pageSizes':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

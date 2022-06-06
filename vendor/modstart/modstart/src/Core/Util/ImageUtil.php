@@ -105,7 +105,9 @@ class ImageUtil
             $option['position'] = 'bottom-right';
         }
         BizException::throwsIf('Unknown water position', !in_array($option['position'], [
-            'center', 'bottom-right', 'top-right', 'bottom-left', 'top-left',
+            'center',
+            'bottom-right', 'top-right', 'bottom-left', 'top-left',
+            'left', 'right', 'top', 'bottom'
         ]));
         $changed = false;
         $img = Image::make($image);

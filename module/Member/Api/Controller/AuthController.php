@@ -531,7 +531,7 @@ class AuthController extends ModuleBaseController
                 }
             } else {
                 if (!CaptchaFacade::check($input->getTrimString('captcha'))) {
-                    return Response::generate(ResponseCodes::CAPTCHA_ERROR, '图片验证码错误', null, '[js]$(\'[data-captcha]\').click();');
+                    return Response::generate(ResponseCodes::CAPTCHA_ERROR, '登录失败:图片验证码错误', null, '[js]$(\'[data-captcha]\').click();');
                 }
             }
         }
@@ -555,7 +555,7 @@ class AuthController extends ModuleBaseController
             }
         }
         if (!$memberUser) {
-            return Response::generate(ResponseCodes::CAPTCHA_ERROR, '登录失败');
+            return Response::generate(ResponseCodes::CAPTCHA_ERROR, '登录失败:用户或密码错误');
         }
         Session::put('memberUserId', $memberUser['id']);
         EventUtil::fire(new MemberUserLoginedEvent($memberUser['id']));

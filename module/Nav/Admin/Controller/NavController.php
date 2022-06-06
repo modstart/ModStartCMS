@@ -13,7 +13,6 @@ use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
-use ModStart\Grid\GridFilter;
 use ModStart\ModStart;
 use ModStart\Repository\Filter\ScopeFilter;
 use ModStart\Support\Concern\HasFields;
@@ -84,7 +83,6 @@ class NavController extends Controller
             ->canBatchDelete(true)
             ->asTree('id', 'pid', 'sort', 'name')
             ->treeMaxLevel(2)
-            ->title('导航')
-            ->dialogSizeSmall();
+            ->title('导航');
     }
 }

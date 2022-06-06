@@ -20,11 +20,10 @@ return [
         'file' => [
             'maxSize' => 1024 * 1024 * 1024,
             'extensions' => [
-                'pdf', 'txt', 'svg', 'png', 'jpg',
-                'ppt', 'pptx',
-                'doc', 'docx',
-                'xls', 'xlsx',
-                'zip', 'csv',
+                'svg', 'png', 'jpg', 'jpeg', 'ico', 'webp',
+                'mp4',
+                'pdf', 'txt', 'ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'csv',
+                'zip',
             ]
         ],
         'document' => [

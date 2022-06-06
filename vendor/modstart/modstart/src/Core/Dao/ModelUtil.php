@@ -204,6 +204,9 @@ class ModelUtil
      */
     public static function get($model, $where, $fields = ['*'], $order = null)
     {
+        if (null === $where) {
+            return null;
+        }
         if (is_string($where) || is_numeric($where)) {
             $where = ['id' => $where];
         }

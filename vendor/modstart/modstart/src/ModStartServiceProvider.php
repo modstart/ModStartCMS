@@ -111,8 +111,8 @@ class ModStartServiceProvider extends ServiceProvider
             }
             $records = array_merge($records, $basic['providers']);
         }
-        foreach (['Admin', 'Web', 'Api', 'OpenApi'] as $app) {
-            $provider = "\\App\\$app\\Core\\ModuleServiceProvider";
+        foreach (['Core', 'Admin\\Core', 'Web\\Core', 'Api\\Core', 'OpenApi\\Core'] as $app) {
+            $provider = "\\App\\$app\\ModuleServiceProvider";
             if (class_exists($provider)) {
                 $records [] = $provider;
             }

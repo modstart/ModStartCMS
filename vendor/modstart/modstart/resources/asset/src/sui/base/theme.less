@@ -1,6 +1,6 @@
 @color-primary: #3555CC;
 @color-primary-dark: darken(@color-primary, 5%);
-@color-primary-light: lighten(@color-primary, 5%);
+@color-primary-light: lighten(@color-primary, 30%);
 @color-success: rgb(59, 179, 70);
 @color-success-dark: rgb(48, 149, 59);
 @color-success-light: rgb(236, 247, 236);
@@ -22,7 +22,7 @@
 
 :root, page {
     --color-primary: var(--theme-color-primary, @color-primary);
-    --color-primary-light: var(--theme-color-primary-light, @color-primary);
+    --color-primary-light: var(--theme-color-primary-light, @color-primary-light);
     --color-primary-dark: var(--theme-color-primary-dark, @color-primary-dark);
     --color-success: @color-success;
     --color-success-dark: @color-success-dark;

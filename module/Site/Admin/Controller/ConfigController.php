@@ -10,7 +10,7 @@ class ConfigController extends Controller
 {
     public function setting(AdminConfigBuilder $builder)
     {
-        $builder->pageTitle('基础设置');
+        $builder->pageTitle('网站基础配置');
         $builder->image('siteLogo', '网站Logo');
         $builder->text('siteName', '网站名称');
         $builder->text('siteSlogan', '网站副标题');

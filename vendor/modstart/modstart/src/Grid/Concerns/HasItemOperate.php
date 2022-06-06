@@ -93,11 +93,13 @@ trait HasItemOperate
     /**
      * 操作栏浮动
      * @param $fixed string left|right
+     * @return $this
      */
     public function operateFixed($fixed)
     {
         $this->hookItemOperateFieldBuild(function (AbstractField $field) use ($fixed) {
             $field->gridFixed($fixed);
         });
+        return $this;
     }
 }

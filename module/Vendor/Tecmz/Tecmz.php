@@ -75,6 +75,7 @@ class Tecmz
             $param['timestamp'] = time();
             $param['sign'] = SignUtil::common($param, $this->appSecret);
         }
+        // print_r($param);exit();
         if ($this->debug) {
             Log::debug('TecmzApi -> ' . self::$API_BASE . $gate . ' -> ' . json_encode($param));
         }
@@ -294,6 +295,34 @@ class Tecmz
         $post['docPath'] = $docPath;
         $post['pageLimit'] = $pageLimit;
         return $this->request('/doc_to_image', $post);
+    }
+
+    /**
+     * 文档转图片Queue
+     *
+     * @param $docPath string
+     * @param $pageLimit int
+     * @return array|mixed
+     */
+    public function docToImageQueue($docPath, $pageLimit = 0)
+    {
+        $post = [];
+        $post['docPath'] = $docPath;
+        $post['pageLimit'] = $pageLimit;
+        return $this->request('/doc_to_image/queue', $post);
+    }
+
+    /**
+     * 文档转图片状态查询
+     *
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function docToImageQuery($jobId)
+    {
+        $post = [];
+        $post['jobId'] = $jobId;
+        return $this->request('/doc_to_image/query', $post);
     }
 
     /**

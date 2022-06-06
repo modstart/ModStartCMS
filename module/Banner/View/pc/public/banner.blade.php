@@ -7,6 +7,11 @@ if(empty($bannerSize)){
 if(empty($bannerRatio)){
     $bannerRatio = '5-2';
 }
+if(empty($mobileBannerRatio)){
+    $mobileBannerRatio = '';
+}else{
+    $mobileBannerRatio = 'm-ratio-'.$mobileBannerRatio;
+}
 if(!isset($round)){
     $round = false;
 }
@@ -14,7 +19,7 @@ if(!isset($round)){
 {!! \ModStart\ModStart::css('asset/vendor/swiper/swiper.css') !!}
 {!! \ModStart\ModStart::js('asset/vendor/swiper/swiper.js') !!}
 {!! \ModStart\ModStart::css('vendor/Banner/style/banner.css') !!}
-<div class="ub-banner ratio-{{$bannerRatio}}" id="{{$bannerId}}">
+<div class="ub-banner ratio-{{$bannerRatio}} {{$mobileBannerRatio}}" id="{{$bannerId}}">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             @if(empty($banners))

@@ -252,8 +252,8 @@ class CurlUtil
 
     public static function postRaw($url, $param = [], $option = [])
     {
-        if (empty($config['timeout'])) {
-            $config['timeout'] = 30;
+        if (empty($option['timeout'])) {
+            $option['timeout'] = 30;
         }
         $sendHeaders = [];
         if (!empty($option['header'])) {
@@ -268,7 +268,7 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_HTTPHEADER, $sendHeaders);
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $config['timeout']);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $option['timeout']);
         curl_setopt($ch, CURLOPT_REFERER, $url);
         if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
             curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
@@ -286,8 +286,8 @@ class CurlUtil
 
     public static function getRaw($url, $param = [], $option = [])
     {
-        if (empty($config['timeout'])) {
-            $config['timeout'] = 30;
+        if (empty($option['timeout'])) {
+            $option['timeout'] = 30;
         }
         if (!empty($param)) {
             $url = $url . '?' . http_build_query($param);
@@ -305,7 +305,7 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_HTTPHEADER, $sendHeaders);
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $config['timeout']);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $option['timeout']);
         curl_setopt($ch, CURLOPT_REFERER, $url);
         if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
             curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);

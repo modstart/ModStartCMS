@@ -249,7 +249,8 @@ class ModuleManager
             if (!$v['isDir']) {
                 continue;
             }
-            if (starts_with($v['filename'], '_delete_.') || starts_with($v['filename'], '_')) {
+            if (starts_with($v['filename'], '_delete_.') || starts_with($v['filename'], '_')
+                || !file_exists($v['pathname'] . '/config.json')) {
                 continue;
             }
             $modules[$v['filename']] = [

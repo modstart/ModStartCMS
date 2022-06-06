@@ -69,6 +69,8 @@ use ModStart\Support\Manager\FieldManager;
  * @method  Grid|mixed gridOperateAppend($value = null)
  * @method  Grid|mixed view($value = null)
  * @method  Grid|mixed gridRowCols($value = null)
+ * @method  Grid|mixed defaultPageSize($value = null)
+ * @method  Grid|mixed pageSizes($value = null)
  *
  * $value = function(Grid $grid, $items){ return $items; }
  * @method  Grid|mixed hookPrepareItems($value = null)
@@ -135,6 +137,8 @@ class Grid
         'gridOperateAppend',
         'hookPrepareItems',
         'gridRowCols',
+        'defaultPageSize',
+        'pageSizes',
     ];
     /**
      * 运行引擎 @see GridEngine
@@ -180,6 +184,10 @@ class Grid
     private $gridOperateAppend = '';
     /** @var array simple模式下栅格所占用的栅格大小null:表示不启用，[6,12]:表示md,sm栅格占比 */
     private $gridRowCols = null;
+    /** @var int grid default page size */
+    private $defaultPageSize = 10;
+    /** @var int[] grid page sizes for selection list */
+    private $pageSizes = [10, 50, 100];
     /** @var Closure 渲染前置处理Items */
     private $hookPrepareItems = null;
     /** @var array 渲染在Table顶部的区域 */
@@ -425,7 +433,7 @@ class Grid
         $input = InputPackage::buildFromInput();
         $this->repository()->setArgument([
             'page' => $input->getPage(),
-            'pageSize' => $input->getPageSize(),
+            'pageSize' => $input->getPageSize(null, null, 1000, $this->defaultPageSize),
             'order' => $input->getArray($this->model->getOrderName()),
             'orderDefault' => $this->defaultOrder,
         ]);
@@ -440,7 +448,7 @@ class Grid
         $input = InputPackage::buildFromInput();
         $this->repository()->setArgument([
             'page' => $input->getPage(),
-            'pageSize' => $input->getPageSize(),
+            'pageSize' => $input->getPageSize(null, null, 1000, $this->defaultPageSize),
             'order' => $input->getArray($this->model->getOrderName()),
             'orderDefault' => $this->defaultOrder,
         ]);

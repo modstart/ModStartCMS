@@ -13,6 +13,13 @@
             <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'installLock'])}}">{{L('Process Now')}}</a>
         </div>
     @endif
+    @if(file_exists(public_path('install.php')))
+        <div class="ub-alert ub-alert-warning">
+            <i class="iconfont icon-warning"></i>
+            {{L('Security Warning')}}: {{ L('install.php script not deleted, may expose sensitive data') }}
+            <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'installScript'])}}">{{L('Process Now')}}</a>
+        </div>
+    @endif
     @if(config('env.APP_DEBUG',false))
         <div class="ub-alert ub-alert-warning">
             <i class="iconfont icon-warning"></i>

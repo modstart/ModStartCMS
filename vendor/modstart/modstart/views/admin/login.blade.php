@@ -8,6 +8,7 @@
             background-color:#222D32;
         }
     </style>
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminLoginHeadAppend'); !!}
 @endsection
 
 @section('bodyAppend')

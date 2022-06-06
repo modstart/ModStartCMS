@@ -29,6 +29,10 @@ let Lister = function (container, option) {
 
     let data = null;
 
+    if (option && ('param' in option)) {
+        param = $.extend(param, option.param)
+    }
+
     let opt = $.extend({
         server: '/path/to/server',
         editQuickServer: '/path/to/edit/quick',
