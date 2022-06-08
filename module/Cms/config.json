@@ -11,7 +11,8 @@
         "Banner:>=1.1.0"
     ],
     "suggest": [
-        "TagManager"
+        "TagManager",
+        "WordSpliter"
     ],
     "version": "3.0.0",
     "modstartVersion": ">=2.9.0",

@@ -4,6 +4,7 @@ namespace ModStart\Core\Dao;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\PageHtmlUtil;
 
@@ -694,6 +695,13 @@ class ModelUtil
                             $first = true;
                             foreach ($searchInfo as $k => $v) {
                                 switch ($k) {
+                                    case 'likes':
+                                        $query->where(function ($q) use ($v, $field) {
+                                            foreach ($v as $vv) {
+                                                $q->where($field, 'like', '%' . $vv . '%');
+                                            }
+                                        });
+                                        break;
                                     case 'like':
                                         if ($first || $searchInfo['exp'] == 'and') {
                                             $first = false;
@@ -778,6 +786,10 @@ class ModelUtil
                                             $query->orWhereRaw($v);
                                         }
                                         break;
+                                    case 'exp':
+                                        break;
+                                    default:
+                                        BizException::throws('unknown search exp : ' . $k);
                                 }
                             }
                         });

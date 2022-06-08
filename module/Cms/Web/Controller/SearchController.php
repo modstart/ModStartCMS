@@ -7,6 +7,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\PageHtmlUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Cms\Util\CmsContentUtil;
+use Module\WordSpliter\Util\WordSpliterUtil;
 
 class SearchController extends ModuleBaseController
 {
@@ -18,7 +19,12 @@ class SearchController extends ModuleBaseController
         $keywords = $input->getTrimString('keywords');
         $option = [];
         if (!empty($keywords)) {
-            $option['search'][] = ['__exp' => 'or', 'title' => ['like' => "%$keywords%"], 'tags' => ['like' => "%:$keywords:%"]];
+            if (modstart_module_enabled('WordSpliter')) {
+                $keywordsList = WordSpliterUtil::cut($keywords);
+                $option['search'][] = ['__exp' => 'or', 'title' => ['likes' => $keywordsList], 'tags' => ['like' => ":$keywords:"]];
+            } else {
+                $option['search'][] = ['__exp' => 'or', 'title' => ['like' => $keywords], 'tags' => ['like' => ":$keywords:"]];
+            }
         }
         $paginateData = CmsContentUtil::paginate($page, $pageSize, $option);
         $viewData = [];
