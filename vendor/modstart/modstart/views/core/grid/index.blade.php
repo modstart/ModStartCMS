@@ -152,6 +152,7 @@
                 data: [],
                 autoColumnWidth: true,
                 autoScrollTop: false,
+                autoSort: false,
                 done: function () {
                 }
             });

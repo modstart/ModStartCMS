@@ -62,14 +62,17 @@ class AuthMiddleware
         /**
          * 对于使用API调用的处理逻辑
          */
-        /*
         if (empty($adminUserId)) {
             $authAdminUserId = intval(Request::headerGet('auth-admin-user-id'));
             $authAdminTimestamp = intval(Request::headerGet('auth-admin-timestamp'));
+            $authAdminRequestId = trim(Request::headerGet('auth-admin-request-id'));
             $authAdminSign = trim(Request::headerGet('auth-admin-sign'));
             if ($authAdminUserId > 0) {
                 if ($authAdminTimestamp < time() - 1800 || $authAdminTimestamp > time() + 1800) {
-                    return Response::json(-1, "auth-admin-timestamp error");
+                    return Response::json(-1, "auth-admin-timestamp error, server time " . time());
+                }
+                if (empty($authAdminRequestId)) {
+                    return Response::json(-1, "request id empty");
                 }
                 $authAdminUser = Admin::get($authAdminUserId);
                 if (empty($authAdminUser)) {
@@ -78,7 +81,8 @@ class AuthMiddleware
                 if (empty($authAdminUser['password']) || empty($authAdminUser['passwordSalt'])) {
                     return Response::json(-1, "admin user forbidden");
                 }
-                $signCalc = md5("$authAdminUserId:$authAdminTimestamp:$authAdminUser[password]$authAdminUser[passwordSalt]");
+                $md5String = "$authAdminTimestamp:$authAdminRequestId:$authAdminUserId:$authAdminUser[username]:$authAdminUser[password]:$authAdminUser[passwordSalt]";
+                $signCalc = md5($md5String);
                 if ($signCalc != $authAdminSign) {
                     return Response::json(-1, 'admin user sign error');
                 }
@@ -86,7 +90,7 @@ class AuthMiddleware
                 $adminUser = $authAdminUser;
             }
         }
-        */
+
         if ($adminUserId) {
             if (empty($adminUser)) {
                 $adminUser = Admin::get($adminUserId);
