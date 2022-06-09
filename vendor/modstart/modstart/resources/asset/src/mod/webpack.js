@@ -4,10 +4,14 @@ const process = require('process')
 let moduleConfig = require('./config.js');
 
 module.exports = function (dirname) {
-    const mod = dirname.replace(/^.+[\/\\]([A-Za-z0-9]+)[\/\\]resources[\/\\]asset/, '$1')
+    let mod = dirname.replace(/^.+[\/\\]([A-Za-z0-9]+)[\/\\]resources[\/\\]asset/, '$1')
+    if (/^[A-Za-z0-9]+$/.test('ab')) {
+        mod = 'App'
+    }
     let config = moduleConfig(mod)
     config.dist = path.join(dirname, config.dist)
     config.distAsset = path.join(dirname, config.distAsset)
+    // console.log(config)
     const webpack = require('webpack');
     const WebpackOnBuildPlugin = require('on-build-webpack');
     // const UglifyJS = require("uglify-js");
@@ -27,7 +31,7 @@ module.exports = function (dirname) {
 
     switch (config.platform) {
         case "windows":
-            files = files.map(f=>f.replace(/\//g,'\\'))
+            files = files.map(f => f.replace(/\//g, '\\'))
             break
     }
 
@@ -45,7 +49,7 @@ module.exports = function (dirname) {
             for (let i = 0; i < files.length; i++) {
                 if (/\.js$/.test(files[i])) {
                     let flag = files[i].replace(/\.js$/, '').replace(src, '');
-                    switch(config.platform){
+                    switch (config.platform) {
                         case 'windows':
                             entries[flag] = './' + files[i].replace(dirname + '\\', '');
                             break
@@ -60,7 +64,7 @@ module.exports = function (dirname) {
     }
 
     let cleanFilesCommands = []
-    switch(config.platform){
+    switch (config.platform) {
         case 'windows':
             cleanFilesCommands.push(files.length > 0 ? 'del /F ' + files.join(' ') : 'cd')
             break
@@ -112,12 +116,12 @@ module.exports = function (dirname) {
                 }
                 const assets = stats.compilation.getAssets()
                 assets
-                	.filter(f => /.js$/.test(f.name))
+                    .filter(f => /.js$/.test(f.name))
                     .forEach(f => {
                         const fileFullPath = f.source.existsAt
-                        if(!fileFullPath){
-                        	console.log('process ignore',f.name)
-                        	return;
+                        if (!fileFullPath) {
+                            console.log('process ignore', f.name)
+                            return;
                         }
                         console.log("process", fileFullPath)
                         fs.readFile(fileFullPath, {
@@ -133,10 +137,10 @@ module.exports = function (dirname) {
                                     comments: /^SOME_NONE_COMMENTS/
                                 }
                             }).code
-                            if(codeCompress){
-	                            console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
-	                            fs.writeFile(fileFullPath, codeCompress, () => {
-	                            });
+                            if (codeCompress) {
+                                console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
+                                fs.writeFile(fileFullPath, codeCompress, () => {
+                                });
                             }
                         });
                     })

@@ -7,7 +7,11 @@ module.exports = function (mod) {
             'entry',
         ],
     }
-    switch(process.platform){
+    if ('App' === mod) {
+        config.dist = './../../public/asset-app'
+        config.distAsset = './../asset-build'
+    }
+    switch (process.platform) {
         case 'win32':
             config.platform = 'windows'
             break

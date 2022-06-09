@@ -4,6 +4,7 @@
 namespace Module\Cms\Web\Controller;
 
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Input\Request;
 use ModStart\Core\Util\PageHtmlUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Cms\Util\CmsContentUtil;
@@ -31,7 +32,7 @@ class SearchController extends ModuleBaseController
         $viewData['keywords'] = $keywords;
         $viewData['records'] = $paginateData['records'];
         $viewData['total'] = $paginateData['total'];
-        $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, '?page={page}');
+        $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, '?' . Request::mergeQueries(['page' => ['{page}']]));
         return $this->view('cms.search.index', $viewData);
     }
 }
