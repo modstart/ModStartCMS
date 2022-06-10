@@ -5,7 +5,6 @@ namespace Module\Member\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Form\Form;
-use ModStart\Module\ModuleManager;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class ConfigController extends Controller
@@ -24,6 +23,11 @@ class ConfigController extends Controller
         $builder->switch('retrieveDisable', '禁用找回密码');
         $builder->switch('retrievePhoneEnable', '启用手机找回密码');
         $builder->switch('retrieveEmailEnable', '启用邮箱找回密码');
+        $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录');
+        $builder->select('Member_LoginDefault', '默认登录方式')->options([
+            'default' => '用户名密码',
+            'phone' => '手机快捷登录',
+        ]);
         $builder->formClass('wide');
         return $builder->perform();
     }

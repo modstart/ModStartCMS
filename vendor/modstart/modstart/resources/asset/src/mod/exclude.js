@@ -5,9 +5,6 @@ const packIgnores = [
     'demo-response.json',
     'demo.css',
     'china.json',
-    /third-party\/webuploader/,
-    /third-party\/highcharts/,
-    /ueditor\/lang\/en\//,
 ]
 
 const excludeCondition = function (file) {

@@ -9,8 +9,6 @@ class File extends AbstractField
     const MODE_DEFAULT = 'default';
     const MODE_RAW = 'raw';
 
-    protected $width = 80;
-
     protected function setup()
     {
         $this->addVariables([

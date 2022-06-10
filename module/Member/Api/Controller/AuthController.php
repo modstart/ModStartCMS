@@ -567,6 +567,95 @@ class AuthController extends ModuleBaseController
         return CaptchaFacade::create('default');
     }
 
+    public function loginPhoneCaptchaRaw()
+    {
+        return CaptchaFacade::create('default');
+    }
+
+    /**
+     * @return array
+     *
+     * @Api 手机快捷登录-登录提交
+     * @ApiBodyParam phone string 手机号
+     * @ApiBodyParam verify string 手机验证码
+     */
+    public function loginPhone()
+    {
+        if (!modstart_config('Member_LoginPhoneEnable', false)) {
+            return Response::generate(-1, '手机快捷登录未开启');
+        }
+        $input = InputPackage::buildFromInput();
+        $phone = $input->getPhone('phone');
+        $verify = $input->getTrimString('verify');
+        if (empty($phone)) {
+            return Response::generate(-1, '手机为空或不正确');
+        }
+        if (empty($verify)) {
+            return Response::generate(-1, '验证码不能为空');
+        }
+        if ($verify != Session::get('loginPhoneVerify')) {
+            return Response::generate(-1, '手机验证码不正确');
+        }
+        if (Session::get('loginPhoneVerifyTime') + 60 * 60 < time()) {
+            return Response::generate(0, '手机验证码已过期');
+        }
+        if ($phone != Session::get('loginPhone')) {
+            return Response::generate(-1, '两次手机不一致');
+        }
+        $memberUser = MemberUtil::getByPhone($phone);
+        if (empty($memberUser)) {
+            return Response::generate(-1, '手机没有绑定任何账号');
+        }
+        Session::forget('loginPhoneVerify');
+        Session::forget('loginPhoneVerifyTime');
+        Session::forget('loginPhone');
+        Session::put('memberUserId', $memberUser['id']);
+        return Response::generate(0, null);
+    }
+
+    /**
+     * @return array
+     * @Api 手机快捷登录-获取手机验证码
+     * @ApiBodyParam target string 手机号
+     */
+    public function loginPhoneVerify()
+    {
+        if (!modstart_config('Member_LoginPhoneEnable', false)) {
+            return Response::generate(-1, '手机快捷登录未开启');
+        }
+
+        $input = InputPackage::buildFromInput();
+        $phone = $input->getPhone('target');
+        if (empty($phone)) {
+            return Response::generate(-1, '手机为空或格式不正确');
+        }
+
+        $captcha = $input->getTrimString('captcha');
+        if (!CaptchaFacade::check($captcha)) {
+            return Response::generate(-1, '图片验证码错误');
+        }
+
+        $memberUser = MemberUtil::getByPhone($phone);
+        if (empty($memberUser)) {
+            return Response::generate(-1, '手机没有绑定任何账号');
+        }
+
+        if (Session::get('loginPhoneVerifyTime') && $phone == Session::get('loginPhone')) {
+            if (Session::get('loginPhoneVerifyTime') + 60 * 2 > time()) {
+                return Response::generate(0, '验证码发送成功!');
+            }
+        }
+
+        $verify = rand(100000, 999999);
+        Session::put('loginPhoneVerify', $verify);
+        Session::put('loginPhoneVerifyTime', time());
+        Session::put('loginPhone', $phone);
+
+        SmsUtil::send($phone, 'verify', ['code' => $verify]);
+
+        return Response::generate(0, '验证码发送成功');
+    }
+
     /**
      * @return array
      *

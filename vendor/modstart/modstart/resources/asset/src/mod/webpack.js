@@ -5,7 +5,7 @@ let moduleConfig = require('./config.js');
 
 module.exports = function (dirname) {
     let mod = dirname.replace(/^.+[\/\\]([A-Za-z0-9]+)[\/\\]resources[\/\\]asset/, '$1')
-    if (/^[A-Za-z0-9]+$/.test('ab')) {
+    if (!/^[A-Za-z0-9]+$/.test(mod)) {
         mod = 'App'
     }
     let config = moduleConfig(mod)

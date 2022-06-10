@@ -22,7 +22,7 @@ module.exports = function (gulp, dirname, excludes) {
         dist: path.resolve(config.dist),
         distAsset: path.resolve(config.distAsset),
         ext: {
-            'static': ['otf', 'eot', 'ttf', 'woff', 'woff2', 'swf', 'svg', 'html', 'xml', 'mp4', 'mp3', 'json', 'md', 'txt'],
+            'static': ['otf', 'eot', 'ttf', 'woff', 'woff2', 'swf', 'svg', 'html', 'xml', 'mp4', 'mp3', 'json', 'md', 'txt', 'properties'],
             'image': ['png', 'jpg', 'jpeg', 'gif', 'svg'],
             'less': ['less'],
             'css': ['css'],
@@ -97,7 +97,13 @@ module.exports = function (gulp, dirname, excludes) {
                 return gulp.src(src, {base})
                     .pipe(gulpIgnore.exclude(exclude.condition))
                     .pipe(gulpEach(function (content, file, callback) {
-                        callback(null, UglifyJS.minify(content).code);
+                        const code = UglifyJS.minify(content).code
+                        if (!code) {
+                            console.log('build error:' + file.path)
+                            callback(null, content);
+                            return
+                        }
+                        callback(null, code);
                     }))
                     .pipe(gulpPrint(function (filepath) {
                         return "build: " + filepath;

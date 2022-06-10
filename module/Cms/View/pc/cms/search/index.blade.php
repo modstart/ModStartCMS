@@ -17,7 +17,7 @@
         <div class="form">
             <form action="{{modstart_web_url('search')}}" method="get">
                 <div class="box">
-                    <input type="text" name="keywords" value="{{$keywords or ''}}" class="form form-lg" placeholder="输入关键词搜索" />
+                    <input type="text" name="keywords" value="{{empty($keywords)?'':$keywords}}" class="form form-lg" placeholder="输入关键词搜索" />
                     <button type="submit" class="btn btn-lg"><i class="iconfont icon-search"></i> 搜索</button>
                 </div>
             </form>

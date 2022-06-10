@@ -160,7 +160,7 @@
               </span>
         </el-dialog>
         <el-dialog
-            :title="L('Edit file')"
+            :title="L('Edit File')"
             :visible.sync="fileVisible"
             append-to-body
             width="30%">

@@ -17,7 +17,7 @@
             "Delete Success",
             "Edit",
             "Edit Category",
-            "Edit file",
+            "Edit File",
             "Edit Success",
             "File(s)",
             "Filter",

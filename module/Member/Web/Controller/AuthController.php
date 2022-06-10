@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Session;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
-use ModStart\Core\Util\CurlUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 
@@ -16,6 +15,7 @@ use Module\Member\Auth\MemberUser;
 // ================================================== Routes ===========================================================
 // =====================================================================================================================
 //Route::match(['get', 'post'], 'login', 'AuthController@login');
+//Route::match(['get', 'post'], 'login/phone', 'AuthController@loginPhone');
 //Route::match(['get', 'post'], 'login/captcha', 'AuthController@loginCaptcha');
 //Route::match(['get', 'post'], 'logout', 'AuthController@logout');
 //Route::match(['get', 'post'], 'register', 'AuthController@register');
@@ -65,6 +65,7 @@ class AuthController extends ModuleBaseController
             Session::put('ssoClientRedirect', $redirect);
             return Response::send(0, null, null, $ret['data']['redirect']);
         }
+        $loginDefault = modstart_config('Member_LoginDefault', 'default');
         if (Request::isPost()) {
             $ret = $this->api->login();
             if (Response::isError($ret)) {
@@ -72,12 +73,46 @@ class AuthController extends ModuleBaseController
             }
             return Response::send(0, '', '', $redirect);
         }
+        if ('phone' == $loginDefault) {
+            $force = $input->getBoolean('force', false);
+            if (!$force) {
+                return Response::redirect(modstart_web_url('login/phone', [
+                    'redirect' => $redirect,
+                ]));
+            }
+        }
         return $this->view('login', ['redirect' => $redirect]);
     }
 
     public function loginCaptcha()
     {
         return $this->api->loginCaptchaRaw();
+    }
+
+    public function loginPhone()
+    {
+        $input = InputPackage::buildFromInput();
+        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        if (Request::isPost()) {
+            $ret = $this->api->loginPhone();
+            if ($ret['code']) {
+                return Response::send(-1, $ret['msg']);
+            }
+            return Response::send(0, null, null, $redirect);
+        }
+        return $this->view('loginPhone', [
+            'redirect' => $redirect,
+        ]);
+    }
+
+    public function loginPhoneCaptcha()
+    {
+        return $this->api->loginPhoneCaptchaRaw();
+    }
+
+    public function loginPhoneVerify()
+    {
+        return Response::sendFromGenerate($this->api->loginPhoneVerify());
     }
 
     public function logout()
