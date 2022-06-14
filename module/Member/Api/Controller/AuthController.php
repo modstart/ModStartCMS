@@ -573,8 +573,6 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 手机快捷登录-登录提交
      * @ApiBodyParam phone string 手机号
      * @ApiBodyParam verify string 手机验证码
@@ -617,6 +615,7 @@ class AuthController extends ModuleBaseController
      * @return array
      * @Api 手机快捷登录-获取手机验证码
      * @ApiBodyParam target string 手机号
+     * @ApiBodyParam captcha string 图片验证码
      */
     public function loginPhoneVerify()
     {
@@ -654,6 +653,22 @@ class AuthController extends ModuleBaseController
         SmsUtil::send($phone, 'verify', ['code' => $verify]);
 
         return Response::generate(0, '验证码发送成功');
+    }
+
+    /**
+     * @return array
+     *
+     * @Api 手机快捷登录-图片验证码
+     * @ApiResponseData {
+     *   "image":"图片Base64"
+     * }
+     */
+    public function loginPhoneCaptcha()
+    {
+        $captcha = $this->loginCaptchaRaw();
+        return Response::generate(0, 'ok', [
+            'image' => 'data:image/png;base64,' . base64_encode($captcha->getOriginalContent()),
+        ]);
     }
 
     /**

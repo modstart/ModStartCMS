@@ -10,8 +10,16 @@ use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberMoneyUtil;
 
+/**
+ * Class MemberMoneyController
+ * @package Module\Member\Api\Controller
+ * @Api 会员资金
+ */
 class MemberMoneyController extends ModuleBaseController implements MemberLoginCheck
 {
+    /**
+     * @Api 获取用户资金
+     */
     public function get()
     {
         return Response::generateSuccessData([

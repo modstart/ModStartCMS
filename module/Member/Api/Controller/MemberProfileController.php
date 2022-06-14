@@ -24,8 +24,19 @@ use Module\Vendor\Email\MailSendJob;
 use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
 
+/**
+ * Class MemberProfileController
+ * @package Module\Member\Api\Controller
+ * @Api 用户资料
+ */
 class MemberProfileController extends ModuleBaseController implements MemberLoginCheck
 {
+    /**
+     * @Api 修改密码
+     * @ApiBodyParam passwordOld string required 原密码
+     * @ApiBodyParam passwordNew string required 新密码
+     * @ApiBodyParam passwordRepeat string required 重复新密码
+     */
     public function password()
     {
         $input = InputPackage::buildFromInput();

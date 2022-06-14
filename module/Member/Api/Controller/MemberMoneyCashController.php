@@ -14,8 +14,17 @@ use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Type\MemberMoneyCashType;
 use Module\Member\Util\MemberMoneyUtil;
 
+/**
+ * Class MemberMoneyCashController
+ * @package Module\Member\Api\Controller
+ * @Api 会员资金
+ */
 class MemberMoneyCashController extends Controller implements MemberLoginCheck
 {
+    /**
+     * @return array
+     * @Api 获取提现配置
+     */
     public function get()
     {
         $total = MemberMoneyUtil::getTotal(MemberUser::id());
@@ -31,6 +40,11 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
         ]);
     }
 
+    /**
+     * @return array
+     * @Api 计算提现金额
+     * @ApiBodyParam money float 提现金额
+     */
     public function calc()
     {
         $input = InputPackage::buildFromInput();
@@ -50,6 +64,13 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
         ]);
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     * @Api 提现提交
+     * @ApiBodyParam money float 提现金额
+     * @ApiBodyParam type string 提现方式
+     */
     public function submit()
     {
         if (!modstart_config('Member_MoneyCashEnable', false)) {

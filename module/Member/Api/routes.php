@@ -9,6 +9,9 @@ $router->group([
     $router->match(['get', 'post'], 'login', 'AuthController@login');
     $router->match(['get', 'post'], 'logout', 'AuthController@logout');
     $router->match(['get', 'post'], 'login_captcha', 'AuthController@loginCaptcha');
+    $router->match(['get', 'post'], 'login_phone', 'AuthController@loginPhone');
+    $router->match(['get', 'post'], 'login_phone_verify', 'AuthController@loginPhoneVerify');
+    $router->match(['get', 'post'], 'login_phone_captcha', 'AuthController@loginPhoneCaptcha');
     $router->match(['get', 'post'], 'register', 'AuthController@register');
     $router->match(['get', 'post'], 'register_email_verify', 'AuthController@registerEmailVerify');
     $router->match(['get', 'post'], 'register_phone_verify', 'AuthController@registerPhoneVerify');

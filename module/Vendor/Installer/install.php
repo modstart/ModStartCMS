@@ -154,9 +154,9 @@ include __DIR__ . '/function.php';
                             <?php text_success('最大上传：' . FileUtil::formatByte(EnvUtil::env('uploadMaxSize'))); ?>
                             <?php function_exists('openssl_open') ? text_success('OpenSSL PHP 扩展') : text_error('缺少 OpenSSL PHP 扩展'); ?>
                             <?php function_exists('exif_read_data') ? text_success('Exif PHP 扩展') : text_error('缺少 Exif PHP 扩展'); ?>
-                            <?php function_exists('proc_open') ? text_success('proc_open 函数') : text_error('缺少 proc_open 函数'); ?>
-                            <?php function_exists('putenv') ? text_success('putenv 函数') : text_error('缺少 putenv 函数'); ?>
-                            <?php function_exists('proc_get_status') ? text_success('proc_get_status 函数') : text_error('缺少 proc_get_status 函数'); ?>
+                            <?php function_exists('proc_open') ? text_success('proc_open 函数') : text_error('缺少 proc_open 函数','https://modstart.com/doc/install/qa.html'); ?>
+                            <?php function_exists('putenv') ? text_success('putenv 函数') : text_error('缺少 putenv 函数','https://modstart.com/doc/install/qa.html'); ?>
+                            <?php function_exists('proc_get_status') ? text_success('proc_get_status 函数') : text_error('缺少 proc_get_status 函数','https://modstart.com/doc/install/qa.html'); ?>
                             <?php function_exists('bcmul') ? text_success('bcmath 扩展') : text_error('缺少 PHP bcmath 扩展'); ?>
                             <?php class_exists('pdo') ? text_success('PDO PHP 扩展') : text_error('缺少 PDO PHP 扩展'); ?>
                             <?php (class_exists('pdo') && in_array('mysql', PDO::getAvailableDrivers())) ? text_success('PDO Mysql 驱动正常') : text_error('缺少 PDO Mysql 驱动'); ?>
