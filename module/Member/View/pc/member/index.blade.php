@@ -10,7 +10,7 @@
                    style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($_memberUser['avatar'])}})"></a>
             </div>
             <div class="tw-flex-grow">
-                <div class="tw-text-bold">{{$_memberUser['username']}}</div>
+                <div class="tw-text-bold">{{\Module\Member\Auth\MemberUser::nickname()}}</div>
                 <div>
                     @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable'))
                         <span class="tw-my-1 tw-mr-2 tw-inline-block ub-text-primary">

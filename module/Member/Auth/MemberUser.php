@@ -6,6 +6,7 @@ namespace Module\Member\Auth;
 
 use Illuminate\Support\Facades\Session;
 use Module\Member\Util\MemberGroupUtil;
+use Module\Member\Util\MemberUtil;
 use Module\Member\Util\MemberVipUtil;
 
 class MemberUser
@@ -78,5 +79,10 @@ class MemberUser
             return $user;
         }
         return isset($user[$key]) ? $user[$key] : $default;
+    }
+
+    public static function nickname()
+    {
+        return MemberUtil::viewName(self::user());
     }
 }

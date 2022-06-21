@@ -73,13 +73,15 @@ class AuthController extends ModuleBaseController
             }
             return Response::send(0, '', '', $redirect);
         }
-        $loginDefault = modstart_config('Member_LoginDefault', 'default');
-        if ('phone' == $loginDefault) {
-            $force = $input->getBoolean('force', false);
-            if (!$force) {
-                return Response::redirect(modstart_web_url('login/phone', [
-                    'redirect' => $redirect,
-                ]));
+        if (modstart_config('Member_LoginPhoneEnable', false)) {
+            $loginDefault = modstart_config('Member_LoginDefault', 'default');
+            if ('phone' == $loginDefault) {
+                $force = $input->getBoolean('force', false);
+                if (!$force) {
+                    return Response::redirect(modstart_web_url('login/phone', [
+                        'redirect' => $redirect,
+                    ]));
+                }
             }
         }
         return $this->view('login', ['redirect' => $redirect]);
@@ -145,15 +147,6 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
-        $registerDefault = modstart_config('Member_RegisterDefault', 'default');
-        if ('phone' == $registerDefault) {
-            $force = $input->getBoolean('force', false);
-            if (!$force) {
-                return Response::redirect(modstart_web_url('register/phone', [
-                    'redirect' => $redirect,
-                ]));
-            }
-        }
         if (Request::isPost()) {
             $ret = $this->api->register();
             if ($ret['code']) {
@@ -164,7 +157,35 @@ class AuthController extends ModuleBaseController
             }
             return Response::send(0, '', '', modstart_web_url('login') . '?redirect=' . urlencode($redirect));
         }
+        if (modstart_config('Member_RegisterPhoneEnable', false)) {
+            $registerDefault = modstart_config('Member_RegisterDefault', 'default');
+            if ('phone' == $registerDefault) {
+                $force = $input->getBoolean('force', false);
+                if (!$force) {
+                    return Response::redirect(modstart_web_url('register/phone', [
+                        'redirect' => $redirect,
+                    ]));
+                }
+            }
+        }
         return $this->view('register', [
+            'redirect' => $redirect,
+        ]);
+    }
+
+    public function registerPhone()
+    {
+        $input = InputPackage::buildFromInput();
+        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        $this->api->checkRedirectSafety($redirect);
+        if (Request::isPost()) {
+            $ret = $this->api->registerPhone();
+            if ($ret['code']) {
+                return Response::send(-1, $ret['msg']);
+            }
+            return Response::send(0, null, null, $redirect);
+        }
+        return $this->view('registerPhone', [
             'redirect' => $redirect,
         ]);
     }

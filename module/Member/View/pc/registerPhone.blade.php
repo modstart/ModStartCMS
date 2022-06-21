@@ -34,16 +34,6 @@
         };
         $(function () {
             new window.api.commonVerify({
-                generateServer: '{{$__msRoot}}register/email_verify',
-                selectorTarget: 'input[name=email]',
-                selectorGenerate: '[data-email-verify-generate]',
-                selectorCountdown: '[data-email-verify-countdown]',
-                selectorRegenerate: '[data-email-verify-regenerate]',
-                selectorCaptcha: 'input[name=captcha]',
-                selectorCaptchaImg:'[data-none]',
-                interval: 60,
-            },window.api.dialog);
-            new window.api.commonVerify({
                 generateServer: '{{$__msRoot}}register/phone_verify',
                 selectorTarget: 'input[name=phone]',
                 selectorGenerate: '[data-phone-verify-generate]',
@@ -78,7 +68,7 @@
                 <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field">
-                            <input type="text" class="form-lg" name="username" placeholder="用户名" />
+                            <input type="text" class="form-lg" name="phone" placeholder="输入手机" />
                         </div>
                     </div>
                     <div class="line">
@@ -99,56 +89,18 @@
                             </div>
                         </div>
                     </div>
-                    @if(modstart_config('registerPhoneEnable'))
-                        <div class="line">
-                            <div class="field">
-                                <div class="row no-gutters">
-                                    <div class="col-7">
-                                        <input type="text" class="form-lg" name="phone" placeholder="输入手机" />
-                                    </div>
-                                    <div class="col-5">
-                                        <button class="btn btn-lg btn-block" type="button" data-phone-verify-generate>获取验证码</button>
-                                        <button class="btn btn-lg btn-block" type="button" data-phone-verify-countdown style="display:none;margin:0;"></button>
-                                        <button class="btn btn-lg btn-block" type="button" data-phone-verify-regenerate style="display:none;margin:0;">重新获取</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="line">
-                            <div class="field">
-                                <input type="text" class="form-lg" name="phoneVerify" placeholder="手机验证码" />
-                            </div>
-                        </div>
-                    @endif
-                    @if(modstart_config('registerEmailEnable'))
-                        <div class="line">
-                            <div class="field">
-                                <div class="row no-gutters">
-                                    <div class="col-7">
-                                        <input type="text" class="form-lg" name="email" placeholder="输入邮箱" />
-                                    </div>
-                                    <div class="col-5">
-                                        <button class="btn btn-lg btn-block" type="button" data-email-verify-generate>获取验证码</button>
-                                        <button class="btn btn-lg btn-block" type="button" data-email-verify-countdown style="display:none;margin:0;"></button>
-                                        <button class="btn btn-lg btn-block" type="button" data-email-verify-regenerate style="display:none;margin:0;">重新获取</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="line">
-                            <div class="field">
-                                <input type="text" class="form-lg" name="emailVerify" placeholder="邮箱验证码" />
-                            </div>
-                        </div>
-                    @endif
                     <div class="line">
                         <div class="field">
-                            <input type="password" class="form-lg" name="password" placeholder="输入密码" />
-                        </div>
-                    </div>
-                    <div class="line">
-                        <div class="field">
-                            <input type="password" class="form-lg" name="passwordRepeat" placeholder="重复密码" />
+                            <div class="row no-gutters">
+                                <div class="col-7">
+                                    <input type="text" class="form-lg" name="phoneVerify" placeholder="输入验证码" />
+                                </div>
+                                <div class="col-5">
+                                    <button class="btn btn-lg btn-block" type="button" data-phone-verify-generate>获取验证码</button>
+                                    <button class="btn btn-lg btn-block" type="button" data-phone-verify-countdown style="display:none;margin:0;"></button>
+                                    <button class="btn btn-lg btn-block" type="button" data-phone-verify-regenerate style="display:none;margin:0;">重新获取</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @foreach(\Module\Member\Provider\RegisterProcessor\MemberRegisterProcessorProvider::listAll() as $provider)
@@ -156,7 +108,7 @@
                     @endforeach
                     <div class="line">
                         <div class="field">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">提交注册</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">注册并登录</button>
                         </div>
                     </div>
                     @if(modstart_config('Member_AgreementEnable',false)||modstart_config('Member_PrivacyEnable',false))

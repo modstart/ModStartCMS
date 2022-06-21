@@ -713,8 +713,73 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
+     * @Api 注册-手机快速注册
+     * @ApiBodyParam phone string 手机号
+     * @ApiBodyParam phoneVerify string 手机验证码
+     * @ApiBodyParam agreement boolean 是否同意协议
+     */
+    public function registerPhone()
+    {
+        if (modstart_config('registerDisable', false)) {
+            return Response::generate(-1, '禁止注册');
+        }
+        if (!modstart_config('Member_RegisterPhoneEnable', false)) {
+            return Response::generate(-1, '手机快速注册未开启');
+        }
+        $input = InputPackage::buildFromInput();
+        if (modstart_config('Member_AgreementEnable', false)) {
+            if (!$input->getBoolean('agreement')) {
+                return Response::generateError('请先同意 ' . modstart_config('Member_AgreementTitle', '用户使用协议'));
+            }
+        }
+        $phone = $input->getPhone('phone');
+        $phoneVerify = $input->getTrimString('phoneVerify');
+
+        if (empty($phone)) {
+            return Response::generate(-1, '请输入手机');
+        }
+        if ($phoneVerify != Session::get('registerPhoneVerify')) {
+            return Response::generate(-1, '手机验证码不正确.');
+        }
+        if (Session::get('registerPhoneVerifyTime') + 60 * 60 < time()) {
+            return Response::generate(-1, '手机验证码已过期');
+        }
+        if ($phone != Session::get('registerPhone')) {
+            return Response::generate(-1, '两次手机不一致');
+        }
+
+        foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
+            /** @var AbstractMemberRegisterProcessorProvider $provider */
+            $ret = $provider->preCheck();
+            if (Response::isError($ret)) {
+                return $ret;
+            }
+        }
+
+        $ret = MemberUtil::register(null, $phone, null, null, true);
+        if ($ret['code']) {
+            return Response::generate(-1, $ret['msg']);
+        }
+        $memberUserId = $ret['data']['id'];
+        $update = [];
+        $update['phoneVerified'] = true;
+        if (!empty($update)) {
+            MemberUtil::update($memberUserId, $update);
+        }
+        EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
+        Session::forget('registerCaptchaPass');
+        foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
+            /** @var AbstractMemberRegisterProcessorProvider $provider */
+            $provider->postProcess($memberUserId);
+        }
+        Session::put('memberUserId', $memberUserId);
+        EventUtil::fire(new MemberUserLoginedEvent($memberUserId));
+        return Response::generate(0, '注册成功', [
+            'id' => $memberUserId,
+        ]);
+    }
+
+    /**
      * @Api 注册-用户注册
      * @ApiBodyParam username string 用户名
      * @ApiBodyParam password string 密码

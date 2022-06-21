@@ -2,7 +2,7 @@
     <div class="ub-container">
         <div class="menu">
             @if(\Module\Member\Auth\MemberUser::id())
-                <a href="{{modstart_web_url('member')}}"><i class="iconfont icon-user"></i> {{\Module\Member\Auth\MemberUser::get('username')}}</a>
+                <a href="{{modstart_web_url('member')}}"><i class="iconfont icon-user"></i> {{\Module\Member\Auth\MemberUser::nickname()}}</a>
             @else
                 <a href="{{modstart_web_url('login')}}">登录</a>
                 @if(!modstart_config('registerDisable',false))
