@@ -59,6 +59,11 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return Response::generate(0, '修改成功', null, '[reload]');
     }
 
+    /**
+     * @Api 修改用户头像
+     * @ApiBodyParam avatar string required base64头像
+     * @ApiBodyParam type string required 类型，固定为 cropper
+     */
     public function avatar()
     {
         $input = InputPackage::buildFromInput();
@@ -116,6 +121,9 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return CaptchaFacade::create('default');
     }
 
+    /**
+     * @Api 获取图片验证码（修改手机、修改邮箱）
+     */
     public function captcha()
     {
         $captcha = $this->captchaRaw();
@@ -208,6 +216,11 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return Response::generate(0, '验证码发送成功');
     }
 
+    /**
+     * @Api 修改手机号码
+     * @ApiBodyParam phone string 手机号码
+     * @ApiBodyParam verify string 手机验证码
+     */
     public function phone()
     {
         $input = InputPackage::buildFromInput();
@@ -253,6 +266,11 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return Response::generate(0, '修改成功', null, '[reload]');
     }
 
+    /**
+     * @Api 发送手机验证码
+     * @ApiBodyParam target string 手机号码
+     * @ApiBodyParam captcha string 图片验证码
+     */
     public function phoneVerify()
     {
         $phone = Input::get('target');

@@ -39,10 +39,11 @@
                 this.editor = window.api.editor.basic(this.id, {
                     ready: () => {
                         // console.log('editor.ready', this.editor)
-                        $(this.editor.container).click((e) => {
-                            e.stopPropagation()
-                            this.editor.setContent(this.currentData)
-                        })
+                        //TODO 该段代码会导致插入图片时不能插入正确的位置
+                        // $(this.editor.container).click((e) => {
+                        //    e.stopPropagation()
+                        //    this.editor.setContent(this.currentData)
+                        //})
                     },
                 },{
                     zIndex: 10000,

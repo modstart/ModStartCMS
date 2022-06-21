@@ -33,7 +33,7 @@ class ModelController extends Controller
     public function fieldEdit($modelId)
     {
         $model = ModelUtil::get('cms_model', $modelId);
-        BizException::throwsIfEmpty('模型不存在', $model);
+        BizException::throwsIfEmpty('模型不存在[id=' . $modelId . ']', $model);
         $id = CRUDUtil::id();
         $record = [
             'title' => '',
@@ -136,7 +136,7 @@ class ModelController extends Controller
     {
         AdminPermission::demoCheck();
         $model = ModelUtil::get('cms_model', $modelId);
-        BizException::throwsIfEmpty('模型不存在', $model);
+        BizException::throwsIfEmpty('模型不存在[id=' . $modelId . ']', $model);
         $id = CRUDUtil::id();
         $record = ModelUtil::get('cms_model_field', $id);
         BizException::throwsIfEmpty('记录不存在', $record);
@@ -152,7 +152,7 @@ class ModelController extends Controller
     {
         AdminPermission::demoCheck();
         $model = ModelUtil::get('cms_model', $modelId);
-        BizException::throwsIfEmpty('模型不存在', $model);
+        BizException::throwsIfEmpty('模型不存在[id=' . $modelId . ']', $model);
         $id = CRUDUtil::id();
         $record = ModelUtil::get('cms_model_field', $id);
         BizException::throwsIfEmpty('记录不存在', $record);
@@ -167,7 +167,7 @@ class ModelController extends Controller
     public function field(AdminDialogPage $page, $modelId)
     {
         $model = ModelUtil::get('cms_model', $modelId);
-        BizException::throwsIfEmpty('模型不存在', $model);
+        BizException::throwsIfEmpty('模型不存在[id=' . $modelId . ']', $model);
         $grid = Grid::make('cms_model_field');
         $grid->repositoryFilter(function (RepositoryFilter $filter) use ($modelId) {
             $filter->where(['modelId' => $modelId]);

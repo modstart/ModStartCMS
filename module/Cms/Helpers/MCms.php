@@ -11,6 +11,14 @@ use Module\Cms\Util\CmsMemberPermitUtil;
  */
 class MCms
 {
+    /**
+     * @Util 获取内容
+     * @param $id int 内容ID
+     */
+    public static function get($id)
+    {
+        return CmsContentUtil::get($id);
+    }
 
     /**
      * @param $catUrl string 栏目URL

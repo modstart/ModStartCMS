@@ -30,7 +30,7 @@ class BaseCatController extends ModuleBaseController
         $catRootChildren = CmsCatUtil::children($catRoot['id']);
         $catChain = CmsCatUtil::chain($cat['id']);
         $model = CmsModelUtil::get($cat['modelId']);
-        BizException::throwsIfEmpty('模型不存在', $model);
+        BizException::throwsIfEmpty('模型不存在[id=' . $cat['modelId'] . ']', $model);
         return [
             'cat' => $cat,
             'catRoot' => $catRoot,

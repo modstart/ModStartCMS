@@ -27,11 +27,15 @@ class MemberMoneyController extends ModuleBaseController implements MemberLoginC
         ]);
     }
 
+    /**
+     * @Api 获取用户资金明细
+     * @ApiBodyParam search.type string required 类型：income|expense
+     */
     public function log()
     {
         $input = InputPackage::buildFromInput();
         $option = [];
-        $searchInput = $input->getJsonAsInput('search');
+        $searchInput = $input->getSearchInput();
         $type = $searchInput->getTrimString('type');
         switch ($type) {
             case 'income':

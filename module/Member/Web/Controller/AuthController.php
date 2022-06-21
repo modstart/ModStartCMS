@@ -56,6 +56,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        $this->api->checkRedirectSafety($redirect);
         if (modstart_config('ssoClientEnable', false)) {
             Input::merge(['client' => Request::domainUrl() . '/sso/client']);
             $ret = $this->api->ssoClientPrepare();
@@ -65,7 +66,6 @@ class AuthController extends ModuleBaseController
             Session::put('ssoClientRedirect', $redirect);
             return Response::send(0, null, null, $ret['data']['redirect']);
         }
-        $loginDefault = modstart_config('Member_LoginDefault', 'default');
         if (Request::isPost()) {
             $ret = $this->api->login();
             if (Response::isError($ret)) {
@@ -73,6 +73,7 @@ class AuthController extends ModuleBaseController
             }
             return Response::send(0, '', '', $redirect);
         }
+        $loginDefault = modstart_config('Member_LoginDefault', 'default');
         if ('phone' == $loginDefault) {
             $force = $input->getBoolean('force', false);
             if (!$force) {
@@ -93,6 +94,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        $this->api->checkRedirectSafety($redirect);
         if (Request::isPost()) {
             $ret = $this->api->loginPhone();
             if ($ret['code']) {
@@ -119,6 +121,7 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url(''));
+        $this->api->checkRedirectSafety($redirect);
         if (modstart_config('ssoClientEnable', false) && modstart_config('ssoClientLogoutSyncEnable', false)) {
             Input::merge(['domainUrl' => Request::domainUrl()]);
             $ret = $this->api->ssoClientLogoutPrepare();
@@ -142,6 +145,15 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        $registerDefault = modstart_config('Member_RegisterDefault', 'default');
+        if ('phone' == $registerDefault) {
+            $force = $input->getBoolean('force', false);
+            if (!$force) {
+                return Response::redirect(modstart_web_url('register/phone', [
+                    'redirect' => $redirect,
+                ]));
+            }
+        }
         if (Request::isPost()) {
             $ret = $this->api->register();
             if ($ret['code']) {
@@ -266,6 +278,7 @@ class AuthController extends ModuleBaseController
             Session::put('oauthLoginView', true);
         }
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        $this->api->checkRedirectSafety($redirect);
         $callback = Request::domainUrl() . '/oauth_callback_' . $oauthType;
         $ret = $this->api->oauthLogin($oauthType, $callback);
         if ($ret['code']) {
@@ -296,6 +309,7 @@ class AuthController extends ModuleBaseController
     public function oauthBind($oauthType = null)
     {
         $redirect = Session::get('oauthRedirect', modstart_web_url('member'));
+        $this->api->checkRedirectSafety($redirect);
         if (Request::isPost()) {
             $ret = $this->api->oauthBind($oauthType);
             if ($ret['code']) {

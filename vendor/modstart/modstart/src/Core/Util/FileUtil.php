@@ -129,7 +129,12 @@ class FileUtil
     {
         $dir = dirname($path);
         if (!file_exists($dir)) {
-            mkdir($dir, 0755, true);
+            try {
+                mkdir($dir, 0755, true);
+            } catch (\Exception $e) {
+                Log::error('mkdir ' . $dir . ' failed');
+                throw $e;
+            }
         }
         file_put_contents($path, $content);
     }

@@ -2,6 +2,8 @@
 
 namespace ModStart\Core\Util;
 
+use Illuminate\Support\Str;
+
 /**
  * Class StrUtil
  * @package ModStart\Core\Util
@@ -113,6 +115,12 @@ class StrUtil
             "\xe2\x80\x8b",
         ];
         return str_replace($chars, '', $value);
+    }
+
+
+    public static function limit($text, $limit = 100, $end = '...')
+    {
+        return Str::limit($text, $limit, $end);
     }
 
 }

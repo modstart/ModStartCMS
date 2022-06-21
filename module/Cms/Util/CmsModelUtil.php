@@ -39,7 +39,7 @@ class CmsModelUtil
                 return $model;
             }
         }
-        BizException::throws('模型不存在');
+        BizException::throws('模型不存在[name=' . $name . ']');
     }
 
     public static function get($modelId)
@@ -49,7 +49,7 @@ class CmsModelUtil
                 return $model;
             }
         }
-        BizException::throws('模型不存在');
+        BizException::throws('模型不存在[id=' . $modelId . ']');
     }
 
     public static function all()

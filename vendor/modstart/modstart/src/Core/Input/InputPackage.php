@@ -695,6 +695,17 @@ class InputPackage
         return self::build($data);
     }
 
+    public function getSearchInput($key = 'search')
+    {
+        if (!isset($this->data[$key])) {
+            return [];
+        }
+        if (is_array($this->data[$key])) {
+            return self::build($this->data[$key]);
+        }
+        return self::build(@json_decode($this->data[$key], true));
+    }
+
     public function getJsonAsInput($key)
     {
         $data = [];

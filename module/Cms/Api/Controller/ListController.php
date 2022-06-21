@@ -10,16 +10,11 @@ use ModStart\Core\Input\Response;
 use Module\Cms\Util\CmsContentUtil;
 
 /**
- * Class ListController
- * @package Module\Cms\Api\Controller
  * @Api 通用CMS
  */
 class ListController extends BaseCatController
 {
     /**
-     * @return array
-     * @throws BizException
-     *
      * @Api 栏目-获取内容列表
      * @ApiBodyParam cat string 栏目标识（ID、名称）
      * @ApiBodyParam search.isRecommend boolean 搜索条件，是否推荐

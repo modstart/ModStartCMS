@@ -23,11 +23,20 @@ class ConfigController extends Controller
         $builder->switch('retrieveDisable', '禁用找回密码');
         $builder->switch('retrievePhoneEnable', '启用手机找回密码');
         $builder->switch('retrieveEmailEnable', '启用邮箱找回密码');
+//        $builder->switch('Member_RegisterPhoneEnable', '启用手机快捷注册');
+//        $builder->select('Member_RegisterDefault', '默认注册方式')->options([
+//            'default' => '用户名密码注册',
+//            'phone' => '手机快捷注册',
+//        ]);
         $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录');
         $builder->select('Member_LoginDefault', '默认登录方式')->options([
-            'default' => '用户名密码',
+            'default' => '用户名密码登录',
             'phone' => '手机快捷登录',
         ]);
+        $builder->switch('Member_LoginRedirectCheckEnable', '登录后跳转安全验证')
+            ->when('=', true, function (Form $form) {
+                $form->textarea('Member_LoginRedirectWhiteList', '白名单')->placeholder('请输入域名白名单，每行一个，如：www.example.com');
+            });
         $builder->formClass('wide');
         return $builder->perform();
     }

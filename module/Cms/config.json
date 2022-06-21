@@ -1,6 +1,6 @@
 {
     "name": "Cms",
-    "title": "通用内容管理系统",
+    "title": "通用CMS",
     "env": [
         "laravel5",
         "laravel9"
@@ -12,7 +12,8 @@
     ],
     "suggest": [
         "TagManager",
-        "WordSpliter"
+        "WordSpliter",
+        "SiteMapManager"
     ],
     "version": "3.0.0",
     "modstartVersion": ">=2.9.0",

@@ -9,16 +9,11 @@ use ModStart\Core\Input\Response;
 use Module\Cms\Util\CmsContentUtil;
 
 /**
- * Class PageController
- * @package Module\Cms\Api\Controller
- *
  * @Api 通用CMS
  */
 class PageController extends BaseCatController
 {
     /**
-     * @return array
-     *
      * @Api 单页-获取信息
      * @ApiBodyParam cat string 栏目标识（ID、名称）
      */

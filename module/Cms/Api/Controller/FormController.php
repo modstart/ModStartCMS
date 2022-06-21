@@ -13,17 +13,11 @@ use Module\Cms\Type\CmsModelFieldType;
 use Module\Cms\Util\CmsContentUtil;
 
 /**
- * Class FormController
- * @package Module\Cms\Api\Controller
- *
  * @Api 通用CMS
  */
 class FormController extends BaseCatController
 {
     /**
-     * @return array
-     * @throws BizException
-     *
      * @Api 表单-获取详情
      * @ApiBodyParam cat string 栏目标识（ID、名称）
      */
@@ -38,8 +32,6 @@ class FormController extends BaseCatController
     }
 
     /**
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
-     *
      * @Api 表单-内容提交
      * @ApiBodyParam cat string 栏目标识（ID、名称）
      * @ApiBodyParam content string 内容

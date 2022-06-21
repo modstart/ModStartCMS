@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\EventUtil;
@@ -126,6 +127,30 @@ use Module\Vendor\Support\ResponseCodes;
  */
 class AuthController extends ModuleBaseController
 {
+    public function checkRedirectSafety($redirect)
+    {
+        if (!modstart_config('Member_LoginRedirectCheckEnable', false)) {
+            return;
+        }
+        $info = parse_url($redirect);
+        // ignore local url
+        if (empty($info['host'])) {
+            return;
+        }
+        if ($info['host'] == Request::domain()) {
+            return;
+        }
+        $whiteList = modstart_config('Member_LoginRedirectWhiteList', '');
+        $whiteList = explode("\n", $whiteList);
+        $whiteList = array_filter($whiteList);
+        foreach ($whiteList as $item) {
+            if ($info['host'] == $item) {
+                return;
+            }
+        }
+        BizException::throws("登录跳转路径异常");
+    }
+
     public function oauthTryLogin($oauthType = null)
     {
         $oauthUserInfo = Session::get('oauthUserInfo', []);
