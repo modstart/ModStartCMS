@@ -43,6 +43,8 @@ class ConfigController extends Controller
             ->when('=', true, function (Form $form) {
                 $form->textarea('Member_LoginRedirectWhiteList', '白名单')->placeholder('请输入域名白名单，每行一个，如：www.example.com');
             });
+        $builder->switch('Member_DeleteEnable', '启用自助注销账号')
+            ->help('用户注销账号后，用户名会重置为随机字符串，已绑定的手机、邮箱均会解绑');
         $builder->formClass('wide');
         return $builder->perform();
     }
@@ -66,7 +68,6 @@ class ConfigController extends Controller
         return $builder->perform();
     }
 
-
     public function vip(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('用户VIP设置');
@@ -76,18 +77,9 @@ class ConfigController extends Controller
         return $builder->perform();
     }
 
-//    public function credit(AdminConfigBuilder $builder)
-//    {
-//        $builder->pageTitle('积分设置');
-//        $builder->switch('Member_CreditEnable', '启用积分功能');
-//        $builder->formClass('wide');
-//        return $builder->perform();
-//    }
-
     public function money(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('用户钱包设置');
-//        $builder->switch('Member_MoneyEnable', '启用钱包功能');
         $builder->switch('Member_MoneyCashEnable', '开启用户提现')->when('=', 1, function (Form $form) {
             $form->number('Member_MoneyCashMin', '最小提现金额')->help('默认为 100');
             $form->number('Member_MoneyCashTaxRate', '用户提现手续费')->help('如 1.00 表示手续费为 1.00%');

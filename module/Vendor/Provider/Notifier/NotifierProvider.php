@@ -30,10 +30,10 @@ class NotifierProvider
 
     /**
      * 发送消息通知
-     * @param $biz
-     * @param $title
-     * @param $content
-     * @param array $param
+     * @param $biz string 业务标识
+     * @param $title string 标题
+     * @param $content array|string 内容
+     * @param $param array 参数
      */
     public static function notify($biz, $title, $content, $param = [])
     {
@@ -42,11 +42,11 @@ class NotifierProvider
         }
     }
 
-    public static function notifyProcess($biz, $title, $content, $processUrl)
+    public static function notifyProcess($biz, $title, $content, $processUrl, $processUrlParam = [])
     {
-        self::notify($biz, $title, $content, [
+        self::notify($biz, $title, $content, array_merge($processUrlParam, [
             'processUrl' => $processUrl,
-        ]);
+        ]));
     }
 
     public static function notifyNoneLoginOperateProcessUrl($biz, $title, $content, $processUrlPath, $processUrlParam = [])

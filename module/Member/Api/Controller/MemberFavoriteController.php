@@ -23,8 +23,8 @@ class MemberFavoriteController extends Controller implements MemberLoginCheck
      * @return array
      * @throws BizException
      * @Api 收藏
-     * @ApiParams category 类别
-     * @ApiParams categoryId 类别ID
+     * @ApiBodyParam category string 类别
+     * @ApiBodyParam categoryId int 类别ID
      */
     public function favorite()
     {
@@ -47,8 +47,8 @@ class MemberFavoriteController extends Controller implements MemberLoginCheck
      * @return array
      * @throws BizException
      * @Api 取消收藏
-     * @ApiParams category 类别
-     * @ApiParams categoryId 类别ID
+     * @ApiBodyParam category string 类别
+     * @ApiBodyParam categoryId int 类别ID
      */
     public function unfavorite()
     {

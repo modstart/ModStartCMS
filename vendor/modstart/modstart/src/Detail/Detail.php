@@ -200,6 +200,8 @@ class Detail implements Renderable
             case 'operateFixed':
             case 'defaultPageSize':
             case 'pageSizes':
+            case 'canBatchSelect':
+            case 'batchOperatePrepend':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

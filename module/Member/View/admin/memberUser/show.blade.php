@@ -17,6 +17,10 @@
                 </div>
             </div>
             <div class="ub-pair">
+                <div class="name">用户ID</div>
+                <div class="value">{{$record['id']}}</div>
+            </div>
+            <div class="ub-pair">
                 <div class="name">用户名</div>
                 <div class="value">{{$record['username']?$record['username']:'-'}}</div>
             </div>

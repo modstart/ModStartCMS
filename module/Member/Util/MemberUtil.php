@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EncodeUtil;
@@ -324,6 +325,7 @@ class MemberUtil
             'phone' => $phone,
             'password' => $ignorePassword ? null : EncodeUtil::md5WithSalt($password, $passwordSalt),
             'passwordSalt' => $ignorePassword ? null : $passwordSalt,
+            'isDeleted' => false,
         ]);
         return Response::generate(0, 'ok', $memberUser);
     }
@@ -609,6 +611,11 @@ class MemberUtil
         return ModelUtil::get('member_oauth', $where);
     }
 
+    public static function listOauths($memberUserId)
+    {
+        return ModelUtil::all('member_oauth', ['memberUserId' => $memberUserId], ['*'], ['type', 'asc']);
+    }
+
     public static function putOauth($memberUserId, $oauthType, $openId, $info = [])
     {
         $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];
@@ -647,6 +654,46 @@ class MemberUtil
     public static function paginate($page, $pageSize, $option = [])
     {
         return ModelUtil::paginate('member_user', $page, $pageSize, $option);
+    }
+
+    public static function updateStatus($memberUserIds, $status)
+    {
+        if (!is_array($memberUserIds)) {
+            $memberUserIds = [$memberUserIds];
+        }
+        if (empty($memberUserIds)) {
+            return;
+        }
+        ModelUtil::model('member_user')->whereIn('id', $memberUserIds)->update(['status' => $status]);
+    }
+
+    public static function delete($memberUserId)
+    {
+        $memberUser = self::get($memberUserId);
+        BizException::throwsIfEmpty('用户不存在', $memberUser);
+        ModelUtil::transactionBegin();
+        $content = [];
+        $oauths = ModelUtil::all('member_oauth', [
+            'memberUserId' => $memberUser['id'],
+        ]);
+        $content['oauth'] = ArrayUtil::keepItemsKeys($oauths, [
+            'type', 'openId', 'infoUsername', 'infoAvatar'
+        ]);
+        ModelUtil::insert('member_deleted', [
+            'id' => $memberUser['id'],
+            'username' => $memberUser['username'],
+            'phone' => $memberUser['phone'],
+            'email' => $memberUser['email'],
+            'content' => json_encode($content, JSON_UNESCAPED_UNICODE),
+        ]);
+        ModelUtil::update('member_user', $memberUserId, [
+            'deleteAtTime' => 0,
+            'isDeleted' => true,
+            'username' => null,
+            'phone' => null,
+            'email' => null,
+        ]);
+        ModelUtil::transactionCommit();
     }
 
 }

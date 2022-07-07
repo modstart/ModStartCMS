@@ -209,7 +209,7 @@ class Response
     public static function page404()
     {
         if (Request::isAjax()) {
-            return self::json(-1, L('Api Not Found'));
+            return self::json(-1, L('Api Not Found : %s', Request::basePath()));
         } else {
             return abort(404, L('Page Not Found'));
         }

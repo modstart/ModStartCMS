@@ -1,51 +1,61 @@
 {
-    "name": "Member",
-    "title": "通用用户系统",
-    "env": [
-        "laravel5",
-        "laravel9"
+  "name": "Member",
+  "title": "通用用户系统",
+  "env": [
+    "laravel5",
+    "laravel9"
+  ],
+  "types": [
+    "PC",
+    "Mobile"
+  ],
+  "require": [
+    "Vendor:>=1.9.0"
+  ],
+  "version": "3.0.0",
+  "modstartVersion": ">=3.5.0",
+  "author": "官方",
+  "description": "提供基础的用户管理服务",
+  "config": {
+    "moneyEnable": [
+      [
+        "switch",
+        "启用钱包"
+      ]
     ],
-    "types": [
-        "PC",
-        "Mobile"
+    "creditEnable": [
+      [
+        "switch",
+        "启用积分"
+      ]
     ],
-    "require": [
-        "Vendor:>=1.9.0"
+    "creditName": [
+      [
+        "text",
+        "积分全局名称"
+      ],
+      [
+        "placeholder",
+        "默认为积分"
+      ]
     ],
-    "version": "3.0.0",
-    "modstartVersion": ">=3.5.0",
-    "author": "官方",
-    "description": "提供基础的用户管理服务",
-    "config": {
-        "moneyEnable": [
-            [
-                "switch",
-                "启用钱包"
-            ]
-        ],
-        "creditEnable": [
-            [
-                "switch",
-                "启用积分"
-            ]
-        ],
-        "vipEnable": [
-            [
-                "switch",
-                "启用VIP"
-            ]
-        ],
-        "addressEnable": [
-            [
-                "switch",
-                "启用地址"
-            ]
-        ],
-        "groupEnable": [
-            [
-                "switch",
-                "启用分组"
-            ]
-        ]
-    }
+    "vipEnable": [
+      [
+        "switch",
+        "启用VIP"
+      ]
+    ],
+    "addressEnable": [
+      [
+        "switch",
+        "启用地址"
+      ]
+    ],
+    "groupEnable": [
+      [
+        "switch",
+        "启用分组"
+      ]
+    ]
+  }
 }

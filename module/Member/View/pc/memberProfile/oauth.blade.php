@@ -6,7 +6,7 @@
 
 @section('memberBodyContent')
 
-    @include('module::Member.View.pc.memberProfile.bindNav')
+    @include('module::Member.View.pc.memberProfile.securityNav')
 
     <div class="ub-panel">
         <div class="head">
@@ -16,8 +16,12 @@
             @if(empty($oauthRecord))
                 <div class="ub-alert ub-alert-warning">
                     当前账号暂未绑定 {{$oauth->title()}}
-                    <a class="btn btn-primary"
-                       href="{{modstart_web_url('oauth_login_'.$oauth->name(),['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">立即绑定</a>
+                    @if($oauth->bindRender())
+                        {!! $oauth->bindRender() !!}
+                    @else
+                        <a class="btn btn-primary"
+                           href="{{modstart_web_url('oauth_login_'.$oauth->name(),['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">立即绑定</a>
+                    @endif
                 </div>
             @else
                 <div class="ub-alert ub-alert-success">

@@ -10,8 +10,8 @@ use ModStart\Core\Input\Request;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Grid\Grid;
-use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleBaseController;
+use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
@@ -44,7 +44,7 @@ class MemberCreditController extends ModuleBaseController implements MemberLogin
             return $grid->request();
         }
         list($view, $_) = $this->viewPaths('memberCredit.index');
-        $page->pageTitle('我的积分');
+        $page->pageTitle('我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分'));
         return $page->view($view)->body($grid);
     }
 

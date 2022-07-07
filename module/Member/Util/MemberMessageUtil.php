@@ -4,6 +4,7 @@ namespace Module\Member\Util;
 
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use Module\Member\Type\MemberMessageStatus;
 
@@ -99,9 +100,9 @@ class MemberMessageUtil
             $view = 'theme.default.message.' . $template;
             if (!view()->exists($view)) {
                 if ($module) {
-                    $view = 'module::' . $module . '.View.' . $theme . '.message.' . $template;
+                    $view = 'module::' . $module . '.View.m.message.' . $template;
                     if (!view()->exists($view)) {
-                        $view = 'module::' . $module . '.View.default.message.' . $template;
+                        $view = 'module::' . $module . '.View.pc.message.' . $template;
                     }
                 } else {
                     $view = 'module::Member.View.' . $theme . '.message.' . $template;
@@ -112,7 +113,7 @@ class MemberMessageUtil
             }
         }
         if (!view()->exists($view)) {
-            throw new \Exception('message view not found : ' . $view);
+            BizException::throws(L('View Not Found : %s', $template));
         }
         $message = View::make($view, $templateData)->render();
         self::send($memberUserId, $message, $fromMemberUserId);

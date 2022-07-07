@@ -56,7 +56,7 @@ class MemberMoneyCashController extends Controller
                         break;
                 }
             })
-            ->title('会员提现')->canAdd(false)->canEdit(false)->canDelete(false);
+            ->title('用户钱包提现申请')->canAdd(false)->canEdit(false)->canDelete(false);
     }
 
     public function pass()

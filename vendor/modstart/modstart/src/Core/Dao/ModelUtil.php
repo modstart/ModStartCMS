@@ -532,15 +532,40 @@ class ModelUtil
         return false;
     }
 
-    public static function join(&$data, $dataModelKey = 'userId', $dataMergedKey = '_user', $model = 'join_model', $modelPrimaryKey = 'id')
+    /**
+     * JOIN表数据
+     *
+     * @param $records array 记录数据
+     * @param $dataModelKey string 记录数据中的模型键名
+     * @param $dataMergedKey string 记录数据中的合并键名
+     * @param $model string JOIN表名称
+     * @param $modelPrimaryKey string JOIN表主键
+     *
+     *
+     * @example
+     *
+     * 原数据
+     * $blogs = [
+     *  ['memberUserId' => 1, 'title'=>'test1' , ],
+     *  ['memberUserId' => 2, 'title'=>'test2' , ],
+     * ];
+     * ModelUtil::join($blogs, 'memberUserId', '_member', 'member_user', 'id');
+     *
+     * 结果数据
+     * $blogs = [
+     *  ['memberUserId' => 1, 'title'=>'test1' , '_member'=>['id'=>1, 'username'=>'test1'] ],
+     *  ['memberUserId' => 2, 'title'=>'test2' , '_member'=>['id'=>1, 'username'=>'test1'] ],
+     * ];
+     */
+    public static function join(&$records, $dataModelKey = 'userId', $dataMergedKey = '_user', $model = 'join_model', $modelPrimaryKey = 'id')
     {
-        if (empty($data)) {
+        if (empty($records)) {
             return;
         }
 
         $ids = array_map(function ($item) use ($dataModelKey) {
             return $item[$dataModelKey];
-        }, $data);
+        }, $records);
 
         $joinData = self::model($model)->whereIn($modelPrimaryKey, $ids)->get()->toArray();
 
@@ -548,7 +573,7 @@ class ModelUtil
             return [$v[$modelPrimaryKey], $v];
         });
 
-        foreach ($data as &$item) {
+        foreach ($records as &$item) {
             $key = $item[$dataModelKey];
             if (isset($joinDataMap[$key])) {
                 $item[$dataMergedKey] = $joinDataMap[$key];

@@ -112,7 +112,7 @@ class StrUtil
         $chars = [
             "\xe2\x80\x8b",
             "\xe2\x80\x8c",
-            "\xe2\x80\x8b",
+            "\xe2\x80\x8d",
         ];
         return str_replace($chars, '', $value);
     }

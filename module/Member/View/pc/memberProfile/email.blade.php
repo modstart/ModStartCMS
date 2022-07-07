@@ -1,8 +1,8 @@
 @extends($_viewMemberFrame)
 
-@section('pageTitleMain')绑定邮箱@endsection
-@section('pageKeywords')绑定邮箱@endsection
-@section('pageDescription')绑定邮箱@endsection
+@section('pageTitleMain')邮箱绑定@endsection
+@section('pageKeywords')邮箱绑定@endsection
+@section('pageDescription')邮箱绑定@endsection
 
 @section('bodyAppend')
     @parent
@@ -25,7 +25,7 @@
 
 @section('memberBodyContent')
 
-    @include('module::Member.View.pc.memberProfile.bindNav')
+    @include('module::Member.View.pc.memberProfile.securityNav')
 
     <div class="ub-panel">
         <div class="head">

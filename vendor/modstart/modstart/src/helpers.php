@@ -62,6 +62,22 @@ function modstart_web_path($path = '')
 }
 
 /**
+ * @Util 生成完整的Web路径
+ * @param string $url 路径
+ * @param array $param 参数
+ * @return string
+ * @example
+ * // 返回 http://www.example.com/aaa/bbb
+ * modstart_web_url('aaa/bbb')
+ * // 返回 http://www.example.com/aaa/bbb?x=y
+ * modstart_web_url('aaa/bbb',['x'=>'y'])
+ */
+function modstart_web_full_url($url = '', $param = [])
+{
+    return Request::domainUrl() . modstart_web_url($url, $param);
+}
+
+/**
  * @Util Web路径
  * @desc 生成Web的路径，自动加前缀
  * @param string $url 路径

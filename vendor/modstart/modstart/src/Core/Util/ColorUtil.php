@@ -21,4 +21,10 @@ class ColorUtil
         $color = self::$colors[($index++) % (count(self::$colors))];
         return $color;
     }
+
+    public static function pick($hashString)
+    {
+        $index = crc32($hashString) % count(self::$colors);
+        return self::$colors[$index];
+    }
 }

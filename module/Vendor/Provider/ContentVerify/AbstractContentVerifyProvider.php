@@ -89,7 +89,7 @@ abstract class AbstractContentVerifyProvider
         $shortTitle = $this->title() . ($shortTitle ? '(' . $shortTitle . ')' : '');
         if ($this->verifyAutoProcess($param)) {
             if ($this->verifyAutoProcessedNotify()) {
-                NotifierProvider::notify($this->name(), '[自动审核]' . $shortTitle, $body);
+                NotifierProvider::notify($this->name(), '[自动审核]' . $shortTitle, $body, $param);
             }
             return;
         }

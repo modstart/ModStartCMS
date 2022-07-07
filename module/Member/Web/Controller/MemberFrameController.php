@@ -16,4 +16,5 @@ class MemberFrameController extends ModuleBaseController
         list($this->viewMemberFrame, $_) = $this->viewPaths('member.frame');
         View::share('_viewMemberFrame', $this->viewMemberFrame);
     }
+
 }

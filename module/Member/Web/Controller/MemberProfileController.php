@@ -5,13 +5,9 @@ namespace Module\Member\Web\Controller;
 
 
 use Illuminate\Support\Facades\View;
-use ModStart\App\Web\Layout\WebConfigBuilder;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
-use ModStart\Field\AbstractField;
-use ModStart\Field\AutoRenderedFieldValue;
-use ModStart\Form\Form;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberOauth;
@@ -35,23 +31,14 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
     }
 
 
-    public function password(WebConfigBuilder $builder)
+    public function password()
     {
-        $memberUser = MemberUser::get();
-        $builder->pageTitle('修改密码');
-        $builder->page()->view($this->viewMemberFrame);
-        if (empty($memberUser['password'])) {
-            $builder->custom('tips', '')->hookRendering(function (AbstractField $field, $item, $index) {
-                return AutoRenderedFieldValue::make('<div class="ub-alert ub-alert-warning"><i class="iconfont icon-warning"></i> 您还没有设定密码，请设定新密码</div>');
-            });
-        } else {
-            $builder->password('passwordOld', '旧密码')->required()->styleFormField('max-width:10rem;');
+        if (Request::isPost()) {
+            return Response::jsonFromGenerate($this->api->password());
         }
-        $builder->password('passwordNew', '新密码')->rules('required')->styleFormField('max-width:10rem;');
-        $builder->password('passwordRepeat', '重复密码')->rules('required')->styleFormField('max-width:10rem;');
-        return $builder->perform(null, function (Form $form) {
-            return $this->api->password();
-        });
+        return $this->view('memberProfile.password', [
+            'pageTitle' => '密码设定',
+        ]);
     }
 
     public function avatar()
@@ -88,7 +75,9 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
     {
         $oauth = MemberOauth::getOrFail($type);
         BizException::throwsIfEmpty('授权登录不存在', $oauth);
-        $oauthRecord = MemberUtil::getOauth(MemberUser::id(), $oauth->name());
+        $oauthRecord = MemberUtil::getOauth(MemberUser::id(), $oauth->oauthKey());
+        // var_dump([MemberUser::id(), $oauth->oauthKey()]);
+        // var_dump($oauthRecord);
         $viewData = [
             'pageTitle' => $oauth->title(),
             'oauth' => $oauth,
@@ -103,7 +92,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
             return Response::jsonFromGenerate($this->api->email());
         }
         return $this->view('memberProfile.email', [
-            'pageTitle' => '修改邮箱',
+            'pageTitle' => '邮箱绑定',
         ]);
     }
 
@@ -118,12 +107,22 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
             return Response::jsonFromGenerate($this->api->phone());
         }
         return $this->view('memberProfile.phone', [
-            'pageTitle' => '修改手机',
+            'pageTitle' => '手机绑定',
         ]);
     }
 
     public function phoneVerify()
     {
         return Response::sendFromGenerate($this->api->phoneVerify());
+    }
+
+    public function delete()
+    {
+        if (Request::isPost()) {
+            return Response::jsonFromGenerate($this->api->delete());
+        }
+        return $this->view('memberProfile.delete', [
+            'pageTitle' => '注销账号',
+        ]);
     }
 }

@@ -19,7 +19,17 @@ abstract class AbstractOauth
         return true;
     }
 
+    public function color()
+    {
+        return null;
+    }
+
     public function title()
+    {
+        return $this->name();
+    }
+
+    public function oauthKey()
     {
         return $this->name();
     }
@@ -27,6 +37,11 @@ abstract class AbstractOauth
     abstract public function name();
 
     abstract public function render();
+
+    public function bindRender()
+    {
+        return null;
+    }
 
     abstract public function processRedirect($param);
 

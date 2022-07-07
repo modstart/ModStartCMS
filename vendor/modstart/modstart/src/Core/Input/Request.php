@@ -9,6 +9,7 @@ class Request
 {
 
     /**
+     * get path for request
      * @return string
      *
      * @example visit http://www.example.com/url/path?foo=bar -> url/path
@@ -19,6 +20,7 @@ class Request
     }
 
     /**
+     * get base path for request
      * @return string
      *
      * @example visit http://www.example.com/url/path?foo=bar -> /url/path
@@ -39,7 +41,7 @@ class Request
     }
 
     /**
-     *
+     * get full url for request (with query string)
      * @return string
      *
      * @example visit http://www.example.com/url/path?foo=bar -> /url/path?foo=bar
@@ -54,6 +56,7 @@ class Request
     }
 
     /**
+     * get full url for request (with query string)
      * @return string
      *
      * @example visit http://www.example.com/url/path?foo=bar -> http://www.example.com/url/path?foo=bar
@@ -81,6 +84,7 @@ class Request
 
 
     /**
+     * get full url for request (without query string)
      * @return string
      *
      * @example visit http://www.example.com/url/path?foo=bar -> http://www.example.com/url/path
@@ -101,6 +105,11 @@ class Request
         return $url;
     }
 
+    /**
+     * merge url queies with given array
+     * @param array $pair
+     * @return string
+     */
     public static function mergeQueries($pair = [])
     {
         $gets = (!empty($_GET) && is_array($_GET)) ? $_GET : [];
@@ -131,11 +140,19 @@ class Request
         return join('&', $urls);
     }
 
+    /**
+     * get domain url
+     * @return string
+     */
     public static function domain()
     {
         return \Illuminate\Support\Facades\Request::server('HTTP_HOST');
     }
 
+    /**
+     * check if current request is https
+     * @return bool
+     */
     public static function isSecurity()
     {
         if ($forceSchema = config('modstart.forceSchema')) {
@@ -144,6 +161,10 @@ class Request
         return \Illuminate\Support\Facades\Request::secure();
     }
 
+    /**
+     * @get current request scheme
+     * @return string
+     */
     public static function schema()
     {
         static $schema = null;
@@ -162,8 +183,7 @@ class Request
     }
 
     /**
-     * 返回当前系统的协议和域名
-     *
+     * get current request domain url
      * @return string
      */
     public static function domainUrl($subdirFix = false)
@@ -175,17 +195,26 @@ class Request
         return $url;
     }
 
+    /**
+     * check if current request is post
+     * @return bool
+     */
     public static function isPost()
     {
         return \Illuminate\Support\Facades\Request::isMethod('post');
     }
 
+    /**
+     * check if current request is ajax
+     * @return bool
+     */
     public static function isAjax()
     {
         return \Illuminate\Support\Facades\Request::ajax() || self::headerGet('is-ajax');
     }
 
     /**
+     * get laravel request instance
      * @return \Illuminate\Http\Request
      */
     public static function instance()
@@ -193,6 +222,13 @@ class Request
         return \Illuminate\Support\Facades\Request::instance();
     }
 
+    /**
+     * get current request controller and action
+     * @return array
+     *
+     * @example
+     * list($controller, $action) = Request::controllerAction();
+     */
     public static function getControllerAction()
     {
         $routeAction = Route::currentRouteAction();

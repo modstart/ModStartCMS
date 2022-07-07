@@ -1,8 +1,8 @@
 @extends($_viewMemberFrame)
 
-@section('pageTitleMain')绑定手机@endsection
-@section('pageKeywords')绑定手机@endsection
-@section('pageDescription')绑定手机@endsection
+@section('pageTitleMain')手机绑定@endsection
+@section('pageKeywords')手机绑定@endsection
+@section('pageDescription')手机绑定@endsection
 
 @section('bodyAppend')
     @parent
@@ -25,7 +25,7 @@
 
 @section('memberBodyContent')
 
-    @include('module::Member.View.pc.memberProfile.bindNav')
+    @include('module::Member.View.pc.memberProfile.securityNav')
 
     <div class="ub-panel">
         <div class="head">
@@ -38,7 +38,7 @@
                     <div class="line">
                         <div class="ub-alert ub-alert-danger">
                             <i class="ub-icon-warning"></i>
-                            系统没有开启手机发送服务，验证码可能无法发送。
+                            系统没有开启短信发送服务，验证码可能无法发送。
                         </div>
                     </div>
                 @endif

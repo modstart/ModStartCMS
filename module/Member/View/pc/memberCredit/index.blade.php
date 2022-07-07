@@ -1,8 +1,6 @@
 @extends($_viewMemberFrame)
 
-@section('pageTitleMain')我的积分@endsection
-@section('pageKeywords')我的地址@endsection
-@section('pageDescription')我的地址@endsection
+@section('pageTitleMain')我的{{\ModStart\Module\ModuleManager::getModuleConfig('Member', 'creditName', '积分')}}@endsection
 
 @section('memberBodyContent')
     <div class="ub-panel transparent">
@@ -12,7 +10,7 @@
                     <i class="font iconfont icon-credit"></i>
                 </div>
                 <div class="number-value">{{\Module\Member\Util\MemberCreditUtil::getTotal(\Module\Member\Auth\MemberUser::id())}}</div>
-                <div class="number-title">我的积分</div>
+                <div class="number-title">我的{{\ModStart\Module\ModuleManager::getModuleConfig('Member', 'creditName', '积分')}}</div>
             </div>
         </div>
     </div>
@@ -20,7 +18,7 @@
         <div class="head">
             <div class="title">
                 <i class="iconfont icon-list"></i>
-                积分流水
+                {{\ModStart\Module\ModuleManager::getModuleConfig('Member', 'creditName', '积分')}}流水
             </div>
         </div>
         <div class="body">

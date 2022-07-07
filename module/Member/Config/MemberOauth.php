@@ -16,6 +16,12 @@ class MemberOauth
         self::$list[] = $item;
     }
 
+    public static function hasEnableItems()
+    {
+        $items = self::get();
+        return !empty($items);
+    }
+
     public static function hasItems()
     {
         $items = self::get();
@@ -49,6 +55,16 @@ class MemberOauth
         foreach ($list as $item) {
             if ($item->name() == $name) {
                 return $item;
+            }
+        }
+        return null;
+    }
+
+    public static function getByOauthKey($name)
+    {
+        foreach (self::get() as $oauth) {
+            if ($oauth->oauthKey() == $name) {
+                return $oauth;
             }
         }
         return null;

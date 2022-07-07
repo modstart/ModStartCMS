@@ -665,8 +665,8 @@ class AuthController extends ModuleBaseController
         }
 
         if (Session::get('loginPhoneVerifyTime') && $phone == Session::get('loginPhone')) {
-            if (Session::get('loginPhoneVerifyTime') + 60 * 2 > time()) {
-                return Response::generate(0, '验证码发送成功!');
+            if (Session::get('loginPhoneVerifyTime') + 60 > time()) {
+                return Response::generate(-1, '验证码发送频繁，请稍后再试!');
             }
         }
 
@@ -938,7 +938,7 @@ class AuthController extends ModuleBaseController
 
         if (Session::get('registerEmailVerifyTime') && $email == Session::get('registerEmail')) {
             if (Session::get('registerEmailVerifyTime') + 60 > time()) {
-                return Response::generate(0, '验证码发送成功!');
+                return Response::generate(-1, '验证码发送频繁，请稍后再试!');
             }
         }
 
