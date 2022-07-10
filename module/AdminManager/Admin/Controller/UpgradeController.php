@@ -54,6 +54,9 @@ class UpgradeController extends Controller
 
     public function index()
     {
+        if (config('modstart.admin.upgradeDisable', false)) {
+            return Response::sendError('系统升级功能已关闭');
+        }
         if (Request::isPost()) {
             AdminPermission::demoCheck();
             $input = InputPackage::buildFromInput();

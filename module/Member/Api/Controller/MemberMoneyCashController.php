@@ -69,7 +69,9 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
      * @throws \Exception
      * @Api 提现提交
      * @ApiBodyParam money float 提现金额
-     * @ApiBodyParam type string 提现方式
+     * @ApiBodyParam type string 提现方式 1支付宝
+     * @ApiBodyParam alipayRealname string 支付宝真实姓名
+     * @ApiBodyParam alipayAccount string 支付宝账号
      */
     public function submit()
     {

@@ -12,7 +12,9 @@
                 <b>ModStartCMS</b>
                 <b>V{{\App\Constant\AppConstant::VERSION}}</b>
             </div>
-            <div data-admin-version></div>
+            @if(!config('modstart.admin.versionCheckDisable',false))
+                <div data-admin-version></div>
+            @endif
         </div>
         <script type="text/javascript">
             // 最新版本检测
