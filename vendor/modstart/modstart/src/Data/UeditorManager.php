@@ -9,6 +9,7 @@ use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
@@ -16,6 +17,22 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UeditorManager
 {
+    private static function listCatcherIgnoreDomains()
+    {
+        $list = [];
+        if ($cdn = (trim(AssetsUtil::cdn(), '/') ? AssetsUtil::cdn() : null)) {
+            $list[] = $cdn;
+        }
+        if ($domain = Request::domain()) {
+            $list[] = $domain;
+        }
+        $domains = modstart_config()->getArray('Data_RemoteCatchIgnoreDomains', $list);
+        if (!empty($domains)) {
+            $list = array_merge($list, $domains);
+        }
+        return $list;
+    }
+
     private static function basicConfig()
     {
         $dataUploadConfig = config('data.upload', []);
@@ -45,7 +62,7 @@ class UeditorManager
             "snapscreenInsertAlign" => "none",
 
             // [暂未开启] 抓取
-            "catcherLocalDomain" => ["127.0.0.1", "localhost"],
+            "catcherLocalDomain" => self::listCatcherIgnoreDomains(),
             "catcherActionName" => "catch",
             "catcherFieldName" => "source",
             "catcherUrlPrefix" => "",
@@ -88,7 +105,6 @@ class UeditorManager
             "fileManagerAllowFiles" => array_map(function ($v) {
                 return '.' . $v;
             }, $dataUploadConfig['file']['extensions'])
-
         ];
         return $config;
     }
@@ -153,14 +169,12 @@ class UeditorManager
                     'list' => null
                 ];
                 $saveList = [];
-                $list = $input->getArray($config ['catcherFieldName']);
-                if (empty ($list)) {
+                $list = $input->getArray($config['catcherFieldName']);
+                if (empty($list)) {
                     return self::resultError($editorRet);
                 }
                 $editorRet ['state'] = 'SUCCESS';
-                $ignores = array_filter([
-                    trim(AssetsUtil::cdn(), '/') ? AssetsUtil::cdn() : null,
-                ]);
+                $ignores = self::listCatcherIgnoreDomains();
                 foreach ($list as $f) {
                     $ignoreCatch = false;
                     foreach ($ignores as $ignore) {
