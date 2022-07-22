@@ -5,6 +5,7 @@ namespace ModStart\Data;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use League\Flysystem\FilesystemInterface;
+use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\PathUtil;
 use ModStart\Data\Repository\DatabaseDataRepository;
@@ -123,7 +124,7 @@ abstract class AbstractDataStorage
         if (PathUtil::isPublicNetPath($path)) {
             return $path;
         }
-        return config('data.baseUrl', '/'). $path;
+        return config('data.baseUrl', '/') . $path;
     }
 
     public function repository()
@@ -139,7 +140,9 @@ abstract class AbstractDataStorage
         $category = $param['category'];
         $file = $param['file'];
         ksort($file, SORT_STRING);
-        $hash = md5(serialize($file));
+        $configParam = [];
+        $configParam['uploadMaxSize'] = EnvUtil::env('uploadMaxSize');
+        $hash = md5(serialize($file) . ':' . serialize($configParam));
         $hashFile = self::DATA_CHUNK . '/token/' . $hash . '.php';
         if (file_exists($hashFile)) {
             $file = (include $hashFile);

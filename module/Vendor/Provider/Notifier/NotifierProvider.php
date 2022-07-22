@@ -51,7 +51,14 @@ class NotifierProvider
 
     public static function notifyNoneLoginOperateProcessUrl($biz, $title, $content, $processUrlPath, $processUrlParam = [])
     {
+        $viewUrl = null;
+        if (isset($processUrlParam['viewUrl'])) {
+            $viewUrl = $processUrlParam['viewUrl'];
+            unset($processUrlParam['viewUrl']);
+        }
         $processUrl = NoneLoginOperateUtil::generateUrl($processUrlPath, $processUrlParam);
-        self::notifyProcess($biz, $title, $content, $processUrl);
+        self::notifyProcess($biz, $title, $content, $processUrl, array_merge($processUrlParam, [
+            'viewUrl' => $viewUrl,
+        ]));
     }
 }

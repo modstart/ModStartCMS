@@ -63,7 +63,7 @@
                                  style="width:0.8rem;display:inline-block;vertical-align:middle;"
                                  :style="{backgroundImage:`url(${memberUser.avatar})`}"></div>
                             <i v-else class="iconfont icon-user"></i>
-                            {{memberUser.username}}
+                            {{ memberUser.username }}
                         </span>
                         <span v-else>
                             <i class="iconfont icon-user"></i>
@@ -92,7 +92,7 @@
                 <a href="javascript:;" class="tw-mr-1 tw-text-gray-500 tw-mr-1"
                    :class="{'ub-text-primary':search.categoryId===cat.id}"
                    v-for="(cat,catIndex) in categories" :key="catIndex" @click="search.categoryId=cat.id">
-                    {{cat.title}}
+                    {{ cat.title }}
                 </a>
             </div>
             <div class="tw-px-2 tw-pt-2" v-if="types.length>0 && search.tab!=='system'">
@@ -105,7 +105,7 @@
                 <a href="javascript:;" class="tw-mr-1 tw-text-gray-500 tw-mr-1"
                    :class="{'ub-text-primary':search.type===type.value}"
                    v-for="(type,typeIndex) in types" :key="typeIndex" @click="search.type=type.value">
-                    {{type.title}}
+                    {{ type.title }}
                 </a>
             </div>
             <div class="ub-empty" v-if="loading">
@@ -151,8 +151,8 @@
                                         <span v-if="!module.isFee && !module._isLocal"
                                               class="ub-text-success">免费</span>
                                         <div v-if="module.isFee" class="ub-text-danger">
-                                            <span v-if="module.priceYearEnable">￥{{module.priceYear}}</span>
-                                            <span v-else-if="module.priceSuperEnable">￥{{module.priceSuper}}</span>
+                                            <span v-if="module.priceYearEnable">￥{{ module.priceYear }}</span>
+                                            <span v-else-if="module.priceSuperEnable">￥{{ module.priceSuper }}</span>
                                         </div>
                                     </div>
                                     <div class="tw-text-gray-400 tw-text-sm tw-mt-2"
@@ -181,7 +181,7 @@
                                         <i class="iconfont icon-down"></i>
                                     </a>
                                 </el-tooltip>
-                                <a v-if="module._isInstalled && !module._isLocal && module.latestVersion!==module._localVersion"
+                                <a v-if="module._isInstalled && !module._isLocal && canUpgrade(module._localVersion,module.latestVersion)"
                                    @click="doUpgrade(module)"
                                    :data-tk-event="'ModuleStore,Upgrade,'+module.name"
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
@@ -232,13 +232,13 @@
                                     v-html="$highlight(module.name,search.keywords)"></span></div>
                                 <span class="ub-text-muted">|</span>
                                 <span class="ub-text-muted" v-if="module._isLocal">
-                                    版本V{{module._localVersion}}
+                                    版本V{{ module._localVersion }}
                                 </span>
                                 <span class="ub-text-muted" v-else-if="module._isInstalled">
-                                    已安装V{{module._localVersion}}，最新版V{{module.latestVersion}}
+                                    已安装V{{ module._localVersion }}，最新版V{{ module.latestVersion }}
                                 </span>
                                 <span class="ub-text-muted" v-else>
-                                    最新版V{{module.latestVersion}}
+                                    最新版V{{ module.latestVersion }}
                                 </span>
                             </div>
                         </div>
@@ -332,7 +332,7 @@
                                  :style="{backgroundImage:`url(${memberUser.avatar||'/asset/image/avatar.png'})`}"></div>
                         </div>
                         <div class="tw-ml-4 tw-mr-auto">
-                            <div class="tw-font-medium">{{memberUser.username || ''}}</div>
+                            <div class="tw-font-medium">{{ memberUser.username || '' }}</div>
                         </div>
                         <div>
                             <a href="javascript:;" @click="doMemberUserLogout()">退出</a>
@@ -359,14 +359,14 @@
             <div slot="title">
                 <div class="ub-text-bold ub-text-primary">
                     <i class="iconfont icon-code"></i>
-                    {{commandDialogTitle}}
+                    {{ commandDialogTitle }}
                 </div>
             </div>
             <div class="tw-bg-gray-900 tw-font-mono tw-leading-8 tw-p-4 tw-text-white">
                 <div v-for="(msg,msgIndex) in commandDialogMsgs" v-html="msg"></div>
                 <div v-if="!commandDialogFinish">
                     <i class="iconfont icon-loading tw-inline-block tw-animate-spin"></i>
-                    当前操作已运行 {{commandDialogRunElapse}} s ...
+                    当前操作已运行 {{ commandDialogRunElapse }} s ...
                 </div>
                 <div v-else>
                     <i class="iconfont icon-check"></i>
@@ -384,16 +384,19 @@
             <div slot="title">
                 <div class="ub-text-bold ub-text-primary" v-if="installVersionModule">
                     <i class="iconfont icon-code"></i>
-                    安装 {{installVersionModule.title}} 其他版本
+                    安装 {{ installVersionModule.title }} 其他版本
                 </div>
             </div>
             <div v-if="installVersionModule">
                 <table class="ub-table tw-w-full tw-font-mono">
                     <tbody>
                     <tr v-for="(v,vIndex) in installVersionReleases">
-                        <td width="100">v{{v.version}}</td>
-                        <td>{{v.feature}}</td>
-                        <td width="100">{{v.time}}</td>
+                        <td width="100">v{{ v.version }}</td>
+                        <td>
+                            <span class="ub-tag warning" v-if="v.status==='preview'">预览</span>
+                            {{ v.feature }}
+                        </td>
+                        <td width="100">{{ v.time }}</td>
                         <td>
                             <a href="javascript:;" @click="doInstallVersionSubmit(installVersionModule,v.version)">
                                 <i class="iconfont icon-plus"></i>
@@ -493,7 +496,7 @@ export default {
                         if (!module._isSystem) return false
                         break
                     case 'upgradeable':
-                        if (!(module._isInstalled && !module._isLocal && module.latestVersion !== module._localVersion)) {
+                        if (!(module._isInstalled && !module._isLocal && this.canUpgrade(module._localVersion, module.latestVersion))) {
                             return false
                         }
                         if (module._isSystem) return false
@@ -555,6 +558,9 @@ export default {
                 }
             }
             return 0;
+        },
+        canUpgrade(currentVersion, latestVersion) {
+            return this.versionCompare(currentVersion, latestVersion) < 0
         },
         doStoreRequest(url, data, cbSuccess, cbError) {
             const cbErrorDefault = (res) => {

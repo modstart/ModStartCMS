@@ -14,6 +14,19 @@ use ModStart\Core\Exception\BizException;
  */
 class Json extends AbstractField
 {
+    protected function setup()
+    {
+        $this->addVariables([
+            'editorHeight' => '200px',
+        ]);
+    }
+
+    public function editorHeight($height)
+    {
+        $this->addVariables(['editorHeight' => $height]);
+        return $this;
+    }
+
     public function unserializeValue($value, AbstractField $field)
     {
         return @json_decode($value, true);

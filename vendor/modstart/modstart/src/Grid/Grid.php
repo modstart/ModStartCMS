@@ -34,46 +34,47 @@ use ModStart\Support\Manager\FieldManager;
 /**
  * Class Grid
  *
- * @method  Grid|mixed engine($value = null)
- * @method  Grid|mixed title($value = null)
- * @method  Grid|mixed titleAdd($value = null)
- * @method  Grid|mixed titleEdit($value = null)
- * @method  Grid|mixed titleShow($value = null)
- * @method  Grid|mixed titleExport($value = null)
- * @method  Grid|mixed titleImport($value = null)
- * @method  Grid|mixed canAdd($value = null)
- * @method  Grid|mixed canEdit($value = null)
- * @method  Grid|mixed canDelete($value = null)
- * @method  Grid|mixed canShow($value = null)
- * @method  Grid|mixed canExport($value = null)
- * @method  Grid|mixed canImport($value = null)
- * @method  Grid|mixed canMultiSelectItem($value = null)
- * @method  Grid|mixed canSingleSelectItem($value = null)
- * @method  Grid|mixed urlAdd($value = null)
- * @method  Grid|mixed urlEdit($value = null)
- * @method  Grid|mixed urlDelete($value = null)
- * @method  Grid|mixed urlShow($value = null)
- * @method  Grid|mixed urlExport($value = null)
- * @method  Grid|mixed urlImport($value = null)
- * @method  Grid|mixed urlSort($value = null)
- * @method  Grid|mixed addDialogSize($value = null)
- * @method  Grid|mixed editDialogSize($value = null)
- * @method  Grid|mixed showDialogSize($value = null)
- * @method  Grid|mixed importDialogSize($value = null)
- * @method  Grid|mixed addBlankPage($value = null)
- * @method  Grid|mixed editBlankPage($value = null)
- * @method  Grid|mixed defaultOrder($value = null)
- * @method  Grid|mixed treeMaxLevel($value = null)
- * @method  Form|mixed treeRootPid($value = null)
- * @method  Grid|mixed batchOperatePrepend($value = null)
- * @method  Grid|mixed gridOperateAppend($value = null)
- * @method  Grid|mixed view($value = null)
- * @method  Grid|mixed gridRowCols($value = null)
- * @method  Grid|mixed defaultPageSize($value = null)
- * @method  Grid|mixed pageSizes($value = null)
+ * @method Grid|mixed engine($value = null)
+ * @method Grid|mixed title($value = null)
+ * @method Grid|mixed titleAdd($value = null)
+ * @method Grid|mixed titleEdit($value = null)
+ * @method Grid|mixed titleShow($value = null)
+ * @method Grid|mixed titleExport($value = null)
+ * @method Grid|mixed titleImport($value = null)
+ * @method Grid|mixed canAdd($value = null)
+ * @method Grid|mixed canEdit($value = null)
+ * @method Grid|mixed canDelete($value = null)
+ * @method Grid|mixed canShow($value = null)
+ * @method Grid|mixed canExport($value = null)
+ * @method Grid|mixed canImport($value = null)
+ * @method Grid|mixed canMultiSelectItem($value = null)
+ * @method Grid|mixed canSingleSelectItem($value = null)
+ * @method Grid|mixed urlAdd($value = null)
+ * @method Grid|mixed urlEdit($value = null)
+ * @method Grid|mixed urlDelete($value = null)
+ * @method Grid|mixed urlShow($value = null)
+ * @method Grid|mixed urlExport($value = null)
+ * @method Grid|mixed urlImport($value = null)
+ * @method Grid|mixed urlSort($value = null)
+ * @method Grid|mixed addDialogSize($value = null)
+ * @method Grid|mixed editDialogSize($value = null)
+ * @method Grid|mixed showDialogSize($value = null)
+ * @method Grid|mixed importDialogSize($value = null)
+ * @method Grid|mixed addBlankPage($value = null)
+ * @method Grid|mixed editBlankPage($value = null)
+ * @method Grid|mixed defaultOrder($value = null)
+ * @method Grid|mixed treeMaxLevel($value = null)
+ * @method Form|mixed treeRootPid($value = null)
+ * @method Grid|mixed batchOperatePrepend($value = null)
+ * @method Grid|mixed gridOperateAppend($value = null)
+ * @method Grid|mixed view($value = null)
+ * @method Grid|mixed gridRowCols($value = null)
+ * @method Grid|mixed defaultPageSize($value = null)
+ * @method Grid|mixed pageSizes($value = null)
+ * @method Grid|mixed gridToolbar($value = []),
  *
  * $value = function(Grid $grid, $items){ return $items; }
- * @method  Grid|mixed hookPrepareItems($value = null)
+ * @method Grid|mixed hookPrepareItems($value = null)
  *
  */
 class Grid
@@ -139,6 +140,7 @@ class Grid
         'gridRowCols',
         'defaultPageSize',
         'pageSizes',
+        'gridToolbar'
     ];
     /**
      * 运行引擎 @see GridEngine
@@ -188,6 +190,8 @@ class Grid
     private $defaultPageSize = 10;
     /** @var int[] grid page sizes for selection list */
     private $pageSizes = [10, 50, 100];
+    /** @var string[] grid toolbar */
+    private $gridToolbar = [];
     /** @var Closure 渲染前置处理Items */
     private $hookPrepareItems = null;
     /** @var array 渲染在Table顶部的区域 */

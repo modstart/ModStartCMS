@@ -65,7 +65,7 @@
             },
             imageDialogUrl: {
                 type: String,
-                default: 'member_data/select_dialog'
+                default: 'member_data/file_manager'
             },
             max: {
                 type: Number,

@@ -139,7 +139,7 @@
                 @if($canMultiSelectItem && ( $batchOperatePrepend || ($canDelete && $canBatchDelete)  ))
                 toolbar: '#{{$id}}TableHeadToolbar',
                 @endif
-                defaultToolbar: [],
+                defaultToolbar: {!! json_encode($gridToolbar) !!},
                 page: false,
                 skin: 'line',
                 text: {

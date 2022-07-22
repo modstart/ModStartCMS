@@ -16,7 +16,7 @@
                @endif
                @if($styleFormField) style="{!! $styleFormField !!}" @endif
         />
-        <div id="{{$id}}Editor" style="width:100%;height:200px;">{{empty($value)?'':json_encode($value,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)}}</div>
+        <div id="{{$id}}Editor" style="width:100%;height:{{$editorHeight}};">{{empty($value)?'':json_encode($value,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)}}</div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif
@@ -29,6 +29,7 @@
                 editor.session.on('change',function(){
                     $('[name={{$name}}]').val(editor.session.getValue());
                 })
+                $('[name={{$name}}]').data('editor',editor);
                 //editor.setReadOnly(true);
             });
         </script>

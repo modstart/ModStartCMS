@@ -18,12 +18,12 @@
                 <form action="?" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field ub-text-center">
-                            <img style="height:4rem;" src="{{$oauthUserInfo['avatar'] or '/asset/image/avatar.png'}}" />
+                            <img style="height:4rem;" src="{{empty($oauthUserInfo['avatar'])?\ModStart\Core\Assets\AssetsUtil::fix('asset/image/avatar.png'):$oauthUserInfo['avatar']}}" />
                         </div>
                     </div>
                     <div class="line">
                         <div class="field">
-                            <input type="text" class="form-lg ub-text-center" name="username" value="{{$oauthUserInfo['username'] or ''}}" placeholder="输入绑定用户名" />
+                            <input type="text" class="form-lg ub-text-center" name="username" value="{{empty($oauthUserInfo['username'])?'':$oauthUserInfo['username']}}" placeholder="输入绑定用户名" />
                         </div>
                     </div>
                     <div class="line">

@@ -52,7 +52,7 @@ WebUploader.Uploader.register({
                     }).done(function (res) {
                         if (res.code) {
                             tipError(res.msg);
-                            task.reject('aaa');
+                            task.reject();
                         } else {
                             me.options.chunkUploaded = res.data.chunkUploaded;
                             task.resolve();

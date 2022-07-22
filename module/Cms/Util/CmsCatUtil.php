@@ -11,9 +11,6 @@ use ModStart\Core\Util\TreeUtil;
 use Module\Cms\Type\CatUrlMode;
 
 /**
- * Class CmsCatUtil
- * @package Module\Cms\Util
- *
  * @Util CMS栏目操作
  */
 class CmsCatUtil

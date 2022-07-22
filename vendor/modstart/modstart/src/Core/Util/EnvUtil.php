@@ -21,8 +21,8 @@ class EnvUtil
                 $size = min($upload_max_filesize, $post_max_size);
                 // 文件上传时附加信息会占用部分
                 $size -= 10 * 1024;
-                // 最少100KB
-                return max($size, 100 * 1024);
+                // 最少100KB，最大2M
+                return min(max($size, 100 * 1024), 2 * 1024 * 1024);
         }
         return null;
     }

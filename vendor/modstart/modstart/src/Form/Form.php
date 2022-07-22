@@ -709,6 +709,7 @@ class Form implements Renderable
             case 'pageSizes':
             case 'canBatchSelect':
             case 'batchOperatePrepend':
+            case 'gridToolbar';
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

@@ -3,10 +3,26 @@
 namespace ModStart\Core\Type;
 
 use Illuminate\Support\Str;
+use ModStart\Core\Input\Request;
+use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ConstantUtil;
 
 class TypeUtil
 {
+    public static function dumpJsFile($types)
+    {
+        $constants = [];
+        foreach ($types as $type) {
+            $constants[class_basename($type)] = TypeUtil::dump($type);
+        }
+        $content = [];
+        $content [] = "// This file is created by " . Request::currentPageUrl() . "\n";
+        foreach ($constants as $name => $json) {
+            $content[] = "export const $name = " . json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . ";";
+        }
+        return Response::raw(join("\n", $content), ['Content-Type' => 'text/plain']);
+    }
+
     public static function name($typeCls, $value)
     {
         $list = $typeCls::getList();
