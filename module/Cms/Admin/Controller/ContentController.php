@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Admin\Layout\AdminPage;
-use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -27,7 +26,6 @@ use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Layout\LayoutGrid;
-use ModStart\Layout\Row;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Manager\FieldManager;
@@ -76,6 +74,28 @@ class ContentController extends Controller
             return [$v['id'], str_repeat('|--', $v['level']) . $v['title']];
         });
         return $catOptions;
+    }
+
+    public function batchMove(AdminDialogPage $page, $modelId)
+    {
+        $this->init($modelId);
+        $form = Form::make('');
+        $ids = array_values(array_unique(CRUDUtil::ids()));
+        BizException::throwsIfEmpty('内容ID为空', $ids);
+        $contentValidCount = ModelUtil::model($this->modelTable)->whereIn('id', $ids)->where('modelId', $this->modelId)->count();
+        BizException::throwsIf('内容ID部分异常', $contentValidCount != count($ids));
+        $form->select('catId', '移动到分类')->options($this->getCatOptions());
+        $form->showSubmit(false)->showReset(false);
+        return $page->body($form)
+            ->pageTitle('批量移动')
+            ->handleForm($form, function (Form $form) use ($ids) {
+                AdminPermission::demoCheck();
+                $data = $form->dataForming();
+                ModelUtil::model($this->modelTable)->whereIn('id', $ids)->where('modelId', $this->modelId)->update([
+                    'catId' => $data['catId'],
+                ]);
+                return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
+            });
     }
 
     public function index(AdminPage $page, $modelId)
@@ -201,6 +221,7 @@ class ContentController extends Controller
         $grid->canEdit(true)->urlEdit(action('\\' . __CLASS__ . '@edit', ['modelId' => $this->modelId]));
         $grid->canDelete(true)->urlDelete(action('\\' . __CLASS__ . '@delete', ['modelId' => $this->modelId]));
         $grid->canBatchDelete(true);
+        $grid->batchOperatePrepend('<button class="btn" data-batch-dialog-operate="' . modstart_admin_url('cms/content/batch_move/' . $this->modelId) . '"><i class="iconfont icon-right"></i> 批量移动</button>');
         if (Request::isPost()) {
             return $grid->request();
         }

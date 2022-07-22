@@ -24,6 +24,7 @@ $router->match(['get', 'post'], 'cms/cat/sort', 'CatController@sort');
 $router->match(['get', 'post'], 'cms/content/{modelId}', 'ContentController@index');
 $router->match(['get', 'post'], 'cms/content/edit/{modelId}', 'ContentController@edit');
 $router->match(['get', 'post'], 'cms/content/delete/{modelId}', 'ContentController@delete');
+$router->match(['get', 'post'], 'cms/content/batch_move/{modelId}', 'ContentController@batchMove');
 
 $router->match(['get', 'post'], 'cms/backup', 'BackupController@index');
 $router->match(['get', 'post'], 'cms/restore', 'RestoreController@index');

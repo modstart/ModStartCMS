@@ -385,32 +385,6 @@
                 });
             });
             @endif
-            $lister.find('[data-table]').on('click', '[data-batch-operate]', function () {
-                var ids = getCheckedIds();
-                var url = $(this).attr('data-batch-operate');
-                if (!ids.length) {
-                    window.api.dialog.tipError("{{L('Please Select Records')}}");
-                    return;
-                }
-                var callback = function(){
-                    window.api.dialog.loadingOn();
-                    window.api.base.post(url, {_id: ids.join(',')}, function (res) {
-                        window.api.dialog.loadingOff();
-                        window.api.base.defaultFormCallback(res, {
-                            success: function (res) {
-                                lister.refresh();
-                            }
-                        });
-                    });
-                };
-                if($(this).attr('data-batch-confirm')){
-                    window.api.dialog.confirm($(this).attr('data-batch-confirm').replace('%d', ids.length), function () {
-                        callback();
-                    });
-                }else{
-                    callback();
-                }
-            });
             @if($canSort)
             $lister.find('[data-table]').on('click', '[data-sort]', function () {
                 var id = getId(this);
@@ -452,6 +426,41 @@
                 });
             });
             @endif
+            $lister.find('[data-table]').on('click', '[data-batch-operate]', function () {
+                var ids = getCheckedIds();
+                var url = $(this).attr('data-batch-operate');
+                if (!ids.length) {
+                    window.api.dialog.tipError("{{L('Please Select Records')}}");
+                    return;
+                }
+                var callback = function(){
+                    window.api.dialog.loadingOn();
+                    window.api.base.post(url, {_id: ids.join(',')}, function (res) {
+                        window.api.dialog.loadingOff();
+                        window.api.base.defaultFormCallback(res, {
+                            success: function (res) {
+                                lister.refresh();
+                            }
+                        });
+                    });
+                };
+                if($(this).attr('data-batch-confirm')){
+                    window.api.dialog.confirm($(this).attr('data-batch-confirm').replace('%d', ids.length), function () {
+                        callback();
+                    });
+                }else{
+                    callback();
+                }
+            });
+            $lister.find('[data-table]').on('click', '[data-batch-dialog-operate]', function () {
+                var ids = getCheckedIds();
+                var url = $(this).attr('data-batch-dialog-operate');
+                if (!ids.length) {
+                    window.api.dialog.tipError("{{L('Please Select Records')}}");
+                    return;
+                }
+                MS.dialog.dialog(url+'?_id='+ids.join(','));
+            });
             $lister.data('lister', lister);
             window.__grids = window.__grids || {
                 instances: {},
