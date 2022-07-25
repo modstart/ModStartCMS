@@ -26,6 +26,7 @@
 @endsection
 
 @section('bodyAppend')
+    @parent
     <script src="@asset('asset/vendor/vue.js')"></script>
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
     <script src="@asset('asset/entry/gridExcelWork.js')"></script>
