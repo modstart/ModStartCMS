@@ -101,6 +101,10 @@ var Editor = {
             editorBasicToolBars = window.__editorBasicToolBars;
         }
 
+        if ('__editorBasicToolBarsExtra' in window) {
+            editorBasicToolBars = editorBasicToolBars.concat(window.__editorBasicToolBarsExtra);
+        }
+
         var editorOpt = $.extend({
             toolbars: [
                 editorBasicToolBars
@@ -148,6 +152,9 @@ var Editor = {
         ];
         if ('__editorSimpleToolBars' in window) {
             editorSimpleToolBars = window.__editorSimpleToolBars;
+        }
+        if ('__editorSimpleToolBarsExtra' in window) {
+            editorSimpleToolBars = editorSimpleToolBars.concat(window.__editorSimpleToolBarsExtra);
         }
 
         var editorOpt = $.extend({

@@ -206,21 +206,40 @@ class Response
         return self::sendError($e->getMessage());
     }
 
+    /**
+     * 中断操作，会停止程序执行并输出提示信息，无返回
+     * @param $msg
+     * @return void
+     */
+    public static function abortMsg($msg)
+    {
+        abort(200, $msg);
+    }
+
+    /**
+     * 返回一个404页面
+     * @return void|JsonResponse
+     */
     public static function page404()
     {
         if (Request::isAjax()) {
             return self::json(-1, L('Api Not Found : %s', Request::basePath()));
         } else {
-            return abort(404, L('Page Not Found'));
+            abort(404, L('Page Not Found'));
         }
     }
 
+    /**
+     * 页面无权限
+     * @param null $msg
+     * @return void|JsonResponse
+     */
     public static function pagePermissionDenied($msg = null)
     {
         if (Request::isAjax()) {
             return self::json(-1, $msg ? $msg : L('No Permission'));
         } else {
-            return abort(403, $msg ? $msg : L('No Permission'));
+            abort(403, $msg ? $msg : L('No Permission'));
         }
     }
 

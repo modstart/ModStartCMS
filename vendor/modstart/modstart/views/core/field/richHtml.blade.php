@@ -1,4 +1,4 @@
-<div class="line" id="{{$id}}">
+<div class="line" id="{{$id}}" style="margin:1000px 0 0 0;">
     <div class="label">
         {!! str_contains($rules,'required')?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         {{$label}}:
@@ -18,14 +18,14 @@
         window.api.editor.simple('{{$id}}Editor', {
             server: "{{$server}}",
             ready: function () {
-                // console.log('ready');
+                $('#{{$id}}').trigger('editor-ready');
             }
         }, {topOffset: 0});
         @else
         window.api.editor.basic('{{$id}}Editor', {
             server: "{{$server}}",
             ready: function () {
-                // console.log('ready');
+                $('#{{$id}}').trigger('editor-ready');
             }
         }, {topOffset: 0});
         @endif

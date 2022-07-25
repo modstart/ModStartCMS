@@ -8,11 +8,15 @@ use Intervention\Image\Facades\Image;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EncodeUtil;
 use ModStart\Data\DataManager;
 use ModStart\Data\Event\DataFileUploadedEvent;
+use Module\Member\Events\MemberUserLoginAttemptEvent;
+use Module\Member\Events\MemberUserLoginFailedEvent;
 use Module\Member\Type\MemberMessageStatus;
 use Module\Member\Type\MemberStatus;
 
@@ -232,7 +236,10 @@ class MemberUtil
             return Response::generate(-6, '登录失败:用户名或密码错误');
         }
 
+        MemberUserLoginAttemptEvent::fire($memberUser['id'], Request::ip(), AgentUtil::getUserAgent());
+
         if ($memberUser['password'] != EncodeUtil::md5WithSalt($password, $memberUser['passwordSalt'])) {
+            MemberUserLoginFailedEvent::fire($memberUser['id'], $memberUser['username'], Request::ip(), AgentUtil::getUserAgent());
             return Response::generate(-7, '登录失败:用户名或密码错误');
         }
 
