@@ -29,6 +29,13 @@ trait ExceptionReportHandleTrait
             if ($needReport && $exception instanceof MethodNotAllowedHttpException) {
                 $needReport = false;
             }
+            if ($needReport && $exception instanceof HttpException) {
+                switch ($exception->getStatusCode()) {
+                    case 200:
+                        $needReport = false;
+                        break;
+                }
+            }
             if ($needReport && $exception instanceof \UnexpectedValueException) {
                 if (Str::contains($exception->getMessage(), 'Invalid method override')) {
                     $needReport = false;

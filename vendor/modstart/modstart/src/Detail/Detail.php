@@ -179,6 +179,7 @@ class Detail implements Renderable
             case 'canShow':
             case 'canExport':
             case 'canImport':
+            case 'canCopy':
             case 'canBatchDelete':
             case 'treeMaxLevel':
             case 'hookSaving':

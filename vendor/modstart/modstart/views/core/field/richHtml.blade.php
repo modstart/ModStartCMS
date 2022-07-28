@@ -1,4 +1,4 @@
-<div class="line" id="{{$id}}" style="margin:1000px 0 0 0;">
+<div class="line" id="{{$id}}">
     <div class="label">
         {!! str_contains($rules,'required')?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         {{$label}}:

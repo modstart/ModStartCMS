@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Route;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Grid\Grid;
 use ModStart\Grid\Type\GridEngine;
-use ModStart\View\Constants;
 
 class CRUDUtil
 {
+    public static function copyId()
+    {
+        $input = InputPackage::buildFromInput();
+        return $input->getInteger('_copyId');
+    }
+
     public static function id()
     {
         $input = InputPackage::buildFromInput();

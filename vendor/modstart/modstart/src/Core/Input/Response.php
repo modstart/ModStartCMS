@@ -305,6 +305,10 @@ class Response
             $filenameFallback
         );
         $response->headers->set('Content-Disposition', $disposition);
+        // 已知部分浏览器（QQ手机浏览器）不设置Content-Type，会导致下载文件失败
+        if (!isset($headers['Content-Type'])) {
+            $response->headers->set('Content-Type', 'application/octet-stream');
+        }
         foreach ($headers as $k => $v) {
             $response->headers->set($k, $v);
         }

@@ -243,7 +243,13 @@
                 }
             };
             @if($canAdd)
-            $lister.find('[data-add-button]').on('click', function () {
+            $grid.on('click','[data-add-button]', function () {
+                var addUrl = lister.realtime.url.add;
+                if($(this).is('[data-add-copy-button]')){
+                    var id = getId(this);
+                    addUrl += (addUrl.indexOf('?') > 0 ? '&' : '?') + '_copyId=' + id;
+                }
+                console.log(addUrl);
                 lister.realtime.dialog.add = layer.open({
                     type: 2,
                     title: "{{ empty($titleAdd) ? ($title?L('Add').$title:L('Add')) : $titleAdd }}",
@@ -252,7 +258,7 @@
                     maxmin: false,
                     scrollbar: false,
                     area: processArea({!! json_encode($addDialogSize) !!}),
-                    content: lister.realtime.url.add,
+                    content: addUrl,
                     success: function (layerDom, index) {
                         lister.realtime.dialog.addWindow = $(layerDom).find('iframe').get(0).contentWindow;
                         lister.realtime.dialog.addWindow.addEventListener('modstart:form.submitted', function (e) {

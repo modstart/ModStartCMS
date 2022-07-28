@@ -303,7 +303,7 @@ class ArrayUtil
      *
      * @example
      *
-     * list($inserts, $deletes) = diff($olds,$news);
+     * list($inserts, $deletes) = ArrayUtil::diff($olds,$news);
      */
     public static function diff(array $olds, array $news)
     {
