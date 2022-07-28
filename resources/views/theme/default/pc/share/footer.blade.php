@@ -37,15 +37,15 @@
                     <div class="list tw-pt-4 tw-text-gray-400">
                         <div class="tw-py-1">
                             <i class="iconfont icon-email tw-inline-block tw-w-4"></i>
-                            {{modstart_config('Cms_ContactEmail','[公司邮箱]')}}
+                            <span class="tw-inline-block">{{modstart_config('Cms_ContactEmail','[公司邮箱]')}}</span>
                         </div>
                         <div class="tw-py-1">
                             <i class="iconfont icon-phone tw-inline-block tw-w-4"></i>
-                            {{modstart_config('Cms_ContactPhone','[公司邮箱]')}}
+                            <span class="tw-inline-block">{{modstart_config('Cms_ContactPhone','[公司电话]')}}</span>
                         </div>
                         <div class="tw-py-1">
                             <i class="iconfont icon-address tw-inline-block tw-w-4"></i>
-                            {{modstart_config('Cms_ContactAddress','[公司地址]')}}
+                            <span class="tw-inline-block">{{modstart_config('Cms_ContactAddress','[公司地址]')}}</span>
                         </div>
                     </div>
                 </div>
