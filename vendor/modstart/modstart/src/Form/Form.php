@@ -491,7 +491,6 @@ class Form implements Renderable
                 $isCopy = true;
             }
         }
-        BizException::throwsIfEmpty(L('Record Not Exists'), $this->item);
         $this->build();
         if ($isCopy) {
             $this->fillFields();
