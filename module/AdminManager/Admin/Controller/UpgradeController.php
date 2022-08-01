@@ -11,10 +11,8 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
-use ModStart\Module\ModuleManager;
 use Module\AdminManager\Util\ModuleUtil;
 use Module\AdminManager\Util\UpgradeUtil;
-use Module\ModuleStore\Util\ModuleStoreUtil;
 
 class UpgradeController extends Controller
 {
@@ -90,10 +88,10 @@ class UpgradeController extends Controller
                     $exitCode = Artisan::call("migrate");
                     BizException::throwsIf("调用 php artisan 命令失败，不能自动升级", 0 != $exitCode);
                     return $this->doNext('downloadPackage', [
+                        'PHP版本: v' . PHP_VERSION,
                         '<span class="ub-text-success">预检通过</span>',
                         '<span class="ub-text-default">开始下载升级包...</span>'
                     ]);
-                    break;
                 default:
                     return $this->doNext('checkPackage', [
                         '<span class="ub-text-success">开始升级系统，从 V' . AppConstant::VERSION . ' 到 V' . $toVersion . '</span>',

@@ -123,6 +123,9 @@ include __DIR__ . '/function.php';
                         </div>
                         <div class="content-item-foot">
                             <div>
+                                <div style="color:red;padding-bottom:1rem;">
+                                    禁止使用本产品进行违法违规业务，我们将对违规使用者停止授权并永久封停账号
+                                </div>
                                 <label style="border:none;margin-top:-10px;margin-right:0;padding-right:0;">
                                     <input type="checkbox" name="installLicense" style="vertical-align:middle;margin-right:0.2rem;" value="1"/>
                                     我已阅读协议并同意所有内容

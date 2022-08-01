@@ -272,7 +272,7 @@ class AuthController extends ModuleBaseController
         $userInfo = $ret['data']['userInfo'];
         $view = $input->getBoolean('view', false);
         if ($view) {
-            Session::put('oauthViewOpenId_' . $oauthType, $userInfo['data']['openid']);
+            Session::put('oauthViewOpenId_' . $oauthType, $userInfo['openid']);
             return Response::generateSuccess();
         }
         Session::put('oauthUserInfo', $userInfo);

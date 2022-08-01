@@ -238,6 +238,7 @@ class ModuleStoreController extends Controller
                 }
                 $msgs[] = '<span class="ub-text-white">开始下载安装包...</span>';
                 return $this->doNext('upgrade', 'downloadPackage', array_merge([
+                    'PHP版本: v' . PHP_VERSION,
                     '<span class="ub-text-success">预检成功，' . count($ret['data']['requires']) . '个依赖满足要求，安装包大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
                 ], $msgs));
             default:
@@ -338,6 +339,7 @@ class ModuleStoreController extends Controller
                     }
                     $msgs[] = '<span class="ub-text-white">开始下载安装包...</span>';
                     return $this->doNext('install', 'downloadPackage', array_merge([
+                        'PHP版本: v' . PHP_VERSION,
                         '<span class="ub-text-success">预检成功，' . count($ret['data']['requires']) . '个依赖满足要求，安装包大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
                     ], $msgs));
                     break;

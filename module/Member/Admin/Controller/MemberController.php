@@ -131,6 +131,9 @@ class MemberController extends Controller
                 $item = $form->item();
                 switch ($form->mode()) {
                     case FormMode::ADD:
+                        MemberUtil::update($item->id, [
+                            'isDeleted' => false,
+                        ]);
                         MemberUtil::changePassword($item->id, $item->password, null, true);
                         break;
                 }
