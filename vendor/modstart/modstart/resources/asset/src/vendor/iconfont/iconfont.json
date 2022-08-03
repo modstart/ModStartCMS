@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1174203",
+      "name": "check",
+      "font_class": "check-simple",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
       "icon_id": "3164378",
       "name": "list_库存明细查询",
       "font_class": "empty-box",

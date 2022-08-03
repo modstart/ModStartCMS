@@ -24,7 +24,7 @@
     {!! \ModStart\ModStart::style() !!}
     @section('headAppend')@show
 </head>
-<body>
+<body @yield('bodyProperties','')>
     @section('body')@show
     {!! \ModStart\ModStart::js() !!}
     {!! \ModStart\ModStart::script() !!}
