@@ -206,4 +206,5 @@ return [
     'File Not Exists' => '文件不存在',
     'Upload Error : %s' => '上传错误:%s',
     'Server Error' => '服务器错误',
+    'Remark' => '备注',
 ];

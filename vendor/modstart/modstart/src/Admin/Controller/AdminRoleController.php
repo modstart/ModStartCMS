@@ -36,6 +36,7 @@ class AdminRoleController extends Controller
                 ->hookValueUnserialize(function ($value, AbstractField $field) {
                     return $value->pluck('rule');
                 });
+            $grid->textarea('remark', L('Remark'));
             $grid->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('name', L('Name'));
@@ -63,6 +64,7 @@ class AdminRoleController extends Controller
                         return ['rule' => $item];
                     });
                 });
+            $form->textarea('remark', L('Remark'));
             $form->display('created_at', L('Created At'));
             $form->display('updated_at', L('Updated At'));
             $form->hookSaving(function (Form $form) {
@@ -108,6 +110,7 @@ class AdminRoleController extends Controller
                         return $r['rule'];
                     })->toArray();
                 });
+            $detail->display('remark', L('Remark'));
             $detail->display('created_at', L('Created At'));
             $detail->display('updated_at', L('Updated At'));
         });

@@ -167,7 +167,7 @@ class ModuleServiceProvider extends ServiceProvider
                                 'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
                             ] : null,
                         [
-                            'title' => '用户功能设置',
+                            'title' => '用户设置',
                             'children' => [
                                 [
                                     'title' => '功能设置',

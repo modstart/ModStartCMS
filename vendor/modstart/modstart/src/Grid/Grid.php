@@ -52,6 +52,7 @@ use ModStart\Support\Manager\FieldManager;
  * @method Grid|mixed canSingleSelectItem($value = null)
  * @method Grid|mixed urlAdd($value = null)
  * @method Grid|mixed urlEdit($value = null)
+ * @method Grid|mixed textEdit($value = null)
  * @method Grid|mixed urlDelete($value = null)
  * @method Grid|mixed urlShow($value = null)
  * @method Grid|mixed urlExport($value = null)
@@ -121,6 +122,7 @@ class Grid
         'canSort',
         'urlAdd',
         'urlEdit',
+        'textEdit',
         'urlDelete',
         'urlShow',
         'urlExport',
@@ -168,6 +170,7 @@ class Grid
     private $canSort = false;
     private $urlAdd;
     private $urlEdit;
+    private $textEdit;
     private $urlDelete;
     private $urlShow;
     private $urlExport;

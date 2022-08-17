@@ -466,9 +466,6 @@ export default {
                 size: file.size,
                 categoryId: this.currentCategoryId
             }, res => {
-                if (this.currentCategoryId === 0) {
-                    this.currentCategoryId = -1
-                }
                 this.doList(1)
             })
         },
@@ -572,7 +569,7 @@ export default {
             width: 33%;
             float: left;
             text-align: center;
-            color: #999;
+            color: var(--color-muted);
             text-decoration: none;
 
             &:hover {
@@ -688,7 +685,7 @@ export default {
             display: inline-block;
             padding: 0 20px;
             text-align: center;
-            color: #999;
+            color: var(--color-muted);
             text-decoration: none;
 
             &:hover {

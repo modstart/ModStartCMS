@@ -22,6 +22,7 @@ use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
 use ModStart\Form\Type\FormMode;
+use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
@@ -104,7 +105,7 @@ class MemberController extends Controller
                 }
                 if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
                     $builder->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
-                    $builder->date('vipExpire', 'VIP过期')->required();
+                    $builder->date('vipExpire', 'VIP过期');
                 }
                 $builder->display('created_at', '注册时间');
                 $builder->canBatchSelect(true);
@@ -126,6 +127,16 @@ class MemberController extends Controller
                     $filter->eq('vipId', 'VIP')->autoHide(true)->select(MemberVipUtil::mapTitle());
                 }
             })
+            ->hookItemOperateRendering(function (ItemOperate $itemOperate) {
+                $item = $itemOperate->item();
+                $itemOperate->prepend(
+                    TextDialogRequest::make(
+                        'primary',
+                        '用户信息',
+                        modstart_admin_url('member/show', ['_id' => $item->id])
+                    )->width('90%')->height('90%')->render()
+                );
+            })
             ->hookSaved(function (Form $form) {
                 /** @var \stdClass $item */
                 $item = $form->item();
@@ -140,7 +151,8 @@ class MemberController extends Controller
             })
             ->title('用户管理')
             ->canShow(false)
-            ->canDelete(true);
+            ->canDelete(true)
+            ->textEdit('修改账号');
     }
 
     public function select(AdminDialogPage $page)

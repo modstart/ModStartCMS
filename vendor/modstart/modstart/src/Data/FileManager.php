@@ -140,7 +140,7 @@ class FileManager
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
         }
-        $retSaveUser = self::saveToUser($ret['data']['data'], $category, 0, $uploadTable, $userId);
+        $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId);
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
@@ -198,7 +198,7 @@ class FileManager
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
         }
-        $retSaveUser = self::saveToUser($ret['data']['data'], $category, 0, $uploadTable, $userId);
+        $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId);
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
@@ -213,7 +213,7 @@ class FileManager
     private static function saveExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
         $path = $input->getTrimString('path');
-        $categoryId = max($input->getInteger('categoryId'), 0);
+        $categoryId = $input->getInteger('categoryId', -1);
         BizException::throwsIfEmpty('path empty', $path);
         $ret = DataManager::storeTempDataByPath($path, $option);
         if ($ret['code']) {
@@ -282,9 +282,9 @@ class FileManager
             $childIds[] = $categoryId;
             $option['whereIn'] = ['uploadCategoryId', $childIds];
         } else if ($categoryId == 0) {
-            $option['whereOperate'] = ['uploadCategoryId', '>', 0];
+            $option['whereOperate'] = ['uploadCategoryId', '>=', 0];
         } else if ($categoryId == -1) {
-            $option['where']['uploadCategoryId'] = 0;
+            $option['where']['uploadCategoryId'] = -1;
         }
         $paginateData = ModelUtil::paginate($uploadTable, $page, $pageSize, $option);
         ModelUtil::join($paginateData['records'], 'dataId', '_data', 'data', 'id');

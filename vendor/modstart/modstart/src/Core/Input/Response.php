@@ -180,6 +180,12 @@ class Response
         if (empty($callback)) {
             return \Illuminate\Support\Facades\Response::json($data);
         }
+        if (!preg_match('/^[a-zA-Z_0-9]+$/', $callback)) {
+            return \Illuminate\Support\Facades\Response::json([
+                'code' => -1,
+                'msg' => 'callback error',
+            ]);
+        }
         return \Illuminate\Support\Facades\Response::jsonp($callback, $data);
     }
 

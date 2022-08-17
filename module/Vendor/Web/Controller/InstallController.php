@@ -33,8 +33,13 @@ class InstallController extends Controller
         try {
             $exitCode = Artisan::call("env");
             $output = trim(Artisan::output());
-            if (0 == $exitCode && Str::contains($output, 'Current application environment')) {
-                return 'ok';
+            if (0 == $exitCode) {
+                if (Str::contains($output, 'Current application environment')) {
+                    return 'ok';
+                }
+                if (Str::contains($output, 'The application environment is')) {
+                    return 'ok';
+                }
             }
             return 'ERROR: code=' . $exitCode . ', msg:' . $output;
         } catch (\Exception $e) {

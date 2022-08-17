@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14679507",
+      "name": "cube",
+      "font_class": "cube",
+      "unicode": "e6fc",
+      "unicode_decimal": 59132
+    },
+    {
       "icon_id": "1174203",
       "name": "check",
       "font_class": "check-simple",

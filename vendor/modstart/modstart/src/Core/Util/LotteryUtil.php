@@ -176,7 +176,7 @@ class LotteryUtil
      *  ['id'=>xx,'rate'=>5],
      * )
      * 按照百分数
-     * @return id or null
+     * @return int|null
      * @throws \Exception
      */
     public static function lottery(array $pool)

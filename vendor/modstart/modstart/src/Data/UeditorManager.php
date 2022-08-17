@@ -184,7 +184,11 @@ class UeditorManager
                         }
                     }
                     if (!$ignoreCatch && preg_match('/^(http|ftp|https):\\/\\//i', $f)) {
-                        $ext = FileUtil::extension($f);
+                        $ext = null;
+                        $urlInfo = parse_url($f);
+                        if (!empty($urlInfo['path'])) {
+                            $ext = FileUtil::extension($urlInfo['path']);
+                        }
                         if (in_array('.' . $ext, $config ['catcherAllowFiles'])) {
                             $imageContent = CurlUtil::getRaw($f);
                             if ($imageContent) {

@@ -1,15 +1,18 @@
 import Cookies from 'js-cookie'
 
 const Cookie = {
-  set(key, value) {
-    Cookies.set(key, value);
-  },
-  get(key) {
-    return Cookies.get(key)
-  }
+    set(key, value, attributes) {
+        Cookies.set(key, value, attributes);
+    },
+    get(key) {
+        return Cookies.get(key)
+    },
+    remove(key) {
+        Cookies.remove(key)
+    }
 }
 
 
 export {
-  Cookie
+    Cookie
 }

@@ -114,10 +114,14 @@ class ItemOperate extends AbstractDisplayer
             $this->operates[] = TextAction::primary(L('Show'), 'data-show');
         }
         if ($this->canEdit() && $this->grid->urlEdit()) {
+            $editText = $this->grid->textEdit();
+            if (empty($editText)) {
+                $editText = L('Edit');
+            }
             if ($this->grid->editBlankPage()) {
-                $this->operates[] = TextLink::primary(L('Edit'), $this->grid->urlEdit() . '?_id=' . $this->item->{$this->grid->getRepositoryKeyName()});
+                $this->operates[] = TextLink::primary($editText, $this->grid->urlEdit() . '?_id=' . $this->item->{$this->grid->getRepositoryKeyName()});
             } else {
-                $this->operates[] = TextAction::primary(L('Edit'), 'data-edit');
+                $this->operates[] = TextAction::primary($editText, 'data-edit');
             }
         }
         if ($this->canDelete() && $this->grid->urlDelete()) {

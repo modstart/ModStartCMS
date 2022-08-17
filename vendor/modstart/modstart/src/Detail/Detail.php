@@ -203,7 +203,8 @@ class Detail implements Renderable
             case 'pageSizes':
             case 'canBatchSelect':
             case 'batchOperatePrepend':
-            case 'gridToolbar';
+            case 'gridToolbar':
+            case 'textEdit':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {
