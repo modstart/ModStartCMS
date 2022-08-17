@@ -941,6 +941,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => 'https://modstart.com/store',
         'openType' => 2,
         'pid' => 23,
+        'enable' => 1,
       ),
       1 =>
       array (
@@ -953,6 +954,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/news',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       2 =>
       array (
@@ -965,6 +967,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/admin',
         'openType' => 2,
         'pid' => 23,
+        'enable' => 1,
       ),
       3 =>
       array (
@@ -977,6 +980,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/job',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       4 =>
       array (
@@ -989,6 +993,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => 'https://modstart.com',
         'openType' => 2,
         'pid' => 0,
+        'enable' => 1,
       ),
       5 =>
       array (
@@ -1001,6 +1006,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/article/lianxi',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       6 =>
       array (
@@ -1013,6 +1019,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/article/about',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       7 =>
       array (
@@ -1025,6 +1032,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/product',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       8 =>
       array (
@@ -1037,6 +1045,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/cases',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       9 =>
       array (
@@ -1049,6 +1058,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       10 =>
       array (
@@ -1061,6 +1071,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/product/kind1',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       11 =>
       array (
@@ -1073,6 +1084,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/product/kind2',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       12 =>
       array (
@@ -1085,6 +1097,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '/news/kind2',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
       13 =>
       array (
@@ -1097,6 +1110,7 @@ Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。
         'link' => '',
         'openType' => 1,
         'pid' => 0,
+        'enable' => 1,
       ),
     ),
     'banner' =>
