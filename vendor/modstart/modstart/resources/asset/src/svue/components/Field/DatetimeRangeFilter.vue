@@ -1,42 +1,38 @@
 <template>
     <div>
-        <el-date-picker v-model="datav"
+        <el-date-picker @onPick="onDataChange"
+                        :value="data"
                         type="datetimerange"
                         range-separator="至"
                         start-placeholder="开始时间"
                         end-placeholder="结束时间"
-                        value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        format="yyyy-MM-dd HH:mm:ss"
+                        :picker-options="pickerOptions"></el-date-picker>
     </div>
 </template>
 
 <script>
 
     import {FieldFilterMixin} from "../../lib/fields-config";
-
+    import {DateUtil} from "../../lib/date-util";
 
     export default {
         name: "DatetimeRangeFilter",
         mixins: [FieldFilterMixin],
-        data() {
+        data(){
             return {
-                datav: [],
-            }
-        },
-        watch: {
-            datav(newValue, oldValue) {
-                if (JSON.stringify(newValue) !== JSON.stringify(this.data)) {
-                    this.$emit('update', newValue)
-                }
-            },
-            data: {
-                handler(newValue, oldValue) {
-                    if (JSON.stringify(newValue) !== JSON.stringify(this.datav)) {
-                        this.datav = newValue
+                pickerOptions:{
+                    onPick:(v)=>{
+                        if(v.minDate && v.maxDate){
+                            this.onDataChange([
+                                DateUtil.formatDatetime(v.minDate),
+                                DateUtil.formatDatetime(v.maxDate)
+                            ])
+                        }
                     }
                 },
-                deep: true,
-                immediate: true
-            },
-        }
+            }
+        },
     }
 </script>

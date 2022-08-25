@@ -171,6 +171,10 @@ class MemberUtil
         }
         foreach (['username' => '用户名', 'phone' => '手机', 'email' => '邮箱',] as $field => $fieldTitle) {
             if (isset($data[$field])) {
+                if (empty($data[$field])) {
+                    $data[$field] = null;
+                    continue;
+                }
                 $exists = ModelUtil::all('member_user', [$field => $data[$field]]);
                 if (count($exists) > 1) {
                     return Response::generate(-1, $fieldTitle . '重复');

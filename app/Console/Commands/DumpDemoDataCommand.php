@@ -20,7 +20,6 @@ class DumpDemoDataCommand extends BaseDumpDemoDataCommand
                         'siteLogo',
                         'siteSlogan',
                         'siteDomain',
-                        'systemCounter',
                         'Cms_HomeInfoTitle',
                         'Cms_HomeInfoImage',
                         'Cms_HomeInfoContent',

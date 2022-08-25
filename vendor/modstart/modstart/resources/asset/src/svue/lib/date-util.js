@@ -40,6 +40,9 @@ export const DateUtil = {
     formatDate(d) {
         return DateUtil.format(d, DateUtil.FORMAT_DATE)
     },
+    formatDatetime(d) {
+        return DateUtil.format(d, DateUtil.FORMAT_DATETIME)
+    },
     formatTimestamp(timestamp, format) {
         let d = new Date()
         d.setTime(timestamp)

@@ -10,6 +10,9 @@ AudioSelector.props.selectText = Object.assign({}, FileSelector.props.selectText
 
 const buildSelectorDialog = (type) => {
     return (cb) => {
+        if (!('__selectorDialogServer' in window)) {
+            alert('请先配置 window.__selectorDialogServer')
+        }
         window.__selectorDialog = new window.api.selectorDialog({
             server: window.__selectorDialogServer + '/' + type,
             callback: (items) => {

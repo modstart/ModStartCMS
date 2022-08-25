@@ -32,6 +32,10 @@
                 <div class="name">手机</div>
                 <div class="value">{{$record['phone']?$record['phone']:'-'}}</div>
             </div>
+            <div class="ub-pair">
+                <div class="name">昵称</div>
+                <div class="value">{{$record['nickname']?$record['nickname']:'-'}}</div>
+            </div>
             @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member','moneyEnable',false))
                 <div class="ub-pair">
                     <div class="name">余额</div>

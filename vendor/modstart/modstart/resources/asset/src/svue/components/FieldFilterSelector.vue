@@ -14,6 +14,9 @@
             <div slot="footer">
                 <el-button type="primary" @click="doSubmit">确认</el-button>
             </div>
+<!--            <div>-->
+<!--                <pre>{{ JSON.stringify(datav,null,2) }}</pre>-->
+<!--            </div>-->
             <div>
                 <template v-for="(item,itemIndex) in datav">
                     <el-row>
@@ -73,7 +76,6 @@
             }
         },
         methods: {
-
             // 自定义修改 开始
             onFieldChange(itemIndex) {
                 switch (this.datav[itemIndex].type) {

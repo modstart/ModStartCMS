@@ -2,7 +2,8 @@
     <div>
         <el-time-picker
                 is-range
-                v-model="datav"
+                :value="data"
+                @change="onDataChange"
                 range-separator="至"
                 start-placeholder="开始时间"
                 end-placeholder="结束时间"
@@ -19,27 +20,5 @@
     export default {
         name: "TimeRangeFilter",
         mixins: [FieldFilterMixin],
-        data() {
-            return {
-                datav: ['', ''],
-            }
-        },
-        methods: {},
-        watch: {
-            datav(newValue, oldValue) {
-                if (newValue !== this.data) {
-                    this.$emit('update', newValue)
-                }
-            },
-            data: {
-                handler(newValue, oldValue) {
-                    if (JSON.stringify(newValue) !== JSON.stringify(this.datav)) {
-                        this.datav = newValue
-                    }
-                },
-                deep: true,
-                immediate: true
-            }
-        }
     }
 </script>

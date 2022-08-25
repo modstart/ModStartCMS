@@ -49,7 +49,12 @@ export const FieldInputMixin = {
         event: 'update'
     },
     props: {
-        data: {},
+        data: {
+            type: [String, Number, Boolean, Object, Array, null ],
+            default: () => {
+                return null
+            }
+        },
         isRequired: {
             type: Boolean,
             default: false,
@@ -70,6 +75,11 @@ export const FieldInputMixin = {
         },
         defaultValue: {}
     },
+    methods: {
+        onDataChange(v){
+            this.$emit("update", v)
+        }
+    }
 }
 
 
@@ -79,9 +89,20 @@ export const FieldFilterMixin = {
         event: 'update'
     },
     props: {
-        data: {},
+        data: {
+            type: [String, Number, Boolean, Object, Array, null ],
+            default: () => {
+                return null
+            }
+        },
         field: {},
     },
+    methods: {
+        onDataChange(v){
+            // console.log('onDataChange', v)
+            this.$emit("update", v)
+        }
+    }
 }
 
 export const FieldViewMixin = {

@@ -10,18 +10,20 @@ use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Core\Assets\AssetsUtil;
+use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
-use ModStart\Form\Type\FormMode;
 use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
@@ -30,6 +32,7 @@ use ModStart\Support\Concern\HasFields;
 use ModStart\Widget\TextDialogRequest;
 use Module\Member\Config\MemberAdminList;
 use Module\Member\Config\MemberOauth;
+use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Type\MemberStatus;
 use Module\Member\Util\MemberGroupUtil;
@@ -71,11 +74,9 @@ class MemberController extends Controller
                                 break;
                         }
                     });
-                $builder->text('password', '初始密码')
-                    ->editable(false)->addable(true)
-                    ->listable(false)->showable(false)->required()->defaultValue(RandomUtil::lowerString(8));
                 $builder->text('email', '邮箱');
                 $builder->text('phone', '手机');
+                $builder->text('nickname', '昵称');
                 if (MemberOauth::hasEnableItems()) {
                     $builder->display('_oauth', '授权')->hookRendering(function (AbstractField $field, $item, $index) {
                         $oauthList = [];
@@ -137,22 +138,95 @@ class MemberController extends Controller
                     )->width('90%')->height('90%')->render()
                 );
             })
-            ->hookSaved(function (Form $form) {
-                /** @var \stdClass $item */
-                $item = $form->item();
-                switch ($form->mode()) {
-                    case FormMode::ADD:
-                        MemberUtil::update($item->id, [
-                            'isDeleted' => false,
-                        ]);
-                        MemberUtil::changePassword($item->id, $item->password, null, true);
-                        break;
-                }
-            })
             ->title('用户管理')
             ->canShow(false)
             ->canDelete(true)
             ->textEdit('修改账号');
+    }
+
+    public function add(AdminDialogPage $page)
+    {
+        $form = Form::make('');
+        $form->layoutPanel('基础（用户、手机、邮箱不能同时为空）', function (Form $form) {
+            $form->text('username', '用户名');
+            $form->text('phone', '手机');
+            $form->text('email', '邮箱');
+            $form->text('password', '初始密码')->defaultValue(RandomUtil::lowerString(8));
+        });
+        $form->layoutPanel('高级', function (Form $form) {
+            $form->text('nickname', '昵称');
+            $form->radio('status', '状态')->optionType(MemberStatus::class)->defaultValue(MemberStatus::NORMAL);
+            if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+                $form->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
+            }
+            if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+                $form->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
+                $form->date('vipExpire', 'VIP过期');
+            }
+        });
+        $form->showSubmit(false)->showReset(false);
+        return $page->pageTitle('创建用户')->body($form)->handleForm($form, function (Form $form) {
+            AdminPermission::demoCheck();
+            $data = $form->dataForming();
+            $username = $data['username'] ? $data['username'] : null;
+            $phone = $data['phone'] ? $data['phone'] : null;
+            $email = $data['email'] ? $data['email'] : null;
+            $profile = ArrayUtil::keepKeys($data, [
+                'nickname',
+                'groupId',
+                'vipId', 'vipExpire',
+            ]);
+            $ret = MemberUtil::register($username, $phone, $email, $data['password']);
+            BizException::throwsIfResponseError($ret);
+            if (!empty($profile)) {
+                MemberUtil::update($ret['data']['id'], $profile);
+            }
+            EventUtil::fire(new MemberUserRegisteredEvent($ret['data']['id']));
+            return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());
+        });
+    }
+
+    public function edit(AdminDialogPage $page)
+    {
+        $memberUser = ModelUtil::get('member_user', CRUDUtil::id());
+        BizException::throwsIfEmpty('用户不存在', $memberUser);
+        $form = Form::make('');
+        $form->layoutPanel('基础', function (Form $form) {
+            $form->text('username', '用户名');
+            $form->text('phone', '手机');
+            $form->text('email', '邮箱');
+        });
+        $form->layoutPanel('高级', function (Form $form) {
+            $form->text('nickname', '昵称');
+            $form->radio('status', '状态')->optionType(MemberStatus::class)->defaultValue(MemberStatus::NORMAL);
+            if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+                $form->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
+            }
+            if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+                $form->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
+                $form->date('vipExpire', 'VIP过期');
+            }
+        });
+        $form->item($memberUser)->fillFields();
+        $form->showSubmit(false)->showReset(false);
+        return $page->pageTitle('创建用户')->body($form)->handleForm($form, function (Form $form) use ($memberUser) {
+            AdminPermission::demoCheck();
+            $data = $form->dataForming();
+            $basic = ArrayUtil::keepKeys($data, [
+                'username',
+                'phone',
+                'email',
+            ]);
+            $profile = ArrayUtil::keepKeys($data, [
+                'nickname',
+                'groupId',
+                'vipId', 'vipExpire',
+            ]);
+            $ret = MemberUtil::updateBasicWithUniqueCheck($memberUser['id'], $basic);
+            BizException::throwsIfResponseError($ret);
+            MemberUtil::update($memberUser['id'], $profile);
+            return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());
+        });
     }
 
     public function select(AdminDialogPage $page)
