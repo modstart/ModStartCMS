@@ -30,6 +30,7 @@ class MemberProfileController extends MemberFrameController implements MemberLog
         $builder->pageTitle('基本资料');
         $builder->page()->view($this->viewMemberFrame);
         $builder->text('username', '用户名')->readonly(true);
+        $builder->text('nickname', '昵称');
         $builder->radio('gender', '性别')->optionType(Gender::class);
         $builder->textarea('signature', '签名');
         return $builder->perform(MemberUser::user(), function (Form $form) {

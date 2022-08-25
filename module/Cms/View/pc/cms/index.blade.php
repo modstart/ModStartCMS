@@ -1,6 +1,6 @@
 @extends($_viewFrame)
 
-@section('pageTitle'){{modstart_config('siteName').' - '.modstart_config('siteSlogan')}}@endsection
+@section('pageTitle'){{modstart_config('siteName').' | '.modstart_config('siteSlogan')}}@endsection
 
 {!! \ModStart\ModStart::js('asset/common/scrollAnimate.js') !!}
 @section('bodyContent')
