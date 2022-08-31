@@ -21,6 +21,7 @@ use ModStart\Widget\Box;
  *
  * @mixin Page
  * @mixin Form
+ * @method $this disableBoxWrap($enable)
  */
 class AdminConfigBuilder implements Renderable
 {
@@ -29,6 +30,9 @@ class AdminConfigBuilder implements Renderable
     /** @var Form */
     private $form;
     private $pagePrepend = [];
+    private $config = [
+        'disableBoxWrap' => false,
+    ];
 
     public function __construct()
     {
@@ -70,7 +74,11 @@ class AdminConfigBuilder implements Renderable
                 $this->page->row($item);
             }
         }
-        $this->page->body(new Box($this->form, $this->page->pageTitle()));
+        $body = $this->form;
+        if (!$this->config['disableBoxWrap']) {
+            $body = new Box($this->form, $this->page->pageTitle());
+        }
+        $this->page->body($body);
         return $this->page->render();
     }
 
@@ -124,6 +132,10 @@ class AdminConfigBuilder implements Renderable
 
     public function __call($name, $arguments)
     {
+        if (isset($this->config[$name])) {
+            $this->config[$name] = $arguments[0];
+            return $this;
+        }
         if (method_exists($this->page, $name)) {
             return $this->page->{$name}(...$arguments);
         }

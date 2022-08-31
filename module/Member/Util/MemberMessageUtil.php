@@ -60,6 +60,11 @@ class MemberMessageUtil
         ModelUtil::model('member_message')->whereIn('id', $ids)->where(['userId' => $userId])->delete();
     }
 
+    public static function deleteAll($userId)
+    {
+        ModelUtil::model('member_message')->where(['userId' => $userId])->delete();
+    }
+
     public static function update($userId, $ids = [], $update = [])
     {
         if (empty($ids) || empty($update)) {

@@ -18,6 +18,7 @@ class RichHtml extends AbstractField
         $this->addVariables([
             'editorMode' => 'default',
             'server' => modstart_admin_url('data/ueditor'),
+            'htmlFilter' => true,
         ]);
     }
 
@@ -28,7 +29,13 @@ class RichHtml extends AbstractField
      */
     public function editorMode($mode)
     {
-        $this->addVariables(['editorMode'=>$mode]);
+        $this->addVariables(['editorMode' => $mode]);
+        return $this;
+    }
+
+    public function htmlFilter($filter = true)
+    {
+        $this->addVariables(['htmlFilter' => $filter]);
         return $this;
     }
 
@@ -40,7 +47,10 @@ class RichHtml extends AbstractField
 
     public function prepareInput($value, $dataSubmitted)
     {
-        return HtmlUtil::filter($value);
+        if ($this->variables['htmlFilter']) {
+            $value = HtmlUtil::filter($value);
+        }
+        return $value;
     }
 
 

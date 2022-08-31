@@ -5,6 +5,7 @@ namespace Module\Member\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Form\Form;
+use ModStart\Support\Concern\HasFields;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class ConfigController extends Controller
@@ -13,39 +14,49 @@ class ConfigController extends Controller
     {
         $captchaType = array_merge(['' => '默认'], CaptchaProvider::nameTitleMap());
         $builder->pageTitle('功能设置');
-        $builder->switch('loginCaptchaEnable', '启用登录验证码')
-            ->when('=', true, function (Form $form) use ($captchaType) {
-                $form->select('loginCaptchaProvider', '登录验证码类型')->options($captchaType);
-            });
-        $builder->switch('registerDisable', '禁用注册')
-            ->when('!=', true, function ($builder) {
-                $builder->switch('registerEmailEnable', '启用邮箱注册');
-                $builder->switch('registerPhoneEnable', '启用手机注册');
-                $builder->switch('Member_RegisterPhoneEnable', '启用手机快捷注册');
-                $builder->select('Member_RegisterDefault', '默认注册方式')->options([
-                    'default' => '用户名密码注册',
-                    'phone' => '手机快捷注册',
-                ]);
-            });
-
-        $builder->switch('retrieveDisable', '禁用找回密码')
-            ->when('!=', true, function ($builder) {
-                $builder->switch('retrievePhoneEnable', '启用手机找回密码');
-                $builder->switch('retrieveEmailEnable', '启用邮箱找回密码');
-            });
-
-        $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录');
-        $builder->select('Member_LoginDefault', '默认登录方式')->options([
-            'default' => '用户名密码登录',
-            'phone' => '手机快捷登录',
-        ]);
-        $builder->switch('Member_LoginRedirectCheckEnable', '登录后跳转安全验证')
-            ->when('=', true, function (Form $form) {
-                $form->textarea('Member_LoginRedirectWhiteList', '白名单')->placeholder('请输入域名白名单，每行一个，如：www.example.com');
-            });
-        $builder->switch('Member_DeleteEnable', '启用自助注销账号')
-            ->help('用户注销账号后，用户名会重置为随机字符串，已绑定的手机、邮箱均会解绑');
+        $builder->layoutPanel('登录注册', function ($builder) use ($captchaType) {
+            /** @var HasFields $builder */
+            $builder->switch('loginCaptchaEnable', '启用登录验证码')
+                ->when('=', true, function (Form $form) use ($captchaType) {
+                    $form->select('loginCaptchaProvider', '登录验证码类型')->options($captchaType);
+                });
+            $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录');
+            $builder->select('Member_LoginDefault', '默认登录方式')->options([
+                'default' => '用户名密码登录',
+                'phone' => '手机快捷登录',
+            ]);
+            $builder->switch('registerDisable', '禁用注册')
+                ->when('!=', true, function ($builder) {
+                    $builder->switch('registerEmailEnable', '启用邮箱注册');
+                    $builder->switch('registerPhoneEnable', '启用手机注册');
+                    $builder->switch('Member_RegisterPhoneEnable', '启用手机快捷注册');
+                    $builder->select('Member_RegisterDefault', '默认注册方式')->options([
+                        'default' => '用户名密码注册',
+                        'phone' => '手机快捷注册',
+                    ]);
+                });
+            $builder->button('', '保存')->forSubmit();
+        });
+        $builder->layoutPanel('找回密码', function ($builder) {
+            $builder->switch('retrieveDisable', '禁用找回密码')
+                ->when('!=', true, function ($builder) {
+                    $builder->switch('retrievePhoneEnable', '启用手机找回密码');
+                    $builder->switch('retrieveEmailEnable', '启用邮箱找回密码');
+                });
+            $builder->button('', '保存')->forSubmit();
+        });
+        $builder->layoutPanel('安全设置', function ($builder) {
+            $builder->switch('Member_LoginRedirectCheckEnable', '登录后跳转安全验证')
+                ->when('=', true, function (Form $form) {
+                    $form->textarea('Member_LoginRedirectWhiteList', '白名单')->placeholder('请输入域名白名单，每行一个，如：www.example.com');
+                });
+            $builder->switch('Member_DeleteEnable', '启用自助注销账号')
+                ->help('用户注销账号后，用户名会重置为随机字符串，已绑定的手机、邮箱均会解绑');
+            $builder->button('', '保存')->forSubmit();
+        });
         $builder->formClass('wide');
+        $builder->disableBoxWrap(true);
+        $builder->showReset(false)->showSubmit(false);
         return $builder->perform();
     }
 

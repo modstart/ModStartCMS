@@ -7,7 +7,7 @@
 
 .ub-list-head-tools {
     box-shadow: 0 0 2px #CCC;
-    background: #FFF;
+    background: var(--color-content-bg);
     height: 2.0rem;
     display: flex;
     position: fixed;
@@ -59,8 +59,8 @@
                 .item-drawer-content {
                     position: relative;
                     padding-bottom: 3.0rem;
-                    background: #FFF;
-                    border-top: 1px solid #EEE;
+                    background: var(--color-content-bg);
+                    border-top: 1px solid var(--color-body-line);
 
                     &.no-foot {
                         padding-bottom: 0;
@@ -73,9 +73,9 @@
                     .item-drawer-content-body {
                         max-height: calc(100vh - 2.0rem - 3.0rem);
                         overflow: auto;
-                        background: #FFF;
+                        background: var(--color-content-bg);
                         padding: var(--size-margin);
-                        box-shadow: inset 0 0 10px #eee;
+                        box-shadow: inset 0 0 10px var(--color-body-line);
 
                         .item-drawer-content-body-list {
                             .item-drawer-content-body-item {
@@ -124,11 +124,12 @@
                         bottom: 0;
                         left: 0;
                         right: 0;
-                        background: #FFF;
-                        border-top: 1px solid #EEE;
+                        background: var(--color-content-bg);
+                        border-top: 1px solid var(--color-body-line);
 
                         .btn {
                             flex: 1;
+                            margin:0 0.5rem;
                         }
                     }
                 }

@@ -47,4 +47,10 @@ class MemberMessageController extends ModuleBaseController implements MemberLogi
         MemberMessageUtil::updateReadAll(MemberUser::id());
         return Response::generateSuccess();
     }
+
+    public function deleteAll()
+    {
+        MemberMessageUtil::deleteAll(MemberUser::id());
+        return Response::generateSuccess();
+    }
 }

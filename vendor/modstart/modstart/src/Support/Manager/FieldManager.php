@@ -60,6 +60,7 @@ class FieldManager
             'areaChina' => \ModStart\Field\AreaChina::class,
             'hidden' => \ModStart\Field\Hidden::class,
             'icon' => \ModStart\Field\Icon::class,
+            'button' => \ModStart\Field\Button::class,
 
             'layoutGrid' => \ModStart\Layout\LayoutGrid::class,
             'layoutTab' => \ModStart\Layout\LayoutTab::class,

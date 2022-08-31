@@ -40,8 +40,8 @@ class Box extends AbstractWidget
     /**
      * Box constructor.
      *
+     * @param string|Renderable $content
      * @param string $title
-     * @param string $content
      * @param string $classList
      */
     public function __construct($content, $title = '', $classList = '')
