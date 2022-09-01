@@ -57,11 +57,11 @@
             {{modstart_config('siteBeian','[网站备案信息]')}}
         </a>
         @if(modstart_config('siteBeianGonganText'))
-                    <a href="{{modstart_config('siteBeianGonganLink')}}" target="_blank">
-                        <img src="@asset('vendor/Site/image/gongan.png')" />
-                        {{modstart_config('siteBeianGonganText')}}
-                    </a>
-                @endif
+            <a href="{{modstart_config('siteBeianGonganLink')}}" target="_blank">
+                <img src="@asset('vendor/Site/image/gongan.png')" />
+                {{modstart_config('siteBeianGonganText')}}
+            </a>
+        @endif
         &copy;{{modstart_config('siteDomain','[网站域名]')}}
     </div>
 </footer>

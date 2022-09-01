@@ -20,6 +20,7 @@ use ModStart\Core\Util\ColorUtil;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\TimeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
@@ -101,6 +102,7 @@ class MemberController extends Controller
                     MemberStatus::NORMAL => 'success',
                     MemberStatus::FORBIDDEN => 'danger',
                 ])->required();
+                // ->gridEditable(true)
                 if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
                     $builder->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
                 }
@@ -128,6 +130,7 @@ class MemberController extends Controller
                     $filter->eq('vipId', 'VIP')->autoHide(true)->select(MemberVipUtil::mapTitle());
                 }
             })
+            ->operateFixed('right')
             ->hookItemOperateRendering(function (ItemOperate $itemOperate) {
                 $item = $itemOperate->item();
                 $itemOperate->prepend(
@@ -174,15 +177,19 @@ class MemberController extends Controller
             $profile = ArrayUtil::keepKeys($data, [
                 'nickname',
                 'groupId',
+                'status',
                 'vipId', 'vipExpire',
             ]);
             $ret = MemberUtil::register($username, $phone, $email, $data['password']);
             BizException::throwsIfResponseError($ret);
             if (!empty($profile)) {
+                if (isset($profile['vipExpire']) && TimeUtil::isDateEmpty($profile['vipExpire'])) {
+                    $profile['vipExpire'] = null;
+                }
                 MemberUtil::update($ret['data']['id'], $profile);
             }
             EventUtil::fire(new MemberUserRegisteredEvent($ret['data']['id']));
-            return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());
+            return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
         });
     }
 
@@ -190,6 +197,23 @@ class MemberController extends Controller
     {
         $memberUser = ModelUtil::get('member_user', CRUDUtil::id());
         BizException::throwsIfEmpty('用户不存在', $memberUser);
+        if (Request::isPost()) {
+            AdminPermission::demoCheck();
+            $input = InputPackage::buildFromInput();
+            switch ($input->getTrimString('_action')) {
+                case 'itemCellEdit':
+                    $update = [];
+                    switch ($input->getTrimString('column')) {
+                        case 'status':
+                            $update['status'] = $input->getInteger('value');
+                            break;
+                    }
+                    if (!empty($update)) {
+                        MemberUtil::update($memberUser['id'], $update);
+                    }
+                    return Response::generateSuccess();
+            }
+        }
         $form = Form::make('');
         $form->layoutPanel('基础', function (Form $form) {
             $form->text('username', '用户名');
@@ -220,12 +244,16 @@ class MemberController extends Controller
             $profile = ArrayUtil::keepKeys($data, [
                 'nickname',
                 'groupId',
+                'status',
                 'vipId', 'vipExpire',
             ]);
             $ret = MemberUtil::updateBasicWithUniqueCheck($memberUser['id'], $basic);
             BizException::throwsIfResponseError($ret);
+            if (isset($profile['vipExpire']) && TimeUtil::isDateEmpty($profile['vipExpire'])) {
+                $profile['vipExpire'] = null;
+            }
             MemberUtil::update($memberUser['id'], $profile);
-            return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());
+            return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
         });
     }
 
