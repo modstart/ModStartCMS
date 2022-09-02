@@ -6,11 +6,12 @@ namespace Module\Member\Api\Controller;
 
 use Illuminate\Routing\Controller;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Auth\MemberVip;
-use Module\Member\Constant\PayConstant;
+use Module\Member\Core\MemberVipPayCenterBiz;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberVipUtil;
 use Module\PayCenter\Support\PayCenterPerform;
@@ -23,7 +24,7 @@ class MemberVipController extends Controller implements MemberLoginCheck
         return Response::generateSuccessData(MemberVipUtil::all());
     }
 
-    public function buy(PayCenterPerform $payCenterPerform)
+    public function buy()
     {
         $input = InputPackage::buildFromInput();
         $vipId = $input->getInteger('vipId');
@@ -50,8 +51,10 @@ class MemberVipController extends Controller implements MemberLoginCheck
             'expire' => $priceInfoRet['data']['expire'],
             'type' => $priceInfoRet['data']['type'],
         ]);
+        BizException::throwsIf('请安装 PayCenter 模块', !modstart_module_enabled('PayCenter'));
+        $payCenterPerform = app(PayCenterPerform::class);
         return $payCenterPerform->performSubmitOrder(
-            PayConstant::MEMBER_VIP,
+            MemberVipPayCenterBiz::NAME,
             $memberVipOrder['id'],
             $memberVipOrder['payFee'],
             '购买会员'

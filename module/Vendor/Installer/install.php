@@ -163,9 +163,9 @@ include __DIR__ . '/function.php';
                             <?php function_exists('bcmul') ? text_success('bcmath 扩展') : text_error('缺少 PHP bcmath 扩展'); ?>
                             <?php class_exists('pdo') ? text_success('PDO PHP 扩展') : text_error('缺少 PDO PHP 扩展'); ?>
                             <?php (class_exists('pdo') && in_array('mysql', PDO::getAvailableDrivers())) ? text_success('PDO Mysql 驱动正常') : text_error('缺少 PDO Mysql 驱动'); ?>
-                            <?php function_exists('mb_internal_encoding') ? text_success('缺少 Mbstring PHP 扩展') : text_error('Mbstring PHP 扩展'); ?>
-                            <?php function_exists('token_get_all') ? text_success('缺少 Tokenizer PHP 扩展') : text_error('Tokenizer PHP 扩展'); ?>
-                            <?php function_exists('finfo_file') ? text_success('缺少 PHP Fileinfo 扩展') : text_error('PHP Fileinfo 扩展'); ?>
+                            <?php function_exists('mb_internal_encoding') ? text_success('缺少 Mbstring PHP 扩展') : text_error('缺少 Mbstring PHP 扩展'); ?>
+                            <?php function_exists('token_get_all') ? text_success('缺少 Tokenizer PHP 扩展') : text_error('缺少 Tokenizer PHP 扩展'); ?>
+                            <?php function_exists('finfo_file') ? text_success('缺少 PHP Fileinfo 扩展') : text_error('缺少 PHP Fileinfo 扩展'); ?>
                             <?php if(version_compare(PHP_VERSION,'5.6.0','ge') && version_compare(PHP_VERSION,'5.7.0','lt')){ ?>
                                 <?php EnvUtil::iniFileConfig('always_populate_raw_post_data')=='-1' ? text_success('验证 always_populate_raw_post_data=-1') : text_error('请配置 always_populate_raw_post_data=-1','https://modstart.com/doc/install/qa.html'); ?>
                             <?php } ?>

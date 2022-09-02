@@ -69,7 +69,7 @@ $router->group([
 
     $router->match(['post'], 'member_money/get', 'MemberMoneyController@get');
     $router->match(['post'], 'member_money/log', 'MemberMoneyController@log');
-
+    $router->match(['post'], 'member_money/charge/submit', 'MemberMoneyChargeController@submit');
     $router->match(['post'], 'member_money/cash/get', 'MemberMoneyCashController@get');
     $router->match(['post'], 'member_money/cash/calc', 'MemberMoneyCashController@calc');
     $router->match(['post'], 'member_money/cash/submit', 'MemberMoneyCashController@submit');

@@ -96,6 +96,7 @@ class ConfigController extends Controller
             $form->number('Member_MoneyCashTaxRate', '用户提现手续费')->help('如 1.00 表示手续费为 1.00%');
             $form->richHtml('Member_MoneyCashDescription', '用户提现说明');
         });
+        $builder->switch('Member_MoneyChargeEnable', '开启钱包充值');
         $builder->richHtml('Member_MoneyChargeDesc', '钱包充值说明');
         $builder->formClass('wide');
         return $builder->perform();
