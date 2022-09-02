@@ -125,8 +125,10 @@ class ModuleServiceProvider extends ServiceProvider
             ]);
         });
 
-        PayCenterBiz::register(MemberMoneyChargePayCenterBiz::class);
-        PayCenterBiz::register(MemberVipPayCenterBiz::class);
+        if (modstart_module_enabled('PayCenter')) {
+            PayCenterBiz::register(MemberMoneyChargePayCenterBiz::class);
+            PayCenterBiz::register(MemberVipPayCenterBiz::class);
+        }
 
         AdminMenu::register(function () {
             return [
