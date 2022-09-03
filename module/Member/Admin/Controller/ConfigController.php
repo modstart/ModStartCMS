@@ -20,7 +20,12 @@ class ConfigController extends Controller
                 ->when('=', true, function (Form $form) use ($captchaType) {
                     $form->select('loginCaptchaProvider', '登录验证码类型')->options($captchaType);
                 });
-            $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录');
+            $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录')
+                ->when('=', true, function (Form $form) {
+                    $form->text('Member_LoginPhoneNameSuggest', '快捷注册用户名前缀')
+                        ->defaultValue('用户')
+                        ->help('默认为"用户"，用户注册后自动设置用户名和昵称为 "用户xxxxxx"');
+                });
             $builder->select('Member_LoginDefault', '默认登录方式')->options([
                 'default' => '用户名密码登录',
                 'phone' => '手机快捷登录',

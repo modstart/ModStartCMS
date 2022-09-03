@@ -9,7 +9,7 @@ use ModStart\Core\Util\SignUtil;
 
 class Tecmz
 {
-    static $API_BASE = null;
+    public static $API_BASE = 'https://api.tecmz.com/open_api';
 
     private $appId;
     private $appSecret;
@@ -18,7 +18,6 @@ class Tecmz
 
     public function __construct($appId, $appSecret = null)
     {
-        self::$API_BASE = 'https://api.tecmz.com/open_api';
         $this->appId = $appId;
         $this->appSecret = $appSecret;
     }
@@ -75,11 +74,12 @@ class Tecmz
             $param['timestamp'] = time();
             $param['sign'] = SignUtil::common($param, $this->appSecret);
         }
-        // print_r($param);exit();
+        $url = self::$API_BASE . $gate;
+        // print_r([$url, $param]);exit();
         if ($this->debug) {
-            Log::debug('TecmzApi -> ' . self::$API_BASE . $gate . ' -> ' . json_encode($param));
+            Log::debug('TecmzApi -> ' . $url . ' -> ' . json_encode($param, JSON_UNESCAPED_UNICODE));
         }
-        return CurlUtil::postJSONBody(self::$API_BASE . $gate, $param);
+        return CurlUtil::postJSONBody($url, $param);
     }
 
     /**
@@ -353,6 +353,21 @@ class Tecmz
         $post['format'] = $format;
         $post['imageData'] = base64_encode($imageData);
         return $this->request('/ocr', $post);
+    }
+
+    /**
+     * 实名认证-姓名身份证号
+     *
+     * @param $name string
+     * @param $idCardNumber string
+     * @return array|mixed
+     */
+    public function personVerifyIdCard($name, $idCardNumber)
+    {
+        $post = [];
+        $post['name'] = $name;
+        $post['idCardNumber'] = $idCardNumber;
+        return $this->request('/person_verify_id_card', $post);
     }
 
 }

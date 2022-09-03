@@ -763,6 +763,7 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, $ret['msg']);
         }
         $memberUserId = $ret['data']['id'];
+        MemberUtil::suggestUsernameNickname($memberUserId, modstart_config('Member_LoginPhoneNameSuggest', '用户'));
         $update = [];
         $update['phoneVerified'] = true;
         if (!empty($update)) {

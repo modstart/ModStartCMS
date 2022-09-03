@@ -13,6 +13,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EncodeUtil;
+use ModStart\Core\Util\RandomUtil;
 use ModStart\Data\DataManager;
 use ModStart\Data\Event\DataFileUploadedEvent;
 use Module\Member\Events\MemberUserLoginAttemptEvent;
@@ -252,6 +253,25 @@ class MemberUtil
                 return Response::generateError(-8, '登录失败:当前用户已被禁用');
         }
         return Response::generateSuccessData($memberUser);
+    }
+
+    public static function suggestUsernameNickname($memberUserId, $prefix = '用户', $randomLength = 6)
+    {
+        $suggestName = $prefix . RandomUtil::string($randomLength);
+        for ($i = 0; $i < 20; $i++) {
+            $found = ModelUtil::model('member_user')
+                ->where(['username' => $suggestName])
+                ->orWhere(['nickname' => $suggestName])
+                ->first();
+            if (empty($found)) {
+                break;
+            }
+            $suggestName = $suggestName . Str::random(1);
+        }
+        ModelUtil::update('member_user', $memberUserId, [
+            'username' => $suggestName,
+            'nickname' => $suggestName,
+        ]);
     }
 
     public static function registerUsernameQuick($username)
