@@ -108,7 +108,7 @@ class UeditorManager
 
             // 公式渲染
             "formulaConfig" => [
-                "imageUrlTemplate" => modstart_config('UEditor_FormulaImageUrlTemplate', 'https://latex.codecogs.com/png.image?{}'),
+                "imageUrlTemplate" => modstart_config('UEditor_FormulaImageUrlTemplate', 'https://latex.codecogs.com/svg.image?{}'),
             ]
         ];
         return $config;

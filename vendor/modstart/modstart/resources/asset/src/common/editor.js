@@ -1,7 +1,6 @@
 var UEditorConfig = require('./../vendor/ueditor/ueditor.config.js');
 var UEditor = require('./../vendor/ueditor/ueditor.all.js');
 require('./../lib/ueditor/wechatcustomemotion.js');
-require('./../lib/ueditor/formula.js');
 
 var EditorUploadConfig = {
     toolbarCallback: function (cmd, editor) {
@@ -91,6 +90,7 @@ var Editor = {
             'indent', 'justifyleft', 'justifycenter', 'justifyright', //'justifyjustify', '|',
             'link', 'unlink',
             'insertcode',
+            'formula',
             // 'imagenone', 'imageleft', 'imageright', 'imagecenter', //'|',
             //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
             //'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',
