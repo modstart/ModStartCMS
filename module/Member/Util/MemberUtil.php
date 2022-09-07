@@ -388,6 +388,8 @@ class MemberUtil
                     return Response::generate(-1, '用户名格式不正确');
                 }
                 break;
+            case 'nickname':
+                break;
             default :
                 return Response::generate(-1, '未能识别的类型' . $type);
         }
@@ -422,6 +424,16 @@ class MemberUtil
     public static function getByPhone($phone)
     {
         return ModelUtil::get('member_user', ['phone' => $phone]);
+    }
+
+    public static function changeNickname($memberUserId, $nickname)
+    {
+        $ret = self::uniqueCheck('nickname', $nickname, $memberUserId);
+        if (Response::isError($ret)) {
+            return $ret;
+        }
+        ModelUtil::update('member_user', $memberUserId, ['nickname' => $nickname]);
+        return Response::generate(0, 'ok');
     }
 
     /**

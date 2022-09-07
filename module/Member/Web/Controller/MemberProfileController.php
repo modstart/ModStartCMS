@@ -41,6 +41,16 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         ]);
     }
 
+    public function nickname()
+    {
+        if (Request::isPost()) {
+            return Response::jsonFromGenerate($this->api->nickname());
+        }
+        return $this->view('memberProfile.nickname', [
+            'pageTitle' => '昵称修改',
+        ]);
+    }
+
     public function avatar()
     {
         if (Request::isPost()) {

@@ -32,6 +32,20 @@ use Module\Vendor\Support\ResponseCodes;
  */
 class MemberProfileController extends ModuleBaseController implements MemberLoginCheck
 {
+    public function nickname()
+    {
+        $input = InputPackage::buildFromInput();
+        $nickname = $input->getTrimString('nickname');
+        BizException::throwsIfEmpty('昵称为空', $nickname);
+        if (!CaptchaFacade::check($input->getTrimString('captcha'))) {
+            return Response::generate(ResponseCodes::CAPTCHA_ERROR, '验证码错误');
+        }
+        $ret = MemberUtil::changeNickname(MemberUser::id(), $nickname);
+        BizException::throwsIfResponseError($ret);
+        EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'nickname'));
+        return Response::generate(0, '修改成功', null, '[reload]');
+    }
+
     /**
      * @Api 修改密码
      * @ApiBodyParam passwordOld string required 原密码
