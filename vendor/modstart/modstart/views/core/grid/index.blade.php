@@ -249,7 +249,7 @@
                     var id = getId(this);
                     addUrl += (addUrl.indexOf('?') > 0 ? '&' : '?') + '_copyId=' + id;
                 }
-                console.log(addUrl);
+                // console.log(addUrl);
                 lister.realtime.dialog.add = layer.open({
                     type: 2,
                     title: "{{ empty($titleAdd) ? ($title?L('Add').$title:L('Add')) : $titleAdd }}",
