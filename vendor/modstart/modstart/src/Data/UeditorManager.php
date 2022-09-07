@@ -104,7 +104,12 @@ class UeditorManager
             "fileManagerListSize" => 20,
             "fileManagerAllowFiles" => array_map(function ($v) {
                 return '.' . $v;
-            }, $dataUploadConfig['file']['extensions'])
+            }, $dataUploadConfig['file']['extensions']),
+
+            // 公式渲染
+            "formulaConfig" => [
+                "imageUrlTemplate" => modstart_config('UEditor_FormulaImageUrlTemplate', 'https://latex.codecogs.com/png.image?{}'),
+            ]
         ];
         return $config;
     }
