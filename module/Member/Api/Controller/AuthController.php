@@ -213,11 +213,73 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, '用户注册已禁用');
         }
         $username = $input->getTrimString('username');
-        $ret = MemberUtil::register($username, null, null, null, true);
+        /** 为了兼容统一登录，禁止使用手机号格式和邮箱格式  */
+        if (Str::contains($username, '@')) {
+            return Response::generate(-1, '用户名不能包含特殊字符');
+        }
+        if (preg_match('/^\\d{11}$/', $username)) {
+            return Response::generate(-1, '用户名不能为纯数字');
+        }
+
+        $phone = $input->getPhone('phone');
+        $phoneVerify = $input->getTrimString('phoneVerify');
+        $email = $input->getEmail('email');
+        $emailVerify = $input->getTrimString('emailVerify');
+        $captcha = $input->getTrimString('captcha');
+
+        if (!Session::get('oauthBindCaptchaPass', false)) {
+            if (!CaptchaFacade::check($captcha)) {
+                SessionUtil::atomicProduce('oauthBindCaptchaPassCount', 1);
+                return Response::generate(-1, '图片验证失败');
+            }
+        }
+        if (!SessionUtil::atomicConsume('oauthBindCaptchaPassCount')) {
+            return Response::generate(-1, '请重新输入图片验证码');
+        }
+        if (modstart_config('Member_OauthBindPhoneEnable')) {
+            if (empty($phone)) {
+                return Response::generate(-1, '请输入手机');
+            }
+            if ($phoneVerify != Session::get('oauthBindPhoneVerify')) {
+                return Response::generate(-1, '手机验证码不正确.');
+            }
+            if (Session::get('oauthBindPhoneVerifyTime') + 60 * 60 < time()) {
+                return Response::generate(-1, '手机验证码已过期');
+            }
+            if ($phone != Session::get('oauthBindPhone')) {
+                return Response::generate(-1, '两次手机不一致');
+            }
+        }
+        if (modstart_config('Member_OauthBindEmailEnable')) {
+            if (empty($email)) {
+                return Response::generate(-1, '请输入邮箱');
+            }
+            if ($emailVerify != Session::get('oauthBindEmailVerify')) {
+                return Response::generate(-1, '邮箱验证码不正确.');
+            }
+            if (Session::get('oauthBindEmailVerifyTime') + 60 * 60 < time()) {
+                return Response::generate(-1, '邮箱验证码已过期');
+            }
+            if ($email != Session::get('oauthBindEmail')) {
+                return Response::generate(-1, '两次邮箱不一致');
+            }
+        }
+
+        $ret = MemberUtil::register($username, $phone, $email, null, true);
         if ($ret['code']) {
             return Response::generate(-1, $ret['msg']);
         }
         $memberUserId = $ret['data']['id'];
+        $update = [];
+        if (modstart_config('Member_OauthBindPhoneEnable')) {
+            $update['phoneVerified'] = true;
+        }
+        if (modstart_config('Member_OauthBindEmailEnable')) {
+            $update['emailVerified'] = true;
+        }
+        if (!empty($update)) {
+            MemberUtil::update($memberUserId, $update);
+        }
         $ret = $oauth->processBindToUser([
             'memberUserId' => $memberUserId,
             'userInfo' => $oauthUserInfo,
@@ -1035,11 +1097,132 @@ class AuthController extends ModuleBaseController
         return Response::generateSuccess();
     }
 
+    public function oauthBindCaptchaVerify()
+    {
+        $input = InputPackage::buildFromInput();
+        $captcha = $input->getTrimString('captcha');
+        if (!CaptchaFacade::check($captcha)) {
+            SessionUtil::atomicRemove('oauthBindCaptchaPassCount');
+            return Response::generate(ResponseCodes::CAPTCHA_ERROR, '验证码错误');
+        }
+        Session::put('oauthBindCaptchaPass', true);
+        $passCount = 1;
+        if (modstart_config('Member_OauthBindPhoneEnable')) {
+            $passCount++;
+        }
+        if (modstart_config('Member_OauthBindEmailEnable')) {
+            $passCount++;
+        }
+        SessionUtil::atomicProduce('oauthBindCaptchaPassCount', $passCount);
+        return Response::generateSuccess();
+    }
+
+    public function oauthBindCaptchaRaw()
+    {
+        return CaptchaFacade::create('default');
+    }
+
+    /**
+     * @return array
+     * @Api 授权登录-获取注册邮箱验证码
+     * @ApiBodyParam target string 邮箱地址
+     */
+    public function oauthBindEmailVerify()
+    {
+        if (!modstart_config('Member_OauthBindEmailEnable')) {
+            return Response::generate(-1, '授权登录未开启邮箱');
+        }
+        $input = InputPackage::buildFromInput();
+
+        $email = $input->getEmail('target');
+        if (empty($email)) {
+            return Response::generate(-1, '邮箱不能为空');
+        }
+
+        if (!Session::get('oauthBindCaptchaPass', false)) {
+            return Response::generate(-1, '请先验证图片验证码');
+        }
+        if (!SessionUtil::atomicConsume('oauthBindCaptchaPassCount')) {
+            return Response::generate(-1, '请重新输入图片验证码');
+        }
+
+        $memberUser = MemberUtil::getByEmail($email);
+        if (!empty($memberUser)) {
+            return Response::generate(-1, '邮箱已经被占用');
+        }
+
+        if (Session::get('oauthBindEmailVerifyTime') && $email == Session::get('oauthBindEmail')) {
+            if (Session::get('oauthBindEmailVerifyTime') + 60 > time()) {
+                return Response::generate(-1, '验证码发送频繁，请稍后再试!');
+            }
+        }
+
+        $verify = rand(100000, 999999);
+
+        MailSendJob::create($email, '注册账户验证码', 'verify', ['code' => $verify]);
+
+        Session::put('oauthBindEmailVerify', $verify);
+        Session::put('oauthBindEmailVerifyTime', time());
+        Session::put('oauthBindEmail', $email);
+
+        return Response::generate(0, '验证码发送成功');
+    }
+
+
+    /**
+     * @return array
+     * @Api 授权登录-获取注册手机验证码
+     * @ApiBodyParam target string 手机号
+     */
+    public function oauthBindPhoneVerify()
+    {
+        if (!modstart_config('Member_OauthBindPhoneEnable')) {
+            return Response::generate(-1, '注册未开启手机');
+        }
+        $input = InputPackage::buildFromInput();
+
+        $phone = $input->getPhone('target');
+        if (empty($phone)) {
+            return Response::generate(-1, '手机不能为空');
+        }
+
+        if (!Session::get('oauthBindCaptchaPass', false)) {
+            return Response::generate(-1, '请先验证图片验证码');
+        }
+        if (!SessionUtil::atomicConsume('oauthBindCaptchaPassCount')) {
+            return Response::generate(-1, '请重新输入图片验证码');
+        }
+
+        $memberUser = MemberUtil::getByPhone($phone);
+        if (!empty($memberUser)) {
+            return Response::generate(-1, '手机已经被占用');
+        }
+
+        if (Session::get('oauthBindPhoneVerifyTime') && $phone == Session::get('oauthBindPhone')) {
+            if (Session::get('oauthBindPhoneVerifyTime') + 60 > time()) {
+                return Response::generate(0, '验证码发送成功!');
+            }
+        }
+
+        $verify = rand(100000, 999999);
+
+        $ret = SmsUtil::send($phone, 'verify', ['code' => $verify]);
+        if (Response::isError($ret)) {
+            return $ret;
+        }
+
+        Session::put('oauthBindPhoneVerify', $verify);
+        Session::put('oauthBindPhoneVerifyTime', time());
+        Session::put('oauthBindPhone', $phone);
+
+        return Response::generate(0, '验证码发送成功');
+    }
 
     public function registerCaptchaRaw()
     {
         return CaptchaFacade::create('default');
     }
+
 
     /**
      * @return array

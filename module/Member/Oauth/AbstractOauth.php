@@ -45,6 +45,15 @@ abstract class AbstractOauth
 
     abstract public function processRedirect($param);
 
+    /**
+     * @param $param
+     * @return array
+     *
+     * @example 成功时，需要返回以下信息，其中 userInfo 需要至少包含 username, avatar, openid 三个属性
+     * Response::generateSuccessData([
+     * 'userInfo' => $userInfo,
+     * ]);
+     */
     abstract public function processLogin($param);
 
     public function processTryLogin($param)

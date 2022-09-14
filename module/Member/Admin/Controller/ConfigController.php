@@ -40,6 +40,10 @@ class ConfigController extends Controller
                         'phone' => '手机快捷注册',
                     ]);
                 });
+            if (modstart_module_enabled('MemberOauth')) {
+                $builder->switch('Member_OauthBindPhoneEnable', '授权登录绑定手机');
+                $builder->switch('Member_OauthBindEmailEnable', '授权登录绑定邮箱');
+            }
             $builder->button('', '保存')->forSubmit();
         });
         $builder->layoutPanel('找回密码', function ($builder) {

@@ -10,6 +10,7 @@ use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
+use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
 use Module\Member\Biz\Vip\MemberVipBiz;
 use Module\Member\Util\MemberVipUtil;
@@ -37,6 +38,12 @@ class MemberVipSetController extends Controller
                     $biz->vipField($builder);
                 }
                 $builder->richHtml('content', '说明')->required();
+                if (ModuleManager::getModuleConfigBoolean('Member', 'creditEnable', false)) {
+                    $builder->switch('creditPresentEnable', '赠送积分')->when('=', true, function ($form) {
+                        /** @var Form $form */
+                        $form->number('creditPresentValue', '赠送积分数量');
+                    })->optionsYesNo()->listable(false);
+                }
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })

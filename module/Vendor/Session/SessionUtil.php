@@ -13,12 +13,12 @@ class SessionUtil
         AtomicUtil::produce("$name:" . Session::getId(), $value, $expire);
     }
 
-    public static function atomicConsume($name, $token = null)
+    public static function atomicConsume($name)
     {
         return AtomicUtil::consume("$name:" . Session::getId());
     }
 
-    public static function atomicRemove($name, $token = null)
+    public static function atomicRemove($name)
     {
         AtomicUtil::remove("$name:" . Session::getId());
     }

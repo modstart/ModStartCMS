@@ -45,7 +45,7 @@ class AtomicUtil
             return false;
         } else {
             if (RandomUtil::percent(20)) {
-                ModelUtil::delete('atomic', 'expire', '<', time());
+                ModelUtil::model('atomic')->where('expire', '<', time())->delete();
             }
             ModelUtil::transactionBegin();
             $atomic = ModelUtil::getWithLock('atomic', ['name' => $name]);
