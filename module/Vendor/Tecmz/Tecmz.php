@@ -302,13 +302,15 @@ class Tecmz
      *
      * @param $docPath string
      * @param $pageLimit int
+     * @param $imageQuality string normal, high, super
      * @return array|mixed
      */
-    public function docToImageQueue($docPath, $pageLimit = 0)
+    public function docToImageQueue($docPath, $pageLimit = 0, $imageQuality = '')
     {
         $post = [];
         $post['docPath'] = $docPath;
         $post['pageLimit'] = $pageLimit;
+        $post['imageQuality'] = $imageQuality;
         return $this->request('/doc_to_image/queue', $post);
     }
 

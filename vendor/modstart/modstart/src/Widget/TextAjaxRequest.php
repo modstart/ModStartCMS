@@ -16,11 +16,12 @@ use ModStart\ModStart;
  * @method static string danger($text, $url, $confirm = null, $disabled = false)
  * @method static string success($text, $url, $confirm = null, $disabled = false)
  *
- * @method void text($text)
- * @method void type($type)
- * @method void confirm($text)
- * @method void url($url)
- * @method void disabled($boolean)
+ * @method $this text($text)
+ * @method $this type($type)
+ * @method $this confirm($text)
+ * @method $this url($url)
+ * @method $this disabled($boolean)
+ * @method $this attr($attr)
  */
 class TextAjaxRequest extends AbstractWidget
 {
@@ -29,6 +30,19 @@ class TextAjaxRequest extends AbstractWidget
         return [
             'style' => '.ub-text-ajax-request{display:inline-block;margin-right:0.5rem;}',
         ];
+    }
+
+    /**
+     * @param ...$arguments string type,text,url
+     * @return $this
+     */
+    public static function make(...$arguments)
+    {
+        $ins = new static();
+        $ins->type($arguments[0]);
+        $ins->text($arguments[1]);
+        $ins->url($arguments[2]);
+        return $ins;
     }
 
     public static function __callStatic($name, $arguments)
@@ -51,7 +65,12 @@ class TextAjaxRequest extends AbstractWidget
         if ($this->disabled) {
             return '<a href="javascript:;" class="ub-text-ajax-request ub-text-' . $this->type . '">' . $this->text . '</a>';
         } else {
-            return '<a href="javascript:;" ' . ($this->confirm ? 'data-confirm="' . $this->confirm . '"' : '') . ' data-ajax-request-loading data-ajax-request="' . $this->url . '" class="ub-text-ajax-request ub-text-' . $this->type . '">' . $this->text . '</a>';
+            return '<a href="javascript:;" ' . ($this->confirm ? 'data-confirm="' . $this->confirm . '"' : '')
+                . ' data-ajax-request-loading data-ajax-request="' . $this->url
+                . '" class="ub-text-ajax-request ub-text-' . $this->type . '" '
+                . ' ' . ($this->attr ? $this->attr : '')
+                . '>'
+                . $this->text . '</a>';
         }
     }
 }

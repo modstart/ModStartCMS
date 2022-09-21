@@ -16,12 +16,13 @@ use ModStart\ModStart;
  * @method static string danger($text, $url, $disabled = false)
  * @method static string success($text, $url, $disabled = false)
  *
- * @method TextDialogRequest text($text)
- * @method TextDialogRequest type($type)
- * @method TextDialogRequest url($url)
- * @method TextDialogRequest disabled($boolean)
- * @method TextDialogRequest width($value)
- * @method TextDialogRequest height($value)
+ * @method $this text($text)
+ * @method $this type($type)
+ * @method $this url($url)
+ * @method $this disabled($boolean)
+ * @method $this width($value)
+ * @method $this height($value)
+ * @method $this attr($attr)
  */
 class TextDialogRequest extends AbstractWidget
 {
@@ -49,7 +50,7 @@ class TextDialogRequest extends AbstractWidget
     }
 
     /**
-     * @param mixed ...$arguments
+     * @param ...$arguments string type,text,url
      * @return TextDialogRequest
      */
     public static function make(...$arguments)
@@ -59,6 +60,19 @@ class TextDialogRequest extends AbstractWidget
         $ins->text($arguments[1]);
         $ins->url($arguments[2]);
         return $ins;
+    }
+
+    /**
+     * @param $size string big
+     * @return $this
+     */
+    public function size($size)
+    {
+        switch ($size) {
+            case 'big':
+                return $this->attr(($this->attr ? $this->attr : '') . ' data-dialog-width="90%" data-dialog-height="90%"');
+        }
+        return $this;
     }
 
     public function render()
@@ -73,6 +87,7 @@ class TextDialogRequest extends AbstractWidget
             return '<a href="javascript:;" ' . ($this->confirm ? 'data-confirm="' . $this->confirm . '"' : '')
                 . ' ' . ($this->width ? 'data-dialog-width="' . $this->width . '"' : '')
                 . ' ' . ($this->height ? 'data-dialog-height="' . $this->height . '"' : '')
+                . ' ' . ($this->attr ? $this->attr : '')
                 . ' data-dialog-request="' . $this->url . '" class="ub-text-dialog-request ub-text-' . $type . '">' . $this->text . '</a>';
         }
     }

@@ -93,420 +93,59 @@
         </div>
     </script>
 </div>
+<script src="@asset('asset/common/gridManager.js')"></script>
 <script>
     (function () {
-        var $grid = $('#{{$id}}');
-        var listerData = {
-            page: 1,
-            pageSize: 1,
-            records: [],
-            total: 1,
-            head: []
-        };
-        var processArea = function (area) {
-            if (/^(\d+)px$/.test(area[0])) {
-                area[0] = Math.min($(window).width(), parseInt(area[0])) + 'px';
-            }
-            if (/^(\d+)px$/.test(area[1])) {
-                area[1] = Math.min($(window).height(), parseInt(area[1])) + 'px';
-            }
-            return area;
-        };
-        var getId = function (o) {
-            var index = parseInt($(o).closest('[data-index]').attr('data-index'));
-            return listerData.records[index]._id;
-        };
-        var getCheckedIds = function () {
-            var data = layui.table.checkStatus('{{$id}}Table').data;
-            var ids = [];
-            for (var i = 0; i < data.length; i++) {
-                ids.push(data[i]._id);
-            }
-            return ids;
-        };
-        var getCheckedItems = function () {
-            var data = layui.table.checkStatus('{{$id}}Table').data;
-            var items = [];
-            for (var i = 0; i < data.length; i++) {
-                items.push(data[i]);
-            }
-            return items;
-        };
-        layui.use(['table', 'laypage'], function () {
-            var table = layui.table.render({
-                id: '{{$id}}Table',
-                elem: '#{{$id}}Table',
-                @if($canMultiSelectItem && ( $batchOperatePrepend || ($canDelete && $canBatchDelete)  ))
-                toolbar: '#{{$id}}TableHeadToolbar',
-                @endif
-                defaultToolbar: {!! json_encode($gridToolbar) !!},
-                page: false,
-                skin: 'line',
-                text: {
-                    none: '<div class="ub-text-muted tw-py-4"><i class="iconfont icon-refresh tw-animate-spin tw-inline-block" style="font-size:2rem;"></i><br />{{L('Loading')}}</div>'
-                },
-                // size: 'sm',
-                loading: true,
-                cellMinWidth: 100,
-                cols: [[]],
-                data: [],
-                autoColumnWidth: true,
-                autoScrollTop: false,
-                autoSort: false,
-                done: function () {
-                }
-            });
-            layui.table.on('sort({{$id}}Table)', function (obj) {
-                if (null == obj.type) {
-                    lister.setParam('order', []);
-                } else {
-                    lister.setParam('order', [[obj.field, obj.type]]);
-                }
-                lister.setPage(1);
-                lister.load();
-            })
-            var isFirst = true;
-            var $lister = $('#{{$id}}');
-            var first = true;
-            var lister = new window.api.lister({
-                search: $lister.find('[data-search]'),
-                table: $lister.find('[data-table]')
-            }, {
-                hashUrl: false,
-                server: window.location.href,
-                showLoading: false,
-                param: {
-                    pageSize: {!! $defaultPageSize !!}
-                },
-                customLoading: function(loading){
-                    @if(!empty($gridBeforeRequestScript))
-                        {!! $gridBeforeRequestScript !!};
-                    @endif
-                    if(first){
-                        first = false;
-                        return;
-                    }
-                    table.loading(loading);
-                },
-                render: function (data) {
-                    listerData = data;
-                    @if($canSingleSelectItem)
-                    data.head.splice(0, 0, {type: 'radio'});
-                    @elseif($canMultiSelectItem)
-                    data.head.splice(0, 0, {type: 'checkbox'});
-                    @endif
-                    $grid.find('[data-addition]').html(data.addition || '');
-                    layui.table.reload('{{$id}}Table', {
-                        text: {
-                            none: '<div class="ub-text-muted"><i class="iconfont icon-empty-box" style="font-size:2rem;"></i><br />{{L('No Records')}}</div>'
-                        },
-                        cols: [data.head],
-                        data: data.records,
-                        limit: data.pageSize,
-                    });
-                    layui.laypage.render({
-                        elem: '{{$id}}Pager',
-                        curr: data.page,
-                        count: data.total,
-                        limit: data.pageSize,
-                        limits: {!! json_encode($pageSizes) !!},
-                        layout: ['limit', 'prev', 'page', 'next', 'count',],
-                        jump: function (obj, first) {
-                            if (!first) {
-                                lister.setPage(obj.curr);
-                                lister.setPageSize(obj.limit);
-                                lister.load();
-                            }
-                        }
-                    });
-                    if(data.script){
-                        eval(data.script);
-                    }
-                }
-            });
-            lister.realtime = {
-                url: {
-                    add: '{{$urlAdd}}',
-                    edit: '{{$urlEdit}}',
-                    delete: '{{$urlDelete}}',
-                    show: '{{$urlShow}}',
-                    export: '{{$urlExport}}',
-                    import: '{{$urlImport}}',
-                    sort: '{{$urlSort}}',
-                },
-                dialog: {
-                    add: null,
-                    addWindow: null,
-                    edit: null,
-                    editWindow: null,
-                    import: null
-                }
-            };
-            @if($canAdd)
-            $grid.on('click','[data-add-button]', function () {
-                var addUrl = lister.realtime.url.add;
-                if($(this).is('[data-add-copy-button]')){
-                    var id = getId(this);
-                    addUrl += (addUrl.indexOf('?') > 0 ? '&' : '?') + '_copyId=' + id;
-                }
-                // console.log(addUrl);
-                lister.realtime.dialog.add = layer.open({
-                    type: 2,
-                    title: "{{ empty($titleAdd) ? ($title?L('Add').$title:L('Add')) : $titleAdd }}",
-                    shadeClose: false,
-                    shade: 0.5,
-                    maxmin: false,
-                    scrollbar: false,
-                    area: processArea({!! json_encode($addDialogSize) !!}),
-                    content: addUrl,
-                    success: function (layerDom, index) {
-                        lister.realtime.dialog.addWindow = $(layerDom).find('iframe').get(0).contentWindow;
-                        lister.realtime.dialog.addWindow.addEventListener('modstart:form.submitted', function (e) {
-                            if (0 === e.detail.res.code) {
-                                layer.close(lister.realtime.dialog.add);
-                            }
-                        });
-                    },
-                    end: function () {
-                        lister.refresh();
-                    }
-                });
-            });
-            @endif
-            @if($canEdit)
-            $lister.find('[data-table]').on('click', '[data-edit]', function () {
-                var id = getId(this);
-                lister.realtime.dialog.edit = layer.open({
-                    type: 2,
-                    title: "{{ empty($titleEdit) ? ($title?L('Edit').$title:L('Edit')) : $titleEdit }}",
-                    shadeClose: false,
-                    shade: 0.5,
-                    maxmin: false,
-                    scrollbar: false,
-                    area: processArea({!! json_encode($editDialogSize) !!}),
-                    content: lister.realtime.url.edit + (lister.realtime.url.edit && lister.realtime.url.edit.indexOf('?') >= 0 ? '&' : '?') + '_id=' + id,
-                    success: function (layerDom, index) {
-                        lister.realtime.dialog.editWindow = $(layerDom).find('iframe').get(0).contentWindow;
-                        lister.realtime.dialog.editWindow.addEventListener('modstart:form.submitted', function (e) {
-                            if (0 === e.detail.res.code) {
-                                layer.close(lister.realtime.dialog.edit);
-                            }
-                        });
-                    },
-                    end: function () {
-                        lister.refresh();
-                    }
-                });
-            });
-            $lister.find('[data-table]').on('click', '[data-edit-quick]', function () {
-                var pcs = $(this).attr('data-edit-quick').split(':');
-                var column = pcs.shift();
-                var value = pcs.join(':');
-                var post = {
-                    _id: getId(this),
-                    _action: 'itemCellEdit',
-                    column: column,
-                    value: value
-                };
-                window.api.dialog.loadingOn();
-                window.api.base.post(lister.realtime.url.edit, post, function (res) {
-                    window.api.dialog.loadingOff();
-                    window.api.base.defaultFormCallback(res, {
-                        success: function (res) {
-                        }
-                    });
-                    lister.refresh();
-                });
-            });
-            $grid.on('grid-item-cell-change', function (e, data) {
-                var post = {
-                    _id: getId(data.ele),
-                    _action: 'itemCellEdit',
-                    column: data.column,
-                    value: data.value
-                };
-                window.api.dialog.loadingOn();
-                window.api.base.post(lister.realtime.url.edit, post, function (res) {
-                    window.api.dialog.loadingOff();
-                    window.api.base.defaultFormCallback(res, {
-                        success: function (res) {
-                        }
-                    });
-                    lister.refresh();
-                });
-            });
-            @endif
-            @if($canDelete)
-            $lister.find('[data-table]').on('click', '[data-delete]', function () {
-                var id = getId(this);
-                window.api.dialog.confirm("{{L('Confirm Delete ?')}}", function () {
-                    window.api.dialog.loadingOn();
-                    window.api.base.post(lister.realtime.url.delete, {_id: id}, function (res) {
-                        window.api.dialog.loadingOff();
-                        window.api.base.defaultFormCallback(res, {
-                            success: function (res) {
-                                lister.refresh();
-                            }
-                        });
-                    })
-                });
-            });
-            @endif
-            @if($canShow)
-            $lister.find('[data-table]').on('click', '[data-show]', function () {
-                var id = getId(this);
-                lister.realtime.dialog.show = layer.open({
-                    type: 2,
-                    title: "{{ empty($titleShow) ? ($title?L('Show').$title:L('Show')) : $titleShow }}",
-                    shadeClose: false,
-                    shade: 0.5,
-                    maxmin: false,
-                    scrollbar: false,
-                    area: {!! json_encode($showDialogSize) !!},
-                    content: lister.realtime.url.show + (lister.realtime.url.show && lister.realtime.url.show.indexOf('?') >= 0 ? '&' : '?') + '_id=' + id,
-                    success: function (layerDom, index) {
-                    },
-                    end: function () {
-                    }
-                });
-            });
-            @endif
-            @if($canDelete && $canBatchDelete)
-            $lister.find('[data-table]').on('click', '[data-batch-delete]', function () {
-                var ids = getCheckedIds();
-                if (!ids.length) {
-                    window.api.dialog.tipError("{{L('Please Select Records')}}");
-                    return;
-                }
-                window.api.dialog.confirm("{{L('Confirm Delete %d records ?')}}".replace('%d', ids.length), function () {
-                    window.api.dialog.loadingOn();
-                    window.api.base.post(lister.realtime.url.delete, {_id: ids.join(',')}, function (res) {
-                        window.api.dialog.loadingOff();
-                        window.api.base.defaultFormCallback(res, {
-                            success: function (res) {
-                                lister.refresh();
-                            }
-                        });
-                    })
-                });
-            });
-            @endif
-            @if($canSort)
-            $lister.find('[data-table]').on('click', '[data-sort]', function () {
-                var id = getId(this);
-                var direction = $(this).attr('data-sort');
-                window.api.dialog.loadingOn();
-                window.api.base.post(lister.realtime.url.sort, {_id: id, direction: direction}, function (res) {
-                    window.api.dialog.loadingOff();
-                    window.api.base.defaultFormCallback(res, {
-                        success: function (res) {
-                            lister.refresh();
-                        }
-                    });
-                })
-            });
-            @endif
-            @if($canExport)
-            $lister.find('[data-export-button]').on('click', function () {
-                lister.prepareSearch();
-                var param = JSON.stringify(lister.getParam());
-                var url = lister.realtime.url.export + '?_param=' + MS.util.urlencode(param);
-                window.open(url, '_blank');
-            });
-            @endif
-            @if($canImport)
-            $lister.find('[data-import-button]').on('click', function () {
-                lister.realtime.dialog.import = layer.open({
-                    type: 2,
-                    title: "{{ empty($titleImport) ? ($title?L('Import').$title:L('Import')) : $titleImport }}",
-                    shadeClose: false,
-                    shade: 0.5,
-                    maxmin: false,
-                    scrollbar: false,
-                    area: {!! json_encode($importDialogSize) !!},
-                    content: lister.realtime.url.import,
-                    success: function (layerDom, index) {
-                    },
-                    end: function () {
-                    }
-                });
-            });
-            @endif
-            $lister.find('[data-table]').on('click', '[data-batch-operate]', function () {
-                var ids = getCheckedIds();
-                var url = $(this).attr('data-batch-operate');
-                if (!ids.length) {
-                    window.api.dialog.tipError("{{L('Please Select Records')}}");
-                    return;
-                }
-                var callback = function(){
-                    window.api.dialog.loadingOn();
-                    window.api.base.post(url, {_id: ids.join(',')}, function (res) {
-                        window.api.dialog.loadingOff();
-                        window.api.base.defaultFormCallback(res, {
-                            success: function (res) {
-                                lister.refresh();
-                            }
-                        });
-                    });
-                };
-                if($(this).attr('data-batch-confirm')){
-                    window.api.dialog.confirm($(this).attr('data-batch-confirm').replace('%d', ids.length), function () {
-                        callback();
-                    });
-                }else{
-                    callback();
-                }
-            });
-            $lister.find('[data-table]').on('click', '[data-batch-dialog-operate]', function () {
-                var ids = getCheckedIds();
-                var url = $(this).attr('data-batch-dialog-operate');
-                if (!ids.length) {
-                    window.api.dialog.tipError("{{L('Please Select Records')}}");
-                    return;
-                }
-                MS.dialog.dialog(url+'?_id='+ids.join(','));
-            });
-            $lister.data('lister', lister);
-            window.__grids = window.__grids || {
-                instances: {},
-                get: function (key) {
-                    if (typeof key === 'number') {
-                        var count = 0;
-                        for (var k in window.__grids.instances) {
-                            if (count === key) {
-                                return window.__grids.instances[k];
-                            }
-                            count++;
-                        }
-                    }
-                    return window.__grids.instances[key];
-                }
-            };
-            window.__grids.instances['{{$id}}'] = {
-                $lister: $lister,
-                lister: lister,
-                getCheckedIds: getCheckedIds,
-                getCheckedItems: getCheckedItems,
-                getId: getId
-            };
+        new MS.GridManager({
+            id: '{{$id}}',
+            canBatchSelect: {!! json_encode(boolval($canBatchSelect)) !!},
+            canSingleSelectItem: {!! json_encode(boolval($canSingleSelectItem)) !!},
+            canMultiSelectItem: {!! json_encode(boolval($canMultiSelectItem)) !!},
+            title: {!! json_encode($title) !!},
+            titleAdd: {!! json_encode(empty($titleAdd)?null:$titleAdd) !!},
+            titleEdit: {!! json_encode(empty($titleEdit)?null:$titleEdit) !!},
+            titleShow: {!! json_encode(empty($titleShow)?null:$titleShow) !!},
+            titleImport: {!! json_encode(empty($titleImport)?null:$titleImport) !!},
+            canAdd: {!! json_encode(boolval($canAdd)) !!},
+            canEdit: {!! json_encode(boolval($canEdit)) !!},
+            canDelete: {!! json_encode(boolval($canDelete)) !!},
+            canShow: {!! json_encode(boolval($canShow)) !!},
+            canSort: {!! json_encode(boolval($canSort)) !!},
+            canExport: {!! json_encode(boolval($canExport)) !!},
+            canImport: {!! json_encode(boolval($canImport)) !!},
+            canBatchDelete: {!! json_encode(boolval($canBatchDelete)) !!},
+            urlAdd: {!! json_encode($urlAdd) !!},
+            urlEdit: {!! json_encode($urlEdit) !!},
+            urlDelete: {!! json_encode($urlDelete) !!},
+            urlShow: {!! json_encode($urlShow) !!},
+            urlExport: {!! json_encode($urlExport) !!},
+            urlImport: {!! json_encode($urlImport) !!},
+            urlSort: {!! json_encode($urlSort) !!},
+            batchOperatePrepend: {!! json_encode($batchOperatePrepend) !!},
+            gridToolbar: {!! json_encode($gridToolbar) !!},
+            defaultPageSize: {!! json_encode($defaultPageSize) !!},
+            gridBeforeRequestScript: {!! json_encode($gridBeforeRequestScript) !!},
+            pageSizes: {!! json_encode($pageSizes) !!},
+            addDialogSize: {!! json_encode($addDialogSize) !!},
+            editDialogSize: {!! json_encode($editDialogSize) !!},
+            showDialogSize: {!! json_encode($showDialogSize) !!},
+            importDialogSize: {!! json_encode($importDialogSize) !!},
+            lang:{
+                loading: {!! json_encode(L('Loading')) !!},
+                noRecords: {!! json_encode(L('No Records')) !!},
+                add: {!! json_encode(L('Add')) !!},
+                edit: {!! json_encode(L('Edit')) !!},
+                show: {!! json_encode(L('Show')) !!},
+                import: {!! json_encode(L('Import')) !!},
+                confirmDelete: {!! json_encode(L('Confirm Delete ?')) !!},
+                pleaseSelectRecords: {!! json_encode(L('Please Select Records')) !!},
+                confirmDeleteRecords: {!! json_encode(L('Confirm Delete %d records ?')) !!},
+            },
         });
-        @if($canBatchSelect || $canSingleSelectItem || $canMultiSelectItem)
-        $(function(){
-            setTimeout(function () {
-                if(window.__dialogFootSubmiting){
-                    window.__dialogFootSubmiting(function () {
-                        var ids = window.__grids.instances['{{$id}}'].getCheckedIds();
-                        var items = window.__grids.instances['{{$id}}'].getCheckedItems();
-                        // console.log('itemSelected',ids, items);
-                        window.parent.__dialogSelectIds = ids;
-                        window.parent.__selectorDialogItems = items;
-                        parent.layer.closeAll();
-                    });
-                }
-            }, 0);
-        })
-        @endif
+
+
+
+
     })();
 </script>
 {!! $bodyAppend !!}

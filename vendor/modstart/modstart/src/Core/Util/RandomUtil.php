@@ -50,6 +50,28 @@ class RandomUtil
     }
 
     /**
+     * 随机可读字符串（小写）
+     * @param $length int 长度
+     * @return string 字符串
+     * @Util
+     */
+    public static function lowerReadableString($length)
+    {
+        return strtolower(self::readableString($length));
+    }
+
+    /**
+     * 随机可读字符串（大写）
+     * @param $length int 长度
+     * @return string 字符串
+     * @Util
+     */
+    public static function upperReadableString($length)
+    {
+        return strtoupper(self::readableString($length));
+    }
+
+    /**
      * 随机Hex字符串
      * @param $length int 长度
      * @return string 字符串

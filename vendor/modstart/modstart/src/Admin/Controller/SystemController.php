@@ -74,7 +74,7 @@ class SystemController extends Controller
                 $form->text('oldPath', L('Current Path'))->rules('required')
                     ->value(config('env.ADMIN_PATH', '/admin/'))->readonly(true);
                 $form->text('newPath', L('New Path'))->rules('required')
-                    ->value('/admin_' . RandomUtil::readableString(6) . '/');
+                    ->value('/admin_' . RandomUtil::lowerReadableString(6) . '/');
                 $form->showSubmit(false)->showReset(false);
                 if (Request::isPost()) {
                     return $form->formRequest(function (Form $form) {

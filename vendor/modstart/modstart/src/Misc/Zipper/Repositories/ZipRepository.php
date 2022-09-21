@@ -108,15 +108,34 @@ class ZipRepository implements RepositoryInterface
      */
     public function each($callback)
     {
+        $records = [];
+        $hasUtf8 = false;
         for ($i = 0; $i < $this->archive->numFiles; ++$i) {
             //skip if folder
             $stats = $this->archive->statIndex($i);
             if ($stats['size'] === 0 && $stats['crc'] === 0) {
                 continue;
             }
+            $name = $this->archive->getNameIndex($i, 0x0001 << 6);
+            $encoding = mb_detect_encoding($name, ['GBK', 'UTF-8']);
+            // var_dump($encoding);
+            if ('UTF-8' === $encoding) {
+                $hasUtf8 = true;
+            }
+            $records[] = [
+                $encoding,
+                $name,
+                $stats
+            ];
+        }
+        foreach ($records as $record) {
+            list($encoding, $name, $stats) = $record;
+            if (!$hasUtf8 && 'CP936' == $encoding) {
+                $name = mb_convert_encoding($name, 'UTF-8', 'GBK');
+            }
             call_user_func_array($callback, [
-                 $this->archive->getNameIndex($i),
-                 $this->archive->statIndex($i)
+                $name,
+                $stats
             ]);
         }
     }
