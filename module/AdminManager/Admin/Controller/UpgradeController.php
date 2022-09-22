@@ -40,7 +40,7 @@ class UpgradeController extends Controller
         return Response::generateSuccessData([
             'msg' => array_map(function ($item) {
                 if (!starts_with($item, '<')) {
-                    $item = "<span class='ub-text-default'>$item</span>";
+                    $item = "<span class='ub-text-white'>$item</span>";
                 }
                 return '<i class="iconfont icon-hr"></i> ' . $item;
             }, $msgs),
@@ -79,23 +79,27 @@ class UpgradeController extends Controller
                     BizException::throwsIfResponseError($ret);
                     return $this->doNext('upgradePackage', [
                         '<span class="ub-text-success">获取安装包完成，大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
-                        '<span class="ub-text-default">开始解压升级装包...</span>'
+                        '<span class="ub-text-white">开始解压升级装包...</span>'
                     ], [
                         'package' => $ret['data']['package'],
                         'diffContentFile' => $ret['data']['diffContentFile'],
                     ]);
                 case 'checkPackage':
-                    $exitCode = Artisan::call("migrate");
+                    try {
+                        $exitCode = Artisan::call("migrate");
+                    } catch (\Exception $e) {
+                        $exitCode = -1;
+                    }
                     BizException::throwsIf("调用 php artisan 命令失败，不能自动升级", 0 != $exitCode);
                     return $this->doNext('downloadPackage', [
                         'PHP版本: v' . PHP_VERSION,
                         '<span class="ub-text-success">预检通过</span>',
-                        '<span class="ub-text-default">开始下载升级包...</span>'
+                        '<span class="ub-text-white">开始下载升级包...</span>'
                     ]);
                 default:
                     return $this->doNext('checkPackage', [
                         '<span class="ub-text-success">开始升级系统，从 V' . AppConstant::VERSION . ' 到 V' . $toVersion . '</span>',
-                        '<span class="ub-text-default">开始预检系统...</span>'
+                        '<span class="ub-text-white">开始预检系统...</span>'
                     ]);
             }
         }

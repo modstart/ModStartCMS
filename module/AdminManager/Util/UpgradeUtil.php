@@ -111,7 +111,11 @@ class UpgradeUtil
         }
         $zipper->close();
         ModStart::clearCache();
-        $exitCode = Artisan::call("migrate");
+        try {
+            $exitCode = Artisan::call("migrate");
+        } catch (\Exception $e) {
+            $exitCode = -1;
+        }
         BizException::throwsIf("调用 php artisan migrate 失败", 0 != $exitCode);
         $exitCode = Artisan::call("modstart:module-install-all");
         BizException::throwsIf("调用 php artisan modstart:module-install-all 失败", 0 != $exitCode);
