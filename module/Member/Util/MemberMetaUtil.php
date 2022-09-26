@@ -22,9 +22,14 @@ class MemberMetaUtil
                     'value' => $value,
                     'updated_at' => Carbon::now()
                 ]) <= 0) {
-                ModelUtil::insert('member_meta', array_merge($where, [
-                    'value' => $value,
-                ]));
+                ModelUtil::transactionBegin();
+                $one = ModelUtil::getWithLock('member_meta', $where);
+                if (empty($one)) {
+                    ModelUtil::insert('member_meta', array_merge($where, [
+                        'value' => $value,
+                    ]));
+                }
+                ModelUtil::transactionCommit();
             }
         }
     }

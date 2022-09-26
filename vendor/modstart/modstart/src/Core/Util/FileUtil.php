@@ -2,17 +2,21 @@
 
 namespace ModStart\Core\Util;
 
+use Illuminate\Support\Facades\Log;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 
 /**
- * Class FileUtil
- * @package ModStart\Core\Util
  * @Util 文件
  */
 class FileUtil
 {
-    public static function mime($type)
+    /**
+     * @Util 根据文件后缀获取MIME类型字符串
+     * @param $ext string 文件后缀
+     * @return string|null
+     */
+    public static function mime($ext)
     {
         static $mimeMap = [
             'aac' => 'audio/aac',
@@ -90,8 +94,8 @@ class FileUtil
             '3g2' => 'video/3gpp2',
             '7z' => 'application/x-7z-compressed',
         ];
-        $type = strtolower($type);
-        return isset($mimeMap[$type]) ? $mimeMap[$type] : null;
+        $ext = strtolower($ext);
+        return isset($mimeMap[$ext]) ? $mimeMap[$ext] : null;
     }
 
     public static function filePathWritableCheck($paths)
@@ -125,6 +129,11 @@ class FileUtil
         return Response::generateSuccess();
     }
 
+    /**
+     * @Util 写入文件
+     * @param $path string
+     * @param $content string
+     */
     public static function write($path, $content)
     {
         $dir = dirname($path);
@@ -139,6 +148,11 @@ class FileUtil
         file_put_contents($path, $content);
     }
 
+    /**
+     * @Util 获取文件后缀
+     * @param $pathname string 文件路径
+     * @return string
+     */
     public static function extension($pathname)
     {
         $ext = strtolower(pathinfo($pathname, PATHINFO_EXTENSION));
@@ -168,6 +182,12 @@ class FileUtil
         return chr(239) . chr(187) . chr(191) . join("\r\n", $lines);
     }
 
+    /**
+     * @Util 递归列出目录所有文件
+     * @param $dir string 目录
+     * @param $filter Closure 过滤器，为空表示不过滤
+     * @return array
+     */
     public static function listAllFiles($dir, $filter = null, &$results = array(), $prefix = '')
     {
         $files = self::listFiles($dir, '*|.*');
@@ -184,6 +204,12 @@ class FileUtil
         return $results;
     }
 
+    /**
+     * @Util 列出目录所有文件
+     * @param $filename string
+     * @param $pattern string 后缀过滤，如 *.txt *.php 等
+     * @return array
+     */
     public static function listFiles($filename, $pattern = '*')
     {
         if (strpos($pattern, '|') !== false) {
@@ -266,6 +292,17 @@ class FileUtil
         return round($size / pow(1024, ($i = floor(log($size, 1024)))), $decimals) . $units[$i];
     }
 
+    /**
+     * @Util 格式化字节（简化）
+     * @param $bytes int 字节数
+     * @param $decimals int 小数最多保留位数，默认为2
+     * @return string
+     * @example
+     * // 返回 1 M
+     * FileUtil::formatByte(1024*1024)
+     * // 返回 1.5 G
+     * FileUtil::formatByte(1024*1024*1024*1.5)
+     */
     public static function formatByteSimple($bytes, $decimals = 2)
     {
         $size = sprintf("%u", $bytes);
@@ -276,16 +313,21 @@ class FileUtil
         return round($size / pow(1024, ($i = floor(log($size, 1024)))), $decimals) . $units[$i];
     }
 
-    public static function formattedSizeToBytes($size_str)
+    /**
+     * @Util 格式化的文件大小转换为字节
+     * @param $sizeString string 如 1M
+     * @return int
+     */
+    public static function formattedSizeToBytes($sizeString)
     {
-        $size_str = strtolower($size_str);
-        $unit = preg_replace('/[^a-z]/', '', $size_str);
-        $value = floatval(preg_replace('/[^0-9.]/', '', $size_str));
+        $sizeString = strtolower($sizeString);
+        $unit = preg_replace('/[^a-z]/', '', $sizeString);
+        $value = floatval(preg_replace('/[^0-9.]/', '', $sizeString));
 
         $units = array('b' => 0, 'kb' => 1, 'mb' => 2, 'gb' => 3, 'tb' => 4, 'k' => 1, 'm' => 2, 'g' => 3, 't' => 4);
         $exponent = isset($units[$unit]) ? $units[$unit] : 0;
 
-        return ($value * pow(1024, $exponent));
+        return intval($value * pow(1024, $exponent));
     }
 
     public static function getAndEnsurePathnameFolder($pathname)
@@ -323,15 +365,13 @@ class FileUtil
     }
 
     /**
-     * 复制文件夹
-     * @param $src : 必须给出，不能为空
-     * @param $dst : 必须给出，不能为空
-     * @param $replaceExt : 如果文件存在需要添加的后缀名
-     * @param $callback : 复制回调
-     * @param $filter : 复制回调
-     *
-     *
-     * 注意：src 和 dst 如果是文件，需同时是文件，如果是目录，需同时是目录
+     * @Util 复制目录
+     * @param $src string 源路径，必须给出，不能为空
+     * @param $dst string 源路径，必须给出，不能为空
+     * @param $replaceExt string|null 如果文件存在需要添加的后缀名，作为备份使用，如果不传表示不备份
+     * @param $callback Closure|null 复制回调
+     * @param $filter Closure|null 复制过滤器
+     * @return null 注意：src 和 dst 如果是文件，需同时是文件，如果是目录，需同时是目录
      */
     public static function copy($src, $dst, $replaceExt = null, $callback = null, $filter = null)
     {
@@ -391,12 +431,11 @@ class FileUtil
     }
 
     /**
-     * 删除文件夹
+     * @Util 删除目录
      *
-     * @param $dir : string
-     * @pararm $removeSelf : bool
-     *
-     * @return null
+     * @param $dir string 目录
+     * @param $removeSelf bool 是否删除本身
+     * @return bool
      */
     public static function rm($dir, $removeSelf = true)
     {

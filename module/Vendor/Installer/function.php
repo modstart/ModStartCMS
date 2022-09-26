@@ -36,9 +36,9 @@ if (!defined('INSTALL_APP')) {
     define('INSTALL_APP', 'APP');
 }
 if (!defined('INSTALL_APP_NAME')) {
-    if(defined('INSTALL_APP')){
+    if (defined('INSTALL_APP')) {
         define('INSTALL_APP_NAME', INSTALL_APP);
-    }else{
+    } else {
         define('INSTALL_APP_NAME', 'APP');
     }
 }
@@ -98,6 +98,23 @@ function get_env_config($key, $default = '')
     if (isset($envConfig[$key])) {
         return $envConfig[$key];
     }
+    $osEnvMap = [
+        'db_host' => ['DB_HOST', 'MYSQL_HOST'],
+        'db_name' => ['DB_DATABASE', 'MYSQL_DB'],
+        'db_username' => ['DB_USERNAME', 'MYSQL_USER'],
+        'db_password' => ['DB_PASSWORD', 'MYSQL_PASSWORD'],
+        'db_prefix' => ['DB_PREFIX'],
+        'admin_username' => ['ADMIN_USERNAME'],
+        'admin_password' => ['ADMIN_PASSWORD'],
+    ];
+    if (isset($osEnvMap[$key])) {
+        foreach ($osEnvMap[$key] as $k) {
+            $v = @getenv($k);
+            if (!empty($v)) {
+                return $v;
+            }
+        }
+    }
     $envMap = [
         'db_host' => 'DB_HOST',
         'db_name' => 'DB_DATABASE',
@@ -108,7 +125,10 @@ function get_env_config($key, $default = '')
         'admin_password' => 'ADMIN_PASSWORD',
     ];
     if (isset($envMap[$key])) {
-        return env($envMap[$key], $default);
+        $v = env($envMap[$key], null);
+        if (!is_null($v)) {
+            return $v;
+        }
     }
     return $default;
 }

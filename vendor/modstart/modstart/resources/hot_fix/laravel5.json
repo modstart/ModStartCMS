@@ -1,0 +1,4 @@
+{
+    "DatabaseQueue.php": "vendor/laravel/framework/src/Illuminate/Queue/DatabaseQueue.php",
+    "MySqlGrammar.php": "vendor/laravel/framework/src/Illuminate/Database/Schema/Grammars/MySqlGrammar.php"
+}

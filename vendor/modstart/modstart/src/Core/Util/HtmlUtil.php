@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Misc\Html\Purifier;
 
+
 class HtmlUtil
 {
     public static function replaceImageSrcToLazyLoad($content, $dataAttr = 'data-src', $useAssets = false)
