@@ -66,10 +66,18 @@ class ModStartServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/module.php', 'module');
         $this->mergeConfigFrom(__DIR__ . '/../config/data.php', 'data');
 
-        if ($subdirUrl = config('modstart.subdirUrl')) {
+        $subdirUrl = config('modstart.subdirUrl');
+        if (empty($subdirUrl)) {
+            $subdirUrl = @getenv('SUBDIR_URL');
+        }
+        if ($subdirUrl) {
             URL::forceRootUrl($subdirUrl);
         }
-        if ($forceScheme = config('modstart.forceSchema')) {
+        $forceScheme = config('modstart.forceSchema');
+        if (empty($forceScheme)) {
+            $forceScheme = @getenv('FORCE_SCHEMA');
+        }
+        if ($forceScheme) {
             if (\ModStart\ModStart::env() == 'laravel5') {
                 URL::forceSchema($forceScheme);
             } else {
