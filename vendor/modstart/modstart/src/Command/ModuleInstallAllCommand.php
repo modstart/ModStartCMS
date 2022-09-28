@@ -29,7 +29,6 @@ class ModuleInstallAllCommand extends Command
             }
             $this->info("");
         }
-        $this->warn("ModuleInstallAll Run Finished");
 
         $initUsers = config('env.MS_INIT_ADMIN_USERS', '');
         if ($initUsers) {
@@ -58,10 +57,13 @@ class ModuleInstallAllCommand extends Command
 
         $this->publishHotfixFiles();
 
+        $this->warn("ModuleInstallAll Run Finished");
+
     }
 
     private function publishHotfixFiles()
     {
+        $this->warn(">>> Publish Hotfix");
         $env = ModStart::env();
         $dir = rtrim(base_path('vendor/modstart/modstart/resources/hot_fix'), '/') . '/';
         $jsonFile = $dir . $env . '.json';
@@ -74,6 +76,7 @@ class ModuleInstallAllCommand extends Command
             @file_put_contents(base_path($path), $content);
             $this->info('Hotfix: ' . $path);
         }
+        $this->info("");
     }
 
 }

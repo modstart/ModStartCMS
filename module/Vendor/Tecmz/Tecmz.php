@@ -336,10 +336,25 @@ class Tecmz
      */
     public function imageCompress($format, $imageData)
     {
+        $ret = $this->request('/image_compress/prepare', []);
+        if (Response::isError($ret)) {
+            return $ret;
+        }
         $post = [];
         $post['format'] = $format;
         $post['imageData'] = base64_encode($imageData);
-        return $this->request('/image_compress', $post);
+        $server = $ret['data']['server'];
+        // print_r([$post,$server]);exit();
+        $ret = CurlUtil::postJSONBody($server, $post);
+        // print_r($ret);exit();
+        if (Response::isError($ret)) {
+            return $ret;
+        }
+        return Response::generate(0, 'ok', [
+            'imageOriginalSize' => $ret['data']['originalSize'],
+            'imageCompressSize' => $ret['data']['compressSize'],
+            'imageUrl' => $ret['data']['url'],
+        ]);
     }
 
     /**
