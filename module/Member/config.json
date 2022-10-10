@@ -7,7 +7,11 @@
     ],
     "types": [
         "PC",
-        "Mobile"
+        "Mobile",
+        "Admin"
+    ],
+    "tags": [
+        "会员"
     ],
     "require": [
         "Vendor:>=1.9.0"

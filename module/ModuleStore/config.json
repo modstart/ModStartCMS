@@ -8,6 +8,9 @@
     "types": [
         "Admin"
     ],
+    "tags": [
+        "模块市场"
+    ],
     "require": [
         "Vendor:>=1.4.0"
     ],

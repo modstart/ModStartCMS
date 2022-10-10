@@ -44,7 +44,7 @@
             </div>
 
             <div class="ub-form flat">
-                <form action="?" method="post" data-ajax-form>
+                <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field">
                             <input type="text" class="form-lg" name="phone" placeholder="输入手机" />
@@ -90,7 +90,7 @@
             @if(!modstart_config('retrieveDisable',false))
                 <div class="retrieve">
                     忘记密码?
-                    <a href="{{$__msRoot}}retrieve?redirect={{urlencode($redirect)}}">找回密码</a>
+                    <a target="_parent" href="{{$__msRoot}}retrieve?redirect={{urlencode($redirect)}}">找回密码</a>
                 </div>
             @endif
         </div>

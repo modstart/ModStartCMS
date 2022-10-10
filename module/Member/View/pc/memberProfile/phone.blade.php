@@ -32,7 +32,7 @@
             <div class="title">{{$pageTitle}}</div>
         </div>
         <div class="body">
-            <form action="?" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
+            <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
 
                 @if(!\Module\Vendor\Provider\SmsSender\SmsSenderProvider::hasProvider())
                     <div class="line">

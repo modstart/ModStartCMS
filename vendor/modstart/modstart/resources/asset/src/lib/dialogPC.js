@@ -162,18 +162,26 @@ let Dialog = {
     },
     dialogContent: function (content, option) {
         let opt = $.extend({
+            skin: null,
             closeBtn: true,
             width: 'auto',
             height: 'auto',
+            offset: 'auto',
             shade: [0.3, '#000'],
             shadeClose: true,
+            fixed: true,
+            anim: 0,
             openCallback: function () {
             },
             closeCallback: function () {
             }
         }, option);
+        // console.log('opt', opt);
         return layer.open({
+            skin: opt.skin,
+            anim: opt.anim,
             shade: opt.shade,
+            offset: opt.offset,
             type: 1,
             title: false,
             zindex: 2019,
@@ -182,6 +190,7 @@ let Dialog = {
             scrollbar: false,
             content: content,
             area: [opt.width, opt.height],
+            fixed: opt.fixed,
             success: function () {
                 opt.openCallback();
             },

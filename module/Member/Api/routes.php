@@ -29,6 +29,10 @@ $router->group([
     $router->match(['post'], 'oauth/callback', 'AuthController@oauthCallback');
     $router->match(['post'], 'oauth/try_login', 'AuthController@oauthTryLogin');
     $router->match(['post'], 'oauth/bind', 'AuthController@oauthBind');
+    $router->match(['post'], 'oauth/bind_captcha', 'AuthController@oauthBindCaptcha');
+    $router->match(['post'], 'oauth/bind_captcha_verify', 'AuthController@oauthBindCaptchaVerify');
+    $router->match(['post'], 'oauth/bind_phone_verify', 'AuthController@oauthBindPhoneVerify');
+    $router->match(['post'], 'oauth/bind_email_verify', 'AuthController@oauthBindEmailVerify');
 
     $router->match(['post'], 'sso/client_prepare', 'AuthController@ssoClientPrepare');
     $router->match(['post'], 'sso/client', 'AuthController@ssoClient');

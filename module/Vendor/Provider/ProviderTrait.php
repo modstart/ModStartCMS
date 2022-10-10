@@ -17,13 +17,30 @@ trait ProviderTrait
 
     public static function listAll()
     {
+        static $processed = false;
+        if ($processed) {
+            return self::$list;
+        }
+        $hasOrder = false;
         foreach (self::$list as $k => $v) {
             if ($v instanceof \Closure) {
                 self::$list[$k] = call_user_func($v);
             } else if (is_string($v)) {
                 self::$list[$k] = app($v);
             }
+            if (!$hasOrder && method_exists(self::$list[$k], 'order')) {
+                $hasOrder = true;
+            }
         }
+        if ($hasOrder) {
+            usort(self::$list, function ($o1, $o2) {
+                if ($o1->order() == $o2->order()) {
+                    return 0;
+                }
+                return $o1->order() > $o2->order() ? 1 : -1;
+            });
+        }
+        $processed = true;
         return self::$list;
     }
 

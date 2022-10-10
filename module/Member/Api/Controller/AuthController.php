@@ -1125,6 +1125,15 @@ class AuthController extends ModuleBaseController
         return CaptchaFacade::create('default');
     }
 
+    public function oauthBindCaptcha()
+    {
+        Session::forget('oauthBindCaptchaPass');
+        $captcha = $this->oauthBindCaptchaRaw();
+        return Response::generate(0, 'ok', [
+            'image' => 'data:image/png;base64,' . base64_encode($captcha->getOriginalContent()),
+        ]);
+    }
+
     /**
      * @return array
      * @Api 授权登录-获取注册邮箱验证码

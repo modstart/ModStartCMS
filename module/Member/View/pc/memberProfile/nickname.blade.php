@@ -11,7 +11,7 @@
             <div class="title">修改昵称</div>
         </div>
         <div class="body">
-            <form action="?" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
+            <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
 
                 <div class="line">
                     <div class="label">原昵称</div>

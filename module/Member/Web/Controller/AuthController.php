@@ -55,6 +55,7 @@ class AuthController extends ModuleBaseController
     public function login()
     {
         $input = InputPackage::buildFromInput();
+        $dialog = $input->getBoolean('dialog');
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         $this->api->checkRedirectSafety($redirect);
         if (modstart_config('ssoClientEnable', false)) {
@@ -64,12 +65,16 @@ class AuthController extends ModuleBaseController
                 return Response::send(-1, $ret['msg']);
             }
             Session::put('ssoClientRedirect', $redirect);
+
             return Response::send(0, null, null, $ret['data']['redirect']);
         }
         if (Request::isPost()) {
             $ret = $this->api->login();
             if (Response::isError($ret)) {
                 return Response::sendFromGenerate($ret);
+            }
+            if ($dialog) {
+                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($redirect) . ';');
             }
             return Response::send(0, '', '', $redirect);
         }
@@ -84,7 +89,14 @@ class AuthController extends ModuleBaseController
                 }
             }
         }
-        return $this->view('login', ['redirect' => $redirect]);
+        $view = 'login';
+        if ($dialog) {
+            $view = 'loginDialog';
+        }
+        return $this->view($view, [
+            'redirect' => $redirect,
+            'dialog' => $dialog,
+        ]);
     }
 
     public function loginCaptcha()
@@ -95,6 +107,7 @@ class AuthController extends ModuleBaseController
     public function loginPhone()
     {
         $input = InputPackage::buildFromInput();
+        $dialog = $input->getBoolean('dialog');
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         $this->api->checkRedirectSafety($redirect);
         if (Request::isPost()) {
@@ -102,10 +115,14 @@ class AuthController extends ModuleBaseController
             if ($ret['code']) {
                 return Response::send(-1, $ret['msg']);
             }
+            if ($dialog) {
+                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($redirect) . ';');
+            }
             return Response::send(0, null, null, $redirect);
         }
         return $this->view('loginPhone', [
             'redirect' => $redirect,
+            'dialog' => $dialog,
         ]);
     }
 
@@ -146,6 +163,7 @@ class AuthController extends ModuleBaseController
     public function register()
     {
         $input = InputPackage::buildFromInput();
+        $dialog = $input->getInteger('dialog');
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         if (Request::isPost()) {
             $ret = $this->api->register();
@@ -155,7 +173,8 @@ class AuthController extends ModuleBaseController
                 }
                 return Response::send(-1, $ret['msg']);
             }
-            return Response::send(0, '', '', modstart_web_url('login') . '?redirect=' . urlencode($redirect));
+            $url = modstart_web_url('login', ['redirect' => $redirect, 'dialog' => $dialog]);
+            return Response::send(0, '', '', $url);
         }
         if (modstart_config('Member_RegisterPhoneEnable', false)) {
             $registerDefault = modstart_config('Member_RegisterDefault', 'default');
@@ -168,8 +187,13 @@ class AuthController extends ModuleBaseController
                 }
             }
         }
-        return $this->view('register', [
+        $view = 'register';
+        if ($input->getBoolean('dialog')) {
+            $view = 'registerDialog';
+        }
+        return $this->view($view, [
             'redirect' => $redirect,
+            'dialog' => $dialog,
         ]);
     }
 

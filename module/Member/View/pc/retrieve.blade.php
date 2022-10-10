@@ -17,7 +17,7 @@
             </div>
 
             <div class="ub-form flat">
-                <form action="?" method="post" data-ajax-form>
+                <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field">
                             <?php $found = false; ?>

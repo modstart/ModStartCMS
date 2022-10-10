@@ -13,7 +13,7 @@
             <div class="title">密码设定</div>
         </div>
         <div class="body">
-            <form action="?" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
+            <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
                 @if(empty($_memberUser['password']))
                     <div class="line">
                         <div class="ub-alert ub-alert-warning"><i class="iconfont icon-warning"></i> 您还没有设定密码，请设定新密码</div>

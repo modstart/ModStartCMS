@@ -13,7 +13,7 @@
             <div class="title">注销账号</div>
         </div>
         <div class="body">
-            <form action="?" data-ajax-form class="ub-form" method="post">
+            <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" data-ajax-form class="ub-form" method="post">
                 <div class="line">
                     <div class="label">用户ID：</div>
                     <div class="field">

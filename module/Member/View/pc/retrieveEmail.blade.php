@@ -33,7 +33,7 @@
                 <a href="javascript:;" class="active">通过邮箱找回密码</a>
             </div>
             <div class="ub-form flat">
-                <form action="?" method="post" data-ajax-form>
+                <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field">
                             <div class="row no-gutters">

@@ -8,6 +8,9 @@ class MemberAdminList
 {
     private static $gridFields = [];
 
+    /**
+     * @param \Closure $callback function($builder) {}
+     */
     public static function registerGridField(\Closure $callback)
     {
         self::$gridFields[] = $callback;

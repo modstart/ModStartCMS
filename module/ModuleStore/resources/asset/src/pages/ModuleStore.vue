@@ -131,12 +131,12 @@
                                        :href="module._isSystem?'javascript:;':module.url"
                                        :target="module._isSystem?'':'_blank'"
                                        class="ub-cover-3-2 tw-shadow  tw-rounded"
-                                       :class="{'tw-w-24 tw-cursor-default':module._isSystem,'tw-w-28':!module._isSystem}"
+                                       :class="{'tw-w-24 tw-cursor-default':module._isSystem,'tw-w-24':!module._isSystem}"
                                        :style="{'background-image':'url('+module.cover+')'}"></a>
                                     <div v-else
-                                         class="tw-shadow tw-w-28 tw-rounded ub-text-center tw-text-gray-300">
-                                        <i class="iconfont icon-category"
-                                           style="font-size:1rem;line-height:3.733333rem;"></i>
+                                         class="tw-shadow tw-w-24 tw-h-16 tw-rounded ub-text-center tw-text-white tw-bg-blue-300">
+                                        <i class="iconfont icon-cube"
+                                           style="font-size:1.6rem;line-height:3.2rem;"></i>
                                     </div>
                                 </div>
                                 <div>
@@ -144,7 +144,7 @@
                                        :target="module._isSystem?'':'_blank'"
                                        :class="{'tw-cursor-default':module._isSystem}"
                                        class="tw-font-bold tw-text-gray-700 ub-text-truncate tw-block">
-                                        <span v-if="module._isLocal" class="ub-tag primary sm ub-bg-a">本地模块</span>
+                                        <span v-if="module._isLocal" class="ub-tag primary sm ub-bg-a">内置</span>
                                         <span v-html="$highlight(module.title,search.keywords)"></span>
                                     </a>
                                     <div v-if="!module._isSystem">
@@ -166,13 +166,13 @@
                                     <a v-if="module._isInstalled && module._hasConfig" href="javascript:;"
                                        :data-tk-event="'ModuleStore,Config,'+module.name"
                                        @click="doConfig(module)">
-                                        <i class="iconfont icon-cog"></i>配置
+                                        <i class="iconfont icon-cog"></i> 配置
                                     </a>
                                 </div>
                                 <a v-if="!module._isInstalled" href="javascript:;" @click="doInstall(module)"
                                    class="tw-mr-1" :data-tk-event="'ModuleStore,Install,'+module.name"
                                 >
-                                    <i class="iconfont icon-plus"></i>安装
+                                    <i class="iconfont icon-plus"></i> 安装
                                 </a>
                                 <el-tooltip class="item" effect="dark" content="安装其他版本" placement="top">
                                     <a v-if="!module._isInstalled" href="javascript:;" @click="doInstallVersion(module)"
@@ -191,20 +191,20 @@
                                    @click="doDisable(module)"
                                    :data-tk-event="'ModuleStore,Disable,'+module.name"
                                    class="ub-text-danger tw-mr-4">
-                                    <i class="iconfont icon-pause"></i>禁用
+                                    <i class="iconfont icon-pause"></i> 禁用
                                 </a>
                                 <a v-if="module._isInstalled && !module._isEnabled" href="javascript:;"
                                    class="tw-mr-4"
                                    :data-tk-event="'ModuleStore,Enable,'+module.name"
                                    @click="doEnable(module)"
                                 >
-                                    <i class="iconfont icon-play"></i>启用
+                                    <i class="iconfont icon-play"></i> 启用
                                 </a>
                                 <a v-if="module._isInstalled && !module._isEnabled" href="javascript:;"
                                    :data-tk-event="'ModuleStore,Uninstall,'+module.name"
                                    @click="doUninstall(module)"
                                    class="ub-text-danger tw-mr-4">
-                                    <i class="iconfont icon-trash"></i>卸载
+                                    <i class="iconfont icon-trash"></i> 卸载
                                 </a>
                             </div>
                             <div v-else
@@ -213,7 +213,7 @@
                                     <a v-if="module._isInstalled && module._hasConfig" href="javascript:;"
                                        :data-tk-event="'ModuleStore,Config,'+module.name"
                                        @click="doConfig(module)">
-                                        <i class="iconfont icon-cog"></i>配置
+                                        <i class="iconfont icon-cog"></i> 配置
                                     </a>
                                 </div>
                                 <div v-if="module._isSystem" class="ub-text-muted tw-inline-block"><i
@@ -223,7 +223,7 @@
                                    :data-tk-event="'ModuleStore,UpgradeSystem,'+module.name"
                                    @click="doUpgrade(module)"
                                    href="javascript:;" class="ub-text-warning tw-mr-4">
-                                    <i class="iconfont icon-direction-up"></i>升级
+                                    <i class="iconfont icon-direction-up"></i> 升级
                                 </a>
                             </div>
                             <div v-if="!module._isSystem"

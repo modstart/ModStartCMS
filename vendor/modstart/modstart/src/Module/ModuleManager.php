@@ -42,6 +42,7 @@ class ModuleManager
                     'laravel5'
                 ],
                 'types' => [],
+                'tags' => [],
                 'require' => [
                     // 'Xxx:*'
                     // 'Xxx:>=*'
