@@ -58,11 +58,11 @@ $router->group([
     $router->match(['get', 'post'], 'member_profile/phone', 'MemberProfileController@phone');
     $router->match(['get', 'post'], 'member_profile/phone_verify', 'MemberProfileController@phoneVerify');
     $router->match(['get', 'post'], 'member_profile/oauth/{type}', 'MemberProfileController@oauth');
-    $router->match(['get', 'post'], 'member_profile/delete', 'MemberProfileController@delete');
+    $router->match(['post'], 'member_profile/delete', 'MemberProfileController@delete');
     $router->match(['get', 'post'], 'member_profile/nickname', 'MemberProfileController@nickname');
 
     $router->match(['get', 'post'], 'member_message', 'MemberMessageController@index');
-    $router->match(['get', 'post'], 'member_message/delete', 'MemberMessageController@delete');
+    $router->match(['post'], 'member_message/delete', 'MemberMessageController@delete');
     $router->match(['get', 'post'], 'member_message/read', 'MemberMessageController@read');
     $router->match(['get', 'post'], 'member_message/read_all', 'MemberMessageController@readAll');
 
@@ -82,7 +82,7 @@ $router->group([
     $router->match(['get', 'post'], 'member_address', 'MemberAddressController@index');
     $router->match(['get', 'post'], 'member_address/add', 'MemberAddressController@add');
     $router->match(['get', 'post'], 'member_address/edit', 'MemberAddressController@edit');
-    $router->match(['get', 'post'], 'member_address/delete', 'MemberAddressController@delete');
+    $router->match(['post'], 'member_address/delete', 'MemberAddressController@delete');
     $router->match(['get', 'post'], 'member_address/area_china', 'MemberAddressController@areaChina');
 
 });

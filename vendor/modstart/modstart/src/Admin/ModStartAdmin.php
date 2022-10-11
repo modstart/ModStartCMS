@@ -22,15 +22,15 @@ class ModStartAdmin
             /* @var \Illuminate\Routing\Router $router */
             $router->match(['get', 'post'], 'login', 'AuthController@login');
             $router->match(['get', 'post'], 'login_quick', 'AuthController@loginQuick');
-            $router->match(['get', 'post'], 'logout', 'AuthController@logout');
-            $router->match(['get', 'post'], 'login/captcha', 'AuthController@loginCaptcha');
+            $router->match(['get'], 'logout', 'AuthController@logout');
+            $router->match(['get'], 'login/captcha', 'AuthController@loginCaptcha');
 
-            $router->match(['get', 'post'], 'sso/client', 'AuthController@ssoClient');
-            $router->match(['get', 'post'], 'sso/server', 'AuthController@ssoServer');
-            $router->match(['get', 'post'], 'sso/server_success', 'AuthController@ssoServerSuccess');
-            $router->match(['get', 'post'], 'sso/server_logout', 'AuthController@ssoServerLogout');
+            $router->match(['get'], 'sso/client', 'AuthController@ssoClient');
+            $router->match(['get'], 'sso/server', 'AuthController@ssoServer');
+            $router->match(['get'], 'sso/server_success', 'AuthController@ssoServerSuccess');
+            $router->match(['get'], 'sso/server_logout', 'AuthController@ssoServerLogout');
 
-            $router->match(['get', 'post'], 'util/frame', 'UtilController@frame');
+            $router->match(['post'], 'util/frame', 'UtilController@frame');
 
             $router->match(['post'], 'system/clear_cache', 'SystemController@clearCache');
             $router->match(['get', 'post'], 'system/security_fix', 'SystemController@securityFix');

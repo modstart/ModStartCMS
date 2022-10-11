@@ -14,7 +14,7 @@ $router->match(['get', 'post'], 'member', 'MemberController@index');
 $router->match(['get', 'post'], 'member/add', 'MemberController@add');
 $router->match(['get', 'post'], 'member/edit', 'MemberController@edit');
 $router->match(['post'], 'member/delete', 'MemberController@delete');
-$router->match(['get', 'post'], 'member/show', 'MemberController@show');
+$router->match(['get'], 'member/show', 'MemberController@show');
 $router->match(['get', 'post'], 'member/select', 'MemberController@select');
 $router->match(['get', 'post'], 'member/search', 'MemberController@search');
 $router->match(['get', 'post'], 'member/reset_password', 'MemberController@resetPassword');
@@ -24,41 +24,41 @@ $router->match(['get', 'post'], 'member/status_forbidden', 'MemberController@sta
 $router->match(['get', 'post'], 'member_vip_set', 'MemberVipSetController@index');
 $router->match(['get', 'post'], 'member_vip_set/add', 'MemberVipSetController@add');
 $router->match(['get', 'post'], 'member_vip_set/edit', 'MemberVipSetController@edit');
-$router->match(['get', 'post'], 'member_vip_set/delete', 'MemberVipSetController@delete');
-$router->match(['get', 'post'], 'member_vip_set/show', 'MemberVipSetController@show');
-$router->match(['get', 'post'], 'member_vip_set/sort', 'MemberVipSetController@sort');
+$router->match(['post'], 'member_vip_set/delete', 'MemberVipSetController@delete');
+$router->match(['get'], 'member_vip_set/show', 'MemberVipSetController@show');
+$router->match(['post'], 'member_vip_set/sort', 'MemberVipSetController@sort');
 
 $router->match(['get', 'post'], 'member_vip_order', 'MemberVipOrderController@index');
 $router->match(['get', 'post'], 'member_vip_order/add', 'MemberVipOrderController@add');
 $router->match(['get', 'post'], 'member_vip_order/edit', 'MemberVipOrderController@edit');
-$router->match(['get', 'post'], 'member_vip_order/delete', 'MemberVipOrderController@delete');
-$router->match(['get', 'post'], 'member_vip_order/show', 'MemberVipOrderController@show');
+$router->match(['post'], 'member_vip_order/delete', 'MemberVipOrderController@delete');
+$router->match(['get'], 'member_vip_order/show', 'MemberVipOrderController@show');
 
 $router->match(['get', 'post'], 'member_money_log', 'MemberMoneyLogController@index');
 $router->match(['get', 'post'], 'member_money_log/add', 'MemberMoneyLogController@add');
 $router->match(['get', 'post'], 'member_money_log/edit', 'MemberMoneyLogController@edit');
-$router->match(['get', 'post'], 'member_money_log/delete', 'MemberMoneyLogController@delete');
-$router->match(['get', 'post'], 'member_money_log/show', 'MemberMoneyLogController@show');
+$router->match(['post'], 'member_money_log/delete', 'MemberMoneyLogController@delete');
+$router->match(['get'], 'member_money_log/show', 'MemberMoneyLogController@show');
 
 $router->match(['get', 'post'], 'member_credit_log', 'MemberCreditLogController@index');
 $router->match(['get', 'post'], 'member_credit_log/add', 'MemberCreditLogController@add');
 $router->match(['get', 'post'], 'member_credit_log/edit', 'MemberCreditLogController@edit');
-$router->match(['get', 'post'], 'member_credit_log/delete', 'MemberCreditLogController@delete');
-$router->match(['get', 'post'], 'member_credit_log/show', 'MemberCreditLogController@show');
+$router->match(['post'], 'member_credit_log/delete', 'MemberCreditLogController@delete');
+$router->match(['get'], 'member_credit_log/show', 'MemberCreditLogController@show');
 
 $router->match(['get', 'post'], 'member_money_cash', 'MemberMoneyCashController@index');
 $router->match(['get', 'post'], 'member_money_cash/add', 'MemberMoneyCashController@add');
 $router->match(['get', 'post'], 'member_money_cash/edit', 'MemberMoneyCashController@edit');
-$router->match(['get', 'post'], 'member_money_cash/delete', 'MemberMoneyCashController@delete');
-$router->match(['get', 'post'], 'member_money_cash/show', 'MemberMoneyCashController@show');
+$router->match(['post'], 'member_money_cash/delete', 'MemberMoneyCashController@delete');
+$router->match(['get'], 'member_money_cash/show', 'MemberMoneyCashController@show');
 $router->match(['get', 'post'], 'member_money_cash/pass', 'MemberMoneyCashController@pass');
 
 $router->match(['get', 'post'], 'member_group', 'MemberGroupController@index');
 $router->match(['get', 'post'], 'member_group/add', 'MemberGroupController@add');
 $router->match(['get', 'post'], 'member_group/edit', 'MemberGroupController@edit');
-$router->match(['get', 'post'], 'member_group/delete', 'MemberGroupController@delete');
-$router->match(['get', 'post'], 'member_group/show', 'MemberGroupController@show');
-$router->match(['get', 'post'], 'member_group/sort', 'MemberGroupController@sort');
+$router->match(['post'], 'member_group/delete', 'MemberGroupController@delete');
+$router->match(['get'], 'member_group/show', 'MemberGroupController@show');
+$router->match(['post'], 'member_group/sort', 'MemberGroupController@sort');
 
 $router->match(['get', 'post'], 'member_credit/charge', 'MemberCreditController@charge');
 

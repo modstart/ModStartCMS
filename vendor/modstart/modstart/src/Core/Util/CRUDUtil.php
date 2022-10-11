@@ -49,9 +49,9 @@ class CRUDUtil
         Route::match(['get', 'post'], "$prefix", "$class@index");
         Route::match(['get', 'post'], "$prefix/add", "$class@add");
         Route::match(['get', 'post'], "$prefix/edit", "$class@edit");
-        Route::match(['get', 'post'], "$prefix/delete", "$class@delete");
-        Route::match(['get', 'post'], "$prefix/show", "$class@show");
-        Route::match(['get', 'post'], "$prefix/sort", "$class@sort");
+        Route::match(['post'], "$prefix/delete", "$class@delete");
+        Route::match(['get'], "$prefix/show", "$class@show");
+        Route::match(['post'], "$prefix/sort", "$class@sort");
     }
 
     public static function registerGridResource(Grid $grid, $class, $param = [])

@@ -258,7 +258,7 @@ class ModelController extends Controller
                 ModelUtil::transactionBegin();
                 if ($record) {
                     ModelUtil::update('cms_model', $record['id'], ArrayUtil::keepKeys($data, [
-                        'title', 'enable', 'form', 'listTemplate', 'detailTemplate', 'pageTemplate',
+                        'title', 'enable', 'form', 'mode', 'listTemplate', 'detailTemplate', 'pageTemplate',
                     ]));
                 } else {
                     $data = ModelUtil::insert('cms_model', $data);
