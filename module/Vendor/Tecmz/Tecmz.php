@@ -328,7 +328,7 @@ class Tecmz
     }
 
     /**
-     * OCR
+     * 图片压缩
      *
      * @param $format string
      * @param $imageData string binary
@@ -354,6 +354,42 @@ class Tecmz
             'imageOriginalSize' => $ret['data']['originalSize'],
             'imageCompressSize' => $ret['data']['compressSize'],
             'imageUrl' => $ret['data']['url'],
+        ]);
+    }
+
+    /**
+     * 随机头像
+     *
+     * @return array|mixed
+     */
+    public function randomAvatar()
+    {
+        $ret = $this->request('/random_avatar/prepare', []);
+        if (Response::isError($ret)) {
+            return $ret;
+        }
+        if ('png' == $ret['data']['format']) {
+            $imageData = @base64_decode($ret['data']['imageData']);
+        } else {
+            $post = [];
+            $post['format'] = $ret['data']['format'];
+            $post['imageData'] = $ret['data']['imageData'];
+            $post['toFormat'] = 'png';
+            $server = $ret['data']['server'];
+            // print_r([$post, $server]);exit();
+            $ret = CurlUtil::postJSONBody($server, $post);
+            // print_r($ret);exit();
+            if (Response::isError($ret)) {
+                return $ret;
+            }
+            $imageData = CurlUtil::getRaw($ret['data']['url']);
+        }
+        if (empty($imageData)) {
+            return Response::generateError('图片数据为空');
+        }
+        return Response::generate(0, 'ok', [
+            'size' => strlen($imageData),
+            'imageData' => $imageData,
         ]);
     }
 

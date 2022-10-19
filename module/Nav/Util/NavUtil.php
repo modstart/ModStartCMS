@@ -35,6 +35,7 @@ class NavUtil
             'name' => 'name',
             'openType' => 'openType',
             'link' => 'link',
+            'icon' => 'icon',
         ], 'id', 'pid', 'sort', ['enable' => true]);
         return array_filter($nodes, function ($item) use ($position) {
             return $item['position'] == $position;

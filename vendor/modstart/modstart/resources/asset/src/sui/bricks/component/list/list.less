@@ -129,7 +129,7 @@
 
                         .btn {
                             flex: 1;
-                            margin:0 0.5rem;
+                            margin: 0 0.5rem;
                         }
                     }
                 }
@@ -881,10 +881,23 @@
     }
 
     .item-video-cover {
-        background: #FFF;
+        background-color: var(--color-content-bg);
         padding: var(--size-margin);
         margin: 0 0 0.5rem 0;
         border-radius: var(--size-radius);
+
+        &.trans {
+            background: transparent;
+            padding: 0;
+        }
+
+        &.vertical {
+            .cover {
+                &:after {
+                    margin-top: 151%;
+                }
+            }
+        }
 
         &:hover {
             transform: scale(1.07);
@@ -930,7 +943,7 @@
             }
 
             a {
-                color: #c4cfdb;
+                color: var(--color-tertiary);
 
                 i {
                     display: inline-block;

@@ -54,6 +54,7 @@ class NavController extends Controller
                         }
                     });
                 $builder->text('name', '名称');
+                $builder->icon('icon', '图标')->help('部分主题支持图标显示');
                 $builder->link('link', '链接');
                 $builder->switch('enable', '启用')->optionsYesNo()->gridEditable(true)->defaultValue(true);
                 $builder->radio('openType', '打开方式')->optionType(NavOpenType::class)->defaultValue(NavOpenType::CURRENT_WINDOW);

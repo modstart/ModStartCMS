@@ -859,8 +859,8 @@
 
 .ub-header-c {
     height: 3rem;
-    border-bottom: 0.05rem solid #EEE;
-    background: #FFF;
+    border-bottom: 0.05rem solid var(--color-body-line);
+    background: var(--color-content-bg);
     overflow: hidden;
     position: fixed;
     text-align: center;
@@ -899,8 +899,9 @@
             padding: 0.2rem 0.5rem 0.2rem 0.75rem;
             width: 30%;
             max-width: 30em;
-            border: 1px solid var(--color-primary);
+            border: 1px solid var(--color-body-line);
             position: relative;
+            background-color: var(--color-body-bg);
 
             .input {
                 height: 1.5rem;
@@ -909,25 +910,26 @@
                 padding: 0 1.5rem 0 0;
                 border: none;
                 background: none;
-                color: #333;
+                color: var(--color-text);
             }
 
             .submit {
                 position: absolute;
-                right: -1px;
-                top: -1px;
-                height: 2rem;
+                right: 0px;
+                top: 0px;
+                height: 1.9rem;
                 border: none;
                 outline: none;
                 font-size: 0.7rem;
-                color: #FFF;
+                color: var(--color-text);
                 cursor: pointer;
-                background: var(--color-primary);
+                background: var(--color-body-bg);
                 border-radius: 0 1rem 1rem 0;
                 padding: 0 0.6rem 0 0.5rem;
 
                 &:hover {
-                    background: var(--color-primary-dark);
+                    background: var(--color-body-bg);
+                    color: var(--color-primary);
                 }
             }
         }
@@ -955,7 +957,7 @@
 
         .item-icon {
             vertical-align: middle;
-            color: #333;
+            color: var(--color-text);
             display: inline-block;
             padding: 0 0.6rem;
             margin-top: -0.2rem;
@@ -1072,7 +1074,7 @@
         .search {
             display: none;
             padding: 0 0.5rem 0.5rem 0.5rem;
-            background: #FFF;
+            background: var(--color-content-bg);
             position: fixed;
             top: 3rem;
             left: 0;

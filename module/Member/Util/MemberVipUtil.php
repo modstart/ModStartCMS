@@ -39,6 +39,18 @@ class MemberVipUtil
         });
     }
 
+    public static function vipsByIds($vipIds)
+    {
+        $map = self::map();
+        $vips = [];
+        foreach ($vipIds as $vipId) {
+            if (isset($map[$vipId])) {
+                $vips[] = $map[$vipId];
+            }
+        }
+        return $vips;
+    }
+
     public static function mapTitle()
     {
         return array_build(self::map(), function ($k, $v) {

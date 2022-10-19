@@ -5,8 +5,6 @@ use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsMemberPermitUtil;
 
 /**
- * Class MCms
- *
  * @Util CMS操作
  */
 class MCms

@@ -195,11 +195,17 @@
 
 
 .ub-nav-group {
-    background: #FFFFFF;
+    background: var(--color-content-bg);
     border-radius: var(--size-radius);
 
+    &.bare {
+        .group {
+            padding-left: 0rem;
+        }
+    }
+
     .group {
-        background: #FFF;
+        background: var(--color-content-bg);
         position: relative;
         padding-left: 6rem;
         overflow: hidden;

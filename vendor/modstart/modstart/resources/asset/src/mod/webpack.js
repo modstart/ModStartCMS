@@ -64,6 +64,7 @@ module.exports = function (dirname) {
     }
 
     let cleanFilesCommands = []
+    console.log("remove old files")
     switch (config.platform) {
         case 'windows':
             cleanFilesCommands.push(files.length > 0 ? 'del /F ' + files.join(' ') : 'cd')
@@ -132,15 +133,24 @@ module.exports = function (dirname) {
                                 console.error(err);
                                 return;
                             }
-                            const codeCompress = UglifyJS.minify(data, {
+                            console.log(`begin ${fileFullPath} (${data.length})`)
+                            if (data.length > 2 * 1024 * 1024) {
+                                console.log(`skip ${fileFullPath} (too large)`)
+                                return;
+                            }
+                            const compressResult = UglifyJS.minify(data, {
                                 output: {
                                     comments: /^SOME_NONE_COMMENTS/
                                 }
-                            }).code
+                            })
+                            console.log(`end ${fileFullPath}`)
+                            const codeCompress = compressResult.code
                             if (codeCompress) {
                                 console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
                                 fs.writeFile(fileFullPath, codeCompress, () => {
                                 });
+                            } else {
+                                console.log(`failed ${fileFullPath}`)
                             }
                         });
                     })
