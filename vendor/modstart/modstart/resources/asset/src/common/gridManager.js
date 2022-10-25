@@ -33,6 +33,7 @@ var GridManager = function (opt) {
         editDialogSize: ['90%', '90%'],
         showDialogSize: ['90%', '90%'],
         importDialogSize: ['90%', '90%'],
+        pageJumpEnable: false,
         lang: {
             loading: 'Loading',
             noRecords: 'No Records',
@@ -166,13 +167,17 @@ var GridManager = function (opt) {
                         data: data.records,
                         limit: data.pageSize,
                     });
+                    var pageLayout = ['limit', 'prev', 'page', 'next', 'count'];
+                    if(option.pageJumpEnable){
+                        pageLayout.push('skip');
+                    }
                     layui.laypage.render({
                         elem: option.id + 'Pager',
                         curr: data.page,
                         count: data.total,
                         limit: data.pageSize,
                         limits: option.pageSizes,
-                        layout: ['limit', 'prev', 'page', 'next', 'count',],
+                        layout: pageLayout,
                         jump: function (obj, first) {
                             if (!first) {
                                 lister.setPage(obj.curr);

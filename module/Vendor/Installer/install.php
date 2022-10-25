@@ -181,6 +181,14 @@ include __DIR__ . '/function.php';
                                     <div>- 配置Nginx/Apache，保证访问 <a href="/install/ping" target="_blank">/install/ping</a> 出现 ok 字样。</div>
                                 </div>
                             </div>
+                            <div data-public-install-path-warning style="display:none;">
+                                <?php text_warning('安装路径为 public/install.php ，可能设置错了网站根目录，请仔细检查','https://modstart.com/doc/install/start.html#%E5%8F%82%E8%80%83%E9%85%8D%E7%BD%AE'); ?>
+                            </div>
+                            <script>
+                                if(window.location.href.indexOf('public/install.php')>0){
+                                    document.querySelector('[data-public-install-path-warning]').style.display = 'block';
+                                }
+                            </script>
                         </div>
                     </div>
                     <div class="content-item-foot">

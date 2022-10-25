@@ -10,7 +10,6 @@
 @endsection
 
 @section('bodyAppend')
-    @parent
     {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}
     <script>
         $(function () {
@@ -30,7 +29,8 @@
 @endsection
 
 
-@section('bodyContent')
+{!! \ModStart\ModStart::style('html,body{background:var(--color-content-bg);}') !!}
+@section('body')
 
     <div class="ub-account pb-member-login-account">
 
@@ -39,7 +39,7 @@
                 <a href="javascript:;" class="active">登录</a>
                 @if(!modstart_config('registerDisable',false) && !modstart_config('Member_LoginPhoneAutoRegister', false))
                     ·
-                    <a href="{{$__msRoot}}register?redirect={{!empty($redirect)?urlencode($redirect):''}}">注册</a>
+                    <a href="{{$__msRoot}}register?dialog=1&redirect={{!empty($redirect)?urlencode($redirect):''}}">注册</a>
                 @endif
             </div>
 

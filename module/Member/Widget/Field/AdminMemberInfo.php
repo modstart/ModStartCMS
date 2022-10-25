@@ -20,6 +20,20 @@ class AdminMemberInfo extends Text
     protected $view = 'modstart::core.field.text';
     protected $editable = false;
 
+    protected function setup()
+    {
+        parent::setup();
+        $this->addVariables([
+            'memberFieldName' => null,
+        ]);
+    }
+
+    public function memberFieldName($v)
+    {
+        $this->addVariables(['memberFieldName' => $v]);
+        return $this;
+    }
+
     public function renderView(AbstractField $field, $item, $index = 0)
     {
         switch ($field->renderMode()) {
@@ -27,7 +41,7 @@ class AdminMemberInfo extends Text
             case FieldRenderMode::DETAIL:
                 $this->hookRendering(function (AbstractField $field, $item, $index) {
                     $column = $field->column();
-                    return MemberCmsUtil::showFromId($item->{$column});
+                    return MemberCmsUtil::showFromId($item->{$column}, $this->getVariable('memberFieldName'));
                 });
         }
         return parent::renderView($field, $item, $index);

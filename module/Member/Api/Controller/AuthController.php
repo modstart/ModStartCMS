@@ -691,6 +691,35 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, '两次手机不一致');
         }
         $memberUser = MemberUtil::getByPhone($phone);
+        // 自动注册
+        if (empty($memberUser) && modstart_config('Member_LoginPhoneAutoRegister', false)) {
+            foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
+                /** @var AbstractMemberRegisterProcessorProvider $provider */
+                $ret = $provider->preCheck();
+                if (Response::isError($ret)) {
+                    return $ret;
+                }
+            }
+            $ret = MemberUtil::register(null, $phone, null, null, true);
+            if ($ret['code']) {
+                return Response::generate(-1, $ret['msg']);
+            }
+            $memberUserId = $ret['data']['id'];
+            MemberUtil::autoSetUsernameNickname($memberUserId, modstart_config('Member_LoginPhoneNameSuggest', '用户'));
+            $update = [];
+            $update['phoneVerified'] = true;
+            $update['registerIp'] = Request::ip();
+            if (!empty($update)) {
+                MemberUtil::update($memberUserId, $update);
+            }
+            EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
+            Session::forget('registerCaptchaPass');
+            foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
+                /** @var AbstractMemberRegisterProcessorProvider $provider */
+                $provider->postProcess($memberUserId);
+            }
+            $memberUser = MemberUtil::get($memberUserId);
+        }
         if (empty($memberUser)) {
             return Response::generate(-1, '手机没有绑定任何账号');
         }
@@ -698,6 +727,7 @@ class AuthController extends ModuleBaseController
         Session::forget('loginPhoneVerifyTime');
         Session::forget('loginPhone');
         Session::put('memberUserId', $memberUser['id']);
+        EventUtil::fire(new MemberUserLoginedEvent($memberUser));
         return Response::generate(0, null);
     }
 
@@ -725,7 +755,7 @@ class AuthController extends ModuleBaseController
         }
 
         $memberUser = MemberUtil::getByPhone($phone);
-        if (empty($memberUser)) {
+        if (empty($memberUser) && !modstart_config('Member_LoginPhoneAutoRegister', false)) {
             return Response::generate(-1, '手机没有绑定任何账号');
         }
 
@@ -826,7 +856,7 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, $ret['msg']);
         }
         $memberUserId = $ret['data']['id'];
-        MemberUtil::suggestUsernameNickname($memberUserId, modstart_config('Member_LoginPhoneNameSuggest', '用户'));
+        MemberUtil::autoSetUsernameNickname($memberUserId, modstart_config('Member_LoginPhoneNameSuggest', '用户'));
         $update = [];
         $update['phoneVerified'] = true;
         $update['registerIp'] = Request::ip();

@@ -130,6 +130,7 @@
             editDialogSize: {!! json_encode($editDialogSize) !!},
             showDialogSize: {!! json_encode($showDialogSize) !!},
             importDialogSize: {!! json_encode($importDialogSize) !!},
+            pageJumpEnable: {!! json_encode(boolval($pageJumpEnable)) !!},
             lang:{
                 loading: {!! json_encode(L('Loading')) !!},
                 noRecords: {!! json_encode(L('No Records')) !!},
@@ -142,10 +143,6 @@
                 confirmDeleteRecords: {!! json_encode(L('Confirm Delete %d records ?')) !!},
             },
         });
-
-
-
-
     })();
 </script>
 {!! $bodyAppend !!}

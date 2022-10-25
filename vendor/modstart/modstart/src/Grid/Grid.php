@@ -74,6 +74,7 @@ use ModStart\Support\Manager\FieldManager;
  * @method Grid|mixed defaultPageSize($value = null)
  * @method Grid|mixed pageSizes($value = null)
  * @method Grid|mixed gridToolbar($value = []),
+ * @method Grid|mixed pageJumpEnable($enable = null),
  *
  * $value = function(Grid $grid, $items){ return $items; }
  * @method Grid|mixed hookPrepareItems($value = null)
@@ -144,7 +145,8 @@ class Grid
         'gridRowCols',
         'defaultPageSize',
         'pageSizes',
-        'gridToolbar'
+        'gridToolbar',
+        'pageJumpEnable',
     ];
     /**
      * 运行引擎 @see GridEngine
@@ -198,6 +200,8 @@ class Grid
     private $pageSizes = [10, 50, 100];
     /** @var string[] grid toolbar */
     private $gridToolbar = [];
+    /** @var bool page jump enable */
+    private $pageJumpEnable = false;
     /** @var Closure 渲染前置处理Items */
     private $hookPrepareItems = null;
     /** @var array 渲染在Table顶部的区域 */

@@ -56,7 +56,7 @@ abstract class AbstractDataStorage
 
     public function softDelete($file)
     {
-        $this->move($file, self::DATA . '/_trash/' . date('Ymd_H') . '/' . $file);
+        return $this->move($file, self::DATA . '/_trash/' . date('Ymd_H') . '/' . $file);
     }
 
     abstract public function put($file, $content);

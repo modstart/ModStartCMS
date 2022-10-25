@@ -236,6 +236,7 @@ class EloquentRepository extends Repository
         // var_dump($model->getQueries());exit();
         // var_dump($model->grid()->isDynamicModel());exit();
         $joins = $model->grid()->gridFilterJoins();
+        // var_dump($joins);
         if (!empty($joins)) {
             $methodMap = [
                 'left' => 'leftJoin',
@@ -250,6 +251,7 @@ class EloquentRepository extends Repository
         }
         // var_dump($model->getQueries());exit();
         $model->getQueries()->each(function ($value) use (&$query, $tableColumns) {
+            // print_r($value);
             if ($value['method'] == 'paginate') {
                 $value['arguments'][1] = $tableColumns;
             } elseif ($value['method'] == 'get') {

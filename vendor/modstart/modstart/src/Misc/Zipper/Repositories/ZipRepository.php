@@ -100,6 +100,20 @@ class ZipRepository implements RepositoryInterface
         return $this->archive->getStream($pathInArchive);
     }
 
+    private function isUtf8($string)
+    {
+        return preg_match('%^(?:
+      [\x09\x0A\x0D\x20-\x7E]            # ASCII
+    | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
+    | \xE0[\xA0-\xBF][\x80-\xBF]         # excluding overlongs
+    | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+    | \xED[\x80-\x9F][\x80-\xBF]         # excluding surrogates
+    | \xF0[\x90-\xBF][\x80-\xBF]{2}      # planes 1-3
+    | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+    | \xF4[\x80-\x8F][\x80-\xBF]{2}      # plane 16
+)*$%xs', $string);
+    }
+
     /**
      * Will loop over every item in the archive and will execute the callback on them
      * Will provide the filename for every item
@@ -109,7 +123,7 @@ class ZipRepository implements RepositoryInterface
     public function each($callback)
     {
         $records = [];
-        $hasUtf8 = false;
+        // $hasUtf8 = false;
         for ($i = 0; $i < $this->archive->numFiles; ++$i) {
             //skip if folder
             $stats = $this->archive->statIndex($i);
@@ -117,22 +131,30 @@ class ZipRepository implements RepositoryInterface
                 continue;
             }
             $name = $this->archive->getNameIndex($i, 0x0001 << 6);
-            $encoding = mb_detect_encoding($name, ['GBK', 'UTF-8']);
-            // var_dump($encoding);
-            if ('UTF-8' === $encoding) {
-                $hasUtf8 = true;
-            }
-            $records[] = [
+            $encoding = mb_detect_encoding($name, ['ASCII', 'GBK', 'UTF-8']);
+            // if ('UTF-8' === $encoding) {
+            // $hasUtf8 = true;
+            // }
+            $record = [
                 $encoding,
                 $name,
                 $stats
             ];
+            // print_r($record);
+            $records[] = $record;
         }
+        // print_r($records);
+        // print_r(json_encode($hasUtf8));
+        // echo "\n";
         foreach ($records as $record) {
             list($encoding, $name, $stats) = $record;
-            if (!$hasUtf8 && 'CP936' == $encoding) {
-                $name = mb_convert_encoding($name, 'UTF-8', 'GBK');
+            // echo $this->isUtf8($name) . "\n";
+            if (!$this->isUtf8($name)) {
+                $name = mb_convert_encoding($name, 'UTF-8', $encoding);
             }
+            //if (!$hasUtf8 && 'CP936' == $encoding) {
+            //    $name = mb_convert_encoding($name, 'UTF-8', 'GBK');
+            //}
             call_user_func_array($callback, [
                 $name,
                 $stats

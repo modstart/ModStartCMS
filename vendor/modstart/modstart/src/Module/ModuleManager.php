@@ -34,6 +34,9 @@ class ModuleManager
         }
         if (file_exists($path = self::path($name, 'config.json'))) {
             $config = json_decode(file_get_contents($path), true);
+            if (empty($config)) {
+                BizException::throws('模块配置文件错误 - ' . $name);
+            }
             $basic[$name] = array_merge([
                 'name' => 'None',
                 'title' => 'None',

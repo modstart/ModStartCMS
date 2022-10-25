@@ -10,9 +10,7 @@
 @endsection
 
 @section('bodyAppend')
-    @parent
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageBodyAppend'); !!}
-    {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}
     <script>
         window.__memberCheckCaptcha = function (){
             $('[data-captcha-status]').hide().filter('[data-captcha-status=loading]').show()
@@ -43,14 +41,15 @@
     </script>
 @endsection
 
-@section('bodyContent')
+{!! \ModStart\ModStart::style('html,body{background:var(--color-content-bg);}') !!}
+@section('body')
 
     <div class="ub-account" style="min-height:calc( 100vh - 220px );">
 
         <div class="box">
 
             <div class="nav">
-                <a href="{{$__msRoot}}login?redirect={{!empty($redirect)?urlencode($redirect):''}}">登录</a>
+                <a href="{{$__msRoot}}login?dialog=1&redirect={{!empty($redirect)?urlencode($redirect):''}}">登录</a>
 
                 ·
                 <a href="javascript:;" class="active">注册</a>

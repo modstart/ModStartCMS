@@ -541,7 +541,9 @@ class FileUtil
             if (StrUtil::startWith($path, '//')) {
                 $path = 'http://' . $path;
             }
-            $image = CurlUtil::getRaw($path);
+            $image = CurlUtil::getRaw($path, [], [
+                'timeout' => 60 * 10,
+            ]);
             if (empty($image)) {
                 return null;
             }

@@ -83,7 +83,7 @@ class MemberGroupUtil
     public static function getMemberGroup($memberUser)
     {
         if (empty($memberUser)) {
-            return self::get(null);
+            return null;
         }
         return self::get($memberUser['groupId']);
     }

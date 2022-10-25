@@ -24,7 +24,12 @@ class ConfigController extends Controller
                 ->when('=', true, function (Form $form) {
                     $form->text('Member_LoginPhoneNameSuggest', '快捷注册用户名前缀')
                         ->defaultValue('用户')
-                        ->help('默认为"用户"，用户注册后自动设置用户名和昵称为 "用户xxxxxx"');
+                        ->help(join('', [
+                            '<p>默认为"用户"，用户注册后自动设置用户名和昵称为 "用户xxxx"。可以使用占位符，如"用户{Phone}"表示注册后自动设置为"用户+手机号"。</p>',
+                            '<p>{Phone}用户手机 {Phone4}手机后4位 {Uid}用户ID，如冲突将会自动追加随机字符串</p>'
+                        ]));
+                    $form->switch('Member_LoginPhoneAutoRegister', '登录时自动注册')
+                        ->help('开启后，用户使用手机号登录时，如果用户不存在则自动注册');
                 });
             $builder->select('Member_LoginDefault', '默认登录方式')->options([
                 'default' => '用户名密码登录',

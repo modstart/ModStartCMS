@@ -727,6 +727,7 @@ class Form implements Renderable
             case 'canBatchSelect':
             case 'batchOperatePrepend':
             case 'gridToolbar';
+            case 'pageJumpEnable';
             case 'textEdit':
                 return $this;
         }

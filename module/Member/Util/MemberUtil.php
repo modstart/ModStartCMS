@@ -255,9 +255,29 @@ class MemberUtil
         return Response::generateSuccessData($memberUser);
     }
 
-    public static function suggestUsernameNickname($memberUserId, $prefix = '用户', $randomLength = 6)
+    public static function autoSetUsernameNickname($memberUserId, $suggestName)
     {
-        $suggestName = $prefix . RandomUtil::string($randomLength);
+        $randomLength = 6;
+        if (preg_match('/\\{.*\\}/', $suggestName)) {
+            $memberUser = self::get($memberUserId);
+            $map = [
+                '{Phone}' => $memberUser['phone'],
+                '{Phone4}' => substr($memberUser['phone'], 7),
+                '{Uid}' => $memberUser['id'],
+            ];
+            $suggestName = str_replace(array_keys($map), array_values($map), $suggestName);
+            $randomLength = 0;
+        }
+        self::suggestUsernameNickname($memberUserId, $suggestName, $randomLength);
+    }
+
+    private static function suggestUsernameNickname($memberUserId, $prefix = '用户', $randomLength = 6)
+    {
+        if ($randomLength > 0) {
+            $suggestName = $prefix . RandomUtil::string($randomLength);
+        } else {
+            $suggestName = $prefix;
+        }
         for ($i = 0; $i < 20; $i++) {
             $found = ModelUtil::model('member_user')
                 ->where(['username' => $suggestName])

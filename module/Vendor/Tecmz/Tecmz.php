@@ -79,7 +79,9 @@ class Tecmz
         if ($this->debug) {
             Log::debug('TecmzApi -> ' . $url . ' -> ' . json_encode($param, JSON_UNESCAPED_UNICODE));
         }
-        return CurlUtil::postJSONBody($url, $param);
+        return CurlUtil::postJSONBody($url, $param, [
+            'timeout' => 60 * 10,
+        ]);
     }
 
     /**
