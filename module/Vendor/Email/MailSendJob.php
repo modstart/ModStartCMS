@@ -32,7 +32,7 @@ class MailSendJob extends BaseJob
         $job->emailUserName = $emailUserName;
         $job->option = $option;
         $job->module = $module;
-        $job->onQueue('DefaultJob');
+        // $job->onQueue('DefaultJob');
         if ($delay > 0) {
             $job->delay($delay);
         }

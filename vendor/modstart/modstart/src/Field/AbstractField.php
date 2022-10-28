@@ -593,7 +593,13 @@ class AbstractField implements Renderable
                     if (is_array($item->{$column})) {
                         return join(', ', $item->{$column});
                     }
-                    return htmlspecialchars((string)$item->{$column});
+                    if (str_contains($column, '.')) {
+                        $value = (string)ModelUtil::traverse($item, $column);
+                        // echo $column . ' - ' . json_encode($value) . "\n";
+                    } else {
+                        $value = (string)$item->{$column};
+                    }
+                    return htmlspecialchars($value);
             }
         } catch (\Throwable $e) {
             Log::error('Field renderMode error - ' . $e->getMessage() . ' - ' . $e->getTraceAsString());

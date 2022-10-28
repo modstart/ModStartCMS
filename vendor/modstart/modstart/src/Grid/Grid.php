@@ -255,6 +255,9 @@ class Grid
      */
     public static function make($model, \Closure $builder = null)
     {
+        if ($model && is_object($model)) {
+            return new Grid($model, $builder);
+        }
         if (class_exists($model)) {
             if (
                 is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)
@@ -484,6 +487,7 @@ class Grid
         // print_r($input->getArray('search'));exit();
         $this->gridFilter->setSearch($input->getArray('search'));
         $items = $this->gridFilter->execute();
+        // print_r($items->toArray());exit();
         if ($this->engine == GridEngine::TREE) {
             $treeIdName = $this->repository()->getKeyName();
             $treePidName = $this->repository()->getTreePidColumn();
@@ -495,6 +499,7 @@ class Grid
         if ($this->hookPrepareItems) {
             $items = call_user_func($this->hookPrepareItems, $this, $items);
         }
+        // var_dump($items);exit();
         $records = [];
         foreach ($items as $index => $item) {
             // print_r($item);exit();
@@ -515,9 +520,11 @@ class Grid
                     continue;
                 }
                 $value = null;
+                // var_dump($field->column(),$itemColumns);
                 if (in_array($field->column(), $itemColumns)
                     || ($item instanceof \Illuminate\Database\Eloquent\Model && method_exists($item, $field->column()))
                 ) {
+                    // var_dump($field->column());
                     $value = $item->{$field->column()};
                     $field->item($item);
                     if ($field->hookValueUnserialize()) {
@@ -534,6 +541,7 @@ class Grid
                     if (str_contains($field->column(), '.')) {
                         $value = ModelUtil::traverse($item, $field->column());
                     }
+                    // var_dump($field->column(),$value);
                     if ($field->hookValueUnserialize()) {
                         $value = call_user_func($field->hookValueUnserialize(), $value, $field);
                     }
@@ -547,7 +555,9 @@ class Grid
                 // echo $field->column() . ' ' . json_encode($value) . "\n";
                 $field->item($item);
                 // return $this->repository()->getTreeTitleColumn();
+                // echo $field->column() . ' ' . json_encode($value) . "\n";
                 $record[$field->column()] = $field->renderView($field, $item, $index);
+                // echo $field->column() . ' ' . json_encode($record[$field->column()]) . "\n";
                 if ($this->engine == GridEngine::TREE && $field->column() == $this->repository()->getTreeTitleColumn()) {
                     $treePrefix = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $item->_level - 1)
                         . '<a class="tree-arrow-icon ub-text-muted" href="javascript:;"><i class="icon iconfont icon-angle-right"></i></a> ';
@@ -564,6 +574,7 @@ class Grid
                     }
                 }
             }
+            // var_dump($record);
             $records[] = $record;
         }
         $head = [];

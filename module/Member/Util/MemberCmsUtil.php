@@ -42,6 +42,7 @@ class MemberCmsUtil
             foreach ($field as $f) {
                 if (!empty($memberUser[$f])) {
                     $text = $memberUser[$f];
+                    break;
                 }
             }
             return AutoRenderedFieldValue::make('<a href="javascript:;" class="ub-icon-text" data-dialog-request="'

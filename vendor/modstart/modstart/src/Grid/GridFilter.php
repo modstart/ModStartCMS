@@ -178,6 +178,8 @@ class GridFilter
             $this->getConditions()
         );
         $this->model->clearQuery();
+        // print_r($conditions);
+        // print_r($this->model->getQueries()->toArray());exit();
         return $this->model->addConditions($conditions)->buildData();
     }
 

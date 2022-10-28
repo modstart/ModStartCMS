@@ -171,7 +171,7 @@ let Dialog = {
             shadeClose: true,
             fixed: true,
             anim: 0,
-            openCallback: function () {
+            openCallback: function (layero, index) {
             },
             closeCallback: function () {
             }
@@ -191,8 +191,8 @@ let Dialog = {
             content: content,
             area: [opt.width, opt.height],
             fixed: opt.fixed,
-            success: function () {
-                opt.openCallback();
+            success: function (layero, index) {
+                opt.openCallback(layero, index);
             },
             end: function () {
                 opt.closeCallback();
