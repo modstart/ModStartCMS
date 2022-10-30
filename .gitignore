@@ -7,6 +7,7 @@ Homestead.json
 .project
 /public/temp/
 /public/ueditor-plus/
+/public/ueditor-plus-doc/
 /storage/install.lock
 /storage/backup/
 .DS_Store
