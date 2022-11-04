@@ -13,6 +13,11 @@ abstract class AbstractScheduleProvider
 {
     abstract public function cron();
 
+    public function name()
+    {
+        return 'default';
+    }
+
     abstract public function title();
 
     abstract public function run();

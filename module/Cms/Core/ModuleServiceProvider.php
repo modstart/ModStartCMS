@@ -22,6 +22,7 @@ use Module\Vendor\Admin\Config\AdminWidgetLink;
 use Module\Vendor\Provider\HomePage\HomePageProvider;
 use Module\Vendor\Provider\SearchBox\QuickSearchBoxProvider;
 use Module\Vendor\Provider\SearchBox\SearchBoxProvider;
+use Module\Vendor\Provider\SiteUrl\SiteUrlBiz;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -40,6 +41,9 @@ class ModuleServiceProvider extends ServiceProvider
         );
         CmsThemeProvider::register(DefaultThemeProvider::class);
         HomePageProvider::register(CmsHomePageProvider::class);
+        if (class_exists(SiteUrlBiz::class)) {
+            SiteUrlBiz::register(CmsSiteUrlBiz::class);
+        }
 
         AdminWidgetLink::register(function () {
             $menu = [];

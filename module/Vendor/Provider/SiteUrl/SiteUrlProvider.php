@@ -6,6 +6,10 @@ namespace Module\Vendor\Provider\SiteUrl;
 
 use ModStart\Core\Exception\BizException;
 
+/**
+ * 网站链接提供者
+ * 当链接地址更新、创建、删除时，会自动调用该 Provider
+ */
 class SiteUrlProvider
 {
     /**

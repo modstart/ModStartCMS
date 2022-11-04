@@ -39,6 +39,15 @@ class ScheduleProvider
         return self::$instances;
     }
 
+    public static function callByName($name)
+    {
+        foreach (self::all() as $provider) {
+            if ($provider->name() == $name) {
+                call_user_func([$provider, 'run']);
+            }
+        }
+    }
+
     public static function call(Schedule $schedule)
     {
         foreach (ScheduleProvider::all() as $provider) {

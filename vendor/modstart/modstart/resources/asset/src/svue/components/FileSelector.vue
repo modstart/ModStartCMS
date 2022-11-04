@@ -108,7 +108,7 @@
             },
             fileDialogUrl: {
                 type: String,
-                default: 'member_data/select_dialog'
+                default: 'member_data/file_manager'
             },
             childKey: {
                 type: String,

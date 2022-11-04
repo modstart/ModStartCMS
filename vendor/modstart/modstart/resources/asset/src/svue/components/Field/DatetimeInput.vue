@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-date-picker :value="data" @change="onDataChange" type="datetime"
+        <el-date-picker v-model="data" @change="onDataChange" type="datetime"
                         value-format="yyyy-MM-dd HH:mm:ss" :placeholder="placeholder"></el-date-picker>
     </div>
 </template>

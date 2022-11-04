@@ -29,14 +29,14 @@
                     </div>
                 </transition-group>
                 <template v-if="datav.length===0 && mini">
-                    <a href="javascript:;" @click="$refs.fileDialog.show()">
+                    <a href="javascript:;" @click="doSelect">
                         <i class="iconfont icon-file"></i>
                         文件
                     </a>
                 </template>
                 <template v-if="datav.length>0 || !mini">
                     <div class="item" slot="footer" v-if="datav.length<max">
-                        <a href="javascript:;" class="plus" @click="$refs.fileDialog.show()">
+                        <a href="javascript:;" class="plus" @click="doSelect">
                             <i class="iconfont icon-plus"></i>
                         </a>
                     </div>
@@ -118,7 +118,7 @@
             },
             fileDialogUrl: {
                 type: String,
-                default: 'member_data/select_dialog'
+                default: 'member_data/file_manager'
             },
             max: {
                 type: Number,
@@ -132,6 +132,10 @@
                 type: String,
                 default: '_child',
             },
+            doSelectCustom: {
+                type: Function,
+                default: null,
+            }
         },
         data() {
             return {
@@ -166,7 +170,16 @@
             },
             doPreview(index) {
                 this.previewFile = this.datav[index]
-            }
+            },
+            doSelect() {
+                if (null === this.doSelectCustom) {
+                    this.$refs.fileDialog.show()
+                } else {
+                    this.doSelectCustom(items => {
+                        this.doFileSelect(items)
+                    })
+                }
+            },
         }
     }
 </script>

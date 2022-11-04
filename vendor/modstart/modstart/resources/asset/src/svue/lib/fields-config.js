@@ -77,6 +77,7 @@ export const FieldInputMixin = {
     },
     methods: {
         onDataChange(v){
+            // console.log('onDataChange',v)
             this.$emit("update", v)
         }
     }
