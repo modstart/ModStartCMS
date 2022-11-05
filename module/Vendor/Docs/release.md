@@ -1,6 +1,7 @@
 ## 3.7.0
 
 - 新增：任务调度执行器ScheduleRunner
+- 新增：SiteUrlBiz 网站链接管理基础组件
 
 ---
 

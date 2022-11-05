@@ -28,9 +28,8 @@ class CmsSiteUrlBiz extends AbstractSiteUrlBiz
         $batchRet = ModelUtil::batch('cms_content', $nextId);
         $finish = empty($batchRet['records']);
         foreach ($batchRet['records'] as $record) {
-            $url = ContentUrlMode::url($record);
             $records[] = [
-                'url' => modstart_web_full_url(ltrim($url, '/')),
+                'url' => ContentUrlMode::url($record),
                 'updateTime' => $record['updated_at'],
             ];
         }

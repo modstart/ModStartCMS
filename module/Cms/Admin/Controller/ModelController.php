@@ -23,8 +23,8 @@ use ModStart\Grid\Grid;
 use ModStart\ModStart;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Widget\TextDialogRequest;
+use Module\Cms\Field\CmsField;
 use Module\Cms\Type\CmsMode;
-use Module\Cms\Type\CmsModelFieldType;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Cms\Util\CmsTemplateUtil;
 
@@ -60,7 +60,7 @@ class ModelController extends Controller
             $data['title'] = $input->getTrimString('title');
             $data['name'] = $input->getTrimString('name');
             $data['enable'] = $input->getBoolean('enable');
-            $data['fieldType'] = $input->getType('fieldType', CmsModelFieldType::class);
+            $data['fieldType'] = $input->getTrimString('fieldType');
             $data['fieldData'] = $input->getArray('fieldData');
             $data['isRequired'] = $input->getBoolean('isRequired');
             $data['isSearch'] = $input->getBoolean('isSearch');
@@ -83,36 +83,9 @@ class ModelController extends Controller
             BizException::throwsIf('标识重复', !$unique);
             BizException::throwsIf('标识长度范围1-50', strlen($data['name']) < 1 || strlen($data['name']) > 50);
             BizException::throwsIfEmpty('字段类型为空', $data['fieldType']);
-            switch ($data['fieldType']) {
-                case CmsModelFieldType::RADIO:
-                case CmsModelFieldType::SELECT:
-                case CmsModelFieldType::CHECKBOX:
-                    BizException::throwsIf('选项为空', empty($data['fieldData']['options']));
-                    $data['fieldData']['options'] = array_filter(array_map(function ($v) {
-                        return trim($v);
-                    }, $data['fieldData']['options']));
-                    BizException::throwsIf('选项为空', empty($data['fieldData']['options']));
-                    break;
-            }
-            switch ($data['fieldType']) {
-                case CmsModelFieldType::TEXT:
-                case CmsModelFieldType::TEXTAREA:
-                case CmsModelFieldType::RADIO:
-                case CmsModelFieldType::SELECT:
-                case CmsModelFieldType::CHECKBOX:
-                    BizException::throwsIf('字段长度错误', $data['maxLength'] < 1 || $data['maxLength'] > 65535);
-                    break;
-                case CmsModelFieldType::IMAGE:
-                case CmsModelFieldType::FILE:
-                case CmsModelFieldType::VIDEO:
-                case CmsModelFieldType::AUDIO:
-                    $data['maxLength'] = 200;
-                    break;
-                case CmsModelFieldType::IMAGES:
-                    $data['maxLength'] = 1000;
-                    break;
-            }
-            $data['fieldData'] = json_encode($data['fieldData']);
+
+            $f = CmsField::getByNameOrFail($data['fieldType']);
+            $data = $f->prepareDataOrFail($data);
             ModelUtil::transactionBegin();
             if ($id) {
                 ModelUtil::update('cms_model_field', $id, $data);

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Module\Cms\Type\CmsModelFieldType;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsModelUtil;
 
@@ -32,7 +31,7 @@ class InitCmsData extends Migration
             [
                 'name' => 'price',
                 'title' => '价格',
-                'fieldType' => CmsModelFieldType::TEXT,
+                'fieldType' => 'text',
                 'isRequired' => false,
             ],
         ]);
@@ -45,7 +44,7 @@ class InitCmsData extends Migration
             [
                 'name' => 'type',
                 'title' => '职位类型',
-                'fieldType' => CmsModelFieldType::SELECT,
+                'fieldType' => 'select',
                 'fieldData' => [
                     'options' => ['财务', '技术', '销售', '后勤']
                 ]
@@ -53,7 +52,7 @@ class InitCmsData extends Migration
             [
                 'name' => 'amount',
                 'title' => '招聘人数',
-                'fieldType' => CmsModelFieldType::TEXT,
+                'fieldType' => 'text',
             ],
         ]);
         CmsCatUtil::build('news', [

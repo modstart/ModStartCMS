@@ -9,5 +9,11 @@
         "laravel5",
         "laravel9"
     ],
+    "types": [
+        "Arch"
+    ],
+    "tags": [
+        "基础组件"
+    ],
     "config": []
 }

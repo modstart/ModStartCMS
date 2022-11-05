@@ -30,10 +30,10 @@ use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Widget\TextLink;
+use Module\Cms\Field\CmsField;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsMode;
 use Module\Cms\Type\CmsModelContentStatus;
-use Module\Cms\Type\CmsModelFieldType;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Member\Util\MemberFieldUtil;
@@ -142,29 +142,8 @@ class ContentController extends Controller
                         $fieldInstance = new $fieldClass('_empty_');
                         $viewData['value'] = $fieldInstance->unserializeValue($viewData['value'], $fieldInstance);
                     }
-                    switch ($field['fieldType']) {
-                        case CmsModelFieldType::TEXT:
-                        case CmsModelFieldType::TEXTAREA:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.text-grid', $viewData);
-                        case CmsModelFieldType::RADIO:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.radio-grid', $viewData);
-                        case CmsModelFieldType::SELECT:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.select-grid', $viewData);
-                        case CmsModelFieldType::CHECKBOX:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.checkbox-grid', $viewData);
-                        case CmsModelFieldType::IMAGE:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.image-grid', $viewData);
-                        case CmsModelFieldType::IMAGES:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.images-grid', $viewData);
-                        case CmsModelFieldType::RICH_TEXT:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.richHtml-grid', $viewData);
-                        case CmsModelFieldType::VIDEO:
-                        case CmsModelFieldType::AUDIO:
-                        case CmsModelFieldType::FILE:
-                        case CmsModelFieldType::DATE:
-                        case CmsModelFieldType::DATETIME:
-                            return AutoRenderedFieldValue::makeView('modstart::core.field.text-grid', $viewData);
-                    }
+                    $f = CmsField::getByNameOrFail($field['fieldType']);
+                    return $f->renderForGrid($viewData);
                 });
             }
         } else {
@@ -276,54 +255,8 @@ class ContentController extends Controller
                     if (!empty($this->model['_customFields'])) {
                         $fields = $this->model['_customFields'];
                         foreach ($fields as $field) {
-                            $f = null;
-                            $options = [];
-                            if (!empty($field['fieldData']['options'])) {
-                                $options = array_build($field['fieldData']['options'], function ($k, $v) {
-                                    return [$v, $v];
-                                });
-                            }
-                            switch ($field['fieldType']) {
-                                case CmsModelFieldType::TEXT:
-                                    $f = $form->text($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::TEXTAREA:
-                                    $f = $form->textarea($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::RADIO:
-                                    $f = $form->radio($field['name'], $field['title'])->options($options);
-                                    break;
-                                case CmsModelFieldType::SELECT:
-                                    $f = $form->select($field['name'], $field['title'])->options($options);
-                                    break;
-                                case CmsModelFieldType::CHECKBOX:
-                                    $f = $form->checkbox($field['name'], $field['title'])->options($options);
-                                    break;
-                                case CmsModelFieldType::IMAGE:
-                                    $f = $form->image($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::IMAGES:
-                                    $f = $form->images($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::FILE:
-                                    $f = $form->file($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::DATE:
-                                    $f = $form->date($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::DATETIME:
-                                    $f = $form->datetime($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::RICH_TEXT:
-                                    $f = $form->richHtml($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::VIDEO:
-                                    $f = $form->video($field['name'], $field['title']);
-                                    break;
-                                case CmsModelFieldType::AUDIO:
-                                    $f = $form->audio($field['name'], $field['title']);
-                                    break;
-                            }
+                            $cmsF = CmsField::getByNameOrFail($field['fieldType']);
+                            $f = $cmsF->renderForForm($form, $field);
                             if (empty($f)) {
                                 BizException::throws('未知的字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
                             }

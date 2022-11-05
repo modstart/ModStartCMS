@@ -9,7 +9,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
-use Module\Cms\Type\CmsModelFieldType;
+use Module\Cms\Field\CmsField;
 use Module\Cms\Util\CmsContentUtil;
 
 /**
@@ -48,47 +48,14 @@ class FormController extends BaseCatController
         $customFields = isset($data['cat']['_model']['_customFields']) ? $data['cat']['_model']['_customFields'] : [];
         if (!empty($customFields)) {
             foreach ($customFields as $customField) {
-                switch ($customField['fieldType']) {
-                    case CmsModelFieldType::TEXT:
-                    case CmsModelFieldType::TEXTAREA:
-                    case CmsModelFieldType::RADIO:
-                    case CmsModelFieldType::SELECT:
-                    case CmsModelFieldType::RICH_TEXT:
-                        $submitData[$customField['name']] = $input->getTrimString($customField['name']);
-                        break;
-                    case CmsModelFieldType::CHECKBOX:
-                        $submitData[$customField['name']] = $input->getArray($customField['name']);
-                        break;
-                    case CmsModelFieldType::IMAGE:
-                        $submitData[$customField['name']] = $input->getImagePath($customField['name']);
-                        break;
-                    case CmsModelFieldType::IMAGES:
-                        $submitData[$customField['name']] = $input->getImagesPath($customField['name']);
-                        break;
-                    case CmsModelFieldType::FILE:
-                    case CmsModelFieldType::VIDEO:
-                    case CmsModelFieldType::AUDIO:
-                        $submitData[$customField['name']] = $input->getFilePath($customField['name']);
-                        break;
-                    case CmsModelFieldType::DATE:
-                        $submitData[$customField['name']] = $input->getDate($customField['name']);
-                        break;
-                    case CmsModelFieldType::DATETIME:
-                        $submitData[$customField['name']] = $input->getDatetime($customField['name']);
-                        break;
-                    default:
-                        return Response::generateError('错误的字段类型');
-                }
+                $f = CmsField::getByNameOrFail($customField['fieldType']);
+                $submitData[$customField['name']] = $f->prepareInputOrFail($customField, $input);
                 if (!empty($customField['isRequired'])) {
                     if (empty($submitData[$customField['name']])) {
                         return Response::generateError($customField['title'] . '不能为空');
                     }
                 }
-                switch ($customField['fieldType']) {
-                    case CmsModelFieldType::CHECKBOX:
-                        $submitData[$customField['name']] = json_encode($submitData[$customField['name']], JSON_UNESCAPED_UNICODE);
-                        break;
-                }
+                $submitData[$customField['name']] = $f->serializeValue($submitData[$customField['name']], $submitData);
             }
         }
         if (empty($submitData['content'])) {

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Module\Cms\Type\CmsMode;
-use Module\Cms\Type\CmsModelFieldType;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsModelUtil;
 
@@ -19,13 +18,13 @@ class InitCmsDataForm extends Migration
             [
                 'name' => 'phone',
                 'title' => '手机',
-                'fieldType' => CmsModelFieldType::TEXT,
+                'fieldType' => 'text',
                 'isRequired' => false,
             ],
             [
                 'name' => 'name',
                 'title' => '姓名',
-                'fieldType' => CmsModelFieldType::TEXT,
+                'fieldType' => 'text',
                 'isRequired' => false,
             ],
         ]);
