@@ -21,7 +21,7 @@ class CmsField
         ImagesCmsField::class,
         FileCmsField::class,
         DateCmsField::class,
-        DateTimeCmsField::class,
+        DatetimeCmsField::class,
         RichTextCmsField::class,
         VideoCmsField::class,
         AudioCmsField::class,
