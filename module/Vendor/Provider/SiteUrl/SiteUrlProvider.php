@@ -36,6 +36,16 @@ class SiteUrlProvider
         return self::$list;
     }
 
+    /**
+     * 链接更新/新增触发
+     * @param $url string 使用绝对路径，不要带 http 协议，如 /xxx/xxx
+     * @param $title string
+     * @param $param array ['biz'=>'xxx']
+     * @example
+     * SiteUrlProvider::update(modstart_web_url('xxx/xxx'));
+     * SiteUrlProvider::update(modstart_web_url('xxx/xxx'), 'xxx');
+     * SiteUrlProvider::update(modstart_web_url('xxx/xxx'), 'xxx', ['biz'=>'xxx']);
+     */
     public static function update($url, $title = '', $param = [])
     {
         BizException::throwsIfEmpty('SiteUrlProvider.Error -> url empty', $url);
@@ -45,6 +55,12 @@ class SiteUrlProvider
         }
     }
 
+    /**
+     * 链接删除触发
+     * @param $url string 使用绝对路径，不要带 http 协议，如 /xxx/xxx
+     * @example
+     * SiteUrlProvider::delete(modstart_web_url('xxx/xxx'));
+     */
     public static function delete($url)
     {
         BizException::throwsIfEmpty('SiteUrlProvider.Error -> url empty', $url);

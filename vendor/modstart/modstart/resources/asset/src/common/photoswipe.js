@@ -4,6 +4,10 @@ var PhotoSwipeCss = require('./../vendor/photoswipe/photoswipe.css');
 var PhotoSwipeSkinCss = require('./../vendor/photoswipe/default-skin/default-skin.css');
 var TemplateHtml = require('./../vendor/photoswipe/template.html');
 
+
+if (!('api' in window)) {
+    window.api = {}
+}
 window.api.photoswipe = function (container, option) {
 
     if (!$('[data-photoswipe-container]').length) {
@@ -50,3 +54,8 @@ window.api.photoswipe = function (container, option) {
         gallery.init();
     });
 }
+
+if (!('MS' in window)) {
+    window.MS = {}
+}
+window.MS.photoswipe=window.api.photoswipe

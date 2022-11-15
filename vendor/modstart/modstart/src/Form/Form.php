@@ -259,7 +259,11 @@ class Form implements Renderable
 
     public static function make($model = null, \Closure $builder = null)
     {
-        if (class_exists($model) && is_subclass_of($model, Model::class)) {
+        if (
+            is_object($model)
+            ||
+            (class_exists($model) && is_subclass_of($model, Model::class))
+        ) {
             return new Form($model, $builder);
         }
         return new Form(DynamicModel::make($model), $builder);

@@ -231,6 +231,9 @@ var UploadButton = function (selector, option) {
     });
 };
 
+if (!('api' in window)) {
+    window.api = {}
+}
 window.api.uploadButton = UploadButton
 
 if (!('MS' in window)) {

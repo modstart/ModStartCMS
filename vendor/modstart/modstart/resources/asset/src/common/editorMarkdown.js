@@ -59,4 +59,11 @@ var Markdown = {
     }
 };
 
+if (!('api' in window)) {
+    window.api = {}
+}
 window.api.editorMarkdown = Markdown;
+if (!('MS' in window)) {
+    window.MS = {}
+}
+window.MS.editorMarkdown = Markdown;

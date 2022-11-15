@@ -33,16 +33,22 @@ class MemberCmsUtil
     {
         if (!empty($memberUser)) {
             if (null === $field) {
-                $field = ['username'];
+                $field = [
+                    'username',
+                ];
             }
             if (!is_array($field)) {
                 $field = [$field];
             }
-            $text = '<未知用户>';
-            foreach ($field as $f) {
-                if (!empty($memberUser[$f])) {
-                    $text = $memberUser[$f];
-                    break;
+            if ($memberUser['isDeleted']) {
+                $text = '<已删除用户>';
+            } else {
+                $text = '<未知用户>';
+                foreach ($field as $f) {
+                    if (!empty($memberUser[$f])) {
+                        $text = $memberUser[$f];
+                        break;
+                    }
                 }
             }
             return AutoRenderedFieldValue::make('<a href="javascript:;" class="ub-icon-text" data-dialog-request="'

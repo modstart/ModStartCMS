@@ -109,7 +109,9 @@ class ModuleServiceProvider extends ServiceProvider
 
         AdminWidgetDashboard::registerIcon(function (Row $row) {
             $row->column(3, DashboardItemA::makeIconNumberTitle(
-                'iconfont icon-user', ModelUtil::count('member_user'), '用户数',
+                'iconfont icon-user',
+                ModelUtil::count('member_user', ['isDeleted' => false]),
+                '用户数',
                 modstart_admin_url('member'), ColorUtil::randomColor()
             ));
         });

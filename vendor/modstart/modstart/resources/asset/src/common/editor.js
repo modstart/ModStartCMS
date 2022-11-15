@@ -185,6 +185,9 @@ var Editor = {
     raw: UE
 };
 
+if (!('api' in window)) {
+    window.api = {}
+}
 window.api.editor = Editor;
 if (!('MS' in window)) {
     window.MS = {}

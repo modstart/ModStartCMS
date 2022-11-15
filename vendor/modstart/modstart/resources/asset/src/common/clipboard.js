@@ -7,4 +7,12 @@ $(function () {
     })
 })
 
+if (!('api' in window)) {
+    window.api = {}
+}
 window.api.clipboard = Clipboard
+
+if (!('MS' in window)) {
+    window.MS = {}
+}
+window.MS.clipboard = Clipboard

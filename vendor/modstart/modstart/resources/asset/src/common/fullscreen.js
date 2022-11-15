@@ -78,4 +78,11 @@ var Fullscreen = {
     }
 }
 
+if (!('api' in window)) {
+    window.api = {}
+}
 window.api.fullscreen = Fullscreen;
+if (!('MS' in window)) {
+    window.MS = {}
+}
+window.MS.fullscreen = Fullscreen;
