@@ -74,7 +74,7 @@
                         @endif
                     @endif
                     <div class="line">
-                        <input type="hidden" name="redirect" value="<?php echo htmlspecialchars(\Illuminate\Support\Facades\Input::get('redirect',config('env.ADMIN_PATH','/admin/'))); ?>">
+                        <input type="hidden" name="redirect" value="{{$redirect}}">
                         <button type="submit" class="btn btn-block btn-lg btn-primary">
                             {{ L('Submit') }}
                             <i class="iconfont icon-right"></i>

@@ -15,7 +15,10 @@
         "WordSpliter",
         "SiteMapManager"
     ],
-    "version": "3.1.0",
+    "tags": [
+        "通用CMS"
+    ],
+    "version": "3.2.0",
     "modstartVersion": ">=2.9.0",
     "author": "ModStart",
     "description": "提供通用的动态模型内容管理系统",

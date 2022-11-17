@@ -82,7 +82,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
     public function avatar()
     {
         $input = InputPackage::buildFromInput();
-        $avatar = $input->get('avatar');
+        $avatar = $input->getTrimString('avatar');
         if (empty($avatar)) {
             return Response::generate(-1, '头像内容为空');
         }

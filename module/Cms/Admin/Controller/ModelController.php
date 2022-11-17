@@ -87,13 +87,16 @@ class ModelController extends Controller
             $f = CmsField::getByNameOrFail($data['fieldType']);
             $data = $f->prepareDataOrFail($data);
             ModelUtil::transactionBegin();
+            $data['fieldData'] = json_encode($data['fieldData'], JSON_UNESCAPED_UNICODE);
             if ($id) {
                 ModelUtil::update('cms_model_field', $id, $data);
+                $data['fieldData'] = json_decode($data['fieldData'], true);
                 CmsModelUtil::editField($model, $record, $data);
             } else {
                 $data['modelId'] = $model['id'];
                 $data['sort'] = ModelUtil::sortNext('cms_model_field', ['modelId' => $model['id']]);
                 $data = ModelUtil::insert('cms_model_field', $data);
+                $data['fieldData'] = json_decode($data['fieldData'], true);
                 CmsModelUtil::addField($model, $data);
             }
             ModelUtil::transactionCommit();

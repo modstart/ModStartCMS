@@ -29,7 +29,6 @@ class RadioCmsField extends AbstractCmsField
         }, $data['fieldData']['options']));
         BizException::throwsIf('选项为空', empty($data['fieldData']['options']));
         BizException::throwsIf('字段长度错误', $data['maxLength'] < 1 || $data['maxLength'] > 65535);
-        $data['fieldData'] = json_encode($data['fieldData']);
         return $data;
     }
 

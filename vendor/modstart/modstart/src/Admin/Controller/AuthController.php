@@ -32,7 +32,9 @@ class AuthController extends Controller
             return Response::redirect($redirect);
         }
         if (modstart_config('adminSSOClientEnable', false)) {
-            return Response::redirect(modstart_admin_url('sso/client?redirect=' . urlencode($redirect)));
+            return Response::redirect(modstart_admin_url('sso/client', [
+                'redirect' => $redirect,
+            ]));
         }
         /**
          * 获取人机检测Provider
@@ -122,6 +124,7 @@ class AuthController extends Controller
             'pageTitle' => L('Admin Login'),
             'captchaProviderName' => $captchaProviderName,
             'captchaProvider' => $captchaProvider,
+            'redirect' => $redirect,
         ]);
     }
 

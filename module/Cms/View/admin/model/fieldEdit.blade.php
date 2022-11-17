@@ -183,13 +183,18 @@
                         this.data.name = s
                     },
                     doSubmit() {
-                        this.$dialog.loadingOn()
-                        this.$api.post(window.location.href, {data: JSON.stringify(this.data)}, res => {
-                            this.$dialog.loadingOff()
-                            parent.__grids.get(0).lister.refresh()
-                            parent.layer.closeAll()
-                        }, res => {
-                            this.$dialog.loadingOff()
+                        MS.dialog.loadingOn()
+                        MS.api.post(window.location.href, {data: JSON.stringify(this.data)}, res => {
+                            MS.api.defaultCallback(res,{
+                                success:res=>{
+                                    MS.dialog.loadingOff()
+                                    parent.__grids.get(0).lister.refresh()
+                                    parent.layer.closeAll()
+                                },
+                                error:res=>{
+                                    MS.dialog.loadingOff()
+                                }
+                            })
                         })
                     }
                 }
