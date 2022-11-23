@@ -30,7 +30,7 @@ class AtomicUtil
                 ModelUtil::insert('atomic', ['name' => $name, 'value' => $value, 'expire' => time() + $expire]);
             }
             if (RandomUtil::percent(20)) {
-                ModelUtil::delete('atomic', 'expire', '<', time());
+                ModelUtil::model('atomic')->where('expire', '<', time())->delete();
             }
         }
     }

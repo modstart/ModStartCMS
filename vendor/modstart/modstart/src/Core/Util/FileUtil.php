@@ -119,7 +119,9 @@ class FileUtil
         }
         foreach ($paths as $file) {
             $checkFile = base_path($file . '/._write_check_');
-            FileUtil::write($checkFile, 'ok');
+            if (false === FileUtil::write($checkFile, 'ok')) {
+                return Response::generate(-1, '目录不可写：' . $file);
+            }
             // echo "$checkFile\n";
             if (!file_exists($checkFile)) {
                 return Response::generateError('目录' . $file . '测试写入失败，请检查权限');
@@ -133,6 +135,7 @@ class FileUtil
      * @Util 写入文件
      * @param $path string
      * @param $content string
+     * @return bool 是否写入成功
      */
     public static function write($path, $content)
     {
@@ -142,10 +145,14 @@ class FileUtil
                 mkdir($dir, 0755, true);
             } catch (\Exception $e) {
                 Log::error('mkdir ' . $dir . ' failed');
-                throw $e;
+                return false;
             }
         }
-        file_put_contents($path, $content);
+        try {
+            return file_put_contents($path, $content) !== false;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**

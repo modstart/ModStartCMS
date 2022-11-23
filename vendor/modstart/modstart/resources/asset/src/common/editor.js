@@ -17,6 +17,23 @@ var EditorUploadConfig = {
                     }
                 }).show();
                 return true
+            case 'attachment':
+                if (!window.__selectorDialogServer) {
+                    alert('Missing Config : window.__selectorDialogServer')
+                    return true
+                }
+                window.__selectorDialog = new window.api.selectorDialog({
+                    server: window.__selectorDialogServer + '/file',
+                    callback: function (items) {
+                        editor.execCommand('insertFile', items.map(o => {
+                            return {
+                                url: o.path,
+                                title: o.filename,
+                            }
+                        }))
+                    }
+                }).show();
+                return true
         }
     },
     imageConfig: {
@@ -91,6 +108,7 @@ var Editor = {
             'link', 'unlink',
             'insertcode',
             'formula',
+            'attachment',
             // 'imagenone', 'imageleft', 'imageright', 'imagecenter', //'|',
             //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
             //'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',

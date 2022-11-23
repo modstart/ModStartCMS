@@ -67,6 +67,8 @@ trait ExceptionReportHandleTrait
                 return response()->make($ret);
             }
             return $ret;
+        } else if ($exception instanceof MethodNotAllowedHttpException) {
+            return Response::page404();
         } elseif ($exception instanceof NotFoundHttpException) {
             if (\ModStart\Core\Input\Request::isAjax()) {
                 return Response::page404();

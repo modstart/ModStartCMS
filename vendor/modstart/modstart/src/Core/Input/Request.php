@@ -119,7 +119,7 @@ class Request
 
         $urls = [];
         foreach ($gets as $k => $v) {
-            if (null === $v) {
+            if (null === $v || '' === $v) {
                 continue;
             }
             if (is_array($v)) {
