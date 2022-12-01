@@ -44,14 +44,20 @@ class ConfigController extends Controller
                         'default' => '用户名密码注册',
                         'phone' => '手机快捷注册',
                     ]);
+                })
+                ->when('=', true, function ($builder) {
+                    $builder->switch('registerOauthEnable', '允许以授权方式注册');
                 });
             if (modstart_module_enabled('MemberOauth')) {
                 $builder->switch('Member_OauthBindPhoneEnable', '授权登录绑定手机');
                 $builder->switch('Member_OauthBindEmailEnable', '授权登录绑定邮箱');
             }
+            $builder->number('Member_UsernameMinLength', '用户名最小长度')->defaultValue(3);
             $builder->button('', '保存')->forSubmit();
         });
-        $builder->layoutPanel('找回密码', function ($builder) {
+        $builder->layoutPanel('账号安全', function ($builder) {
+            $builder->switch('Member_ProfileEmailEnable', '开启邮箱绑定');
+            $builder->switch('Member_ProfilePhoneEnable', '开启手机绑定');
             $builder->switch('retrieveDisable', '禁用找回密码')
                 ->when('!=', true, function ($builder) {
                     $builder->switch('retrievePhoneEnable', '启用手机找回密码');

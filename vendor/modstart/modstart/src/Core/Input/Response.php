@@ -275,6 +275,11 @@ class Response
         return self::send(0, null, null, $redirect);
     }
 
+    public static function redirectPermanently($redirect)
+    {
+        return app('redirect')->away($redirect, 301);
+    }
+
     public static function send($code, $msg, $data = null, $redirect = null)
     {
         if (\Illuminate\Support\Facades\Request::ajax()

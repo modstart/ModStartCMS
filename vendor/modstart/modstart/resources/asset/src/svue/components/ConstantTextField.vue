@@ -44,17 +44,15 @@
                             key: k
                         }
                     })
-                } else {
-                    if (this.name in Constants) {
-                        const v = Constants[this.name]
-                        Object.keys(v).forEach(k => {
-                            vs['v' + v[k].value] = {
-                                name: v[k].name,
-                                value: v[k].value,
-                                key: k
-                            }
-                        })
-                    }
+                } else if (this.name in Constants) {
+                    const v = Constants[this.name]
+                    Object.keys(v).forEach(k => {
+                        vs['v' + v[k].value] = {
+                            name: v[k].name,
+                            value: v[k].value,
+                            key: k
+                        }
+                    })
                 }
                 return vs
             },

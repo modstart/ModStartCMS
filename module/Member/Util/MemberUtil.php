@@ -39,6 +39,13 @@ class MemberUtil
         return ModelUtil::get('member_user', ['id' => $id]);
     }
 
+    public static function getCached($id)
+    {
+        return Cache::remember('MemberUser:' . $id, 60, function () use ($id) {
+            return self::get($id);
+        });
+    }
+
     /**
      * @param $memberUser
      * @since Member 1.6.0
@@ -271,6 +278,22 @@ class MemberUtil
         self::suggestUsernameNickname($memberUserId, $suggestName, $randomLength);
     }
 
+    public static function getSuggestUsernameNickname($suggest)
+    {
+        $suggestName = $suggest . Str::random(1);
+        for ($i = 0; $i < 20; $i++) {
+            $found = ModelUtil::model('member_user')
+                ->where(['username' => $suggestName])
+                ->orWhere(['nickname' => $suggestName])
+                ->first();
+            if (empty($found)) {
+                return $suggestName;
+            }
+            $suggestName = $suggestName . Str::random(1);
+        }
+        return $suggestName . Str::random(10);
+    }
+
     private static function suggestUsernameNickname($memberUserId, $prefix = '用户', $randomLength = 6)
     {
         if ($randomLength > 0) {
@@ -349,7 +372,7 @@ class MemberUtil
             if ($ret['code']) {
                 return $ret;
             }
-            if (strlen($username) < 3) {
+            if (strlen($username) < modstart_config('Member_UsernameMinLength', 3)) {
                 return Response::generate(-1, '用户名至少3个字符');
             }
             // 为了统一登录时区分邮箱

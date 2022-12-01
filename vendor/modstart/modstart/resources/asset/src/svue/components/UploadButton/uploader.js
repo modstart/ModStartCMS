@@ -167,8 +167,9 @@ export const UploadButtonUploader = function (selector, option) {
             }
         });
 
-        uploader.on('uploadAccept', function (file, response) {
+        uploader.on('uploadAccept', function (file, response, setErrorReason) {
             if (response.code) {
+                setErrorReason(response.msg);
                 return false;
             }
             return true;
@@ -191,19 +192,26 @@ export const UploadButtonUploader = function (selector, option) {
             data.md5 = file.file.fileMd5
         });
 
-        uploader.on('uploadError', function (file) {
+        uploader.on('uploadError', function (file, typeOrMsg) {
+            if (typeOrMsg && typeOrMsg.indexOf('ShouldRetryUpload') >= 0) {
+                this.retry(file);
+                return;
+            }
             this.removeFile(file);
+            if (typeOrMsg) {
+                switch (typeOrMsg) {
+                    case 'server':
+                        opt.tipError(MS.L('Upload Error : %s', MS.L('Server Error')));
+                        break
+                    default:
+                        opt.tipError(MS.L('Upload Error : %s', typeOrMsg));
+                        break
+                }
+            }
         });
 
         uploader.on('uploadFinished', function () {
             opt.finish();
-        });
-
-        uploader.on('uploadError', function (file, msg) {
-            if (null !== msg) {
-                msg || '上传出现错误，请联系后台管理员'
-                opt.tipError(msg);
-            }
         });
 
         uploader.on('error', function (type) {

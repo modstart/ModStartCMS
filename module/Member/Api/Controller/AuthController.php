@@ -209,7 +209,8 @@ class AuthController extends ModuleBaseController
             Session::forget('oauthUserInfo');
             return Response::generateSuccessData(['memberUserId' => $ret['data']['memberUserId']]);
         }
-        if (modstart_config()->getWithEnv('registerDisable', false)) {
+        if (modstart_config()->getWithEnv('registerDisable', false)
+            && !modstart_config()->getWithEnv('registerOauthEnable', false)) {
             return Response::generate(-1, '用户注册已禁用');
         }
         $username = $input->getTrimString('username');

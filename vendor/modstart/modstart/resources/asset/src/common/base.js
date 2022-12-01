@@ -8,6 +8,16 @@ import {Tree} from './../svue/lib/tree';
 
 const sprintf = require('sprintf-js').sprintf;
 
+jquery.fn.isInViewport = function () {
+    var elementTop = $(this).offset().top;
+    var elementBottom = elementTop + $(this).outerHeight();
+
+    var viewportTop = $(window).scrollTop();
+    var viewportBottom = viewportTop + $(window).height();
+
+    return elementBottom > viewportTop && elementTop < viewportBottom;
+};
+
 const Header = {
     trigger: function (selector, showClass) {
         selector = selector || 'header'
@@ -73,6 +83,7 @@ const MS = {
 }
 
 window.api = window.api || {}
+
 
 window.api.jquery = jquery
 window.api.base = Base

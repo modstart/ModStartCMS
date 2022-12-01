@@ -96,7 +96,11 @@ class Detail implements Renderable
 
     public static function make($model, \Closure $builder = null)
     {
-        if (class_exists($model) && is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)) {
+        if (
+            is_object($model)
+            ||
+            (class_exists($model) && is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class))
+        ) {
             return new Detail($model, $builder);
         }
         return new Detail(DynamicModel::make($model), $builder);

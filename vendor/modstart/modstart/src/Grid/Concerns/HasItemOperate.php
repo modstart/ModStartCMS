@@ -65,7 +65,7 @@ trait HasItemOperate
     }
 
     /**
-     * @param \Closure $callback function(ItemOperate $itemOperate){  }
+     * @param $callback \Closure function(ItemOperate $itemOperate){  }
      * @return $this|\Closure
      */
     public function hookItemOperateRendering($callback = null)
@@ -78,7 +78,7 @@ trait HasItemOperate
     }
 
     /**
-     * @param null $callback = function(AbstractField $field){  }
+     * @param $callback \Closure function(AbstractField $field){  }
      * @return $this|\Closure
      */
     public function hookItemOperateFieldBuild($callback = null)

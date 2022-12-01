@@ -74,6 +74,10 @@ class FileDataStorage extends AbstractDataStorage
         $data['chunk'] = $input['chunk'];
         $data['file'] = $input['file'];
 
+        // if ($data['chunk'] == 3 && rand(0, 10) > 2) {
+        //     return Response::generateError('ShouldRetryUpload');
+        // }
+
         $hashFile = self::DATA_CHUNK . '/data/' . $token['hash'];
         if ($data['chunk'] < $data['chunks']) {
             $p = $data['file']->getRealPath();
@@ -90,7 +94,7 @@ class FileDataStorage extends AbstractDataStorage
                 $this->uploadChunkTokenAndDeleteToken($token);
                 $hashFileSize = $this->size($hashFile);
                 if ($hashFileSize != $token['size']) {
-                    return Response::generate(-1, 'MultiPartUpload combile file failed (' . $hashFileSize . ',' . $token['size'] . ')');
+                    return Response::generate(-1, 'MultiPartUpload combile file failed (' . $hashFileSize . ',' . $token['size'] . ') ShouldRetryUpload');
                 }
                 $this->move($hashFile, $token['fullPath']);
                 DataFileUploadedEvent::fire(null, $category, $token['fullPath']);

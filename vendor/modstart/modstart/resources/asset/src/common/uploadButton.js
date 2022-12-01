@@ -170,8 +170,9 @@ var UploadButton = function (selector, option) {
             }
         });
 
-        uploader.on('uploadAccept', function (file, response) {
+        uploader.on('uploadAccept', function (file, response, setErrorReason) {
             if (response.code) {
+                setErrorReason(response.msg);
                 return false;
             }
             return true;
@@ -201,6 +202,10 @@ var UploadButton = function (selector, option) {
         });
 
         uploader.on('uploadError', function (file, typeOrMsg) {
+            if (typeOrMsg && typeOrMsg.indexOf('ShouldRetryUpload') >= 0) {
+                this.retry(file);
+                return;
+            }
             this.removeFile(file);
             if (typeOrMsg) {
                 switch (typeOrMsg) {

@@ -160,9 +160,9 @@ class Page implements Renderable
     }
 
     /**
-     * @param Form $form
-     * @param Closure $callback function(Form $form){ $data = $form->dataForming(); return Response::generateSuccess(); }
-     * @param array|null $data
+     * @param $form Form
+     * @param $callback Closure function(Form $form){ $data = $form->dataForming(); return Response::generateSuccess(); }
+     * @param $data array|null
      * @return $this
      */
     public function handleForm($form, $callback, array $data = null)

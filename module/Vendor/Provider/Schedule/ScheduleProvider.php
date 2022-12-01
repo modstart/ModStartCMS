@@ -5,6 +5,10 @@ namespace Module\Vendor\Provider\Schedule;
 
 
 use Illuminate\Console\Scheduling\Schedule;
+use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\TimeUtil;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class ScheduleProvider
@@ -50,10 +54,36 @@ class ScheduleProvider
 
     public static function call(Schedule $schedule)
     {
+        $autoCleanHistory = true;
         foreach (ScheduleProvider::all() as $provider) {
+            // Log::info('ScheduleProvider.schedule - ' . $provider->title() . ' - ' . $provider->cron());
             /** @var AbstractScheduleProvider $provider */
-            $schedule->call(function () use ($provider) {
-                call_user_func([$provider, 'run']);
+            $schedule->call(function () use ($provider, &$autoCleanHistory) {
+                $data = [];
+                $data['name'] = get_class($provider);
+                $data['startTime'] = date('Y-m-d H:i:s');
+                $data['status'] = RunStatus::RUNNING;
+                $data = ModelUtil::insert('schedule_run', $data);
+                $dataId = $data['id'];
+                $data = [];
+                try {
+                    $data['result'] = call_user_func([$provider, 'run']);
+                    $data['status'] = RunStatus::SUCCESS;
+                } catch (\Exception $e) {
+                    $data['result'] = $e->getMessage();
+                    $data['status'] = RunStatus::FAILED;
+                }
+                $data['endTime'] = date('Y-m-d H:i:s');
+                ModelUtil::update('schedule_run', $dataId, $data);
+                // 只保留最近7天的运行日志
+                if ($autoCleanHistory) {
+                    $autoCleanHistory = false;
+                    if (RandomUtil::percent(10)) {
+                        ModelUtil::model('schedule_run')
+                            ->where('created_at', '<', date('Y-m-d H:i:s', time() - TimeUtil::PERIOD_DAY * 7))
+                            ->delete();
+                    }
+                }
             })->cron($provider->cron());
         }
     }

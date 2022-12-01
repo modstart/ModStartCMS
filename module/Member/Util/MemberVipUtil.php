@@ -64,6 +64,12 @@ class MemberVipUtil
         return self::getMemberVip($memberUser, $key, $defaultValue);
     }
 
+    public static function getMemberVipByIdCached($memberUserId, $key = null, $defaultValue = null)
+    {
+        $memberUser = MemberUtil::getCached($memberUserId);
+        return self::getMemberVip($memberUser, $key, $defaultValue);
+    }
+
     public static function getMemberVip($memberUser, $key = null, $defaultValue = null)
     {
         if (empty($memberUser)) {

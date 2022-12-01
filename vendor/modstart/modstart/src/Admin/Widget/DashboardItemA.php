@@ -3,6 +3,7 @@
 namespace ModStart\Admin\Widget;
 
 use ModStart\Core\Util\ColorUtil;
+use ModStart\ModStart;
 use ModStart\Widget\AbstractWidget;
 
 class DashboardItemA extends AbstractWidget
@@ -90,6 +91,7 @@ class DashboardItemA extends AbstractWidget
 
     public function render()
     {
+        ModStart::js('asset/common/countUp.js');
         switch ($this->type) {
             case 1:
                 return <<<HTML
@@ -102,6 +104,7 @@ class DashboardItemA extends AbstractWidget
 </a>
 HTML;
             case 2:
+                $numberValue = intval($this->number);
                 if (!is_string($this->number)) {
                     $number = number_format($this->number);
                 } else {
@@ -112,7 +115,7 @@ HTML;
     <div class="icon" style="color:{$this->color}">
         <i class="font {$this->icon}"></i>
     </div>
-    <div class="number-value">{$number}</div>
+    <div class="number-value" data-count-up-number="$numberValue">-</div>
     <div class="number-title">{$this->title}</div>
 </a>
 HTML;
@@ -123,12 +126,13 @@ HTML;
 </a>
 HTML;
             case 4:
+                $numberValue = intval($this->number);
                 return <<<HTML
 <a href="{$this->link}" class="ub-dashboard-item-b" style="background:{$this->color}">
     <div class="icon">
         <i class="font {$this->icon}"></i>
     </div>
-    <div class="number-value">{$this->number}</div>
+    <div class="number-value" data-count-up-number="$numberValue">{$this->number}</div>
     <div class="number-title">{$this->title}</div>
 </a>
 HTML;

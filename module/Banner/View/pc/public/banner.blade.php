@@ -90,8 +90,23 @@ if(!isset($round)){
                 loop: true,
                 autoplay: {
                     delay: 3000
+                },
+                observer: true,
+                observeParents: true,
+                on: {
+                    observerUpdate: function(){
+                        swiperRefresh();
+                    },
+                    resize: function () {
+                        swiperRefresh();
+                    }
                 }
             });
+            var swiperRefresh = function(){
+                setTimeout(function(){
+                    swiper.update();
+                }, 500);
+            };
             changeAnimate(swiper.slides[swiper.activeIndex]);
             swiper.on('slideChange',function(){
                 changeAnimate(swiper.slides[swiper.activeIndex]);

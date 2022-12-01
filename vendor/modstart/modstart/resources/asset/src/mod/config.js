@@ -10,6 +10,7 @@ module.exports = function (mod) {
     if ('App' === mod) {
         config.dist = './../../public/asset-app'
         config.distAsset = './../asset-build'
+        config.cdn = '/asset-app'
     }
     switch (process.platform) {
         case 'win32':

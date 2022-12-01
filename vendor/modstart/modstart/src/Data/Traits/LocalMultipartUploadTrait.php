@@ -47,7 +47,7 @@ trait LocalMultipartUploadTrait
                 $this->uploadChunkTokenAndDeleteToken($token);
                 $hashFileSize = $this->localStorage->size($hashFile);
                 if ($hashFileSize != $token['size']) {
-                    return Response::generate(-1, 'MultiPartUpload combile file failed (' . $hashFileSize . ',' . $token['size'] . ')');
+                    return Response::generate(-1, 'MultiPartUpload combile file failed (' . $hashFileSize . ',' . $token['size'] . ') ShouldRetryUpload');
                 }
                 $this->saveLocalToRemote($hashFile, $token['fullPath']);
                 @unlink(public_path($hashFile));

@@ -3,11 +3,14 @@ const fs = require('fs');
 const process = require('process')
 let moduleConfig = require('./config.js');
 
-module.exports = function (dirname) {
+module.exports = function (dirname, buildOption) {
     let mod = dirname.replace(/^.+[\/\\]([A-Za-z0-9]+)[\/\\]resources[\/\\]asset/, '$1')
     if (!/^[A-Za-z0-9]+$/.test(mod)) {
         mod = 'App'
     }
+    buildOption = Object.assign({
+        compress: true,
+    }, buildOption)
     let config = moduleConfig(mod)
     config.dist = path.join(dirname, config.dist)
     config.distAsset = path.join(dirname, config.distAsset)
@@ -112,7 +115,7 @@ module.exports = function (dirname) {
                 minChunkSize: 20 * 1000
             }),
             new WebpackOnBuildPlugin(function (stats) {
-                if (stats.compilation.options.mode === 'development') {
+                if (stats.compilation.options.mode === 'development' || !buildOption.compress) {
                     return
                 }
                 const assets = stats.compilation.getAssets()
@@ -188,7 +191,7 @@ module.exports = function (dirname) {
                 {
                     test: /\.(png|jpg|gif|jpeg|)$/,
                     use: [
-                        {loader: 'url-loader?limit=10000&name=sprites/[hash].[ext]'}
+                        {loader: 'url-loader?limit=10000&name=sprites/[hash].[ext]', options: {esModule: false}}
                     ]
                 },
                 {
