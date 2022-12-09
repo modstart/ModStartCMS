@@ -273,6 +273,16 @@ class FileUtil
         return $dir;
     }
 
+    public static function nameWithoutExtension($pathname)
+    {
+        $pathname = self::name($pathname);
+        $i = strrpos($pathname, '.');
+        if (false !== $i) {
+            return substr($pathname, 0, $i);
+        }
+        return $pathname;
+    }
+
     public static function name($pathname)
     {
         return strtolower(pathinfo($pathname, PATHINFO_BASENAME));

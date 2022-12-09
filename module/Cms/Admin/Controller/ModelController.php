@@ -256,8 +256,8 @@ class ModelController extends Controller
         BizException::throwsIfEmpty('记录不存在', $record);
         BizException::throwsIf('有栏目使用，不能删除', ModelUtil::exists('cms_cat', ['modelId' => $record['id']]));
         BizException::throwsIf('该模型有数据，不能删除', ModelUtil::exists('cms_content', ['modelId' => $record['id']]));
-        ModelUtil::transactionBegin();
         CmsModelUtil::drop($record);
+        ModelUtil::transactionBegin();
         ModelUtil::delete('cms_model', $record['id']);
         ModelUtil::delete('cms_model_field', ['modelId' => $record['id']]);
         ModelUtil::transactionCommit();

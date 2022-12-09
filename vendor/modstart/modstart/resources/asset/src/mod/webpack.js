@@ -261,6 +261,7 @@ module.exports = function (dirname, buildOption) {
             mode = 'development'
         }
         console.log('webpack mode -> ', mode)
+        console.log('webpack build option -> ', buildOption)
         let results = []
         results.push(Object.assign({}, webpackConfig, {
             mode

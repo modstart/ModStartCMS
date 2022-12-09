@@ -1,6 +1,6 @@
 @extends('modstart::admin.dialogFrame')
 
-@section('pageTitle')用户 {{$record['username']}} 的信息@endsection
+@section('pageTitle')用户 {{\Module\Member\Util\MemberUtil::viewName($record)}} 的信息@endsection
 
 @section('bodyContent')
 
@@ -36,6 +36,12 @@
                 <div class="name">昵称</div>
                 <div class="value">{{$record['nickname']?$record['nickname']:'-'}}</div>
             </div>
+            @if(array_key_exists('gender',$record))
+                <div class="ub-pair">
+                    <div class="name">性别</div>
+                    <div class="value">{{\ModStart\Core\Type\TypeUtil::name(\Module\Member\Type\Gender::class,$record['gender'])}}</div>
+                </div>
+            @endif
             @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member','moneyEnable',false))
                 <div class="ub-pair">
                     <div class="name">余额</div>

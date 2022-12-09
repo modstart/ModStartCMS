@@ -12,6 +12,17 @@ import vueTimeago from 'vue-timeago';
 import VueClipboard from 'vue-clipboard2';
 import {EventBus} from '@ModStartAsset/svue/lib/event-bus';
 
+Vue.prototype.L = (name, ...args) => {
+    let tpl = name
+    if (window.lang && window.lang[name]) {
+        tpl = window.lang[name]
+    }
+    if (args.length) {
+        return StrUtil.sprintf(tpl, ...args)
+    }
+    return tpl
+}
+
 Vue.use(ElementUI, {size: 'mini', zIndex: 3000});
 Vue.use(vueTimeago, {
     name: 'TimeAgo',
@@ -21,6 +32,13 @@ Vue.use(vueTimeago, {
     }
 })
 Vue.use(VueClipboard)
+Vue.prototype.$doCopyText = function (text, tips) {
+    tips = tips || this.L('Copy Success')
+    this.$copyText(text).then(
+        () => Dialog.tipSuccess(tips),
+        () => Dialog.tipError(this.L('Copy Fail'))
+    );
+}
 Vue.prototype.$onCopySuccess = () => {
     Dialog.tipSuccess((window.lang && window.lang['Copy Success']) ? window.lang['Copy Success'] : 'Copy Success')
 }
