@@ -54,6 +54,7 @@ use ModStart\Layout\LayoutTab;
  * @method \ModStart\Field\Code           code($column, $label = '')
  * @method \ModStart\Field\Captcha        captcha($column, $label = '')
  * @method \ModStart\Field\File           file($column, $label = '')
+ * @method \ModStart\Field\Files          files($column, $label = '')
  * @method \ModStart\Field\Video          video($column, $label = '')
  * @method \ModStart\Field\Audio          audio($column, $label = '')
  * @method \ModStart\Field\AreaChina      areaChina($column, $label = '')

@@ -83,24 +83,43 @@
                     </div>
                 </div>
                 <div class="body">
-                    <div class="ub-file-selector">
-                        <div class="ub-file-selector__value">
-                            无
-                        </div>
-                        <div class="ub-file-selector__close hidden">
-                            <i class="iconfont icon-close"></i>
-                        </div>
-                        <div class="ub-file-selector__action">
-                            <a href="javascript:;" class="btn">
-                                <i class="iconfont icon-category"></i>
-                                选择
+                    <div class="row">
+                        <div class="col-4">
+                            文件上传
+                            <a href="javascript:;"
+                               onclick="$(this).parent().next().find('.ub-file-selector__item').toggleClass('hidden')">
+                                切换
                             </a>
                         </div>
-                        <div class="ub-file-selector__action">
-                            <a href="javascript:;" class="btn">
-                                <i class="iconfont icon-category"></i>
-                                上传
-                            </a>
+                        <div class="col-8">
+                            <div class="ub-file-selector">
+                                <div class="ub-file-selector__items">
+                                    <div class="ub-file-selector__item hidden">
+                                        <div class="ub-file-selector__value">文件</div>
+                                        <div class="ub-file-selector__close">
+                                            <i class="iconfont icon-close"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ub-file-selector__item hidden">
+                                        <div class="ub-file-selector__value">文件</div>
+                                        <div class="ub-file-selector__close">
+                                            <i class="iconfont icon-close"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ub-file-selector__action">
+                                    <a href="javascript:;" class="btn">
+                                        <i class="iconfont icon-category"></i>
+                                        选择
+                                    </a>
+                                </div>
+                                <div class="ub-file-selector__action">
+                                    <a href="javascript:;" class="btn">
+                                        <i class="iconfont icon-category"></i>
+                                        上传
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@ return [
                 'b[style],strong[style],i[style],em[style],u[style],a[href|title|style|download],ul[style],ol[style],li[style]',
                 'p[style],br,span[style],img[style|width|height|alt|src|data-formula-image]',
                 'span[style],h1[style],h2[style],h3[style],h4[style],h5[style],pre[class],code[style]',
-                'table[style|cellspacing|width],tbody[style],tr[style],td[style|rowspan|colspan|width|valign]',
+                'table[style|cellspacing|width],tbody[style],tbody[style],tr[style],td[style|rowspan|colspan|width|valign],th[style|rowspan|colspan|width|valign]',
                 'iframe[src|width|height|frameborder|style]',
                 'video[controls|height|poster|preload|src|width|crossorigin]',
                 'audio[controls|preload|src|crossorigin]',

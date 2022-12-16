@@ -8,26 +8,38 @@
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             <table class="ub-table mini">
                 <tr>
-                    <td width="60">{{L('Type')}}</td>
+                    <td width="60">
+                        {{L('Type')}}
+                    </td>
                     <td>
-                        <div style="padding-top:0.2rem;margin-bottom:-0.2rem;">
-                            <el-radio v-model="value.type" label="">{{L('None')}}</el-radio>
-                            <el-radio v-model="value.type" label="Text">{{L('Text')}}</el-radio>
-                            <el-radio v-model="value.type" label="Radio">{{L('Radio')}}</el-radio>
+                        <div>
+                            <el-select v-model="value.type" size="mini" style="width:auto;">
+                                <el-option label="{{L('None')}}" value=""></el-option>
+                                <el-option label="{{L('Text')}}" value="Text"></el-option>
+                                <el-option label="{{L('Radio')}}" value="Radio"></el-option>
+                                <el-option label="{{L('File')}}" value="File"></el-option>
+                                <el-option label="{{L('Files')}}" value="Files"></el-option>
+                            </el-select>
                         </div>
                     </td>
                 </tr>
-                <tr v-if="value.type==='Radio' || value.type==='Text'">
-                    <td width="60">{{L('Title')}}</td>
+                <tr v-if="!!value.type">
+                    <td width="60">
+                        {{L('Title')}}
+                    </td>
                     <td>
-                        <input type="text" v-model="value.title" style="max-width:10rem;" />
+                        <input type="text" v-model="value.title" />
                     </td>
                 </tr>
                 <tr v-if="value.type==='Radio'">
-                    <td width="60">{{L('Option')}}</td>
+                    <td width="60">
+                        {{L('Option')}}
+                    </td>
                     <td>
-                        <div v-for="(option,optionIndex) in value.data.option">
-                            <input type="text" v-model="value.data.option[optionIndex]" style="max-width:10rem;" />
+                        <div v-for="(option,optionIndex) in value.data.option" class="tw-flex">
+                            <div class="tw-flex-grow">
+                                <input type="text" v-model="value.data.option[optionIndex]" />
+                            </div>
                             <a href="javascript:;" class="ub-text-danger" @click="value.data.option.splice(optionIndex,1)"><i class="iconfont icon-trash"></i></a>
                         </div>
                         <div>

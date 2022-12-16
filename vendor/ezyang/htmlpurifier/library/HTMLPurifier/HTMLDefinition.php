@@ -306,6 +306,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                 unset($allowed_elements[$name]);
             }
             // emit errors
+            $allowed_elements = [];
             foreach ($allowed_elements as $element => $d) {
                 $element = htmlspecialchars($element); // PHP doesn't escape errors, be careful!
                 trigger_error("Element '$element' is not supported $support", E_USER_WARNING);
@@ -369,15 +370,15 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                             $element = htmlspecialchars($bits[0]);
                             $attribute = htmlspecialchars($bits[1]);
                             if (!isset($this->info[$element])) {
-                                trigger_error(
-                                    "Cannot allow attribute '$attribute' if element " .
-                                    "'$element' is not allowed/supported $support"
-                                );
+                                // trigger_error(
+                                //     "Cannot allow attribute '$attribute' if element " .
+                                //     "'$element' is not allowed/supported $support"
+                                // );
                             } else {
-                                trigger_error(
-                                    "Attribute '$attribute' in element '$element' not supported $support",
-                                    E_USER_WARNING
-                                );
+                                // trigger_error(
+                                //     "Attribute '$attribute' in element '$element' not supported $support",
+                                //     E_USER_WARNING
+                                // );
                             }
                             break;
                         }

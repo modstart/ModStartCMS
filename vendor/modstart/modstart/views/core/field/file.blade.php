@@ -11,17 +11,27 @@
                placeholder="{{$placeholder}}"
                value="{{$value}}"/>
         <div id="{{$name}}Selector">
-            <div class="ub-file-selector" style="display:inline-block;border:1px solid #EEE;position:relative;border-radius:0.2rem;line-height:1.3rem;padding:0 2rem 0 0.5rem;vertical-align:bottom;">
-                <div data-value>{{empty($value)?L('None'):$value}}</div>
-                <a data-close href="javascript:;" style="{{$value?'display:inline-block;':'display:none;'}}position:absolute;right:0px;top:0px;line-height:1.3rem;width:1rem;text-align:center;color:#999;"><i class="iconfont icon-close"></i></a>
+            <div class="ub-file-selector">
+                <div class="ub-file-selector__items">
+                    <div class="ub-file-selector__item {{empty($value)?'hidden':$value}}">
+                        <div data-value class="ub-file-selector__value"></div>
+                        <div data-close class="ub-file-selector__close">
+                            <i class="iconfont icon-close"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="ub-file-selector__action">
+                    <div id="{{$id}}Uploader" class="ub-upload-button"></div>
+                </div>
+                @if($mode=='default')
+                    <div class="ub-file-selector__action">
+                        <a href="javascript:;" class="btn" data-gallery>
+                            <i class="iconfont icon-category"></i>
+                            {{L('File Gallery')}}
+                        </a>
+                    </div>
+                @endif
             </div>
-            <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.35rem;vertical-align:bottom;line-height:1.35rem;"></div>
-            @if($mode=='default')
-                <a href="javascript:;" class="btn" data-gallery style="display:inline-block;vertical-align:bottom;">
-                    <i class="iconfont icon-category"></i>
-                    {{L('File Gallery')}}
-                </a>
-            @endif
         </div>
         {!! \ModStart\ModStart::js('asset/common/uploadButton.js') !!}
         <script>
@@ -30,23 +40,16 @@
                 var $selector = $('#{{$name}}Selector .ub-file-selector');
                 var $gallery = $('#{{$name}}Selector [data-gallery]')
                 function setValue(path) {
-                    try {
-                        $field.find('[name="{{$name}}"]').val(path);
-                    } catch (e) {
-                    }
-                    if (path) {
-                        $selector.find('[data-value]').html(path);
-                        $selector.find('[data-close]').css('display','inline-block');
-                    } else {
-                        $selector.find('[data-value]').html("{{L('None')}}");
-                        $selector.find('[data-close]').css('display','none');
-                    }
+                    path = path || '';
+                    $field.find('[name="{{$name}}"]').val(path);
+                    $selector.find('[data-value]').html(path);
+                    $selector.find('.ub-file-selector__item').toggleClass('hidden', !path);
                 }
                 $selector.find('[data-close]').on('click', function () {
                     setValue('');
                 });
-                window.api.uploadButton('#{{$id}}Uploader', {
-                    text: '<a href="javascript:;" class="btn" style="display:inline-block;vertical-align:bottom;"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
+                MS.uploadButton('#{{$id}}Uploader', {
+                    text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
                     server: "{{$server}}",
                     extensions: {!! json_encode(join(',',config('data.upload.file.extensions'))) !!},
                     sizeLimit: {!! json_encode(config('data.upload.file.maxSize')) !!},
@@ -71,7 +74,7 @@
                 });
                 @if($mode=='default')
                 $gallery.on('click', function () {
-                    window.__selectorDialog = new window.api.selectorDialog({
+                    window.__selectorDialog = new MS.selectorDialog({
                         server: '{{$server}}',
                         callback: function (items) {
                             if (items.length > 0) {

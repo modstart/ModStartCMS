@@ -55,6 +55,7 @@ class FieldManager
             'captcha' => \ModStart\Field\Captcha::class,
             'fileTemp' => \ModStart\Field\FileTemp::class,
             'file' => \ModStart\Field\File::class,
+            'files' => \ModStart\Field\Files::class,
             'video' => \ModStart\Field\Video::class,
             'audio' => \ModStart\Field\Audio::class,
             'areaChina' => \ModStart\Field\AreaChina::class,

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1e3c4f3954276ca14122ed785d9598658a0207ad',
+        'reference' => 'cae8707fbd9fa8c91cee832d1c73aaa59f6aeea6',
         'name' => 'modstart/cms',
         'dev' => true,
     ),
@@ -139,7 +139,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../ezyang/htmlpurifier',
             'aliases' => array(),
-            'reference' => '1ab79098bbbdc616f27132779355a7cb86be442b',
+            'reference' => 'abcca0f778a9717d9c1b8d1020cec86a2ec657d2',
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
@@ -469,7 +469,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1e3c4f3954276ca14122ed785d9598658a0207ad',
+            'reference' => 'cae8707fbd9fa8c91cee832d1c73aaa59f6aeea6',
             'dev_requirement' => false,
         ),
         'modstart/modstart' => array(

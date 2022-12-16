@@ -207,4 +207,7 @@ return [
     'Upload Error : %s' => '上传错误:%s',
     'Server Error' => '服务器错误',
     'Remark' => '备注',
+    'File' => '文件',
+    'Files' => '多文件',
+    'Field Type' => '字段类型',
 ];

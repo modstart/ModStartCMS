@@ -67,7 +67,8 @@ const MS = {
     util: Util,
     api: {
         defaultCallback: Base.defaultFormCallback,
-        post: Base.post
+        post: Base.post,
+        postSuccess: Base.postSuccess
     },
     selectorDialog: SelectorDialog,
     header: Header,

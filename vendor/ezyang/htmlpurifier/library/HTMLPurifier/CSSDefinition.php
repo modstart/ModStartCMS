@@ -572,6 +572,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                 unset($allowed_properties[$name]);
             }
             // emit errors
+            $allowed_properties = [];
             foreach ($allowed_properties as $name => $d) {
                 // :TODO: Is this htmlspecialchars() call really necessary?
                 $name = htmlspecialchars($name);
