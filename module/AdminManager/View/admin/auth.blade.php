@@ -2,7 +2,7 @@
 
 @section('pageTitle')模块授权@endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
     <div class="ub-panel">
         <div class="head">
             <div class="title">

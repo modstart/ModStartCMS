@@ -14,6 +14,10 @@ export default {
             type: String,
             default: ''
         },
+        type: {
+            type: String,
+            default: 'basic',
+        },
         server: {
             type: String,
             default: '/member_data/ueditor'
@@ -30,18 +34,24 @@ export default {
         this.htmlEditorInit()
     },
     beforeDestroy() {
-        if(this.htmlEditor){
+        if (this.htmlEditor) {
             this.htmlEditor.destroy()
             this.htmlEditor = null
         }
     },
     methods: {
         htmlEditorInit() {
-            if(!MS || !MS.editor){
+            if (!MS || !MS.editor) {
                 alert('UEditor插件未加载')
                 return
             }
-            this.htmlEditor = MS.editor.basic(this.id, {
+            let editorCallback = MS.editor.basic
+            switch (this.type) {
+                case 'simple':
+                    editorCallback = MS.editor.simple
+                    break
+            }
+            this.htmlEditor = editorCallback(this.id, {
                 server: this.server,
                 ready: () => {
                     // console.log('htmlEditor.ready', this.htmlEditor)

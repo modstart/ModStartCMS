@@ -2,7 +2,7 @@
 
 @section('pageTitle')系统升级@endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
     <div id="app"></div>
 @endsection
 

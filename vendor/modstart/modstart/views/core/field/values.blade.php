@@ -1,6 +1,9 @@
 <div class="line">
     <div class="label">
         {!! str_contains($rules,'required')?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
+        @if($tip)
+            <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
+        @endif
         {{$label}}:
     </div>
     <div class="field">
@@ -33,7 +36,7 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! json_encode($value) !!}
+                value: {!! json_encode($value?$value:$defaultValue) !!}
             },
             computed:{
                 jsonValue:function(){

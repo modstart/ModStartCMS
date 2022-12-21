@@ -587,6 +587,9 @@ class Grid
                 'title' => $field->label(),
                 'sort' => $field->sortable(),
             ];
+            if ($field->tip()) {
+                $record['title'] .= ' <a class="ub-text-muted" href="javascript:;" data-tip-popover="' . htmlspecialchars($field->tip()) . '"><i class="iconfont icon-warning"></i></a>';
+            }
             if ($field->width() !== '') {
                 $record['width'] = $field->width();
             } else {

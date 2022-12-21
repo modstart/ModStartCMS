@@ -21,7 +21,7 @@
     </script>
 @endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
     <div id="app"></div>
 @endsection
 

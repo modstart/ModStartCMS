@@ -243,7 +243,11 @@ class AdminPermission
             }
             if (empty($v['children'])) {
                 // echo "$controllerMethod - $v[url] - $currentUrl\n";
-                if ($controllerMethod === $v['url'] || $currentUrl === $v['url'] || ends_with($currentUrl, $v['url'])) {
+                if ($controllerMethod === $v['url']
+                    || $currentUrl === $v['url']
+                    || ends_with($currentUrl, $v['url'])
+                    || (!empty($v['active']) && in_array($controllerMethod, $v['active']))
+                ) {
                     $v['_active'] = true;
                 }
                 if (self::permit($v['rule'])) {

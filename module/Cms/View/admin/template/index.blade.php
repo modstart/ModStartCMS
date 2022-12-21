@@ -2,7 +2,7 @@
 
 @section('pageTitle')内容模板@endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
     <div class="ub-alert">
         <i class="iconfont icon-warning"></i>
         请使用专业IDE对模板进行操作。

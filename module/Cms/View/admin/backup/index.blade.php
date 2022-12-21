@@ -2,7 +2,7 @@
 
 @section('pageTitle')数据备份@endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
 
     <div class="ub-alert ub-alert-warning">
         <i class="iconfont icon-warning"></i>

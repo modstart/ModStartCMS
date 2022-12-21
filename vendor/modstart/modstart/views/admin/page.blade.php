@@ -1,5 +1,5 @@
 @extends('modstart::admin.frame')
 
-@section('bodyContent')
+@section($_tabSectionName)
     {!! $content !!}
 @endsection

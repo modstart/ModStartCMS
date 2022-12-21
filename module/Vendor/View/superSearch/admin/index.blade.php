@@ -54,7 +54,7 @@
     </script>
 @endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
 
     @if(empty($provider))
         <div class="ub-alert ub-alert-danger">

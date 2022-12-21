@@ -25,7 +25,16 @@ class Cascader extends AbstractFilterField
             return $this->nodes;
         }
         if (is_string($nodes) && is_subclass_of($nodes, BaseType::class)) {
-            $value = $nodes::getList();
+            $value = [];
+            $sort = 1;
+            foreach ($nodes::getList() as $k => $v) {
+                $value[] = [
+                    'id' => $k,
+                    'pid' => 0,
+                    'title' => $v,
+                    'sort' => $sort++,
+                ];
+            }
         } else if (is_array($nodes)) {
             $value = $nodes;
         } else {

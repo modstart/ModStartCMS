@@ -38,6 +38,7 @@ use ModStart\Layout\LayoutTab;
  * @method \ModStart\Field\Period         period($column, $label = '')
  * @method \ModStart\Field\Radio          radio($column, $label = '')
  * @method \ModStart\Field\Select         select($column, $label = '')
+ * @method \ModStart\Field\SelectRemote   selectRemote($column, $label = '')
  * @method \ModStart\Field\RichHtml       richHtml($column, $label = '')
  * @method \ModStart\Field\Markdown       markdown($column, $label = '')
  * @method \ModStart\Field\KeyValueList   keyValueList($column, $label = '')
@@ -69,7 +70,10 @@ use ModStart\Layout\LayoutTab;
  * @method \ModStart\Layout\LayoutTab         layoutTab($callback)
  * $callback = function (Form $form) { });
  * @method \ModStart\Layout\LayoutPanel       layoutPanel($title, $callback)
+ * $callback = function (Form $form) { });
+ * @method \ModStart\Layout\LayoutLine        layoutLine($title, $callback)
  * @method \ModStart\Layout\LayoutSeparator   layoutSeparator($title)
+ * @method \ModStart\Layout\LayoutHtml        layoutHtml($html)
  */
 trait HasFields
 {

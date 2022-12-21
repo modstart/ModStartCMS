@@ -3,6 +3,7 @@
 namespace ModStart\Admin\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
@@ -211,9 +212,19 @@ class AuthMiddleware
         Session::flash('_adminUser', $adminUser);
         Session::flash('_currentApp', CurrentApp::ADMIN);
 
-        View::share('_adminUser', $adminUser);
-        View::share('_adminUserId', $adminUserId);
-        View::share('_controllerMethod', $urlControllerMethod);
+        $isTab = @boolval(Input::get('_is_tab', false));
+        $tabSectionName = 'bodyContent';
+        if ($isTab) {
+            $tabSectionName = 'body';
+        }
+
+        View::share([
+            '_adminUser' => $adminUser,
+            '_adminUserId' => $adminUserId,
+            '_controllerMethod' => $urlControllerMethod,
+            '_isTab' => $isTab,
+            '_tabSectionName' => $tabSectionName,
+        ]);
 
         foreach (self::$gates as $item) {
             /** @var AccessGate $instance */

@@ -2,7 +2,7 @@
 
 @section('pageTitle')数据恢复@endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
 
     <div class="ub-alert ub-alert-warning">
         <i class="iconfont icon-warning"></i>

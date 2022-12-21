@@ -68,7 +68,7 @@
                     <div class="vip-list">
                         <div class="row">
                             @foreach($memberVips as $memberVip)
-                                @if(!$memberVip['isDefault'])
+                                @if(!$memberVip['isDefault'] && $memberVip['visible'])
                                     <div class="col-md-4">
                                         <div class="item" data-vip-id="{{$memberVip['id']}}">
                                             <div class="title">

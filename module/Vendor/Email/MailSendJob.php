@@ -18,13 +18,35 @@ class MailSendJob extends BaseJob
     public $emailUserName = null;
     public $option = [];
     public $module;
+    public $html;
+    public $type;
 
-    public static function create($email, $subject, $template, $templateData = [], $emailUserName = null, $option = [], $delay = 0, $module = null)
+    private static function checkConfig()
     {
         $provider = app()->config->get('EmailSenderProvider');
         BizException::throwsIfEmpty('邮箱发送未配置', $provider);
+    }
 
-        $job = new MailSendJob();
+    public static function createHtml($email, $subject, $html, $emailUserName = null, $option = [], $delay = 0)
+    {
+        self::checkConfig();
+        $job = new static();
+        $job->type = 'html';
+        $job->email = $email;
+        $job->subject = $subject;
+        $job->html = $html;
+        $job->emailUserName = $emailUserName;
+        $job->option = $option;
+        if ($delay > 0) {
+            $job->delay($delay);
+        }
+        app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
+    }
+
+    public static function create($email, $subject, $template, $templateData = [], $emailUserName = null, $option = [], $delay = 0, $module = null)
+    {
+        self::checkConfig();
+        $job = new static();
         $job->email = $email;
         $job->subject = $subject;
         $job->template = $template;
@@ -32,7 +54,6 @@ class MailSendJob extends BaseJob
         $job->emailUserName = $emailUserName;
         $job->option = $option;
         $job->module = $module;
-        // $job->onQueue('DefaultJob');
         if ($delay > 0) {
             $job->delay($delay);
         }
@@ -46,29 +67,37 @@ class MailSendJob extends BaseJob
         $instance = MailSenderProvider::get($provider);
         Logger::info('Email', 'Start', $this->email . ' -> ' . $this->subject . ' -> ' . $this->template);
 
-        $view = $this->template;
-        if (!view()->exists($view)) {
-            $view = 'theme.' . modstart_config()->getWithEnv('siteTemplate', 'default') . '.mail.' . $this->template;
-            if (!view()->exists($view)) {
-                $view = 'theme.default.mail.' . $this->template;
+        switch ($this->type) {
+            case 'html':
+                $html = $this->html;
+                break;
+            default:
+                $view = $this->template;
                 if (!view()->exists($view)) {
-                    if ($this->module) {
-                        $view = 'module::' . $this->module . '.View.mail.' . $this->template;
-                    }
+                    $view = 'theme.' . modstart_config()->getWithEnv('siteTemplate', 'default') . '.mail.' . $this->template;
                     if (!view()->exists($view)) {
-                        $view = 'module::Vendor.View.mail.' . $this->template;
+                        $view = 'theme.default.mail.' . $this->template;
+                        if (!view()->exists($view)) {
+                            if ($this->module) {
+                                $view = 'module::' . $this->module . '.View.mail.' . $this->template;
+                            }
+                            if (!view()->exists($view)) {
+                                $view = 'module::Vendor.View.mail.' . $this->template;
+                            }
+                        }
                     }
                 }
-            }
+                if (!view()->exists($view)) {
+                    throw new \Exception('mail view not found : ' . $view);
+                }
+                if (null === $this->emailUserName) {
+                    $this->emailUserName = $this->email;
+                }
+                $html = View::make($view, $this->templateData)->render();
+                break;
         }
-        if (!view()->exists($view)) {
-            throw new \Exception('mail view not found : ' . $view);
-        }
-        if (null === $this->emailUserName) {
-            $this->emailUserName = $this->email;
-        }
-        $content = View::make($view, $this->templateData)->render();
-        $ret = $instance->send($this->email, $this->emailUserName, $this->subject, $content);
+        BizException::throwsIfEmpty('MailSendJob.HtmlEmpty', $html);
+        $ret = $instance->send($this->email, $this->emailUserName, $this->subject, $html);
         BizException::throwsIfResponseError($ret);
         Logger::info('Email', 'End', $this->email . ' -> ' . $this->subject);
     }

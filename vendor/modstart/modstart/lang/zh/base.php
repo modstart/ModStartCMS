@@ -210,4 +210,7 @@ return [
     'File' => '文件',
     'Files' => '多文件',
     'Field Type' => '字段类型',
+    'Full Screen' => '全屏',
+    'Shrink/Expand Menu' => '收缩/展开菜单',
+    'Refresh Page' => '刷新页面',
 ];

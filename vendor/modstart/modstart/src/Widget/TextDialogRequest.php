@@ -50,7 +50,9 @@ class TextDialogRequest extends AbstractWidget
     }
 
     /**
-     * @param ...$arguments string type,text,url
+     * @param $type string
+     * @param $text string
+     * @param $text url
      * @return TextDialogRequest
      */
     public static function make(...$arguments)
@@ -63,7 +65,7 @@ class TextDialogRequest extends AbstractWidget
     }
 
     /**
-     * @param $size string big
+     * @param $size string big|default
      * @return $this
      */
     public function size($size)

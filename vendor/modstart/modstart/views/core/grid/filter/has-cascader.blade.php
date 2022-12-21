@@ -19,18 +19,18 @@
                 value: [],
                 nodes: {!! json_encode($field->nodes()) !!}
             },
-            computed:{
-                optionTree(){
-                    return MS.tree.tree(this.nodes,0);
+            computed: {
+                optionTree() {
+                    return MS.tree.tree(this.nodes, 0, 'id', 'pid', 'sort');
                 }
             }
         });
         $field.data('get', function () {
             var v = app.$data.value || [];
-            v = v.length>0 ? v[v.length-1] : 0;
-            if(v>0){
-                v = MS.tree.findChildrenIdsIncludeSelf(app.$data.nodes,v,'id','pid');
-            }else{
+            v = v.length > 0 ? v[v.length - 1] : 0;
+            if (v > 0) {
+                v = MS.tree.findChildrenIdsIncludeSelf(app.$data.nodes, v, 'id', 'pid');
+            } else {
                 v = [];
             }
             return {
@@ -42,7 +42,7 @@
         $field.data('reset', function () {
             app.$data.value = [];
         });
-        $field.data('setNodes',function(nodes){
+        $field.data('setNodes', function (nodes) {
             this.value = [];
             app.$data.nodes = nodes;
         });

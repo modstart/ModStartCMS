@@ -199,7 +199,7 @@ var Convenient = {
         });
 
         $(document)
-            .on('mouseover', '[data-tip-popover]', function (e) {
+            .on('mouseenter', '[data-tip-popover]', function (e) {
                 var msg = $(this).attr('data-tip-popover');
                 var ele = this;
                 if (Dialog) {
@@ -208,7 +208,7 @@ var Convenient = {
                     $(ele).attr('title', msg);
                 }
             })
-            .on('mouseout', '[data-tip-popover]', function (e) {
+            .on('mouseleave', '[data-tip-popover]', function (e) {
                 var ele = this;
                 if (Dialog) {
                     Dialog.tipPopoverHide(ele);

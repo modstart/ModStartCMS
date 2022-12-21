@@ -46,6 +46,8 @@ use ModStart\Support\Concern\HasFluentAttribute;
  *
  * form模式：帮助文字，样式
  * @method AbstractField|mixed help($value = null)
+ * grid|form|detail模式：字段提示
+ * @method AbstractField|mixed tip($value = null)
  * @method AbstractField|mixed styleFormField($value = null)
  *
  * grid模式：字段宽度
@@ -154,6 +156,7 @@ class AbstractField implements Renderable
         'defaultValue',
         'placeholder',
         'help',
+        'tip',
         'width',
         'styleFormField',
         'readonly',
@@ -179,6 +182,7 @@ class AbstractField implements Renderable
     private $defaultValue = null;
     private $placeholder = null;
     private $help = null;
+    private $tip = null;
     private $styleFormField = null;
     protected $width = '';
     private $readonly = false;
@@ -233,7 +237,7 @@ class AbstractField implements Renderable
         if (isset($arguments[0])) {
             $this->label = $arguments[0];
         } else {
-            $this->label = $column;
+            $this->label = null;
         }
         $this->setup();
     }
@@ -567,6 +571,8 @@ class AbstractField implements Renderable
                     if ($ret instanceof AutoRenderedFieldValue) {
                         return view('modstart::core.field.autoRenderedField-' . $this->renderMode, [
                             'label' => $this->label,
+                            'tip' => $this->tip,
+                            'help' => $this->help,
                             'value' => $ret->getValue(),
                         ])->render();
                     }

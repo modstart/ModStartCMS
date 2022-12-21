@@ -40,6 +40,7 @@ class FieldManager
             'period' => \ModStart\Field\Period::class,
             'radio' => \ModStart\Field\Radio::class,
             'select' => \ModStart\Field\Select::class,
+            'selectRemote' => \ModStart\Field\SelectRemote::class,
             'richHtml' => \ModStart\Field\RichHtml::class,
             'markdown' => \ModStart\Field\Markdown::class,
             'keyValueList' => \ModStart\Field\KeyValueList::class,
@@ -67,6 +68,8 @@ class FieldManager
             'layoutTab' => \ModStart\Layout\LayoutTab::class,
             'layoutPanel' => \ModStart\Layout\LayoutPanel::class,
             'layoutSeparator' => \ModStart\Layout\LayoutSeparator::class,
+            'layoutHtml' => \ModStart\Layout\LayoutHtml::class,
+            'layoutLine' => \ModStart\Layout\LayoutLine::class,
         ];
 
         foreach ($map as $abstract => $class) {

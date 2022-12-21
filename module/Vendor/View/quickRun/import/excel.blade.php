@@ -1,4 +1,4 @@
-@extends('modstart::admin.dialogFrame')
+@extends($frameView)
 
 @section('pageTitle'){{$pageTitle}}@endsection
 
@@ -149,9 +149,9 @@
     </style>
 @endsection
 
-@section('body')
-    <div id="app" v-cloak class="tw-px-4 tw-pt-4">
-        <div class="tw-p-2 tw-rounded-lg tw-mx-auto tw-shadow-lg tw-bg-white">
+@section('bodyContent')
+    <div id="app" v-cloak>
+        <div class="tw-p-2 tw-rounded tw-mx-auto tw-bg-white">
             <div class="ub-panel">
                 <div class="head">
                     <div class="title">
@@ -168,7 +168,7 @@
                         </div>
                     @endif
                     <div>
-                        <el-upload action="" ref="upload" :auto-upload="false" :file-list="[]" drag :on-change="doFileSelect">
+                        <el-upload action="" :show-file-list="false" ref="upload" :auto-upload="false" :file-list="[]" drag :on-change="doFileSelect">
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">将文件拖到此处，或<em>点击上传XLSX文件</em></div>
                             <div class="el-upload__tip" slot="tip">
@@ -205,7 +205,10 @@
                                 <span class="ub-text-danger" v-else-if="item.status==='fail'">失败</span>
                                 <span class="ub-text-warning" v-else-if="item.status==='duplicated'">重复</span>
                             </td>
-                            <td>@{{ item.msg }}</td>
+                            <td>
+                                <div v-if="!!item.msg">@{{ item }}</div>
+                                <div v-else class="ub-text-muted">-</div>
+                            </td>
                             <td>
                                 <div class="tw-font-mono">@{{ JSON.stringify(item.record, null, 2) }}</div>
                             </td>

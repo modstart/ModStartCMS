@@ -5,7 +5,6 @@ namespace ModStart\Layout;
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use ModStart\Core\Input\Request;
-use ModStart\Core\Input\Response;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 

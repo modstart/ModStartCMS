@@ -179,11 +179,11 @@ Util.fullscreen = {
     trigger: function (callback) {
         if (Util.fullscreen.isFullScreen()) {
             Util.fullscreen.exit(function () {
-                callback('exit');
+                callback && callback('exit');
             });
         } else {
             Util.fullscreen.enter(function () {
-                callback('enter');
+                callback && callback('enter');
             });
         }
     }

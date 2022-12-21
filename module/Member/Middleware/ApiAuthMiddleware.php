@@ -34,6 +34,10 @@ class ApiAuthMiddleware
                         $memberUser = null;
                         break;
                 }
+                // 已删除用户
+                if ($memberUser['isDeleted']) {
+                    $memberUser = null;
+                }
             }
         }
         if ($memberUserId && !$memberUser) {

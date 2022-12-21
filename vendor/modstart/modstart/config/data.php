@@ -25,6 +25,7 @@ return [
                 'pdf', 'txt', 'ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'csv',
                 'zip',
                 'epub',
+                'ai', 'psd', 'cad',
             ]
         ],
         'document' => [
