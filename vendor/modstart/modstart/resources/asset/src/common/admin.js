@@ -1,4 +1,5 @@
 $(window).on('load', function () {
+
     /**
      * 修复部分依赖窗口滚动时间的组件（ueditor顶部悬浮工具栏)
      */
@@ -7,11 +8,11 @@ $(window).on('load', function () {
         evt.initEvent('scroll', false, true);
         window.dispatchEvent(evt);
     });
+
     var isMobile = ($(window).width() < 600)
     var $frame = $('.ub-panel-frame');
-    $frame.find('.menu-expand-all').on('click', function () {
-        $frame.find('.left .menu .title').addClass('open');
-    });
+
+    // 左侧菜单收起或展开
     if (isMobile) {
         $frame.find('.left-menu-shrink').on('click', function () {
             $frame.removeClass('left-toggle');
@@ -92,124 +93,152 @@ $(window).on('load', function () {
     var $adminTabMenu = $frame.find('#adminTabMenu');
     var $adminMainPage = $frame.find('#adminMainPage');
     var $adminTabRefresh = $frame.find('#adminTabRefresh');
-    var tabManager = {
-        data: [],
-        id: 1,
-        getIndexById: function (id) {
-            id = parseInt(id)
-            for (var i = 0; i < this.data.length; i++) {
-                if (this.data[i].id == id) {
-                    return i;
-                }
-            }
-            return null;
-        },
-        getById: function (id) {
-            var index = this.getIndexById(id);
-            return (null === index) ? null : this.data[index];
-        },
-        getByUrl: function (url) {
-            for (var i = 0; i < this.data.length; i++) {
-                if (this.data[i].url == url) {
-                    return this.data[i];
-                }
-            }
-            return null;
-        },
-        close: function (id) {
-            var index = this.getIndexById(id);
-            if (null === index) {
+    if ($frame.is('.page-tabs-enable') && !isMobile) {
+        // 让$adminTabMenu可以水平滚动
+        var dragData = {
+            draging: false,
+            scrollLeftStart: 0,
+            startX: 0,
+            isDragged: false,
+        };
+        $adminTabMenu.on('mousedown', function (e) {
+            dragData.draging = true;
+            dragData.scrollLeftStart = $adminTabMenu.scrollLeft();
+            dragData.startX = e.pageX;
+            dragData.isDragged = false;
+        });
+        $adminTabMenu.on('mousemove', function (e) {
+            if (!dragData.draging) {
                 return;
             }
-            var tab = this.data[index];
-            $adminTabPage.find('[data-tab-page=' + id + ']').remove();
-            $adminTabMenu.find('[data-tab-menu=' + id + ']').remove();
-            if (tab.active) {
-                if (index > 0) {
-                    this.active(this.data[index - 1].id);
-                } else if (index < this.data.length - 1) {
-                    this.active(this.data[index + 1].id);
+            dragData.isDragged = true;
+            var offset = e.pageX - dragData.startX;
+            $adminTabMenu.scrollLeft(dragData.scrollLeftStart - offset);
+        })
+        $adminTabMenu.on('mouseup', function (e) {
+            dragData.draging = false;
+        });
+        $adminTabMenu.on('mouseleave', function (e) {
+            dragData.draging = false;
+        });
+
+        var tabManager = {
+            data: [],
+            id: 1,
+            getIndexById: function (id) {
+                id = parseInt(id)
+                for (var i = 0; i < this.data.length; i++) {
+                    if (this.data[i].id == id) {
+                        return i;
+                    }
                 }
-            }
-            this.data.splice(index, 1);
-            this.updateMainPage()
-        },
-        updateMainPage: function () {
-            let hasTab = (this.data.filter(o => o.active).length > 0)
-            $adminMainPage.toggleClass('hidden', hasTab);
-            $adminTabPage.toggleClass('hidden', !hasTab);
-        },
-        activeId: function () {
-            for (var i = 0; i < this.data.length; i++) {
-                if (this.data[i].active) {
-                    return this.data[i].id;
+                return null;
+            },
+            getById: function (id) {
+                var index = this.getIndexById(id);
+                return (null === index) ? null : this.data[index];
+            },
+            getByUrl: function (url) {
+                for (var i = 0; i < this.data.length; i++) {
+                    if (this.data[i].url == url) {
+                        return this.data[i];
+                    }
                 }
-            }
-            return null
-        },
-        activeByUrl: function (url) {
-            let tab = this.getByUrl(url);
-            if (!tab) {
-                return
-            }
-            this.active(tab.id)
-        },
-        refresh: function () {
-            let activeId = this.activeId()
-            if (!activeId) {
-                window.location.reload()
-                return
-            }
-            let $iframe = $adminTabPage.find('iframe[data-tab-page=' + activeId + ']')
-            $iframe[0].contentWindow.location.reload()
-        },
-        active: function (id) {
-            if (!id) {
-                $adminTabPage.find('iframe').addClass('hidden')
-                $adminTabMenu.find('a').removeClass('active')
+                return null;
+            },
+            close: function (id) {
+                var index = this.getIndexById(id);
+                if (null === index) {
+                    return;
+                }
+                var tab = this.data[index];
+                $adminTabPage.find('[data-tab-page=' + id + ']').remove();
+                $adminTabMenu.find('[data-tab-menu=' + id + ']').remove();
+                if (tab.active) {
+                    if (index > 0) {
+                        this.active(this.data[index - 1].id);
+                    } else if (index < this.data.length - 1) {
+                        this.active(this.data[index + 1].id);
+                    }
+                }
+                this.data.splice(index, 1);
+                this.updateMainPage()
+            },
+            updateMainPage: function () {
+                let hasTab = (this.data.filter(o => o.active).length > 0)
+                $adminMainPage.toggleClass('hidden', hasTab);
+                $adminTabPage.toggleClass('hidden', !hasTab);
+            },
+            activeId: function () {
+                for (var i = 0; i < this.data.length; i++) {
+                    if (this.data[i].active) {
+                        return this.data[i].id;
+                    }
+                }
+                return null
+            },
+            activeByUrl: function (url) {
+                let tab = this.getByUrl(url);
+                if (!tab) {
+                    return
+                }
+                this.active(tab.id)
+            },
+            refresh: function () {
+                let activeId = this.activeId()
+                if (!activeId) {
+                    window.location.reload()
+                    return
+                }
+                let $iframe = $adminTabPage.find('iframe[data-tab-page=' + activeId + ']')
+                $iframe[0].contentWindow.location.reload()
+            },
+            active: function (id) {
+                if (!id) {
+                    $adminTabPage.find('iframe').addClass('hidden')
+                    $adminTabMenu.find('a').removeClass('active')
+                    try {
+                        let $menu = $adminTabMenu.find('[data-tab-menu-main]').addClass('active');
+                        $menu[0].scrollIntoView({block: 'center', behavior: 'smooth'});
+                    } catch (e) {
+                    }
+                    for (var i = 0; i < this.data.length; i++) {
+                        this.data[i].active = false
+                    }
+                    this.updateMainPage()
+                    return
+                }
+                $adminTabPage.find('iframe').addClass('hidden').filter('[data-tab-page=' + id + ']').removeClass('hidden');
+                $adminTabMenu.find('a').removeClass('active').filter('[data-tab-menu=' + id + ']').addClass('active');
                 try {
-                    let $menu = $adminTabMenu.find('[data-tab-menu-main]').addClass('active');
+                    let $menu = $adminTabMenu.find('[data-tab-menu=' + id + ']');
                     $menu[0].scrollIntoView({block: 'center', behavior: 'smooth'});
                 } catch (e) {
                 }
                 for (var i = 0; i < this.data.length; i++) {
-                    this.data[i].active = false
+                    this.data[i].active = (this.data[i].id == id);
                 }
                 this.updateMainPage()
-                return
+            },
+            open: function (url, title) {
+                var current = this.getByUrl(url);
+                if (current) {
+                    this.active(current.id);
+                    return
+                }
+                let tabUrl = url + (url.indexOf('?') > -1 ? '&' : '?') + '_is_tab=1'
+                $adminTabPage.append(`<iframe src="${tabUrl}" class="hidden" frameborder="0" data-tab-page="${this.id}"></iframe>`)
+                $adminTabMenu.append(`<a href="javascript:;" data-tab-menu="${this.id}" draggable="false">${title}<i class="close iconfont icon-close"></i></a>`)
+                this.data.push({
+                    url: url,
+                    title: title,
+                    id: this.id,
+                    active: false,
+                })
+                this.active(this.id);
+                this.id++;
             }
-            $adminTabPage.find('iframe').addClass('hidden').filter('[data-tab-page=' + id + ']').removeClass('hidden');
-            $adminTabMenu.find('a').removeClass('active').filter('[data-tab-menu=' + id + ']').addClass('active');
-            try {
-                let $menu = $adminTabMenu.find('[data-tab-menu=' + id + ']');
-                $menu[0].scrollIntoView({block: 'center', behavior: 'smooth'});
-            } catch (e) {
-            }
-            for (var i = 0; i < this.data.length; i++) {
-                this.data[i].active = (this.data[i].id == id);
-            }
-            this.updateMainPage()
-        },
-        open: function (url, title) {
-            var current = this.getByUrl(url);
-            if (current) {
-                this.active(current.id);
-                return
-            }
-            let tabUrl = url + (url.indexOf('?') > -1 ? '&' : '?') + '_is_tab=1'
-            $adminTabPage.append(`<iframe src="${tabUrl}" class="hidden" frameborder="0" data-tab-page="${this.id}"></iframe>`)
-            $adminTabMenu.append(`<a href="javascript:;" data-tab-menu="${this.id}">${title}<i class="close iconfont icon-close"></i></a>`)
-            this.data.push({
-                url: url,
-                title: title,
-                id: this.id,
-                active: false,
-            })
-            this.active(this.id);
-            this.id++;
-        }
-    };
-    if (!isMobile) {
+        };
         $menu.find('a').on('click', function () {
             let url = $(this).attr('href');
             if (['javascript:;'].includes(url)) {
@@ -220,12 +249,17 @@ $(window).on('load', function () {
             return false;
         });
         $adminTabMenu.on('click', '[data-tab-menu-main]', function () {
+            if (dragData.isDragged) {
+                return;
+            }
             tabManager.active(null)
             return false;
         });
         $adminTabMenu.on('click', '[data-tab-menu]', function () {
+            if (dragData.isDragged) {
+                return;
+            }
             tabManager.active($(this).attr('data-tab-menu'))
-            return false;
         });
         $adminTabMenu.on('click', '[data-tab-menu] i.close', function () {
             tabManager.close($(this).parent().attr('data-tab-menu'));
@@ -233,6 +267,19 @@ $(window).on('load', function () {
         });
         $adminTabRefresh.on('click', function () {
             tabManager.refresh();
+            return false;
+        });
+        $frame.on('click', '[data-tab-open]', function () {
+            console.log('asdfasdf');
+            let url = $(this).attr('href');
+            if (['javascript:;'].includes(url)) {
+                return;
+            }
+            let title = $(this).attr('data-tab-title');
+            if (!title) {
+                title = $(this).text();
+            }
+            tabManager.open(url, title)
             return false;
         });
     } else {

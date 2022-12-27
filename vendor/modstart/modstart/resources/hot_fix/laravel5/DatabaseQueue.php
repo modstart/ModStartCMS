@@ -8,6 +8,7 @@ use Illuminate\Database\Connection;
 use Illuminate\Queue\Jobs\DatabaseJob;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseQueue extends Queue implements QueueContract
 {
@@ -147,6 +148,16 @@ class DatabaseQueue extends Queue implements QueueContract
             $this->getQueue($queue), $payload, $this->getAvailableAt($delay), $attempts
         );
 
+        if (config('env.QUEUE_DATABASE_TAG_ENABLE', false)) {
+            if ('database' == config('queue.default')) {
+                if (($payload = @json_decode($payload, true))
+                    && ($job = @unserialize($payload['data']['command']))
+                    && property_exists($job, 'queueTag')) {
+                    $attributes['tag'] = $job->queueTag;
+                }
+            }
+        }
+
         return $this->database->table($this->table)->insertGetId($attributes);
     }
 
@@ -221,13 +232,16 @@ class DatabaseQueue extends Queue implements QueueContract
      */
     protected function getNextAvailableJob($queue)
     {
-        $job = $this->database->table($this->table)
+        $query = $this->database->table($this->table)
             // ->lockForUpdate()
             ->where('queue', $this->getQueue($queue))
             ->where('reserved', 0)
             ->where('available_at', '<=', $this->getTime())
-            ->orderBy('id', 'asc')
-            ->first();
+            ->orderBy('id', 'asc');
+        if ($tags = config('env.QUEUE_DATABASE_TAGS', null)) {
+            $query = $query->whereRaw(DB::raw("FIND_IN_SET(tag, '{$tags}')"));
+        }
+        $job = $query->first();
 
         if (empty($job)) {
             return null;

@@ -179,7 +179,7 @@ class CustomField extends AbstractField
         return null;
     }
 
-    public static function renderForm($field, $fieldName)
+    public static function renderForm($field, $fieldName, $param = [])
     {
         if (empty($field['type']) || empty($field['title'])) {
             return '';
@@ -190,6 +190,7 @@ class CustomField extends AbstractField
         return View::make('modstart::core.field.customField.form.' . $field['type'], [
             'fieldName' => $fieldName,
             'field' => $field,
+            'param' => $param,
         ])->render();
     }
 
@@ -207,4 +208,5 @@ class CustomField extends AbstractField
             'value' => $value,
         ])->render();
     }
+
 }

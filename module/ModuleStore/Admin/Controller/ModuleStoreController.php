@@ -101,7 +101,7 @@ class ModuleStoreController extends Controller
                 $ret = ModuleManager::disable($module);
                 BizException::throwsIfResponseError($ret);
                 return $this->doFinish([
-                    '<span class="ub-text-success">禁用成功，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
+                    '<span class="ub-text-success">禁用成功，请 <a href="javascript:;" onclick="parent.location.reload()">刷新后台</a> 查看最新系统</span>',
                 ]);
         }
     }
@@ -123,7 +123,7 @@ class ModuleStoreController extends Controller
                 $ret = ModuleManager::enable($module);
                 BizException::throwsIfResponseError($ret);
                 return $this->doFinish([
-                    '<span class="ub-text-success">启动成功，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
+                    '<span class="ub-text-success">启动成功，请 <a href="javascript:;" onclick="parent.location.reload()">刷新后台</a> 查看最新系统</span>',
                 ]);
         }
     }
@@ -148,7 +148,7 @@ class ModuleStoreController extends Controller
                     $ret = ModuleManager::uninstall($module);
                     BizException::throwsIfResponseError($ret);
                     return $this->doFinish([
-                        '<span class="ub-text-success">卸载完成，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
+                        '<span class="ub-text-success">卸载完成，请 <a href="javascript:;" onclick="parent.location.reload()">刷新后台</a> 查看最新系统</span>',
                     ]);
             }
         } else {
@@ -157,7 +157,7 @@ class ModuleStoreController extends Controller
                     $ret = ModuleStoreUtil::removeModule($module, $version);
                     BizException::throwsIfResponseError($ret);
                     return $this->doFinish([
-                        '<span class="ub-text-success">卸载完成，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
+                        '<span class="ub-text-success">卸载完成，请 <a href="javascript:;" onclick="parent.location.reload()">刷新后台</a> 查看最新系统</span>',
                     ]);
                 default:
                     $ret = ModuleManager::uninstall($module);
@@ -192,7 +192,7 @@ class ModuleStoreController extends Controller
                 $ret = ModuleManager::enable($module);
                 BizException::throwsIfResponseError($ret);
                 return $this->doFinish([
-                    '<span class="ub-text-success">升级安装完成，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
+                    '<span class="ub-text-success">升级安装完成，请 <a href="javascript:;" onclick="parent.location.reload()">刷新后台</a> 查看最新系统</span>',
                 ]);
             case 'unpackPackage':
                 $package = $dataInput->getTrimString('package');
@@ -274,7 +274,7 @@ class ModuleStoreController extends Controller
                     $ret = ModuleManager::enable($module);
                     BizException::throwsIfResponseError($ret);
                     return $this->doFinish([
-                        '<span class="ub-text-success">安装完成，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
+                        '<span class="ub-text-success">安装完成，请 <a href="javascript:;" onclick="parent.location.reload()">刷新后台</a> 查看最新系统</span>',
                     ]);
                 default:
                     return $this->doNext('install', 'installModule', [
@@ -293,7 +293,7 @@ class ModuleStoreController extends Controller
                     $ret = ModuleManager::enable($module);
                     BizException::throwsIfResponseError($ret);
                     return $this->doFinish([
-                        '<span class="ub-text-success">安装完成，请 <a href="javascript:;" onclick="window.location.reload()">刷新后台</a> 查看最新系统</span>',
+                        '<span class="ub-text-success">安装完成，请 <a href="javascript:;" onclick="parent.location.reload()">刷新后台</a> 查看最新系统</span>',
                     ]);
                 case 'unpackPackage':
                     $package = $dataInput->getTrimString('package');

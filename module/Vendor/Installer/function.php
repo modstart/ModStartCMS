@@ -67,7 +67,7 @@ function php_version_requires()
 function php_version_ok()
 {
     if (INSTALL_APP == 'CMS9') {
-        if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+        if (version_compare(PHP_VERSION, '8.1.0', '<')) {
             return false;
         }
         return true;

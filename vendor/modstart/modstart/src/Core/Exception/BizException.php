@@ -17,13 +17,16 @@ class BizException extends \Exception
         }
     }
 
-    public static function throwsIfResponseError($response)
+    public static function throwsIfResponseError($response, $prefix = '')
     {
+        if ($prefix) {
+            $prefix = $prefix . ':';
+        }
         if (empty($response)) {
-            throw new BizException('Response Empty');
+            throw new BizException($prefix . 'Response Empty');
         }
         if ($response['code']) {
-            throw new BizException($response['msg']);
+            throw new BizException($prefix . $response['msg']);
         }
     }
 

@@ -478,6 +478,16 @@ class FileUtil
         return true;
     }
 
+    public static function canSafeCleanTemp($path)
+    {
+        $tempPath = public_path('temp');
+        $path = realpath($path);
+        if (strpos($path, $tempPath) === 0) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 删除使用 savePathToLocalTemp 或 generateLocalTempPath 产生的本地临时路径
      * @param $path string

@@ -425,4 +425,293 @@ class Tecmz
         return $this->request('/person_verify_id_card', $post);
     }
 
+    private function callFileConvertQueue($type, $url, $name = null, $param = [])
+    {
+        $post = [];
+        $post['url'] = $url;
+        $post['name'] = $name;
+        $post['param'] = json_encode($param, JSON_UNESCAPED_UNICODE);
+        return $this->request('/' . $type . '/queue', $post);
+    }
+
+    private function callFileConvertQuery($type, $jobId)
+    {
+        $post = [];
+        $post['jobId'] = $jobId;
+        return $this->request('/' . $type . '/query', $post);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function aiToImageQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('ai_to_image', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function aiToImageQuery($jobId)
+    {
+        return $this->callFileConvertQuery('ai_to_image', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function amrConvertQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('amr_convert', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function amrConvertQuery($jobId)
+    {
+        return $this->callFileConvertQuery('amr_convert', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function docToPdfQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('doc_to_pdf', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function docToPdfQuery($jobId)
+    {
+        return $this->callFileConvertQuery('doc_to_pdf', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function epsToImageQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('eps_to_image', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function epsToImageQuery($jobId)
+    {
+        return $this->callFileConvertQuery('eps_to_image', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function mp3ConvertQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('mp3_convert', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function mp3ConvertQuery($jobId)
+    {
+        return $this->callFileConvertQuery('mp3_convert', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function wavConvertQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('wav_convert', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function wavConvertQuery($jobId)
+    {
+        return $this->callFileConvertQuery('wav_convert', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfCollectQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_collect', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfCollectQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_collect', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfDecryptQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_decrypt', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfDecryptQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_decrypt', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfEncryptQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_encrypt', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfEncryptQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_encrypt', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfOptimizeQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_optimize', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfOptimizeQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_optimize', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfToImageQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_to_image', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfToImageQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_to_image', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfWatermarkQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_watermark', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfWatermarkQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_watermark', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function psdToImageQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('psd_to_image', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function psdToImageQuery($jobId)
+    {
+        return $this->callFileConvertQuery('psd_to_image', $jobId);
+    }
+
 }
