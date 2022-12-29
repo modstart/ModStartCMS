@@ -239,7 +239,7 @@ class DatabaseQueue extends Queue implements QueueContract
             ->where('available_at', '<=', $this->getTime())
             ->orderBy('id', 'asc');
         if ($tags = config('env.QUEUE_DATABASE_TAGS', null)) {
-            $query = $query->whereRaw(DB::raw("FIND_IN_SET(tag, '{$tags}')"));
+            $query = $query->whereRaw(DB::raw("( FIND_IN_SET( tag, '{$tags}' ) OR ( tag = '' ) OR ( tag IS NULL ) ) "));
         }
         $job = $query->first();
 

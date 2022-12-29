@@ -7,6 +7,7 @@ namespace Module\Cms\Api\Controller;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Util\CmsCatUtil;
@@ -44,10 +45,14 @@ class DetailController extends ModuleBaseController
         $catRootChildren = CmsCatUtil::children($catRoot['id']);
         $viewData = [];
         $viewData['view'] = $view;
+        // print_r($cat);exit();
         if (CmsMemberPermitUtil::canVisitCat($cat)) {
             $viewData['record'] = $data['record'];
         } else {
-            $viewData['record'] = null;
+            $viewData['record'] = ArrayUtil::keepKeys($data['record'], [
+                'title', 'summary',
+                'seoTitle', 'seoKeywords', 'seoDescription',
+            ]);
         }
         $viewData['cat'] = $cat;
         $viewData['catRoot'] = $catRoot;
