@@ -13,6 +13,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EncodeUtil;
+use ModStart\Core\Util\FormatUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Data\DataManager;
 use ModStart\Data\Event\DataFileUploadedEvent;
@@ -224,26 +225,26 @@ class MemberUtil
         }
 
         if ($email) {
-            if (!preg_match('/(^[\w\-.]+@[\w\-]+\.[\w\-.]+$)/', $email)) {
+            if (!FormatUtil::isEmail($email)) {
                 return Response::generate(-3, '邮箱格式不正确');
             }
-            $where = array(
+            $where = [
                 'email' => $email
-            );
+            ];
         } else if ($phone) {
             if (!preg_match('/(^1[0-9]{10}$)/', $phone)) {
                 return Response::generate(-4, '手机格式不正确');
             }
-            $where = array(
+            $where = [
                 'phone' => $phone
-            );
+            ];
         } else if ($username) {
             if (strpos($username, '@') !== false) {
                 return Response::generate(-5, '用户名格式不正确');
             }
-            $where = array(
+            $where = [
                 'username' => $username
-            );
+            ];
         }
 
         $memberUser = ModelUtil::get('member_user', $where);
@@ -420,7 +421,7 @@ class MemberUtil
         $value = trim($value);
         switch ($type) {
             case 'email' :
-                if (!preg_match('/(^[\w-.]+@[\w-]+\.[\w-.]+$)/', $value)) {
+                if (!FormatUtil::isEmail($value)) {
                     return Response::generate(-1, '邮箱格式不正确');
                 }
                 break;

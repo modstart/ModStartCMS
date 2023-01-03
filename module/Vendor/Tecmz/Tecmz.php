@@ -219,18 +219,20 @@ class Tecmz
     /**
      * 快递查询
      *
-     * @param $type
-     * @param $no
+     * @param $type string
+     * @param $no string
+     * @param $phone string
      * @return array
      *
      * 失败 [code=>-1,msg=>'<失败原因>',data=>null]
      * 成功 [code=>0,msg=>'ok',data=>null]
      */
-    public function express($type, $no)
+    public function express($type, $no, $phone = null)
     {
         $post = [];
         $post['type'] = $type;
         $post['no'] = $no;
+        $post['phone'] = $phone;
         return $this->request('/express', $post);
     }
 
@@ -427,6 +429,9 @@ class Tecmz
 
     private function callFileConvertQueue($type, $url, $name = null, $param = [])
     {
+        if (is_array($url)) {
+            $url = json_encode($url, JSON_UNESCAPED_UNICODE);
+        }
         $post = [];
         $post['url'] = $url;
         $post['name'] = $name;
@@ -712,6 +717,90 @@ class Tecmz
     public function psdToImageQuery($jobId)
     {
         return $this->callFileConvertQuery('psd_to_image', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfToWordQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_to_word', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfToWordQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_to_word', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function pdfToExcelQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('pdf_to_excel', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function pdfToExcelQuery($jobId)
+    {
+        return $this->callFileConvertQuery('pdf_to_excel', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function imageToWordQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('image_to_word', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function imageToWordQuery($jobId)
+    {
+        return $this->callFileConvertQuery('image_to_word', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function imageToExcelQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('image_to_excel', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function imageToExcelQuery($jobId)
+    {
+        return $this->callFileConvertQuery('image_to_excel', $jobId);
     }
 
 }

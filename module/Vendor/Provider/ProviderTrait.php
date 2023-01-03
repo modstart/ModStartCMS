@@ -10,11 +10,19 @@ trait ProviderTrait
      */
     private static $list = [];
 
+    /**
+     * 注册
+     * @param $provider
+     */
     public static function register($provider)
     {
         self::$list[] = $provider;
     }
 
+    /**
+     * 列出全部
+     * @return array
+     */
     public static function listAll()
     {
         static $processed = false;
@@ -44,16 +52,10 @@ trait ProviderTrait
         return self::$list;
     }
 
-    private static function getByName($name)
-    {
-        foreach (self::all() as $item) {
-            if ($item->name() == $name) {
-                return $item;
-            }
-        }
-        return null;
-    }
-
+    /**
+     * 列出全部Map name->title
+     * @return array
+     */
     public static function allMap()
     {
         return array_build(self::all(), function ($k, $v) {
@@ -63,6 +65,10 @@ trait ProviderTrait
         });
     }
 
+    /**
+     * 列出全部Map（包含一个空）name->title
+     * @return array|string[]
+     */
     public static function allDefaultMap()
     {
         return array_merge(
@@ -73,5 +79,24 @@ trait ProviderTrait
                 ];
             })
         );
+    }
+
+    /**
+     * 判断是否为空
+     * @return bool
+     */
+    public static function isEmpty()
+    {
+        return empty(self::$list);
+    }
+
+    private static function getByName($name)
+    {
+        foreach (self::all() as $item) {
+            if ($item->name() == $name) {
+                return $item;
+            }
+        }
+        return null;
     }
 }

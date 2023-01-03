@@ -83,7 +83,7 @@ class FormatUtil
 
     public static function isDomain($domain)
     {
-        return preg_match('/([a-z0-9]([a-z0-9\-]{0,61}[a-z0-9])?\.)+[a-z]{2,10}/i', $domain);
+        return preg_match('/([a-z0-9]([a-z0-9\\-]{0,61}[a-z0-9])?\\.)+[a-z]{2,10}/i', $domain);
     }
 
     public static function isMoney($money)
