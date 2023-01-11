@@ -3,6 +3,7 @@
 namespace ModStart;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use ModStart\Core\Exception\BizException;
@@ -170,9 +171,11 @@ class ModStart
      */
     public static function env()
     {
-        if (PHP_VERSION_ID >= 80000) {
-            return 'laravel9';
-        }
-        return 'laravel5';
+        static $env = null;
+        if (null === $env) {
+            $pcs = explode('.', \Illuminate\Foundation\Application::VERSION);
+            $env = 'laravel' . $pcs[0];
+        };
+        return $env;
     }
 }

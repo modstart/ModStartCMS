@@ -42,10 +42,13 @@ class DataManager
     {
         static $option = null;
         if (null === $option) {
-            $option ['driver'] = app()->config->get('DataStorageDriver');
+            $option ['driver'] = modstart_config('DataStorageDefaultDriver', '');
             if (empty($option ['driver'])) {
-                $option ['driver'] = 'DataStorage_File';
-                app()->bind('DataStorage_File', function () {
+                $option ['driver'] = app()->config->get('DataStorageDriver');
+            }
+            if (empty($option ['driver'])) {
+                $option ['driver'] = 'DataStorage_DataFile';
+                app()->bind('DataStorage_DataFile', function () {
                     return new FileDataStorage(null);
                 });
             }

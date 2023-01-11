@@ -111,8 +111,25 @@ class ShellUtil
 
     public static function pathQuote($path)
     {
-        // 中文字符会变为空
-        // return escapeshellarg($path);
-        return '"' . str_replace('"', '\\"', $path) . '"';
+        return self::escapeArgument($path);
+    }
+
+    public static function escapeArgument($argument)
+    {
+        if ('' === $argument || null === $argument) {
+            return '""';
+        }
+        if ('\\' !== \DIRECTORY_SEPARATOR) {
+            return "'" . str_replace("'", "'\\''", $argument) . "'";
+        }
+        if (str_contains($argument, "\0")) {
+            $argument = str_replace("\0", '?', $argument);
+        }
+        if (!preg_match('/[\/()%!^"<>&|\s]/', $argument)) {
+            return $argument;
+        }
+        $argument = preg_replace('/(\\\\+)$/', '$1$1', $argument);
+
+        return '"' . str_replace(['"', '^', '%', '!', "\n"], ['""', '"^^"', '"^%"', '"^!"', '!LF!'], $argument) . '"';
     }
 }

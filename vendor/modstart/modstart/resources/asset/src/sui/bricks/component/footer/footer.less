@@ -60,16 +60,27 @@
 }
 
 .ub-footer-link {
-    &.reverse {
-        background: #333;
-        color: #EEE;
 
-        .link {
-            .list {
-                a {
-                    color: #CCC;
-                }
-            }
+    padding: 2rem 0;
+
+    a {
+        color: var(--color-text);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &.reverse {
+        background: #1b1c20;
+        color: #c4cfdb;
+
+        a {
+            color: #c4cfdb;
+        }
+
+        .line {
+            background-color: lighten(#1b1c20, 10%);
         }
     }
 
@@ -77,25 +88,38 @@
         padding: 1rem 0;
 
         .title {
-            font-size: 0.78rem;
+            font-size: 1rem;
         }
 
         .list {
             a {
-                display: block;
-                color: #666;
                 margin: 0.5rem 0;
+                display: block;
             }
         }
     }
 
-    .image {
+    .content {
         padding: 1rem 0;
-        text-align: right;
+    }
 
-        img {
-            max-width: 100%;
+    .line {
+        height: 1px;
+        background: #EEE;
+        margin: 1rem 0;
+    }
+
+    .nav {
+        padding: 0.5rem 0;
+        text-align: center;
+
+        a {
+            margin: 0 0.25rem;
         }
+    }
+
+    .copyright {
+        text-align: center;
     }
 }
 

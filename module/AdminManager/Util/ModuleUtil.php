@@ -15,6 +15,9 @@ class ModuleUtil
         $modules[] = "ModStart:" . ModStart::$version;
         foreach (ModuleManager::listAllEnabledModules() as $m => $_) {
             $info = ModuleManager::getModuleBasic($m);
+            if (!$info) {
+                continue;
+            }
             $modules[] = "$m:$info[version]";
         }
         return $modules;

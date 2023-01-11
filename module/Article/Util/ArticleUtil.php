@@ -10,14 +10,32 @@ class ArticleUtil
 {
     const CACHE_KEY_PREFIX = 'article:';
 
+    public static function buildRecord($article)
+    {
+        if (empty($article)) {
+            return $article;
+        }
+        $article['_url'] = self::url($article);
+        return $article;
+    }
+
+    public static function url($article)
+    {
+        if ($article['alias']) {
+            return modstart_web_url('article/' . $article['alias']);
+        }
+        return modstart_web_url('article/' . $article['id']);
+    }
+
     public static function get($id)
     {
-        return ModelUtil::get('article', $id);
+        $m = ModelUtil::get('article', $id);
+        return self::buildRecord($m);
     }
 
     public static function getByAlias($alias)
     {
-        return ModelUtil::get('article', ['alias' => $alias]);
+        return self::buildRecord(ModelUtil::get('article', ['alias' => $alias]));
     }
 
     /**
@@ -28,7 +46,10 @@ class ArticleUtil
      */
     public static function listByPosition($position = 'home')
     {
-        return ModelUtil::model('article')->where(['position' => $position])->orderBy('sort', 'asc')->get()->toArray();
+        $records = ModelUtil::model('article')->where(['position' => $position])->orderBy('sort', 'asc')->get()->toArray();
+        return array_map(function ($item) {
+            return self::buildRecord($item);
+        }, $records);
     }
 
     /**

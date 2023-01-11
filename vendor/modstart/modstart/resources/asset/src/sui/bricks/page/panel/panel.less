@@ -303,6 +303,18 @@
                         border-color: var(--color-primary);
                         color: var(--color-primary);
                         background-color: rgb(237, 239, 255);
+
+                        &:before {
+                            content: '';
+                            background-color: var(--color-primary);
+                            width: 6px;
+                            height: 6px;
+                            display: inline-block;
+                            border-radius: 50%;
+                            vertical-align: middle;
+                            margin-top: -2px;
+                            margin-right: 4px;
+                        }
                     }
 
                     &:hover {

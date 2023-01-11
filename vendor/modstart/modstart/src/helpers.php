@@ -352,7 +352,14 @@ function L($name, ...$params)
         }
         return $langTrans[$fallbackLocale][$name];
     }
-    foreach (['base.' . $name, 'modstart::base.' . $name] as $id) {
+    $ids = [
+        'base.' . $name,
+        'modstart::base.' . $name,
+    ];
+    if (strpos($name, '.') !== false) {
+        array_unshift($ids, $name);
+    }
+    foreach ($ids as $id) {
         $trans = trans($id);
         if ($trans !== $id) {
             if ($trackMissing && isset($trackMissingData[$name])) unset($trackMissingData[$name]);

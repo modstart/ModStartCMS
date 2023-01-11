@@ -568,14 +568,14 @@ class FileUtil
             if (StrUtil::startWith($path, '//')) {
                 $path = 'http://' . $path;
             }
-            $image = CurlUtil::getRaw($path, [], [
+            $content = CurlUtil::getRaw($path, [], [
                 'timeout' => 60 * 10,
             ]);
-            if (empty($image)) {
+            if (empty($content)) {
                 return null;
             }
             @mkdir(public_path('temp'));
-            file_put_contents($tempPath, $image);
+            file_put_contents($tempPath, $content);
         } else {
             if (StrUtil::startWith($path, '/')) {
                 $path = substr($path, 1);

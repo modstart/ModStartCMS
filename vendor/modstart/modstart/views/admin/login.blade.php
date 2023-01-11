@@ -25,7 +25,7 @@
         <div class="login-box">
             <div class="info">
                 <div class="title">
-                    <i class="iconfont icon-user-o"></i> {!! L('Admin Login') !!}
+                    <i class="iconfont icon-ms"></i> {!! L('Admin Login') !!}
                 </div>
                 <div class="slogan">
                     @if(modstart_config('adminLoginSlogan'))
