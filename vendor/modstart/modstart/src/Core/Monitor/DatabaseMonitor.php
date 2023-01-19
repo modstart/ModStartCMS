@@ -8,6 +8,7 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use ModStart\Core\Util\ArrayUtil;
 
 class DatabaseMonitor
 {
@@ -32,16 +33,13 @@ class DatabaseMonitor
                     $bindings = $query->bindings;
                     $time = $query->time;
                 }
-                foreach ($bindings as $i => $binding) {
-                    if (is_string($binding)) {
-                        $bindings[$i] = Str::limit($binding, 100);
-                    }
-                }
-                $param = json_encode($bindings, JSON_UNESCAPED_UNICODE);
-                self::$queryCountPerRequestSqls[] = "$sql, $param";
+                self::$queryCountPerRequestSqls[] = [
+                    'sql' => $sql,
+                    'bindings' => $bindings,
+                ];
                 // Log::info("SQL $sql, " . json_encode($bindings));
                 if ($time > 500) {
-                    Log::warning("LONG_SQL ${time}ms, $sql, $param");
+                    Log::warning("LONG_SQL ${time}ms, $sql, " . ArrayUtil::serializeForLog($bindings));
                 }
             });
         } catch (\Exception $e) {
@@ -55,6 +53,12 @@ class DatabaseMonitor
 
     public static function getQueryCountPerRequestSqls()
     {
+        foreach (self::$queryCountPerRequestSqls as $i => $v) {
+            if (is_array($v)) {
+                $bindings = ArrayUtil::serializeForLog($v['bindings']);
+                self::$queryCountPerRequestSqls[$i] = $v['sql'] . ', ' . $bindings;
+            }
+        }
         return self::$queryCountPerRequestSqls;
     }
 

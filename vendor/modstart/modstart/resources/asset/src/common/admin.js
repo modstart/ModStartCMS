@@ -177,6 +177,8 @@ $(window).on('load', function () {
                         this.active(this.data[index - 1].id);
                     } else if (index < this.data.length - 1) {
                         this.active(this.data[index + 1].id);
+                    } else {
+                        this.active(0);
                     }
                 }
                 this.data.splice(index, 1);

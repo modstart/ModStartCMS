@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use ModStart\Core\Util\ArrayUtil;
 
 class HttpMonitor
 {
@@ -37,15 +39,16 @@ class HttpMonitor
             $url = $request->url();
             $method = $request->method();
             if ($time > 1000) {
-                $param = json_encode($request->input(), JSON_UNESCAPED_UNICODE);
+                $param = ArrayUtil::serializeForLog($request->input());
                 Log::warning("LONG_REQUEST $method [$url] ${time}ms $param");
             }
             $queryCountPerRequest = DatabaseMonitor::getQueryCountPerRequest();
             if ($queryCountPerRequest > 10) {
-                $param = json_encode($request->input(), JSON_UNESCAPED_UNICODE);
+                $param = ArrayUtil::serializeForLog($request->input());
                 Log::warning("MASS_REQUEST_SQL $method [$url] $queryCountPerRequest $param -> "
                     . json_encode(DatabaseMonitor::getQueryCountPerRequestSqls(), JSON_UNESCAPED_UNICODE));
             }
         });
     }
+
 }
