@@ -289,8 +289,8 @@ AdminMenu::register(function () {
 
 ### QQ交流群
 
-<img width="400" src="https://modstart.com/contact/ContactQQGroup" />
+<img src="https://modstart.com/contact/ContactQQGroup" />
 
 ### 微信交流群
 
-<img width="400" src="https://modstart.com/contact/ContactWechatGroup" />
+<img src="https://modstart.com/contact/ContactWechatGroup" />
