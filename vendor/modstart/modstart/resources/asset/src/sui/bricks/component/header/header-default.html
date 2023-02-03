@@ -7,14 +7,14 @@
                 <img data-src="placeholder/400x100"/>
             </a>
         </div>
-        <div class="menu-mask" onclick="$('body').removeClass('ub-header-show')"></div>
+        <div class="menu-mask" onclick="MS.header.hide()"></div>
         <div class="menu">
             <a href="#">首页</a>
             <a href="#" class="active">导航A</a>
             <a href="#">导航B</a>
             <a href="#">导航C</a>
         </div>
-        <a class="menu-toggle" href="javascript:;" onclick="$('body').toggleClass('ub-header-show')">
+        <a class="menu-toggle" href="javascript:;" onclick="MS.header.trigger()">
             <i class="show iconfont icon-list"></i>
             <i class="close iconfont icon-close"></i>
         </a>

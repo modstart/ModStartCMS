@@ -1,3 +1,4 @@
+
 <p align="center">
   <a href="https://modstart.com">
     <img src="https://ms-assets.modstart.com/data/image/2021/09/08/23652_1f1j_9825.png" alt="ModStart" width="360" />
@@ -6,7 +7,6 @@
 <p align="center">
   基于 Laravel 的企业内容建站系统
 </p>
-
 
 <p align="center">  
   <a href="https://github.com/modstart/ModStartCMS" target="_blank">
@@ -44,7 +44,6 @@
 最新版本 <img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/github/v/release/modstart/ModStartCMS?style=flat-square">
 
 功能完善，模块市场丰富，欢迎交流。
-QQ群： [467107293](https://qm.qq.com/cgi-bin/qm/qr?k=JP5GySRSCM8BUVoIGwfXF_bCe6gPajEb&jump_from=webapi)
 
 - 会员模块通用且完整，支持完整的API调用
 - 大文件分片上传，进度条显示，已上传文件管理
@@ -57,34 +56,35 @@ QQ群： [467107293](https://qm.qq.com/cgi-bin/qm/qr?k=JP5GySRSCM8BUVoIGwfXF_bCe
 - 第三方云存储支持，支持云储存分片上传（阿里云、百度云、华为云、腾讯云、FTP、七牛云、UCloud、又拍云）
 - 第三方短信支持（阿里云、腾讯云、华为云、百度云、253云通讯、聚合、七牛云、融云、赛邮、UCloud、云片、网易云）
 - 丰富优秀的模块支持：
-  - [视频点播课](https://modstart.com/m/CourseVideo)
-  - [一物一码防伪溯源](https://modstart.com/m/Tracking)
-  - [文章投稿系统](https://modstart.com/m/CmsWriter)
-  - [Markdown文档管理](https://modstart.com/m/Markdown)
-  - [视频管理系统](https://modstart.com/m/Video)
-  - [邮件营销系统](https://modstart.com/m/Edm)
-  - [视频直播系统](https://modstart.com/m/CourseLive)
-  - [文库系统](https://modstart.com/m/Wenku)
-  - [相册系统](https://modstart.com/m/Photo)
-  - [文库系统](https://modstart.com/m/Wenku)
-  - [问答系统](https://modstart.com/m/Wenda)
-  - [IT工具箱](https://modstart.com/m/Tools)
-  - [帮助中心系统](https://modstart.com/m/CmsHelp)
-  - [短连接系统](https://modstart.com/m/ShortLink)
-  - [论坛系统](https://modstart.com/m/Forum)
-  - [个人博客系统](https://modstart.com/m/Blog)
-  - [发卡系统](https://modstart.com/m/Faka)
-  - [积分商城](https://modstart.com/m/CreditShop)
-  - [兼职招聘系统](https://modstart.com/m/Hire)
-  - [课程报名系统](https://modstart.com/m/Course)
-  - [活动报名系统](https://modstart.com/m/Event)
-  - [简单商城系统](https://modstart.com/m/Shop)
-  - [网盘系统](https://modstart.com/m/Pan)
-  - [微信公众号管理系统](https://modstart.com/m/WechatMP)
-  - [在线客服系统](https://modstart.com/m/LiveChat)
-  - [图床系统](https://modstart.com/m/PicUploader)
-  - [通用CMS系统](https://modstart.com/m/Cms)
-  - ...
+    - [视频点播课](https://modstart.com/m/CourseVideo)
+    - [一物一码防伪溯源](https://modstart.com/m/Tracking)
+    - [文章投稿系统](https://modstart.com/m/CmsWriter)
+    - [Markdown文档管理](https://modstart.com/m/Markdown)
+    - [视频管理系统](https://modstart.com/m/Video)
+    - [邮件营销系统](https://modstart.com/m/Edm)
+    - [视频直播系统](https://modstart.com/m/CourseLive)
+    - [文库系统](https://modstart.com/m/Wenku)
+    - [相册系统](https://modstart.com/m/Photo)
+    - [文库系统](https://modstart.com/m/Wenku)
+    - [问答系统](https://modstart.com/m/Wenda)
+    - [IT工具箱](https://modstart.com/m/Tools)
+    - [帮助中心系统](https://modstart.com/m/CmsHelp)
+    - [短连接系统](https://modstart.com/m/ShortLink)
+    - [论坛系统](https://modstart.com/m/Forum)
+    - [个人博客系统](https://modstart.com/m/Blog)
+    - [发卡系统](https://modstart.com/m/Faka)
+    - [积分商城](https://modstart.com/m/CreditShop)
+    - [兼职招聘系统](https://modstart.com/m/Hire)
+    - [课程报名系统](https://modstart.com/m/Course)
+    - [活动报名系统](https://modstart.com/m/Event)
+    - [简单商城系统](https://modstart.com/m/Shop)
+    - [网盘系统](https://modstart.com/m/Pan)
+    - [微信公众号管理系统](https://modstart.com/m/WechatMP)
+    - [在线客服系统](https://modstart.com/m/LiveChat)
+    - [图床系统](https://modstart.com/m/PicUploader)
+    - [通用CMS系统](https://modstart.com/m/Cms)
+    - ...
+
 
 
 ##  💡 系统简介
@@ -92,6 +92,7 @@ QQ群： [467107293](https://qm.qq.com/cgi-bin/qm/qr?k=JP5GySRSCM8BUVoIGwfXF_bCe
 `ModStartCMS` 是一个基于 `Laravel` 企业内容建站系统。模块市场拥有丰富的功能应用，支持后台一键快速安装，让开发者能快的实现业务功能开发。 
 
 系统完全开源，基于 **Apache 2.0** 开源协议，**免费且不限制商业使用**。
+
 
 <img src="https://ms-assets.modstart.com/data/image/2021/11/07/46017_dv5r_7358.jpg" alt="功能架构" />
 
@@ -155,17 +156,17 @@ QQ群： [467107293](https://qm.qq.com/cgi-bin/qm/qr?k=JP5GySRSCM8BUVoIGwfXF_bCe
 
 
 - **Laravel 5.1 版本**
-  - `PHP 5.6` `PHP 7.0`
-  - `MySQL` `>=5.0`
-  - `PHP Extension`：`Fileinfo`
-  - `Apache/Nginx`
+    - `PHP 5.6` `PHP 7.0`
+    - `MySQL` `>=5.0`
+    - `PHP Extension`：`Fileinfo`
+    - `Apache/Nginx`
 
 
 - **Laravel 9.0 版本**
-  - `PHP 8.0` `PHP 8.1`
-  - `MySQL` `>=5.0`
-  - `PHP Extension`：`Fileinfo`
-  - `Apache/Nginx`
+    - `PHP 8.1`
+    - `MySQL` `>=5.0`
+    - `PHP Extension`：`Fileinfo`
+    - `Apache/Nginx`
 
 > 我们的测试基于 PHP 的 5.6 / 7.0 / 8.0 / 8.1 版本，系统稳定性最好
 
@@ -286,4 +287,10 @@ AdminMenu::register(function () {
 
 ## ✉️ 使用交流
 
-QQ交流群： [467107293](https://qm.qq.com/cgi-bin/qm/qr?k=JP5GySRSCM8BUVoIGwfXF_bCe6gPajEb&jump_from=webapi)
+### QQ交流群
+
+<img width="400" src="https://modstart.com/contact/ContactQQGroup" />
+
+### 微信交流群
+
+<img width="400" src="https://modstart.com/contact/ContactWechatGroup" />

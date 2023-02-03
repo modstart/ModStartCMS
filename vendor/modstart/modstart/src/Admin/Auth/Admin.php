@@ -146,7 +146,7 @@ class Admin
         }
         $adminLog = ModelUtil::insert('admin_log', ['adminUserId' => $adminUserId, 'type' => AdminLogType::INFO, 'summary' => $summary]);
         if (!empty($content)) {
-            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => json_encode($content)]);
+            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => json_encode($content, JSON_UNESCAPED_UNICODE)]);
         }
     }
 

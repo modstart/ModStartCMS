@@ -30,10 +30,8 @@
                 <div class="slogan">
                     @if(modstart_config('adminLoginSlogan'))
                         {{ modstart_config('adminLoginSlogan') }}
-                    @elseif(defined('\App\Constant\AppConstant::APP_NAME'))
-                        {{\App\Constant\AppConstant::APP_NAME}}
                     @else
-                        Admin Login
+                        {{\ModStart\Core\Util\MetaUtil::get('APP_NAME')}}
                     @endif
                 </div>
             </div>

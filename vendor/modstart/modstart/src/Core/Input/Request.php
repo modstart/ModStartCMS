@@ -283,11 +283,25 @@ class Request
 
     public static function ip()
     {
+        $keys = [
+            'HTTP_X_REAL_IP',
+            'HTTP_X_FORWARDED_FOR',
+        ];
+        foreach ($keys as $key) {
+            if ($v = self::server($key)) {
+                return $v;
+            }
+        }
         return self::instance()->ip();
     }
 
     public static function server($name)
     {
         return self::instance()->server($name);
+    }
+
+    public static function servers()
+    {
+        return self::instance()->server->all();
     }
 }

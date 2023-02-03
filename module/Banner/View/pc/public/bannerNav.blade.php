@@ -40,7 +40,7 @@ $banners = \Module\Banner\Util\BannerUtil::listByPositionWithCache($position);
                 @endforeach
             @endif
         </div>
-        <a class="menu-toggle" href="javascript:;" onclick="$('body').toggleClass('ub-header-show')">
+        <a class="menu-toggle" href="javascript:;" onclick="MS.header.trigger()">
             <i class="show iconfont icon-list"></i>
             <i class="close iconfont icon-close"></i>
         </a>

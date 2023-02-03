@@ -35,9 +35,9 @@ class SelectRemote extends AbstractField
                     $value = $item[$field->name()];
                     $record = ModelUtil::get($table, [$valueKey => $value]);
                     if ($record) {
-                        return $record[$labelKey];
+                        $value = $record[$labelKey];
                     }
-                    return $value;
+                    return AutoRenderedFieldValue::make($value);
             }
         });
         return $this;

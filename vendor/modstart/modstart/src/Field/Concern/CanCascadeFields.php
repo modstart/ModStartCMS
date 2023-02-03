@@ -221,6 +221,7 @@ JS;
             $value = json_encode($this->value);
             switch (get_class($this)) {
                 case Select::class:
+                case Type::class:
                     return <<<JS
 cascadeChange($value);
 JS;

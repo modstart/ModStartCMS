@@ -19,10 +19,13 @@ jquery.fn.isInViewport = function () {
 };
 
 const Header = {
-    trigger: function (selector, showClass) {
+    trigger: function (ele, selector, showClass) {
         selector = selector || 'header'
         showClass = showClass || 'show'
-        var $header = $(selector)
+        if ((typeof ele === 'undefined') && window.event) {
+            ele = window.event.target
+        }
+        var $header = ele ? ($(ele).closest(selector)) : ($(selector))
         if ($header.hasClass(showClass)) {
             $header.removeClass(showClass)
             $('html').removeClass('body-scroll-lock')
@@ -31,10 +34,13 @@ const Header = {
             $('html').addClass('body-scroll-lock')
         }
     },
-    hide: function (selector, showClass) {
+    hide: function (ele, selector, showClass) {
+        if ((typeof ele === 'undefined') && window.event) {
+            ele = window.event.target
+        }
         selector = selector || 'header'
         showClass = showClass || 'show'
-        var $header = $(selector)
+        var $header = ele ? ($(ele).closest(selector)) : ($(selector))
         $header.removeClass(showClass)
         $('html').removeClass('body-scroll-lock')
     }

@@ -149,7 +149,7 @@
     </style>
 @endsection
 
-@section('bodyContent')
+@section($_tabSectionName)
     <div id="app" v-cloak>
         <div class="tw-p-2 tw-rounded tw-mx-auto tw-bg-white">
             <div class="ub-panel">

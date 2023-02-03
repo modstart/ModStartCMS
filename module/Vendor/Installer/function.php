@@ -50,11 +50,15 @@ if (!file_exists(ENV_FILE)) {
     file_put_contents(ENV_FILE, "APP_ENV=beta\nAPP_DEBUG=true\nAPP_KEY=" . \ModStart\Core\Util\RandomUtil::string(32));
 }
 
+function php_is_laravel9()
+{
+    return in_array(INSTALL_APP, ['CMS9', 'BLOG9']);
+}
+
 function php_version_requires()
 {
-    if (INSTALL_APP == 'CMS9') {
+    if (php_is_laravel9()) {
         return join('，', [
-            '8.0.x',
             '8.1.x',
         ]);
     }
@@ -66,7 +70,7 @@ function php_version_requires()
 
 function php_version_ok()
 {
-    if (INSTALL_APP == 'CMS9') {
+    if (php_is_laravel9()) {
         if (version_compare(PHP_VERSION, '8.1.0', '<')) {
             return false;
         }

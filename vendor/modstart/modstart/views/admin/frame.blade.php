@@ -149,6 +149,7 @@
                         <div class="dropdown">
                             @if(\ModStart\Admin\Auth\AdminPermission::permit('\ModStart\Admin\Controller\ProfileController@changePassword'))
                                 <a class="dropdown-item"
+                                   data-tab-open
                                    href="{{action('\ModStart\Admin\Controller\ProfileController@changePassword')}}">{{L('Change Password')}}</a>
                             @endif
                             <a class="dropdown-item" href="javascript:;" data-confirm="{{L('Confirm Logout ?')}}"

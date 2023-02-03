@@ -5,6 +5,7 @@ namespace ModStart\Grid\Displayer;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\View;
 use ModStart\Field\AbstractField;
 use ModStart\Widget\TextAction;
 use ModStart\Widget\TextLink;
@@ -119,7 +120,10 @@ class ItemOperate extends AbstractDisplayer
                 $editText = L('Edit');
             }
             if ($this->grid->editBlankPage()) {
-                $this->operates[] = TextLink::primary($editText, $this->grid->urlEdit() . '?_id=' . $this->item->{$this->grid->getRepositoryKeyName()});
+                $this->operates[] = TextLink::primary($editText,
+                    $this->grid->urlEdit() . '?_id=' . $this->item->{$this->grid->getRepositoryKeyName()},
+                    View::shared('_isTab') ? 'data-tab-open' : ''
+                );
             } else {
                 $this->operates[] = TextAction::primary($editText, 'data-edit');
             }
