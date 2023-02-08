@@ -68,7 +68,7 @@ class TextDialogRequest extends AbstractWidget
      * @param $size string big|default
      * @return $this
      */
-    public function size($size)
+    public function size($size = 'big')
     {
         switch ($size) {
             case 'big':

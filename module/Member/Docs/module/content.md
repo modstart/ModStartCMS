@@ -30,3 +30,18 @@
 \Module\Member\Auth\MemberUser::get()
 ```
 
+在页面上判断用户分组和VIP等级
+
+```php
+@if(\Module\Member\Auth\MemberGroup::inGroupIds([1,2]))
+    是用户组1、2、3
+@endif
+
+@if(\Module\Member\Auth\MemberVip::get('id')==1)
+    是VIP1
+@endif
+
+@if(\Module\Member\Auth\MemberVip::isDefault())
+    是默认VIP用户
+@endif
+```

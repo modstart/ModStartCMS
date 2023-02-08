@@ -56,7 +56,7 @@ class ButtonDialogRequest extends AbstractWidget
         return $ins;
     }
 
-    public function size($size)
+    public function size($size = 'big')
     {
         switch ($size) {
             case 'big':

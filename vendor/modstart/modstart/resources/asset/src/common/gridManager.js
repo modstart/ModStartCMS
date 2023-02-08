@@ -230,6 +230,9 @@ var GridManager = function (opt) {
                     content: addUrl,
                     success: function (layerDom, index) {
                         lister.realtime.dialog.addWindow = $(layerDom).find('iframe').get(0).contentWindow;
+                        lister.realtime.dialog.addWindow.__dialogClose = function(){
+                            layer.close(lister.realtime.dialog.add);
+                        };
                         lister.realtime.dialog.addWindow.addEventListener('modstart:form.submitted', function (e) {
                             if (0 === e.detail.res.code) {
                                 layer.close(lister.realtime.dialog.add);
@@ -256,6 +259,9 @@ var GridManager = function (opt) {
                 content: lister.realtime.url.edit + (lister.realtime.url.edit && lister.realtime.url.edit.indexOf('?') >= 0 ? '&' : '?') + '_id=' + id,
                 success: function (layerDom, index) {
                     lister.realtime.dialog.editWindow = $(layerDom).find('iframe').get(0).contentWindow;
+                    lister.realtime.dialog.editWindow.__dialogClose = function(){
+                        layer.close(lister.realtime.dialog.edit);
+                    };
                     lister.realtime.dialog.editWindow.addEventListener('modstart:form.submitted', function (e) {
                         if (0 === e.detail.res.code) {
                             layer.close(lister.realtime.dialog.edit);
