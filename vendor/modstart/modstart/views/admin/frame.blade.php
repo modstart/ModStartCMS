@@ -6,6 +6,7 @@
 {!! \ModStart\ModStart::css('asset/theme/default/admin.css') !!}
 {!! \ModStart\ModStart::js('asset/common/admin.js') !!}
 {!! \ModStart\ModStart::js('asset/vendor/pinyin-match.js') !!}
+{!! \ModStart\ModStart::script('window._pageTabManager.updateTitleFromTab('.json_encode(empty($pageTitle)?null:$pageTitle).')') !!}
 
 @section('headAppend')
     @parent

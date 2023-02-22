@@ -80,5 +80,10 @@
                 </form>
             </div>
         </div>
+        @if(($v=modstart_config('siteBeian','[网站备案信息]')) && $v!='[网站备案信息]')
+            <div class="tw-text-center tw-py-4">
+                <a class="ub-text-tertiary" href="http://beian.miit.gov.cn" target="_blank">{{$v}}</a>
+            </div>
+        @endif
     </div>
 @endsection

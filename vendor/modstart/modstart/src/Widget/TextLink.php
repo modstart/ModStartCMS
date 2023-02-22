@@ -31,6 +31,21 @@ class TextLink extends AbstractWidget
         ];
     }
 
+    /**
+     * @param $type string
+     * @param $text string
+     * @param $text url
+     * @return TextDialogRequest
+     */
+    public static function make(...$arguments)
+    {
+        $ins = new static();
+        $ins->type($arguments[0]);
+        $ins->text($arguments[1]);
+        $ins->link($arguments[2]);
+        return $ins;
+    }
+
     public static function __callStatic($name, $arguments)
     {
         $methods = ['primary', 'muted', 'warning', 'danger', 'success',];

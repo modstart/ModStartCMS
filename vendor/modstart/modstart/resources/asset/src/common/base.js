@@ -43,7 +43,7 @@ const Header = {
         var $header = ele ? ($(ele).closest(selector)) : ($(selector))
         $header.removeClass(showClass)
         $('html').removeClass('body-scroll-lock')
-    }
+    },
 }
 
 const MS = {
@@ -89,6 +89,24 @@ const MS = {
     }
 }
 
+function init() {
+    var windowScrollFar = false
+    $(window).scroll(function () {
+        var scrollTop = $(window).scrollTop()
+        if (scrollTop > 60 * 3) {
+            if (!windowScrollFar) {
+                windowScrollFar = true
+                $('html').addClass('body-scroll-far')
+            }
+        } else if (scrollTop < 60) {
+            if (windowScrollFar) {
+                windowScrollFar = false
+                $('html').removeClass('body-scroll-far')
+            }
+        }
+    });
+}
+
 window.api = window.api || {}
 
 
@@ -100,5 +118,6 @@ window.api.selectorDialog = SelectorDialog
 window.api.util = Util
 
 Base.init()
+init()
 
 window.MS = MS

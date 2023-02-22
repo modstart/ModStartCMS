@@ -525,13 +525,13 @@ class InputPackage
         if (!is_array($this->data[$key])) {
             return $defaultValue;
         }
-        $images = $this->data[$key];
+        $files = $this->data[$key];
         $values = [];
-        foreach ($images as $image) {
-            if (preg_match('/(data\\/[a-z]+\\/\\d{4}\\/\\d{2}\\/\\d{2}\\/[a-z0-9\\_]+\\.[a-z0-9]+)[\\?]?/', $image, $mat)) {
-                $values[] = $image;
+        foreach ($files as $file) {
+            if (preg_match('/(data\\/[a-z]+\\/\\d{4}\\/\\d{2}\\/\\d{2}\\/[a-z0-9\\_]+\\.[a-z0-9]+)[\\?]?/', $file, $mat)) {
+                $values[] = $file;
             } else {
-                $values[] = $image;
+                $values[] = $file;
             }
         }
         return $values;

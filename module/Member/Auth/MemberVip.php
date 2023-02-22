@@ -24,4 +24,9 @@ class MemberVip
     {
         return self::get('isDefault', false);
     }
+
+    public static function id()
+    {
+        return self::get('id', 0);
+    }
 }

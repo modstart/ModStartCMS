@@ -18,7 +18,12 @@ class PartnerUtil
      */
     public static function listByPosition($position = 'home')
     {
-        return ModelUtil::model('partner')->where(['position' => $position])->orderBy('sort', 'asc')->get()->toArray();
+        return ModelUtil::model('partner')
+            ->where([
+                'position' => $position,
+                'enable' => true,
+            ])
+            ->orderBy('sort', 'asc')->get()->toArray();
     }
 
     /**

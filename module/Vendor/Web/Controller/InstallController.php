@@ -61,6 +61,7 @@ class InstallController extends Controller
 
         $input = InputPackage::buildFromInput();
         $dbHost = $input->getTrimString('db_host');
+        $dbPort = $input->getTrimString('db_port');
         $dbDatabase = $input->getTrimString('db_database');
         $dbUsername = $input->getTrimString('db_username');
         $dbPassword = $input->getTrimString('db_password', '');
@@ -73,11 +74,14 @@ class InstallController extends Controller
         if (empty($dbHost)) {
             return Response::jsonError("数据库主机名不能为空");
         }
+        if (empty($dbPort)) {
+            return Response::jsonError("数据库端口不能为空");
+        }
         if (empty($dbDatabase)) {
             return Response::jsonError("数据库数据库不能为空");
         }
         if (empty($dbUsername)) {
-            return Response::jsonError("数据库用户明不能为空");
+            return Response::jsonError("数据库用户名不能为空");
         }
         if (empty($username)) {
             return Response::jsonError("管理用户不能为空");
@@ -91,7 +95,7 @@ class InstallController extends Controller
 
         // 数据库连接检测
         try {
-            new PDO("mysql:host=$dbHost;dbname=$dbDatabase", $dbUsername, $dbPassword);
+            new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbDatabase", $dbUsername, $dbPassword);
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             if (str_contains($msg, 'Server sent charset unknown to the client')) {
@@ -100,13 +104,14 @@ class InstallController extends Controller
                 return Response::generateError('用户密码不匹配：' . $msg);
             }
             Log::error('InstallError -> ' . $e->getMessage() . ' -> ' . $e->getTraceAsString());
-            return Response::jsonError('连接数据信息 ' . $dbHost . '.' . $dbDatabase . ' 失败!');
+            return Response::jsonError('连接数据信息 ' . $dbHost . ':' . $dbPort . '.' . $dbDatabase . ' 失败!');
         }
 
         // 替换.env文件
         $envContent = file_get_contents(base_path('env.example'));
 
         $envContent = preg_replace("/DB_HOST=(.*?)\\n/", "DB_HOST=" . $dbHost . "\n", $envContent);
+        $envContent = preg_replace("/DB_PORT=(.*?)\\n/", "DB_PORT=" . $dbPort . "\n", $envContent);
         $envContent = preg_replace("/DB_DATABASE=(.*?)\\n/", "DB_DATABASE=" . $dbDatabase . "\n", $envContent);
         $envContent = preg_replace("/DB_USERNAME=(.*?)\\n/", "DB_USERNAME=" . $dbUsername . "\n", $envContent);
         $envContent = preg_replace("/DB_PASSWORD=(.*?)\\n/", "DB_PASSWORD=" . $dbPassword . "\n", $envContent);

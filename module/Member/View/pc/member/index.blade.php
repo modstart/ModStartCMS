@@ -3,14 +3,15 @@
 @section('pageTitleMain'){{'我的'}}@endsection
 
 @section('memberBodyContent')
-    <div class="tw-bg-white tw-rounded tw-shadow">
+    <div class="tw-bg-white tw-rounded-lg">
         <div class="tw-flex tw-p-4 tw-flex-wrap">
             <div class="tw-flex-shrink-0 tw-w-14">
-                <a href="{{modstart_web_url('member_profile/avatar')}}" class="tw-block tw-w-10 tw-h-10 ub-cover-1-1 tw-rounded-full tw-shadow"
+                <a href="{{modstart_web_url('member_profile/avatar')}}"
+                   class="tw-block tw-w-10 tw-h-10 ub-cover-1-1 tw-rounded-full tw-shadow"
                    style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($_memberUser['avatar'])}})"></a>
             </div>
             <div class="tw-flex-grow">
-                <div class="tw-text-bold">{{\Module\Member\Auth\MemberUser::nickname()}}</div>
+                <div class="tw-text-bold tw-text-lg">{{\Module\Member\Auth\MemberUser::nickname()}}</div>
                 <div>
                     @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable'))
                         <span class="tw-my-1 tw-mr-2 tw-inline-block ub-text-primary">

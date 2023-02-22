@@ -49,6 +49,7 @@ class FieldManager
             'html' => \ModStart\Field\Html::class,
             'cascadeGroup' => \ModStart\Field\CascadeGroup::class,
             'number' => \ModStart\Field\Number::class,
+            'rate' => \ModStart\Field\Rate::class,
             'percent' => \ModStart\Field\Percent::class,
             'decimal' => \ModStart\Field\Decimal::class,
             'currency' => \ModStart\Field\Currency::class,

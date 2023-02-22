@@ -32,7 +32,7 @@ class Response
             BizException::throws($ret['msg']);
         }
         if (null !== $key) {
-            if (!isset($ret['data'][$key])) {
+            if (!array_key_exists($key, $ret['data'])) {
                 BizException::throws('data not exists ' . $key);
             }
             return $ret['data'][$key];

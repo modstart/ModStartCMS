@@ -48,6 +48,7 @@ use ModStart\Layout\LayoutTab;
  * @method \ModStart\Field\Tags           tags($column, $label = '')
  * @method \ModStart\Field\Type           type($column, $label = '')
  * @method \ModStart\Field\Number         number($column, $label = '')
+ * @method \ModStart\Field\Rate           rate($column, $label = '')
  * @method \ModStart\Field\Percent        percent($column, $label = '')
  * @method \ModStart\Field\Decimal        decimal($column, $label = '')
  * @method \ModStart\Field\Currency       currency($column, $label = '')

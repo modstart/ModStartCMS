@@ -1,9 +1,10 @@
 <?php
 
 /* @var \Illuminate\Routing\Router $router */
-$router->match(['get', 'post'], 'partner', '\Module\Partner\Admin\Controller\PartnerController@index');
-$router->match(['get', 'post'], 'partner/add', '\Module\Partner\Admin\Controller\PartnerController@add');
-$router->match(['get', 'post'], 'partner/edit', '\Module\Partner\Admin\Controller\PartnerController@edit');
-$router->match(['post'], 'partner/delete', '\Module\Partner\Admin\Controller\PartnerController@delete');
-$router->match(['get'], 'partner/show', '\Module\Partner\Admin\Controller\PartnerController@show');
-$router->match(['post'], 'partner/sort', '\Module\Partner\Admin\Controller\PartnerController@sort');
+$router->match(['get', 'post'], 'partner', 'PartnerController@index');
+$router->match(['get', 'post'], 'partner/add', 'PartnerController@add');
+$router->match(['get', 'post'], 'partner/edit', 'PartnerController@edit');
+$router->match(['post'], 'partner/delete', 'PartnerController@delete');
+$router->match(['get'], 'partner/show', 'PartnerController@show');
+$router->match(['post'], 'partner/sort', 'PartnerController@sort');
+$router->match(['get', 'post'], 'partner/config', 'PartnerController@config');

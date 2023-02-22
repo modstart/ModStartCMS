@@ -38,13 +38,15 @@ class HttpMonitor
             $time = round((microtime(true) - LARAVEL_START) * 1000, 2);
             $url = $request->url();
             $method = $request->method();
-            if ($time > 1000) {
+            $queryCountPerRequest = DatabaseMonitor::getQueryCountPerRequest();
+            $param = [];
+            if ($time > 1000 || $queryCountPerRequest > 10) {
                 $param = ArrayUtil::serializeForLog($request->input());
+            }
+            if ($time > 1000) {
                 Log::warning("LONG_REQUEST $method [$url] ${time}ms $param");
             }
-            $queryCountPerRequest = DatabaseMonitor::getQueryCountPerRequest();
             if ($queryCountPerRequest > 10) {
-                $param = ArrayUtil::serializeForLog($request->input());
                 Log::warning("MASS_REQUEST_SQL $method [$url] $queryCountPerRequest $param -> "
                     . json_encode(DatabaseMonitor::getQueryCountPerRequestSqls(), JSON_UNESCAPED_UNICODE));
             }

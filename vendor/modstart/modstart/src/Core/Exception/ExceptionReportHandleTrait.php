@@ -19,6 +19,10 @@ trait ExceptionReportHandleTrait
     private function errorReportCheck($exception)
     {
         try {
+            $errorReportUrl = config('env.ERROR_REPORT_URL', null);
+            if (empty($errorReportUrl)) {
+                return;
+            }
             $needReport = true;
             if ($needReport && $exception instanceof BizException) {
                 $needReport = false;
@@ -36,27 +40,33 @@ trait ExceptionReportHandleTrait
                         break;
                 }
             }
-            if ($needReport && $exception instanceof \UnexpectedValueException) {
-                if (Str::contains($exception->getMessage(), 'Invalid method override')) {
-                    $needReport = false;
-                }
+            if ($needReport && $this->isExceptionIgnore($exception)) {
+                $needReport = false;
             }
-            if ($needReport) {
-                $errorReportUrl = config('env.ERROR_REPORT_URL', null);
-                if ($errorReportUrl) {
-                    $error = [];
-                    $error['url'] = Request::url();
-                    $error['file'] = $exception->getFile() . ':' . $exception->getLine();
-                    $error['message'] = $exception->getMessage();
-                    foreach ($error as &$v) {
-                        $v = str_replace(base_path(), '', $v);
-                    }
-                    CurlUtil::get($errorReportUrl, ['data' => json_encode($error)]);
-                }
+            if (!$needReport) {
+                return;
             }
+            $error = [];
+            $error['url'] = Request::url();
+            $error['file'] = $exception->getFile() . ':' . $exception->getLine();
+            $error['message'] = $exception->getMessage();
+            foreach ($error as &$v) {
+                $v = str_replace(base_path(), '', $v);
+            }
+            CurlUtil::get($errorReportUrl, ['data' => json_encode($error)]);
         } catch (\Exception $e) {
             // do nothing
         }
+    }
+
+    private function isExceptionIgnore($exception)
+    {
+        if ($exception instanceof \UnexpectedValueException) {
+            if (Str::contains($exception->getMessage(), 'Invalid method override')) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private function getExceptionResponse($exception)
@@ -85,6 +95,10 @@ trait ExceptionReportHandleTrait
                     }
                     return $ret;
             }
+        } else if ($exception instanceof \UnexpectedValueException) {
+            if (Str::contains($exception->getMessage(), 'Invalid method override')) {
+                return Response::page404();
+            }
         }
 
         try {
@@ -102,4 +116,5 @@ trait ExceptionReportHandleTrait
 
         return null;
     }
+
 }

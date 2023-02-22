@@ -3,6 +3,7 @@
     background: var(--color-primary, #419488);
     padding: 2rem 0.5rem 3rem 0.5rem;
     text-align: center;
+    position: relative;
 
     &.white {
         background: #FFF;
@@ -24,6 +25,22 @@
                 }
             }
         }
+    }
+
+    .video-background {
+        top: 0;
+        left: 0;
+        height: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+        background-color: var(--color-primary);
+        vertical-align: top;
+        position: absolute;
+        width: 100%;
+    }
+
+    .content-container {
+        position: relative;
     }
 
     .title {
@@ -91,15 +108,16 @@
     line-height: 2rem;
     padding: 0 0.5rem;
 
-    &.page{
-       background-color: var(--color-content-bg);
-       height:2.5rem;
-       padding:0.25rem 0;
-       .center{
-         .box{
-           background-color: var(--color-body-bg);
-         }
-       }
+    &.page {
+        background-color: var(--color-content-bg);
+        height: 2.5rem;
+        padding: 0.25rem 0;
+
+        .center {
+            .box {
+                background-color: var(--color-body-bg);
+            }
+        }
     }
 
     .left, .center, .right {

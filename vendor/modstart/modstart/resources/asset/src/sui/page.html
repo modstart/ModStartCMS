@@ -199,7 +199,7 @@
                 // console.log('LessProcessed');
                 less.registerStylesheets().then(function () {
                     less.refresh(true).then(function () {
-                        $('[data-src],[data-background-src]')
+                        $('[data-src],[data-background-url]')
                             .filter('[data-holder-rendered!=true]')
                             .each(function (i, o) {
                                 switch (o.tagName) {

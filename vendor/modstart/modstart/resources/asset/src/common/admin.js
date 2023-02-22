@@ -1,3 +1,23 @@
+window._pageTabManager = {
+    closeFromTab: function () {
+        if (window == parent.window) {
+            return
+        }
+        var tabPageId = window.frameElement.getAttribute("data-tab-page")
+        window.parent._pageTabManager.close(tabPageId)
+    },
+    updateTitleFromTab: function (title) {
+        if (!title) {
+            return
+        }
+        if (window == parent.window) {
+            return
+        }
+        var tabPageId = window.frameElement.getAttribute("data-tab-page")
+        window.parent._pageTabManager.updateTitle(tabPageId, title)
+    }
+};
+
 $(window).on('load', function () {
 
     /**
@@ -128,7 +148,7 @@ $(window).on('load', function () {
             dragData.draging = false;
         });
 
-        var tabManager = {
+        var tabManager = Object.assign(window._pageTabManager, {
             data: [],
             id: 1,
             normalTabUrl(url) {
@@ -257,8 +277,11 @@ $(window).on('load', function () {
                 })
                 this.active(this.id);
                 this.id++;
-            }
-        };
+            },
+            updateTitle: function (id, title) {
+                $adminTabMenu.find('[data-tab-menu=' + id + ']').html(title + '<i class="close iconfont icon-close"></i>')
+            },
+        });
         $menu.find('a').on('click', function () {
             var $this = $(this)
             if ($this.is('[data-tab-menu-ignore]')) {
@@ -268,7 +291,7 @@ $(window).on('load', function () {
             if (['javascript:;'].includes(url)) {
                 return;
             }
-            let title = $this.text()
+            let title = $.trim($this.text())
             tabManager.open(url, title)
             return false;
         });
@@ -303,13 +326,13 @@ $(window).on('load', function () {
                 title = $(this).text();
             }
             if (window.parent !== window) {
-                window.parent._pageTabmanager.open(url, title)
+                window.parent._pageTabManager.open(url, title)
             } else {
                 tabManager.open(url, title)
             }
             return false;
         });
-        window._pageTabmanager = tabManager
+        window._pageTabManager = tabManager
     } else {
         // console.log('page-tabs-disabled')
         $adminTabRefresh.remove();

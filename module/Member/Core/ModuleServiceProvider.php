@@ -169,11 +169,12 @@ class ModuleServiceProvider extends ServiceProvider
                         ],
                         ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ?
                             [
-                                'title' => '会员VIP订单',
+                                'title' => '用户VIP订单',
                                 'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
                             ] : null,
                         [
                             'title' => '用户设置',
+                            'sort' => 999999,
                             'children' => [
                                 [
                                     'title' => '功能设置',

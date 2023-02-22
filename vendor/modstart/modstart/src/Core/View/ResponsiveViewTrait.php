@@ -6,6 +6,7 @@ namespace ModStart\Core\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\AgentUtil;
 use Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider;
@@ -32,6 +33,9 @@ trait ResponsiveViewTrait
 
     private function fetchViewPath($templateName, $templateRoot, $module, $device, $view)
     {
+        if (Str::contains($view, '::')) {
+            return $view;
+        }
         $viewThemeCustom = "theme.$templateName.$device.$view";
         $viewTheme = "$templateRoot.$device.$view";
         if ($module) {

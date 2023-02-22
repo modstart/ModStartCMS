@@ -379,27 +379,42 @@ class ArrayUtil
     }
 
 
-    private static function serializeForLogProcess($param)
+    private static function serializeForLogProcess($param, $sensitiveKeys)
     {
         if (is_string($param)) {
             return Str::limit($param, 100);
         } else if (is_array($param)) {
             foreach ($param as $k => $v) {
-                $param[$k] = self::serializeForLogProcess($v);
+                if (in_array($k, $sensitiveKeys, true)) {
+                    $param[$k] = '******';
+                    continue;
+                }
+                $param[$k] = self::serializeForLogProcess($v, $sensitiveKeys);
             }
         }
         return $param;
     }
 
-    public static function serializeForLog($params)
+    public static function serializeForLog($params, $sensitiveKeys = ['password', 'passwordRepeat'])
     {
         if (!empty($params)) {
             if (is_array($params)) {
                 foreach ($params as $i => $param) {
-                    $params[$i] = self::serializeForLogProcess($param);
+                    if (in_array($i, $sensitiveKeys, true)) {
+                        $params[$i] = '******';
+                        continue;
+                    }
+                    $params[$i] = self::serializeForLogProcess($param, $sensitiveKeys);
                 }
             }
         }
         return json_encode($params, JSON_UNESCAPED_UNICODE);
+    }
+
+    public static function update(&$original, $update)
+    {
+        foreach ($update as $k => $v) {
+            $original[$k] = $v;
+        }
     }
 }

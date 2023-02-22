@@ -119,7 +119,7 @@ class CmsContentUtil
             if (empty($dataModel)) {
                 $dataModel = $cat['_model'];
             } else {
-                if ($cat['id'] != $dataModel['id']) {
+                if ($cat['modelId'] != $dataModel['id']) {
                     BizException::throws('只能为同一模型');
                 }
             }

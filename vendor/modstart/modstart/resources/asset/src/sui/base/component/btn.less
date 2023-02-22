@@ -92,13 +92,14 @@ fieldset:disabled a.btn {
 
 .btn-primary-line {
     color: var(--color-primary);
-    border: 1px solid var(--color-primary);
-    background: #FFF;
+    outline: 1px solid var(--color-primary);
+    outline-offset: -1px;
+    background: transparent;
 }
 
 .btn-primary-line:hover {
-    background-color: #F8F8F8;
-    color: var(--color-primary);
+    color: #FFF;
+    background-color: var(--color-primary);
 }
 
 .btn-primary-line.disabled, .btn-primary-line:disabled {

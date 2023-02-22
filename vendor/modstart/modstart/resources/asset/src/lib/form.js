@@ -81,12 +81,7 @@ var Form = {
             } else if ('[back]' === redirect) {
                 window.history.back();
             } else if ('[tab-close]' === redirect) {
-                if (window == parent.window) {
-                    console.error('tab-close must be in iframe')
-                    return
-                }
-                var tabPageId = window.frameElement.getAttribute("data-tab-page")
-                window.parent._pageTabmanager.close(tabPageId)
+                window._pageTabManager.closeFromTab()
             } else if (redirect.indexOf('[js]') === 0) {
                 eval(redirect.substr(4));
             } else {

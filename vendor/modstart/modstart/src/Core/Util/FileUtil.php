@@ -548,10 +548,11 @@ class FileUtil
     /**
      * 将远程文件保存为本地可用
      * @param $path string 可以为 http://example.com/xxxxx.xxx /data/xxxxx.xxx
-     * @param string $ext
+     * @param string $ext 文件后缀
+     * @param string $downloadStream 是否使用流下载
      * @return string|null 返回本地临时路径或本地文件绝对路径，注意使用safeCleanLocalTemp来清理文件，如果是本地其他路径可能会误删
      */
-    public static function savePathToLocalTemp($path, $ext = '')
+    public static function savePathToLocalTemp($path, $ext = null, $downloadStream = false)
     {
         if (@file_exists($path)) {
             return $path;
@@ -568,14 +569,21 @@ class FileUtil
             if (StrUtil::startWith($path, '//')) {
                 $path = 'http://' . $path;
             }
-            $content = CurlUtil::getRaw($path, [], [
-                'timeout' => 60 * 10,
-            ]);
-            if (empty($content)) {
+            @mkdir(public_path('temp'));
+            if ($downloadStream) {
+                file_put_contents($tempPath, fopen($path, 'r'));
+            } else {
+                $content = CurlUtil::getRaw($path, [], [
+                    'timeout' => 60 * 10,
+                ]);
+                if (empty($content)) {
+                    return null;
+                }
+                file_put_contents($tempPath, $content);
+            }
+            if (!file_exists($tempPath)) {
                 return null;
             }
-            @mkdir(public_path('temp'));
-            file_put_contents($tempPath, $content);
         } else {
             if (StrUtil::startWith($path, '/')) {
                 $path = substr($path, 1);

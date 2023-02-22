@@ -104,6 +104,7 @@ function get_env_config($key, $default = '')
     }
     $osEnvMap = [
         'db_host' => ['DB_HOST', 'MYSQL_HOST'],
+        'db_port' => ['DB_DATABASE', 'MYSQL_PORT'],
         'db_name' => ['DB_DATABASE', 'MYSQL_DB'],
         'db_username' => ['DB_USERNAME', 'MYSQL_USER'],
         'db_password' => ['DB_PASSWORD', 'MYSQL_PASSWORD'],
@@ -121,6 +122,7 @@ function get_env_config($key, $default = '')
     }
     $envMap = [
         'db_host' => 'DB_HOST',
+        'db_port' => 'DB_PORT',
         'db_name' => 'DB_DATABASE',
         'db_username' => 'DB_USERNAME',
         'db_password' => 'DB_PASSWORD',

@@ -1,12 +1,30 @@
+@header-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 5%);
 
 .ub-header {
     height: 3rem;
-    border-bottom: 0.05rem solid #EEE;
     background: #FFF;
+
+    &.primary {
+        background: var(--color-primary);
+
+        .menu {
+            a {
+                color: #EEE;
+
+                &:hover, &.active {
+                    color: #FFF;
+                }
+            }
+        }
+
+        .menu-toggle {
+            color: #FFF;
+        }
+
+    }
 
     &.transparent {
         background: transparent;
-        border-bottom-color: transparent;
 
         .menu-toggle {
             color: #FFF;
@@ -104,7 +122,6 @@
     .ub-header {
         &.transparent {
             background: transparent;
-            border-bottom-color: transparent;
 
             .menu {
                 .item {
@@ -399,7 +416,6 @@
 
 .ub-header-b {
     height: 3rem;
-    border-bottom: 0.05rem solid #EEE;
     background: #FFF;
     overflow: visible;
 
@@ -413,7 +429,6 @@
 
     &.transparent {
         background: transparent;
-        border-bottom-color: transparent;
 
         .nav {
             a, .nav-item {
@@ -705,6 +720,22 @@
     }
 }
 
+@media screen and (min-width: 40rem) {
+    .ub-header-b {
+        position: sticky;
+        transition: top 0.3s;
+        z-index: 2000;
+        top: -3rem;
+    }
+
+    html.body-scroll-far {
+        .ub-header-b {
+            top: 0px;
+            box-shadow: @header-box-shadow;
+        }
+    }
+}
+
 @media screen and (max-width: 40rem) {
     .ub-header-b {
         text-align: left;
@@ -765,7 +796,6 @@
             a {
                 display: inline-block;
                 padding: 0 0.3rem 0 0;
-                // border-bottom: 0.05rem solid #EEE;
                 background: transparent;
                 line-height: 2rem;
             }
@@ -819,7 +849,6 @@
 
             a, .nav-item {
                 display: block;
-                border-bottom: 0.05rem solid #EEE;
                 background: #FFF;
 
                 .sub-nav {
@@ -859,7 +888,6 @@
 
 .ub-header-c {
     height: 3rem;
-    border-bottom: 0.05rem solid var(--color-body-line);
     background: var(--color-content-bg);
     overflow: hidden;
     position: fixed;
@@ -1167,7 +1195,6 @@
     .main {
         height: 4.7rem;
         border-bottom: 0.25rem solid rgba(236, 236, 236, .65);
-        // overflow: hidden;
 
         .menu {
             float: right;
@@ -1362,7 +1389,7 @@
         }
 
         .header-container {
-            box-shadow: 0 0 5px #CCC;
+            box-shadow: @header-box-shadow;
         }
     }
 }

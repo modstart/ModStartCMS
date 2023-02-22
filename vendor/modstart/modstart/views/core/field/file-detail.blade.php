@@ -8,7 +8,10 @@
     <div class="field">
         <div class="value">
             @if(!empty($value))
-                <a href="{{$value}}" target="_blank">{{$value}}</a>
+                <a href="{{$value}}" target="_blank" class="tw-inline-block tw-px-2 tw-bg-gray-200 tw-rounded tw-mb-1">
+                    <i class="iconfont icon-file"></i>
+                    {{$value}}
+                </a>
             @else
                 <span class="ub-text-muted">-</span>
             @endif

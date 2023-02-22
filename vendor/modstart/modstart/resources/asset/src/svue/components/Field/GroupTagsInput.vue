@@ -3,20 +3,22 @@
         <div v-if="!option.length" class="ub-text-muted">
             无
         </div>
-        <table v-else>
-            <tr v-for="(groupTagItem,groupTagIndex) in option" :key="groupTagIndex">
-                <td style="width:6em;vertical-align:top;">{{ groupTagItem[groupTitleKey] }}</td>
-                <td>
-                    <el-checkbox v-for="(groupTagItemItem,groupTagItemIndex) in groupTagItem[childKey]"
-                                 :key="groupTagItemIndex"
-                                 :value="currentData.includes(groupTagItemItem.id)"
-                                 @change="checked=>onQuestionTagChange(checked,groupTagItemItem.id)"
-                    >
-                        {{ groupTagItemItem.title }}
-                    </el-checkbox>
-                </td>
-            </tr>
-        </table>
+        <div v-else>
+            <table>
+                <tr v-for="(groupTagItem,groupTagIndex) in option" :key="groupTagIndex">
+                    <td style="width:6em;vertical-align:top;">{{ groupTagItem[groupTitleKey] }}</td>
+                    <td>
+                        <el-checkbox v-for="(groupTagItemItem,groupTagItemIndex) in groupTagItem[childKey]"
+                                     :key="groupTagItemIndex"
+                                     :value="currentData.includes(groupTagItemItem.id)"
+                                     @change="checked=>onQuestionTagChange(checked,groupTagItemItem.id)"
+                        >
+                            {{ groupTagItemItem.title }}
+                        </el-checkbox>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 

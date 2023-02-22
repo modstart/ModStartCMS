@@ -17,11 +17,20 @@ class RepositoryFilter
     private $queries;
 
     /**
-     * GlobalFilterItem constructor.
+     * RepositoryFilter constructor.
      */
     public function __construct()
     {
         $this->queries = new Collection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function clear()
+    {
+        $this->queries = new Collection();
+        return $this;
     }
 
     public function executeQueries(&$query)

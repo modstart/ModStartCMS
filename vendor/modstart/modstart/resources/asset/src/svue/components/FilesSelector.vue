@@ -14,7 +14,10 @@
                          draggable="true"
                          v-for="(item,itemIndex) in datav"
                          :key="itemIndex+'a'">
-                        <div class="file-cover">{{fileName(item)}}</div>
+                        <div class="file-cover">
+                            <i class="iconfont icon-file"></i>
+                            {{fileName(item)}}
+                        </div>
                         <div class="mask">
                             <a href="javascript:;" @click="doPreview(itemIndex)">
                                 <i class="iconfont icon-zoom-in"></i>
@@ -55,21 +58,21 @@
             background-position: center;
             background-size: contain;
             border: 1px solid #c0ccda;
-            border-radius: 3px;
+            border-radius: 0.15rem;
             box-sizing: border-box;
             position: relative;
             width: 100%;
-            height: 30px;
+            height: 1.5rem;
             display: inline-block;
             .plus {
-                line-height: 30px;
+                line-height: 1.5rem;
                 text-align: center;
                 color: #999;
                 display: block;
             }
             .file-cover {
-                color: #999;
-                padding: 0 5px;
+                color: var(--color-tertiary);
+                padding: 0.25rem;
             }
             &:hover {
                 .mask {

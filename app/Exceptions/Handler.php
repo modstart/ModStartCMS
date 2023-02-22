@@ -79,4 +79,9 @@ class Handler extends ExceptionHandler
         }
         return response()->view('errors.500', ['exception' => $e], 500);
     }
+
+    protected function shouldntReport(\Exception $e)
+    {
+        return $this->isExceptionIgnore($e) || parent::shouldntReport($e);
+    }
 }

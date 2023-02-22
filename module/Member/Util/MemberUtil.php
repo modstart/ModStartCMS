@@ -70,13 +70,30 @@ class MemberUtil
         }
     }
 
+    private static function processBasicFields($keepFields)
+    {
+        $keepFieldsBasic = [
+            'id', 'username', 'avatar', 'created_at', 'signature', 'nickname',
+        ];
+        if (null === $keepFields) {
+            $keepFields = $keepFieldsBasic;
+        } else {
+            $keepFieldsProcess = [];
+            foreach ($keepFields as $k) {
+                if ('<basic>' == $k) {
+                    $keepFieldsProcess = array_merge($keepFieldsProcess, $keepFieldsBasic);
+                } else {
+                    $keepFieldsProcess[] = $k;
+                }
+            }
+            $keepFields = $keepFieldsProcess;
+        }
+        return $keepFields;
+    }
+
     public static function getBasic($id, $keepFields = null)
     {
-        if (null === $keepFields) {
-            $keepFields = [
-                'id', 'username', 'avatar', 'created_at', 'signature', 'nickname',
-            ];
-        }
+        $keepFields = self::processBasicFields($keepFields);
         $item = self::get($id);
         if (empty($item)) {
             return null;
@@ -619,11 +636,7 @@ class MemberUtil
 
     public static function mergeMemberUserBasics(&$records, $memberUserIdKey = 'memberUserId', $memberUserMergeKey = '_memberUser', $keepFields = null)
     {
-        if (null === $keepFields) {
-            $keepFields = [
-                'id', 'username', 'avatar', 'created_at', 'signature', 'nickname',
-            ];
-        }
+        $keepFields = self::processBasicFields($keepFields);
         if (is_array($records)) {
             ModelUtil::join($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
             foreach ($records as $k => $v) {

@@ -1,6 +1,9 @@
 
 .ub-content {
-    padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
     .head {
         padding: 0.5rem 0;
@@ -35,9 +38,6 @@
 }
 
 .ub-content {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 
     .item-basic {
         .h1 {
@@ -66,13 +66,12 @@
     }
 }
 
-.ub-content .body {
+.ub-content {
     .item-a {
         text-align: center;
         display: block;
-        padding: 1rem;
+        padding: 1rem 0;
         line-height: 1.5;
-        border-radius: 0.2rem;
         text-decoration: none;
         width: 100%;
         margin-bottom: .5rem;
@@ -344,6 +343,118 @@
                 width: 80% !important;
                 padding: 0 !important;
                 margin: 0 auto !important;
+            }
+        }
+    }
+}
+
+.ub-content {
+    .panel-a {
+        color: #FFF;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        text-align: left;
+
+        .title {
+            font-size: 1.8rem;
+            line-height: 2rem;
+        }
+
+        .sub-title {
+            margin-top: 0.8rem;
+            font-size: var(--font-size-medium);
+        }
+    }
+
+    .panel-b {
+        color: #FFF;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+
+        .bg, .mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            background-size: cover;
+            background-position: center;
+            border-radius: 0.5rem;
+        }
+
+        .bg {
+            filter: blur(1rem);
+        }
+
+        .mask {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .box {
+            position: relative;
+            text-align: left;
+
+            .c {
+                display: flex;
+                align-items: center;
+
+                .c1 {
+                    width: 7rem;
+
+                    .cover {
+                        margin-bottom: 0;
+                        border-radius: 0.5rem;
+                    }
+                }
+
+                .c2 {
+                    padding-left: 1rem;
+                }
+            }
+        }
+
+        .title {
+            font-size: 1.2rem;
+        }
+
+        .sub-title {
+            margin-top: 0.8rem;
+            font-size: var(--font-size-medium);
+
+            a {
+                color: #FFF;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 40rem) {
+
+    .ub-content {
+        .panel-a {
+            text-align: center;
+        }
+
+        .panel-b {
+            padding: 1rem;
+
+            .box {
+                .c {
+                    display: block;
+                    text-align: center;
+
+                    .c1 {
+                        width: auto;
+                    }
+
+                    .c2 {
+                        padding-left: 0;
+                        margin-top: 1rem;
+                    }
+                }
             }
         }
     }

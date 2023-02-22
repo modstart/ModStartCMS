@@ -1,109 +1,126 @@
 
 .ub-bar-page {
-  position: fixed;
-  right: 0;
-  bottom: 8rem;
-  width: 3rem;
-  z-index: 1000;
-
-  .item {
+    position: fixed;
+    right: 0;
+    bottom: 2rem;
     width: 3rem;
-    height: 3rem;
-    display: block;
-    background: #FFF;
-    color: #666;
-    text-align: center;
-    box-shadow: 0 0 5px #EEE;
-    margin: 0 0 0.25rem 0;
-    padding: 0.5rem;
-    border-radius: var(--size-radius);
-    position: relative;
+    z-index: 10000;
 
-    &:hover {
-      .popup {
+    .item {
+        width: 3rem;
+        height: 3rem;
         display: block;
-      }
-    }
+        background: #FFF;
+        color: #666;
+        text-align: center;
+        box-shadow: 0 0 0.25rem #EEE;
+        margin: 0 0 0.25rem 0;
+        padding: 0.5rem;
+        border-radius: var(--size-radius);
+        position: relative;
+        cursor: pointer;
+        transition: all 0.5s;
 
-    .popup {
-      position: absolute;
-      right: 3rem;
-      top: 0;
-      background: #FFF;
-      border-radius: 3px;
-      box-shadow: 0 0 5px #CCC;
-      width: 10rem;
-      min-height: 2rem;
-      padding: 0.5rem;
-      display: none;
-
-      .content {
-        color: #333;
-
-        img {
-          width: 9rem;
+        &:hover {
+            .popup {
+                display: block;
+            }
         }
-      }
-    }
 
-    &:hover {
-      background: var(--color-primary);
-      color: #FFF;
-      transition: background 0.5s;
-    }
+        .popup {
+            position: absolute;
+            right: 3rem;
+            bottom: 0;
+            background: #FFF;
+            border-radius: var(--size-radius);
+            box-shadow: 0 0 0.5rem #CCC;
+            width: 10rem;
+            min-height: 2rem;
+            padding: 0.5rem;
+            display: none;
 
-    &.item-icon {
-      .icon {
-        line-height: 2rem;
-        height: 2rem;
-      }
-    }
+            .content {
+                color: #333;
 
-    .icon {
-      height: 1.5rem;
-      line-height: 1.5rem;
-      font-size: 1.5rem;
-      display: block;
-    }
+                img {
+                    width: 9rem;
+                }
+            }
+        }
 
-    .text {
-      height: 0.5rem;
-      line-height: 0.5rem;
-      display: block;
-      font-size: 0.5rem;
+        &:hover {
+            background: var(--color-primary);
+            color: #FFF;
+            transition: background 0.5s;
+        }
+
+        &.item-icon {
+            .icon {
+                line-height: 2rem;
+                height: 2rem;
+            }
+        }
+
+        .icon {
+            height: 1.5rem;
+            line-height: 1.5rem;
+            font-size: 1.5rem;
+            display: block;
+        }
+
+        .text {
+            height: 0.5rem;
+            line-height: 0.5rem;
+            display: block;
+            font-size: 0.5rem;
+        }
     }
-  }
+}
+
+.ub-bar-page {
+    .item-back {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+html.body-scroll-far {
+    .ub-bar-page {
+        .item-back {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
 }
 
 @media (max-width: 40rem) {
-  .ub-bar-page {
-    bottom: 2rem;
-    width: 2rem;
+    .ub-bar-page {
+        bottom: 2rem;
+        width: 2rem;
 
-    .item {
-      width: 2rem;
-      height: 2rem;
-      padding: 0.25rem 0;
+        .item {
+            width: 2rem;
+            height: 2rem;
+            padding: 0.25rem 0;
 
-      .popup {
-        right: 2.25rem;
-        top: auto;
-        bottom: 0;
-      }
+            .popup {
+                right: 2.25rem;
+            }
 
-      .icon {
-        font-size: 1rem;
-        line-height: 1rem;
-        height: 1rem;
-      }
+            .icon {
+                font-size: 1rem;
+                line-height: 1rem;
+                height: 1rem;
+            }
 
-      .text {
-        font-size: 0.5rem;
-      }
+            .text {
+                font-size: 0.5rem;
+            }
+        }
+
+        .item-icon {
+            padding: 0;
+        }
     }
-
-    .item-icon {
-      padding: 0;
-    }
-  }
 }
+

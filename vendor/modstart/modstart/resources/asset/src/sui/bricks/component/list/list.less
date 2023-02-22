@@ -1,6 +1,8 @@
 @import "../../../base/component/animate";
 @import "../../../base/theme";
 
+@list-item-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
+
 .ub-list-head-tools-placeholder {
     height: 2.0rem;
 }
@@ -286,23 +288,34 @@
 
     .item-e {
         padding-bottom: 0.5rem;
-        border-radius: 0.15rem;
+        border-radius: 0.25rem;
+        overflow: hidden;
+
+        &:hover {
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
+
+            .cover {
+                transform: scale(1.05);
+            }
+
+            .title {
+                color: var(--color-primary);
+            }
+        }
 
         .cover {
             display: block;
             overflow: hidden;
             background: no-repeat center;
             background-size: cover;
-            box-shadow: #EEE 0 0 0.15rem;
-            border-radius: 0.15rem;
+            border-radius: 0.25rem 0.25rem 0 0;
+            transition: all 0.3s ease-in-out;
 
             &:after {
                 content: '';
                 display: block;
                 margin-top: 66%;
             }
-
-
         }
 
         .title {
@@ -316,6 +329,7 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            transition: all 0.3s ease-in-out;
         }
 
         .summary {
@@ -446,20 +460,32 @@
     }
 
     .item-i {
-        border: 0.05rem solid #EEE;
-        border-radius: 0.15rem;
+        border-radius: 0.25rem;
         padding: 0.5rem 0.5rem 0.5rem 2.5rem;
         overflow: hidden;
         margin: 0 0 0.5rem 0;
         display: block;
+        background-color: #FFF;
 
         &:hover {
-            border-color: #CCC;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
+
+            .title {
+                color: var(--color-primary);
+            }
+        }
+
+        .right {
+            float: right;
+            color: var(--color-muted);
+            padding-left: 1rem;
         }
 
         .icon {
             float: left;
             margin: 0.25rem 0 0 -2rem;
+            width: 1.5rem;
+            border-radius: 0.25rem;
 
             img {
                 height: 1.5rem;
@@ -484,6 +510,9 @@
             font-size: var(--font-size);
             line-height: 1rem;
             height: 1rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            //white-space: nowrap;
 
             &:hover {
                 color: #111;
@@ -498,8 +527,8 @@
             overflow: hidden;
             display: block;
             text-overflow: ellipsis;
-            width: 100%;
-            white-space: nowrap;
+            //width: 100%;
+            //white-space: nowrap;
         }
     }
 
@@ -545,18 +574,18 @@
     }
 
     .item-k {
-        border-bottom: 0.05rem dashed #EEE;
-        padding: 1rem 1rem 1rem 11rem;
+        padding: 0.5rem 0.5rem 0.5rem 10.5rem;
         overflow: hidden;
-        border-radius: 0.5rem;
+        border-radius: 0.25rem;
+        background: var(--color-content-bg);
 
         &.item-k-a {
-            padding: 0.5rem 0.5rem 0.5rem 3.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 4rem;
 
             .image {
                 width: 3rem;
-                padding: 0.25rem;
                 margin-left: -3.5rem;
+                border-radius: 50%;
 
                 .cover {
                     border-radius: 50%;
@@ -570,11 +599,10 @@
         }
 
         &.item-k-b {
-            padding: 0rem 0rem 0rem 2.5rem;
+            padding: 0.25rem 0.25rem 0.25rem 3rem;
 
             .image {
                 width: 2rem;
-                padding: 0.25rem;
                 margin-left: -2.5rem;
 
                 .cover {
@@ -584,21 +612,24 @@
 
             .title {
                 font-size: var(--font-size);
-                padding: 0.3rem 0;
+                padding: 0.25rem 0;
                 display: inline-block;
             }
 
             .right {
-                padding: 0.3rem 0;
+                padding: 0.25rem;
             }
         }
 
         &:hover {
             .image {
                 .cover {
-                    transform: translateY(-0.25rem);
-                    transition: all 0.6s;
+                    transform: scale(1.1);
                 }
+            }
+
+            .title {
+                color: var(--color-primary);
             }
         }
 
@@ -611,32 +642,45 @@
             float: left;
             margin-left: -10rem;
             display: block;
+            overflow: hidden;
+            border-radius: 0.25rem;
 
             .cover {
                 border-radius: 0.25rem;
+                transition: all 0.6s ease-in-out;
             }
         }
 
         .title {
-            font-size: var(--font-size-medium);
+            font-size: var(--font-size-large);
             color: var(--color-text);
             line-height: 1.4rem;
+            display: block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         .summary {
-            color: #c4cfdb;
+            color: var(--color-tertiary);
             font-size: var(--font-size);
             padding: 0.5rem 0 0 0;
             height: 3.425rem;
             overflow: hidden;
             line-height: 0.975rem;
+            display: block;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
         }
 
         .info {
-            color: #c4cfdb;
+            color: var(--color-tertiary);
             font-size: var(--font-size);
             padding: 1rem 0 0 0;
             overflow: hidden;
+            display: block;
 
             .left {
                 float: left;
@@ -647,7 +691,7 @@
             }
 
             a {
-                color: #c4cfdb;
+                color: var(--color-tertiary);
 
                 &:hover {
                     text-decoration: underline;
@@ -722,9 +766,7 @@
     }
 
     .item-n {
-        border-radius: 3px;
-        box-shadow: 0 0 2px #CCC;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
         transition: all linear 0.2s;
 
         &:hover {
@@ -795,20 +837,28 @@
     }
 
     .item-p {
-        border-radius: 0.2rem;
+        border-radius: 0.25rem;
         margin-bottom: 0.5rem;
         background: #FFF;
         padding: 0 0 1rem 0;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
 
         &:hover {
-            box-shadow: 0 0 2px #BBB;
+            .image {
+                .cover {
+                    transform: scale(1.1);
+                }
+            }
         }
 
         .image {
             display: block;
+            overflow: hidden;
+            border-radius: 0.25rem 0.25rem 0 0;
 
             .cover {
                 border-radius: 0.2rem 0.2rem 0 0;
+                transition: all 0.6s;
             }
         }
 
@@ -822,6 +872,10 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+
+            &:hover {
+                color: var(--color-primary);
+            }
         }
 
         .summary {
@@ -834,6 +888,7 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             padding: 0 0.5rem;
+            cursor: default;
 
             &.line2 {
                 height: 2rem;

@@ -250,7 +250,7 @@ class ModuleManager
         $files = FileUtil::listFiles(base_path('module'));
         $modules = [];
         foreach ($files as $v) {
-            if (!$v['isDir']) {
+            if (!$v['isDir'] || !preg_match('/^[a-zA-Z0-9_]+$/', $v['filename'])) {
                 continue;
             }
             if (starts_with($v['filename'], '_delete_.') || starts_with($v['filename'], '_')

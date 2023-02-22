@@ -226,6 +226,11 @@ include __DIR__ . '/function.php';
                                            value="<?php echo htmlspecialchars(get_env_config('db_host')); ?>"/>
                                 </div>
                                 <div class="line">
+                                    <label class="label"><span class="ub-text-danger">*</span> 端口</label>
+                                    <input type="text" style="width:100%;" name="db_port"
+                                           value="<?php echo htmlspecialchars(get_env_config('db_port')); ?>"/>
+                                </div>
+                                <div class="line">
                                     <label class="label"><span class="ub-text-danger">*</span> 数据库名</label>
                                     <input type="text" style="width:100%;" name="db_database"
                                            value="<?php echo htmlspecialchars(get_env_config('db_name')); ?>"/>

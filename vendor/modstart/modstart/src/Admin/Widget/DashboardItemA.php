@@ -148,9 +148,9 @@ HTML;
 HTML;
             case 5:
                 return <<<HTML
-<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-shadow tw-py-4" data-tab-open data-tab-title="{$tabTitle}" {$this->formatAttributes()}>
-    <div style="height:1.5rem;">
-        <i class="{$this->icon}" style="font-size:1.5rem;line-height:1.5rem;color:{$this->color};"></i>
+<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-py-4" data-tab-open data-tab-title="{$tabTitle}" {$this->formatAttributes()}>
+    <div style="height:2rem;">
+        <i class="{$this->icon}" style="font-size:1.5rem;line-height:2rem;color:{$this->color};"></i>
     </div>
     <div class="tw-text-gray-400">{$this->title}</div>
 </a>
