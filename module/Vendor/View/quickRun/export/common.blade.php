@@ -6,7 +6,7 @@
     @parent
     <script src="@asset('asset/vendor/vue.js')"></script>
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
-    <script src="@asset('asset/entry/exportWork.js')"></script>
+    <script src="@asset('asset/entry/importExportWork.js')"></script>
     <script>
         $(function () {
             new Vue({
@@ -14,16 +14,18 @@
                 data() {
                     return {
                         exportName: '{{$exportName}}',
+                        format: 'xlsx',
                     }
                 },
                 methods: {
                     doExport() {
-                        MS.exportWork.doExportExecute('xlsx', (page, cb) => {
+                        MS.importExportWork.doExportExecute(this.format, (page, cb) => {
                             MS.api.postSuccess(
                                 window.location.href,
                                 {
                                     page: page,
-                                    exportName: this.exportName
+                                    exportName: this.exportName,
+                                    format: this.format,
                                 },
                                 (res) => {
                                     cb(res.data);
@@ -55,10 +57,23 @@
                         </div>
                     </div>
                     <div class="line">
+                        <div class="label">文件格式</div>
+                        <div class="field">
+                            <el-radio-group v-model="format">
+                                @foreach($formats as $f)
+                                    <el-radio label="{{$f}}">{{$f}}</el-radio>
+                                @endforeach
+                            </el-radio-group>
+                        </div>
+                    </div>
+
+                    <div class="line">
                         <div class="label">文件名</div>
                         <div class="field">
                             <el-input v-model="exportName" placeholder="输入导出文件名">
-                                <template slot="append">.xlsx</template>
+                                <template slot="append">
+                                    .@{{format}}
+                                </template>
                             </el-input>
                         </div>
                     </div>

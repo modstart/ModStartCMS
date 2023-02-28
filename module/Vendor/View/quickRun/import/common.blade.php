@@ -6,29 +6,41 @@
     @parent
     <script src="@asset('asset/vendor/vue.js')"></script>
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
-    <script src="@asset('asset/entry/gridExcelWork.js')"></script>
+    <script src="@asset('asset/entry/importExportWork.js')"></script>
     <script>
         $(function () {
             new Vue({
                 el: '#app',
                 data() {
                     return {
-                        headTitles:{!! json_encode($headTitles) !!},
-                        templateName:{!! json_encode($templateName) !!},
-                        templateData:{!! json_encode($templateData) !!},
-                        file:null,
+                        headTitles: {!! json_encode($headTitles) !!},
+                        templateName: {!! json_encode($templateName) !!},
+                        templateData: {!! json_encode($templateData) !!},
+                        file: null,
                         uploadResult: [],
                     }
                 },
                 methods: {
-                    doDownloadTemplate(){
-                        new MS.gridExcelWork.ExcelWriter()
-                            .data([this.headTitles].concat(this.templateData))
-                            .filename(this.templateName+'.xlsx')
-                            .download()
+                    doDownloadTemplate(format) {
+                        const data = [this.headTitles].concat(this.templateData)
+                        switch (format) {
+                            case 'xlsx':
+                                new MS.importExportWork.ExcelWriter()
+                                    .data(data)
+                                    .filename(this.templateName + '.xlsx')
+                                    .download()
+                                break;
+                            case 'csv':
+                                MS.importExportWork.FileUtil.downloadCSV(this.templateName + '.csv', data)
+                                break;
+                            default:
+                                console.error('未支持的格式 ' + format)
+                                break;
+                        }
                     },
                     doFileSelect(file) {
                         this.file = file.raw
+                        const fileFormat = file.name.split('.').pop().toLowerCase()
                         let importSuccess = 0, importDuplicated = 0, importFail = 0
                         const loadingIndex = MS.dialog.loadingOn('正在导入')
                         const loading = (text) => {
@@ -64,7 +76,7 @@
                             let total = data.length
                             this.uploadResult = []
                             let row = 0
-                            new MS.gridExcelWork.ListDispatcher()
+                            new MS.importExportWork.ListDispatcher()
                                 .set(data)
                                 .chunk(1)
                                 .error((msg, me) => {
@@ -76,11 +88,11 @@
                                     loading(`数据导入中（进度${processed}/${total}，成功${importSuccess}条，失败${importFail}条，重复${importDuplicated}条）`)
                                     let one = list[0]
                                     // console.log('ImportData', one)
-                                    MS.api.post(window.location.href,{
-                                        data:JSON.stringify(one),
-                                    },res=>{
-                                        MS.api.defaultCallback(res,{
-                                            success:res=>{
+                                    MS.api.post(window.location.href, {
+                                        data: JSON.stringify(one),
+                                    }, res => {
+                                        MS.api.defaultCallback(res, {
+                                            success: res => {
                                                 importSuccess++
                                                 this.uploadResult.push({
                                                     row: ++row,
@@ -89,8 +101,8 @@
                                                     record: one
                                                 })
                                             },
-                                            error: res=>{
-                                                if(res.code===1){
+                                            error: res => {
+                                                if (res.code === 1) {
                                                     importDuplicated++
                                                     this.uploadResult.push({
                                                         row: ++row,
@@ -98,7 +110,7 @@
                                                         msg: res.msg,
                                                         record: one
                                                     })
-                                                }else{
+                                                } else {
                                                     importFail++
                                                     this.uploadResult.push({
                                                         row: ++row,
@@ -115,26 +127,25 @@
                                 .finish((me) => {
                                     success(`成功上传${importSuccess}条数据，失败${importFail}条数据，重复${importDuplicated}条`)
                                 })
-                                .start()
+                                .start();
                         }
-                        new MS.gridExcelWork.ExcelReader().file(this.file).parse((data) => {
-                            upload(data)
-                        })
+                        switch (fileFormat) {
+                            case 'xlsx':
+                                new MS.importExportWork.ExcelReader().file(this.file).parse((data) => {
+                                    upload(data)
+                                });
+                                break;
+                            case 'csv':
+                                new MS.importExportWork.CSVParser().file(this.file).read((data) => {
+                                    upload(data)
+                                });
+                                break;
+                            default:
+                                console.error('未支持的导出格式 ' + fileFormat)
+                                break;
+                        }
+
                     },
-                    doImport() {
-                        MS.gridExcelWork.doExportProcessExecute((page, cb) => {
-                            MS.api.postSuccess(
-                                window.location.href,
-                                {
-                                    page: page,
-                                    exportName: this.exportName
-                                },
-                                (res) => {
-                                    cb(res.data);
-                                }
-                            );
-                        });
-                    }
                 }
             });
         });
@@ -144,8 +155,13 @@
 @section('headAppend')
     @parent
     <style type="text/css">
-        .el-upload{display:block;}
-        .el-upload .el-upload-dragger{width:100%;}
+        .el-upload {
+            display: block;
+        }
+
+        .el-upload .el-upload-dragger {
+            width: 100%;
+        }
     </style>
 @endsection
 
@@ -168,12 +184,18 @@
                         </div>
                     @endif
                     <div>
-                        <el-upload action="" :show-file-list="false" ref="upload" :auto-upload="false" :file-list="[]" drag :on-change="doFileSelect">
+                        <el-upload action="" :show-file-list="false" ref="upload" :auto-upload="false" :file-list="[]"
+                                   drag :on-change="doFileSelect">
                             <i class="el-icon-upload"></i>
-                            <div class="el-upload__text">将文件拖到此处，或<em>点击上传XLSX文件</em></div>
+                            <div class="el-upload__text">将文件拖到此处，或<em>点击上传{{join(',',$formats)}}文件</em></div>
                             <div class="el-upload__tip" slot="tip">
-                                <a href="javascript:;" @click="doDownloadTemplate()"><i
-                                            class="iconfont icon-download"></i> 点击这里下载模板</a>
+                                @foreach($formats as $format)
+                                    <a href="javascript:;" @click="doDownloadTemplate('{{$format}}')"
+                                       class="tw-mr-2">
+                                        <i class="iconfont icon-download"></i>
+                                        下载{{$format}}模板
+                                    </a>
+                                @endforeach
                             </div>
                         </el-upload>
                     </div>

@@ -48,8 +48,24 @@ class ExportHandle
         return $this->perform('xlsx', 'excel');
     }
 
-    private function perform($ext, $view)
+    public function performCsv()
     {
+        return $this->perform('xlsx', 'csv');
+    }
+
+    public function performCommon($param = [])
+    {
+        return $this->perform(null, 'common', $param);
+    }
+
+    private function perform($ext, $view, $param = [])
+    {
+        if (null === $ext) {
+            $ext = 'xlsx';
+        }
+        if (!isset($param['formats'])) {
+            $param['formats'] = ['xlsx', 'csv'];
+        }
         $pageTitle = $this->data['pageTitle'];
         $defaultExportName = $this->data['defaultExportName'];
         $input = InputPackage::buildFromInput();
@@ -57,6 +73,7 @@ class ExportHandle
         $pageSize = $input->getPageSize(null, null, null, 100);
         $search = $input->getJsonAsInput('_param')->getArray('search');
         $exportName = $input->getTrimString('exportName', $defaultExportName);
+        $format = $input->getTrimString('format', $ext);
 
         if (Request::isPost()) {
             BizException::throwsIfEmpty('导出文件名为空', $exportName);
@@ -66,7 +83,7 @@ class ExportHandle
             $data['list'] = $paginateData['list'];
             $data['total'] = $paginateData['total'];
             $data['finished'] = count($paginateData['list']) != $pageSize;
-            $data['exportName'] = $exportName . '.' . $ext;
+            $data['exportName'] = $exportName . '.' . $format;
             $data['exportHeadTitles'] = $this->data['headTitles'];
             return Response::generateSuccessData($data);
         }
@@ -76,6 +93,7 @@ class ExportHandle
             'pageTitle' => $pageTitle,
             'exportName' => $exportName,
             'total' => $paginateData['total'],
+            'formats' => $param['formats'],
         ]);
     }
 }

@@ -2,6 +2,7 @@
 @import "../../../base/theme";
 
 @list-item-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
+@list-item-box-shadow-lg: 0 0 1rem rgba(0, 0, 0, 5%);
 
 .ub-list-head-tools-placeholder {
     height: 2.0rem;
@@ -383,29 +384,29 @@
     }
 
     .item-g {
-        border: 0.05rem solid #EEE;
-        border-radius: 0.15rem;
-        padding: 0.5rem;
+        border-radius: 0.25rem;
+        padding: 1rem;
         overflow: hidden;
         margin: 0 0 0.5rem 0;
         text-align: center;
         display: block;
+        background-color: var(--color-content-bg);
 
         &:hover {
-            box-shadow: #CCC 0 0 0.1rem;
+            box-shadow: @list-item-box-shadow-lg;
         }
 
         .icon {
-            img {
-                height: 4rem;
-                width: 4rem;
-            }
+
         }
 
         .title {
             display: block;
             color: var(--color-text);
+            margin-top: 0.5rem;
+            height: 1rem;
             line-height: 1rem;
+            overflow: hidden;
 
             &:hover {
                 color: #111;
@@ -654,7 +655,7 @@
         .title {
             font-size: var(--font-size-large);
             color: var(--color-text);
-            line-height: 1.4rem;
+            line-height: 1.2;
             display: block;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -767,10 +768,12 @@
 
     .item-n {
         margin-bottom: 1rem;
-        transition: all linear 0.2s;
+        transition: all 0.3s ease-in-out;
 
         &:hover {
             transform: translateY(-0.25rem);
+            background: var(--color-content-bg);
+            box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
         }
 
         .image {
@@ -937,14 +940,10 @@
 
     .item-video-cover {
         background-color: var(--color-content-bg);
-        padding: var(--size-margin);
         margin: 0 0 0.5rem 0;
         border-radius: var(--size-radius);
-
-        &.trans {
-            background: transparent;
-            padding: 0;
-        }
+        overflow: hidden;
+        transition: all 0.3s;
 
         &.vertical {
             .cover {
@@ -955,8 +954,19 @@
         }
 
         &:hover {
-            transform: scale(1.07);
-            transition: all 0.3s;
+            box-shadow: @list-item-box-shadow;
+
+            .cover {
+                transform: scale(1.05);
+
+                .mask-text {
+                    transform: scale(0.95);
+                }
+            }
+
+            .title {
+                color: var(--color-primary);
+            }
         }
 
         .cover {
@@ -964,30 +974,47 @@
             overflow: hidden;
             background: no-repeat center;
             background-size: cover;
-            box-shadow: #EEE 0 0 0.15rem;
-            border-radius: 0.15rem;
+            border-radius: var(--size-radius) var(--size-radius) 0 0;
+            transition: all 0.3s;
+            position: relative;
 
             &:after {
                 content: '';
                 display: block;
                 margin-top: 66%;
             }
+
+            .mask-text {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.1);
+                padding: 0.25rem;
+                color: #FFF;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                transition: all 0.3s;
+            }
+
         }
 
         .title {
             line-height: 1rem;
-            height: 1rem;
+            height: 1.5rem;
             overflow: hidden;
             display: block;
-            margin-top: 0.5rem;
             color: var(--color-text);
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 100%;
+            padding: 0.25rem 0.5rem;
         }
 
         .category {
-            margin-top: 0.5rem;
+            padding: 0.25rem 0.5rem;
 
             .stat {
                 float: right;
@@ -1093,7 +1120,6 @@
 
             .title {
                 font-size: var(--font-size);
-                line-height: var(--font-size);
             }
 
             .image {

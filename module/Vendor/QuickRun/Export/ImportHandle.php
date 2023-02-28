@@ -100,11 +100,31 @@ class ImportHandle
 
     public function performExcel()
     {
-        return $this->perform('xlsx', 'excel');
+        return $this->perform('xlsx', 'common', [
+            'formats' => ['xlsx'],
+        ]);
     }
 
-    private function perform($ext, $view)
+    public function performCsv()
     {
+        return $this->perform('csv', 'common', [
+            'formats' => ['csv'],
+        ]);
+    }
+
+    public function performCommon($param = [])
+    {
+        return $this->perform(null, 'common', $param);
+    }
+
+    private function perform($ext, $view, $param = [])
+    {
+        if (null === $ext) {
+            $ext = 'xlsx';
+        }
+        if (!isset($param['formats'])) {
+            $param['formats'] = ['xlsx', 'csv'];
+        }
         $input = InputPackage::buildFromInput();
         if (Request::isPost()) {
             $data = $input->getJson('data');
@@ -112,7 +132,8 @@ class ImportHandle
             return call_user_func_array($this->importCallback, [$data, []]);
         }
         return view('module::Vendor.View.quickRun.import.' . $view, array_merge($this->data, [
-
+            'ext' => $ext,
+            'formats' => $param['formats'],
         ]));
     }
 }

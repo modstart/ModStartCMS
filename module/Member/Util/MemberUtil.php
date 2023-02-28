@@ -91,6 +91,11 @@ class MemberUtil
         return $keepFields;
     }
 
+    public static function fixAvatar($avatar)
+    {
+        return AssetsUtil::fixFullOrDefault($avatar, 'asset/image/avatar.png');
+    }
+
     public static function getBasic($id, $keepFields = null)
     {
         $keepFields = self::processBasicFields($keepFields);
@@ -101,7 +106,7 @@ class MemberUtil
         if (empty($item['nickname'])) {
             $item['nickname'] = $item['username'];
         }
-        $item['avatar'] = AssetsUtil::fixFullOrDefault($item['avatar'], 'asset/image/avatar.png');
+        $item['avatar'] = self::fixAvatar($item['avatar']);
         $result = [];
         foreach ($keepFields as $keepField) {
             if (isset($item[$keepField])) {

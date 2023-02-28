@@ -2,8 +2,10 @@ import {VueManager} from "../lib/vue-manager";
 
 import {ExcelReader, ExcelWriter} from "@ModStartAsset/svue/lib/excel-util";
 import {ListDispatcher, ListCollector} from "@ModStartAsset/svue/lib/batch-util";
+import {FileUtil} from "@ModStartAsset/svue/lib/file-util";
+import {CSVParser} from "@ModStartAsset/svue/lib/csvparser";
 
-function doExportProcessExecute(fetchCB, exportHeadTitles, exportName) {
+function doExportExecute(format, fetchCB, exportHeadTitles, exportName) {
     exportName = exportName || null
     exportHeadTitles = exportHeadTitles || null
     const loading = ELEMENT.Loading.service({
@@ -43,7 +45,18 @@ function doExportProcessExecute(fetchCB, exportHeadTitles, exportName) {
         .finish((data, me) => {
             let records = []
             records.push(exportHeadTitles)
-            new ExcelWriter().data(records.concat(data)).filename(exportName).download()
+            data = records.concat(data)
+            switch (format) {
+                case 'xlsx':
+                    new ExcelWriter().data(data).filename(exportName).download()
+                    break;
+                case 'csv':
+                    FileUtil.downloadCSV(exportName, data)
+                    break;
+                default:
+                    console.error('未支持的导出格式 ' + format)
+                    break;
+            }
             setTimeout(() => {
                 loading.close()
             }, 2000)
@@ -52,18 +65,20 @@ function doExportProcessExecute(fetchCB, exportHeadTitles, exportName) {
 }
 
 
-const gridExcelWork = {
+const importExportWork = {
     ExcelReader,
     ExcelWriter,
     ListDispatcher,
     ListCollector,
-    doExportProcessExecute
+    FileUtil,
+    CSVParser,
+    doExportExecute
 }
 
 
 if (!('MS' in window)) {
     window.MS = {}
 }
-window.MS.gridExcelWork = gridExcelWork
+window.MS.importExportWork = importExportWork
 
-window.__gridExcelWork = gridExcelWork
+window.__importExportWork = importExportWork

@@ -223,6 +223,7 @@ class AuthMiddleware
             '_adminUserId' => $adminUserId,
             '_controllerMethod' => $urlControllerMethod,
             '_isTab' => $isTab,
+            '_isTabQuery' => $isTab ? '1' : '',
             '_tabSectionName' => $tabSectionName,
         ]);
 

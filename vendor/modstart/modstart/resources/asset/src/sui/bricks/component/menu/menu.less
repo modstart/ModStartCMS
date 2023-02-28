@@ -151,8 +151,23 @@
 .ub-menu {
     border-radius: 0.25rem;
     background: #FFF;
+    padding: 0.5rem 0;
 
-    &.single-level {
+    &.lg {
+        font-size: 0.7rem;
+
+        .title {
+            line-height: 2.5rem;
+        }
+
+        .items {
+            a {
+                line-height: 2.5rem;
+            }
+        }
+    }
+
+    &.simple {
         .title {
             &:before {
                 transform: rotate(90deg) scaleX(1) scaleY(0.5);
@@ -170,15 +185,40 @@
         overflow: hidden;
         text-overflow: ellipsis;
 
+        &:has(+ .open) {
+            &:before {
+                transform: rotate(180deg) scaleX(1) scaleY(0.5);
+            }
+        }
+
+        a {
+            color: var(--color-text);
+
+            &:hover {
+                color: var(--color-primary);
+            }
+        }
+
         &:before {
             content: '^';
             display: block;
             color: #CCC;
             float: right;
-            transform: rotate(180deg) scaleX(1) scaleY(0.5);
+            transform: rotate(0deg) scaleX(1) scaleY(0.5);
+            transition: all 0.3s;
         }
 
-        &.active, &:hover {
+        &.active {
+            color: var(--color-primary);
+            border-right: 4px solid var(--color-primary);
+            background-color: var(--color-primary-light-bg);
+
+            a {
+                color: var(--color-primary);
+            }
+        }
+
+        &:hover {
             color: var(--color-primary);
         }
 
@@ -201,7 +241,13 @@
             display: block;
             color: #333;
 
-            &.active, &:hover {
+            &.active {
+                color: var(--color-primary);
+                background-color: var(--color-primary-light-bg);
+                border-right: 4px solid var(--color-primary);
+            }
+
+            &:hover {
                 color: var(--color-primary);
             }
         }
@@ -221,10 +267,15 @@
     .ub-menu.simple {
         white-space: nowrap;
         overflow-x: auto;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        line-height: 0;
 
         .title {
             display: inline-block;
             min-width: 4em;
+            border-right: none;
+            border-radius: 0.5rem;
 
             &:before {
                 display: none;
@@ -313,7 +364,7 @@
             color: #333;
             padding-left: 0.7rem;
             position: relative;
-            margin:0.5rem 0;
+            margin: 0.5rem 0;
 
             &:hover, &.active {
                 color: var(--color-primary);

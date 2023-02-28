@@ -1,6 +1,7 @@
 @color-primary: #3555CC;
 @color-primary-dark: darken(@color-primary, 5%);
 @color-primary-light: lighten(@color-primary, 30%);
+@color-primary-light-bg: lighten(@color-primary, 45%);
 @color-success: rgb(59, 179, 70);
 @color-success-dark: rgb(48, 149, 59);
 @color-success-light: rgb(236, 247, 236);
@@ -26,6 +27,7 @@
 :root, page {
     --color-primary: var(--theme-color-primary, @color-primary);
     --color-primary-light: var(--theme-color-primary-light, @color-primary-light);
+    --color-primary-light-bg: var(--theme-color-primary-light-bg, @color-primary-light-bg);
     --color-primary-dark: var(--theme-color-primary-dark, @color-primary-dark);
     --color-success: @color-success;
     --color-success-dark: @color-success-dark;
@@ -60,6 +62,7 @@
 
     --font-size-root: var(--theme-font-size-root, 20px);
     --font-size: var(--theme-font-size, 0.65rem);
+    --font-size-lh: var(--theme-font-size, 0.65rem * 1.1);
     --font-size-medium: var(--theme-font-size, 0.8rem);
     --font-size-large: var(--theme-font-size-large, 1rem);
     --font-size-small: var(--theme-font-size-small, 0.6rem);

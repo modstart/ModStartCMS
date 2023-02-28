@@ -285,7 +285,7 @@ class FileUtil
 
     public static function name($pathname)
     {
-        return strtolower(pathinfo($pathname, PATHINFO_BASENAME));
+        return pathinfo($pathname, PATHINFO_BASENAME);
     }
 
     /**

@@ -16,25 +16,28 @@ use Module\Vendor\Provider\Notifier\NotifierProvider;
 abstract class AbstractContentVerifyProvider
 {
     /**
-     * 审核业务唯一标识
+     * 业务唯一标识
      * @return string
      * @example post
      */
     abstract public function name();
 
     /**
-     * 审核业务名称
+     * 业务标题
      * @return string
      * @example 文章
      */
     abstract public function title();
 
     /**
-     * 是否启用自动审核
+     * 是否自动审核完成
      * @param $param
      * @return boolean
      */
-    abstract public function verifyAutoProcess($param);
+    public function verifyAutoProcess($param)
+    {
+        return false;
+    }
 
     /**
      * 待审核数量
@@ -50,12 +53,25 @@ abstract class AbstractContentVerifyProvider
      */
     abstract public function verifyRule();
 
+
     /**
-     * 构建审核表单
+     * 启用自动表单审核，返回 false 表示不适用表单审核
+     * @return false
+     */
+    public function useFormVerify()
+    {
+        return false;
+    }
+
+    /**
+     * 构建审核表单，返回 null 表示不适用表单审核
      * @param Form $form
      * @param $param
      */
-    abstract public function buildForm(Form $form, $param);
+    public function buildForm(Form $form, $param)
+    {
+        return null;
+    }
 
     /**
      * 后台审核路径
@@ -94,8 +110,11 @@ abstract class AbstractContentVerifyProvider
             return;
         }
         NotifierProvider::notifyNoneLoginOperateProcessUrl(
-            $this->name(), '[审核]' . $shortTitle, $body,
-            'content_verify/' . $this->name(), $param
+            $this->name(),
+            '[审核]' . $shortTitle,
+            $body,
+            $this->useFormVerify() ? 'content_verify/' . $this->name() : null,
+            $param
         );
     }
 

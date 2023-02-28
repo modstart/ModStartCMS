@@ -5,6 +5,7 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-remove-strict-mode": "^0.0.2",
     "css-loader": "^5.0.1",
+    "papaparse": "^5.3.2",
     "date-and-time": "^1.0.0",
     "expose-loader": "^1.0.3",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",

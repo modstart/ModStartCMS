@@ -78,184 +78,199 @@
     <div style="padding:1rem;">
         <div class="row">
             <div class="col-4">
-                <div class="ub-panel">
-                    <div class="head">
-                        <div class="title">自适应页面菜单 page-menu（切换显示效果）</div>
+                <div>.ub-menu.page-menu</div>
+                <div class="ub-menu page-menu" data-menu-page-menu>
+                    <div class="title">标题1</div>
+                    <div class="items">
+                        <a class="active" href="#">标题1-1</a>
+                        <a href="#">标题1-2</a>
                     </div>
-                    <div class="body">
-                        <div class="ub-menu page-menu">
-                            <div class="title">标题1</div>
-                            <div class="items">
-                                <a class="active" href="#">标题1-1</a>
-                                <a href="#">标题1-2</a>
-                            </div>
-                            <div class="title">标题2</div>
-                            <div class="items">
-                                <a href="#">标题2-1</a>
-                                <a href="#">标题2-2</a>
-                            </div>
-                            <div class="title">标题3</div>
-                            <div class="items">
-                                <a href="#">标题3-1</a>
-                                <a href="#">标题3-2</a>
-                            </div>
-                            <a class="page-menu-toggle" href="javascript:;"
-                               onclick="$('body').toggleClass('ub-menu-page-show')">
-                                <i class="icon iconfont icon-list"></i>
-                            </a>
-                        </div>
-                        <script>
-                            $(function () {
-                                var $menu = $('.ub-menu.page-menu');
-                                $menu.find('.items .active').parent().show();
-                                $menu.find('.title').on('click', function () {
-                                    var $next = $(this).next();
-                                    $next.is(':visible') ? $next.slideUp() : $next.slideDown();
-                                });
-                            });
-                        </script>
+                    <div class="title">标题2</div>
+                    <div class="items">
+                        <a href="#">标题2-1</a>
+                        <a href="#">标题2-2</a>
                     </div>
+                    <div class="title">标题3</div>
+                    <div class="items">
+                        <a href="#">标题3-1</a>
+                        <a href="#">标题3-2</a>
+                    </div>
+                    <a class="page-menu-toggle" href="javascript:;"
+                       onclick="$('body').toggleClass('ub-menu-page-show')">
+                        <i class="icon iconfont icon-list"></i>
+                    </a>
+                </div>
+                <script>
+                    $(function () {
+                        $('[data-menu-page-menu]').on('click','.title',function(){
+                            $(this).next().toggleClass('open');
+                        });
+                    });
+                </script>
+            </div>
+            <div class="col-4">
+                <div>.ub-menu</div>
+                <div class="ub-menu" data-menu>
+                    <div class="title">标题1</div>
+                    <div class="items">
+                        <a class="active" href="#">标题1-1</a>
+                        <a href="#">标题1-2</a>
+                    </div>
+                    <div class="title">标题2</div>
+                    <div class="items">
+                        <a href="#">标题2-1</a>
+                        <a href="#">标题2-2</a>
+                    </div>
+                    <div class="title">标题3</div>
+                    <div class="items">
+                        <a href="#">标题3-1</a>
+                        <a href="#">标题3-2</a>
+                    </div>
+                </div>
+                <script>
+                    $(function () {
+                        $('[data-menu]').on('click','.title',function(){
+                            $(this).next().toggleClass('open');
+                        });
+                    });
+                </script>
+            </div>
+            <div class="col-4">
+                <div>.ub-menu.simple 简单水平滚动菜单</div>
+                <div class="ub-menu simple">
+                    <a class="title active" href="javascript:;">菜单</a>
+                    <a class="title" href="javascript:;" data-repeat="5">{ZH,4,100}</a>
                 </div>
             </div>
             <div class="col-4">
-                <div class="ub-panel">
-                    <div class="head">
-                        <div class="title">多级菜单</div>
-                    </div>
-                    <div class="body">
-                        <div class="ub-menu demo-b">
-                            <div class="title">标题1</div>
-                            <div class="items">
-                                <a class="active" href="#">标题1-1</a>
-                                <a href="#">标题1-2</a>
-                            </div>
-                            <div class="title">标题2</div>
-                            <div class="items">
-                                <a href="#">标题2-1</a>
-                                <a href="#">标题2-2</a>
-                            </div>
-                            <div class="title">标题3</div>
-                            <div class="items">
-                                <a href="#">标题3-1</a>
-                                <a href="#">标题3-2</a>
-                            </div>
-                        </div>
-                        <script>
-                            $(function () {
-                                var $menu = $('.ub-menu.demo-b');
-                                $menu.find('.items .active').parent().show();
-                                $menu.find('.title').on('click', function () {
-                                    var $next = $(this).next();
-                                    $next.is(':visible') ? $next.slideUp() : $next.slideDown();
-                                });
-                            });
-                        </script>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="ub-panel">
-                    <div class="head">
-                        <div class="title">简单水平滚动菜单</div>
-                    </div>
-                    <div class="body">
-                        <div class="ub-menu simple">
-                            <a class="title" href="javascript:;">菜单</a>
-                            <a class="title" href="javascript:;" data-repeat="5">标题1</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="ub-panel">
-                    <div class="head">
-                        <div class="title">多级菜单</div>
-                    </div>
-                    <div class="body">
-                        <div class="ub-menu-tree">
+                <div>.ub-menu-tree 多级菜单</div>
+                <div class="ub-menu-tree" data-menu-tree>
+                    <div class="item" data-repeat="2">
+                        <a class="title" href="javascript:;">菜单 {ZH,1,1}</a>
+                        <div class="group">
                             <div class="item" data-repeat="2">
-                                <a class="title" href="javascript:;">菜单 {ZH,1,1}</a>
+                                <a class="title" href="javascript:;">菜单 {ZH,2,2}</a>
+                            </div>
+                            <div class="item" data-repeat="2">
+                                <a class="title" href="javascript:;">菜单 {ZH,3,3}</a>
                                 <div class="group">
                                     <div class="item" data-repeat="2">
-                                        <a class="title" href="javascript:;">菜单 {ZH,2,2}</a>
-                                    </div>
-                                    <div class="item" data-repeat="2">
-                                        <a class="title" href="javascript:;">菜单 {ZH,3,3}</a>
-                                        <div class="group">
-                                            <div class="item" data-repeat="2">
-                                                <a class="title" href="javascript:;">菜单 {ZH,40,400}</a>
-                                            </div>
-                                        </div>
+                                        <a class="title" href="javascript:;">菜单 {ZH,40,400}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            $(function () {
-                                $('.ub-menu-tree').each(function (i, o) {
-                                    $(o).find('.title')
-                                        .each(function (i, o) {
-                                            if ($(o).next().is('.group')) $(o).addClass('has-group');
-                                        })
-                                        .on('click', function () {
-                                            if ($(this).is('.has-group')) {
-                                                $(this).toggleClass('open');
-                                                return false;
-                                            }
-                                        });
-                                });
-                            });
-                        </script>
                     </div>
+                </div>
+                <script>
+                    $(function () {
+                        $('[data-menu-tree]').each(function (i, o) {
+                            $(o).find('.title')
+                                .each(function (i, o) {
+                                    if ($(o).next().is('.group')) $(o).addClass('has-group');
+                                })
+                                .on('click', function () {
+                                    if ($(this).is('.has-group')) {
+                                        $(this).toggleClass('open');
+                                        return false;
+                                    }
+                                });
+                        });
+                    });
+                </script>
+            </div>
+            <div class="col-4">
+                <div>
+                    <div>nav-menu</div>
+                    <div class="ub-menu nav-menu" data-menu-nav-menu>
+                        <div class="title">
+                            <a href="#">标题1</a>
+                        </div>
+                        <div class="items">
+                            <a class="active" href="#">标题1-1</a>
+                            <a href="#">标题1-2</a>
+                        </div>
+                        <div class="title active">标题2</div>
+                        <div class="items">
+                            <a href="#">标题2-1</a>
+                            <a href="#">标题2-2</a>
+                        </div>
+                        <div class="title">标题3</div>
+                        <div class="items">
+                            <a href="#">标题3-1</a>
+                            <a href="#">标题3-2</a>
+                        </div>
+                        <a class="page-menu-toggle" href="javascript:;"
+                           onclick="$('body').toggleClass('ub-menu-page-show')">
+                            <i class="icon iconfont icon-list"></i>
+                        </a>
+                    </div>
+                    <script>
+                        $(function () {
+                            var $menu = $('[data-menu-nav-menu]');
+                            if($(window).width()>600) {
+                                $menu.find('.items').addClass('open');
+                            }else{
+                                $menu.on('click','.title',function(){
+                                    $menu.find('.items').removeClass('open');
+                                    $(this).next().addClass('open')
+                                        .css('left',$(this).offset().left+'px')
+                                        .css('width',$(this).width()+'px');
+                                    return false;
+                                });
+                                $(document).on('click',function(){
+                                    $menu.find('.items').removeClass('open');
+                                });
+                            }
+                        });
+                    </script>
                 </div>
             </div>
             <div class="col-4">
-                <div class="ub-panel">
-                    <div class="head">
-                        <div class="title">自适应菜单（用户中心）</div>
-                    </div>
-                    <div class="body">
-                        <div class="ub-menu nav-menu">
-                            <div class="title">标题1</div>
-                            <div class="items">
-                                <a class="active" href="#">标题1-1</a>
-                                <a href="#">标题1-2</a>
-                            </div>
-                            <div class="title">标题2</div>
-                            <div class="items">
-                                <a href="#">标题2-1</a>
-                                <a href="#">标题2-2</a>
-                            </div>
-                            <div class="title">标题3</div>
-                            <div class="items">
-                                <a href="#">标题3-1</a>
-                                <a href="#">标题3-2</a>
-                            </div>
-                            <a class="page-menu-toggle" href="javascript:;"
-                               onclick="$('body').toggleClass('ub-menu-page-show')">
-                                <i class="icon iconfont icon-list"></i>
-                            </a>
+                <div>
+                    <div>nav-menu</div>
+                    <div class="ub-menu nav-menu lg" data-menu-nav-menu-lg>
+                        <div class="title">
+                            <a href="#">标题1</a>
                         </div>
-                        <script>
-                            $(function () {
-                                var $menu = $('.ub-menu.nav-menu');
-                                if($(window).width()>600){
-                                    $menu.find('.items').addClass('open');
-                                }else{
-                                    $menu.find('.title').on('click',function () {
-                                        $menu.find('.items').removeClass('open');
-                                        $(this).next().addClass('open')
-                                            .css('left',$(this).offset().left+'px')
-                                            .css('width',$(this).width()+'px');
-                                        return false;
-                                    });
-                                    $(document).on('click',function(){
-                                        $menu.find('.items').removeClass('open');
-                                    });
-                                }
-                            });
-                        </script>
+                        <div class="items">
+                            <a class="active" href="#">标题1-1</a>
+                            <a href="#">标题1-2</a>
+                        </div>
+                        <div class="title active">标题2</div>
+                        <div class="items">
+                            <a href="#">标题2-1</a>
+                            <a href="#">标题2-2</a>
+                        </div>
+                        <div class="title">标题3</div>
+                        <div class="items">
+                            <a href="#">标题3-1</a>
+                            <a href="#">标题3-2</a>
+                        </div>
+                        <a class="page-menu-toggle" href="javascript:;"
+                           onclick="$('body').toggleClass('ub-menu-page-show')">
+                            <i class="icon iconfont icon-list"></i>
+                        </a>
                     </div>
+                    <script>
+                        $(function () {
+                            var $menu = $('[data-menu-nav-menu-lg]');
+                            if($(window).width()>600) {
+                                $menu.find('.items').addClass('open');
+                            }else{
+                                $menu.on('click','.title',function(){
+                                    $menu.find('.items').removeClass('open');
+                                    $(this).next().addClass('open')
+                                        .css('left',$(this).offset().left+'px')
+                                        .css('width',$(this).width()+'px');
+                                    return false;
+                                });
+                                $(document).on('click',function(){
+                                    $menu.find('.items').removeClass('open');
+                                });
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>

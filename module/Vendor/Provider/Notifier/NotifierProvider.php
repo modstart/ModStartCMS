@@ -42,23 +42,22 @@ class NotifierProvider
         }
     }
 
-    public static function notifyProcess($biz, $title, $content, $processUrl, $processUrlParam = [])
+    public static function notifyNoneLoginOperateProcessUrl($biz, $title, $content, $processUrlPath, $param = [])
     {
-        self::notify($biz, $title, $content, array_merge($processUrlParam, [
-            'processUrl' => $processUrl,
-        ]));
-    }
-
-    public static function notifyNoneLoginOperateProcessUrl($biz, $title, $content, $processUrlPath, $processUrlParam = [])
-    {
-        $viewUrl = null;
-        if (isset($processUrlParam['viewUrl'])) {
-            $viewUrl = $processUrlParam['viewUrl'];
-            unset($processUrlParam['viewUrl']);
+        $systemParam = [
+            'domainUrl' => null,
+            'viewUrl' => null,
+        ];
+        foreach ($systemParam as $k => $v) {
+            if (isset($param[$k])) {
+                $systemParam[$k] = $param[$k];
+                unset($param[$k]);
+            }
         }
-        $processUrl = NoneLoginOperateUtil::generateUrl($processUrlPath, $processUrlParam);
-        self::notifyProcess($biz, $title, $content, $processUrl, array_merge($processUrlParam, [
-            'viewUrl' => $viewUrl,
-        ]));
+        if ($processUrlPath) {
+            $processUrl = NoneLoginOperateUtil::generateUrl($processUrlPath, $param, $systemParam['domainUrl']);
+            $systemParam['processUrl'] = $processUrl;
+        }
+        self::notify($biz, $title, $content, array_merge($param, $systemParam));
     }
 }

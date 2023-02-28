@@ -68,6 +68,24 @@ var CSVParser = function () {
         })
         return me
     }
+
+    this.read = function (cb, config) {
+        var data = []
+        config = config || {}
+        Papa.parse(me._file, {
+            // worker: true,
+            step: function (results, parser) {
+                if (results.data.length === 1 && results.data[0] === '') {
+                    return
+                }
+                data.push(results.data)
+            },
+            complete: function (results, file) {
+                cb(data)
+            }
+        })
+        return me
+    }
     return this
 }
 

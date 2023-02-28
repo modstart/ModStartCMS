@@ -23,8 +23,12 @@
 
     }
 
+    &.bg-transparent {
+        background-color: transparent;
+    }
+
     &.transparent {
-        background: transparent;
+        background-color: transparent;
 
         .menu-toggle {
             color: #FFF;
@@ -721,7 +725,7 @@
 }
 
 @media screen and (min-width: 40rem) {
-    .ub-header-b {
+    .ub-header-b, .ub-header {
         position: sticky;
         transition: top 0.3s;
         z-index: 2000;
@@ -729,9 +733,13 @@
     }
 
     html.body-scroll-far {
-        .ub-header-b {
+        .ub-header-b, .ub-header {
             top: 0px;
             box-shadow: @header-box-shadow;
+
+            &.bg-transparent {
+                background-color: #FFF;
+            }
         }
     }
 }
