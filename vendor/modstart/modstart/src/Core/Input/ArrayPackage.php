@@ -70,6 +70,18 @@ class ArrayPackage
         return $defaultValue;
     }
 
+    public function nextTypeValue($typeCls, $defaultValue = null)
+    {
+        $value = $this->nextTrimString();
+        $list = $typeCls::getList();
+        foreach ($list as $k => $v) {
+            if ($value == $k) {
+                return $v;
+            }
+        }
+        return $defaultValue;
+    }
+
     public function nextInteger($defaultValue = null)
     {
         $value = $this->next($defaultValue);

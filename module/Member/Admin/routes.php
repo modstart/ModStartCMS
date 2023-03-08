@@ -20,6 +20,7 @@ $router->match(['get', 'post'], 'member/search', 'MemberController@search');
 $router->match(['get', 'post'], 'member/reset_password', 'MemberController@resetPassword');
 $router->match(['get', 'post'], 'member/send_message', 'MemberController@sendMessage');
 $router->match(['get', 'post'], 'member/status_forbidden', 'MemberController@statusForbidden');
+$router->match(['get', 'post'], 'member/export', 'MemberController@export');
 
 $router->match(['get', 'post'], 'member_vip_set', 'MemberVipSetController@index');
 $router->match(['get', 'post'], 'member_vip_set/add', 'MemberVipSetController@add');

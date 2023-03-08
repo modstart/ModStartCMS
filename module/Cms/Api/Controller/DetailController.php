@@ -47,13 +47,14 @@ class DetailController extends ModuleBaseController
         $viewData['view'] = $view;
         // print_r($cat);exit();
         if (CmsMemberPermitUtil::canVisitCat($cat)) {
-            $viewData['record'] = $data['record'];
+            $record = $data['record'];
         } else {
-            $viewData['record'] = ArrayUtil::keepKeys($data['record'], [
-                'title', 'summary',
+            $record = ArrayUtil::keepKeys($data['record'], [
+                'title', 'summary', 'cover',
                 'seoTitle', 'seoKeywords', 'seoDescription',
             ]);
         }
+        $viewData['record'] = $record;
         $viewData['cat'] = $cat;
         $viewData['catRoot'] = $catRoot;
         $viewData['catChain'] = $catChain;

@@ -13,7 +13,7 @@ class StrUtil
 
     public static function mask($subject, $startIndex = null, $endIndex = null, $maskChar = '*')
     {
-        $strLen = strlen($subject);
+        $strLen = mb_strlen($subject);
 
         if (null == $startIndex) {
             $startIndex = floor($strLen / 2);
@@ -31,11 +31,11 @@ class StrUtil
 
         $maskedSubject = '';
         if ($startIndex > 0) {
-            $maskedSubject .= substr($subject, 0, $startIndex);
+            $maskedSubject .= mb_substr($subject, 0, $startIndex);
         }
         $maskedSubject .= str_repeat($maskChar, $endIndex - $startIndex + 1);
         if ($endIndex < $strLen - 1) {
-            $maskedSubject .= substr($subject, $endIndex + 1);
+            $maskedSubject .= mb_substr($subject, $endIndex + 1);
         }
         return $maskedSubject;
 

@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="tw-p-4 tw-text-center" style="background:#444;">
+    <div class="tw-p-4 tw-text-center">
         <a href="http://beian.miit.gov.cn" target="_blank" class="tw-text-gray-100 hover:tw-text-gray-100">
             {{modstart_config('siteBeian','[网站备案信息]')}}
         </a>

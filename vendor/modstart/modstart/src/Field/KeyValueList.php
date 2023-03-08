@@ -79,7 +79,7 @@ class KeyValueList extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value);
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
 
     public function prepareInput($value, $model)

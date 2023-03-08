@@ -752,11 +752,13 @@ class MemberUtil
 
     public static function updateNewChatMsgStatus($memberUserId)
     {
-        ModelUtil::update('member_user', ['id' => $memberUserId], [
-            'newChatMsgCount' => ModelUtil::sum('member_chat', 'unreadMsgCount', [
-                'memberUserId' => $memberUserId,
-            ])
-        ]);
+        if (modstart_module_enabled('MemberChat')) {
+            ModelUtil::update('member_user', ['id' => $memberUserId], [
+                'newChatMsgCount' => ModelUtil::sum('member_chat', 'unreadMsgCount', [
+                    'memberUserId' => $memberUserId,
+                ])
+            ]);
+        }
     }
 
     public static function paginate($page, $pageSize, $option = [])

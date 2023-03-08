@@ -34,9 +34,6 @@
             <div class="ub-nav-header">
                 产品展示
             </div>
-            <div class="ub-nav-header-sub">
-                RECOMMEND PRODUCT
-            </div>
             <div class="tw-pb-8">
                 <div class="ub-list-items">
                     <div class="row">
@@ -60,9 +57,6 @@
             <div class="ub-nav-header">
                 客户案例
             </div>
-            <div class="ub-nav-header-sub">
-                RECOMMEND CASES
-            </div>
             <div class="">
                 <div class="ub-list-items">
                     <div class="row">
@@ -83,10 +77,7 @@
 
         <div>
             <div class="ub-nav-header">
-                新闻中心
-            </div>
-            <div class="ub-nav-header-sub">
-                RECOMMEND NEWS
+                新闻资讯
             </div>
             <div class="">
                 <div class="ub-list-items">
@@ -113,9 +104,6 @@
         <div>
             <div class="ub-nav-header">
                 合作伙伴
-            </div>
-            <div class="ub-nav-header-sub">
-                PARTNERS
             </div>
             <div class="" data-scroll-animate="animated fadeInUp">
                 @include('module::Partner.View.pc.public.partnerRaw',['position'=>'home'])

@@ -44,6 +44,7 @@ class FieldManager
             'richHtml' => \ModStart\Field\RichHtml::class,
             'markdown' => \ModStart\Field\Markdown::class,
             'keyValueList' => \ModStart\Field\KeyValueList::class,
+            'complexFields' => \ModStart\Field\ComplexFields::class,
             'values' => \ModStart\Field\Values::class,
             'customField' => \ModStart\Field\CustomField::class,
             'html' => \ModStart\Field\Html::class,

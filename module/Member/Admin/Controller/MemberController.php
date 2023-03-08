@@ -15,6 +15,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Type\TypeUtil;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Core\Util\CRUDUtil;
@@ -35,11 +36,13 @@ use Module\Member\Config\MemberAdminList;
 use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
+use Module\Member\Type\Gender;
 use Module\Member\Type\MemberStatus;
 use Module\Member\Util\MemberGroupUtil;
 use Module\Member\Util\MemberMessageUtil;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\MemberVipUtil;
+use Module\Vendor\QuickRun\Export\ExportHandle;
 
 class MemberController extends Controller
 {
@@ -145,6 +148,7 @@ class MemberController extends Controller
             ->title('用户管理')
             ->canShow(false)
             ->canDelete(true)
+            ->canExport(ModuleManager::getModuleConfigBoolean('Member', 'exportEnable'))
             ->textEdit('修改账号');
     }
 
@@ -349,5 +353,57 @@ class MemberController extends Controller
         AdminPermission::demoCheck();
         MemberUtil::updateStatus(CRUDUtil::ids(), MemberStatus::FORBIDDEN);
         return Response::redirect(CRUDUtil::jsGridRefresh());
+    }
+
+    public function export(ExportHandle $handle)
+    {
+        $headTitles = [
+            'ID', '用户名', '邮箱', '手机',
+            '注册时间', '性别', '姓名', '签名',
+        ];
+        return $handle
+            ->withPageTitle('导出用户信息')
+            ->withDefaultExportName('用户信息')
+            ->withHeadTitles($headTitles)
+            ->handleFetch(function ($page, $pageSize, $search, $param) {
+                $query = ModelUtil::model('member_user');
+                $query = $query->where(['isDeleted' => false])->orderBy('id', 'desc');
+                foreach ($search as $searchItem) {
+                    if (!empty($searchItem['id']['eq'])) {
+                        $query = $query->where('id', $searchItem['id']['eq']);
+                    } elseif (!empty($searchItem['status']['eq'])) {
+                        $query = $query->where('status', $searchItem['status']['eq']);
+                    } elseif (!empty($searchItem['groupId']['eq'])) {
+                        $query = $query->where('groupId', $searchItem['groupId']['eq']);
+                    } elseif (!empty($searchItem['vipId']['eq'])) {
+                        $query = $query->where('vipId', $searchItem['vipId']['eq']);
+                    } elseif (!empty($searchItem['username']['like'])) {
+                        $query = $query->where('username', 'like', '%' . $searchItem['username']['like'] . '%');
+                    } elseif (!empty($searchItem['email']['like'])) {
+                        $query = $query->where('email', 'like', '%' . $searchItem['email']['like'] . '%');
+                    } elseif (!empty($searchItem['phone']['like'])) {
+                        $query = $query->where('phone', 'like', '%' . $searchItem['phone']['like'] . '%');
+                    }
+                }
+                $result = $query->paginate($pageSize, ['*'], 'page', $page)->toArray();
+                $list = [];
+                foreach ($result['data'] as $item) {
+                    $one = [];
+                    $one[] = $item['id'];
+                    $one[] = $item['username'];
+                    $one[] = $item['email'];
+                    $one[] = $item['phone'];
+                    $one[] = $item['created_at'];
+                    $one[] = TypeUtil::name(Gender::class, $item['gender']);
+                    $one[] = $item['realname'];
+                    $one[] = $item['signature'];
+                    $list[] = $one;
+                }
+                return [
+                    'list' => $list,
+                    'total' => $result['total'],
+                ];
+            })
+            ->performCommon();
     }
 }

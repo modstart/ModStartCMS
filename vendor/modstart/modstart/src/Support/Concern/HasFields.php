@@ -42,6 +42,7 @@ use ModStart\Layout\LayoutTab;
  * @method \ModStart\Field\RichHtml       richHtml($column, $label = '')
  * @method \ModStart\Field\Markdown       markdown($column, $label = '')
  * @method \ModStart\Field\KeyValueList   keyValueList($column, $label = '')
+ * @method \ModStart\Field\ComplexFields  complexFields($column, $label = '')
  * @method \ModStart\Field\Values         values($column, $label = '')
  * @method \ModStart\Field\CustomField    customField($column, $label = '')
  * @method \ModStart\Field\Html           html($column, $label = '')

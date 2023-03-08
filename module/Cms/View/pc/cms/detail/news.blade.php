@@ -9,13 +9,25 @@
 
 @section('bodyContent')
 
-    <div class="lg:tw-text-left tw-text-center tw-text-white tw-text-lg tw-py-20 tw-bg-gray-500 ub-cover"
-         @if($cat['bannerBg']) style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($cat['bannerBg'])}});" @endif
-    >
-        <div class="ub-container">
-            <h1 class="tw-text-4xl animated fadeInUp">{{$cat['title']}}</h1>
-            <div class="tw-mt-4 animated fadeInUp">
-                {{$record['summary']}}
+    <div class="ub-container ub-content margin-top margin-bottom-remove">
+        <div class="panel-b">
+            <div class="bg" style="background-image:url({{$record['cover']}});"></div>
+            <div class="mask"></div>
+            <div class="box">
+                <div class="c">
+                    <div class="c1">
+                        <div class="ub-cover-4-3 tw-rounded"
+                             style="background-image:url({{$record['cover']}});"></div>
+                    </div>
+                    <div class="c2">
+                        <h1 class="title animated fadeInUp">
+                            {{$record['title']}}
+                        </h1>
+                        <div class="sub-title animated fadeInUp">
+                            {{$record['summary']}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -41,27 +53,25 @@
                         您没有权限访问该栏目内容
                     </div>
                 @else
-                    <div class="ub-panel" style="padding:1rem;">
-                        <div class="ub-article">
-                            <h1>{{$record['title']}}</h1>
-                            <div class="attr">
-                                <i class="iconfont icon-eye"></i>
-                                {{$record['viewCount']?$record['viewCount']:'-'}}
-                                &nbsp;&nbsp;
-                                <i class="iconfont icon-time"></i>
-                                {{($record['postTime'])}}
-                                &nbsp;&nbsp;
-                                @foreach($record['_tags'] as $tag)
-                                    <i class="iconfont icon-tag"></i>
-                                    <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
-                                       href="{{modstart_web_url('tag/'.urlencode($tag))}}">
-                                        {{$tag}}
-                                    </a>
-                                @endforeach
-                            </div>
-                            <div class="content ub-html" style="font-size:0.8rem;">
-                                {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
-                            </div>
+                    <div class="tw-p-3 tw-bg-white tw-rounded-lg margin-bottom">
+                        <div class="ub-html" style="font-size:0.8rem;">
+                            {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
+                        </div>
+                        <div class="tw-bg-gray-100 tw-my-4" style="height:1px;"></div>
+                        <div class="tw-text-right">
+                            <i class="iconfont icon-eye"></i>
+                            {{$record['viewCount']?$record['viewCount']:'-'}}
+                            &nbsp;&nbsp;
+                            <i class="iconfont icon-time"></i>
+                            {{($record['postTime'])}}
+                            &nbsp;&nbsp;
+                            @foreach($record['_tags'] as $tag)
+                                <i class="iconfont icon-tag"></i>
+                                <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
+                                   href="{{modstart_web_url('tag/'.urlencode($tag))}}">
+                                    {{$tag}}
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 @endif

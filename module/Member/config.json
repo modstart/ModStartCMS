@@ -60,6 +60,12 @@
                 "switch",
                 "启用分组"
             ]
+        ],
+        "exportEnable": [
+            [
+                "switch",
+                "启用导出"
+            ]
         ]
     }
 }

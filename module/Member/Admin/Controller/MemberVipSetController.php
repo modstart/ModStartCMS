@@ -38,7 +38,8 @@ class MemberVipSetController extends Controller
                 foreach (MemberVipBiz::all() as $biz) {
                     $biz->vipField($builder);
                 }
-                $builder->richHtml('content', '说明')->required();
+                $builder->text('desc', '简要说明')->required();
+                $builder->richHtml('content', '详细说明')->required();
                 if (ModuleManager::getModuleConfigBoolean('Member', 'creditEnable', false)) {
                     $builder->switch('creditPresentEnable', '赠送积分')->when('=', true, function ($form) {
                         /** @var Form $form */

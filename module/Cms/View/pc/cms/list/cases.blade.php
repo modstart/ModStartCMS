@@ -6,14 +6,18 @@
 
 @section('bodyContent')
 
-    <div class="lg:tw-text-left tw-text-center tw-text-white tw-text-lg tw-py-20 tw-bg-gray-500 ub-cover"
-         @if($cat['bannerBg'])
-         style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($cat['bannerBg'])}});"
-        @endif
-    >
-        <div class="ub-container">
-            <h1 class="tw-text-4xl animated fadeInUp">{{$cat['title']}}</h1>
-            <div class="tw-mt-4 animated fadeInUp">
+    <div class="ub-content ub-container margin-top margin-bottom-remove">
+        <div class="panel-a"
+             @if($cat['bannerBg'])
+             style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($cat['bannerBg'])}});"
+             @else
+             style="background-image:var(--color-primary-gradient-bg);"
+            @endif
+        >
+            <h1 class="title animated fadeInUp">
+                {{$cat['title']}}
+            </h1>
+            <div class="sub-title animated fadeInUp">
                 {{$cat['subTitle']}}
             </div>
         </div>

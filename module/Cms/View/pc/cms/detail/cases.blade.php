@@ -7,13 +7,27 @@
 {!! \ModStart\ModStart::js('asset/common/lazyLoad.js') !!}
 @section('bodyContent')
 
-    <div class="lg:tw-text-left tw-text-center tw-text-white tw-text-lg tw-py-20 tw-bg-gray-500 ub-cover"
-         @if($cat['bannerBg']) style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($cat['bannerBg'])}});" @endif
-    >
-        <div class="ub-container">
-            <h1 class="tw-text-4xl animated fadeInUp">{{$cat['title']}}</h1>
-            <div class="tw-mt-4 animated fadeInUp">
-                {{$record['summary']}}
+    <div style="max-width:800px;margin:0 auto;">
+        <div class="ub-container ub-content margin-top margin-bottom-remove">
+            <div class="panel-b">
+                <div class="bg" style="background-image:url({{$record['cover']}});"></div>
+                <div class="mask"></div>
+                <div class="box">
+                    <div class="c">
+                        <div class="c1">
+                            <div class="ub-cover-4-3 tw-rounded"
+                                 style="background-image:url({{$record['cover']}});"></div>
+                        </div>
+                        <div class="c2">
+                            <h1 class="title animated fadeInUp">
+                                {{$record['title']}}
+                            </h1>
+                            <div class="sub-title animated fadeInUp">
+                                {{$record['summary']}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
