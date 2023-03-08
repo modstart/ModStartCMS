@@ -5,9 +5,6 @@
                 <a href="{{modstart_web_url('member')}}"><i class="iconfont icon-user"></i> {{\Module\Member\Auth\MemberUser::nickname()}}</a>
             @else
                 <a href="{{modstart_web_url('login')}}">登录</a>
-                @if(!modstart_config('registerDisable',false))
-                    <a href="{{modstart_web_url('register')}}">注册</a>
-                @endif
             @endif
         </div>
         <div class="logo">
