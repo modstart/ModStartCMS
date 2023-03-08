@@ -26,7 +26,8 @@
 
 @section('htmlProperties')
     @parent
-    page-tabs-enable
+    @if(config('modstart.admin.tabsEnable',true)) page-tabs-enable @endif
+    data-theme="{{config('modstart.admin.theme','default')}}"
 @endsection
 
 @section('bodyAppend')

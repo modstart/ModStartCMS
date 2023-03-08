@@ -1,7 +1,36 @@
-@brick-page-panel-left-width: 10rem;
-@brick-page-panel-menu-bg-color: #00101C;
-@brick-page-panel-menu-bg-active-color: #000B12;
+:root {
+    --panel-menu-width: 10rem;
+    --panel-menu-font-size: 0.7rem;
+    --panel-menu-logo-font-size: 1rem;
 
+    --panel-menu-logo-color: var(--color-primary);
+    --panel-menu-background: #00101C;
+    --panel-menu-text-color: #FFFFFF;
+    --panel-menu-text-color-hover: #FFFFFF;
+    --panel-menu-active-background: var(--color-primary);
+    --panel-menu-active-color: #FFFFFF;
+    --panel-menu-active-border-color: var(--color-primary);
+    --panel-menu-search-background: #444;
+    --panel-menu-search-color: #EEE;
+    --panel-menu-search-color: #EEE;
+    --panel-menu-scrollbar-background: #111111;
+    --panel-menu-arrow-color: #666666;
+}
+
+[data-theme="light"] {
+    --panel-menu-logo-color: var(--color-primary);
+    --panel-menu-background: #FFFFFF;
+    --panel-menu-text-color: #333333;
+    --panel-menu-text-color-hover: var(--color-primary);
+    --panel-menu-active-background: var(--color-primary-light-bg);
+    --panel-menu-active-color: var(--color-primary);
+    --panel-menu-active-border-color: var(--color-primary);
+    --panel-menu-search-background: #EEE;
+    --panel-menu-search-color: #111;
+    --panel-menu-search-tip-color: #999;
+    --panel-menu-scrollbar-background: #CCCCCC;
+    --panel-menu-arrow-color: #CCCCCC;
+}
 
 .ub-panel-frame {
 
@@ -14,24 +43,24 @@
     .left {
         position: fixed;
         left: 0;
-        width: @brick-page-panel-left-width;
+        width: var(--panel-menu-width);
         top: 0;
         bottom: 0;
-        background: var(--color-primary);
+        background: var(--panel-menu-background);
         overflow: hidden;
         z-index: 2000;
-        box-shadow: 0 0 5px #c4cfdb;
         transition: all 0.2s linear;
+        outline: 1px solid #EEE;
 
         .logo {
             height: 2.25rem;
-            background: var(--color-primary);
             line-height: 2.25rem;
-            color: #FFF;
-            font-size: var(--font-size-medium);
+            color: var(--panel-menu-text-color);
+            font-size: var(--panel-menu-logo-font-size);
             display: block;
             text-align: left;
             padding: 0 0.75rem;
+            transition: all 0.2s linear;
 
             .img {
                 width: 2.25rem;
@@ -45,6 +74,7 @@
                 width: auto;
                 height: 2.25rem;
                 text-align: center;
+                color: var(--panel-menu-logo-color);
             }
 
             .text {
@@ -52,11 +82,11 @@
         }
 
         .menu {
-            background: @brick-page-panel-menu-bg-color;
+            background: var(--panel-menu-background);
             position: fixed;
             top: 2.25rem;
             left: 0;
-            width: @brick-page-panel-left-width;
+            width: var(--panel-menu-width);
             bottom: 0;
             overflow: auto;
             transition: all 0.2s linear;
@@ -83,26 +113,26 @@
 
                 input {
                     height: 1.5rem;
-                    background: #444;
+                    background: var(--panel-menu-search-background);
                     border: none;
-                    font-size: 13px;
+                    font-size: 0.65rem;
                     width: 100%;
-                    color: #FFF;
+                    color: var(--panel-menu-search-color);
                     padding-left: 1.5rem;
 
                     &::-webkit-input-placeholder {
-                        color: #c4cfdb;
-                        font-size: 13px;
+                        color: var(--panel-menu-search-tip-color);
+                        font-size: 0.65rem;
                     }
 
                     &::-moz-placeholder {
-                        color: #c4cfdb;
-                        font-size: 13px;
+                        color: var(--panel-menu-search-tip-color);
+                        font-size: 0.65rem;
                     }
 
                     &::-ms-input-placeholder {
-                        color: #c4cfdb;
-                        font-size: 13px;
+                        color: var(--panel-menu-search-tip-color);
+                        font-size: 0.65rem;
                     }
                 }
 
@@ -116,69 +146,77 @@
                     line-height: 2rem;
                     width: 2.25rem;
                     text-align: center;
-                    color: #EEE;
-                    font-size: 13px;
+                    color: var(--panel-menu-search-color);
+                    font-size: 0.65rem;
                 }
             }
 
             &::-webkit-scrollbar-track {
-                background: hsla(0, 0%, 100%, .15);
-                border-radius: 3px;
-                box-shadow: inset 0 0 5px rgb(37 37 37 / 5%);
+                background: transparent;
             }
 
             &::-webkit-scrollbar {
-                width: 6px;
-                height: 6px;
+                width: 1px;
+                height: 1px;
             }
 
             &::-webkit-scrollbar-thumb {
-                background: hsla(0, 0%, 100%, .2);
-                border-radius: 3px;
-                box-shadow: inset 0 0 5px hsl(0deg 0% 100% / 5%);
+                background: #CCC;
             }
 
             & > .menu-item {
-                padding-left: 0 !important;
-
                 .title {
                     padding-left: 0.75rem;
                 }
             }
 
-            .menu-item {
-                padding-left: 1.0rem;
+            & > .menu-item {
+                & .children > .menu-item {
+                    .title {
+                        padding-left: 1.8rem;
+                    }
 
-                .menu-item {
-                    .menu-item {
-                        padding-left: 0.75rem;
-
-                        .title {
-                            font-size: var(--font-size-small);
-                            padding-right: 0.5rem;
+                    & .children {
+                        & > .menu-item {
+                            .title {
+                                padding-left: 2.3rem;
+                                font-size: var(--font-size-small);
+                                padding-right: 0.5rem;
+                            }
                         }
+                    }
+                }
+            }
+
+            .menu-item {
+
+                &.active {
+                    &:not(:has(.children)) {
+                        background: var(--panel-menu-active-background);
+                        color: var(--panel-menu-active-color);
+                        border-right: 3px solid var(--panel-menu-active-border-color);
                     }
                 }
 
                 &.active {
                     & > .title {
-                        color: #FFF;
+                        color: var(--panel-menu-active-color);
                     }
                 }
 
                 .title {
-                    line-height: 2rem;
+                    line-height: 2.3rem;
                     display: block;
                     position: relative;
                     overflow: hidden;
                     padding-right: 1rem;
                     white-space: nowrap;
                     text-overflow: ellipsis;
-                    font-size: var(--font-size);
-                    color: #87a2ae;
+                    font-size: var(--panel-menu-font-size);
+                    color: var(--panel-menu-text-color);
 
                     &:hover {
-                        color: #FFF;
+                        color: var(--panel-menu-text-color-hover);
                     }
 
                     .icon {
@@ -190,8 +228,8 @@
                         width: 0px;
                         height: 0px;
                         display: block;
-                        border: 0.2rem solid #87a2ae;
-                        border-color: transparent transparent transparent #87a2ae;
+                        border: 0.2rem solid var(--panel-menu-arrow-color);
+                        border-color: transparent transparent transparent var(--panel-menu-arrow-color);
                         position: absolute;
                         right: 0.5rem;
                         top: 0.8rem;
@@ -215,7 +253,6 @@
                 .children {
                     display: block;
                     max-height: 0;
-                    background: @brick-page-panel-menu-bg-active-color;
                     overflow: hidden;
                     transition: max-height 0.2s ease-out;
                 }
@@ -225,7 +262,7 @@
 
     .right {
         position: fixed;
-        left: @brick-page-panel-left-width;
+        left: var(--panel-menu-width);
         right: 0;
         top: 0;
         bottom: 0;
@@ -265,20 +302,16 @@
                 white-space: nowrap;
 
                 &::-webkit-scrollbar-track {
-                    background: #EEE;
-                    border-radius: 2px;
-                    box-shadow: inset 0 0 5px rgb(37 37 37 / 5%);
+                    background: transparent;
                 }
 
                 &::-webkit-scrollbar {
-                    width: 2px;
-                    height: 2px;
+                    width: 1px;
+                    height: 1px;
                 }
 
                 &::-webkit-scrollbar-thumb {
-                    background: #EEE;
-                    border-radius: 2px;
-                    box-shadow: inset 0 0 5px hsl(0deg 0% 100% / 5%);
+                    background: var(--panel-menu-scrollbar-background);
                 }
 
                 a {
@@ -381,11 +414,11 @@
                 position: fixed;
                 top: 2.25rem;
                 bottom: 0;
-                left: @brick-page-panel-left-width;
+                left: var(--panel-menu-width);
                 right: 0;
                 overflow: auto;
                 transition: all 0.2s linear;
-                background: #ecf0f5;
+                background: #F4F4F4;
                 padding: 0.5rem;
             }
         }
@@ -394,7 +427,7 @@
             position: fixed;
             bottom: 0;
             right: 0;
-            left: @brick-page-panel-left-width;
+            left: var(--panel-menu-width);
             background: #FFF;
             padding: 0.5rem;
             box-shadow: 0 0 4px #ccc;
@@ -524,10 +557,10 @@
         }
 
         .left {
-            left: -@brick-page-panel-left-width;
+            left: calc(0rem - var(--panel-menu-width));
 
             .menu {
-                left: -@brick-page-panel-left-width;
+                left: calc(0rem - var(--panel-menu-width));
 
             }
         }

@@ -243,6 +243,9 @@ $(window).on('load', function () {
                     } catch (e) {
                     }
                     for (var i = 0; i < this.data.length; i++) {
+                        if (this.data[i].active) {
+                            this.data[i].option.blur()
+                        }
                         this.data[i].active = false
                     }
                     this.updateMainPage()
@@ -256,11 +259,25 @@ $(window).on('load', function () {
                 } catch (e) {
                 }
                 for (var i = 0; i < this.data.length; i++) {
-                    this.data[i].active = (this.data[i].id == id);
+                    var active = (this.data[i].id == id)
+                    if (this.data[i].active !== active) {
+                        if (active) {
+                            this.data[i].option.focus()
+                        } else {
+                            this.data[i].option.blur()
+                        }
+                    }
+                    this.data[i].active = active;
                 }
                 this.updateMainPage()
             },
-            open: function (url, title) {
+            open: function (url, title, option) {
+                option = Object.assign({
+                    focus: function () {
+                    },
+                    blur: function () {
+                    },
+                }, option)
                 url = this.normalTabUrl(url)
                 var current = this.getByUrl(url);
                 if (current) {
@@ -274,6 +291,7 @@ $(window).on('load', function () {
                     title: title,
                     id: this.id,
                     active: false,
+                    option: option,
                 })
                 this.active(this.id);
                 this.id++;
@@ -292,7 +310,15 @@ $(window).on('load', function () {
                 return;
             }
             let title = $.trim($this.text())
-            tabManager.open(url, title)
+            tabManager.open(url, title, {
+                focus: function () {
+                    $this.closest('.ub-panel-frame').find('.menu-item').removeClass('active')
+                    $this.parent().addClass('active')
+                },
+                blur: function () {
+                    $this.parent().removeClass('active')
+                }
+            })
             return false;
         });
         $adminTabMenu.on('click', '[data-tab-menu-main]', function () {
