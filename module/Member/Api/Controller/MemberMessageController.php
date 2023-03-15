@@ -33,13 +33,17 @@ class MemberMessageController extends ModuleBaseController implements MemberLogi
     public function delete()
     {
         MemberMessageUtil::delete(MemberUser::id(), CRUDUtil::ids());
-        return Response::generateSuccess();
+        return Response::generateSuccessData([
+            'unreadMessageCount' => MemberMessageUtil::getUnreadMessageCount(MemberUser::id()),
+        ]);
     }
 
     public function read()
     {
         MemberMessageUtil::updateRead(MemberUser::id(), CRUDUtil::ids());
-        return Response::generateSuccess();
+        return Response::generateSuccessData([
+            'unreadMessageCount' => MemberMessageUtil::getUnreadMessageCount(MemberUser::id()),
+        ]);
     }
 
     public function readAll()

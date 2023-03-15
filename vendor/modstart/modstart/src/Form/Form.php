@@ -339,12 +339,19 @@ class Form implements Renderable
     private function fieldValidateMessages($fields, $input)
     {
         $failedValidators = [];
+        /** @var AbstractField $field */
         foreach ($fields as $field) {
             if (!$validator = $field->getValidator($input)) {
                 continue;
             }
-            if (($validator instanceof Validator) && !$validator->passes()) {
-                $failedValidators[] = $validator;
+            if ($validator instanceof Validator) {
+                try {
+                    if (!$validator->passes()) {
+                        $failedValidators[] = $validator;
+                    }
+                } catch (\Exception $e) {
+                    BizException::throws('Form.fieldValidateMessages.Error - ' . json_encode($validator->getRules(), JSON_UNESCAPED_UNICODE));
+                }
             }
         }
         $msgs = [];

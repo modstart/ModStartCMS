@@ -1,25 +1,119 @@
+@barPageSize: 3rem;
 
 .ub-bar-page {
     position: fixed;
-    right: 0;
+    right: 1rem;
     bottom: 2rem;
-    width: 3rem;
     z-index: 10000;
+    background: #FFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem #ddd;
 
-    .item {
-        width: 3rem;
-        height: 3rem;
+
+    .items {
+        .item {
+            width: @barPageSize + 0.5rem;
+            height: @barPageSize + 0.5rem;
+            display: block;
+            color: var(--color-primary);
+            text-align: center;
+            padding: 0.5rem;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.5s;
+            background: #FFFFFF;
+
+            &:first-child {
+                border-top-left-radius: 0.5rem;
+                border-top-right-radius: 0.5rem;
+            }
+
+            &:last-child {
+                border-bottom-left-radius: 0.5rem;
+                border-bottom-right-radius: 0.5rem;
+            }
+
+
+            &:hover {
+                .popup {
+                    display: block;
+                }
+            }
+
+            .popup {
+                position: absolute;
+                right: @barPageSize + 1rem;
+                bottom: 0;
+                background: #FFF;
+                border-radius: 0.5rem;
+                box-shadow: 0 0 0.5rem #DDD;
+                width: 10rem;
+                min-height: 2rem;
+                padding: 0.5rem;
+                display: none;
+
+                .content {
+                    color: #333;
+
+                    img {
+                        width: 9rem;
+                    }
+                }
+            }
+
+            &:hover {
+                background: var(--color-primary-light-bg);
+                transition: background 0.5s;
+            }
+
+            &.item-icon {
+                .icon {
+                    line-height: 2rem;
+                    height: 2rem;
+                }
+            }
+
+            .icon {
+                height: 1.5rem;
+                line-height: 1.5rem;
+                font-size: 1.5rem;
+                display: block;
+            }
+
+            .text {
+                height: 0.5rem;
+                line-height: 0.5rem;
+                display: block;
+                font-size: 0.5rem;
+            }
+        }
+    }
+
+    .item-top {
+        width: @barPageSize + 0.5rem;
+        height: @barPageSize + 0.5rem;
         display: block;
-        background: #FFF;
-        color: #666;
-        text-align: center;
-        box-shadow: 0 0 0.25rem #EEE;
-        margin: 0 0 0.25rem 0;
-        padding: 0.5rem;
-        border-radius: var(--size-radius);
-        position: relative;
+        background: transparent;
         cursor: pointer;
-        transition: all 0.5s;
+        border: 0.1rem solid var(--color-primary);
+        border-radius: 50%;
+        position: absolute;
+        top: 0 - @barPageSize - 1rem;
+
+        .cover {
+            width: @barPageSize + 0.3rem;
+            height: @barPageSize + .3rem;
+            border: 1px solid var(--color-primary);
+            border-radius: 50%;
+            animation: 3s ease-in-out 0s infinite avatarScaling;
+
+            .avatar {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                border-radius: 50%;
+            }
+        }
 
         &:hover {
             .popup {
@@ -29,11 +123,11 @@
 
         .popup {
             position: absolute;
-            right: 3rem;
-            bottom: 0;
+            right: 4rem;
+            top: 0;
             background: #FFF;
-            border-radius: var(--size-radius);
-            box-shadow: 0 0 0.5rem #CCC;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 0.5rem #DDD;
             width: 10rem;
             min-height: 2rem;
             padding: 0.5rem;
@@ -47,39 +141,29 @@
                 }
             }
         }
+    }
 
-        &:hover {
-            background: var(--color-primary);
-            color: #FFF;
-            transition: background 0.5s;
+    @keyframes avatarScaling {
+        0% {
+            transform: scale(1);
         }
-
-        &.item-icon {
-            .icon {
-                line-height: 2rem;
-                height: 2rem;
-            }
+        25% {
+            transform: scale(0.8);
         }
-
-        .icon {
-            height: 1.5rem;
-            line-height: 1.5rem;
-            font-size: 1.5rem;
-            display: block;
+        50% {
+            transform: scale(1);
         }
-
-        .text {
-            height: 0.5rem;
-            line-height: 0.5rem;
-            display: block;
-            font-size: 0.5rem;
+        75% {
+            transform: scale(0.8);
         }
     }
+
 }
+
 
 .ub-bar-page {
     .item-back {
-        opacity: 0;
+        color: #999;
         pointer-events: none;
     }
 }
@@ -87,7 +171,7 @@
 html.body-scroll-far {
     .ub-bar-page {
         .item-back {
-            opacity: 1;
+            color: var(--color-primary);
             pointer-events: all;
         }
     }
@@ -98,28 +182,48 @@ html.body-scroll-far {
         bottom: 2rem;
         width: 2rem;
 
-        .item {
-            width: 2rem;
-            height: 2rem;
-            padding: 0.25rem 0;
+        .items {
+            .item {
+                width: 2rem;
+                height: 2rem;
+                padding: 0.25rem 0;
 
-            .popup {
-                right: 2.25rem;
+                .popup {
+                    right: 2.25rem;
+                }
+
+                .icon {
+                    font-size: 1rem;
+                    line-height: 1rem;
+                    height: 1rem;
+                }
+
+                .text {
+                    font-size: 0.5rem;
+                }
             }
 
-            .icon {
-                font-size: 1rem;
-                line-height: 1rem;
-                height: 1rem;
-            }
-
-            .text {
-                font-size: 0.5rem;
+            .item-icon {
+                padding: 0;
             }
         }
 
-        .item-icon {
-            padding: 0;
+        .item-top {
+            top: -2.5rem;
+            width: 2rem;
+            height: 2rem;
+            border-width: 0.1rem;
+
+            .cover {
+                width: 1.8rem;
+                height: 1.8rem;
+            }
+
+            .popup {
+                right: 2.25rem;
+                top: initial;
+                bottom: 0;
+            }
         }
     }
 }

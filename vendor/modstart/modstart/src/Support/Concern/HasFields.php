@@ -70,9 +70,9 @@ use ModStart\Layout\LayoutTab;
  * @method \ModStart\Layout\LayoutGrid        layoutGrid($callback)
  * $callback = function (LayoutTab $layout) { $layout->tab('title',closure});
  * @method \ModStart\Layout\LayoutTab         layoutTab($callback)
- * $callback = function (Form $form) { });
+ * $title = 'title', $callback = function (Form $form) { })
  * @method \ModStart\Layout\LayoutPanel       layoutPanel($title, $callback)
- * $callback = function (Form $form) { });
+ * $title = 'title', $callback = function (Form $form) { })
  * @method \ModStart\Layout\LayoutLine        layoutLine($title, $callback)
  * @method \ModStart\Layout\LayoutSeparator   layoutSeparator($title)
  * @method \ModStart\Layout\LayoutHtml        layoutHtml($html)

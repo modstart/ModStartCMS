@@ -1,5 +1,6 @@
 const jquery = require('jquery');
 const Base = require('./../lib/basePC');
+const Form = require('./../lib/form');
 const Dialog = require('./../lib/dialogPC');
 const Lister = require('./../lib/lister');
 const Util = require('./../lib/util');
@@ -72,6 +73,7 @@ const MS = {
     },
     dialog: Dialog,
     util: Util,
+    form: Form,
     api: {
         defaultCallback: Base.defaultFormCallback,
         post: Base.post,

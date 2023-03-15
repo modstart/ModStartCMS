@@ -139,6 +139,7 @@ return [
     'Data File Manager Upload' => '文件管理上传',
     'Data File Manager Delete' => '文件管理删除',
     'Data File Manager Add/Edit' => '文件管理增加/编辑',
+    'Save' => '保存',
     'Save Success' => '保存成功',
     'Copy Success' => '复制成功',
     'Safe File Error' => '保存文件失败',

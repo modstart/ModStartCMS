@@ -20,23 +20,6 @@ class TecmzUtil
         return Tecmz::instance($config->getWithEnv("${configPrefix}AppId"), $config->getWithEnv("${configPrefix}AppSecret"));
     }
 
-    public static function audioConvert($from, $to, $contentBin)
-    {
-        $config = modstart_config();
-        $appId = $config->getWithEnv('softApiAudioConvertAppId');
-        $appSecret = $config->getWithEnv('softApiAudioConvertAppSecret');
-        if (empty($appId)) {
-            $appId = $config->getWithEnv('softApiDefaultAppId');
-            $appSecret = $config->getWithEnv('softApiDefaultAppSecret');
-        }
-        $softApi = Tecmz::instance($appId, $appSecret);
-        $ret = $softApi->audioConvert($from, $to, base64_encode($contentBin));
-        if ($ret['code']) {
-            return null;
-        }
-        return base64_decode($ret['data']['content']);
-    }
-
     public static function asr($type, $contentBin)
     {
         $config = modstart_config();

@@ -71,7 +71,7 @@
                     <div class="member-info tw-flex tw-items-center">
                         <div class="tw-w-12 tw-mr-3">
                             <div class="ub-cover-1-1 tw-w-12 tw-rounded-full"
-                                 style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($_memberUser?$_memberUser['avatar']:'asset/image/avatar.png')}});"></div>
+                                 style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($_memberUser?$_memberUser['avatar']:'asset/image/avatar.svg')}});"></div>
                         </div>
                         <div class="">
                             <div class="">

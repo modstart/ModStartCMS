@@ -14,6 +14,7 @@
     --panel-menu-search-color: #EEE;
     --panel-menu-search-color: #EEE;
     --panel-menu-scrollbar-background: #111111;
+    --panel-menu-page-tab-scrollbar-background: var(--color-primary);
     --panel-menu-arrow-color: #666666;
 }
 
@@ -29,6 +30,7 @@
     --panel-menu-search-color: #111;
     --panel-menu-search-tip-color: #999;
     --panel-menu-scrollbar-background: #CCCCCC;
+    --panel-menu-page-tab-scrollbar-background: var(--color-primary);
     --panel-menu-arrow-color: #CCCCCC;
 }
 
@@ -161,7 +163,7 @@
             }
 
             &::-webkit-scrollbar-thumb {
-                background: #CCC;
+                background: var(--panel-menu-scrollbar-background);
             }
 
             & > .menu-item {
@@ -311,7 +313,7 @@
                 }
 
                 &::-webkit-scrollbar-thumb {
-                    background: var(--panel-menu-scrollbar-background);
+                    background: var(--panel-menu-page-tab-scrollbar-background);
                 }
 
                 a {
@@ -442,6 +444,26 @@
         }
 
 
+    }
+}
+
+[data-page-is-tab] {
+    .content-fixed-bottom-toolbox {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: #FFF;
+        padding: 0.5rem;
+        box-shadow: 0 0 4px #ccc;
+        z-index: 1000;
+        transition: all 0.2s linear;
+    }
+
+    .content-fixed-bottom-toolbox-placeholder {
+        height: 2rem;
+        clear: both;
+        overflow: hidden;
     }
 }
 

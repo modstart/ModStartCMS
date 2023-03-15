@@ -145,16 +145,20 @@ class DataManager
 
     /**
      * 上传文件到 data_temp
-     * @param $category
-     * @param $filename
-     * @param $content
-     * @param null $option
+     * @param $category string
+     * @param $filename string
+     * @param $content string
+     * @param $option array|null
+     * @param $param array
      * @return array
      */
-    public static function uploadToTemp($category, $filename, $content, $option = null)
+    public static function uploadToTemp($category, $filename, $content, $option = null, $param = [])
     {
         if (null === $option) {
             $option = self::getConfigOption();
+        }
+        if (!isset($param['eventOpt'])) {
+            $param['eventOpt'] = [];
         }
         $option = self::prepareOption($option);
         $storage = self::storage($option);
@@ -189,7 +193,7 @@ class DataManager
             return Response::generate(-7, 'Upload fail');
         }
         $storage->put($fullPath, $content);
-        DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath);
+        DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath, $param['eventOpt']);
         $dataTemp = $storage->repository()->addTemp($category, $path, $filename, $size);
         $path = config('data.baseUrl', '/') . AbstractDataStorage::DATA_TEMP . '/' . $dataTemp['category'] . '/' . $dataTemp['path'];
         $fullPath = $path;
@@ -208,14 +212,18 @@ class DataManager
      * @param string $category
      * @param string $filename 包含后缀名的文件
      * @param string $content
-     * @param null $option
+     * @param array|null $option
+     * @param array $param
      * @return array
      * @throws \Exception
      */
-    public static function upload($category, $filename, $content, $option = null)
+    public static function upload($category, $filename, $content, $option = null, $param = [])
     {
         if (null === $option) {
             $option = self::getConfigOption();
+        }
+        if (!isset($param['eventOpt'])) {
+            $param['eventOpt'] = [];
         }
         $option = self::prepareOption($option);
         $storage = self::storage($option);
@@ -250,7 +258,7 @@ class DataManager
             return Response::generate(-7, 'Upload fail');
         }
         $storage->put($fullPath, $content);
-        DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath);
+        DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath, $param['eventOpt']);
         $md5 = md5($content);
         $data = $storage->repository()->addData($category, $path, $filename, $size, $md5);
         $data = $storage->updateDriverDomain($data);

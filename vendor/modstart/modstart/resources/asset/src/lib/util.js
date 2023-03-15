@@ -354,4 +354,18 @@ Util.iframeMessage = {
     }
 };
 
+var currentMaxZIndex = -1;
+Util.getNextMaxZIndex = function () {
+    if (-1 === currentMaxZIndex) {
+        $("*").each(function () {
+            var zindex = $(this).css("z-index");
+            if ((zindex > currentMaxZIndex) && (zindex != 'auto')) {
+                currentMaxZIndex = zindex;
+            }
+        });
+    }
+    currentMaxZIndex++;
+    return currentMaxZIndex;
+}
+
 module.exports = Util;

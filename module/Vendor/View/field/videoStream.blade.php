@@ -1,6 +1,6 @@
 <div class="line" id="{{$id}}">
     <div class="label">
-        {!! str_contains($rules,'required')?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
+        {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         {{$label}}:
     </div>
     <div class="field">

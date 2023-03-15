@@ -1,6 +1,6 @@
 <div class="line" id="{{$id}}">
     <div class="label">
-        {!! str_contains($rules,'required')?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
+        {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)
             <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
         @endif
@@ -23,7 +23,7 @@
                     <div class="cover ub-cover-1-1 contain" style="background-image:url({{$value}});"></div>
                 @else
                     <div class="cover ub-cover-1-1 contain"
-                         style="background-image:url(@asset('asset/image/none.png'));"></div>
+                         style="background-image:url(@asset('asset/image/none.svg'));"></div>
                 @endif
             </div>
             <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.35rem;vertical-align:bottom;line-height:1.35rem;"></div>
@@ -46,7 +46,7 @@
                         $selector.find('.cover').css('backgroundImage', "url(" + path + ")");
                         $selector.addClass('has-value');
                     } else {
-                        $selector.find('.cover').css('backgroundImage', "url( @asset('asset/image/none.png') )");
+                        $selector.find('.cover').css('backgroundImage', "url( @asset('asset/image/none.svg') )");
                         $selector.removeClass('has-value');
                     }
                 }

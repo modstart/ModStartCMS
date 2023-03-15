@@ -26,6 +26,7 @@ return [
                 'zip',
                 'epub',
                 'ai', 'psd', 'cad',
+                'css', 'html',
             ]
         ],
         'document' => [

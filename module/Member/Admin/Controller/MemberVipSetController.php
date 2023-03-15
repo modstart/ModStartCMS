@@ -35,9 +35,6 @@ class MemberVipSetController extends Controller
                 $builder->image('icon', '图标');
                 $builder->currency('price', '价格')->required();
                 $builder->number('vipDays', '时间')->required()->help('单位为天，365表示1年');
-                foreach (MemberVipBiz::all() as $biz) {
-                    $biz->vipField($builder);
-                }
                 $builder->text('desc', '简要说明')->required();
                 $builder->richHtml('content', '详细说明')->required();
                 if (ModuleManager::getModuleConfigBoolean('Member', 'creditEnable', false)) {
@@ -45,6 +42,11 @@ class MemberVipSetController extends Controller
                         /** @var Form $form */
                         $form->number('creditPresentValue', '赠送积分数量');
                     })->optionsYesNo()->listable(false);
+                }
+                foreach (MemberVipBiz::all() as $biz) {
+                    $builder->layoutPanel($biz->title(), function ($builder) use ($biz) {
+                        $biz->vipField($builder);
+                    });
                 }
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);

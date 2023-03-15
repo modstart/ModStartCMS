@@ -53,7 +53,7 @@ class MemberCmsUtil
             }
             return AutoRenderedFieldValue::make('<a href="javascript:;" class="ub-icon-text" data-dialog-request="'
                 . action('\\Module\\Member\\Admin\\Controller\\MemberController@show', ['_id' => $memberUser['id']]) . '">
-            <img class="icon" src="' . AssetsUtil::fixOrDefault($memberUser['avatar'], 'asset/image/avatar.png') . '" />
+            <img class="icon" src="' . AssetsUtil::fixOrDefault($memberUser['avatar'], 'asset/image/avatar.svg') . '" />
             <span class="text">' . htmlspecialchars($text) . '</span></a>');
         }
         return AutoRenderedFieldValue::make('');

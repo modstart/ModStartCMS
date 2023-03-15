@@ -53,7 +53,7 @@ class AdminRoleController extends Controller
     {
         $form = new Form(AdminRole::class, function (Form $form) {
             $form->display('id', L('ID'))->editable(true);
-            $form->text('name', L('Role Name'))->rules('required|unique:admin_role,name,' . CRUDUtil::id());
+            $form->text('name', L('Role Name'))->required()->rules('unique:admin_role,name,' . CRUDUtil::id());
             $form->tree('rules', L('Role Permission'))->rules('required')
                 ->columnNameId('rule')->tree(AdminPermission::menuAll(null, true))
                 ->hookValueUnserialize(function ($value, AbstractField $field) {

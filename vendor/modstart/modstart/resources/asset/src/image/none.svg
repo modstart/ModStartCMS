@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="rgb(241, 242, 243)"/>
+    <path id="svg_1" d="m50.5,54.01852l37,0l0,31l-37,0l0,-31z" fill="#dff0fe"/>
+    <path id="svg_2" d="m87,54.51852l0,30l-36,0l0,-30l36,0m1,-1l-38,0l0,32l38,0l0,-32l0,0z" fill="#4788c7"/>
+    <path id="svg_3"
+          d="m76.45,69.13052l-7.45,5.825l10.247,9.563l7.753,0l0,-5.888l-10.55,-9.5zm2.55,-9.612a3,3 0 1 0 0,6a3,3 0 1 0 0,-6z"
+          fill="#98ccfd"/>
+    <path id="svg_4" d="m81.468,84.51852l-30.468,0l0,-7.579l12,-10.105l18.468,17.684z" fill="#b6dcfe"/>
+    <g id="svg_5">
+        <path id="svg_6" d="m85,56.51852l0,26l-32,0l0,-26l32,0m2,-2l-36,0l0,30l36,0l0,-30l0,0z" fill="#fff"/>
+    </g>
+</svg>

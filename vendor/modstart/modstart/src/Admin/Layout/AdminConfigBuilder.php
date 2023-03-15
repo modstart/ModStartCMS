@@ -9,6 +9,7 @@ use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Dao\DynamicModel;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\IdUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Form\Form;
 use ModStart\Layout\Page;
@@ -127,6 +128,22 @@ class AdminConfigBuilder implements Renderable
         }
         $this->form->item(RepositoryUtil::itemFromArray($item));
         $this->form->fillFields();
+        return $this;
+    }
+
+    public function contentFixedBottomContentSave()
+    {
+        $this->contentFixedBottomContent('<button type="submit" class="btn btn-primary">' . L('Save') . '</button>');
+    }
+
+    public function contentFixedBottomContent($html)
+    {
+        $id = IdUtil::generate('ContentFixedBottomContent');
+        $this->layoutHtml('
+<div class="content-fixed-bottom-toolbox-placeholder" id="' . $id . 'Placeholder"></div>
+<div class="content-fixed-bottom-toolbox" id="' . $id . 'Content">' . $html . '</div>
+<script>$(function(){ $("#' . $id . 'Placeholder").css("height",20+$("#' . $id . 'Content").height()+"px"); });</script>
+');
         return $this;
     }
 

@@ -3,26 +3,45 @@ MS.ready(
         return window.__grids;
     },
     function () {
+        var updateUnreadMessageCount = function (cnt) {
+            $('[data-member-unread-message-count]').html(cnt)
+            if (cnt <= 0) {
+                $('[data-member-unread-message-count]').addClass('tw-animate-ping');
+                setTimeout(function () {
+                    $('[data-member-unread-message-count]').remove();
+                }, 1000);
+            }
+        };
+        var setAdRead = function (id) {
+            MS.api.post('member_message/read', {_id: id}, function (res) {
+                updateUnreadMessageCount(res.data.unreadMessageCount);
+            });
+        };
         var grid = window.__grids.get(0);
         grid.$lister.on('click', '[data-batch-read-all]', function () {
-            window.api.base.post('member_message/read_all', {_id: grid.getCheckedIds()}, function (res) {
+            var ids = $('[data-message-id]').map(function () {
+                return $(this).data('message-id');
+            }).get();
+            MS.api.post('member_message/read_all', {_id: ids.join(',')}, function (res) {
                 grid.lister.refresh();
+                MS.dialog.tipSuccess('操作成功');
+                updateUnreadMessageCount(0);
             });
-            grid.lister.refresh();
         });
         grid.$lister.on('click', '[data-item-read]', function () {
-            window.api.base.post('member_message/read', {_id: grid.getId(this)}, function (res) {
-                grid.lister.refresh();
-            });
+            $(this).closest('[data-message-id]').find('[data-message-unread],[data-item-read]').remove();
+            setAdRead($(this).closest('[data-message-id]').data('message-id'));
         });
-        grid.$lister.on('click', '[data-batch-item-read]', function () {
-            var ids = grid.getCheckedIds();
-            if (!ids.length) {
-                window.api.dialog.tipError('请选择消息');
-                return;
+        grid.$lister.on('click', '[data-message-id]', function () {
+            if ($(this).find('[data-message-unread]').length) {
+                $(this).find('[data-message-unread],[data-item-read]').remove();
+                setAdRead($(this).data('message-id'));
             }
-            window.api.base.post('member_message/read', {_id: ids.join(',')}, function (res) {
+        });
+        grid.$lister.on('click', '[data-item-delete]', function () {
+            MS.api.post('member_message/delete', {_id: $(this).closest('[data-message-id]').data('message-id')}, function (res) {
                 grid.lister.refresh();
+                updateUnreadMessageCount(res.data.unreadMessageCount);
             });
         });
     }

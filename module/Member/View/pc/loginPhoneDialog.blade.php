@@ -19,9 +19,20 @@
                 selectorGenerate: '[data-phone-verify-generate]',
                 selectorCountdown: '[data-phone-verify-countdown]',
                 selectorRegenerate: '[data-phone-verify-regenerate]',
+                @if(!\Module\Member\Util\SecurityUtil::loginCaptchaProvider())
                 selectorCaptcha: 'input[name=captcha]',
                 selectorCaptchaImg:'img[data-captcha]',
+                @endif
                 interval: 60,
+                formData:function(){
+                    var $provider = $('[data-captcha-provider]');
+                    var data = {};
+                    $provider.find('input').each(function () {
+                        var $this = $(this);
+                        data[$this.attr('name')] = $this.val();
+                    });
+                    return data;
+                }
             },window.api.dialog);
         });
     </script>
@@ -50,18 +61,26 @@
                             <input type="text" class="form-lg" name="phone" placeholder="输入手机" />
                         </div>
                     </div>
-                    <div class="line">
-                        <div class="field">
-                            <div class="row no-gutters">
-                                <div class="col-6">
-                                    <input type="text" class="form-lg" name="captcha" autocomplete="off" placeholder="图片验证码" />
-                                </div>
-                                <div class="col-6">
-                                    <img class="captcha captcha-lg" data-captcha title="刷新验证" onclick="this.src='{{$__msRoot}}login/phone_captcha?'+Math.random()" src="{{$__msRoot}}login/phone_captcha?{{time()}}" />
+                    @if($provider=\Module\Member\Util\SecurityUtil::loginCaptchaProvider())
+                        <div style="padding:0.5rem;" data-captcha-provider>
+                            <div>
+                                {!! $provider->render() !!}
+                            </div>
+                        </div>
+                    @else
+                        <div class="line">
+                            <div class="field">
+                                <div class="row no-gutters">
+                                    <div class="col-6">
+                                        <input type="text" class="form-lg" name="captcha" autocomplete="off" placeholder="图片验证码" />
+                                    </div>
+                                    <div class="col-6">
+                                        <img class="captcha captcha-lg" data-captcha title="刷新验证" onclick="this.src='{{$__msRoot}}login/phone_captcha?'+Math.random()" src="{{$__msRoot}}login/phone_captcha?{{time()}}" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="line">
                         <div class="field">
                             <div class="row no-gutters">

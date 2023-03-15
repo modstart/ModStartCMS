@@ -8,43 +8,38 @@
 
     @include('module::Member.View.pc.memberProfile.securityNav')
 
-    <div class="ub-panel">
-        <div class="head">
-            <div class="title">密码设定</div>
-        </div>
-        <div class="body">
-            <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
-                @if(empty($_memberUser['password']))
-                    <div class="line">
-                        <div class="ub-alert ub-alert-warning"><i class="iconfont icon-warning"></i> 您还没有设定密码，请设定新密码</div>
-                    </div>
-                @else
-                    <div class="line">
-                        <div class="label">旧密码：</div>
-                        <div class="field">
-                            <input type="password" class="form" name="passwordOld" />
-                        </div>
-                    </div>
-                @endif
+    <div class="tw-px-3 tw-py-20 tw-rounded-b-lg tw-bg-white">
+        <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" class="ub-form" method="post" style="max-width:40em;" data-ajax-form>
+            @if(empty($_memberUser['password']))
                 <div class="line">
-                    <div class="label">新密码：</div>
+                    <div class="ub-alert ub-alert-warning"><i class="iconfont icon-warning"></i> 您还没有设定密码，请设定新密码</div>
+                </div>
+            @else
+                <div class="line">
+                    <div class="label">旧密码：</div>
                     <div class="field">
-                        <input type="password" class="form" name="passwordNew" />
+                        <input type="password" class="form" name="passwordOld" />
                     </div>
                 </div>
-                <div class="line">
-                    <div class="label">重复新密码：</div>
-                    <div class="field">
-                        <input type="password" class="form" name="passwordRepeat" />
-                    </div>
+            @endif
+            <div class="line">
+                <div class="label">新密码：</div>
+                <div class="field">
+                    <input type="password" class="form" name="passwordNew" />
                 </div>
-                <div class="line">
-                    <div class="label">&nbsp;</div>
-                    <div class="field">
-                        <button type="submit" class="btn btn-primary">提交</button>
-                    </div>
+            </div>
+            <div class="line">
+                <div class="label">重复新密码：</div>
+                <div class="field">
+                    <input type="password" class="form" name="passwordRepeat" />
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="line">
+                <div class="label">&nbsp;</div>
+                <div class="field">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </form>
     </div>
 @endsection

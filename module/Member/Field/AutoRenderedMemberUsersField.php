@@ -28,7 +28,7 @@ class AutoRenderedMemberUsersField
                     return [
                         'value' => intval($item['id']),
                         'name' => MemberUtil::viewName($item),
-                        'avatar' => AssetsUtil::fixOrDefault($item['avatar'], 'asset/image/avatar.png'),
+                        'avatar' => AssetsUtil::fixOrDefault($item['avatar'], 'asset/image/avatar.svg'),
                     ];
                 }, $memberUsers);
                 return AutoRenderedFieldValue::makeView('module::Member.View.field.memberUsers', [

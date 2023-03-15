@@ -66,7 +66,7 @@ class AdminUserController extends Controller
     protected function form()
     {
         $form = new Form(AdminUser::class, function (Form $form) {
-            $form->text('username', L('Username'))->rules('required|unique:admin_user,username,' . CRUDUtil::id());
+            $form->text('username', L('Username'))->required()->rules('unique:admin_user,username,' . CRUDUtil::id());
             $form->text('password', L('Password'))->rules($form->isModeAdd() ? 'required' : '')
                 ->placeholder($form->isModeAdd() ? '' : L('Keep Old Password If Empty'))
                 ->value($form->isModeAdd() ? RandomUtil::string(6) : '')

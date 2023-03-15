@@ -134,7 +134,7 @@ class AbstractField implements Renderable
     protected $label;
     protected $value = null;
     protected $fixedValue = null;
-    protected $rules = '';
+    protected $rules = [];
     protected $view = null;
     protected $variables = [];
     /**
@@ -261,18 +261,27 @@ class AbstractField implements Renderable
         return $this->context;
     }
 
-    public function rules($rules = null)
+    public function rules($rule = null)
     {
-        if (is_null($rules)) {
+        if (is_null($rule)) {
             return $this->rules;
         }
-        $rules = array_filter(explode('|', "{$this->rules}|$rules"));
-        $this->rules = implode('|', $rules);
+        // echo json_encode([$this->column, $this->rules]) . "\n";
+        if (is_array($rule)) {
+            $rule = array_filter($rule);
+            $this->rules = array_merge($this->rules, $rule);
+        } else {
+            if (!empty($rule)) {
+                $this->rules[] = $rule;
+            }
+        }
+        // $rules = array_filter(explode('|', "{$this->rules}|$rules"));
+        // $this->rules = implode('|', $rules);
         return $this;
     }
 
     /**
-     * @return $this|string
+     * @return $this|array
      */
     public function required()
     {
@@ -280,7 +289,7 @@ class AbstractField implements Renderable
     }
 
     /**
-     * @return $this|string
+     * @return $this|array
      */
     public function ruleRegex($regex)
     {
@@ -289,7 +298,7 @@ class AbstractField implements Renderable
 
     /**
      * 匹配 Url
-     * @return $this|string
+     * @return $this|array
      */
     public function ruleUrl()
     {
@@ -297,7 +306,7 @@ class AbstractField implements Renderable
     }
 
     /**
-     * @return $this|string
+     * @return $this|array
      */
     public function ruleUnique($table, $field = null)
     {

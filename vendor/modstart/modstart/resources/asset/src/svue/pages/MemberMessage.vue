@@ -85,7 +85,7 @@
 
     export default {
         metaInfo: {
-            title: '系统通知'
+            title: '我的消息'
         },
         components: {},
         data() {

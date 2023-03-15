@@ -179,26 +179,6 @@ class Tecmz
     }
 
     /**
-     * 语音转换
-     *
-     * @param $from
-     * @param $to
-     * @param $contentBase64
-     * @return array
-     *
-     * 失败 [code=>-1,msg=>'<失败原因>',data=>null]
-     * 成功 [code=>0,msg=>'ok',data=>null]
-     */
-    public function audioConvert($from, $to, $contentBase64)
-    {
-        $post = [];
-        $post['from'] = $from;
-        $post['to'] = $to;
-        $post['content'] = $contentBase64;
-        return $this->request('/audio_convert', $post);
-    }
-
-    /**
      * ASR
      *
      * @param $type
@@ -801,6 +781,48 @@ class Tecmz
     public function imageToExcelQuery($jobId)
     {
         return $this->callFileConvertQuery('image_to_excel', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array
+     * @return array|mixed
+     */
+    public function imageThumbQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('image_thumb', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function imageThumbQuery($jobId)
+    {
+        return $this->callFileConvertQuery('image_thumb', $jobId);
+    }
+
+    /**
+     *
+     * @param $url string
+     * @param $name string
+     * @param $param array [ limit=>转换页数 ]
+     * @return array|mixed
+     */
+    public function docToHtmlQueue($url, $name = null, $param = [])
+    {
+        return $this->callFileConvertQueue('doc_to_html', $url, $name, $param);
+    }
+
+    /**
+     * @param $jobId int
+     * @return array|mixed
+     */
+    public function docToHtmlQuery($jobId)
+    {
+        return $this->callFileConvertQuery('doc_to_html', $jobId);
     }
 
 }

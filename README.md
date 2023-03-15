@@ -285,6 +285,20 @@ AdminMenu::register(function () {
 - [https://modstart.com/forum](https://modstart.com/forum)
 
 
+## ⭐️ 贡献代码
+
+系统接受 Github 和 Gitee 的 Pull Request，欢迎提交代码。
+
+文件 `/vendor/modstart/modstart` 底层代码修改，可以提交 PR 到以下仓库，该仓库会在每次发版自动合入所有系统。
+
+- `Github` [https://github.com/modstart-lib/modstart](https://github.com/modstart-lib/modstart)
+- `Gitee` [https://gitee.com/modstart-lib/modstart](https://gitee.com/modstart-lib/modstart)
+
+如果是非底层代码修改，可具体提交 PR 到以下仓库
+
+- `Github` [https://github.com/modstart/ModStartCMS](https://github.com/modstart/ModStartCMS)
+- `Gitee` [https://gitee.com/modstart/ModStartCMS](https://gitee.com/modstart/ModStartCMS)
+
 ## ✉️ 使用交流
 
 ### QQ交流群

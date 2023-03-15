@@ -37,11 +37,8 @@ class MemberMoneyController extends MemberFrameController implements MemberLogin
                 'item' => $item,
             ]);
         });
-        if (Request::isPost()) {
-            return $grid->request();
-        }
         list($view, $_) = $this->viewPaths('memberMoney.index');
-        return $page->pageTitle('钱包')->view($view)->body($grid);
+        return $page->pageTitle('钱包')->view($view)->body($grid)->handleGrid($grid);
     }
 
 

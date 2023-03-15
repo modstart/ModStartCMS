@@ -40,8 +40,7 @@
                         </div>
                     </div>
                     @if(modstart_config('loginCaptchaEnable',false))
-                        <?php $providerName = modstart_config('loginCaptchaProvider',null); ?>
-                        @if($providerName && ($provider = \Module\Vendor\Provider\Captcha\CaptchaProvider::get($providerName)))
+                        @if($provider = \Module\Member\Util\SecurityUtil::loginCaptchaProvider())
                             <div style="padding:0.5rem;">
                                 {!! $provider->render() !!}
                             </div>

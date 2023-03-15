@@ -72,9 +72,11 @@ class MemberVipUtil
 
     public static function getMemberVip($memberUser, $key = null, $defaultValue = null)
     {
-        if (empty($memberUser)) {
-            $vip = self::get(null);
-        } else if (!empty($memberUser['vipExpire']) && strtotime($memberUser['vipExpire']) > time()) {
+        if (
+            !empty($memberUser['vipId'])
+            &&
+            (empty($memberUser['vipExpire']) || strtotime($memberUser['vipExpire']) > time())
+        ) {
             $vip = self::get($memberUser['vipId']);
         } else {
             $vip = self::get(null);

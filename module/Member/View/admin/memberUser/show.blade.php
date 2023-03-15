@@ -13,7 +13,7 @@
                 <div class="name">头像</div>
                 <div class="value">
                     <img class="tw-w-10 tw-h-10 tw-rounded-full tw-shadow"
-                         src="{{\ModStart\Core\Assets\AssetsUtil::fixOrDefault($record['avatar'],'asset/image/avatar.png')}}"/>
+                         src="{{\ModStart\Core\Assets\AssetsUtil::fixOrDefault($record['avatar'],'asset/image/avatar.svg')}}"/>
                 </div>
             </div>
             <div class="ub-pair">

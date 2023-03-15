@@ -71,7 +71,9 @@ class AuthController extends ModuleBaseController
                 return Response::send(-1, $ret['msg']);
             }
             Session::put('ssoClientRedirect', $redirect);
-
+            if ($dialog) {
+                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($ret['data']['redirect']) . ';');
+            }
             return Response::send(0, null, null, $ret['data']['redirect']);
         }
         if (Request::isPost()) {
@@ -89,10 +91,7 @@ class AuthController extends ModuleBaseController
             if ('phone' == $loginDefault) {
                 $force = $input->getBoolean('force', false);
                 if (!$force) {
-                    return Response::redirect(modstart_web_url('login/phone', [
-                        'redirect' => $redirect,
-                        'dialog' => $dialog,
-                    ]));
+                    return Response::redirect(modstart_web_url('login/phone', $redirectData));
                 }
             }
         }
@@ -190,7 +189,7 @@ class AuthController extends ModuleBaseController
                 }
                 return Response::send(-1, $ret['msg']);
             }
-            $url = modstart_web_url('login', ['redirect' => $redirect, 'dialog' => $dialog]);
+            $url = modstart_web_url('login', $redirectData);
             return Response::send(0, '', '', $url);
         }
         if (modstart_config('Member_RegisterPhoneEnable', false)) {

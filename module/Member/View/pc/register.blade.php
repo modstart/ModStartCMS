@@ -17,21 +17,8 @@
 @section('bodyAppend')
     @parent
     {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}
+    {{\ModStart\ModStart::js('vendor/Member/entry/register.js')}}
     <script>
-        window.__memberCheckCaptcha = function (){
-            $('[data-captcha-status]').hide().filter('[data-captcha-status=loading]').show()
-            window.api.base.post(window.__msRoot+'register/captcha_verify',{captcha:$('[name=captcha]').val()},function (res) {
-                window.api.base.defaultFormCallback(res,{
-                    success:function (res) {
-                        $('[data-captcha-status]').hide().filter('[data-captcha-status=success]').show();
-                    },
-                    error:function (res) {
-                        $('[data-captcha-status]').hide().filter('[data-captcha-status=error]').show();
-                        $('[data-captcha]').click();
-                    }
-                })
-            })
-        };
         $(function () {
             new window.api.commonVerify({
                 generateServer: '{{$__msRoot}}register/email_verify',
@@ -39,9 +26,11 @@
                 selectorGenerate: '[data-email-verify-generate]',
                 selectorCountdown: '[data-email-verify-countdown]',
                 selectorRegenerate: '[data-email-verify-regenerate]',
+                @if(!\Module\Member\Util\SecurityUtil::registerCaptchaProvider())
                 selectorCaptcha: 'input[name=captcha]',
                 selectorCaptchaImg:'[data-none]',
-                interval: 60,
+                @endif
+                interval: 60
             },window.api.dialog);
             new window.api.commonVerify({
                 generateServer: '{{$__msRoot}}register/phone_verify',
@@ -49,9 +38,11 @@
                 selectorGenerate: '[data-phone-verify-generate]',
                 selectorCountdown: '[data-phone-verify-countdown]',
                 selectorRegenerate: '[data-phone-verify-regenerate]',
+                @if(!\Module\Member\Util\SecurityUtil::registerCaptchaProvider())
                 selectorCaptcha: 'input[name=captcha]',
                 selectorCaptchaImg:'[data-none]',
-                interval: 60,
+                @endif
+                interval: 60
             },window.api.dialog);
         });
     </script>
@@ -81,24 +72,7 @@
                             <input type="text" class="form-lg" name="username" placeholder="用户名" />
                         </div>
                     </div>
-                    <div class="line">
-                        <div class="field">
-                            <div class="row no-gutters">
-                                <div class="col-7">
-                                    <input type="text" class="form-lg" name="captcha" autocomplete="off" onblur="__memberCheckCaptcha()" placeholder="图片验证码" />
-                                </div>
-                                <div class="col-5">
-                                    <img class="captcha captcha-lg" data-captcha title="刷新验证" onclick="this.src=window.__msRoot+'register/captcha?'+Math.random()" src="{{$__msRoot}}register/captcha?{{time()}}" />
-                                </div>
-                            </div>
-                            <div class="help">
-                                <text class="ub-text-muted" data-captcha-status="tip"><i class="iconfont icon-warning"></i> 输入图片验证码验证</text>
-                                <text class="ub-text-muted" data-captcha-status="loading" style="display:none;"><i class="iconfont icon-refresh"></i> 正在验证</text>
-                                <text class="ub-text-success" data-captcha-status="success" style="display:none;"><i class="iconfont icon-checked"></i> 验证通过</text>
-                                <text class="ub-text-danger" data-captcha-status="error" style="display:none;"><i class="iconfont icon-close-o"></i> 验证失败</text>
-                            </div>
-                        </div>
-                    </div>
+                    @include('module::Member.View.pc.inc.registerCaptcha')
                     @if(modstart_config('registerPhoneEnable'))
                         <div class="line">
                             <div class="field">

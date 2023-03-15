@@ -75,52 +75,45 @@
 
     @include('module::Member.View.pc.memberProfile.profileNav')
 
-    <div class="ub-panel">
-        <div class="head">
-            <div class="title">{{$pageTitle}}</div>
-        </div>
-        <div class="body">
-            <div>
-                <div data-box-avatar class="margin-bottom">
-                    <div class="tw-p-2 tw-rounded-lg tw-bg-gray-100 tw-inline-block">
-                        <?php $avatar = 'asset/image/avatar.png'; ?>
-                        @if(!empty($_memberUser['avatarBig']))
-                            <?php $avatar = $_memberUser['avatarBig']; ?>
-                        @endif
-                        <img data-member-image-upload-preview="avatar"
-                             class="tw-h-48 tw-rounded-lg"
-                             src="{{\ModStart\Core\Assets\AssetsUtil::fix($avatar)}}"/>
-                    </div>
-                </div>
-                <div data-box-tool class="margin-bottom">
-                    <button type="button" class="btn btn-round" id="avatarImageUpload">
-                        <i class="iconfont icon-upload"></i>
-                        选择图片
-                    </button>
-                </div>
-                <div data-box-editing-preview class="margin-bottom pb-page-hidden">
-                    <img id="editingPreview" style="max-width:80%;max-height:300px;"/>
-                </div>
-                <div data-box-editing class="margin-bottom pb-page-hidden">
-                    <a href="javascript:;" class="btn btn-round" id="avatarBack">
-                        <i class="iconfont icon-direction-left"></i>
-                        返回
-                    </a>
-                    <a href="javascript:;" class="btn btn-round" id="avatarImageReupload">
-                        <i class="iconfont icon-upload"></i>
-                        重新选择
-                    </a>
-                    <a href="javascript:;" class="btn btn-round" id="avatarZoomOut">
-                        <i class="iconfont icon-zoom-out"></i>
-                    </a>
-                    <a href="javascript:;" class="btn btn-round" id="avatarZoomIn">
-                        <i class="iconfont icon-zoom-in"></i>
-                    </a>
-                    <a href="javascript:;" class="btn btn-round btn-primary" id="avatarSave">
-                        <i class="uk-icon-save"></i> 保存头像
-                    </a>
-                </div>
+    <div class="tw-px-10 tw-py-20 tw-rounded-b-lg tw-bg-white">
+        <div data-box-avatar class="margin-bottom">
+            <div class="tw-p-2 tw-rounded-lg tw-bg-gray-100 tw-inline-block">
+                <?php $avatar = 'asset/image/avatar.svg'; ?>
+                @if(!empty($_memberUser['avatarBig']))
+                    <?php $avatar = $_memberUser['avatarBig']; ?>
+                @endif
+                <img data-member-image-upload-preview="avatar"
+                     class="tw-h-48 tw-rounded-lg"
+                     src="{{\ModStart\Core\Assets\AssetsUtil::fix($avatar)}}"/>
             </div>
+        </div>
+        <div data-box-tool class="margin-bottom">
+            <button type="button" class="btn btn-round" id="avatarImageUpload">
+                <i class="iconfont icon-upload"></i>
+                选择图片
+            </button>
+        </div>
+        <div data-box-editing-preview class="margin-bottom pb-page-hidden">
+            <img id="editingPreview" style="max-width:80%;max-height:300px;"/>
+        </div>
+        <div data-box-editing class="margin-bottom pb-page-hidden">
+            <a href="javascript:;" class="btn btn-round" id="avatarBack">
+                <i class="iconfont icon-direction-left"></i>
+                返回
+            </a>
+            <a href="javascript:;" class="btn btn-round" id="avatarImageReupload">
+                <i class="iconfont icon-upload"></i>
+                重新选择
+            </a>
+            <a href="javascript:;" class="btn btn-round" id="avatarZoomOut">
+                <i class="iconfont icon-zoom-out"></i>
+            </a>
+            <a href="javascript:;" class="btn btn-round" id="avatarZoomIn">
+                <i class="iconfont icon-zoom-in"></i>
+            </a>
+            <a href="javascript:;" class="btn btn-round btn-primary" id="avatarSave">
+                <i class="uk-icon-save"></i> 保存头像
+            </a>
         </div>
     </div>
 @endsection

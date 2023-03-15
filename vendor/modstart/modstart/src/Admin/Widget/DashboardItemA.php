@@ -15,6 +15,7 @@ class DashboardItemA extends AbstractWidget
     private $icon;
     private $color;
     private $number;
+    private $value;
     private $param;
 
     public static function makeIconTitleDesc($icon, $title, $desc, $link = 'javascript:;', $color = '#999', $param = [])
@@ -95,6 +96,30 @@ class DashboardItemA extends AbstractWidget
         return $item;
     }
 
+    /**
+     * @param $icon
+     * @param $title
+     * @param $link
+     * @param null $color
+     * @return DashboardItemA
+     * @since 1.5.0
+     */
+    public static function makeIconTitleValueLink($icon, $title, $value, $link, $color = null, $param = [])
+    {
+        if (null === $color) {
+            $color = ColorUtil::randomColor();
+        }
+        $item = new DashboardItemA();
+        $item->icon = $icon;
+        $item->title = $title;
+        $item->value = $value;
+        $item->link = $link;
+        $item->color = $color;
+        $item->param = $param;
+        $item->type = 6;
+        return $item;
+    }
+
     public function render()
     {
         ModStart::js('asset/common/countUp.js');
@@ -148,11 +173,24 @@ HTML;
 HTML;
             case 5:
                 return <<<HTML
-<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-py-4" data-tab-open data-tab-title="{$tabTitle}" {$this->formatAttributes()}>
+<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-py-4 margin-bottom tw-transform tw-duration-300 hover:tw--translate-y-1" data-tab-open data-tab-title="{$tabTitle}" {$this->formatAttributes()}>
     <div style="height:2rem;">
         <i class="{$this->icon}" style="font-size:1.5rem;line-height:2rem;color:{$this->color};"></i>
     </div>
     <div class="tw-text-gray-400">{$this->title}</div>
+</a>
+HTML;
+            case 6:
+                if (null === $this->value) {
+                    $this->value = '&nbsp;';
+                }
+                return <<<HTML
+<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-pt-4 margin-bottom tw-transform tw-duration-300 hover:tw--translate-y-1" data-tab-open data-tab-title="{$tabTitle}" {$this->formatAttributes()}>
+    <div style="height:2rem;">
+        <i class="{$this->icon}" style="font-size:1.5rem;line-height:2rem;color:{$this->color};"></i>
+    </div>
+    <div class="ub-text-tertiary">{$this->title}</div>
+    <div class="ub-text-tertiary tw-font-bold">{$this->value}</div>
 </a>
 HTML;
 

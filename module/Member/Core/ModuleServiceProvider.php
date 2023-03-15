@@ -10,10 +10,13 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleManager;
+use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberHomeIcon;
 use Module\Member\Config\MemberMenu;
 use Module\Member\Provider\MemberDeleteScheduleProvider;
 use Module\Member\Provider\VerifySmsTemplateProvider;
+use Module\Member\Util\MemberCreditUtil;
+use Module\Member\Util\MemberMoneyUtil;
 use Module\PayCenter\Biz\PayCenterBiz;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
@@ -87,6 +90,23 @@ class ModuleServiceProvider extends ServiceProvider
                     'title' => '我的',
                     'sort' => 1000,
                     'children' => [
+                        ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? [
+                            'icon' => 'iconfont icon-pay',
+                            'value' => sprintf('￥%.2f', MemberMoneyUtil::getTotal(MemberUser::id())),
+                            'title' => '我的钱包',
+                            'url' => modstart_web_url('member_money'),
+                        ] : null,
+                        ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [
+                            'icon' => 'iconfont icon-credit',
+                            'value' => MemberCreditUtil::getTotal(MemberUser::id()),
+                            'title' => '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分'),
+                            'url' => modstart_web_url('member_credit'),
+                        ] : null,
+                        [
+                            'icon' => 'iconfont icon-comment',
+                            'title' => '我的消息',
+                            'url' => modstart_web_url('member_message'),
+                        ],
                         [
                             'icon' => 'iconfont icon-card',
                             'title' => '我的资料',
@@ -101,6 +121,11 @@ class ModuleServiceProvider extends ServiceProvider
                             'icon' => 'iconfont icon-user',
                             'title' => '修改头像',
                             'url' => modstart_web_url('member_profile/avatar'),
+                        ],
+                        [
+                            'icon' => 'iconfont icon-lock',
+                            'title' => '退出登录',
+                            'url' => modstart_web_url('logout'),
                         ],
                     ]
                 ],

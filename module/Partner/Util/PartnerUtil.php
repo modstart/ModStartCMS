@@ -3,6 +3,7 @@
 namespace Module\Partner\Util;
 
 use Illuminate\Support\Facades\Cache;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use Module\Partner\Type\PartnerPosition;
 
@@ -18,12 +19,18 @@ class PartnerUtil
      */
     public static function listByPosition($position = 'home')
     {
-        return ModelUtil::model('partner')
+        $records = ModelUtil::model('partner')
             ->where([
                 'position' => $position,
                 'enable' => true,
             ])
             ->orderBy('sort', 'asc')->get()->toArray();
+        foreach ($records as $k => $v) {
+            if (!empty($v['logo'])) {
+                $records[$k]['logo'] = AssetsUtil::fixFull($v['logo']);
+            }
+        }
+        return $records;
     }
 
     /**

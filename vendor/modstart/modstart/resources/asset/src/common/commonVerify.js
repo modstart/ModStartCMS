@@ -80,6 +80,7 @@ var CommonVerify = function (option) {
                         alert(res.data);
                     }
                     opt.sendError(res.msg);
+                    MS.form.redirectProcess(res.redirect);
                 }
             });
         });

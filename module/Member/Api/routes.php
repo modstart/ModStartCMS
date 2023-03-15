@@ -60,6 +60,7 @@ $router->group([
     $router->match(['post'], 'member_message/delete_all', 'MemberMessageController@deleteAll');
 
     $router->match(['post'], 'member_vip/get', 'MemberVipController@get');
+    $router->match(['post'], 'member_vip/info', 'MemberVipController@info');
     $router->match(['post'], 'member_vip/all', 'MemberVipController@all');
     $router->match(['post'], 'member_vip/calc', 'MemberVipController@calc');
     $router->match(['post'], 'member_vip/buy', 'MemberVipController@buy');

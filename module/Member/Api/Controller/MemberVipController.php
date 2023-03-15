@@ -19,6 +19,16 @@ use Module\Vendor\Type\OrderStatus;
 
 class MemberVipController extends Controller implements MemberLoginCheck
 {
+    public function info()
+    {
+        $data = [];
+        $data['title'] = modstart_config('Member_VipTitle');
+        $data['subTitle'] = modstart_config('Member_VipSubTitle');
+        $data['content'] = modstart_config('Member_VipContent');
+        $data['vips'] = MemberVipUtil::all();
+        return Response::generateSuccessData($data);
+    }
+
     public function all()
     {
         return Response::generateSuccessData(MemberVipUtil::all());

@@ -60,13 +60,13 @@ class MemberUtil
             $memberUser['nickname'] = $memberUser['username'];
         }
         if (empty($memberUser['avatar'])) {
-            $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.png', false);
+            $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.svg', false);
         }
         if (empty($memberUser['avatarMedium'])) {
-            $memberUser['avatarMedium'] = AssetsUtil::fixFull('asset/image/avatar.png', false);
+            $memberUser['avatarMedium'] = AssetsUtil::fixFull('asset/image/avatar.svg', false);
         }
         if (empty($memberUser['avatarBig'])) {
-            $memberUser['avatarBig'] = AssetsUtil::fixFull('asset/image/avatar.png', false);
+            $memberUser['avatarBig'] = AssetsUtil::fixFull('asset/image/avatar.svg', false);
         }
     }
 
@@ -93,7 +93,7 @@ class MemberUtil
 
     public static function fixAvatar($avatar)
     {
-        return AssetsUtil::fixFullOrDefault($avatar, 'asset/image/avatar.png');
+        return AssetsUtil::fixFullOrDefault($avatar, 'asset/image/avatar.svg');
     }
 
     public static function getBasic($id, $keepFields = null)
@@ -141,7 +141,7 @@ class MemberUtil
             'nickname' => empty($memberUser['nickname']) ? $memberUser['username'] : $memberUser['nickname'],
             'created_at' => $memberUser['created_at'],
             'signature' => isset($memberUser['signature']) ? $memberUser['signature'] : null,
-            'avatar' => AssetsUtil::fixFullOrDefault($memberUser['avatar'], 'asset/image/avatar.png'),
+            'avatar' => AssetsUtil::fixFullOrDefault($memberUser['avatar'], 'asset/image/avatar.svg'),
         ];
     }
 
@@ -154,7 +154,7 @@ class MemberUtil
                 'nickname' => empty($item['nickname']) ? $item['username'] : $item['nickname'],
                 'created_at' => $item['created_at'],
                 'signature' => isset($item['signature']) ? $item['signature'] : null,
-                'avatar' => AssetsUtil::fixFullOrDefault($item['avatar'], 'asset/image/avatar.png'),
+                'avatar' => AssetsUtil::fixFullOrDefault($item['avatar'], 'asset/image/avatar.svg'),
             ];
         }, $memberUsers);
     }
@@ -567,7 +567,12 @@ class MemberUtil
             DataFileUploadedEvent::setParam('imageCompressIgnore', true);
             DataFileUploadedEvent::setParam('imageWatermarkIgnore', true);
         }
-        $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig);
+        $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig, null, [
+            'eventOpt' => [
+                DataFileUploadedEvent::OPT_IMAGE_COMPRESS_IGNORE => true,
+                DataFileUploadedEvent::OPT_IMAGE_WATERMARK_IGNORE => true,
+            ]
+        ]);
         if ($retBig['code']) {
             return Response::generate(-1, '头像存储失败（' . $retBig['msg'] . '）');
         }
@@ -645,12 +650,15 @@ class MemberUtil
         if (is_array($records)) {
             ModelUtil::join($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
             foreach ($records as $k => $v) {
+                if (empty($v[$memberUserMergeKey])) {
+                    continue;
+                }
                 $memberUser = ArrayUtil::keepKeys($v[$memberUserMergeKey], $keepFields);
                 if (empty($memberUser['nickname'])) {
                     $memberUser['nickname'] = $memberUser['username'];
                 }
                 if (empty($memberUser['avatar'])) {
-                    $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.png');
+                    $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.svg');
                 } else {
                     $memberUser['avatar'] = AssetsUtil::fixFull($memberUser['avatar']);
                 }
@@ -659,12 +667,15 @@ class MemberUtil
         } else {
             ModelUtil::joinItems($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
             foreach ($records as $item) {
+                if (empty($item->{$memberUserMergeKey})) {
+                    continue;
+                }
                 $memberUser = ArrayUtil::keepKeys($item->{$memberUserMergeKey}, $keepFields);
                 if (empty($memberUser['nickname'])) {
                     $memberUser['nickname'] = $memberUser['username'];
                 }
                 if (empty($memberUser['avatar'])) {
-                    $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.png');
+                    $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.svg');
                 } else {
                     $memberUser['avatar'] = AssetsUtil::fixFull($memberUser['avatar']);
                 }

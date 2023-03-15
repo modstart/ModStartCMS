@@ -12,13 +12,18 @@ class LocalAssetsPath implements AssetsPath
     public function getPathWithHash($file)
     {
         $hash = Cache::get($flag = self::CACHE_PREFIX . $file, null);
+        $joiner = (false === strpos($file, '?')) ? '?' : '&';
         if (null !== $hash) {
-            return $file . '?' . $hash;
+            return $file . $joiner . $hash;
         }
-        if (file_exists($file)) {
-            $hash = '' . crc32(md5_file($file));
+        $localFile = $file;
+        if ('&' == $joiner) {
+            $localFile = substr($file, 0, strpos($file, '?'));
+        }
+        if (file_exists($localFile)) {
+            $hash = '' . crc32(md5_file($localFile));
             Cache::put($flag, $hash, 0);
-            return $file . '?' . $hash;
+            return $file . $joiner . $hash;
         }
         Cache::put($flag, '', 0);
         return $file;

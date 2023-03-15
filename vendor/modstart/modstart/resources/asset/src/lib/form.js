@@ -2,7 +2,65 @@ var $ = require('jquery');
 var Util = require('./util.js');
 var EventManager = require('./event-manager.js');
 
+var isWeiXin = function () {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+// 解决安卓微信浏览器中location.reload 或者 location.href失效的问题
+var winReload = function (w) {
+    if (isWeiXin()) {
+        var l = w.location;
+        var url = [];
+        var t = '_t_' + (new Date().getTime()) + '_';
+        url.push(l.protocol);
+        url.push('//');
+        url.push(l.host);
+        url.push(l.pathname);
+        if (l.search) {
+            if (/_t_\d+_/.test(l.search)) {
+                url.push(l.search.replace(/_t_\d+_/, t));
+            } else {
+                url.push(l.search);
+                url.push('&');
+                url.push(t);
+            }
+        } else {
+            url.push(l.search);
+            url.push('?');
+            url.push(t);
+        }
+        url.push(l.hash);
+        w.location.replace(url.join(''));
+    } else {
+        w.location.reload();
+    }
+};
+
 var Form = {
+    redirectProcess: function (redirect) {
+        if (!redirect) {
+            return;
+        }
+        if ('[reload]' === redirect) {
+            winReload(window);
+        } else if ('[root-reload]' == redirect) {
+            winReload(Util.getRootWindow())
+        } else if ('[back]' === redirect) {
+            window.history.back();
+        } else if ('[tab-close]' === redirect) {
+            window._pageTabManager.closeFromTab()
+        } else if (redirect.indexOf('[js]') === 0) {
+            // console.log('eval', redirect.substr(4));
+            eval(redirect.substr(4));
+        } else {
+            window.location.href = redirect;
+        }
+    },
     defaultCallback: function (res, callback, Dialog) {
 
         Dialog = Dialog || null;
@@ -31,64 +89,6 @@ var Form = {
             data = res.data;
         }
 
-        var isWeiXin = function () {
-            var ua = window.navigator.userAgent.toLowerCase();
-            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-                return true;
-            } else {
-                return false;
-            }
-        };
-
-        // 解决安卓微信浏览器中location.reload 或者 location.href失效的问题
-        var winReload = function (w) {
-            if (isWeiXin()) {
-                var l = w.location;
-                var url = [];
-                var t = '_t_' + (new Date().getTime()) + '_';
-                url.push(l.protocol);
-                url.push('//');
-                url.push(l.host);
-                url.push(l.pathname);
-                if (l.search) {
-                    if (/_t_\d+_/.test(l.search)) {
-                        url.push(l.search.replace(/_t_\d+_/, t));
-                    } else {
-                        url.push(l.search);
-                        url.push('&');
-                        url.push(t);
-                    }
-                } else {
-                    url.push(l.search);
-                    url.push('?');
-                    url.push(t);
-                }
-                url.push(l.hash);
-                w.location.replace(url.join(''));
-            } else {
-                w.location.reload();
-            }
-        };
-
-        var redirectFunc = function (redirect) {
-            if (!redirect) {
-                return;
-            }
-            if ('[reload]' === redirect) {
-                winReload(window);
-            } else if ('[root-reload]' == redirect) {
-                winReload(Util.getRootWindow())
-            } else if ('[back]' === redirect) {
-                window.history.back();
-            } else if ('[tab-close]' === redirect) {
-                window._pageTabManager.closeFromTab()
-            } else if (redirect.indexOf('[js]') === 0) {
-                eval(redirect.substr(4));
-            } else {
-                window.location.href = redirect;
-            }
-        };
-
         var successFunc = function () {
             if ("success" in callback) {
                 callback.success(res);
@@ -96,14 +96,14 @@ var Form = {
                 if (msg) {
                     if (Dialog) {
                         Dialog.alertSuccess(msg, function () {
-                            redirectFunc(redirect);
+                            Form.redirectProcess(redirect);
                         });
                     } else {
                         alert(msg);
-                        redirectFunc(redirect);
+                        Form.redirectProcess(redirect);
                     }
                 } else {
-                    redirectFunc(redirect);
+                    Form.redirectProcess(redirect);
                 }
             } else {
                 if (msg) {
@@ -123,14 +123,14 @@ var Form = {
                 if (msg) {
                     if (Dialog) {
                         Dialog.alertError(msg, function () {
-                            redirectFunc(redirect);
+                            Form.redirectProcess(redirect);
                         });
                     } else {
                         alert(msg);
-                        redirectFunc(redirect);
+                        Form.redirectProcess(redirect);
                     }
                 } else {
-                    redirectFunc(redirect);
+                    Form.redirectProcess(redirect);
                 }
             } else {
                 if (Dialog) {
@@ -141,12 +141,16 @@ var Form = {
             }
         };
 
-        if (code == 0) {
+        if (0 == code) {
             successFunc();
         } else {
+            if (1002 == code) {
+                EventManager.fire('modstart:captcha.error', {
+                    res: res
+                });
+            }
             errorFunc();
         }
-
     },
     // ajax表单初始化
     initAjax: function (form, Dialog) {

@@ -179,7 +179,7 @@
                         class="tw-bg-white tw-rounded-sm tw-mb-2 tw-box tw-px-5 tw-py-3 tw-mb-3 tw-flex tw-items-center tw-zoom-in">
                         <div class="tw-w-10 tw-h-10 tw-flex-none tw-image-fit tw-rounded-full tw-overflow-hidden">
                             <div class="circle tw-border tw-border-gray-200 tw-border-solid tw-shadow ub-cover-1-1"
-                                 :style="{backgroundImage:`url(${memberUser.avatar||'/asset/image/avatar.png'})`}"></div>
+                                 :style="{backgroundImage:`url(${memberUser.avatar||'/asset/image/avatar.svg'})`}"></div>
                         </div>
                         <div class="tw-ml-4 tw-mr-auto">
                             <div class="tw-font-medium">{{memberUser.username || ''}}</div>

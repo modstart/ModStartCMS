@@ -147,7 +147,7 @@
     border-radius: var(--size-radius);
 
     &.no-bg {
-        background: transparent;
+        background-color: transparent;
 
         .head {
             padding: 0.5rem 0;
@@ -291,6 +291,7 @@
         padding-bottom: 0.5rem;
         border-radius: 0.25rem;
         overflow: hidden;
+        border: 1px solid var(--color-body-bg);
 
         &:hover {
             box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
@@ -614,11 +615,13 @@
             .title {
                 font-size: var(--font-size);
                 padding: 0.25rem 0;
-                display: inline-block;
+                display: block;
+                padding: 0.5rem 0;
+                line-height: 1rem;
             }
 
             .right {
-                padding: 0.25rem;
+                padding: 0.5rem 0.25rem;
             }
         }
 
@@ -777,6 +780,9 @@
         }
 
         .image {
+            .cover {
+                border-radius: 0.1rem;
+            }
         }
 
         .text {
@@ -784,6 +790,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                border-radius: 0.1rem;
 
                 .content {
                     color: #111;

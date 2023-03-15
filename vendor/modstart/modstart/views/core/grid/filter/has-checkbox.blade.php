@@ -3,7 +3,7 @@
     <div class="input">
         @foreach($field->options() as $k=>$v)
             <label>
-                <input type="checkbox" name="{{$id}}Checkbox" value="{{$k}}" />
+                 <input type="checkbox" @if(null!==$defaultValue&&in_array($k, $defaultValue)) checked @endif name="{{$id}}Checkbox" value="{{$k}}" />
                 {{$v}}
             </label>
         @endforeach

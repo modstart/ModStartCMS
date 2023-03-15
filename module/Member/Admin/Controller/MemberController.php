@@ -58,8 +58,8 @@ class MemberController extends Controller
                 $builder->id('id', 'ID');
                 MemberAdminList::callGridField($builder);
                 $builder->display('avatar', '头像')->hookRendering(function (AbstractField $field, $item, $index) {
-                    $avatarSmall = AssetsUtil::fixOrDefault($item->avatar, 'asset/image/avatar.png');
-                    $avatarBig = AssetsUtil::fixOrDefault($item->avatarBig, 'asset/image/avatar.png');
+                    $avatarSmall = AssetsUtil::fixOrDefault($item->avatar, 'asset/image/avatar.svg');
+                    $avatarBig = AssetsUtil::fixOrDefault($item->avatarBig, 'asset/image/avatar.svg');
                     return AutoRenderedFieldValue::make("<a href='$avatarBig' class='tw-inline-block' data-image-preview>
                         <img src='$avatarSmall' class='tw-rounded-full tw-w-8 tw-h-8 tw-shadow'></a>");
                 });
@@ -221,6 +221,7 @@ class MemberController extends Controller
         }
         $form = Form::make('');
         $form->layoutPanel('基础', function (Form $form) {
+            $form->display('id', '用户ID')->addable(true);
             $form->text('username', '用户名');
             $form->text('phone', '手机');
             $form->text('email', '邮箱');
@@ -233,7 +234,7 @@ class MemberController extends Controller
             }
             if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
                 $form->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
-                $form->date('vipExpire', 'VIP过期');
+                $form->date('vipExpire', 'VIP过期')->help('VIP过期留空表示永久');
             }
         });
         $form->item($memberUser)->fillFields();
@@ -285,7 +286,7 @@ class MemberController extends Controller
             return [
                 'value' => intval($item['id']),
                 'name' => htmlspecialchars(MemberUtil::viewName($item)),
-                'avatar' => AssetsUtil::fixOrDefault($item['avatar'], 'asset/image/avatar.png'),
+                'avatar' => AssetsUtil::fixOrDefault($item['avatar'], 'asset/image/avatar.svg'),
             ];
         }, $paginateData['records']);
         return Response::jsonSuccessData($records);
