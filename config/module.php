@@ -43,9 +43,6 @@ return [
         'SmsTecmz' => [
             'enable' => true,
         ],
-        'Cms' => [
-            'enable' => true,
-        ],
         'Member' => [
             'enable' => true,
             'config' => [
