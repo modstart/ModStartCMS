@@ -14,7 +14,7 @@
             skip_invisible  : false,
             appear          : null,
             load            : null,
-            placeholder     : "data:image/gif;base64,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"
+            placeholder     : "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTAwMHB4IiBoZWlnaHQ9IjQwMHB4IgogICAgIHZpZXdCb3g9IjAgMCAxMDAwIDQwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPgogICAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0icmdiKDI0MSwgMjQyLCAyNDMpIiAvPgogICAgPGNpcmNsZSBjeD0iNTAwIiBjeT0iMTgwIiByPSIzMiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2U9IiM4NWEyYjYiCiAgICAgICAgICAgIHN0cm9rZS1kYXNoYXJyYXk9IjUwLjI2NTQ4MjQ1NzQzNjY5IDUwLjI2NTQ4MjQ1NzQzNjY5IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiBkdXI9IjNzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIga2V5VGltZXM9IjA7MSIKICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXM9IjAgNTAwIDE4MDszNjAgNTAwIDE4MCI+PC9hbmltYXRlVHJhbnNmb3JtPgogICAgPC9jaXJjbGU+CiAgICA8Y2lyY2xlIGN4PSI1MDAiIGN5PSIxODAiIHI9IjIzIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZT0iI2JiY2VkZCIKICAgICAgICAgICAgc3Ryb2tlLWRhc2hhcnJheT0iMzYuMTI4MzE1NTE2MjgyNjIgMzYuMTI4MzE1NTE2MjgyNjIiIHN0cm9rZS1kYXNob2Zmc2V0PSIzNi4xMjgzMTU1MTYyODI2MiIgZmlsbD0ibm9uZSIKICAgICAgICAgICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgICAgICA8YW5pbWF0ZVRyYW5zZm9ybSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIHR5cGU9InJvdGF0ZSIgZHVyPSI2cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIGtleVRpbWVzPSIwOzEiCiAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWVzPSIwIDUwMCAxODA7LTM2MCA1MDAgMTgwIj48L2FuaW1hdGVUcmFuc2Zvcm0+CiAgICA8L2NpcmNsZT4KICAgIDx0ZXh0IHg9IjUwMCIgeT0iMjQ1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjIwIiBmaWxsPSIjODVhMmI2Ij5sb2FkaW5nLi4uPC90ZXh0Pgo8L3N2Zz4K"
         };
 
         function update() {
@@ -58,7 +58,7 @@
 
         /* Cache container as jQuery as object. */
         $container = (settings.container === undefined ||
-        settings.container === window) ? $window : $(settings.container);
+            settings.container === window) ? $window : $(settings.container);
 
         /* Fire one scroll event per scroll. Not one scroll event per image. */
         if (0 === settings.event.indexOf("scroll")) {
@@ -77,6 +77,8 @@
             if ($self.attr("src") === undefined || $self.attr("src") === false) {
                 if ($self.is("img")) {
                     $self.attr("src", settings.placeholder);
+                }else{
+                    $self.css("background-image", "url("+settings.placeholder+")");
                 }
             }
 

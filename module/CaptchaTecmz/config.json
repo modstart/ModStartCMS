@@ -1,0 +1,28 @@
+{
+    "name": "CaptchaTecmz",
+    "title": "魔众智能验证码",
+    "require": [
+        "Vendor:>=1.1.0"
+    ],
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "types": [
+        "PC",
+        "Mobile",
+        "Admin"
+    ],
+    "tags": [
+        "人工智能",
+        "验证码",
+        "魔众API"
+    ],
+    "version": "1.3.0",
+    "author": "ModStart",
+    "description": "提供魔众智能验证码验证服务",
+    "providers": [
+    ],
+    "config": {
+    }
+}

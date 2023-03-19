@@ -5,10 +5,12 @@ namespace Module\Member\Api\Controller;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\FileUtil;
@@ -27,6 +29,7 @@ use Module\Vendor\Email\MailSendJob;
 use Module\Vendor\Session\SessionUtil;
 use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
+use Module\Vendor\Type\DeviceType;
 
 /**
  * 相关配置开关
@@ -170,6 +173,12 @@ class AuthController extends ModuleBaseController
         BizException::throwsIfResponseError($ret);
         if ($ret['data']['memberUserId'] > 0) {
             Session::put('memberUserId', $ret['data']['memberUserId']);
+            ModelUtil::insert('member_login_log', [
+                'memberUserId' => $ret['data']['memberUserId'],
+                'deviceType' => DeviceType::current(),
+                'ip' => Request::ip(),
+                'userAgent' => AgentUtil::getUserAgent(),
+            ]);
             Session::forget('oauthUserInfo');
             return Response::generateSuccessData(['memberUserId' => $ret['data']['memberUserId']]);
         }
@@ -206,6 +215,12 @@ class AuthController extends ModuleBaseController
         BizException::throwsIfResponseError($ret);
         if ($ret['data']['memberUserId'] > 0) {
             Session::put('memberUserId', $ret['data']['memberUserId']);
+            ModelUtil::insert('member_login_log', [
+                'memberUserId' => $ret['data']['memberUserId'],
+                'deviceType' => DeviceType::current(),
+                'ip' => Request::ip(),
+                'userAgent' => AgentUtil::getUserAgent(),
+            ]);
             Session::forget('oauthUserInfo');
             return Response::generateSuccessData(['memberUserId' => $ret['data']['memberUserId']]);
         }
@@ -299,6 +314,12 @@ class AuthController extends ModuleBaseController
             }
         }
         Session::put('memberUserId', $memberUserId);
+        ModelUtil::insert('member_login_log', [
+            'memberUserId' => $memberUserId,
+            'deviceType' => DeviceType::current(),
+            'ip' => Request::ip(),
+            'userAgent' => AgentUtil::getUserAgent(),
+        ]);
         Session::forget('oauthUserInfo');
         return Response::generate(0, null);
     }
@@ -554,6 +575,12 @@ class AuthController extends ModuleBaseController
             $memberUser = MemberUtil::get($ret['data']['id']);
         }
         Session::put('memberUserId', $memberUser['id']);
+        ModelUtil::insert('member_login_log', [
+            'memberUserId' => $memberUser['id'],
+            'deviceType' => DeviceType::current(),
+            'ip' => Request::ip(),
+            'userAgent' => AgentUtil::getUserAgent(),
+        ]);
         // return Response::generateError('forbidden');
         return Response::generate(0, 'ok');
     }
@@ -649,6 +676,12 @@ class AuthController extends ModuleBaseController
             return Response::generate(ResponseCodes::CAPTCHA_ERROR, '登录失败:用户或密码错误' . ($failedTip ? '，' . $failedTip : ''));
         }
         Session::put('memberUserId', $memberUser['id']);
+        ModelUtil::insert('member_login_log', [
+            'memberUserId' => $memberUser['id'],
+            'deviceType' => DeviceType::current(),
+            'ip' => Request::ip(),
+            'userAgent' => AgentUtil::getUserAgent(),
+        ]);
         EventUtil::fire(new MemberUserLoginedEvent($memberUser['id']));
         return Response::generateSuccess();
     }
@@ -728,6 +761,12 @@ class AuthController extends ModuleBaseController
         Session::forget('loginPhoneVerifyTime');
         Session::forget('loginPhone');
         Session::put('memberUserId', $memberUser['id']);
+        ModelUtil::insert('member_login_log', [
+            'memberUserId' => $memberUser['id'],
+            'deviceType' => DeviceType::current(),
+            'ip' => Request::ip(),
+            'userAgent' => AgentUtil::getUserAgent(),
+        ]);
         EventUtil::fire(new MemberUserLoginedEvent($memberUser));
         return Response::generate(0, null);
     }
@@ -879,6 +918,12 @@ class AuthController extends ModuleBaseController
             $provider->postProcess($memberUserId);
         }
         Session::put('memberUserId', $memberUserId);
+        ModelUtil::insert('member_login_log', [
+            'memberUserId' => $memberUserId,
+            'deviceType' => DeviceType::current(),
+            'ip' => Request::ip(),
+            'userAgent' => AgentUtil::getUserAgent(),
+        ]);
         EventUtil::fire(new MemberUserLoginedEvent($memberUserId));
         return Response::generate(0, '注册成功', [
             'id' => $memberUserId,

@@ -1,4 +1,4 @@
-const LazyLoad = require('./../vendor/jqueryLazyload.js')
+const LazyLoad = require('./../lib/jqueryLazyload.js')
 
 window.api.lazyLoad = function () {
     $(function () {

@@ -757,6 +757,13 @@
 }
 
 @media screen and (min-width: 40rem) {
+
+    [data-header-sticky-disable] {
+        .ub-header-b, .ub-header {
+            top: -3rem !important;
+        }
+    }
+
     .ub-header-b, .ub-header {
         position: sticky;
         transition: top 0.3s;

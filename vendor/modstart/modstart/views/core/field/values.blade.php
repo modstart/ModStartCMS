@@ -9,8 +9,18 @@
     <div class="field">
         <div id="{{$id}}Input">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
-            <table class="ub-table">
-                <body>
+            @if($viewMode=='mini')
+                <div class="tw-inline-block tw-w-32" v-for="(valueItem,valueIndex) in value">
+                    <el-input placeholder="请输入内容" size="mini" v-model="value[valueIndex]">
+                        <template slot="append">
+                            <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
+                        </template>
+                    </el-input>
+                </div>
+                <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+            @else
+                <table class="ub-table">
+                    <body>
                     <tr v-for="(valueItem,valueIndex) in value">
                         <td>
                             <input type="text" v-model="value[valueIndex]" />
@@ -19,9 +29,10 @@
                             <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
                         </td>
                     </tr>
-                </body>
-            </table>
-            <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+                    </body>
+                </table>
+                <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+            @endif
         </div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

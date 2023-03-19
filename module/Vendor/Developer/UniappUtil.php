@@ -3,13 +3,23 @@
 
 namespace Module\Vendor\Developer;
 
-use ModStart\Core\Util\ReUtil;
 use ModStart\Core\Util\PlatformUtil;
+use ModStart\Core\Util\ReUtil;
 
 include_once __DIR__ . '/../Shell/include.php';
 
 class UniappUtil
 {
+    public static function runOrFail($command)
+    {
+        shell_echo_info("开始运行 $command");
+        passthru($command, $resultCode);
+        if ($resultCode !== 0) {
+            shell_echo_error('运行命令 ' . $command . ' 失败');
+            exit(1);
+        }
+    }
+
     public static function build($dir)
     {
         $module = ReUtil::group1('/module[\/\\\\](.*?)[\/\\\\]resources/', $dir);
@@ -22,7 +32,8 @@ class UniappUtil
         shell_echo_success('环境正常');
 
         shell_echo_block("开始编译");
-        passthru("npm run build:h5");
+        self::runOrFail("npm install");
+        self::runOrFail("npm run build:h5");
 
         shell_echo_block("处理HTML文件");
         $content = file_get_contents('dist/build/h5/index.html');
@@ -44,8 +55,8 @@ class UniappUtil
         shell_echo_block("处理静态文件");
         $replaces = [
             '"__cdn_url__/"' => 'window.__msCDN+"vendor/' . $module . '/"',
-            '(/static/' => '(/vendor/' . $module . '/static/',
-            '"/static/' => '"/vendor/' . $module . '/static/',
+            // '(/static/' => '(/vendor/' . $module . '/static/',
+            '"/static/' => 'window.__msCDN+"vendor/' . $module . '/static/',
         ];
         $files = glob('dist/build/h5/static/js/*.js');
         foreach ($files as $file) {

@@ -37,6 +37,15 @@ return [
                 'position' => '[{"k":"home","v":"首页"}]',
             ],
         ],
+        'CaptchaTecmz' => [
+            'enable' => true,
+        ],
+        'SmsTecmz' => [
+            'enable' => true,
+        ],
+        'Cms' => [
+            'enable' => true,
+        ],
         'Member' => [
             'enable' => true,
             'config' => [

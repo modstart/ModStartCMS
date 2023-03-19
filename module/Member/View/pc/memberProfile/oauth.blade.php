@@ -15,7 +15,7 @@
                 @if($oauth->bindRender())
                     {!! $oauth->bindRender() !!}
                 @else
-                    <a class="btn btn-primary"
+                    <a class="btn btn-primary" rel="nofollow"
                        href="{{modstart_web_url('oauth_login_'.$oauth->name(),['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">立即绑定</a>
                 @endif
             </div>

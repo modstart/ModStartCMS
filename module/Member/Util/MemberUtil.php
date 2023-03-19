@@ -563,37 +563,30 @@ class MemberUtil
         $imageMedium = (string)Image::make($avatarData)->resize(200, 200)->encode($avatarExt, 75);
         $image = (string)Image::make($avatarData)->resize(50, 50)->encode($avatarExt, 75);
 
-        if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
-            DataFileUploadedEvent::setParam('imageCompressIgnore', true);
-            DataFileUploadedEvent::setParam('imageWatermarkIgnore', true);
-        }
-        $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig, null, [
+        $uploadParam = [
             'eventOpt' => [
                 DataFileUploadedEvent::OPT_IMAGE_COMPRESS_IGNORE => true,
                 DataFileUploadedEvent::OPT_IMAGE_WATERMARK_IGNORE => true,
             ]
-        ]);
+        ];
+        $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig, null, $uploadParam);
         if ($retBig['code']) {
             return Response::generate(-1, '头像存储失败（' . $retBig['msg'] . '）');
         }
-        $retMedium = DataManager::upload('image', 'U' . $userId . '_AvatarMiddle.' . $avatarExt, $imageMedium);
+        $retMedium = DataManager::upload('image', 'U' . $userId . '_AvatarMiddle.' . $avatarExt, $imageMedium, null, $uploadParam);
         if ($retMedium['code']) {
             DataManager::deleteById($retBig['data']['id']);
             if ($retBig['code']) {
                 return Response::generate(-1, '头像存储失败（' . $retMedium['msg'] . '）');
             }
         }
-        $ret = DataManager::upload('image', 'U_' . $userId . '_Avatar.' . $avatarExt, $image);
+        $ret = DataManager::upload('image', 'U_' . $userId . '_Avatar.' . $avatarExt, $image, null, $uploadParam);
         if ($ret['code']) {
             DataManager::deleteById($retBig['data']['id']);
             DataManager::deleteById($retMedium['data']['id']);
             if ($retBig['code']) {
                 return Response::generate(-1, '头像存储失败（' . $ret['msg'] . '）');
             }
-        }
-        if (class_exists('ModStart\Data\Event\DataFileUploadedEvent')) {
-            DataFileUploadedEvent::forgetParam('imageCompressIgnore');
-            DataFileUploadedEvent::forgetParam('imageWatermarkIgnore');
         }
         self::update($memberUser['id'], [
             'avatarBig' => $retBig['data']['fullPath'],
