@@ -155,17 +155,19 @@ include __DIR__ . '/function.php';
                             <?php text_success('系统：' . PHP_OS); ?>
                             <?php php_version_ok() ? text_success('PHP版本 ' . PHP_VERSION) : text_error('PHP版本要求（'.php_version_requires().'） 当前为 ' . PHP_VERSION); ?>
                             <?php text_success('最大上传：' . FileUtil::formatByte(EnvUtil::env('uploadMaxSize'))); ?>
-                            <?php function_exists('openssl_open') ? text_success('OpenSSL PHP 扩展') : text_error('缺少 OpenSSL PHP 扩展'); ?>
-                            <?php function_exists('exif_read_data') ? text_success('Exif PHP 扩展') : text_error('缺少 Exif PHP 扩展'); ?>
+                            <?php function_exists('curl_init') ? text_success('PHP curl 扩展') : text_error('缺少 PHP curl 扩展'); ?>
+                            <?php class_exists('ZipArchive') ? text_success('PHP zip 扩展') : text_error('缺少 PHP zip 扩展'); ?>
+                            <?php function_exists('openssl_open') ? text_success('PHP openssl 扩展') : text_error('缺少 PHP openssl 扩展'); ?>
+                            <?php function_exists('exif_read_data') ? text_success('PHP exif 扩展') : text_error('缺少 PHP exif 扩展'); ?>
+                            <?php function_exists('bcmul') ? text_success('PHP bcmath 扩展') : text_error('缺少 PHP bcmath 扩展'); ?>
+                            <?php class_exists('pdo') ? text_success('PHP pdo 扩展') : text_error('缺少 PHP pdo 扩展'); ?>
+                            <?php (class_exists('pdo') && in_array('mysql', PDO::getAvailableDrivers())) ? text_success('PHP PDO mysql 驱动') : text_error('缺少 PHP PDO mysql 驱动'); ?>
+                            <?php function_exists('mb_internal_encoding') ? text_success('PHP mbstring 扩展') : text_error('缺少 PHP mbstring 扩展'); ?>
+                            <?php function_exists('token_get_all') ? text_success('PHP tokenizer 扩展') : text_error('缺少 PHP tokenizer 扩展'); ?>
+                            <?php function_exists('finfo_file') ? text_success('PHP fileinfo 扩展') : text_error('缺少 PHP fileinfo 扩展'); ?>
                             <?php function_exists('proc_open') ? text_success('proc_open 函数') : text_error('缺少 proc_open 函数','https://modstart.com/doc/install/qa.html'); ?>
                             <?php function_exists('putenv') ? text_success('putenv 函数') : text_error('缺少 putenv 函数','https://modstart.com/doc/install/qa.html'); ?>
                             <?php function_exists('proc_get_status') ? text_success('proc_get_status 函数') : text_error('缺少 proc_get_status 函数','https://modstart.com/doc/install/qa.html'); ?>
-                            <?php function_exists('bcmul') ? text_success('bcmath 扩展') : text_error('缺少 PHP bcmath 扩展'); ?>
-                            <?php class_exists('pdo') ? text_success('PDO PHP 扩展') : text_error('缺少 PDO PHP 扩展'); ?>
-                            <?php (class_exists('pdo') && in_array('mysql', PDO::getAvailableDrivers())) ? text_success('PDO Mysql 驱动正常') : text_error('缺少 PDO Mysql 驱动'); ?>
-                            <?php function_exists('mb_internal_encoding') ? text_success('缺少 Mbstring PHP 扩展') : text_error('缺少 Mbstring PHP 扩展'); ?>
-                            <?php function_exists('token_get_all') ? text_success('缺少 Tokenizer PHP 扩展') : text_error('缺少 Tokenizer PHP 扩展'); ?>
-                            <?php function_exists('finfo_file') ? text_success('缺少 PHP Fileinfo 扩展') : text_error('缺少 PHP Fileinfo 扩展'); ?>
                             <?php if(version_compare(PHP_VERSION,'5.6.0','ge') && version_compare(PHP_VERSION,'5.7.0','lt')){ ?>
                                 <?php EnvUtil::iniFileConfig('always_populate_raw_post_data')=='-1' ? text_success('验证 always_populate_raw_post_data=-1') : text_error('请配置 always_populate_raw_post_data=-1','https://modstart.com/doc/install/qa.html'); ?>
                             <?php } ?>

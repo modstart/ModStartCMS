@@ -2,6 +2,7 @@
 
 namespace Module\Member\Util;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -21,6 +22,7 @@ use Module\Member\Events\MemberUserLoginAttemptEvent;
 use Module\Member\Events\MemberUserLoginFailedEvent;
 use Module\Member\Type\MemberMessageStatus;
 use Module\Member\Type\MemberStatus;
+use Module\Vendor\Type\DeviceType;
 
 class MemberUtil
 {
@@ -808,6 +810,21 @@ class MemberUtil
             'email' => null,
         ]);
         ModelUtil::transactionCommit();
+    }
+
+    public static function fireLogin($memberUserId)
+    {
+        $ip = Request::ip();
+        ModelUtil::update('member_user', $memberUserId, [
+            'lastLoginTime' => Carbon::now(),
+            'lastLoginIp' => $ip,
+        ]);
+        ModelUtil::insert('member_login_log', [
+            'memberUserId' => $memberUserId,
+            'deviceType' => DeviceType::current(),
+            'ip' => $ip,
+            'userAgent' => AgentUtil::getUserAgent(),
+        ]);
     }
 
 }

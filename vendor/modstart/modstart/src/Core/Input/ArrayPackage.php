@@ -75,8 +75,8 @@ class ArrayPackage
         $value = $this->nextTrimString();
         $list = $typeCls::getList();
         foreach ($list as $k => $v) {
-            if ($value == $k) {
-                return $v;
+            if ($value === $v) {
+                return $k;
             }
         }
         return $defaultValue;

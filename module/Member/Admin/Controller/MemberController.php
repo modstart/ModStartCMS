@@ -176,9 +176,9 @@ class MemberController extends Controller
         return $page->pageTitle('创建用户')->body($form)->handleForm($form, function (Form $form) {
             AdminPermission::demoCheck();
             $data = $form->dataForming();
-            $username = $data['username'] ? $data['username'] : null;
-            $phone = $data['phone'] ? $data['phone'] : null;
-            $email = $data['email'] ? $data['email'] : null;
+            $username = !empty($data['username']) ? $data['username'] : null;
+            $phone = !empty($data['phone']) ? $data['phone'] : null;
+            $email = !empty($data['email']) ? $data['email'] : null;
             $profile = ArrayUtil::keepKeys($data, [
                 'nickname',
                 'groupId',
