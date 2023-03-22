@@ -202,7 +202,7 @@ class ModuleServiceProvider extends ServiceProvider
                             'sort' => 999999,
                             'children' => [
                                 [
-                                    'title' => '功能设置',
+                                    'title' => '用户设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@setting',
                                 ],
                                 [
@@ -214,11 +214,11 @@ class ModuleServiceProvider extends ServiceProvider
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@money',
                                 ] : null,
                                 ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? [
-                                    'title' => 'VIP设置',
+                                    'title' => '用户VIP设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@vip',
                                 ] : null,
                                 ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? [
-                                    'title' => 'VIP等级',
+                                    'title' => '用户VIP等级',
                                     'url' => '\Module\Member\Admin\Controller\MemberVipSetController@index',
                                 ] : null,
                                 ModuleManager::getModuleConfigBoolean('Member', 'groupEnable') ? [

@@ -27,7 +27,7 @@ class ModuleServiceProvider extends ServiceProvider
                 'sort' => 200,
                 'children' => [
                     [
-                        'title' => '导航配置',
+                        'title' => '导航设置',
                         'url' => '\Module\Nav\Admin\Controller\NavController@index',
                     ],
                 ]

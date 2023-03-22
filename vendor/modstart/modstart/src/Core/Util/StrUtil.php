@@ -123,4 +123,15 @@ class StrUtil
         return Str::limit($text, $limit, $end);
     }
 
+    /**
+     * 裁减字符串
+     * @param $text
+     * @param $limit
+     * @return string
+     */
+    public static function mbLimit($text, $limit)
+    {
+        return Str::limit($text, $limit, '');
+    }
+
 }

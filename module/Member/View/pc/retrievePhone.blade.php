@@ -70,7 +70,7 @@
                             <button type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
                         </div>
                     </div>
-                    <input type="hidden" name="redirect" value="{{$redirect or ''}}" />
+                    <input type="hidden" name="redirect" value="{{empty($redirect)?'':$redirect}}" />
                 </form>
             </div>
         </div>

@@ -29,7 +29,7 @@ class Logger
             return strcmp($b, $a);
         });
         foreach (array_slice($logFiles, $maxKeeps) as $file) {
-            Log::info("Logger Clean - " . $file);
+            Log::info("Vendor.LoggerClean - " . $file);
             @unlink($file);
         }
     }

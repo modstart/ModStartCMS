@@ -19,7 +19,7 @@ if(!isset($round)){
 {!! \ModStart\ModStart::css('asset/vendor/swiper/swiper.css') !!}
 {!! \ModStart\ModStart::js('asset/vendor/swiper/swiper.js') !!}
 {!! \ModStart\ModStart::css('vendor/Banner/style/banner.css') !!}
-<div class="ub-banner ratio-{{$bannerRatio}} {{$mobileBannerRatio}}" id="{{$bannerId}}">
+<div class="ub-banner margin-bottom ratio-{{$bannerRatio}} {{$mobileBannerRatio}}" id="{{$bannerId}}">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             @if(empty($banners))

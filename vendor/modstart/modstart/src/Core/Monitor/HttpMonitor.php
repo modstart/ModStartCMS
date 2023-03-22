@@ -8,16 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
+use ModStart\Core\Events\ModStartRequestHandled;
 use ModStart\Core\Util\ArrayUtil;
+use ModStart\Core\Util\EventUtil;
 
 class HttpMonitor
 {
     public static function init()
     {
-        if (!config('modstart.trackPerformance', false)) {
-            return;
-        }
         $eventName = 'kernel.handled';
         if (class_exists('Illuminate\\Foundation\\Http\\Events\\RequestHandled')) {
             $eventName = 'Illuminate\\Foundation\\Http\\Events\\RequestHandled';
@@ -38,6 +36,25 @@ class HttpMonitor
             $time = round((microtime(true) - LARAVEL_START) * 1000, 2);
             $url = $request->url();
             $method = $request->method();
+
+            if (class_exists('\\ModStart\\Core\\Events\\ModStartRequestHandled')) {
+                $e = new ModStartRequestHandled();
+                $e->url = $request->path();
+                $e->method = $method;
+                $e->time = $time;
+                $e->statusCode = 0;
+                if (method_exists($response, 'status')) {
+                    $e->statusCode = $response->status();
+                } else if (method_exists($response, 'getStatusCode')) {
+                    $e->statusCode = $response->getStatusCode();
+                }
+                EventUtil::fire($e);
+            }
+
+            if (!config('modstart.trackPerformance', false)) {
+                return;
+            }
+
             $queryCountPerRequest = DatabaseMonitor::getQueryCountPerRequest();
             $param = [];
             if ($time > 1000 || $queryCountPerRequest > 10) {
@@ -50,6 +67,7 @@ class HttpMonitor
                 Log::warning("MASS_REQUEST_SQL $method [$url] $queryCountPerRequest $param -> "
                     . json_encode(DatabaseMonitor::getQueryCountPerRequestSqls(), JSON_UNESCAPED_UNICODE));
             }
+
         });
     }
 

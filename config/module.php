@@ -50,6 +50,9 @@ return [
                 'vipEnable' => true,
             ],
         ],
+        'VisitStatistic' => [
+            'enable' => true,
+        ],
         'Cms' => [
             'enable' => true,
         ],

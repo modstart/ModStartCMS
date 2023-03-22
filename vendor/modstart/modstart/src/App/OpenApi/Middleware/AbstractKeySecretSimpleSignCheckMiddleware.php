@@ -55,7 +55,7 @@ abstract class AbstractKeySecretSimpleSignCheckMiddleware
         ];
         $signCalc = SignUtil::common($params, $secret);
         if ($sign != $signCalc) {
-            Log::info('sign not match : ' . $signCalc);
+            Log::info('MS.SignNotMatch : ' . $signCalc);
             $ret = $this->signNotMatch();
             if ($ret['code']) {
                 return $ret['data'];

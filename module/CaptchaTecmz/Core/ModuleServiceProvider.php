@@ -25,7 +25,7 @@ class ModuleServiceProvider extends ServiceProvider
                     'sort' => 400,
                     'children' => [
                         [
-                            'title' => '接口配置',
+                            'title' => '接口设置',
                             'children' => [
                                 [
                                     'title' => '魔众智能验证码',

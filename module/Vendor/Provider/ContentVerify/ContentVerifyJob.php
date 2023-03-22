@@ -4,6 +4,7 @@
 namespace Module\Vendor\Provider\ContentVerify;
 
 
+use Illuminate\Support\Facades\Log;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Job\BaseJob;
 
@@ -14,7 +15,7 @@ class ContentVerifyJob extends BaseJob
     public $body;
     public $param;
 
-    public static function createQuick($name, $id, $title, $viewUrl)
+    public static function createQuick($name, $id, $title, $viewUrl = null)
     {
         self::create($name, [
             'id' => $id,
@@ -51,6 +52,10 @@ class ContentVerifyJob extends BaseJob
     public function handle()
     {
         $provider = ContentVerifyProvider::get($this->name);
+        if (empty($provider)) {
+            Log::info('Vendor.ContentVerifyJob.UnknownProvider - ' . $this->name);
+            return;
+        }
         $provider->run($this->param, $this->title, $this->body);
     }
 }

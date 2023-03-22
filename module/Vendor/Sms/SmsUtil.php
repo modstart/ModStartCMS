@@ -59,7 +59,7 @@ class SmsUtil
     public static function send($phone, $template, $templateData = [])
     {
         $provider = app()->config->get('SmsSenderProvider');
-        BizException::throwsIfEmpty('短信发送未配置', $provider);
+        BizException::throwsIfEmpty('短信发送未设置', $provider);
         $ret = SmsSenderProvider::get($provider)->send($phone, $template, $templateData);
         BizException::throwsIfResponseError($ret);
         return Response::generateSuccess();

@@ -13,7 +13,7 @@ class ConfigController extends Controller
     public function setting(AdminConfigBuilder $builder)
     {
         $captchaType = array_merge(['' => '默认'], CaptchaProvider::nameTitleMap());
-        $builder->pageTitle('功能设置');
+        $builder->pageTitle('用户设置');
         $builder->layoutPanel('登录', function ($builder) use ($captchaType) {
             /** @var HasFields $builder */
             $builder->switch('loginCaptchaEnable', '启用登录验证码')

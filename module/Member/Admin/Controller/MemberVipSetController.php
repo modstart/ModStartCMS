@@ -59,7 +59,7 @@ class MemberVipSetController extends Controller
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)
             ->canShow(false)
-            ->title('VIP等级')
+            ->title('用户VIP等级')
             ->addDialogSize(['600px', '95%'])
             ->editDialogSize(['600px', '95%'])
             ->hookSaved(function (Form $form) {

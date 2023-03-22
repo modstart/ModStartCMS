@@ -102,7 +102,7 @@
                 <div class="line">
                     <div class="label">邮箱:</div>
                     <div class="field">
-                        <input type="text" class="form" name="email" value="{{$_memberUser['email'] or ''}}" />
+                        <input type="text" class="form" name="email" value="{{empty($_memberUser['email'])?'':$_memberUser['email']}}" />
                     </div>
                 </div>
                 <div class="line">

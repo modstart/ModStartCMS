@@ -102,7 +102,7 @@ class StatisticMonitor
                 stream_socket_sendto($socket, $binData);
             }
         } catch (\Exception $e) {
-            Log::error('StatisticMonitor.send.error -> ' . $e->getMessage());
+            Log::error('MS.StatisticMonitor.Error -> ' . $e->getMessage());
         }
     }
 

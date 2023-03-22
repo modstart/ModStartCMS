@@ -30,6 +30,13 @@ class ConfigController extends Controller
         $builder->text('siteBeian', 'ICP备案编号');
         $builder->text('siteBeianGonganText', '公安备案文字');
         $builder->text('siteBeianGonganLink', '公安备案链接');
+        $builder->textarea('Site_CopyrightOthers', '其他备案信息')->help('支持HTML');
+
+        $builder->layoutSeparator('联系信息');
+        $builder->text('Site_ContactEmail', '邮箱');
+        $builder->text('Site_ContactPhone', '电话');
+        $builder->text('Site_ContactAddress', '地址');
+        $builder->image('Site_ContactQrcode', '联系二维码')->help('可传带二维码的公众号/微信/QQ等，方便用户扫码联系');
 
         $builder->formClass('wide');
         return $builder->perform();

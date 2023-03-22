@@ -140,7 +140,7 @@ class ModuleStoreController extends Controller
         $isLocal = $dataInput->getBoolean('isLocal');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
-        BizException::throwsIf('系统模块不能动态配置', ModuleManager::isSystemModule($module));
+        BizException::throwsIf('系统模块不能动态设置', ModuleManager::isSystemModule($module));
         $this->moduleOperateCheck($module);
         if ($isLocal) {
             switch ($step) {
@@ -263,7 +263,7 @@ class ModuleStoreController extends Controller
         $isLocal = $dataInput->getBoolean('isLocal');
         BizException::throwsIfEmpty('module为空', $module);
         BizException::throwsIfEmpty('version为空', $version);
-        BizException::throwsIf('系统模块不能动态配置', ModuleManager::isSystemModule($module));
+        BizException::throwsIf('系统模块不能动态设置', ModuleManager::isSystemModule($module));
         $this->moduleOperateCheck($module);
 
         if ($isLocal) {

@@ -23,6 +23,7 @@ class ModuleServiceProvider extends ServiceProvider
                 'children' => [
                     [
                         'title' => '基本设置',
+                        'sort' => 1,
                         'url' => '\Module\Site\Admin\Controller\ConfigController@setting',
                     ],
                 ]

@@ -148,7 +148,7 @@ return [
     'Select File' => '选择文件',
     'Select Audio' => '选择音频',
     'Select Video' => '选择视频',
-    'Config Site' => '站点配置',
+    'Config Site' => '站点设置',
     'Config Visit' => '访问设置',
     'On' => '开启',
     'Off' => '关闭',

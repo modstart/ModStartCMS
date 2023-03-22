@@ -45,7 +45,7 @@
                             <button type="submit" class="btn btn-primary btn-lg btn-block">完成设置</button>
                         </div>
                     </div>
-                    <input type="hidden" name="redirect" value="{{$redirect or ''}}" />
+                    <input type="hidden" name="redirect" value="{{empty($redirect)?'':$redirect}}" />
                 </form>
             </div>
 

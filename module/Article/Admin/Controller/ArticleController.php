@@ -49,7 +49,7 @@ class ArticleController extends Controller
                 $filter->eq('position', '位置')->select(ArticlePosition::class);
                 $filter->like('title', L('Title'));
             })
-            ->title('单页文章')
+            ->title('通用文章')
             ->hookSaved(function (Form $form) {
                 ArticleUtil::clearCache();
             });

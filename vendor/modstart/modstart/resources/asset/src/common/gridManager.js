@@ -99,7 +99,7 @@ var GridManager = function (opt) {
                 none: '<div class="ub-text-muted tw-py-4"><i class="iconfont icon-refresh tw-animate-spin tw-inline-block" style="font-size:2rem;"></i><br />'
                     + option.lang.loading + '</div>'
             },
-            // size: 'sm',
+            // size: 'lg',
             loading: true,
             cellMinWidth: 100,
             cols: [[]],

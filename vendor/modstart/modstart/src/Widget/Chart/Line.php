@@ -28,6 +28,9 @@ class Line extends AbstractWidget
             "bottom" => "10%",
             "containLabel" => true
         ],
+        'legend' => [
+            'data' => [],
+        ],
         "tooltip" => [
             "trigger" => "axis"
         ],
@@ -40,20 +43,7 @@ class Line extends AbstractWidget
             "minInterval" => 1
         ],
         "series" => [
-            [
-                "name" => "数量",
-                "data" => [],
-                "type" => "line",
-                "smooth" => true,
-                "itemStyle" => [
-                    "normal" => [
-                        "color" => "#4F7FF3",
-                        "lineStyle" => [
-                            "color" => "#4F7FF3"
-                        ]
-                    ]
-                ]
-            ]
+
         ]
     ];
 
@@ -73,19 +63,41 @@ class Line extends AbstractWidget
     public function random()
     {
         $this->option['xAxis']['data'] = RandomUtil::dateCollection();
-        $this->option['series'][0]['data'] = RandomUtil::numberCollection();
+        $this->ySeries(0, RandomUtil::numberCollection());
         return $this;
     }
 
-    public function xData($value)
+    public function xData($value, $param = [])
     {
         $this->option['xAxis']['data'] = $value;
         return $this;
     }
 
-    public function yData($value)
+    public function yData($value, $param = [])
     {
-        $this->option['series'][0]['data'] = $value;
+        return $this->ySeries(0, $value, '数量', $param);
+    }
+
+    public function ySeries($i, $value, $name = '数量', $param = [])
+    {
+        if (!isset($param['lineColor'])) {
+            $param['lineColor'] = ColorUtil::pick('LineColor-' . $i);
+        }
+        $this->option['legend']['data'][$i] = $name;
+        $this->option['series'][$i] = [
+            "name" => $name,
+            "data" => $value,
+            "type" => "line",
+            "smooth" => true,
+            "itemStyle" => [
+                "normal" => [
+                    "color" => $param['lineColor'],
+                    "lineStyle" => [
+                        "color" => $param['lineColor'],
+                    ]
+                ]
+            ]
+        ];
         return $this;
     }
 

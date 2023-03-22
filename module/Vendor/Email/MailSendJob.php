@@ -24,7 +24,7 @@ class MailSendJob extends BaseJob
     private static function checkConfig()
     {
         $provider = app()->config->get('EmailSenderProvider');
-        BizException::throwsIfEmpty('邮箱发送未配置', $provider);
+        BizException::throwsIfEmpty('邮箱发送未设置', $provider);
     }
 
     public static function createHtml($email, $subject, $html, $emailUserName = null, $option = [], $delay = 0)

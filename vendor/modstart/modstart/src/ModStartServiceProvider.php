@@ -15,6 +15,9 @@ use ModStart\App\Api\ModStartApi;
 use ModStart\App\OpenApi\ModStartOpenApi;
 use ModStart\App\Web\ModStartWeb;
 use ModStart\Core\Facades\ModStart;
+use ModStart\Core\Monitor\DatabaseMonitor;
+use ModStart\Core\Monitor\HttpMonitor;
+use ModStart\Core\Monitor\StatisticMonitor;
 use ModStart\Module\ModuleManager;
 
 /**
@@ -153,16 +156,9 @@ class ModStartServiceProvider extends ServiceProvider
 
     private function setupMonitor()
     {
-        /** @remove if condition after 20220417 */
-        if (class_exists('\\ModStart\\Core\\Monitor\\DataBaseMonitor')) {
-            \ModStart\Core\Monitor\DatabaseMonitor::init();
-        }
-        if (class_exists('\\ModStart\\Core\\Monitor\\HttpMonitor')) {
-            \ModStart\Core\Monitor\HttpMonitor::init();
-        }
-        if (class_exists('\\ModStart\\Core\\Monitor\\StatisticMonitor')) {
-            \ModStart\Core\Monitor\StatisticMonitor::init();
-        }
+        DatabaseMonitor::init();
+        HttpMonitor::init();
+        StatisticMonitor::init();
     }
 
     private function registerRouteMiddleware()

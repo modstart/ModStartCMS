@@ -84,6 +84,6 @@ class NavController extends Controller
             ->canBatchDelete(true)
             ->asTree('id', 'pid', 'sort', 'name')
             ->treeMaxLevel(2)
-            ->title('导航');
+            ->title('导航设置');
     }
 }

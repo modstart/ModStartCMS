@@ -36,7 +36,7 @@ class MemberGroupController extends Controller
             ->enablePagination(false)
             ->defaultOrder(['id', 'asc'])
             ->canSort(true)
-            ->title('会员分组')
+            ->title('用户分组')
             ->dialogSizeSmall()
             ->hookSaved(function (Form $form) {
                 MemberGroupUtil::clearCache();
