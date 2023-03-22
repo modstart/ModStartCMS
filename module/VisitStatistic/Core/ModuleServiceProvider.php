@@ -65,7 +65,7 @@ class ModuleServiceProvider extends ServiceProvider
                 $line = Line::make()->xData($data['time'])->ySeries(0, $data['pv'], '访问量')->ySeries(1, $data['uv'], '访客数');
                 $page->row(Box::make($line, '<i class="fa fa-bar-chart"></i> 访问统计'));
             });
-            
+
         }
 
         AdminMenu::register(function () {

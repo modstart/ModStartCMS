@@ -7,9 +7,9 @@
                 @if(in_array($customField['fieldType'],[
                     'text','textarea','video','audio'
                 ]))
-                    {{$data[$customField['name']] or '-'}}
+                    {{empty($data[$customField['name']])?'-':$data[$customField['name']]}}
                 @else
-                    {{$data[$customField['name']] or '-'}}
+                    {{$data[$customField['name']]?'-':$data[$customField['name']]}}
                 @endif
             </td>
         </tr>

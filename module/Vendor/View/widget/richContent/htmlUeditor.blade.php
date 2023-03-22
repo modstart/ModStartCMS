@@ -1,4 +1,4 @@
-<script type="text/plain" id="{{$name}}" name="{{$name}}">{!! $value or '' !!}</script>
+<script type="text/plain" id="{{$name}}" name="{{$name}}">{!! empty($value)?'':$value !!}</script>
 <script src="@asset('asset/common/editor.js')"></script>
 <script>
     $(function () {
