@@ -6,6 +6,11 @@ namespace ModStart\Data\Event;
 
 use ModStart\Core\Util\EventUtil;
 
+/**
+ * 用户上传完文件事件
+ * Class DataFileUploadedEvent
+ * @package ModStart\Data\Event
+ */
 class DataFileUploadedEvent
 {
     const OPT_IMAGE_COMPRESS_IGNORE = 'imageCompressIgnore';

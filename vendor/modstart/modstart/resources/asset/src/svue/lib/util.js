@@ -244,6 +244,7 @@ export const BeanUtil = {
      *
      * @param bean
      * @param valuePool
+     * @deprecated 请使用update
      */
     assign(bean, valuePool) {
         if (!bean || !valuePool) {

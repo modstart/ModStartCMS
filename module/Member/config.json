@@ -61,10 +61,10 @@
                 "启用分组"
             ]
         ],
-        "exportEnable": [
+        "dataStatisticEnable": [
             [
                 "switch",
-                "启用导出"
+                "启用存储限制"
             ]
         ]
     }

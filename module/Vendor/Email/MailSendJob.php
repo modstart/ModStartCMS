@@ -43,6 +43,11 @@ class MailSendJob extends BaseJob
         app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
     }
 
+    public static function createModule($module, $template, $email, $subject, $templateData = [], $emailUserName = null, $option = [], $delay = 0)
+    {
+        self::create($email, $subject, $template, $templateData, $emailUserName, $option, $delay, $module);
+    }
+
     public static function create($email, $subject, $template, $templateData = [], $emailUserName = null, $option = [], $delay = 0, $module = null)
     {
         self::checkConfig();
@@ -65,7 +70,7 @@ class MailSendJob extends BaseJob
         $provider = app()->config->get('EmailSenderProvider');
         /** @var AbstractMailSenderProvider $instance */
         $instance = MailSenderProvider::get($provider);
-        Logger::info('Email', 'Start', $this->email . ' -> ' . $this->subject . ' -> ' . $this->template);
+        Logger::info('Email', 'Start', $this->email . ' - ' . $this->subject . ' - ' . $this->template);
 
         switch ($this->type) {
             case 'html':
@@ -99,6 +104,6 @@ class MailSendJob extends BaseJob
         BizException::throwsIfEmpty('MailSendJob.HtmlEmpty', $html);
         $ret = $instance->send($this->email, $this->emailUserName, $this->subject, $html);
         BizException::throwsIfResponseError($ret);
-        Logger::info('Email', 'End', $this->email . ' -> ' . $this->subject);
+        Logger::info('Email', 'End', $this->email . ' - ' . $this->subject);
     }
 }

@@ -17,7 +17,6 @@
 </div>
 <script>
     layui.use('form', function () {
-        var form = layui.form;
-        form.render('radio','{{$id}}Radio');
+        layui.form.render('radio','{{$id}}Radio');
     });
 </script>

@@ -68,13 +68,17 @@ function modstart_web_path($path = '')
  * @return string
  * @example
  * // 返回 http://www.example.com/aaa/bbb
- * modstart_web_url('aaa/bbb')
+ * modstart_web_full_url('aaa/bbb')
  * // 返回 http://www.example.com/aaa/bbb?x=y
- * modstart_web_url('aaa/bbb',['x'=>'y'])
+ * modstart_web_full_url('aaa/bbb',['x'=>'y'])
  */
 function modstart_web_full_url($url = '', $param = [])
 {
-    return Request::domainUrl() . modstart_web_url($url, $param);
+    $domainUrl = Request::domainUrl();
+    if ('http://localhost' == $domainUrl) {
+        $domainUrl = rtrim(modstart_config('siteUrl', 'http://localhost'), '/');
+    }
+    return $domainUrl . modstart_web_url($url, $param);
 }
 
 /**
@@ -237,7 +241,7 @@ function modstart_config($key = null, $default = '', $useCache = true)
         if (true === $default || false === $default) {
             return boolval($v);
         }
-        if (0 === $default) {
+        if (is_int($default)) {
             return intval($v);
         }
         if (is_array($default)) {
@@ -245,6 +249,7 @@ function modstart_config($key = null, $default = '', $useCache = true)
             if (null === $v) {
                 return $default;
             }
+            return $v;
         }
         return $v;
     } catch (Exception $e) {

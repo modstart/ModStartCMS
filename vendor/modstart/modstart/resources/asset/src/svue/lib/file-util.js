@@ -15,8 +15,37 @@ export const FileUtil = {
         }
         return new Blob(byteArrays, {type: contentType});
     },
+    downloadContent(url, option) {
+        option = Object.assign({
+            start: function () {
+            },
+            end: function () {
+            },
+            error: function (msg) {
+
+            },
+            success: function (data) {
+
+            }
+        }, option)
+        option.start()
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const blob = new Blob([xhr.response], {type: 'application/octet-stream'});
+                option.success(blob)
+            } else {
+                option.error('下载文件出现错误')
+            }
+            option.end()
+        };
+        xhr.send();
+    },
     download(filename, content, type) {
-        type = type || "text/plain;charset=utf-8"
+        // type = type || "text/plain;charset=utf-8"
+        type = type || 'application/octet-stream'
         let blob
         if ('object' === typeof content) {
             blob = content
@@ -50,5 +79,16 @@ export const FileUtil = {
         winname.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title}</title></head><body>${html}</body></html>`);
         winname.document.title = title
         winname.document.close();
+    },
+    formatSize(size) {
+        if (size < 1024) {
+            return size + 'B'
+        } else if (size < 1024 * 1024) {
+            return (size / 1024).toFixed(1) + 'KB'
+        } else if (size < 1024 * 1024 * 1024) {
+            return (size / (1024 * 1024)).toFixed(1) + 'MB'
+        } else {
+            return (size / (1024 * 1024 * 1024)).toFixed(1) + 'GB'
+        }
     }
 }

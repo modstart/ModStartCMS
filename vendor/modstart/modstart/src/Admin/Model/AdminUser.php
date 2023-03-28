@@ -5,6 +5,7 @@ namespace ModStart\Admin\Model;
 
 
 use Illuminate\Database\Eloquent\Model;
+use ModStart\Core\Dao\ModelUtil;
 
 class AdminUser extends Model
 {
@@ -13,6 +14,11 @@ class AdminUser extends Model
     public function roles()
     {
         return $this->belongsToMany(AdminRole::class, 'admin_user_role', 'userId', 'roleId');
+    }
+
+    public static function getCached($adminUserId)
+    {
+        return ModelUtil::get('admin_user', $adminUserId);
     }
 
     protected static function boot()

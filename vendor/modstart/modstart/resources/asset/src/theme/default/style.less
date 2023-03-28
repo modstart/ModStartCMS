@@ -33,106 +33,109 @@
 @import "../../sui/bricks/component/animate/animate";
 
 body, html {
-  background: var(--color-body-bg);
-  color: var(--color-text);
+    background: var(--color-body-bg);
+    color: var(--color-text);
 }
 
 [v-cloak] {
-  display: none;
+    display: none;
 }
 
 .ub-lister-table-container {
-  background: #FFF;
-  padding: 0.5rem;
-  border-radius: 0.2rem;
+    background: #FFF;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
 
-  .toolbox-container {
-    float: right;
-  }
-
-  .table-addition-container {
-    padding-bottom: 10px;
-  }
-
-  .table-container {
-    width: 100%;
-    //margin-top: -10px;
-  }
-
-  .page-container {
-    // background: #FFF;
-    //padding: 0 0.5rem;
-
-    .layui-laypage {
-      margin: 0.5rem 0 0.3rem 0;
-
-      span {
-        background: transparent;
-      }
-
-      .layui-laypage-spr {
-        background: #FFF;
-      }
+    .toolbox-container {
+        float: right;
     }
-  }
+
+    .table-addition-container {
+
+        &:has(*) {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .table-container {
+        width: 100%;
+        //margin-top: -10px;
+    }
+
+    .page-container {
+        // background: #FFF;
+        //padding: 0 0.5rem;
+
+        .layui-laypage {
+            margin: 0.5rem 0 0.3rem 0;
+
+            span {
+                background: transparent;
+            }
+
+            .layui-laypage-spr {
+                background: #FFF;
+            }
+        }
+    }
 }
 
 .ub-upload-button {
-  overflow: hidden;
-  position: relative;
+    overflow: hidden;
+    position: relative;
 
-  .webuploader-pick {
-    display: inline-block;
-    padding: 1px;
-  }
-
-  .webuploader-container {
-    display: inline-block;
-  }
-
-  .webuploader-list {
-    position: absolute;
-    bottom: 1px;
-    left: 0;
-    right: 0;
-
-    & > li {
-      padding: 0;
-      border: 0;
-
-      .progress-box {
-        height: 2px;
-        border: none;
-
-        .progress-bar {
-          background-color: var(--color-primary);
-          height: 2px;
-          border-radius: 2px;
-        }
-      }
-
-      .progress-info {
-        display: none;
-      }
+    .webuploader-pick {
+        display: inline-block;
+        padding: 1px;
     }
-  }
+
+    .webuploader-container {
+        display: inline-block;
+    }
+
+    .webuploader-list {
+        position: absolute;
+        bottom: 1px;
+        left: 0;
+        right: 0;
+
+        & > li {
+            padding: 0;
+            border: 0;
+
+            .progress-box {
+                height: 2px;
+                border: none;
+
+                .progress-bar {
+                    background-color: var(--color-primary);
+                    height: 2px;
+                    border-radius: 2px;
+                }
+            }
+
+            .progress-info {
+                display: none;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 40rem) {
-  body > :not(.ub-panel-dialog) {
-    .ub-form {
-      .line {
-        padding: 0.5rem;
+    body > :not(.ub-panel-dialog) {
+        .ub-form {
+            .line {
+                padding: 0.5rem;
 
-        .label {
-          float: none;
-          margin: 0;
-          width: 100%;
-          text-align: left;
-          line-height: inherit !important;
-          padding-bottom: 0.1rem;
+                .label {
+                    float: none;
+                    margin: 0;
+                    width: 100%;
+                    text-align: left;
+                    line-height: inherit !important;
+                    padding-bottom: 0.1rem;
+                }
+            }
         }
-      }
     }
-  }
 }

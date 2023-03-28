@@ -21,8 +21,8 @@
 }
 
 .ub-lister-search {
-    overflow: hidden;
-    position: relative;
+    // overflow: hidden;
+    // position: relative;
 
     .field-more-expand {
         display: none;
@@ -36,10 +36,10 @@
     }
 
     .field {
-        float: left;
-        display: flex;
+        //float: left;
+        display: inline-flex;
         margin: 0 0.5rem 0.5rem 0;
-        overflow: hidden;
+        // overflow: hidden;
         min-width: 9rem;
 
         &.auto {
@@ -143,6 +143,17 @@
 
         td {
             font-size: 12px;
+            padding: 0.1rem;
+        }
+
+        tbody {
+            tr {
+                &:last-child {
+                    td {
+                        border-bottom: none;
+                    }
+                }
+            }
         }
     }
 
@@ -193,8 +204,8 @@
     }
 
     &.hover {
-        tbody{
-            tr:hover{
+        tbody {
+            tr:hover {
                 td {
                     background: #F4F8FB;
                 }

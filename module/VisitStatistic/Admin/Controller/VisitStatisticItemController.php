@@ -36,6 +36,7 @@ class VisitStatisticItemController extends Controller
                 ButtonDialogRequest::primary('设置', modstart_admin_url('visit_statistic/config'))
             )
             ->title('网站访问记录')
+            ->canBatchDelete(true)
             ->canAdd(false)->canEdit(false)->canShow(false);
     }
 }

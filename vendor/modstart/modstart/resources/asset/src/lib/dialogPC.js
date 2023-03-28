@@ -28,6 +28,10 @@ let Dialog = {
             return layer.load(2);
         }
     },
+    loadingUpdate: function (loading, msg) {
+        $('#layui-layer' + loading + ' .loading-text').html(msg)
+        $(window).resize()
+    },
     loadingOff: function () {
         layer.closeAll('loading');
     },

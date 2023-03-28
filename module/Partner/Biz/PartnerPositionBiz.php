@@ -10,6 +10,11 @@ class PartnerPositionBiz
 {
     use BizTrait;
 
+    public static function registerQuick($name, $title)
+    {
+        self::register(QuickPartnerPositionBiz::make($name, $title));
+    }
+
     /**
      * @return AbstractPartnerPositionBiz[]
      */

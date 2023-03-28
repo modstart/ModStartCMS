@@ -19,7 +19,11 @@ abstract class AbstractMemberAdminShowPanelProvider
 
     public function render($memberUser, $param = [])
     {
-        return View::make($this->renderView(), [
+        $view = $this->renderView();
+        if (empty($view)) {
+            return null;
+        }
+        return View::make($view, [
             'memberUser' => $memberUser,
             'param' => $param,
         ])->render();

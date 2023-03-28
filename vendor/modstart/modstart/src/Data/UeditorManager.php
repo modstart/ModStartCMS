@@ -13,6 +13,8 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Data\Event\DataUploadedEvent;
+use ModStart\Data\Event\DataUploadingEvent;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UeditorManager
@@ -150,6 +152,7 @@ class UeditorManager
             case 'config':
                 return Response::jsonRaw($config);
             case 'image':
+                DataUploadingEvent::fire($uploadTable, $userId, 'image');
                 $editorRet = [
                     'state' => 'SUCCESS',
                     'url' => null
@@ -167,8 +170,10 @@ class UeditorManager
                 }
                 self::saveToUser($uploadTable, $userId, $ret['data']['data']);
                 $editorRet['url'] = $ret['data']['fullPath'];
+                DataUploadedEvent::fire($uploadTable, $userId, 'image', $ret['data']['data']['id']);
                 return Response::jsonRaw($editorRet);
             case 'catch':
+                DataUploadingEvent::fire($uploadTable, $userId, 'image');
                 $editorRet = [
                     'state' => '',
                     'list' => null
@@ -202,6 +207,7 @@ class UeditorManager
                                     $ret['state'] = $ret['msg'];
                                 } else {
                                     self::saveToUser($uploadTable, $userId, $ret['data']['data']);
+                                    DataUploadedEvent::fire($uploadTable, $userId, 'image', $ret['data']['data']['id']);
                                     $saveList [] = [
                                         'state' => 'SUCCESS',
                                         'url' => $ret['data']['fullPath'],

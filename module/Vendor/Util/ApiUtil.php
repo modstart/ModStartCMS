@@ -27,13 +27,15 @@ class ApiUtil
         $data['siteFavIco'] = AssetsUtil::fixFull($config->get('siteFavIco'));
         $data['siteBeian'] = $config->get('siteBeian');
         $data['siteCDN'] = AssetsUtil::fixFull(AssetsUtil::cdn(), false);
-        
+
         $data['modules'] = ModuleManager::listAllEnableModuleNames();
 
         // 支付
+        /** @deprecated delete after 2023-09-27 */
         $data['payAlipayOn'] = $config->getBoolean('payAlipayOn');
         $data['payAlipayWebOn'] = $config->getBoolean('payAlipayWebOn');
         $data['payWechatOn'] = $config->getBoolean('payWechatOn');
+        $data['payMemberMoneyOn'] = $config->getBoolean('payMemberMoneyOn');
 
         // 上传
         $data['dataUpload'] = [];

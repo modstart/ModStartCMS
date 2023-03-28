@@ -8,14 +8,19 @@ use ModStart\Admin\Config\AdminMenu;
 use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ColorUtil;
+use ModStart\Data\Event\DataUploadedEvent;
+use ModStart\Data\Event\DataUploadingEvent;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleManager;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberHomeIcon;
 use Module\Member\Config\MemberMenu;
+use Module\Member\Model\MemberDataStatistic;
+use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Provider\MemberDeleteScheduleProvider;
 use Module\Member\Provider\VerifySmsTemplateProvider;
 use Module\Member\Util\MemberCreditUtil;
+use Module\Member\Util\MemberDataStatisticUtil;
 use Module\Member\Util\MemberMoneyUtil;
 use Module\PayCenter\Biz\PayCenterBiz;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
@@ -33,18 +38,22 @@ class ModuleServiceProvider extends ServiceProvider
     public function boot(Dispatcher $events)
     {
         MemberMenu::register(function () {
+            $moneyEnable = ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable');
+            $creditEnable = ModuleManager::getModuleConfigBoolean('Member', 'creditEnable');
+            $creditName = '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分');
+            $addressEnable = ModuleManager::getModuleConfigBoolean('Member', 'addressEnable');
             return [
                 [
                     'icon' => 'details',
                     'title' => '资产',
                     'sort' => 900,
                     'children' => [
-                        ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? [
+                        $moneyEnable ? [
                             'title' => '我的钱包',
                             'url' => modstart_web_url('member_money'),
                         ] : null,
-                        ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [
-                            'title' => '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分'),
+                        $creditEnable ? [
+                            'title' => $creditName,
                             'url' => modstart_web_url('member_credit'),
                         ] : null,
                     ],
@@ -54,7 +63,7 @@ class ModuleServiceProvider extends ServiceProvider
                     'title' => '我的',
                     'sort' => 1000,
                     'children' => [
-                        ModuleManager::getModuleConfigBoolean('Member', 'addressEnable') ? [
+                        $addressEnable ? [
                             'title' => '我的地址',
                             'url' => modstart_web_url('member_address'),
                         ] : null,
@@ -85,21 +94,24 @@ class ModuleServiceProvider extends ServiceProvider
         ScheduleProvider::register(MemberDeleteScheduleProvider::class);
 
         MemberHomeIcon::register(function () {
+            $moneyEnable = ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable');
+            $creditEnable = ModuleManager::getModuleConfigBoolean('Member', 'creditEnable');
+            $creditName = '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分');
             return [
                 [
                     'title' => '我的',
                     'sort' => 1000,
                     'children' => [
-                        ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? [
+                        $moneyEnable ? [
                             'icon' => 'iconfont icon-pay',
                             'value' => sprintf('￥%.2f', MemberMoneyUtil::getTotal(MemberUser::id())),
                             'title' => '我的钱包',
                             'url' => modstart_web_url('member_money'),
                         ] : null,
-                        ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ? [
+                        $creditEnable ? [
                             'icon' => 'iconfont icon-credit',
                             'value' => MemberCreditUtil::getTotal(MemberUser::id()),
-                            'title' => '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分'),
+                            'title' => $creditName,
                             'url' => modstart_web_url('member_credit'),
                         ] : null,
                         [
@@ -157,7 +169,25 @@ class ModuleServiceProvider extends ServiceProvider
             PayCenterBiz::register(MemberVipPayCenterBiz::class);
         }
 
+        if (ModuleManager::getModuleConfig('Member', 'dataStatisticEnable', false)) {
+            MemberAdminShowPanelProvider::register(MemberDataStatisticAdminShowPanelProvider::class);
+            if (class_exists(DataUploadingEvent::class)) {
+                DataUploadingEvent::listen('member_upload', function (DataUploadingEvent $e) {
+                    MemberDataStatisticUtil::checkQuota($e->userId);
+                });
+            }
+            if (class_exists(DataUploadedEvent::class)) {
+                DataUploadedEvent::listen('member_upload', function (DataUploadedEvent $e) {
+                    MemberDataStatistic::updateMemberUserUsedSize($e->userId);
+                });
+            }
+        }
+
         AdminMenu::register(function () {
+            $moneyEnable = ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable');
+            $creditEnable = ModuleManager::getModuleConfigBoolean('Member', 'creditEnable');
+            $vipEnable = ModuleManager::getModuleConfigBoolean('Member', 'vipEnable');
+            $groupEnable = ModuleManager::getModuleConfigBoolean('Member', 'groupEnable');
             return [
                 [
                     'title' => '用户中心',
@@ -175,28 +205,23 @@ class ModuleServiceProvider extends ServiceProvider
                         [
                             'title' => '用户资产',
                             'children' => [
-                                ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ?
+                                $moneyEnable ?
                                     [
                                         'title' => '用户钱包流水',
                                         'url' => '\Module\Member\Admin\Controller\MemberMoneyLogController@index',
                                     ] : null,
-                                ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ?
+                                $moneyEnable ?
                                     [
                                         'title' => '用户钱包提现申请',
                                         'url' => '\Module\Member\Admin\Controller\MemberMoneyCashController@index',
                                     ] : null,
-                                ModuleManager::getModuleConfigBoolean('Member', 'creditEnable') ?
+                                $creditEnable ?
                                     [
                                         'title' => '用户积分流水',
                                         'url' => '\Module\Member\Admin\Controller\MemberCreditLogController@index',
                                     ] : null,
                             ]
                         ],
-                        ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ?
-                            [
-                                'title' => '用户VIP订单',
-                                'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
-                            ] : null,
                         [
                             'title' => '用户设置',
                             'sort' => 999999,
@@ -209,24 +234,47 @@ class ModuleServiceProvider extends ServiceProvider
                                     'title' => '用户协议',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@agreement',
                                 ],
-                                ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable') ? [
+                                $moneyEnable ? [
                                     'title' => '钱包设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@money',
                                 ] : null,
-                                ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? [
+                                $vipEnable ? [
                                     'title' => '用户VIP设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@vip',
                                 ] : null,
-                                ModuleManager::getModuleConfigBoolean('Member', 'vipEnable') ? [
+                                $vipEnable ? [
                                     'title' => '用户VIP等级',
                                     'url' => '\Module\Member\Admin\Controller\MemberVipSetController@index',
                                 ] : null,
-                                ModuleManager::getModuleConfigBoolean('Member', 'groupEnable') ? [
+                                $groupEnable ? [
                                     'title' => '用户分组',
                                     'url' => '\Module\Member\Admin\Controller\MemberGroupController@index',
                                 ] : null,
                             ]
                         ]
+                    ]
+                ],
+                [
+                    'title' => '财务中心',
+                    'icon' => 'cny',
+                    'sort' => 200,
+                    'children' => [
+                        [
+                            'title' => '业务订单',
+                            'sort' => 999999,
+                            'children' => [
+                                $moneyEnable ?
+                                    [
+                                        'title' => '用户钱包充值订单',
+                                        'url' => '\Module\Member\Admin\Controller\MemberMoneyChargeOrderController@index',
+                                    ] : null,
+                                $vipEnable ?
+                                    [
+                                        'title' => '用户VIP订单',
+                                        'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
+                                    ] : null,
+                            ],
+                        ],
                     ]
                 ],
             ];

@@ -17,7 +17,6 @@
 </div>
 <script>
     layui.use('form', function () {
-        var form = layui.form;
-        form.render('checkbox','{{$name}}');
+        layui.form.render('checkbox','{{$name}}');
     });
 </script>

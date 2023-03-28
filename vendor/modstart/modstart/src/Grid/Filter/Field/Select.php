@@ -13,6 +13,7 @@ use ModStart\Core\Type\BaseType;
 class Select extends AbstractFilterField
 {
     protected $options = [];
+    protected $selectSearch = false;
 
     protected function setup()
     {
@@ -32,5 +33,17 @@ class Select extends AbstractFilterField
             BizException::throws('Select options error');
         }
         $this->options = $value;
+        return $this;
     }
+
+    public function selectSearch($value = null)
+    {
+        if (null === $value) {
+            return $this->selectSearch;
+        }
+        $this->setFluentAttribute('selectSearch', $value);
+        return $this;
+    }
+
+
 }

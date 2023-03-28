@@ -64,18 +64,6 @@ class AuthController extends ModuleBaseController
             $redirectData['dialog'] = $dialog;
         }
         $this->api->checkRedirectSafety($redirect);
-        if (modstart_config('ssoClientEnable', false)) {
-            Input::merge(['client' => Request::domainUrl() . '/sso/client']);
-            $ret = $this->api->ssoClientPrepare();
-            if ($ret['code']) {
-                return Response::send(-1, $ret['msg']);
-            }
-            Session::put('ssoClientRedirect', $redirect);
-            if ($dialog) {
-                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($ret['data']['redirect']) . ';');
-            }
-            return Response::send(0, null, null, $ret['data']['redirect']);
-        }
         if (Request::isPost()) {
             $ret = $this->api->login();
             if (Response::isError($ret)) {
@@ -86,15 +74,64 @@ class AuthController extends ModuleBaseController
             }
             return Response::send(0, '', '', $redirect);
         }
-        if (modstart_config('Member_LoginPhoneEnable', false)) {
-            $loginDefault = modstart_config('Member_LoginDefault', 'default');
-            if ('phone' == $loginDefault) {
-                $force = $input->getBoolean('force', false);
-                if (!$force) {
-                    return Response::redirect(modstart_web_url('login/phone', $redirectData));
-                }
+        $loginDefault = modstart_config('Member_LoginDefault', 'default');
+        if ('sso' == $loginDefault && modstart_config('ssoClientEnable', false)) {
+            $force = $input->getBoolean('force', false);
+            if (!$force) {
+                return Response::redirect(modstart_web_url('login/sso', $redirectData));
+            }
+        } else if ('phone' == $loginDefault && modstart_config('Member_LoginPhoneEnable', false)) {
+            $force = $input->getBoolean('force', false);
+            if (!$force) {
+                return Response::redirect(modstart_web_url('login/phone', $redirectData));
             }
         }
+        $view = 'login';
+        if ($dialog) {
+            $view = 'loginDialog';
+        }
+        return $this->view($view, $redirectData);
+    }
+
+    public function loginSso()
+    {
+        if (!modstart_config('ssoClientEnable', false)) {
+            return Response::generateError('SSO登录未开启');
+        }
+        $input = InputPackage::buildFromInput();
+        $dialog = $input->getInteger('dialog');
+        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        $redirectData = [
+            'redirect' => $redirect,
+        ];
+        if ($dialog) {
+            $redirectData['dialog'] = $dialog;
+        }
+        $this->api->checkRedirectSafety($redirect);
+        Input::merge(['client' => Request::domainUrl() . '/sso/client']);
+        $ret = $this->api->ssoClientPrepare();
+        if ($ret['code']) {
+            return Response::send(-1, $ret['msg']);
+        }
+        Session::put('ssoClientRedirect', $redirect);
+        if ($dialog) {
+            return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($ret['data']['redirect']) . ';');
+        }
+        return Response::send(0, null, null, $ret['data']['redirect']);
+    }
+
+    public function loginOther()
+    {
+        $input = InputPackage::buildFromInput();
+        $dialog = $input->getInteger('dialog');
+        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
+        $redirectData = [
+            'redirect' => $redirect,
+        ];
+        if ($dialog) {
+            $redirectData['dialog'] = $dialog;
+        }
+        $this->api->checkRedirectSafety($redirect);
         $view = 'login';
         if ($dialog) {
             $view = 'loginDialog';
@@ -373,10 +410,16 @@ class AuthController extends ModuleBaseController
 
     public function oauthBind($oauthType = null)
     {
-        $redirect = Session::get('oauthRedirect', modstart_web_url('member'));
+        $input = InputPackage::buildFromInput();
+        $redirect = Session::get('oauthRedirect');
+        if (empty($redirect)) {
+            $redirect = $input->getTrimString('redirect');
+        }
+        if (empty($redirect)) {
+            $redirect = modstart_web_url('member');
+        }
         $this->api->checkRedirectSafety($redirect);
         if (Request::isPost()) {
-            $input = InputPackage::buildFromInput();
             $ret = $this->api->oauthBind($oauthType);
             if ($ret['code']) {
                 if ($input->getTrimString('captcha')) {

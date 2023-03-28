@@ -28,7 +28,7 @@ class MemberCreditController extends Controller
         $form->number('change', '积分变更')->help('负数表示减少')->required();
         $form->text('remark', '说明')->defaultValue('系统变更')->required();
         $form->showSubmit(false)->showReset(false);
-        return $page->pageTitle('积分充值')->body($form)->handleForm($form, function (Form $form) use ($memberUserId) {
+        return $page->pageTitle('积分变更')->body($form)->handleForm($form, function (Form $form) use ($memberUserId) {
             AdminPermission::demoCheck();
             $data = $form->dataForming();
             ModelUtil::transactionBegin();

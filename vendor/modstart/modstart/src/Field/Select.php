@@ -17,7 +17,14 @@ class Select extends AbstractField
         $this->addVariables([
             'options' => [],
             'onValueChangeJsFunction' => '',
+            'selectSearch' => false,
         ]);
+    }
+
+    public function selectSearch($value)
+    {
+        $this->addVariables(['selectSearch' => $value]);
+        return $this;
     }
 
     public function options($options)

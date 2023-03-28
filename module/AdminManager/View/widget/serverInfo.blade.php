@@ -1,6 +1,9 @@
 <div class="ub-panel ub-cover">
     <div class="head">
-        <div class="title">服务器信息</div>
+        <div class="title">
+            <i class="iconfont icon-desktop"></i>
+            服务器信息
+        </div>
     </div>
     <div class="body">
         <table class="ub-table tw-font-mono">

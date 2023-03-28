@@ -7,6 +7,7 @@ $router->match(['get', 'post'], 'member/config/agreement', 'ConfigController@agr
 $router->match(['get', 'post'], 'member/config/vip', 'ConfigController@vip');
 $router->match(['get', 'post'], 'member/config/money', 'ConfigController@money');
 $router->match(['get', 'post'], 'member/config/credit', 'ConfigController@credit');
+$router->match(['post'], 'member/config/data_statistic', 'ConfigController@dataStatistic');
 
 $router->match(['get', 'post'], 'member/dashboard', 'MemberDashboardController@index');
 
@@ -34,6 +35,12 @@ $router->match(['get', 'post'], 'member_vip_order/add', 'MemberVipOrderControlle
 $router->match(['get', 'post'], 'member_vip_order/edit', 'MemberVipOrderController@edit');
 $router->match(['post'], 'member_vip_order/delete', 'MemberVipOrderController@delete');
 $router->match(['get'], 'member_vip_order/show', 'MemberVipOrderController@show');
+
+$router->match(['get', 'post'], 'member/money_charge_order', 'MemberMoneyChargeOrderController@index');
+$router->match(['get', 'post'], 'member/money_charge_order/add', 'MemberMoneyChargeOrderController@add');
+$router->match(['get', 'post'], 'member/money_charge_order/edit', 'MemberMoneyChargeOrderController@edit');
+$router->match(['post'], 'member/money_charge_order/delete', 'MemberMoneyChargeOrderController@delete');
+$router->match(['get'], 'member/money_charge_order/show', 'MemberMoneyChargeOrderController@show');
 
 $router->match(['get', 'post'], 'member_money_log', 'MemberMoneyLogController@index');
 $router->match(['get', 'post'], 'member_money_log/add', 'MemberMoneyLogController@add');

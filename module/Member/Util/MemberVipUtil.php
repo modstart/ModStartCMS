@@ -15,6 +15,14 @@ class MemberVipUtil
         return ModuleManager::getModuleConfigBoolean('Member', 'vipEnable');
     }
 
+    public static function allWithGuest()
+    {
+        $vips = [];
+        $vips[] = ['id' => 0, 'title' => '游客'];
+        $vips = array_merge($vips, self::all());
+        return $vips;
+    }
+
     public static function all()
     {
         return CacheUtil::rememberForever('MemberVipList', function () {
@@ -49,6 +57,16 @@ class MemberVipUtil
             }
         }
         return $vips;
+    }
+
+    public static function mapTitleWithGuest()
+    {
+        $map = [];
+        $map[0] = '游客';
+        foreach (self::map() as $k => $v) {
+            $map[$k] = $v['title'];
+        }
+        return $map;
     }
 
     public static function mapTitle()
@@ -88,6 +106,25 @@ class MemberVipUtil
             return $vip;
         }
         return isset($vip[$key]) ? $vip[$key] : $defaultValue;
+    }
+
+    public static function sortRecordsByVipOrder($records)
+    {
+        $vipSortMap = [0 => 0];
+        foreach (MemberVipUtil::all() as $i => $v) {
+            $vipSortMap[$v['id']] = $i + 1;
+        };
+        usort($records, function ($a, $b) use ($vipSortMap) {
+            if (isset($vipSortMap[$a['vipId']]) && isset($vipSortMap[$b['vipId']])) {
+                return $vipSortMap[$a['vipId']] - $vipSortMap[$b['vipId']];
+            } else if (isset($vipSortMap[$a['vipId']])) {
+                return -1;
+            } else if (isset($vipSortMap[$b['vipId']])) {
+                return 1;
+            }
+            return 0;
+        });
+        return $records;
     }
 
     public static function getDefaultVip()

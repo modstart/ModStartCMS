@@ -214,4 +214,6 @@ return [
     'Full Screen' => '全屏',
     'Shrink/Expand Menu' => '收缩/展开菜单',
     'Refresh Page' => '刷新页面',
+    'Field %s Too Long' => '字段%s长度太长',
+    'Field %s Format Error' => '字段%s格式不正确',
 ];

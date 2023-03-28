@@ -185,7 +185,7 @@ HTML;
                     $this->value = '&nbsp;';
                 }
                 return <<<HTML
-<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-pt-4 margin-bottom tw-transform tw-duration-300 hover:tw--translate-y-1" data-tab-open data-tab-title="{$tabTitle}" {$this->formatAttributes()}>
+<a href="{$this->link}" class="tw-block tw-bg-white tw-text-center tw-rounded tw-pt-4 margin-bottom tw-transform tw-duration-300 hover:tw--translate-y-1 tw-transition" data-tab-open data-tab-title="{$tabTitle}" {$this->formatAttributes()}>
     <div style="height:2rem;">
         <i class="{$this->icon}" style="font-size:1.5rem;line-height:2rem;color:{$this->color};"></i>
     </div>

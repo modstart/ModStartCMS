@@ -1,12 +1,15 @@
 <div class="field auto" data-grid-filter-field="{{$id}}" data-grid-filter-field-column="{{$column}}">
     <div class="name">{{$label}}</div>
     <div class="input">
-        <select class="form" id="{{$id}}Select">
-            <option value="" @if(null===$defaultValue) selected @endif>{{L('All')}}</option>
-            @foreach($field->options() as $k=>$v)
-                <option value="{{$k}}" @if(null!==$defaultValue&&$defaultValue==$k) selected @endif>{{$v}}</option>
-            @endforeach
-        </select>
+        <div class="layui-form tw-inline-block" lay-filter="{{$id}}">
+            <select class="form" id="{{$id}}Select"
+                    @if($field->selectSearch()) lay-search @else lay-ignore @endif>
+                <option value="" @if(null===$defaultValue) selected @endif>{{L('All')}}</option>
+                @foreach($field->options() as $k=>$v)
+                    <option value="{{$k}}" @if(null!==$defaultValue&&$defaultValue==$k) selected @endif>{{$v}}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 </div>
 <script>

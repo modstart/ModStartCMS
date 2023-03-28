@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div class="body ub-list-items">
-                        @foreach(\MCms::latestCat($cat['id']) as $a)
+                        @foreach(\MCms::latestContentByCat($cat['id']) as $a)
                             <a class="item-c" href="{{$a['_url']}}">{{$a['title']}}</a>
                         @endforeach
                     </div>

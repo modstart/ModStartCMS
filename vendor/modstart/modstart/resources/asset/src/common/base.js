@@ -48,6 +48,24 @@ const Header = {
     },
 }
 
+const Ui = {
+    onResize(ele, cb) {
+        if (!window.ResizeObserver) {
+            return;
+        }
+        var resizeTimer = null;
+        var resizeObserver = new ResizeObserver(function (entries) {
+            if (resizeTimer) {
+                clearTimeout(resizeTimer);
+            }
+            resizeTimer = setTimeout(function () {
+                cb();
+            }, 100);
+        });
+        resizeObserver.observe(ele);
+    }
+}
+
 const MS = {
     ready() {
         let args = Array.from(arguments)
@@ -71,6 +89,7 @@ const MS = {
         }
         cb()
     },
+    ui: Ui,
     dialog: Dialog,
     util: Util,
     form: Form,

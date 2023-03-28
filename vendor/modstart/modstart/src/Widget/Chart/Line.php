@@ -81,7 +81,7 @@ class Line extends AbstractWidget
     public function ySeries($i, $value, $name = '数量', $param = [])
     {
         if (!isset($param['lineColor'])) {
-            $param['lineColor'] = ColorUtil::pick('LineColor-' . $i);
+            $param['lineColor'] = ColorUtil::pick('L-' . $i);
         }
         $this->option['legend']['data'][$i] = $name;
         $this->option['series'][$i] = [

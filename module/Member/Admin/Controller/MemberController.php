@@ -106,10 +106,12 @@ class MemberController extends Controller
                     MemberStatus::FORBIDDEN => 'danger',
                 ])->required();
                 // ->gridEditable(true)
-                if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+                $groupEnable = ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false);
+                if ($groupEnable) {
                     $builder->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
                 }
-                if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+                $vipEnable = ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false);
+                if ($vipEnable) {
                     $builder->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
                     $builder->date('vipExpire', 'VIP过期');
                 }
@@ -140,7 +142,7 @@ class MemberController extends Controller
                 $itemOperate->prepend(
                     TextDialogRequest::make(
                         'primary',
-                        '用户信息',
+                        '查看',
                         modstart_admin_url('member/show', ['_id' => $item->id])
                     )->width('90%')->height('90%')->render()
                 );
@@ -148,8 +150,8 @@ class MemberController extends Controller
             ->title('用户管理')
             ->canShow(false)
             ->canDelete(true)
-            ->canExport(ModuleManager::getModuleConfigBoolean('Member', 'exportEnable'))
-            ->textEdit('修改账号');
+            ->canEdit(false)
+            ->canExport(ModuleManager::getModuleConfigBoolean('Member', 'exportEnable'));
     }
 
     public function add(AdminDialogPage $page)
@@ -239,7 +241,7 @@ class MemberController extends Controller
         });
         $form->item($memberUser)->fillFields();
         $form->showSubmit(false)->showReset(false);
-        return $page->pageTitle('创建用户')->body($form)->handleForm($form, function (Form $form) use ($memberUser) {
+        return $page->pageTitle('修改信息')->body($form)->handleForm($form, function (Form $form) use ($memberUser) {
             AdminPermission::demoCheck();
             $data = $form->dataForming();
             $basic = ArrayUtil::keepKeys($data, [

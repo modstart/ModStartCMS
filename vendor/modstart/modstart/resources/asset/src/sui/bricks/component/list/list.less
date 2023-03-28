@@ -257,33 +257,44 @@
     }
 
     .item-d {
-        border-bottom: 0.05rem dashed #CCC;
+        border-bottom: 0.05rem dashed var(--color-body-line);
         padding: var(--size-margin) 0;
+
+        &:hover {
+            .title {
+                color: var(--color-primary);
+            }
+        }
 
         .title {
             font-size: var(--font-size-large);
             color: var(--color-text);
             line-height: 1.4rem;
-        }
-
-        .attr {
-            color: #c4cfdb;
-            font-size: var(--font-size);
-            padding: 0.25rem 0 0 0;
-
-            a {
-                color: #c4cfdb;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
+            transition: color 0.2s ease-in-out;
         }
 
         .summary {
-            color: #c4cfdb;
+            color: var(--color-tertiary);
             font-size: var(--font-size);
             padding: 0.25rem 0 0 0;
+        }
+
+        .action {
+            display: flex;
+            padding-top: 0.25rem;
+            color: var(--color-muted);
+
+            a {
+                color: var(--color-muted);
+            }
+
+            .left {
+                flex-grow: 1;
+            }
+
+            .right {
+
+            }
         }
     }
 
@@ -1216,6 +1227,7 @@
             width: 1.5rem;
             height: 1.5rem;
             vertical-align: middle;
+            margin-right: 0.2rem;
         }
     }
 }

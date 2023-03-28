@@ -36,7 +36,7 @@
 </script>
 @foreach(\ModStart\Field\Plugin\RichHtmlPlugin::all() as $plugin)
     {!! $plugin->render([
-        'currentApp'=>\Illuminate\Support\Facades\Session::get('_currentApp'),
+        'currentApp'=>\ModStart\App\Core\CurrentApp::get(),
         'fieldId'=>$id,
         'name'=>$name
     ]) !!}

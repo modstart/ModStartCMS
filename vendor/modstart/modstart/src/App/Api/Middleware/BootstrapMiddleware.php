@@ -4,6 +4,7 @@ namespace ModStart\App\Api\Middleware;
 
 use Illuminate\Http\Request;
 use ModStart\App\Core\AccessGate;
+use ModStart\App\Core\CurrentApp;
 use ModStart\Core\Input\Response;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Support\Manager\WidgetManager;
@@ -22,6 +23,10 @@ class BootstrapMiddleware
 
     public function handle(Request $request, \Closure $next)
     {
+        if (method_exists(CurrentApp::class, 'set')) {
+            CurrentApp::set(CurrentApp::API);
+        }
+
         foreach (self::$gates as $item) {
             /** @var AccessGate $instance */
             $instance = app($item);

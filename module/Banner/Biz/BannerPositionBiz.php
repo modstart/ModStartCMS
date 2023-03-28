@@ -10,6 +10,11 @@ class BannerPositionBiz
 {
     use BizTrait;
 
+    public static function registerQuick($name, $title)
+    {
+        self::register(QuickBannerPositionBiz::make($name, $title));
+    }
+
     /**
      * @return AbstractBannerPositionBiz[]
      */

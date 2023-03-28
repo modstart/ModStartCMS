@@ -34,4 +34,16 @@ class Range extends AbstractFilter
         return $this;
     }
 
+    public function text()
+    {
+        $this->field = new Field\Text($this);
+        return $this;
+    }
+
+    public function number()
+    {
+        $this->field = new Field\Number($this);
+        return $this;
+    }
+
 }

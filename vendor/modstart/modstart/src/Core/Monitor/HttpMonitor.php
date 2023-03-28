@@ -43,6 +43,7 @@ class HttpMonitor
                 $e->method = $method;
                 $e->time = $time;
                 $e->statusCode = 0;
+                $e->response = $response;
                 if (method_exists($response, 'status')) {
                     $e->statusCode = $response->status();
                 } else if (method_exists($response, 'getStatusCode')) {

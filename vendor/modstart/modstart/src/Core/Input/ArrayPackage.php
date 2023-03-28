@@ -5,6 +5,7 @@ namespace ModStart\Core\Input;
 
 
 use ModStart\Core\Util\StrUtil;
+use ModStart\Core\Util\TimeUtil;
 
 class ArrayPackage
 {
@@ -89,5 +90,14 @@ class ArrayPackage
             return $value;
         }
         return intval($value);
+    }
+
+    public function nextDatetime($defaultValue = null)
+    {
+        $value = $this->next($defaultValue);
+        if (TimeUtil::isDatetimeEmpty($value)) {
+            return $defaultValue;
+        }
+        return $value;
     }
 }

@@ -16,6 +16,7 @@ use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EncodeUtil;
 use ModStart\Core\Util\FormatUtil;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\StrUtil;
 use ModStart\Data\DataManager;
 use ModStart\Data\Event\DataFileUploadedEvent;
 use Module\Member\Events\MemberUserLoginAttemptEvent;
@@ -823,7 +824,7 @@ class MemberUtil
             'memberUserId' => $memberUserId,
             'deviceType' => DeviceType::current(),
             'ip' => $ip,
-            'userAgent' => AgentUtil::getUserAgent(),
+            'userAgent' => StrUtil::mbLimit(AgentUtil::getUserAgent(), 400),
         ]);
     }
 

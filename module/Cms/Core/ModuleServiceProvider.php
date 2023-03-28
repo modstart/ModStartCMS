@@ -15,7 +15,6 @@ use Module\Cms\Provider\CmsHomePageProvider;
 use Module\Cms\Provider\Theme\CmsThemeProvider;
 use Module\Cms\Provider\Theme\DefaultThemeProvider;
 use Module\Cms\Util\CmsModelUtil;
-use Module\SiteMapManager\Biz\SiteMapManagerBiz;
 use Module\TagManager\Biz\TagManagerBiz;
 use Module\Vendor\Admin\Config\AdminWidgetDashboard;
 use Module\Vendor\Admin\Config\AdminWidgetLink;
@@ -143,11 +142,6 @@ class ModuleServiceProvider extends ServiceProvider
 
         if (ModuleManager::isModuleEnabled('TagManager')) {
             TagManagerBiz::register(CmsTagManagerBiz::class);
-        }
-        if (modstart_module_enabled('SiteMapManager')) {
-            if (class_exists(SiteMapManagerBiz::class)) {
-                SiteMapManagerBiz::register(CmsSiteMapManagerBiz::class);
-            }
         }
 
     }

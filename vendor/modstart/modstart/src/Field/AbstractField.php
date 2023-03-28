@@ -129,8 +129,17 @@ class AbstractField implements Renderable
     protected $context;
 
     private $id;
+    /**
+     * @var string 表单name
+     */
     private $name;
+    /**
+     * @var string 数据表字段名
+     */
     private $column;
+    /**
+     * @var mixed|null 表单名称
+     */
     protected $label;
     protected $value = null;
     protected $fixedValue = null;

@@ -507,6 +507,7 @@ class FileUtil
     {
         $path = realpath($path);
         if (empty($path)) {
+            // realpath() returns false on failure, e.g. if the file does not exist.
             BizException::throws('FileSafePath File Not Exists');
         }
         $whiteList = [];

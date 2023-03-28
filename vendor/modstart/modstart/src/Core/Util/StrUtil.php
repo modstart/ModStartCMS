@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 /**
  * Class StrUtil
  * @package ModStart\Core\Util
+ * @Util 字符串处理
  */
 class StrUtil
 {
@@ -124,14 +125,32 @@ class StrUtil
     }
 
     /**
-     * 裁减字符串
-     * @param $text
-     * @param $limit
+     * @Util 按照UTF8编码裁减字符串（汉字和英文都占1个宽度）
+     * @param $text string 待裁剪字符串
+     * @param $limit int
      * @return string
      */
     public static function mbLimit($text, $limit)
     {
         return Str::limit($text, $limit, '');
+    }
+
+    /**
+     * @Util 计算UTF8字符串宽度（汉字和英文都占1个宽度）
+     * @param $text string
+     * @return int
+     */
+    public static function mbLength($text)
+    {
+        if (empty($text)) {
+            return 0;
+        }
+        return intval(mb_strwidth($text, 'UTF-8'));
+    }
+
+    public static function mbLengthGt($text, $limit)
+    {
+        return self::mbLength($text) > $limit;
     }
 
 }

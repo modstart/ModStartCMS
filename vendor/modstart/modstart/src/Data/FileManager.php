@@ -15,6 +15,8 @@ use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\ImageUtil;
 use ModStart\Core\Util\PathUtil;
 use ModStart\Core\Util\TreeUtil;
+use ModStart\Data\Event\DataUploadedEvent;
+use ModStart\Data\Event\DataUploadingEvent;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileManager
@@ -129,6 +131,7 @@ class FileManager
      */
     private static function uploadDirectExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
         /** @var UploadedFile $file */
         $file = Input::file('file');
         if (empty($file)) {
@@ -153,6 +156,7 @@ class FileManager
         if (Input::get('fullPath', false)) {
             $data['fullPath'] = PathUtil::fixFull($data['fullPath']);
         }
+        DataUploadedEvent::fire($uploadTable, $userId, $category, $data['id']);
         return Response::jsonSuccessData($data);
     }
 
@@ -170,6 +174,7 @@ class FileManager
      */
     private static function uploadDirectRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
         /** @var UploadedFile $file */
         $file = Input::file('file');
         if (empty($file)) {
@@ -181,6 +186,7 @@ class FileManager
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
         }
+        DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
         return Response::jsonSuccessData([
             'path' => $ret['data']['path'],
             'fullPath' => $ret['data']['fullPath'],
@@ -191,6 +197,7 @@ class FileManager
 
     private static function uploadAndSaveBase64Execute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
         $input = InputPackage::buildFromInput();
         $filename = $input->getTrimString('filename');
         $content = $input->getBase64Image('data');
@@ -202,6 +209,7 @@ class FileManager
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
+        DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
         return Response::jsonSuccessData([
             'path' => $ret['data']['path'],
             'fullPath' => $ret['data']['fullPath'],
@@ -212,6 +220,7 @@ class FileManager
 
     private static function saveExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
         $path = $input->getTrimString('path');
         $categoryId = $input->getInteger('categoryId', -1);
         BizException::throwsIfEmpty('path empty', $path);
@@ -224,6 +233,7 @@ class FileManager
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
+        DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
         return Response::jsonSuccessData([
             'data' => ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']),
             'fullPath' => $ret['data']['fullPath'],
@@ -244,6 +254,7 @@ class FileManager
      */
     private static function saveRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
         $path = $input->getTrimString('path');
         $categoryId = max($input->getInteger('categoryId'), 0);
         BizException::throwsIfEmpty('path empty', $path);
@@ -252,19 +263,22 @@ class FileManager
             return Response::jsonError($ret['msg']);
         }
         $data = $ret['data']['data'];
+        DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
         return Response::jsonSuccessData([
             'data' => ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']),
             'fullPath' => $ret['data']['fullPath'],
         ]);
     }
 
-    private static function uploadExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function initExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
         return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option);
     }
 
-    private static function initExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function uploadExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
         return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option);
     }
 

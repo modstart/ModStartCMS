@@ -9,6 +9,7 @@ use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
+use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
 use Module\Member\Util\MemberCmsUtil;
 
@@ -36,6 +37,9 @@ class MemberCreditLogController extends Controller
                     });
                 $builder->text('remark', '备注');
                 $builder->display('created_at', L('Created At'));
+            })
+            ->gridFilter(function (GridFilter $filter) {
+                $filter->eq('memberUserId', '用户ID');
             })
             ->title('用户积分流水')->canAdd(false)->canEdit(false)->canDelete(false);
     }

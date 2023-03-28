@@ -16,55 +16,57 @@ use ModStart\Layout\LayoutTab;
  * @package ModStart\Support\Concern
  *
  *
- * @method \ModStart\Field\Display        display($column, $label = '')
- * @method \ModStart\Field\Text           text($column, $label = '')
- * @method \ModStart\Field\Tree           tree($column, $label = '')
- * @method \ModStart\Field\Checkbox       checkbox($column, $label = '')
- * @method \ModStart\Field\Password       password($column, $label = '')
- * @method \ModStart\Field\Image          image($column, $label = '')
- * @method \ModStart\Field\Images         images($column, $label = '')
- * @method \ModStart\Field\ImagesTemp     imagesTemp($column, $label = '')
- * @method \ModStart\Field\FileTemp       fileTemp($column, $label = '')
- * @method \ModStart\Field\Link           link($column, $label = '')
- * @method \ModStart\Field\SwitchField    switch ($column, $label = '')
- * @method \ModStart\Field\Textarea       textarea($column, $label = '')
- * @method \ModStart\Field\Json           json($column, $label = '')
- * @method \ModStart\Field\JsonKeyValue   jsonKeyValue($column, $label = '')
- * @method \ModStart\Field\JsonIdItems    jsonIdItems($column, $label = '')
- * @method \ModStart\Field\Color          color($column, $label = '')
- * @method \ModStart\Field\Date           date($column, $label = '')
- * @method \ModStart\Field\Datetime       datetime($column, $label = '')
- * @method \ModStart\Field\Time           time($column, $label = '')
- * @method \ModStart\Field\Period         period($column, $label = '')
- * @method \ModStart\Field\Radio          radio($column, $label = '')
- * @method \ModStart\Field\Select         select($column, $label = '')
- * @method \ModStart\Field\SelectRemote   selectRemote($column, $label = '')
- * @method \ModStart\Field\RichHtml       richHtml($column, $label = '')
- * @method \ModStart\Field\Markdown       markdown($column, $label = '')
- * @method \ModStart\Field\KeyValueList   keyValueList($column, $label = '')
- * @method \ModStart\Field\ComplexFields  complexFields($column, $label = '')
- * @method \ModStart\Field\Values         values($column, $label = '')
- * @method \ModStart\Field\CustomField    customField($column, $label = '')
- * @method \ModStart\Field\Html           html($column, $label = '')
- * @method \ModStart\Field\Tags           tags($column, $label = '')
- * @method \ModStart\Field\Type           type($column, $label = '')
- * @method \ModStart\Field\Number         number($column, $label = '')
- * @method \ModStart\Field\Rate           rate($column, $label = '')
- * @method \ModStart\Field\Percent        percent($column, $label = '')
- * @method \ModStart\Field\Decimal        decimal($column, $label = '')
- * @method \ModStart\Field\Currency       currency($column, $label = '')
- * @method \ModStart\Field\Id             id($column, $label = '')
- * @method \ModStart\Field\Code           code($column, $label = '')
- * @method \ModStart\Field\Captcha        captcha($column, $label = '')
- * @method \ModStart\Field\File           file($column, $label = '')
- * @method \ModStart\Field\Files          files($column, $label = '')
- * @method \ModStart\Field\Video          video($column, $label = '')
- * @method \ModStart\Field\Audio          audio($column, $label = '')
- * @method \ModStart\Field\AreaChina      areaChina($column, $label = '')
- * @method \ModStart\Field\Hidden         hidden($column, $label = '')
- * @method \ModStart\Field\Icon           icon($column, $label = '')
- * @method \ModStart\Field\Custom         custom($column, $label = '')
- * @method \ModStart\Field\Button         button($column, $label = '')
+ * @method \ModStart\Field\Display              display($column, $label = '')
+ * @method \ModStart\Field\Text                 text($column, $label = '')
+ * @method \ModStart\Field\Tree                 tree($column, $label = '')
+ * @method \ModStart\Field\Checkbox             checkbox($column, $label = '')
+ * @method \ModStart\Field\Password             password($column, $label = '')
+ * @method \ModStart\Field\Image                image($column, $label = '')
+ * @method \ModStart\Field\Images               images($column, $label = '')
+ * @method \ModStart\Field\ImagesTemp           imagesTemp($column, $label = '')
+ * @method \ModStart\Field\FileTemp             fileTemp($column, $label = '')
+ * @method \ModStart\Field\Link                 link($column, $label = '')
+ * @method \ModStart\Field\SwitchField          switch ($column, $label = '')
+ * @method \ModStart\Field\Textarea             textarea($column, $label = '')
+ * @method \ModStart\Field\Json                 json($column, $label = '')
+ * @method \ModStart\Field\JsonKeyValue         jsonKeyValue($column, $label = '')
+ * @method \ModStart\Field\JsonIdItems          jsonIdItems($column, $label = '')
+ * @method \ModStart\Field\Color                color($column, $label = '')
+ * @method \ModStart\Field\Date                 date($column, $label = '')
+ * @method \ModStart\Field\Datetime             datetime($column, $label = '')
+ * @method \ModStart\Field\Time                 time($column, $label = '')
+ * @method \ModStart\Field\Period               period($column, $label = '')
+ * @method \ModStart\Field\Radio                radio($column, $label = '')
+ * @method \ModStart\Field\Select               select($column, $label = '')
+ * @method \ModStart\Field\SelectRemote         selectRemote($column, $label = '')
+ * @method \ModStart\Field\RichHtml             richHtml($column, $label = '')
+ * @method \ModStart\Field\Markdown             markdown($column, $label = '')
+ * @method \ModStart\Field\KeyValueList         keyValueList($column, $label = '')
+ * @method \ModStart\Field\ComplexFields        complexFields($column, $label = '')
+ * @method \ModStart\Field\ComplexFieldsList    complexFieldsList($column, $label = '')
+ * @method \ModStart\Field\Values               values($column, $label = '')
+ * @method \ModStart\Field\CustomField          customField($column, $label = '')
+ * @method \ModStart\Field\Html                 html($column, $label = '')
+ * @method \ModStart\Field\Tags                 tags($column, $label = '')
+ * @method \ModStart\Field\Type                 type($column, $label = '')
+ * @method \ModStart\Field\Number               number($column, $label = '')
+ * @method \ModStart\Field\Rate                 rate($column, $label = '')
+ * @method \ModStart\Field\Percent              percent($column, $label = '')
+ * @method \ModStart\Field\Decimal              decimal($column, $label = '')
+ * @method \ModStart\Field\Currency             currency($column, $label = '')
+ * @method \ModStart\Field\Id                   id($column, $label = '')
+ * @method \ModStart\Field\Code                 code($column, $label = '')
+ * @method \ModStart\Field\Captcha              captcha($column, $label = '')
+ * @method \ModStart\Field\File                 file($column, $label = '')
+ * @method \ModStart\Field\Files                files($column, $label = '')
+ * @method \ModStart\Field\Video                video($column, $label = '')
+ * @method \ModStart\Field\Audio                audio($column, $label = '')
+ * @method \ModStart\Field\AreaChina            areaChina($column, $label = '')
+ * @method \ModStart\Field\Hidden               hidden($column, $label = '')
+ * @method \ModStart\Field\Icon                 icon($column, $label = '')
+ * @method \ModStart\Field\Custom               custom($column, $label = '')
+ * @method \ModStart\Field\Button               button($column, $label = '')
+ * @method \ModStart\Field\AdminUser            adminUser($column, $label = '')
  *
  * $callback = function (LayoutGrid $layout) { $layout->layoutColumn(4, function ($builder) { }); });
  * @method \ModStart\Layout\LayoutGrid        layoutGrid($callback)
@@ -208,6 +210,30 @@ trait HasFields
     {
         return $this->fields->filter(function (AbstractField $item) {
             return $item->sortable();
+        });
+    }
+
+    /**
+     * 根据表单name获取字段
+     * @param $name
+     * @return AbstractField
+     */
+    public function getFieldByName($name)
+    {
+        return $this->fields->first(function ($k, AbstractField $item) use ($name) {
+            return $item->name() == $name;
+        });
+    }
+
+    /**
+     * 根据字段获取字段
+     * @param $name
+     * @return AbstractField
+     */
+    public function getFieldByColumn($column)
+    {
+        return $this->fields->first(function ($k, AbstractField $item) use ($column) {
+            return $item->column() == $column;
         });
     }
 

@@ -7,6 +7,7 @@ namespace Module\Vendor\Provider\Schedule;
 use Illuminate\Console\Scheduling\Schedule;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\StrUtil;
 use ModStart\Core\Util\TimeUtil;
 use Illuminate\Support\Facades\Log;
 
@@ -67,10 +68,11 @@ class ScheduleProvider
                 $dataId = $data['id'];
                 $data = [];
                 try {
-                    $data['result'] = call_user_func([$provider, 'run']);
+                    $result = call_user_func([$provider, 'run']);
+                    $data['result'] = StrUtil::mbLimit($result, 200);
                     $data['status'] = RunStatus::SUCCESS;
                 } catch (\Exception $e) {
-                    $data['result'] = $e->getMessage();
+                    $data['result'] = StrUtil::mbLimit($e->getMessage(), 200);
                     $data['status'] = RunStatus::FAILED;
                 }
                 $data['endTime'] = date('Y-m-d H:i:s');

@@ -210,7 +210,6 @@ class AuthMiddleware
 
         Session::put('_adminUserId', $adminUserId);
         Session::flash('_adminUser', $adminUser);
-        Session::flash('_currentApp', CurrentApp::ADMIN);
 
         $isTab = @boolval(Input::get('_is_tab', false));
         $tabSectionName = 'bodyContent';

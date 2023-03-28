@@ -53,12 +53,15 @@
                         @foreach($records as $record)
                             <div class="item-d">
                                 <a class="title" href="{{$record['_url']}}">{{$record['title']}}</a>
-                                <div class="attr">
-                                    <i class="iconfont icon-time"></i>
-                                    {{$record['_day']}}
-                                </div>
                                 <div class="summary">
                                     {{$record['summary']}}
+                                </div>
+                                <div class="action">
+                                    <div class="left">
+                                        <i class="iconfont icon-time"></i>
+                                        {{$record['_day']}}
+                                    </div>
+                                    <div class="right"></div>
                                 </div>
                             </div>
                         @endforeach

@@ -5,12 +5,10 @@ namespace Module\Member\Api\Controller;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
-use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\FileUtil;
@@ -27,9 +25,8 @@ use Module\Member\Util\MemberUtil;
 use Module\Member\Util\SecurityUtil;
 use Module\Vendor\Email\MailSendJob;
 use Module\Vendor\Session\SessionUtil;
-use Module\Vendor\Sms\SmsUtil;
+use Module\Vendor\Sms\SmsSendJob;
 use Module\Vendor\Support\ResponseCodes;
-use Module\Vendor\Type\DeviceType;
 
 /**
  * 相关配置开关
@@ -788,7 +785,7 @@ class AuthController extends ModuleBaseController
         Session::put('loginPhoneVerifyTime', time());
         Session::put('loginPhone', $phone);
 
-        SmsUtil::send($phone, 'verify', ['code' => $verify]);
+        SmsSendJob::create($phone, 'verify', ['code' => $verify]);
 
         return Response::generate(0, '验证码发送成功');
     }
@@ -1111,10 +1108,7 @@ class AuthController extends ModuleBaseController
 
         $verify = rand(100000, 999999);
 
-        $ret = SmsUtil::send($phone, 'verify', ['code' => $verify]);
-        if (Response::isError($ret)) {
-            return $ret;
-        }
+        SmsSendJob::create($phone, 'verify', ['code' => $verify]);
 
         Session::put('registerPhoneVerify', $verify);
         Session::put('registerPhoneVerifyTime', time());
@@ -1275,10 +1269,7 @@ class AuthController extends ModuleBaseController
 
         $verify = rand(100000, 999999);
 
-        $ret = SmsUtil::send($phone, 'verify', ['code' => $verify]);
-        if (Response::isError($ret)) {
-            return $ret;
-        }
+        SmsSendJob::create($phone, 'verify', ['code' => $verify]);
 
         Session::put('oauthBindPhoneVerify', $verify);
         Session::put('oauthBindPhoneVerifyTime', time());
@@ -1394,7 +1385,7 @@ class AuthController extends ModuleBaseController
         Session::put('retrievePhoneVerifyTime', time());
         Session::put('retrievePhone', $phone);
 
-        SmsUtil::send($phone, 'verify', ['code' => $verify]);
+        SmsSendJob::create($phone, 'verify', ['code' => $verify]);
 
         return Response::generate(0, '验证码发送成功');
     }

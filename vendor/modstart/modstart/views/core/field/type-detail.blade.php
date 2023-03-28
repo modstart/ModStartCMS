@@ -18,7 +18,11 @@
             @if(isset($valueMap[$value]))
                 {{$valueMap[$value]}}
             @else
-                {{$value}}
+                @if($value)
+                    {{$value}}
+                @else
+                    <span class="ub-text-muted">-</span>
+                @endif
             @endif
         @endif
     </div>

@@ -43,7 +43,9 @@ class MemberOauth
         if (null === $list) {
             $list = [];
             foreach (self::$list as $item) {
-                if ($item instanceof \Closure) {
+                if (is_string($item)) {
+                    $item = [app($item)];
+                } else if ($item instanceof \Closure) {
                     $item = call_user_func($item);
                 }
                 $list = array_merge($list, $item);

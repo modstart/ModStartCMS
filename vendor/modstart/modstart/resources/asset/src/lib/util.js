@@ -358,8 +358,8 @@ var currentMaxZIndex = -1;
 Util.getNextMaxZIndex = function () {
     if (-1 === currentMaxZIndex) {
         $("*").each(function () {
-            var zindex = $(this).css("z-index");
-            if ((zindex > currentMaxZIndex) && (zindex != 'auto')) {
+            var zindex = parseInt($(this).css("z-index"));
+            if (zindex > 0 && zindex > currentMaxZIndex) {
                 currentMaxZIndex = zindex;
             }
         });

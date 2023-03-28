@@ -510,11 +510,34 @@ class ModuleManager
     {
         $moduleInfo = self::getInstalledModuleInfo($module);
         if (isset($moduleInfo['config'][$key])) {
+            $v = $moduleInfo['config'][$key];
+            if (true === $default || false === $default) {
+                return boolval($v);
+            }
+            if (is_int($default)) {
+                return intval($v);
+            }
+            if (is_array($default)) {
+                if (is_string($v)) {
+                    $v = @json_decode($v, true);
+                }
+                if (null === $v) {
+                    return $default;
+                }
+                return $v;
+            }
             return $moduleInfo['config'][$key];
         }
         return $default;
     }
 
+    /**
+     * @param $module
+     * @param $key
+     * @param array $default
+     * @return array|mixed
+     * @deprecated delete after 2023-09-26
+     */
     public static function getModuleConfigArray($module, $key, $default = [])
     {
         $value = self::getModuleConfig($module, $key);
@@ -528,6 +551,13 @@ class ModuleManager
         return $value;
     }
 
+    /**
+     * @param $module
+     * @param $key
+     * @param false $default
+     * @return bool
+     * @deprecated delete after 2023-09-26
+     */
     public static function getModuleConfigBoolean($module, $key, $default = false)
     {
         return !!self::getModuleConfig($module, $key, $default);

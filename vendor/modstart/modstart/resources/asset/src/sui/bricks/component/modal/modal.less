@@ -1,5 +1,6 @@
 .ub-modal {
-    display: none;
+    display: block;
+    visibility: hidden;
     position: fixed;
     top: 0;
     right: 0;
@@ -13,21 +14,21 @@
     -webkit-transition: opacity 0.15s linear;
     transition: opacity 0.15s linear;
     touch-action: cross-slide-y pinch-zoom double-tap-zoom;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+}
+
+.ub-modal.ub-disable-animate {
+    -webkit-transition: none;
+    transition: none;
+
+    .ub-modal-dialog {
+        -webkit-transition: none;
+        transition: none;
+    }
 }
 
 .ub-modal.ub-open {
     opacity: 1;
     display: block;
-}
-
-.ub-modal.ub-hidden {
-    display: block;
-    visibility: hidden;
-}
-
-.ub-modal.ub-hidden.ub-open {
     visibility: visible;
 }
 
@@ -43,8 +44,8 @@
     opacity: 0;
     -webkit-transform: translateY(-100px);
     transform: translateY(-100px);
-    -webkit-transition: opacity 0.3s linear, -webkit-transform 0.3s ease-out;
-    transition: opacity 0.3s linear, transform 0.3s ease-out;
+    -webkit-transition: opacity 0.3s linear, -webkit-transform 0.3s ease-in-out;
+    transition: opacity 0.3s linear, transform 0.3s ease-in-out;
     border-radius: 3px;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
 }

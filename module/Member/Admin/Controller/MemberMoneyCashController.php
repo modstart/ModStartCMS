@@ -56,6 +56,9 @@ class MemberMoneyCashController extends Controller
                         break;
                 }
             })
+            ->gridFilter(function (GridFilter $filter) {
+                $filter->eq('memberUserId', '用户ID');
+            })
             ->title('用户钱包提现申请')->canAdd(false)->canEdit(false)->canDelete(false);
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use ModStart\Core\Dao\DynamicModel;
 use ModStart\Core\Exception\BizException;
@@ -366,6 +367,25 @@ class Form implements Renderable
         return $msgs;
     }
 
+    private function convertBizExceptionToResponse($exception)
+    {
+        $message = $exception->getMessage();
+        $messageTemplates = [
+            ['FieldTooLong:', 'Field %s Too Long'],
+            ['FieldFormatError:', 'Field %s Format Error'],
+        ];
+        foreach ($messageTemplates as $m) {
+            if (Str::startsWith($message, $m[0])) {
+                list($_, $c) = explode(':', $message);
+                $field = $this->getFieldByColumn($c);
+                if ($field) {
+                    return Response::jsonError(L($m[1], $field->label()));
+                }
+            }
+        }
+        return Response::jsonError($message);
+    }
+
     private function validateFields($fields, $data)
     {
         $msgsList = [];
@@ -544,7 +564,7 @@ class Form implements Renderable
             }
             return Response::jsonSuccess(L('Add Success'));
         } catch (BizException $e) {
-            return Response::jsonError($e->getMessage());
+            return $this->convertBizExceptionToResponse($e);
         } catch (ResultException $e) {
             return Response::jsonError($e->getMessage());
         }
@@ -623,7 +643,7 @@ class Form implements Renderable
             }
             return Response::jsonSuccess(L('Edit Success'));
         } catch (BizException $e) {
-            return Response::jsonError($e->getMessage());
+            return $this->convertBizExceptionToResponse($e);
         } catch (ResultException $e) {
             return Response::jsonError($e->getMessage());
         }

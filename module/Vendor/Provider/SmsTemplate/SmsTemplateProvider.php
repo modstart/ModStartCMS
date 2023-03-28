@@ -3,8 +3,6 @@
 
 namespace Module\Vendor\Provider\SmsTemplate;
 
-use ModStart\Support\Concern\HasFields;
-
 /**
  * Class SmsTemplateProvider
  * @package Module\Vendor\Provider\SmsTemplate

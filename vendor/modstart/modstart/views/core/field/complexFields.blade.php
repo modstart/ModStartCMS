@@ -16,7 +16,13 @@
                         <td width="1%" class="ub-text-truncate">{{empty($f['title'])?$f['name']:$f['title']}}</td>
                         <td>
                             @if($f['type']=='switch')
-                                <el-switch v-model="value['{{$f['name']}}']"></el-switch>
+                                <el-switch v-model="value['{{$f['name']}}']" />
+                            @elseif($f['type']=='text')
+                                <el-input v-model="value['{{$f['name']}}']" size="mini" />
+                            @elseif($f['type']=='icon')
+                                <icon-input v-model="value['{{$f['name']}}']" :icons="icons" :inline="true" />
+                            @elseif($f['type']=='number')
+                                <el-input-number v-model="value['{{$f['name']}}']" size="mini" />
                             @endif
                         </td>
                     </tr>
@@ -38,6 +44,12 @@
             el: '#{{$id}}Input',
             data: {
                 value: Object.assign({!! $defaultValue?json_encode($defaultValue):'{}' !!},{!! empty($value)?json_encode($defaultValue?$defaultValue:new \stdClass()):json_encode($value) !!}),
+                icons: []
+            },
+            mounted(){
+                MS.api.post('{{$iconServer}}', {}, res => {
+                    this.icons = res.data
+                })
             },
             computed:{
                 jsonValue:function(){

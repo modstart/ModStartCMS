@@ -19,7 +19,11 @@
         });
     </script>
 @else
-    <span class="ub-text-{{isset($colorMap[$value])?$colorMap[$value]:'default'}}">
-        <i class="iconfont icon-dot-sm ub-text-{{isset($colorMap[$value])?$colorMap[$value]:'default'}}"></i>{{$valueLabel}}
-    </span>
+    @if($valueLabel)
+        <span class="ub-text-{{isset($colorMap[$value])?$colorMap[$value]:'default'}}">
+            <i class="iconfont icon-dot-sm ub-text-{{isset($colorMap[$value])?$colorMap[$value]:'default'}}"></i>{{$valueLabel}}
+        </span>
+    @else
+        <span class="ub-text-muted">-</span>
+    @endif
 @endif

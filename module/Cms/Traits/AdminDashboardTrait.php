@@ -17,11 +17,11 @@ trait AdminDashboardTrait
     {
         /** @var AdminPage $page */
         $page = app(AdminPage::class);
-        $page->pageTitle(L('Dashboard'))
-            ->row(new SecurityTooltipBox())
-            ->append(new Row(function (Row $row) {
-                AdminWidgetDashboard::callIcon($row);
-            }));
+        $page->pageTitle(L('Dashboard'));
+        $page->row(new SecurityTooltipBox());
+        $page->append(new Row(function (Row $row) {
+            AdminWidgetDashboard::callIcon($row);
+        }));
         AdminWidgetDashboard::call($page);
         $page->append(new CmsInfoWidget());
         $page->append(new ServerInfoWidget());

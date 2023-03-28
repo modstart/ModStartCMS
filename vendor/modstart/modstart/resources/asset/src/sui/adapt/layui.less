@@ -28,9 +28,22 @@
     vertical-align: top;
 }
 
-.layui-layer-tips i.layui-layer-TipsG {
-    border-left-color: #333 !important;
-    border-right-color: transparent !important;
+.layui-layer-tips {
+    i.layui-layer-TipsB, i.layui-layer-TipsT {
+        border-right-color: transparent !important;
+        left: 2px;
+        pointer-event: none;
+    }
+
+    i.layui-layer-TipsB {
+        border-bottom-color: #333;
+        top: -13px;
+    }
+
+    i.layui-layer-TipsT {
+        border-top-color: #333;
+        bottom: -13px;
+    }
 }
 
 .layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed > i {
@@ -112,6 +125,37 @@
 
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
     background-color: #FFF;
+}
+
+.ub-lister-search {
+    .layui-form-select {
+        width: 7rem;
+    }
+}
+
+.layui-form-select {
+    .layui-select-title {
+        .layui-input {
+            height: 1.45rem;
+            border-radius: 0.15rem;
+            background-color: #FFF;
+        }
+    }
+
+    dl {
+        top: 1.45rem;
+        max-height: 10rem;
+
+        dd {
+            height: 1.45rem;
+            margin-bottom: 0.1rem;
+            line-height: 1.45rem;
+
+            &.layui-this {
+                background-color: var(--color-primary);
+            }
+        }
+    }
 }
 
 .layui-table {

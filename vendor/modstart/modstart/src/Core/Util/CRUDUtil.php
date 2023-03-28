@@ -5,6 +5,7 @@ namespace ModStart\Core\Util;
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Grid\Grid;
 use ModStart\Grid\Type\GridEngine;
@@ -107,6 +108,15 @@ class CRUDUtil
     public static function jsDialogCloseAndParentRefresh()
     {
         return "[js]parent.location.reload();";
+    }
+
+    public static function adminRedirectOrTabClose($url)
+    {
+        $redirect = $url;
+        if (View::shared('_isTab')) {
+            $redirect = '[tab-close]';
+        }
+        return $redirect;
     }
 
 }

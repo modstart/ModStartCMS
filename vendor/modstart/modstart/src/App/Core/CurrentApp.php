@@ -4,6 +4,7 @@
 namespace ModStart\App\Core;
 
 
+use Illuminate\Support\Facades\Session;
 use ModStart\Core\Type\BaseType;
 
 class CurrentApp implements BaseType
@@ -21,6 +22,21 @@ class CurrentApp implements BaseType
             self::OPEN_API => 'OpenApi',
             self::API => 'Api',
         ];
+    }
+
+    public static function set($app)
+    {
+        Session::flash('_currentApp', $app);
+    }
+
+    public static function get()
+    {
+        return Session::get('_currentApp');
+    }
+
+    public static function is($app)
+    {
+        return self::get() == $app;
     }
 
 }
