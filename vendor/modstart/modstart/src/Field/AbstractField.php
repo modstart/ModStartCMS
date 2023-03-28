@@ -503,6 +503,12 @@ class AbstractField implements Renderable
         return $this;
     }
 
+    public function setVariable($key, $value)
+    {
+        $this->variables[$key] = $value;
+        return $this;
+    }
+
     public function getVariable($key, $default = null)
     {
         if (isset($this->variables[$key])) {

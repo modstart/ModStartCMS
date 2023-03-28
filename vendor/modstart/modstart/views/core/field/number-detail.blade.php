@@ -6,7 +6,13 @@
         {{$label}}:
     </div>
     <div class="field">
-        <div class="value">{{$value}}</div>
+        <div class="value">
+            @if($autoColor)
+                <span class="ub-text-{{$value>0?'success':'danger'}}">{{($signShow&&($value>0))?'+':''}}{{$value}}</span>
+            @else
+                {{($signShow&&($value>0))?'+':''}}{{$value}}
+            @endif
+        </div>
         <input type="hidden" name="{{$name}}" value="{{$value}}"/>
     </div>
 </div>
