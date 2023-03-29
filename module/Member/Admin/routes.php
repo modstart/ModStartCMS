@@ -18,6 +18,7 @@ $router->match(['post'], 'member/delete', 'MemberController@delete');
 $router->match(['get'], 'member/show', 'MemberController@show');
 $router->match(['get', 'post'], 'member/select', 'MemberController@select');
 $router->match(['get', 'post'], 'member/search', 'MemberController@search');
+$router->match(['get', 'post'], 'member/select_remote', 'MemberController@selectRemote');
 $router->match(['get', 'post'], 'member/reset_password', 'MemberController@resetPassword');
 $router->match(['get', 'post'], 'member/send_message', 'MemberController@sendMessage');
 $router->match(['get', 'post'], 'member/status_forbidden', 'MemberController@statusForbidden');

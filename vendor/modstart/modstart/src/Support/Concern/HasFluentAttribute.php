@@ -6,7 +6,6 @@ namespace ModStart\Support\Concern;
 /**
  * Trait HasFluentAttribute
  * @package ModStart\Support\Concern
- * @method  $this urlExport($value = null)
  */
 trait HasFluentAttribute
 {

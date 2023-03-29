@@ -12,7 +12,8 @@
         @endif
         <div class="layui-form tw-inline-block" lay-filter="{{$name}}">
             <select class="form" name="{{$name}}"
-                    @if($selectSearch) lay-search @else lay-ignore @endif
+                    @if($selectSearch) lay-search @elseif($selectRemote) @else lay-ignore @endif
+                    @if($selectRemote) lay-remote="{{$selectRemote}}" lay-init-value="{{$value}}" @endif
                     @if($readonly) disabled @endif
                     @if(!empty($onValueChangeJsFunction))
                         onchange="window.{{$id}}_change(this);"

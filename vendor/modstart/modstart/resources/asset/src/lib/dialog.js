@@ -4,8 +4,8 @@ if ('layer' in window) {
     console.error('ERR: dialog should required only once, use window.api.dialog instead')
 }
 
-let layer = require('./layer/layer.js');
-let layerLess = require('./layer/theme/default/layer.less');
+// let layer = require('./layer/layer.js');
+// let layerLess = require('./layer/theme/default/layer.less');
 let Util = require('./util.js');
 
 let Dialog = {

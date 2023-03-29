@@ -1,5 +1,5 @@
 let Form = require('./form.js');
-let Dialog = require('./dialogPC.js');
+let Dialog = require('./dialog.js');
 
 let Lister = function (container, option) {
 

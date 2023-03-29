@@ -1,4 +1,4 @@
-var Dialog = require('./dialogPC.js');
+var Dialog = require('./dialog.js');
 
 var SelectorDialog = function (option) {
     if (Dialog == undefined) {

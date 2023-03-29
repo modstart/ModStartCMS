@@ -20,6 +20,7 @@ trait HasVariables
     }
 
     /**
+     * 设定一个属性
      * @param $name string|array
      * @param void
      */
@@ -35,9 +36,10 @@ trait HasVariables
     }
 
     /**
-     * @param $name
-     * @param null $default
-     * @return |null
+     * 获取一个属性
+     * @param $name string
+     * @param $default null|mixed
+     * @return mixed
      */
     public function getVariable($name, $default = null)
     {

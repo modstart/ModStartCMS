@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var DialogPC = require('./dialogPC.js');
+var Dialog = require('./dialog.js');
 var Form = require('./form.js');
 var Convenient = require('./convenient.js');
 
@@ -9,17 +9,17 @@ var initForm = function () {
             $(o).unbind('submit');
             var isAjaxForm = ($(o).attr('data-ajax-form') !== undefined);
             if (isAjaxForm) {
-                Form.initAjax(o, DialogPC);
+                Form.initAjax(o, Dialog);
             } else {
                 if (!$(o).is('[data-form-no-loading]')) {
-                    Form.initCommon(o, DialogPC);
+                    Form.initCommon(o, Dialog);
                 }
             }
         });
     });
 };
 var initConvenient = function () {
-    Convenient.init(DialogPC);
+    Convenient.init(Dialog);
 };
 
 var Base = {
@@ -28,7 +28,7 @@ var Base = {
         initConvenient();
     },
     defaultFormCallback: function (res, callback) {
-        return Form.defaultCallback(res, callback, DialogPC);
+        return Form.defaultCallback(res, callback, Dialog);
     },
     post: function (url, param, cb) {
         $.ajax({

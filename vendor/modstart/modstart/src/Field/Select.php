@@ -4,6 +4,8 @@
 namespace ModStart\Field;
 
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Input\Response;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Field\Concern\CanCascadeFields;
 use ModStart\Repository\TreeRepositoryInterface;
@@ -18,12 +20,19 @@ class Select extends AbstractField
             'options' => [],
             'onValueChangeJsFunction' => '',
             'selectSearch' => false,
+            'selectRemote' => null,
         ]);
     }
 
     public function selectSearch($value)
     {
         $this->addVariables(['selectSearch' => $value]);
+        return $this;
+    }
+
+    public function selectRemote($value)
+    {
+        $this->addVariables(['selectRemote' => $value]);
         return $this;
     }
 
@@ -93,11 +102,41 @@ class Select extends AbstractField
         return $this->options($options);
     }
 
+    public static function optionRemoteHandleModel($table, $valueKey = 'id', $labelKey = 'title', $param = [])
+    {
+        if (!isset($param['sort'])) {
+            $param['sort'] = ['id', 'desc'];
+        }
+        $input = InputPackage::buildFromInput();
+        $value = $input->getInteger('value');
+        $keywords = $input->getTrimString('keywords');
+        $query = ModelUtil::model($table);
+        if ($value) {
+            $query = $query->where($valueKey, $value);
+        }
+        if ($keywords) {
+            $query = $query->where($labelKey, 'like', '%' . $keywords . '%');
+        }
+        $records = $query
+            ->orderBy($param['sort'][0], $param['sort'][1])
+            ->limit(10)
+            ->get([$valueKey, $labelKey])->toArray();
+        $options = [];
+        foreach ($records as $record) {
+            $options[] = [
+                'value' => $record[$valueKey],
+                'label' => $record[$labelKey],
+            ];
+        }
+        return Response::generateSuccessData([
+            'options' => $options,
+        ]);
+    }
+
     public function render()
     {
         $this->addCascadeScript();
         return parent::render();
     }
-
 
 }

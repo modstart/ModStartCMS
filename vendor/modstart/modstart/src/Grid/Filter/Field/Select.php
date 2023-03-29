@@ -14,10 +14,13 @@ class Select extends AbstractFilterField
 {
     protected $options = [];
     protected $selectSearch = false;
+    protected $selectRemote = null;
 
     protected function setup()
     {
         $this->addFluentAttributeVariable('options');
+        $this->addFluentAttributeVariable('selectSearch');
+        $this->addFluentAttributeVariable('selectRemote');
     }
 
     public function options($options = null)
@@ -41,7 +44,16 @@ class Select extends AbstractFilterField
         if (null === $value) {
             return $this->selectSearch;
         }
-        $this->setFluentAttribute('selectSearch', $value);
+        $this->selectSearch = $value;
+        return $this;
+    }
+
+    public function selectRemote($value = null)
+    {
+        if (null === $value) {
+            return $this->selectRemote;
+        }
+        $this->selectRemote = $value;
         return $this;
     }
 

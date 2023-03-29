@@ -41,7 +41,7 @@ abstract class AbstractFilterField
         if ($this->isFluentAttribute($method)) {
             return $this->fluentAttribute($method, $arguments);
         }
-        throw new \Exception('AbstractFilterField __call error : ' . $name);
+        throw new \Exception('AbstractFilterField __call error : ' . $method);
     }
 
 

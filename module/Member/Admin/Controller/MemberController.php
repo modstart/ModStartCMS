@@ -24,6 +24,7 @@ use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\TimeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
+use ModStart\Field\Select;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
 use ModStart\Grid\Displayer\ItemOperate;
@@ -152,6 +153,11 @@ class MemberController extends Controller
             ->canDelete(true)
             ->canEdit(false)
             ->canExport(ModuleManager::getModuleConfigBoolean('Member', 'exportEnable'));
+    }
+
+    public function selectRemote()
+    {
+        return Select::optionRemoteHandleModel('member_user', 'id', 'username');
     }
 
     public function add(AdminDialogPage $page)

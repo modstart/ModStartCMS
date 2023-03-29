@@ -10,12 +10,29 @@
     -ms-user-select: none;
     user-select: none;
     border: none;
-    padding: 0.2rem 0.6rem;
+    padding: 0.3rem 0.7rem;
+    height: 1.6rem;
+    line-height: 1rem;
     font-size: 0.65rem;
-    line-height: 1.5;
     border-radius: 0.2rem;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
     -webkit-appearance: none;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    border-radius: 0.24rem;
+    height: 1.8rem;
+}
+
+.btn-sm, .btn-group-sm > .btn {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.5rem;
+    height: 1.4rem;
+    border-radius: 0.16rem;
+    line-height: 1rem;
 }
 
 // 换行按钮出现问题
@@ -176,20 +193,6 @@ fieldset:disabled a.btn {
 .btn-danger:not(:disabled):not(.disabled):active, .btn-danger:not(:disabled):not(.disabled).active {
     color: #fff;
     background-color: var(--color-danger-dark);
-}
-
-.btn-lg, .btn-group-lg > .btn {
-    padding: 0.35rem 0.8rem;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    border-radius: 0.24rem;
-}
-
-.btn-sm, .btn-group-sm > .btn {
-    padding: 0.1rem 0.3rem;
-    font-size: 0.5rem;
-    line-height: 1.5;
-    border-radius: 0.16rem;
 }
 
 .btn-block {

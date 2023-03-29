@@ -3,7 +3,9 @@
     <div class="input">
         <div class="layui-form tw-inline-block" lay-filter="{{$id}}">
             <select class="form" id="{{$id}}Select"
-                    @if($field->selectSearch()) lay-search @else lay-ignore @endif>
+                    @if($field->selectSearch()) lay-search @elseif($field->selectRemote()) @else lay-ignore @endif
+                    @if($field->selectRemote()) lay-remote="{{$field->selectRemote()}}" @endif
+            >
                 <option value="" @if(null===$defaultValue) selected @endif>{{L('All')}}</option>
                 @foreach($field->options() as $k=>$v)
                     <option value="{{$k}}" @if(null!==$defaultValue&&$defaultValue==$k) selected @endif>{{$v}}</option>

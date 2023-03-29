@@ -2,9 +2,9 @@
 .ub-tag {
     display: inline-block;
     padding: 0.2rem 0.35rem;
-    font-size: .6rem;
-    font-weight: 700;
-    line-height: 1;
+    font-size: .65rem;
+    height: 1.2rem;
+    line-height: 0.8rem;
     color: #fff;
     text-align: center;
     white-space: nowrap;
@@ -12,6 +12,18 @@
     border-radius: 50rem;
     cursor: default;
     background-color: rgb(108, 117, 125);
+
+    &.sm {
+        font-size: 0.5rem;
+        height: 1.0rem;
+        line-height: 0.6rem;
+    }
+
+    &.lg {
+        font-size: 0.8rem;
+        height: 1.2rem;
+        line-height: 0.8rem;
+    }
 
     &.danger {
         background-color: var(--color-danger);
@@ -27,6 +39,11 @@
 
     &.primary {
         background-color: var(--color-primary);
+    }
+
+    &.info {
+        background-color: #f4f4f5;
+        color: #909399;
     }
 }
 
