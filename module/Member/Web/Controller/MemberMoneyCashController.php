@@ -45,6 +45,9 @@ class MemberMoneyCashController extends MemberFrameController implements MemberL
         $grid->repositoryFilter(function (RepositoryFilter $filter) {
             $filter->where(['memberUserId' => MemberUser::id()]);
         });
+        $grid->gridFilter(function (GridFilter $filter) {
+            $filter->range('created_at', '时间')->datetime();
+        });
         $grid->disableCUD()->disableItemOperate();
         $grid->useSimple(function (AbstractField $field, $item, $index) {
             return AutoRenderedFieldValue::makeView('module::Member.View.pc.memberMoneyCash.logItem', [

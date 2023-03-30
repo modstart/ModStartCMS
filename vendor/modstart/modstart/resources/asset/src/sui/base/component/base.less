@@ -117,9 +117,6 @@ a.ub-text {
 }
 
 
-
-
-
 .ub-color-a {
     color: #FF7F50 !important;
 }
@@ -250,7 +247,6 @@ a.ub-text {
 }
 
 
-
 .ub-bg-primary {
     background-color: var(--color-primary) !important;
 }
@@ -258,9 +254,6 @@ a.ub-text {
 .ub-bg-white {
     background-color: #FFF !important;
 }
-
-
-
 
 
 .ub-bg-a {
@@ -487,10 +480,18 @@ a.ub-text {
 
 .ub-content-bg {
     background-color: var(--color-content-bg);
+}
 
-    &.h-full {
-        min-height: 100vh;
-    }
+.ub-border-bottom {
+    border-bottom: 1px solid var(--color-body-line);
+}
+
+.ub-border-top {
+    border-top: 1px solid var(--color-body-line);
+}
+
+.ub-h-full {
+    min-height: 100vh;
 }
 
 @media (max-width: 40rem) {
@@ -508,7 +509,9 @@ a.ub-text {
 }
 
 
-html.body-scroll-lock {
+.body-scroll-lock {
+    overflow: hidden;
+
     body {
         overflow: hidden;
     }

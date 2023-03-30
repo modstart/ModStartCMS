@@ -818,12 +818,12 @@ class MemberUtil
         $ip = Request::ip();
         ModelUtil::update('member_user', $memberUserId, [
             'lastLoginTime' => Carbon::now(),
-            'lastLoginIp' => $ip,
+            'lastLoginIp' => StrUtil::mbLimit($ip, 20),
         ]);
         ModelUtil::insert('member_login_log', [
             'memberUserId' => $memberUserId,
             'deviceType' => DeviceType::current(),
-            'ip' => $ip,
+            'ip' => StrUtil::mbLimit($ip, 20),
             'userAgent' => StrUtil::mbLimit(AgentUtil::getUserAgent(), 400),
         ]);
     }

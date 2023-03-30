@@ -19,6 +19,10 @@ use Module\Vendor\Type\OrderStatus;
 
 class MemberVipController extends Controller implements MemberLoginCheck
 {
+    public static $memberLoginCheckIgnores = [
+        'info', 'calc',
+    ];
+
     public function info()
     {
         $data = [];
@@ -74,6 +78,13 @@ class MemberVipController extends Controller implements MemberLoginCheck
     public function calc($vipId = 0)
     {
         $input = InputPackage::buildFromInput();
+        if (MemberUser::isNotLogin()) {
+            return Response::generate(0, 'ok', [
+                'type' => '-',
+                'expire' => '-',
+                'price' => '-',
+            ]);
+        }
         $memberVip = MemberVip::get();
         if (empty($vipId)) {
             $vipId = $input->getInteger('vipId');

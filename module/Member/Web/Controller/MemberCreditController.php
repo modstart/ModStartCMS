@@ -10,6 +10,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Grid\Grid;
+use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleBaseController;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
@@ -33,6 +34,9 @@ class MemberCreditController extends ModuleBaseController implements MemberLogin
         $grid = Grid::make('member_credit_log');
         $grid->repositoryFilter(function (RepositoryFilter $filter) {
             $filter->where(['memberUserId' => MemberUser::id()]);
+        });
+        $grid->gridFilter(function (GridFilter $filter) {
+            $filter->range('created_at', '时间')->datetime();
         });
         $grid->disableCUD()->disableItemOperate();
         $grid->useSimple(function (AbstractField $field, $item, $index) {
