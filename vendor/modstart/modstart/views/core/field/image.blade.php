@@ -26,7 +26,7 @@
                          style="background-image:url(@asset('asset/image/none.svg'));"></div>
                 @endif
             </div>
-            <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.35rem;vertical-align:bottom;line-height:1.35rem;"></div>
+            <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.65rem;vertical-align:bottom;line-height:1.65rem;overflow:visible;"></div>
             @if($mode=='default')
                 <a href="javascript:;" class="btn" data-gallery style="display:inline-block;vertical-align:bottom;">
                     <i class="iconfont icon-category"></i>
@@ -57,7 +57,7 @@
                     window.api.dialog.preview($field.find('[name="{{$name}}"]').val());
                 });
                 window.api.uploadButton('#{{$id}}Uploader', {
-                    text: '<a href="javascript:;" class="btn" style="display:inline-block;vertical-align:bottom;"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
+                    text: '<a href="javascript:;" class="btn" style="display:inline-block;vertical-align:top;"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
                     server: "{{$server}}",
                     extensions: {!! json_encode(join(',',config('data.upload.image.extensions'))) !!},
                     sizeLimit: {!! json_encode(config('data.upload.image.maxSize')) !!},

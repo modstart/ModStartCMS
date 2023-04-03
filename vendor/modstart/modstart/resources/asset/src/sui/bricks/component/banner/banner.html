@@ -7,8 +7,9 @@
     <div class="ub-banner ratio-4-1">
         <div id="swiper" class="swiper-container">
             <div class="swiper-wrapper">
-                <a class="swiper-slide" data-repeat="3" data-background-url="placeholder/1600x400"
-                   href="javascript:;"></a>
+                <a class="swiper-slide" data-repeat="3" href="javascript:;">
+                    <div class="cover" data-background-url="placeholder/1600x400"></div>
+                </a>
             </div>
             <div class="swiper-pagination swiper-pagination-white"></div>
             <div class="swiper-button-next swiper-button-white"></div>
@@ -40,64 +41,74 @@
 </script>
 
 <div>
-    <div class="ub-banner ratio-5-2 m-ratio-1-2">
+    <div class="ub-banner container ratio-5-2 m-ratio-1-2">
         <div id="swiperA" class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide b">
-                    <div class="content">
-                        <div class="left">
+                <div class="swiper-slide b" style="background-color:red;">
+                    <div class="cover">
+                        <div class="content">
+                            <div class="left">
+                                <div class="title">{ZH,4,10}</div>
+                                <div class="slogan">
+                                    <div class="line">{ZH,10,20}</div>
+                                    <div class="line">{ZH,10,20}</div>
+                                </div>
+                                <div class="link">
+                                    <a class="action" href="#">免费体验</a>
+                                    <a class="action" href="#">免费体验</a>
+                                </div>
+                                <div class="text">
+                                    <span>最新版本 V1.0.0</span>
+                                    <span>最新版本 V1.0.0</span>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="image" data-background-url="placeholder/400x400"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide a" style="background-color:blue;">
+                    <div class="cover" data-background-url="placeholder/1600x400">
+                        <div class="content">
                             <div class="title">{ZH,4,10}</div>
                             <div class="slogan">
                                 <div class="line">{ZH,10,20}</div>
                                 <div class="line">{ZH,10,20}</div>
-                            </div>
-                            <div class="link">
-                                <a class="action" href="#">免费体验</a>
-                                <a class="action" href="#">免费体验</a>
                             </div>
                             <div class="text">
                                 <span>最新版本 V1.0.0</span>
                                 <span>最新版本 V1.0.0</span>
                             </div>
                         </div>
-                        <div class="right">
-                            <div class="image" data-background-url="placeholder/400x400"></div>
+                    </div>
+                </div>
+                <div class="swiper-slide a">
+                    <div class="cover" data-background-url="placeholder/400x400">
+                        <div class="content reverse">
+                            <div class="title">{ZH,4,10}</div>
+                            <div class="slogan">
+                                <div class="line">{ZH,10,20}</div>
+                                <div class="line">{ZH,10,20}</div>
+                            </div>
+                            <a class="link" href="#">免费体验</a>
+                            <div class="text">
+                                <span>最新版本 V1.0.0</span>
+                                <span>最新版本 V1.0.0</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-slide a" data-background-url="placeholder/1600x400">
-                    <div class="content">
-                        <div class="title">{ZH,4,10}</div>
-                        <div class="slogan">
-                            <div class="line">{ZH,10,20}</div>
-                            <div class="line">{ZH,10,20}</div>
-                        </div>
-                        <div class="text">
-                            <span>最新版本 V1.0.0</span>
-                            <span>最新版本 V1.0.0</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide a" data-background-url="placeholder/400x400">
-                    <div class="content reverse">
-                        <div class="title">{ZH,4,10}</div>
-                        <div class="slogan">
-                            <div class="line">{ZH,10,20}</div>
-                            <div class="line">{ZH,10,20}</div>
-                        </div>
-                        <a class="link" href="#">免费体验</a>
-                        <div class="text">
-                            <span>最新版本 V1.0.0</span>
-                            <span>最新版本 V1.0.0</span>
-                        </div>
-                    </div>
-                </div>
-                <a class="swiper-slide" style="background-image:url(https://ms-assets.modstart.com/demo/modstart.jpg);" href="javascript:;"></a>
+                <a class="swiper-slide" href="javascript:;">
+                    <div class="cover" style="background-image:url(https://ms-assets.modstart.com/demo/modstart.jpg);"></div>
+                </a>
                 <div class="swiper-slide video">
-                    <div class="content reverse">
-                        <video class="video-player"
-                               src="https://ms-assets.modstart.com/demo/modstart.mp4"
-                               autoplay="autoplay" loop="loop" muted="muted"></video>
+                    <div class="cover">
+                        <div class="content reverse">
+                            <video class="video-player"
+                                   src="https://ms-assets.modstart.com/demo/modstart.mp4"
+                                   autoplay="autoplay" loop="loop" muted="muted"></video>
+                        </div>
                     </div>
                 </div>
             </div>

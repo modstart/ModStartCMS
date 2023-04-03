@@ -267,7 +267,7 @@ class MemberController extends Controller
                 $profile['vipExpire'] = null;
             }
             MemberUtil::update($memberUser['id'], $profile);
-            return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
+            return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());
         });
     }
 

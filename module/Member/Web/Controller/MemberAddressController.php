@@ -69,7 +69,7 @@ class MemberAddressController extends MemberFrameController implements MemberLog
         $builder->pageTitle(($id ? '修改' : '增加') . '地址');
         $builder->text('name', '姓名')->required();
         $builder->text('phone', '手机号')->required();
-        if (ModuleManager::isModuleEnabled('Area')) {
+        if (modstart_module_enabled('Area')) {
             $builder->areaChina('area', '省市地区')->required();
         } else {
             $html = "<div class='tw-bg-gray-200 tw-rounded tw-px-2'>省市地区需要依赖 <a href='https://modstart.com/m/Area' target='_blank'>Area</a> 模块</div>";

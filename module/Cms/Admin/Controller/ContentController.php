@@ -359,7 +359,7 @@ class ContentController extends Controller
                             'id' => $record['id']
                         ]));
                     }
-                    if (ModuleManager::isModuleEnabled('TagManager')) {
+                    if (modstart_module_enabled('TagManager')) {
                         TagManager::updateTags('cms', $record['_tags'], $recordValue['tags']);
                     }
                 } else {
@@ -367,7 +367,7 @@ class ContentController extends Controller
                     $recordValue = ModelUtil::insert($this->modelTable, $recordValue);
                     $recordDataValue['id'] = $recordValue['id'];
                     ModelUtil::insert($this->modelDataTable, $recordDataValue);
-                    if (ModuleManager::isModuleEnabled('TagManager')) {
+                    if (modstart_module_enabled('TagManager')) {
                         TagManager::putTags('cms', $recordValue['tags']);
                     }
                 }
@@ -390,7 +390,7 @@ class ContentController extends Controller
             ModelUtil::transactionBegin();
             ModelUtil::delete($this->modelTable, $record['id']);
             ModelUtil::delete($this->modelDataTable, $record['id']);
-            if (ModuleManager::isModuleEnabled('TagManager')) {
+            if (modstart_module_enabled('TagManager')) {
                 TagManager::deleteTags('cms', $record['_tags']);
             }
             ModelUtil::transactionCommit();

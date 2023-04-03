@@ -15,7 +15,7 @@
                    name="{{$name}}"
                    placeholder="{{$placeholder}}"
                    value="{{$value}}" />
-            <div id="{{$id}}Color" style="vertical-align:top;transform:scale(1.1) translateY(3px);"></div>
+            <div id="{{$id}}Color" style="vertical-align:top;"></div>
         </div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

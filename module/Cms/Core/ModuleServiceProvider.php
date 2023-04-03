@@ -140,7 +140,7 @@ class ModuleServiceProvider extends ServiceProvider
             ));
         });
 
-        if (ModuleManager::isModuleEnabled('TagManager')) {
+        if (modstart_module_enabled('TagManager')) {
             TagManagerBiz::register(CmsTagManagerBiz::class);
         }
 

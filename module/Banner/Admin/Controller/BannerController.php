@@ -7,7 +7,6 @@ namespace Module\Banner\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
-use ModStart\Detail\Detail;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
@@ -41,6 +40,7 @@ class BannerController extends Controller
                         /** @var HasFields $context */
                         $context->video('video', '视频');
                     })->required();
+                $builder->color('backgroundColor', '背景色');
                 $builder->link('link', '链接');
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);

@@ -16,7 +16,7 @@ class MemberVipController extends ModuleBaseController
 
     public function index()
     {
-        BizException::throwsIf('缺少 PayCenter 模块', !ModuleManager::isModuleEnabled('PayCenter'));
+        BizException::throwsIf('缺少 PayCenter 模块', !modstart_module_enabled('PayCenter'));
         $this->api = app(\Module\Member\Api\Controller\MemberVipController::class);
         return $this->view('memberVip.index', [
             'memberVips' => MemberVipUtil::all(),

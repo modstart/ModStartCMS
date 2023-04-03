@@ -9,7 +9,7 @@ use Module\Vendor\Provider\ProviderTrait;
 /**
  * Class PartnerPositionProvider
  * @package Module\Partner\Provider
- * @deprecated
+ * @deprecated delete at 2023-10-01
  */
 class PartnerPositionProvider
 {

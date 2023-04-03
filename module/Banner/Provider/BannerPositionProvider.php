@@ -9,7 +9,7 @@ use Module\Vendor\Provider\ProviderTrait;
 /**
  * Class BannerPositionProvider
  * @package Module\Banner\Provider
- * @deprecated
+ * @deprecated delete at 2023-10-01
  */
 class BannerPositionProvider
 {

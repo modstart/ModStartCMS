@@ -15,41 +15,54 @@ if(empty($mobileBannerRatio)){
 if(!isset($round)){
     $round = false;
 }
+if(!isset($container)){
+    $container = true;
+}
 ?>
 {!! \ModStart\ModStart::css('asset/vendor/swiper/swiper.css') !!}
 {!! \ModStart\ModStart::js('asset/vendor/swiper/swiper.js') !!}
 {!! \ModStart\ModStart::css('vendor/Banner/style/banner.css') !!}
-<div class="ub-banner ratio-{{$bannerRatio}} {{$mobileBannerRatio}}" id="{{$bannerId}}">
+<div class="ub-banner ratio-{{$bannerRatio}} {{$mobileBannerRatio}} {{$container?'container':''}}" id="{{$bannerId}}">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             @if(empty($banners))
-                <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
-                <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
-                <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
+                @for($i=0;$i<3;$i++)
+                    <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-color:#EEE;">
+                        <div class="cover" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
+                    </div>
+                @endfor
             @else
-                @foreach($banners as $banner)
-                    @if($banner['type']==\Module\Banner\Type\BannerType::IMAGE)
+                @foreach($banners as $b)
+                    @if($b['type']==\Module\Banner\Type\BannerType::IMAGE)
                         <a class="swiper-slide {{$round?'tw-rounded':''}}"
-                           style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});"
-                           @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif></a>
-                    @elseif($banner['type']==\Module\Banner\Type\BannerType::IMAGE_TITLE_SLOGAN_LINK)
-                        <div class="swiper-slide {{$round?'tw-rounded':''}} a" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});">
-                            <div class="content @if(!empty($banner['colorReverse'])) reverse @endif">
-                                <div class="title">{{$banner['title']}}</div>
-                                <div class="slogan">
-                                    @foreach(explode("\n",trim($banner['slogan'])) as $line)
-                                        <div class="line">{{$line}}</div>
-                                    @endforeach
+                           style="background-color:{{$b['backgroundColor']?$b['backgroundColor']:'transparent'}};"
+                           @if($b['link']) href="{{$b['link']}}" target="_blank" @else href="javascript:;" @endif>
+                            <span class="cover" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($b['image'])}});"></span>
+                        </a>
+                    @elseif($b['type']==\Module\Banner\Type\BannerType::IMAGE_TITLE_SLOGAN_LINK)
+                        <div class="swiper-slide {{$round?'tw-rounded':''}} a"
+                             style="background-color:{{$b['backgroundColor']?$b['backgroundColor']:'transparent'}};">
+                            <div class="cover" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($b['image'])}});">
+                                <div class="content @if(!empty($b['colorReverse'])) reverse @endif">
+                                    <div class="title">{{$b['title']}}</div>
+                                    <div class="slogan">
+                                        @foreach(explode("\n",trim($b['slogan'])) as $line)
+                                            <div class="line">{{$line}}</div>
+                                        @endforeach
+                                    </div>
+                                    <a class="link" href="{{$b['link']}}" target="_blank">{{$b['linkText']}}</a>
                                 </div>
-                                <a class="link" href="{{$banner['link']}}" target="_blank">{{$banner['linkText']}}</a>
                             </div>
                         </div>
-                    @elseif($banner['type']==\Module\Banner\Type\BannerType::VIDEO && !\ModStart\Core\Util\AgentUtil::isMobile())
+                    @elseif($b['type']==\Module\Banner\Type\BannerType::VIDEO && !\ModStart\Core\Util\AgentUtil::isMobile())
                         <a class="swiper-slide {{$round?'tw-rounded':''}} video"
-                           @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif>
-                            <video class="video-player"
-                                   src="{{\ModStart\Core\Assets\AssetsUtil::fix($banner['video'])}}"
-                                   autoplay="autoplay" loop="loop" muted="muted"></video>
+                           style="background-color:{{$b['backgroundColor']?$b['backgroundColor']:'transparent'}};"
+                           @if($b['link']) href="{{$b['link']}}" target="_blank" @else href="javascript:;" @endif>
+                            <div class="cover">
+                                <video class="video-player"
+                                       src="{{\ModStart\Core\Assets\AssetsUtil::fix($b['video'])}}"
+                                       autoplay="autoplay" loop="loop" muted="muted"></video>
+                            </div>
                         </a>
                     @endif
                 @endforeach

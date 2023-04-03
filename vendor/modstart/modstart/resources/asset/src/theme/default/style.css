@@ -13471,10 +13471,6 @@ input:-webkit-autofill {
 .layui-form-radio * {
   font-size: var(--font-size);
 }
-.layui-icon.layui-colorpicker-trigger-i.layui-icon-close {
-  line-height: 12px;
-  vertical-align: top;
-}
 .layui-layer-tips i.layui-layer-TipsB,
 .layui-layer-tips i.layui-layer-TipsT {
   border-right-color: transparent !important;
