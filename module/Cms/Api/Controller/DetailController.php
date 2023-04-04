@@ -50,11 +50,13 @@ class DetailController extends ModuleBaseController
             $record = $data['record'];
         } else {
             $record = ArrayUtil::keepKeys($data['record'], [
-                'title', 'summary', 'cover',
+                'title', 'summary', 'cover', 'catId', 'id',
                 'seoTitle', 'seoKeywords', 'seoDescription',
             ]);
         }
         $viewData['record'] = $record;
+        $viewData['recordPrev'] = \MCms::prevContent($record['catId'], $record['id']);
+        $viewData['recordNext'] = \MCms::nextContent($record['catId'], $record['id']);
         $viewData['cat'] = $cat;
         $viewData['catRoot'] = $catRoot;
         $viewData['catChain'] = $catChain;

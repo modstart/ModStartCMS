@@ -122,7 +122,7 @@ class ItemOperate extends AbstractDisplayer
             if ($this->grid->editBlankPage()) {
                 $this->operates[] = TextLink::primary($editText,
                     $this->grid->urlEdit() . '?_id=' . $this->item->{$this->grid->getRepositoryKeyName()},
-                    View::shared('_isTab') ? 'data-tab-open' : ''
+                    modstart_admin_is_tab() ? 'data-tab-open' : ''
                 );
             } else {
                 $this->operates[] = TextAction::primary($editText, 'data-edit');

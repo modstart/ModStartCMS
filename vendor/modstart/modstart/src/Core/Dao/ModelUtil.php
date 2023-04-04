@@ -78,6 +78,9 @@ class ModelUtil
      */
     public static function insertAll($model, $datas, $updateTimestamp = true)
     {
+        if (empty($records)) {
+            return;
+        }
         if ($updateTimestamp) {
             foreach ($datas as $i => $data) {
                 if (!isset($datas[$i]['created_at'])) {

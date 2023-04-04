@@ -18,6 +18,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Type\SortDirection;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\IdUtil;
+use ModStart\Detail\Detail;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Display;
@@ -30,6 +31,7 @@ use ModStart\Grid\Concerns\HasSort;
 use ModStart\Repository\Filter\HasRepositoryFilter;
 use ModStart\Repository\Filter\HasScopeFilter;
 use ModStart\Repository\Repository;
+use ModStart\Repository\RepositoryUtil;
 use ModStart\Support\Concern\HasBuilder;
 use ModStart\Support\Concern\HasFields;
 use ModStart\Support\Concern\HasFluentAttribute;
@@ -58,7 +60,7 @@ use stdClass;
  * > edit模式：当前编辑数据
  * > delete模式：当前删除的数据集合
  *
- * @method  stdClass|Form|Model|Collection item($value = null)
+ * @method  stdClass|Form|Detail|Model|Collection|HasFields item($value = null)
  *
  * @method  Form|mixed engine($value = null)
  *
@@ -763,6 +765,13 @@ class Form implements Renderable
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {
+            switch ($method) {
+                case 'item':
+                    if (isset($arguments[0]) && is_array($arguments[0])) {
+                        $arguments[0] = RepositoryUtil::itemFromArray($arguments[0]);
+                    }
+                    break;
+            }
             return $this->fluentAttribute($method, $arguments);
         }
         return FieldManager::call($this, $method, $arguments);

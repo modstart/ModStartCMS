@@ -38,12 +38,12 @@ abstract class AbstractFilter
      */
     protected $id;
     /**
-     * Label of field.
-     *
+     * 名称
      * @var string
      */
     protected $label;
     /**
+     * 字段名
      * @var string
      */
     protected $column;

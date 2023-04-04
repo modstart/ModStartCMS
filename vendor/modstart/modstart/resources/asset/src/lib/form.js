@@ -42,6 +42,20 @@ var winReload = function (w) {
 };
 
 var Form = {
+    defaultTimeout:10 * 60 * 1000,
+    responseToRes: function (response) {
+        var res = {
+            code: -999,
+            msg: "请求出现错误 T_T"
+        }
+        // console.log('error', response);
+        if ('timeout' === response.statusText) {
+            res.msg = '请求超时取消 T_T';
+        } else {
+            res.msg = '请求出现错误(' + response.status + ' ' + response.statusText + ') T_T';
+        }
+        return res;
+    },
     redirectProcess: function (redirect) {
         if (!redirect) {
             return;
@@ -189,13 +203,15 @@ var Form = {
                 var msg = $(this).attr('data-form-loading');
                 Dialog.loadingOn(msg);
             }
+            // console.log('form', method, action);
             $.ajax({
                 type: method,
                 url: action,
                 dataType: "json",
-                timeout: 10 * 60 * 1000,
+                timeout: Form.defaultTimeout,
                 data: data,
                 success: function (res) {
+                    // console.log('success', res);
                     EventManager.fire('modstart:form.submitted', {
                         $form: $form,
                         res: res,
@@ -206,11 +222,8 @@ var Form = {
                     }
                     return callback(res, {}, Dialog);
                 },
-                error: function () {
-                    var res = {
-                        code: -999,
-                        msg: "请求出现错误 T_T"
-                    }
+                error: function (res) {
+                    res = Form.responseToRes(res);
                     EventManager.fire('modstart:form.submitted', {
                         $form: $form,
                         res: res,

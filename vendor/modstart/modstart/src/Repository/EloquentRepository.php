@@ -198,7 +198,7 @@ class EloquentRepository extends Repository
             } elseif ($value['method'] == 'get') {
                 $value['arguments'] = [$tableColumns];
             }
-            $query = call_user_func_array([$query, $value['method']], $value['arguments'] ? $value['arguments'] : []);
+            $query = call_user_func_array([$query, $value['']], $value['arguments'] ? $value['arguments'] : []);
         });
         return $query;
     }

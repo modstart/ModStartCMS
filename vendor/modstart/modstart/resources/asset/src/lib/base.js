@@ -35,16 +35,14 @@ var Base = {
             type: 'post',
             url: url,
             dataType: "json",
-            timeout: 10 * 60 * 1000,
+            timeout: Form.defaultTimeout,
             data: param,
             success: function (res) {
                 cb && cb(res);
             },
-            error: function () {
-                cb && cb({
-                    code: -999,
-                    msg: "请求出现错误 T_T"
-                });
+            error: function (res) {
+                res = Form.responseError(res);
+                cb && cb(res);
             }
         });
     },

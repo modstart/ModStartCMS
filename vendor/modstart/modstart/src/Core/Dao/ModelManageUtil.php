@@ -29,7 +29,7 @@ class ModelManageUtil
         $now = Carbon::now();
         $table = ModelManageUtil::table($table);
         foreach ($field as $item) {
-            ModelManageUtil::statement("UPDATE $table SET `$item`='$now' WHERE `$item`='0000-00-00 00:00:00'");
+            ModelManageUtil::statement("UPDATE $table SET `$item`='$now' WHERE `$item`='1970-01-01 00:00:00'");
         }
     }
 

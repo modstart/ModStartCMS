@@ -139,7 +139,10 @@ class MemberMessageUtil
                 if ($module) {
                     $view = 'module::' . $module . '.View.m.message.' . $template;
                     if (!view()->exists($view)) {
-                        $view = 'module::' . $module . '.View.pc.message.' . $template;
+                        $view = 'module::' . $module . '.View.message.' . $template;
+                        if (!view()->exists($view)) {
+                            $view = 'module::' . $module . '.View.pc.message.' . $template;
+                        }
                     }
                 } else {
                     $view = 'module::Member.View.' . $theme . '.message.' . $template;

@@ -2,14 +2,15 @@
 
 namespace ModStart\Grid;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use ModStart\Grid\Filter\AbstractFilter;
 use ModStart\Grid\Filter\Eq;
 use ModStart\Grid\Filter\Field\AbstractFilterField;
+use ModStart\Grid\Filter\Has;
 use ModStart\Grid\Filter\Like;
 use ModStart\Grid\Filter\Likes;
 use ModStart\Grid\Filter\Range;
-use ModStart\Grid\Filter\Has;
 use ReflectionClass;
 
 /**
@@ -111,6 +112,17 @@ class GridFilter
     }
 
     /**
+     * 根据字段删除指定的Filter
+     * @param $column
+     */
+    public function deleteFilterByColumn($column)
+    {
+        $this->filters = array_filter($this->filters, function ($filter) use ($column) {
+            return $filter->column() != $column;
+        });
+    }
+
+    /**
      * Get all queries.
      *
      * @return AbstractFilter[]
@@ -158,6 +170,23 @@ class GridFilter
         }
         // var_dump($search);exit();
         return array_filter($conditions);
+    }
+
+    /**
+     * 对一个Query执行所有的条件
+     * @param $query Builder
+     * @return Builder
+     */
+    public function executeQueryConditions($query)
+    {
+        $conditions = array_merge(
+            $this->getScopeConditions(),
+            $this->getConditions()
+        );
+        foreach ($conditions as $condition) {
+            $query = call_user_func_array([$query, key($condition)], current($condition));
+        }
+        return $query;
     }
 
     public function executeQuery()
@@ -209,7 +238,9 @@ class GridFilter
             $reflection = new ReflectionClass($className);
             /** @var AbstractFilter $filter */
             $filter = $reflection->newInstanceArgs($arguments);
-            $filter->grid($this->model->grid());
+            if ($this->model) {
+                $filter->grid($this->model->grid());
+            }
             return $this->addFilter($filter);
         }
     }

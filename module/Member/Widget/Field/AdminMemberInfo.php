@@ -25,6 +25,7 @@ class AdminMemberInfo extends Text
         parent::setup();
         $this->addVariables([
             'memberFieldName' => null,
+            'formAsDisplay' => null,
         ]);
     }
 
@@ -34,16 +35,33 @@ class AdminMemberInfo extends Text
         return $this;
     }
 
+    public function formAsDisplay($v)
+    {
+        $this->addVariables(['formAsDisplay' => $v]);
+        return $this;
+    }
+
     public function renderView(AbstractField $field, $item, $index = 0)
     {
         switch ($field->renderMode()) {
             case FieldRenderMode::GRID:
             case FieldRenderMode::DETAIL:
-                $this->hookRendering(function (AbstractField $field, $item, $index) {
-                    $column = $field->column();
-                    return MemberCmsUtil::showFromId($item->{$column}, $this->getVariable('memberFieldName'));
-                });
+                $this->renderAsDisplay();
+                break;
+            case FieldRenderMode::FORM:
+                if ($this->getVariable('formAsDisplay')) {
+                    $this->renderAsDisplay();
+                }
+                break;
         }
         return parent::renderView($field, $item, $index);
+    }
+
+    private function renderAsDisplay()
+    {
+        $this->hookRendering(function (AbstractField $field, $item, $index) {
+            $column = $field->column();
+            return MemberCmsUtil::showFromId($item->{$column}, $this->getVariable('memberFieldName'));
+        });
     }
 }

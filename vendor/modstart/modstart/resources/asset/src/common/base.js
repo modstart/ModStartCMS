@@ -20,6 +20,24 @@ jquery.fn.isInViewport = function () {
     return elementBottom > viewportTop && elementTop < viewportBottom;
 };
 
+jquery.fn.serializeJson = function () {
+    var serializeObj = {};
+    var array = this.serializeArray();
+    var str = this.serialize();
+    $(array).each(function () {
+        if (serializeObj[this.name]) {
+            if ($.isArray(serializeObj[this.name])) {
+                serializeObj[this.name].push(this.value);
+            } else {
+                serializeObj[this.name] = [serializeObj[this.name], this.value];
+            }
+        } else {
+            serializeObj[this.name] = this.value;
+        }
+    });
+    return serializeObj;
+};
+
 const Header = {
     trigger: function (ele, selector, showClass) {
         selector = selector || 'header'

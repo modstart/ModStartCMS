@@ -75,6 +75,40 @@
                         </div>
                     </div>
                 @endif
+
+                <div class="margin-bottom ub-content-bg tw-rounded-lg tw-p-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <div class="tw-text-gray-400 tw-text-sm">上一篇</div>
+                                <div class="tw-pt-2">
+                                    @if($recordPrev)
+                                        <a href="{{$recordPrev['_url']}}" class="tw-text-gray-800 tw-inline-block">
+                                            {{$recordPrev['title']}}
+                                        </a>
+                                    @else
+                                        <span class="ub-text-muted">没有了</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="tw-text-right">
+                                <div class="tw-text-gray-400 tw-text-sm">下一篇</div>
+                                <div class="tw-pt-2">
+                                    @if($recordNext)
+                                        <a href="{{$recordNext['_url']}}" class="tw-text-gray-800 tw-inline-block">
+                                            {{$recordNext['title']}}
+                                        </a>
+                                    @else
+                                        <span class="ub-text-muted">没有了</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-3">
 
