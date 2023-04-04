@@ -55,25 +55,30 @@ $banners = \Module\Banner\Util\BannerUtil::listByPositionWithCache($position);
     <div class="swiper-container">
         <div class="swiper-wrapper">
             @if(empty($banners))
-                <div class="swiper-slide" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
-                <div class="swiper-slide" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
-                <div class="swiper-slide" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
+                @for($i=0;$i<3;$i++)
+                    <div class="swiper-slide {{$round?'tw-rounded':''}}" style="background-color:#EEE;">
+                        <div class="cover" style="background-image:url('/placeholder/{{$bannerSize}}');"></div>
+                    </div>
+                @endfor
             @else
                 @foreach($banners as $banner)
                     @if($banner['type']===\Module\Banner\Type\BannerType::IMAGE)
                         <a class="swiper-slide"
-                           style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});"
-                           @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif></a>
+                           @if($banner['link']) href="{{$banner['link']}}" target="_blank" @else href="javascript:;" @endif>
+                            <div class="cover" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});"></div>
+                        </a>
                     @elseif($banner['type']===\Module\Banner\Type\BannerType::IMAGE_TITLE_SLOGAN_LINK)
-                        <div class="swiper-slide a" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});">
-                            <div class="content @if(!empty($banner['colorReverse'])) reverse @endif">
-                                <div class="title">{{$banner['title']}}</div>
-                                <div class="slogan">
-                                    @foreach(explode("\n",trim($banner['slogan'])) as $line)
-                                        <div class="line">{{$line}}</div>
-                                    @endforeach
+                        <div class="swiper-slide a">
+                            <div class="cover" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($banner['image'])}});">
+                                <div class="content @if(!empty($banner['colorReverse'])) reverse @endif">
+                                    <div class="title">{{$banner['title']}}</div>
+                                    <div class="slogan">
+                                        @foreach(explode("\n",trim($banner['slogan'])) as $line)
+                                            <div class="line">{{$line}}</div>
+                                        @endforeach
+                                    </div>
+                                    <a class="link" href="{{$banner['link']}}" target="_blank">{{$banner['linkText']}}</a>
                                 </div>
-                                <a class="link" href="{{$banner['link']}}" target="_blank">{{$banner['linkText']}}</a>
                             </div>
                         </div>
                     @endif

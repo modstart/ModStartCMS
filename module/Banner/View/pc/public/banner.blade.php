@@ -16,7 +16,7 @@ if(!isset($round)){
     $round = false;
 }
 if(!isset($container)){
-    $container = true;
+    $container = false;
 }
 ?>
 {!! \ModStart\ModStart::css('asset/vendor/swiper/swiper.css') !!}
@@ -37,7 +37,7 @@ if(!isset($container)){
                         <a class="swiper-slide {{$round?'tw-rounded':''}}"
                            style="background-color:{{$b['backgroundColor']?$b['backgroundColor']:'transparent'}};"
                            @if($b['link']) href="{{$b['link']}}" target="_blank" @else href="javascript:;" @endif>
-                            <span class="cover" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($b['image'])}});"></span>
+                            <div class="cover" style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($b['image'])}});"></div>
                         </a>
                     @elseif($b['type']==\Module\Banner\Type\BannerType::IMAGE_TITLE_SLOGAN_LINK)
                         <div class="swiper-slide {{$round?'tw-rounded':''}} a"
