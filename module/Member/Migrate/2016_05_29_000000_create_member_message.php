@@ -20,7 +20,7 @@ class CreateMemberMessage extends Migration
                 $table->integer('userId')->comment('用户ID')->nullable();
                 $table->tinyInteger('status')->comment('1未读 2已读')->nullable();
                 $table->integer('fromId')->comment('来源用户ID')->nullable();
-                $table->string('content', 20000)->comment('消息内容(html)')->nullable();
+                $table->text('content')->comment('消息内容(html)')->nullable();
 
                 $table->index(['userId', 'status']);
 

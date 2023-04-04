@@ -41,7 +41,7 @@ var Base = {
                 cb && cb(res);
             },
             error: function (res) {
-                res = Form.responseError(res);
+                res = Form.responseToRes(res);
                 cb && cb(res);
             }
         });
