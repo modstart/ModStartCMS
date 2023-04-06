@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Module\Vendor\Sms;
+namespace Module\Vendor\Job;
 
 
 use ModStart\Core\Exception\BizException;
@@ -9,11 +9,6 @@ use ModStart\Core\Job\BaseJob;
 use Module\Vendor\Log\Logger;
 use Module\Vendor\Provider\SmsSender\SmsSenderProvider;
 
-/**
- * Class SmsSendJob
- * @package Module\Vendor\Sms
- * @deprecated delete at 2023-10-04
- */
 class SmsSendJob extends BaseJob
 {
     public $phone;

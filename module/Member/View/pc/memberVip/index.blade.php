@@ -13,6 +13,7 @@
             var $items = $('.pb-member-vip .vip-list .item');
             var $contents = $('.vip-content-list .item');
             $items.on('click', function () {
+                var vipId = $(this).attr('data-vip-id');
                 var index = $items.index($(this));
                 $contents.hide().eq(index).show();
                 $('[data-vip-info]').find('[data-vip-value]').html('-')
@@ -20,13 +21,17 @@
                 $items.removeClass('active');
                 $(this).addClass('active');
                 $('[name=vipId]').val($(this).attr('data-vip-id'));
+                var $rights = $('[data-vip-right-list] [data-vip-right]');
+                $rights.hide().filter(function(i,o){
+                    return $(o).attr('data-vip-right').split(',').indexOf(vipId)>=0;
+                }).show();
                 @if(\Module\Member\Auth\MemberUser::isLogin())
-                MS.api.post(window.__msRoot + 'api/member_vip/calc', {vipId: $(this).attr('data-vip-id')}, function (res) {
-                    $('[data-vip-type]').html(res.data.type);
-                    $('[data-vip-price]').html(res.data.price);
-                    $('[data-vip-expire]').html(res.data.expire);
-                    $('[data-vip-info]').show();
-                });
+                    MS.api.post(window.__msRoot + 'api/member_vip/calc', {vipId: vipId}, function (res) {
+                        $('[data-vip-type]').html(res.data.type);
+                        $('[data-vip-price]').html(res.data.price);
+                        $('[data-vip-expire]').html(res.data.expire);
+                        $('[data-vip-info]').show();
+                    });
                 @endif
             });
             $container.find('.nav').on('click', function () {
@@ -110,7 +115,7 @@
                                 @endif
                             </div>
                         @endif
-                        <div class="vip-list-container-box">
+                        <div class="vip-list-container-box margin-bottom">
                             <div class="vip-list-container">
                                 <div class="vip-list vip-bg tw-rounded">
                                     @foreach($memberVips as $memberVip)
@@ -137,7 +142,26 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="tw-rounded vip-bg margin-top vip-content-list">
+                        @if(!empty($memberVipRights))
+                            <div class="vip-bg tw-p-3 margin-bottom tw-rounded-lg" data-vip-right-list>
+                                <div class="row">
+                                    @foreach($memberVipRights as $r)
+                                        <div class="col-md-2 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
+                                            <div class="tw-flex tw-items-center ub-text-small">
+                                                <div class="tw-pr-2">
+                                                    <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full" src="{{$r['image']}}" />
+                                                </div>
+                                                <div>
+                                                    <div class="vip-text">{{$r['title']}}</div>
+                                                    <div class="ub-text-muted">{{$r['desc']}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                        <div class="tw-rounded vip-bg vip-content-list">
                             @foreach($memberVips as $memberVip)
                                 @if(!$memberVip['isDefault'] && $memberVip['visible'])
                                     <div class="item tw-hidden">

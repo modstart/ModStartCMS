@@ -1,13 +1,12 @@
 <?php
 
-namespace Module\Vendor\Cache;
+namespace Module\Vendor\Util;
 
 use Illuminate\Support\Facades\Cache;
 
 /**
  * Class CacheUtil
  * @package Module\Vendor\Cache
- * @deprecated delete at 2023-10-04
  */
 class CacheUtil
 {

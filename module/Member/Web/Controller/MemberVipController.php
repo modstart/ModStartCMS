@@ -20,6 +20,7 @@ class MemberVipController extends ModuleBaseController
         $this->api = app(\Module\Member\Api\Controller\MemberVipController::class);
         return $this->view('memberVip.index', [
             'memberVips' => MemberVipUtil::all(),
+            'memberVipRights' => MemberVipUtil::rights(),
         ]);
     }
 

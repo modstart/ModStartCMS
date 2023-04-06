@@ -21,7 +21,8 @@ use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserUpdatedEvent;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberUtil;
-use Module\Vendor\Email\MailSendJob;
+use Module\Vendor\Job\MailSendJob;
+use Module\Vendor\Job\SmsSendJob;
 use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
 
@@ -319,7 +320,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         Session::put('memberProfilePhoneVerify', $verify);
         Session::put('memberProfilePhoneVerifyTime', time());
         Session::put('memberProfilePhone', $phone);
-        SmsUtil::send($phone, 'verify', ['code' => $verify]);
+        SmsSendJob::create($phone, 'verify', ['code' => $verify]);
         return Response::generate(0, '验证码发送成功');
 
     }

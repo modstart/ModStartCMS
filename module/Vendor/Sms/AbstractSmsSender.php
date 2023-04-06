@@ -6,7 +6,7 @@ namespace Module\Vendor\Sms;
 /**
  * Class AbstractSmsSender
  * @package Module\Vendor\Sms
- * @deprecated @since 1.6.0
+ * @deprecated delete at 2023-10-04
  */
 abstract class AbstractSmsSender
 {

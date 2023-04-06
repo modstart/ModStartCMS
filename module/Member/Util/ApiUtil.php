@@ -49,13 +49,13 @@ class ApiUtil
         $data['Member_ProfilePhoneEnable'] = $config->getBoolean('Member_ProfilePhoneEnable', false);
 
         // VIP
-        $data['Member_VipEnable'] = ModuleManager::getModuleConfigBoolean('Member', 'vipEnable');
+        $data['Member_VipEnable'] = ModuleManager::getModuleConfig('Member', 'vipEnable',false);
 
         // 资产
-        $data['Member_MoneyEnable'] = ModuleManager::getModuleConfigBoolean('Member', 'moneyEnable');
+        $data['Member_MoneyEnable'] = ModuleManager::getModuleConfig('Member', 'moneyEnable',false);
         $data['Member_MoneyChargeEnable'] = modstart_config('Member_MoneyChargeEnable', false);
         $data['Member_MoneyCashEnable'] = modstart_config('Member_MoneyCashEnable', false);
-        $data['Member_CreditEnable'] = ModuleManager::getModuleConfigBoolean('Member', 'creditEnable');
+        $data['Member_CreditEnable'] = ModuleManager::getModuleConfig('Member', 'creditEnable',false);
 
         // 其他
         $data['Member_AgreementEnable'] = $config->getBoolean('Member_AgreementEnable', false);

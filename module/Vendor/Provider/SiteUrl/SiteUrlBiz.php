@@ -4,7 +4,7 @@
 namespace Module\Vendor\Provider\SiteUrl;
 
 
-use Module\Vendor\Biz\BizTrait;
+use Module\Vendor\Provider\BizTrait;
 
 class SiteUrlBiz
 {

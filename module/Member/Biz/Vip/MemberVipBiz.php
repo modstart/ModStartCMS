@@ -4,7 +4,7 @@
 namespace Module\Member\Biz\Vip;
 
 
-use Module\Vendor\Biz\BizTrait;
+use Module\Vendor\Provider\BizTrait;
 
 class MemberVipBiz
 {

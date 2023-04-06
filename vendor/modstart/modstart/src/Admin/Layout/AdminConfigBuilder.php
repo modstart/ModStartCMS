@@ -114,7 +114,11 @@ class AdminConfigBuilder implements Renderable
                 if ($field->isLayoutField()) {
                     continue;
                 }
-                $item[$field->column()] = modstart_config($field->column(), $field->defaultValue());
+                $v = modstart_config($field->column(), $field->defaultValue());
+                if (is_array($v)) {
+                    $v = json_encode($v, JSON_UNESCAPED_UNICODE);
+                }
+                $item[$field->column()] = $v;
             }
         } else if (false === $item) {
             $item = [];

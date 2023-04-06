@@ -1,18 +1,13 @@
 <?php
 
 
-namespace Module\Vendor\Developer;
+namespace Module\Vendor\Util;
 
 use ModStart\Core\Util\PlatformUtil;
 use ModStart\Core\Util\ReUtil;
 
 include_once __DIR__ . '/../Shell/include.php';
 
-/**
- * Class UniappUtil
- * @package Module\Vendor\Developer
- * @deprecated delete at 2023-10-04
- */
 class UniappUtil
 {
     public static function runOrFail($command)

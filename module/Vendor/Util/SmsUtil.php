@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Vendor\Sms;
+namespace Module\Vendor\Util;
 
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
@@ -9,7 +9,6 @@ use Module\Vendor\Provider\SmsSender\SmsSenderProvider;
 /**
  * Class SmsUtil
  * @package Module\Vendor\Sms
- * @deprecated delete at 2023-10-04
  */
 class SmsUtil
 {

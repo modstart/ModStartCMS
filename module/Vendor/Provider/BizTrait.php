@@ -1,13 +1,8 @@
 <?php
 
 
-namespace Module\Vendor\Biz;
+namespace Module\Vendor\Provider;
 
-/**
- * Trait BizTrait
- * @package Module\Vendor\Biz
- * @deprecated delete at 2023-10-04
- */
 trait BizTrait
 {
     /**

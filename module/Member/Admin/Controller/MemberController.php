@@ -107,11 +107,11 @@ class MemberController extends Controller
                     MemberStatus::FORBIDDEN => 'danger',
                 ])->required();
                 // ->gridEditable(true)
-                $groupEnable = ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false);
+                $groupEnable = ModuleManager::getModuleConfig('Member', 'groupEnable', false);
                 if ($groupEnable) {
                     $builder->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
                 }
-                $vipEnable = ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false);
+                $vipEnable = ModuleManager::getModuleConfig('Member', 'vipEnable', false);
                 if ($vipEnable) {
                     $builder->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
                     $builder->date('vipExpire', 'VIP过期');
@@ -130,10 +130,10 @@ class MemberController extends Controller
                 $filter->like('email', '邮箱')->autoHide(true);
                 $filter->like('phone', '手机')->autoHide(true);
                 $filter->eq('status', '状态')->autoHide(true)->select(MemberStatus::class);
-                if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+                if (ModuleManager::getModuleConfig('Member', 'groupEnable', false)) {
                     $filter->eq('groupId', '分组')->autoHide(true)->select(MemberGroupUtil::mapIdTitle());
                 }
-                if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+                if (ModuleManager::getModuleConfig('Member', 'vipEnable', false)) {
                     $filter->eq('vipId', 'VIP')->autoHide(true)->select(MemberVipUtil::mapTitle());
                 }
             })
@@ -152,7 +152,7 @@ class MemberController extends Controller
             ->canShow(false)
             ->canDelete(true)
             ->canEdit(false)
-            ->canExport(ModuleManager::getModuleConfigBoolean('Member', 'exportEnable'));
+            ->canExport(ModuleManager::getModuleConfig('Member', 'exportEnable',false));
     }
 
     public function selectRemote()
@@ -172,10 +172,10 @@ class MemberController extends Controller
         $form->layoutPanel('高级', function (Form $form) {
             $form->text('nickname', '昵称');
             $form->radio('status', '状态')->optionType(MemberStatus::class)->defaultValue(MemberStatus::NORMAL);
-            if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+            if (ModuleManager::getModuleConfig('Member', 'groupEnable', false)) {
                 $form->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
             }
-            if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+            if (ModuleManager::getModuleConfig('Member', 'vipEnable', false)) {
                 $form->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
                 $form->date('vipExpire', 'VIP过期');
             }
@@ -237,10 +237,10 @@ class MemberController extends Controller
         $form->layoutPanel('高级', function (Form $form) {
             $form->text('nickname', '昵称');
             $form->radio('status', '状态')->optionType(MemberStatus::class)->defaultValue(MemberStatus::NORMAL);
-            if (ModuleManager::getModuleConfigBoolean('Member', 'groupEnable', false)) {
+            if (ModuleManager::getModuleConfig('Member', 'groupEnable', false)) {
                 $form->radio('groupId', '分组')->options(MemberGroupUtil::mapIdTitle())->required();
             }
-            if (ModuleManager::getModuleConfigBoolean('Member', 'vipEnable', false)) {
+            if (ModuleManager::getModuleConfig('Member', 'vipEnable', false)) {
                 $form->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
                 $form->date('vipExpire', 'VIP过期')->help('VIP过期留空表示永久');
             }

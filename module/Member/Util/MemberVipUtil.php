@@ -3,16 +3,18 @@
 
 namespace Module\Member\Util;
 
+use Illuminate\Support\Facades\Cache;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleManager;
-use Module\Vendor\Cache\CacheUtil;
+use Module\Vendor\Util\CacheUtil;
 
 class MemberVipUtil
 {
     public static function isEnable()
     {
-        return ModuleManager::getModuleConfigBoolean('Member', 'vipEnable');
+        return ModuleManager::getModuleConfig('Member', 'vipEnable', false);
     }
 
     public static function allWithGuest()
@@ -213,9 +215,20 @@ class MemberVipUtil
 
     }
 
+    public static function rights()
+    {
+        return Cache::rememberForever('MemberVipRights', function () {
+            $records = ModelUtil::all('member_vip_right', [], ['*'], ['sort', 'asc']);
+            AssetsUtil::recordsFixFullOrDefault($records, 'image');
+            ModelUtil::decodeRecordsJson($records, ['vipIds']);
+            return $records;
+        });
+    }
+
     public static function clearCache()
     {
         CacheUtil::forget('MemberVipList');
         CacheUtil::forget('MemberVipMap');
+        CacheUtil::forget('MemberVipRights');
     }
 }

@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 
+/**
+ * Class AbstractEmailSender
+ * @package Module\Vendor\Email
+ * @deprecated delete at 2023-10-04
+ */
 abstract class AbstractEmailSender
 {
     abstract protected function sendExecute($email, $emailUserName, $subject, $content, $param = []);

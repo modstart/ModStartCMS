@@ -230,9 +230,9 @@ function modstart_action($name, $parameters = [])
  * @Util 获取配置
  * @desc 用于获取表 config 中的配置选项
  * @param $key string 配置名称
- * @param $default any|string 默认值
+ * @param $default string|array|boolean|integer 默认值
  * @param $useCache bool 启用缓存，默认为true
- * @return any|string|\ModStart\Core\Config\MConfig 返回配置值或配置对象
+ * @return string|array|boolean|integer|\ModStart\Core\Config\MConfig 返回配置值或配置对象
  * @example
  * // 网站名称
  * modstart_config('siteName');
@@ -247,7 +247,11 @@ function modstart_config($key = null, $default = '', $useCache = true)
         if (is_null($key)) {
             return app('modstartConfig');
         }
-        $v = app('modstartConfig')->get($key, $default, $useCache);
+        $configDefault = $default;
+        if (is_array($default)) {
+            $configDefault = json_encode($default, JSON_UNESCAPED_UNICODE);
+        }
+        $v = app('modstartConfig')->get($key, $configDefault, $useCache);
         if (true === $default || false === $default) {
             return boolval($v);
         }

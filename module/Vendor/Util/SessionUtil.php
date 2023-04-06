@@ -1,16 +1,11 @@
 <?php
 
 
-namespace Module\Vendor\Session;
+namespace Module\Vendor\Util;
 
 use Illuminate\Support\Facades\Session;
 use Module\Vendor\Util\AtomicUtil;
 
-/**
- * Class SessionUtil
- * @package Module\Vendor\Session
- * @deprecated delete at 2023-10-04
- */
 class SessionUtil
 {
     public static function atomicProduce($name, $value, $expire = 3600)

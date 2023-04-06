@@ -5,7 +5,7 @@ namespace Module\Vendor\LazyValue;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
-use Module\Vendor\Cache\CacheUtil;
+use Module\Vendor\Util\CacheUtil;
 
 class LazyValueUtil
 {

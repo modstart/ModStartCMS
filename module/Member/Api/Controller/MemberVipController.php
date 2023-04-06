@@ -30,6 +30,7 @@ class MemberVipController extends Controller implements MemberLoginCheck
         $data['subTitle'] = modstart_config('Member_VipSubTitle');
         $data['content'] = modstart_config('Member_VipContent');
         $data['vips'] = MemberVipUtil::all();
+        $data['rights'] = MemberVipUtil::rights();
         return Response::generateSuccessData($data);
     }
 

@@ -7,7 +7,7 @@ namespace Module\Vendor\Captcha;
 /**
  * Class CaptchaUtil
  * @package Module\Vendor\Captcha
- * @deprecated
+ * @deprecated delete at 2023-10-04
  */
 class CaptchaUtil
 {

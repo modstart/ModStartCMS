@@ -4,7 +4,7 @@
 namespace Module\Member\Util;
 
 use ModStart\Core\Dao\ModelUtil;
-use Module\Vendor\Cache\CacheUtil;
+use Module\Vendor\Util\CacheUtil;
 
 class MemberGroupUtil
 {

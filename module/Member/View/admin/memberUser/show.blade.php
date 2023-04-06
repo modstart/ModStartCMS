@@ -46,7 +46,7 @@
                 <div class="value">{{\ModStart\Core\Type\TypeUtil::name(\Module\Member\Type\Gender::class,$record['gender'])}}</div>
             </div>
         @endif
-        @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member','moneyEnable',false))
+        @if(\ModStart\Module\ModuleManager::getModuleConfig('Member','moneyEnable',false))
             <div class="ub-pair">
                 <div class="name">余额</div>
                 <div class="value">
@@ -59,7 +59,7 @@
                 </div>
             </div>
         @endif
-        @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member','creditEnable',false))
+        @if(\ModStart\Module\ModuleManager::getModuleConfig('Member','creditEnable',false))
             <div class="ub-pair">
                 <div class="name">积分</div>
                 <div class="value">

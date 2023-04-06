@@ -4,7 +4,6 @@
 
 $router->match(['get', 'post'], 'member/config/setting', 'ConfigController@setting');
 $router->match(['get', 'post'], 'member/config/agreement', 'ConfigController@agreement');
-$router->match(['get', 'post'], 'member/config/vip', 'ConfigController@vip');
 $router->match(['get', 'post'], 'member/config/money', 'ConfigController@money');
 $router->match(['get', 'post'], 'member/config/credit', 'ConfigController@credit');
 $router->match(['post'], 'member/config/data_statistic', 'ConfigController@dataStatistic');
@@ -30,6 +29,15 @@ $router->match(['get', 'post'], 'member_vip_set/edit', 'MemberVipSetController@e
 $router->match(['post'], 'member_vip_set/delete', 'MemberVipSetController@delete');
 $router->match(['get'], 'member_vip_set/show', 'MemberVipSetController@show');
 $router->match(['post'], 'member_vip_set/sort', 'MemberVipSetController@sort');
+
+$router->match(['get', 'post'], 'member_vip_set/config', 'MemberVipSetController@config');
+
+$router->match(['get', 'post'], 'member_vip_right', 'MemberVipRightController@index');
+$router->match(['get', 'post'], 'member_vip_right/add', 'MemberVipRightController@add');
+$router->match(['get', 'post'], 'member_vip_right/edit', 'MemberVipRightController@edit');
+$router->match(['post'], 'member_vip_right/delete', 'MemberVipRightController@delete');
+$router->match(['get'], 'member_vip_right/show', 'MemberVipRightController@show');
+$router->match(['post'], 'member_vip_right/sort', 'MemberVipRightController@sort');
 
 $router->match(['get', 'post'], 'member_vip_order', 'MemberVipOrderController@index');
 $router->match(['get', 'post'], 'member_vip_order/add', 'MemberVipOrderController@add');

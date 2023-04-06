@@ -12,7 +12,7 @@ use ModStart\Misc\Captcha\CaptchaFacade;
 /**
  * Class DefaultCaptchaProvider
  * @package Module\Vendor\Captcha
- * @deprecated
+ * @deprecated delete at 2023-10-04
  */
 class DefaultCaptchaProvider extends AbstractCaptchaProvider
 {

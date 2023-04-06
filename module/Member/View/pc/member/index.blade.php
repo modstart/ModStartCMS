@@ -15,7 +15,7 @@
                 <div class="tw-font-bold tw-text-lg">
                     {{\Module\Member\Auth\MemberUser::nickname()}}
                     ，欢迎您！
-                    @if(\ModStart\Module\ModuleManager::getModuleConfigBoolean('Member', 'vipEnable'))
+                    @if(\ModStart\Module\ModuleManager::getModuleConfig('Member', 'vipEnable',false))
                         <a class="tw-my-1 tw-mr-1 ub-tag warning ub-text-white ub-cursor-pointer" href="{{modstart_web_url('member_vip')}}">
                             @if(\Module\Member\Auth\MemberVip::get('icon'))
                                 <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(\Module\Member\Auth\MemberVip::get('icon'))}}"

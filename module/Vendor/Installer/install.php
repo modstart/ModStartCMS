@@ -23,12 +23,12 @@ include __DIR__ . '/function.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">
-    <script src="/asset/vendor/jquery.js"></script>
-    <script src="/asset/common/base.js"></script>
-    <script src="/asset/layui/layui.js"></script>
-    <link rel="stylesheet" href="/asset/vendor/iconfont/iconfont.css">
-    <link rel="stylesheet" href="/asset/layui/css/layui.css">
-    <link rel="stylesheet" href="/asset/theme/default/style.css">
+    <script src="/asset/vendor/jquery.js?<?php echo time(); ?>"></script>
+    <script src="/asset/common/base.js?<?php echo time(); ?>"></script>
+    <script src="/asset/layui/layui.js?<?php echo time(); ?>"></script>
+    <link rel="stylesheet" href="/asset/vendor/iconfont/iconfont.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="/asset/layui/css/layui.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="/asset/theme/default/style.css?<?php echo time(); ?>">
     <title><?php echo INSTALL_APP_NAME.' V'.INSTALL_APP_VERSION; ?> 安装助手</title>
     <style type="text/css">
         body, html {

@@ -20,6 +20,10 @@ class Tecmz
     {
         $this->appId = $appId;
         $this->appSecret = $appSecret;
+        $apiBase = modstart_config('Tecmz_ApiBase', '');
+        if ($apiBase) {
+            self::$API_BASE = $apiBase;
+        }
     }
 
     /**

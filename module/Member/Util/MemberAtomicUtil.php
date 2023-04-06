@@ -6,7 +6,7 @@ namespace Module\Member\Util;
 
 use ModStart\Core\Exception\BizException;
 use Module\Member\Auth\MemberUser;
-use Module\Vendor\Atomic\AtomicUtil;
+use Module\Vendor\Util\AtomicUtil;
 
 class MemberAtomicUtil
 {

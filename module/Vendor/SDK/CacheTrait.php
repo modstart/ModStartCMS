@@ -3,7 +3,7 @@
 namespace Module\Vendor\SDK;
 
 
-use Module\Vendor\Cache\CacheUtil;
+use Module\Vendor\Util\CacheUtil;
 
 trait CacheTrait
 {

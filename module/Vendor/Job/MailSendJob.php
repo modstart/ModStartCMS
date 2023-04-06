@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Vendor\Email;
+namespace Module\Vendor\Job;
 
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
@@ -9,11 +9,6 @@ use Module\Vendor\Log\Logger;
 use Module\Vendor\Provider\MailSender\AbstractMailSenderProvider;
 use Module\Vendor\Provider\MailSender\MailSenderProvider;
 
-/**
- * Class MailSendJob
- * @package Module\Vendor\Email
- * @deprecated delete at 2023-10-04
- */
 class MailSendJob extends BaseJob
 {
     public $email;

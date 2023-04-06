@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Vendor\Atomic;
+namespace Module\Vendor\Util;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\RandomUtil;
@@ -14,7 +14,6 @@ use ModStart\Core\Util\RedisUtil;
  *
  * example:
  * - captcha error count
- * @deprecated delete at 2023-10-04
  */
 class AtomicUtil
 {

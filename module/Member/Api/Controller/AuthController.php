@@ -23,9 +23,9 @@ use Module\Member\Provider\RegisterProcessor\AbstractMemberRegisterProcessorProv
 use Module\Member\Provider\RegisterProcessor\MemberRegisterProcessorProvider;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\SecurityUtil;
-use Module\Vendor\Email\MailSendJob;
-use Module\Vendor\Session\SessionUtil;
-use Module\Vendor\Sms\SmsSendJob;
+use Module\Vendor\Job\MailSendJob;
+use Module\Vendor\Util\SessionUtil;
+use Module\Vendor\Job\SmsSendJob;
 use Module\Vendor\Support\ResponseCodes;
 
 /**

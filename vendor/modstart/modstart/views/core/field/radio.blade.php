@@ -8,7 +8,9 @@
     </div>
     <div class="field layui-form" lay-filter="{{$id}}Radio">
         @foreach($options as $k=>$v)
-            <input type="radio" value="{{$k}}" name="{{$name}}" @if(($value && $k==$value)||(!$value && $k==$defaultValue)) checked @endif title="{{$v}}">
+            @if(!empty($vertical)) <div> @endif
+            <input type="radio" value="{{$k}}" name="{{$name}}" @if(($value && $k==$value)||(!$value && $k==$defaultValue)) checked @endif title="{{$v}}" />
+            @if(!empty($vertical)) </div> @endif
         @endforeach
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

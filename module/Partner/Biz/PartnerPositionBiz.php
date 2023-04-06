@@ -4,7 +4,7 @@
 namespace Module\Partner\Biz;
 
 
-use Module\Vendor\Biz\BizTrait;
+use Module\Vendor\Provider\BizTrait;
 
 class PartnerPositionBiz
 {

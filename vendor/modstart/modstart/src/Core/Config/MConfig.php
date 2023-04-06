@@ -3,10 +3,26 @@
 namespace ModStart\Core\Config;
 
 
+/**
+ * 提供统一的配置读写接口，都是操作string
+ */
 abstract class MConfig
 {
+    /**
+     * 获取配置（进出都要是string）
+     * @param $key string
+     * @param $defaultValue string
+     * @param $useCache bool
+     * @return string
+     */
     public abstract function get($key, $defaultValue = '', $useCache = true);
 
+    /**
+     * 设置配置（值需要是string）
+     * @param $key string
+     * @param $value string
+     * @return void
+     */
     public abstract function set($key, $value);
 
     public abstract function remove($key);

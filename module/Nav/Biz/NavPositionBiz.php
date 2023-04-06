@@ -4,7 +4,7 @@
 namespace Module\Nav\Biz;
 
 
-use Module\Vendor\Biz\BizTrait;
+use Module\Vendor\Provider\BizTrait;
 
 class NavPositionBiz
 {
