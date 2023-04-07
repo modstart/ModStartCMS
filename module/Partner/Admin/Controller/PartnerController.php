@@ -30,7 +30,7 @@ class PartnerController extends Controller
                 $builder->text('title', '名称');
                 $builder->image('logo', 'Logo');
                 $builder->text('link', '链接');
-                $builder->switch('enable', '启用')->gridEditable(true);
+                $builder->switch('enable', '启用')->gridEditable(true)->defaultValue(true);
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })
@@ -54,7 +54,7 @@ class PartnerController extends Controller
     {
         $builder->useDialog();
         $builder->pageTitle('友情链接设置');
-        $builder->text('Partner_Title', '友情链接标题')->defaultValue('我们的合伙伙伴');
+        $builder->text('Partner_Title', '友情链接标题')->defaultValue('合伙伙伴');
         $builder->switch('Partner_LinkDisable', '友情链接不跳转');
         $builder->formClass('wide');
         return $builder->perform();

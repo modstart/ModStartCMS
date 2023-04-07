@@ -28,11 +28,17 @@ class UeditorManager
         if ($domain = Request::domain()) {
             $list[] = $domain;
         }
-        $domains = modstart_config()->getArray('Data_RemoteCatchIgnoreDomains', $list);
+        $storage = DataManager::storage();
+        if ($storage) {
+            if ($d = $storage->domain()) {
+                $list[] = $d;
+            }
+        }
+        $domains = modstart_config()->getArray('Data_RemoteCatchIgnoreDomains', []);
         if (!empty($domains)) {
             $list = array_merge($list, $domains);
         }
-        return $list;
+        return array_unique($list);
     }
 
     private static function basicConfig()

@@ -15,13 +15,13 @@
 **常规版本**
 
 ```
-@include('module::Partner.View.pc.public.partner',['position'=>'位置'])
+{!! \Module\Partner\View\PartnerView::simple('位置') !!}
 ```
 
 **透明版本**
 
 ```
-@include('module::Partner.View.pc.public.partnerTransparent',['position'=>'位置'])
+{!! \Module\Partner\View\PartnerView::transparent('位置') !!}
 ```
 
 ## 快速实现自定义位置的友情链接
@@ -33,5 +33,5 @@
 第二步，使用如下代码在blade页面调用
 
 ```html
-@include('module::Partner.View.pc.public.partnerTransparent',['position'=>'位置'])
+{!! \Module\Partner\View\PartnerView::transparent('位置') !!}
 ```

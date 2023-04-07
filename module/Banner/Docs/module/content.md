@@ -17,7 +17,7 @@
 在需要使用到的地方通过如下代码调用
 
 ```html
-@include('module::Partner.View.pc.public.partner',['position'=>'位置'])
+{!! \Module\Banner\View\BannerView::simple('位置') !!}
 ```
 
 ## 模块位置信息注册
@@ -52,7 +52,7 @@ if (class_exists(BannerPositionProvider::class)) {
 ## 如何调整轮播的比例和大小
 
 ```html
-@include('module::Partner.View.pc.public.partner',['position'=>'位置','bannerRatio'=>'5-2'])
+{!! \Module\Banner\View\BannerView::render('位置',['bannerRatio'=>'5-2']) !!}
 ```
 
 默认情况下，轮播使用了 `5-2` 的比例，还支持的内置比例有，调用时候只需要添加 `宽-高` 的 `bannerRatio` 变量即可。

@@ -1,3 +1,4 @@
+{{--delete at 2023-10-07--}}
 <?php
 $partners = \Module\Partner\Util\PartnerUtil::listByPositionWithCache($position);
 \ModStart\ModStart::js('asset/common/lazyLoad.js');

@@ -15,7 +15,7 @@
         <div class="nav-mask" onclick="MS.header.hide()"></div>
         <div class="nav">
             @include('module::Vendor.View.searchBox.header')
-            {!! \Module\Nav\Render\NavRender::position('head') !!}
+            {!! \Module\Nav\View\NavView::position('head') !!}
         </div>
         <a class="nav-toggle" href="javascript:;" onclick="MS.header.trigger()">
             <i class="show iconfont icon-list"></i>

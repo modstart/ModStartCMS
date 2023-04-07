@@ -106,7 +106,7 @@
                 合作伙伴
             </div>
             <div class="" data-scroll-animate="animated fadeInUp">
-                @include('module::Partner.View.pc.public.partnerRaw',['position'=>'home'])
+                {!! \Module\Partner\View\PartnerView::raw('home') !!}
             </div>
         </div>
 

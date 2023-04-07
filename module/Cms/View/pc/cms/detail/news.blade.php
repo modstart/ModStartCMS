@@ -53,7 +53,7 @@
                         您没有权限访问该栏目内容
                     </div>
                 @else
-                    <div class="tw-p-3 tw-bg-white tw-rounded-lg margin-bottom">
+                    <div class="ub-content-box margin-bottom">
                         <div class="ub-html" style="font-size:0.8rem;">
                             {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
                         </div>

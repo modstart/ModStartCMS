@@ -12,7 +12,7 @@
 
 @section('bodyContent')
 
-    <div class="tw-p-3 tw-bg-white tw-rounded-lg margin-bottom">
+    <div class="ub-content-box margin-bottom">
         <div class="ub-pair">
             <div class="name">头像</div>
             <div class="value">

@@ -1,4 +1,3 @@
-{{--delete at 2023-10-07--}}
 <?php
 $partners = \Module\Partner\Util\PartnerUtil::listByPositionWithCache($position);
 \ModStart\ModStart::js('asset/common/lazyLoad.js');
@@ -7,7 +6,7 @@ $partners = \Module\Partner\Util\PartnerUtil::listByPositionWithCache($position)
     <div class="head">
         <div class="title">
             <i class="iconfont icon-users"></i>
-            合作伙伴
+            {!! modstart_config('Partner_Title','合作伙伴') !!}
         </div>
     </div>
     <div class="body ub-list-items padding-bottom-remove">

@@ -1,17 +1,12 @@
 <?php
 
 
-namespace Module\Nav\Render;
+namespace Module\Nav\View;
 
 
 use Illuminate\Support\Facades\View;
 
-/**
- * Class NavRender
- * @package Module\Nav\Render
- * @deprecated delete at 2023-04-07
- */
-class NavRender
+class NavView
 {
     public static function position($position)
     {
