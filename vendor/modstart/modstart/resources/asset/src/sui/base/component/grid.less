@@ -19,8 +19,8 @@ html {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: var(--size-margin-1-2-negative);
-    margin-left: var(--size-margin-1-2-negative);
+    margin-right: calc( 0px - var(--size-margin) / 2 );
+    margin-left: calc( 0px - var(--size-margin) / 2 );
     box-sizing: border-box;
 }
 
@@ -113,8 +113,8 @@ html {
     position: relative;
     width: 100%;
     min-height: 0.05rem;
-    padding-right: var(--size-margin-1-2);
-    padding-left: var(--size-margin-1-2);
+    padding-right: calc( var(--size-margin) / 2 );
+    padding-left: calc( var(--size-margin) / 2 );
     box-sizing: border-box;
 }
 

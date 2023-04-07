@@ -211,10 +211,24 @@
 }
 
 .ub-search-block-a {
+    --radius: 1rem;
+    --height: 1.6rem;
+    --font-size: 0.65rem;
+    --font-size-btn: 0.8rem;
+    --border-size: 0.05rem;
+
     position: relative;
-    border: 1px solid var(--color-primary);
-    border-radius: 0.5rem;
+    border: var(--border-size) solid var(--color-primary);
+    border-radius: var(--radius);
     padding: 0;
+
+    &.lg {
+        --radius: 1.25rem;
+        --height: 2.5rem;
+        --font-size: 0.8rem;
+        --font-size-btn: 1rem;
+        --border-size: 0.1rem;
+    }
 
     &.mini {
         .search-btn {
@@ -225,28 +239,28 @@
 
     .input {
         outline: none;
-        height: 2rem;
+        height: var(--height);
         width: 100%;
-        line-height: 2rem;
+        line-height: var(--height);
         border: none;
         padding: 0 0.5rem;
-        font-size: 0.65rem;
+        font-size: var(--font-size);
         box-sizing: border-box;
-        border-radius: 0.5rem;
+        border-radius: var(--radius);
     }
 
     .search-btn {
         display: block;
-        height: 2rem;
+        height: var(--height);
         padding: 0 1rem;
-        line-height: 2rem;
+        line-height: var(--height);
         background-color: var(--color-primary, #419488);
         color: #FFF;
         position: absolute;
         right: 0px;
         top: 0px;
-        font-size: 0.8rem;
-        border-radius: 0.4rem;
+        font-size: var(--font-size-btn);
+        border-radius: calc(var(--radius) - 2px);
 
         &:hover {
             color: #FFF;

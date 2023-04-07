@@ -102,8 +102,8 @@ a.ub-text {
     max-width: var(--container-width, 57rem);
     margin-left: auto;
     margin-right: auto;
-    padding-left: var(--size-margin-1-2);
-    padding-right: var(--size-margin-1-2);
+    padding-left: calc( var(--size-margin) / 2 );
+    padding-right: calc( var(--size-margin) / 2 );
 
     &.narrow {
         max-width: 30rem;
@@ -480,6 +480,12 @@ a.ub-text {
 
 .ub-content-bg {
     background-color: var(--color-content-bg);
+}
+
+.ub-content-box{
+    background-color: var(--color-content-bg);
+    border-radius: var(--size-radius);
+    padding: var(--size-padding);
 }
 
 .ub-border-bottom {

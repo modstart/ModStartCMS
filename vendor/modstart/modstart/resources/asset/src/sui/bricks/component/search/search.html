@@ -27,10 +27,35 @@
 
 
     <form action="?" method="get">
-        <div class="ub-search-block-a mini">
-            <input class="input" type="text" style="height:1.6rem;line-height:1.6rem;" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索 模块" />
+        <div class="ub-search-block-a">
+            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索 模块" />
             <a class="search-btn" href="javascript:;"
-               style="height:1.6rem;line-height:1.6rem;"
+               onclick="$(this).closest('form').submit();">
+                <span class="iconfont icon-search"></span>
+                搜索
+            </a>
+        </div>
+    </form>
+
+    <div class="block-breaker"></div>
+
+    <form action="?" method="get">
+        <div class="ub-search-block-a mini">
+            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索 模块" />
+            <a class="search-btn" href="javascript:;"
+               onclick="$(this).closest('form').submit();">
+                <span class="iconfont icon-search"></span>
+                搜索
+            </a>
+        </div>
+    </form>
+
+    <div class="block-breaker"></div>
+
+    <form action="?" method="get">
+        <div class="ub-search-block-a lg">
+            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索 模块" />
+            <a class="search-btn" href="javascript:;"
                onclick="$(this).closest('form').submit();">
                 <span class="iconfont icon-search"></span>
                 搜索

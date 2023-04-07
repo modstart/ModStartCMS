@@ -11,7 +11,8 @@
 @endif
         <div class="layui-form" lay-filter="{{$name}}">
             @foreach($options as $k=>$v)
-                <input type="checkbox" value="{{$k}}" name="{{$name}}[]" lay-skin="primary" @if($value && in_array($k,$value)) checked @endif title="{{$v}}">
+                <input type="checkbox" value="{{$k}}" name="{{$name}}[]" lay-skin="primary"
+                       @if((!empty($value) && in_array($k,$value))||(!empty($defaultValue) && in_array($k,$defaultValue))) checked @endif title="{{$v}}">
             @endforeach
         </div>
         @if(!empty($help))

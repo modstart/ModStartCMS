@@ -13664,8 +13664,6 @@ page {
   --size-radius: var(--theme-size-radius, 0.4rem);
   --size-margin: var(--theme-size-margin, 0.5rem);
   --size-margin-lg: var(--theme-size-margin-lg, 2rem);
-  --size-margin-1-2: var(--theme-size-margin-1-2, 0.25rem);
-  --size-margin-1-2-negative: var(--theme-size-margin-1-2-negative, -0.25rem);
   --font-size-root: var(--theme-font-size-root, 20px);
   --font-size: var(--theme-font-size, 0.65rem);
   --font-size-lh: var(--theme-font-size, 0.715rem);
@@ -14030,8 +14028,8 @@ a.ub-text:hover {
   max-width: var(--container-width, 57rem);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--size-margin-1-2);
-  padding-right: var(--size-margin-1-2);
+  padding-left: calc( var(--size-margin) / 2 );
+  padding-right: calc( var(--size-margin) / 2 );
 }
 .ub-container.narrow,
 .ub-mobile-container.narrow {
@@ -14339,8 +14337,8 @@ html {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin-right: var(--size-margin-1-2-negative);
-  margin-left: var(--size-margin-1-2-negative);
+  margin-right: calc( 0px - var(--size-margin) / 2 );
+  margin-left: calc( 0px - var(--size-margin) / 2 );
   box-sizing: border-box;
 }
 .no-gutters {
@@ -14494,8 +14492,8 @@ html {
   position: relative;
   width: 100%;
   min-height: 0.05rem;
-  padding-right: var(--size-margin-1-2);
-  padding-left: var(--size-margin-1-2);
+  padding-right: calc( var(--size-margin) / 2 );
+  padding-left: calc( var(--size-margin) / 2 );
   box-sizing: border-box;
 }
 .col {
