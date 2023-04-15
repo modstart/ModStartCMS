@@ -557,7 +557,7 @@ class AbstractField implements Renderable
     protected function variables()
     {
         // echo $this->column . " : " . json_encode($this->value()) . "\n";
-        return array_merge($this->fluentAttributeVariables(), $this->variables, [
+        $variables = array_merge($this->fluentAttributeVariables(), $this->variables, [
             'id' => $this->id,
             'name' => $this->name(),
             'value' => $this->value(),
@@ -567,6 +567,8 @@ class AbstractField implements Renderable
             'placeholder' => $this->placeholder(),
             'rules' => $this->rules,
         ]);
+        // echo json_encode($variables, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+        return $variables;
     }
 
     public function view($mode = '', $name = null)

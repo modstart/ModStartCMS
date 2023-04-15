@@ -23,9 +23,9 @@ use Module\Member\Util\MemberCreditUtil;
 use Module\Member\Util\MemberDataStatisticUtil;
 use Module\Member\Util\MemberMoneyUtil;
 use Module\PayCenter\Biz\PayCenterBiz;
-use Module\Vendor\Admin\Config\AdminWidgetDashboard;
-use Module\Vendor\Admin\Config\AdminWidgetLink;
-use Module\Vendor\Provider\Schedule\ScheduleProvider;
+use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
+use Module\Vendor\Admin\Widget\AdminWidgetLink;
+use Module\Vendor\Provider\Schedule\ScheduleBiz;
 use Module\Vendor\Provider\SmsTemplate\SmsTemplateProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -91,7 +91,7 @@ class ModuleServiceProvider extends ServiceProvider
         });
 
         SmsTemplateProvider::register(VerifySmsTemplateProvider::class);
-        ScheduleProvider::register(MemberDeleteScheduleProvider::class);
+        ScheduleBiz::register(MemberDeleteScheduleProvider::class);
 
         MemberHomeIcon::register(function () {
             $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable',false);

@@ -113,7 +113,7 @@ abstract class AbstractFilter
     /**
      * 获取字段
      *
-     * @return $this|Filter\Field\AbstractFilterField|Filter\Field\Select
+     * @return $this|Filter\Field\AbstractFilterField|Filter\Field\Select|Filter\Field\Datetime
      */
     public function field($value = null)
     {
@@ -202,9 +202,7 @@ abstract class AbstractFilter
             'defaultValue' => $this->defaultValue,
             'autoHide' => $this->autoHide,
         ];
-        if (method_exists($this->field, 'variables')) {
-            $variables = array_merge($variables, $this->field()->variables());
-        }
+        $variables = array_merge($variables, $this->field->variables());
         return $variables;
     }
 

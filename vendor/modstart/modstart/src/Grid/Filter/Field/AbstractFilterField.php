@@ -16,9 +16,8 @@ use ModStart\Support\Concern\HasFluentAttribute;
 abstract class AbstractFilterField
 {
     use HasFluentAttribute;
-    private $fluentAttributes = [
-        'label',
-    ];
+
+    private $fluentAttributes = [];
     protected $label = '';
     /** @var AbstractFilter */
     private $filter;
@@ -34,6 +33,24 @@ abstract class AbstractFilterField
 
     protected function setup()
     {
+    }
+
+    public function label($value = null)
+    {
+        if (is_null($value)) {
+            return $this->label;
+        }
+        $this->label = $value;
+        return $this;
+    }
+
+    public function variables()
+    {
+        $variables = [];
+        foreach ($this->fluentAttributes as $k) {
+            $variables[$k] = $this->{$k};
+        }
+        return $variables;
     }
 
     public function __call($method, $arguments)

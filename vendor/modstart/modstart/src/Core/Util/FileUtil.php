@@ -572,7 +572,10 @@ class FileUtil
             }
             @mkdir(public_path('temp'));
             if ($downloadStream) {
-                file_put_contents($tempPath, fopen($path, 'r'));
+                $f = @fopen($path, 'r');
+                if ($f) {
+                    file_put_contents($tempPath, $f);
+                }
             } else {
                 $content = CurlUtil::getRaw($path, [], [
                     'timeout' => 60 * 10,

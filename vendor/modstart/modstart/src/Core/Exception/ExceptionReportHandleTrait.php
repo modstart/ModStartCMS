@@ -89,6 +89,10 @@ trait ExceptionReportHandleTrait
         } else if ($exception instanceof HttpException) {
             switch ($exception->getStatusCode()) {
                 case 200:
+                    if (\ModStart\Core\Input\Request::isJsonp()) {
+                        $ret = Response::generateError($exception->getMessage());
+                        return Response::jsonp($ret);
+                    }
                     $ret = Response::sendError($exception->getMessage());
                     if ($ret instanceof View) {
                         return response()->make($ret);

@@ -7,7 +7,7 @@ use ModStart\Admin\Layout\AdminPage;
 use ModStart\Admin\Widget\SecurityTooltipBox;
 use ModStart\Layout\Row;
 use Module\AdminManager\Widget\ServerInfoWidget;
-use Module\Vendor\Admin\Config\AdminWidgetDashboard;
+use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
 
 /**
  * Trait AdminDashboardTrait

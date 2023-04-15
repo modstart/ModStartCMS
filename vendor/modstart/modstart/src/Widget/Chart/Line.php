@@ -21,28 +21,48 @@ class Line extends AbstractWidget
 
     protected $height = 300;
     protected $option = [
-        "grid" => [
-            "top" => "5%",
-            "right" => "1%",
-            "left" => "1%",
-            "bottom" => "10%",
-            "containLabel" => true
+        'grid' => [
+            // 'top' => '20%',
+            'right' => '1%',
+            'left' => '1%',
+            'bottom' => '10%',
+            'containLabel' => true
+        ],
+        'toolbox' => [
+            'feature' => [
+                'dataView' => [
+                    'show' => true,
+                    'readOnly' => false,
+                ],
+                'restore' => [
+                    'show' => true,
+                ],
+                'saveAsImage' => [
+                    'show' => true,
+                ],
+            ],
+        ],
+        'tooltip' => [
+            'trigger' => 'axis',
+            'axisPointer' => [
+                'type' => 'cross',
+                'crossStyle' => [
+                    'color' => '#999',
+                ],
+            ],
         ],
         'legend' => [
             'data' => [],
         ],
-        "tooltip" => [
-            "trigger" => "axis"
+        'xAxis' => [
+            'type' => 'category',
+            'data' => []
         ],
-        "xAxis" => [
-            "type" => "category",
-            "data" => []
+        'yAxis' => [
+            'type' => 'value',
+            'minInterval' => 1
         ],
-        "yAxis" => [
-            "type" => "value",
-            "minInterval" => 1
-        ],
-        "series" => [
+        'series' => [
 
         ]
     ];
@@ -60,6 +80,21 @@ class Line extends AbstractWidget
         return new static();
     }
 
+    public function option($value = null)
+    {
+        if (is_null($value)) {
+            return $this->option;
+        }
+        $this->option = $value;
+        return $this;
+    }
+
+    public function optionSet($key, $value)
+    {
+        $this->option[$key] = $value;
+        return $this;
+    }
+
     public function random()
     {
         $this->option['xAxis']['data'] = RandomUtil::dateCollection();
@@ -73,9 +108,9 @@ class Line extends AbstractWidget
         return $this;
     }
 
-    public function yData($value, $param = [])
+    public function yData($value, $name = '数量', $param = [])
     {
-        return $this->ySeries(0, $value, '数量', $param);
+        return $this->ySeries(0, $value, $name, $param);
     }
 
     public function ySeries($i, $value, $name = '数量', $param = [])
@@ -85,15 +120,15 @@ class Line extends AbstractWidget
         }
         $this->option['legend']['data'][$i] = $name;
         $this->option['series'][$i] = [
-            "name" => $name,
-            "data" => $value,
-            "type" => "line",
-            "smooth" => true,
-            "itemStyle" => [
-                "normal" => [
-                    "color" => $param['lineColor'],
-                    "lineStyle" => [
-                        "color" => $param['lineColor'],
+            'name' => $name,
+            'data' => $value,
+            'type' => 'line',
+            'smooth' => true,
+            'itemStyle' => [
+                'normal' => [
+                    'color' => $param['lineColor'],
+                    'lineStyle' => [
+                        'color' => $param['lineColor'],
                     ]
                 ]
             ]
@@ -126,15 +161,15 @@ class Line extends AbstractWidget
         foreach ($data['values'] as $index => $value) {
             $color = isset($series[$index]['color']) ? $series[$index]['color'] : ColorUtil::randomColor();
             $this->option['series'][] = [
-                "name" => $series[$index]['title'],
-                "data" => $value,
-                "type" => "line",
-                "smooth" => true,
-                "itemStyle" => [
-                    "normal" => [
-                        "color" => $color,
-                        "lineStyle" => [
-                            "color" => $color
+                'name' => $series[$index]['title'],
+                'data' => $value,
+                'type' => 'line',
+                'smooth' => true,
+                'itemStyle' => [
+                    'normal' => [
+                        'color' => $color,
+                        'lineStyle' => [
+                            'color' => $color
                         ]
                     ]
                 ]
@@ -161,15 +196,15 @@ class Line extends AbstractWidget
         foreach ($data['values'] as $index => $value) {
             $color = isset($series[$index]['color']) ? $series[$index]['color'] : ColorUtil::randomColor();
             $this->option['series'][] = [
-                "name" => $series[$index]['title'],
-                "data" => $value,
-                "type" => "line",
-                "smooth" => true,
-                "itemStyle" => [
-                    "normal" => [
-                        "color" => $color,
-                        "lineStyle" => [
-                            "color" => $color
+                'name' => $series[$index]['title'],
+                'data' => $value,
+                'type' => 'line',
+                'smooth' => true,
+                'itemStyle' => [
+                    'normal' => [
+                        'color' => $color,
+                        'lineStyle' => [
+                            'color' => $color
                         ]
                     ]
                 ]

@@ -6,7 +6,8 @@
         @foreach($field['data']['option'] as $option)
             <div>
                 <label class="tw-bg-white">
-                    <input type="radio" name="{{$fieldName}}" value="{{$option}}" />
+                    <input type="radio" name="{{$fieldName}}" value="{{$option}}"
+                           @if($option==$value) checked @endif />
                     {{$option}}
                 </label>
             </div>

@@ -34,9 +34,9 @@ trait BizTrait
         return self::$list;
     }
 
-    private static function getByName($name)
+    public static function getByName($name)
     {
-        foreach (self::all() as $item) {
+        foreach (self::listAll() as $item) {
             if ($item->name() == $name) {
                 return $item;
             }
@@ -46,7 +46,7 @@ trait BizTrait
 
     public static function allMap()
     {
-        return array_build(self::all(), function ($k, $v) {
+        return array_build(self::listAll(), function ($k, $v) {
             return [
                 $v->name(), $v->title()
             ];

@@ -13,6 +13,11 @@ use Module\Vendor\Provider\CensorImage\CensorImageProvider;
 use Module\Vendor\Provider\CensorText\CensorTextProvider;
 use Module\Vendor\Provider\Notifier\NotifierProvider;
 
+/**
+ * Class AbstractContentVerifyProvider
+ * @package Module\Vendor\Provider\ContentVerify
+ * @deprecated delete at 2023-10-10
+ */
 abstract class AbstractContentVerifyProvider
 {
     /**

@@ -129,7 +129,16 @@ class MemberVipUtil
         return $records;
     }
 
+    /**
+     * @return mixed|null
+     * @deprecated delete at 2023-10-11
+     */
     public static function getDefaultVip()
+    {
+        return self::defaultVip();
+    }
+
+    public static function defaultVip()
     {
         foreach (self::map() as $vipId => $vip) {
             if (!empty($vip['isDefault'])) {
@@ -139,6 +148,13 @@ class MemberVipUtil
         return null;
     }
 
+
+    public static function defaultVipId()
+    {
+        $vip = self::defaultVip();
+        return $vip ? $vip['id'] : null;
+    }
+
     public static function get($vipId, $key = null)
     {
         $map = self::map();
@@ -146,12 +162,12 @@ class MemberVipUtil
             if (isset($map[$vipId])) {
                 return $map[$vipId];
             }
-            return self::getDefaultVip();
+            return self::defaultVip();
         } else {
             if (isset($map[$vipId][$key])) {
                 return $map[$vipId][$key];
             }
-            $vip = self::getDefaultVip();
+            $vip = self::defaultVip();
             if (isset($vip[$key])) {
                 return $vip[$key];
             }

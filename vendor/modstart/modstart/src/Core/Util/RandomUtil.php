@@ -150,7 +150,8 @@ class RandomUtil
     public static function dateCollection($length = 10)
     {
         $list = [];
-        for ($i = time() - $length * TimeUtil::MINUTE_PERIOD_DAY; $i <= time(); $i += TimeUtil::MINUTE_PERIOD_DAY) {
+        $t = time();
+        for ($i = $t - $length * TimeUtil::MINUTE_PERIOD_DAY; $i < $t; $i += TimeUtil::MINUTE_PERIOD_DAY) {
             $list[] = date('Y-m-d', $i);
         }
         return $list;

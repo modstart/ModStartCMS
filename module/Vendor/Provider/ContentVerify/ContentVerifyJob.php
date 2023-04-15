@@ -51,7 +51,7 @@ class ContentVerifyJob extends BaseJob
 
     public function handle()
     {
-        $provider = ContentVerifyProvider::get($this->name);
+        $provider = ContentVerifyBiz::getByName($this->name);
         if (empty($provider)) {
             Log::info('Vendor.ContentVerifyJob.UnknownProvider - ' . $this->name);
             return;

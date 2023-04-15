@@ -58,7 +58,7 @@ trait ProviderTrait
      */
     public static function allMap()
     {
-        return array_build(self::all(), function ($k, $v) {
+        return array_build(self::listAll(), function ($k, $v) {
             return [
                 $v->name(), $v->title()
             ];
@@ -73,7 +73,7 @@ trait ProviderTrait
     {
         return array_merge(
             ['' => L('None')],
-            array_build(self::all(), function ($k, $v) {
+            array_build(self::listAll(), function ($k, $v) {
                 return [
                     $v->name(), $v->title()
                 ];
@@ -92,10 +92,18 @@ trait ProviderTrait
 
     private static function getByName($name)
     {
-        foreach (self::all() as $item) {
+        foreach (self::listAll() as $item) {
             if ($item->name() == $name) {
                 return $item;
             }
+        }
+        return null;
+    }
+
+    public static function first()
+    {
+        foreach (self::listAll() as $item) {
+            return $item;
         }
         return null;
     }

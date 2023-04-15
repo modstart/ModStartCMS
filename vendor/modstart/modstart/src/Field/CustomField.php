@@ -7,7 +7,6 @@ namespace ModStart\Field;
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
-use ModStart\Core\Util\ArrayUtil;
 
 class CustomField extends AbstractField
 {
@@ -67,24 +66,24 @@ class CustomField extends AbstractField
         return $value;
     }
 
-    public static function buildRecordNameValue($keyRecord, $valueRecord, $prefix = 'fieldCustom', $fieldCount = 5)
+    /**
+     * 准备详情数据
+     * @param $keyRecord array 携带自定义字段数据的记录
+     * @param $valueRecord array 携带自定义字段值的记录
+     * @param $prefix string
+     * @param $fieldCount int
+     * @return array
+     */
+    public static function buildRecordFieldsValues($keyRecord, $valueRecord, $prefix = 'fieldCustom', $fieldCount = 5)
     {
+        self::buildFieldsData($keyRecord, $prefix, $fieldCount);
         $pairs = [];
-        for ($i = 1; $i <= $fieldCount; $i++) {
-            if (empty($keyRecord[$prefix . $i])) {
-                continue;
-            }
-            $field = $keyRecord[$prefix . $i];
-            if (is_string($field)) {
-                $field = @json_decode($field, true);
-            }
-            if (empty($field['type']) || empty($field['title'])) {
-                continue;
-            }
+        foreach ($keyRecord['_' . $prefix] as $f) {
+            $value = self::prepareDetail($f, $valueRecord[$f['_name']]);
             $pairs[] = [
-                'name' => $field['title'],
-                'value' => $valueRecord[$prefix . $i],
-                'field' => $field,
+                'name' => $f['_name'],
+                'value' => $value,
+                'field' => $f,
                 'record' => $valueRecord,
             ];
         }
@@ -110,29 +109,42 @@ class CustomField extends AbstractField
     }
 
     /**
-     * 对标中的自定义字段进行构建
-     * @param $data
-     * @param $prefix string
-     * @param $fieldCount int
+     * 对表中的自定义字段进行构建，会自动过滤掉空的自定义字段
+     * @param $data array 包含了多个自定义字段的数据
+     * @param $fieldPrefix string 多个自定义字段格式应该为 fieldCustom1,fieldCustom2,fieldCustom3
+     * @param $fieldCount int 自定义字段数量
+     * @example 会对自定义字段进行构建，同时生成自定义字段数组
+     * {
+     *    ...
+     *    "_fieldCustom": [
+     *         {
+     *             "type": "Text",
+     *             "title": "文本字段",
+     *             "data": {
+     *                 "option": []
+     *             },
+     *             "_name": "fieldCustom1"
+     *         }
+     *     ]
+     *     ...
+     * }
      */
-    public static function unbuildTableFieldRow(&$data, $prefix = 'fieldCustom', $fieldCount = 5)
+    public static function buildFieldsData(&$data, $fieldPrefix = 'fieldCustom', $fieldCount = 5)
     {
         $fieldModules = [];
         for ($i = 1; $i <= $fieldCount; $i++) {
-            if (empty($data[$prefix . $i])) {
-                continue;
-            }
-            $field = $data[$prefix . $i];
+            $field = $data[$fieldPrefix . $i];
             if (is_string($field)) {
                 $field = @json_decode($field, true);
             }
             if (empty($field['type']) || empty($field['title'])) {
                 continue;
+            } else {
+                $field['_name'] = $fieldPrefix . $i;
             }
-            $field['_name'] = $prefix . $i;
             $fieldModules[] = $field;
         }
-        $data['_' . $prefix] = $fieldModules;
+        $data['_' . $fieldPrefix] = $fieldModules;
     }
 
     public static function prepareInputOrFail($field, $fieldName, InputPackage $input)
@@ -170,16 +182,18 @@ class CustomField extends AbstractField
             case 'File':
                 return $value;
             case 'Files':
-                $value = @json_decode($value, true);
-                if (empty($value) || !is_array($value)) {
-                    $value = [];
+                if (!is_array($value)) {
+                    $value = @json_decode($value, true);
+                    if (empty($value) || !is_array($value)) {
+                        $value = [];
+                    }
                 }
                 return $value;
         }
         return null;
     }
 
-    public static function renderForm($field, $fieldName, $param = [])
+    public static function renderForm($field, $fieldName, $value, $param = [])
     {
         if (empty($field['type']) || empty($field['title'])) {
             return '';
@@ -187,9 +201,11 @@ class CustomField extends AbstractField
         if (!in_array($field['type'], static::$supportTypes)) {
             return '';
         }
+        $value = self::prepareDetail($field, $value);
         return View::make('modstart::core.field.customField.form.' . $field['type'], [
             'fieldName' => $fieldName,
             'field' => $field,
+            'value' => $value,
             'param' => $param,
         ])->render();
     }

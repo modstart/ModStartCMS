@@ -4,12 +4,11 @@
         @if($tip)
             <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
         @endif
-        {{$label}}:
+        {{$label}}
     </div>
     <div class="field">
         <input type="hidden"
                {{$readonly?'readonly':''}}
-               class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                value="{{$value}}"/>
@@ -51,6 +50,7 @@
                 $selector.find('[data-close]').on('click', function () {
                     setValue('');
                 });
+                setValue($field.find('[name="{{$name}}"]').val());
                 MS.uploadButton('#{{$id}}Uploader', {
                     text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
                     server: "{{$server}}",

@@ -94,6 +94,24 @@ class TimeUtil
         return date(self::FORMAT_DATETIME, time());
     }
 
+    public static function dateCollection($startDate, $endDate)
+    {
+        if (!is_numeric($startDate)) {
+            $startDate = strtotime($startDate);
+        }
+        if (!is_numeric($endDate)) {
+            $endDate = strtotime($endDate);
+        }
+        if ($startDate > $endDate || $startDate <= 0 || $endDate <= 0) {
+            return [];
+        }
+        $date = [];
+        for ($i = $startDate; $i <= $endDate; $i += self::PERIOD_DAY) {
+            $date[] = date('Y-m-d', $i);
+        }
+        return $date;
+    }
+
     public static function format($timestamp, $format = null)
     {
         if (null === $format) {

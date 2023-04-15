@@ -428,6 +428,8 @@ class MemberUtil
             'phone' => $phone,
             'password' => $ignorePassword ? null : EncodeUtil::md5WithSalt($password, $passwordSalt),
             'passwordSalt' => $ignorePassword ? null : $passwordSalt,
+            'vipId' => MemberVipUtil::defaultVipId(),
+            'groupId' => MemberGroupUtil::defaultGroupId(),
             'isDeleted' => false,
         ]);
         return Response::generate(0, 'ok', $memberUser);

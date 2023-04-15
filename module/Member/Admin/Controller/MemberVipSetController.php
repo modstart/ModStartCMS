@@ -26,24 +26,26 @@ class MemberVipSetController extends Controller
             ->init('member_vip_set')
             ->field(function ($builder) {
                 /** @var HasFields $builder */
-                $builder->id('id', 'ID')->addable(true)->editable(true)
-                    ->ruleUnique('member_vip_set')->required()
-                    ->defaultValue(ModelUtil::sortNext('member_vip_set', [], 'id'));
-                $builder->text('title', '名称')->required()->ruleUnique('member_vip_set');
-                $builder->text('flag', '英文标识')->required()->ruleUnique('member_vip_set');
-                $builder->switch('visible', '可见')->gridEditable(true)->tip('开启后前台用户可见');
-                $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级')->required();
-                $builder->image('icon', '图标');
-                $builder->currency('price', '价格')->required();
-                $builder->number('vipDays', '时间')->required()->help('单位为天，365表示1年');
-                $builder->text('desc', '简要说明')->required();
-                $builder->richHtml('content', '详细说明')->required();
-                if (ModuleManager::getModuleConfig('Member', 'creditEnable', false)) {
-                    $builder->switch('creditPresentEnable', '赠送积分')->when('=', true, function ($form) {
-                        /** @var Form $form */
-                        $form->number('creditPresentValue', '赠送积分数量');
-                    })->optionsYesNo()->listable(false);
-                }
+                $builder->layoutPanel('基础信息', function ($builder) {
+                    $builder->id('id', 'ID')->addable(true)->editable(true)
+                        ->ruleUnique('member_vip_set')->required()
+                        ->defaultValue(ModelUtil::sortNext('member_vip_set', [], 'id'));
+                    $builder->text('title', '名称')->required()->ruleUnique('member_vip_set');
+                    $builder->text('flag', '英文标识')->required()->ruleUnique('member_vip_set');
+                    $builder->switch('visible', '可见')->gridEditable(true)->tip('开启后前台用户可见');
+                    $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级')->required();
+                    $builder->image('icon', '图标');
+                    $builder->currency('price', '价格')->required();
+                    $builder->number('vipDays', '时间')->required()->help('单位为天，365表示1年');
+                    $builder->text('desc', '简要说明')->required();
+                    $builder->richHtml('content', '详细说明')->required();
+                    if (ModuleManager::getModuleConfig('Member', 'creditEnable', false)) {
+                        $builder->switch('creditPresentEnable', '赠送积分')->when('=', true, function ($form) {
+                            /** @var Form $form */
+                            $form->number('creditPresentValue', '赠送积分数量');
+                        })->optionsYesNo()->listable(false);
+                    }
+                });
                 foreach (MemberVipBiz::all() as $biz) {
                     $builder->layoutPanel($biz->title(), function ($builder) use ($biz) {
                         $biz->vipField($builder);

@@ -3,7 +3,7 @@
         @if($tip)
             <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
         @endif
-        {{$label}}:
+        {{$label}}
     </div>
     <div class="field">
         <div class="value">
@@ -12,6 +12,7 @@
             @else
                 {{($signShow&&($value>0))?'+':''}}{{$value}}
             @endif
+            {{empty($unit)?'':$unit}}
         </div>
         <input type="hidden" name="{{$name}}" value="{{$value}}"/>
     </div>

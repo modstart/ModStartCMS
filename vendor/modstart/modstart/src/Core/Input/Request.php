@@ -2,6 +2,7 @@
 
 namespace ModStart\Core\Input;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -220,6 +221,22 @@ class Request
     public static function isAjax()
     {
         return \Illuminate\Support\Facades\Request::ajax() || self::headerGet('is-ajax');
+    }
+
+    /**
+     * check if current request is jsonp
+     * @return bool
+     */
+    public static function isJsonp()
+    {
+        if (
+            self::isGet()
+            && ($callback = Input::get('callback'))
+            && preg_match('/^jQuery\w+$/', $callback)
+        ) {
+            return true;
+        }
+        return false;
     }
 
     /**

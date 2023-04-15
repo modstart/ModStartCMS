@@ -13,6 +13,8 @@ class Number extends AbstractField
             'autoColor' => false,
             // 是否显示符号
             'signShow' => false,
+            // 单位
+            'unit' => null,
         ]);
     }
 
@@ -25,6 +27,12 @@ class Number extends AbstractField
     public function signShow($value)
     {
         $this->setVariable('signShow', $value);
+        return $this;
+    }
+
+    public function unit($value)
+    {
+        $this->setVariable('unit', $value);
         return $this;
     }
 

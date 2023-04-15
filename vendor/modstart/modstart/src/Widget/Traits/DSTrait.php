@@ -68,7 +68,7 @@ trait DSTrait
     /**
      * @param $start
      * @param $end
-     * @param array $series
+     * @param $series array
      * @return array
      *
      * @example

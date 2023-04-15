@@ -3,3 +3,4 @@
 @else
     {{($signShow&&($value>0))?'+':''}}{{$value}}
 @endif
+{{empty($unit)?'':$unit}}

@@ -5,7 +5,7 @@
         @if($tip)
             <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
         @endif
-        {{$label}}:
+        {{$label}}
     </div>
     <div class="field">
 @endif
@@ -16,6 +16,7 @@
            name="{{$name}}"
            placeholder="{{$placeholder}}"
            value="{{$value}}" />
+        {{empty($unit)?'':$unit}}
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif

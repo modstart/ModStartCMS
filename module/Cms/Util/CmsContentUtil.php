@@ -10,6 +10,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TagUtil;
+use Module\Cms\Field\CmsField;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsModelContentStatus;
 use Module\Cms\Type\ContentUrlMode;
@@ -166,6 +167,10 @@ class CmsContentUtil
         $table = "cms_m_$model[name]";
         $recordData = ModelUtil::get($table, $record['id']);
         $record['_tags'] = TagUtil::string2Array($record['tags']);
+        foreach ($model['_customFields'] as $v) {
+            $f = CmsField::getByName($v['fieldType']);
+            $recordData[$v['name']] = $f->unserializeValue($recordData[$v['name']], $recordData);
+        }
         $record['_data'] = $recordData;
         if (!empty($record['cover'])) {
             $record['cover'] = AssetsUtil::fixFull($record['cover']);

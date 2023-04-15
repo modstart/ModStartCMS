@@ -76,22 +76,22 @@ class ModelUtil
      *
      * @Util
      */
-    public static function insertAll($model, $datas, $updateTimestamp = true)
+    public static function insertAll($model, $records, $updateTimestamp = true)
     {
         if (empty($records)) {
             return;
         }
         if ($updateTimestamp) {
-            foreach ($datas as $i => $data) {
-                if (!isset($datas[$i]['created_at'])) {
-                    $datas[$i]['created_at'] = date('Y-m-d H:i:s');
+            foreach ($records as $i => $data) {
+                if (!isset($records[$i]['created_at'])) {
+                    $records[$i]['created_at'] = date('Y-m-d H:i:s');
                 }
-                if (!isset($datas[$i]['updated_at'])) {
-                    $datas[$i]['updated_at'] = date('Y-m-d H:i:s');
+                if (!isset($records[$i]['updated_at'])) {
+                    $records[$i]['updated_at'] = date('Y-m-d H:i:s');
                 }
             }
         }
-        DB::table($model)->insert($datas);
+        DB::table($model)->insert($records);
     }
 
     /**

@@ -9,7 +9,6 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Core\Util\TimeUtil;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class ScheduleProvider
@@ -20,10 +19,15 @@ class ScheduleProvider
 {
     /**
      * @var AbstractScheduleProvider[]
+     * @deprecated delete at 2023-10-10
      */
     private static $instances = [
     ];
 
+    /**
+     * @param $provider
+     * @deprecated delete at 2023-10-10
+     */
     public static function register($provider)
     {
         self::$instances[] = $provider;
@@ -31,6 +35,7 @@ class ScheduleProvider
 
     /**
      * @return AbstractScheduleProvider[]
+     * @deprecated delete at 2023-10-10
      */
     public static function all()
     {
@@ -46,7 +51,7 @@ class ScheduleProvider
 
     public static function callByName($name)
     {
-        foreach (self::all() as $provider) {
+        foreach (ScheduleBiz::all() as $provider) {
             if ($provider->name() == $name) {
                 call_user_func([$provider, 'run']);
             }
@@ -56,9 +61,9 @@ class ScheduleProvider
     public static function call(Schedule $schedule)
     {
         $autoCleanHistory = true;
-        foreach (ScheduleProvider::all() as $provider) {
+        foreach (ScheduleBiz::all() as $provider) {
             // Log::info('ScheduleProvider.schedule - ' . $provider->title() . ' - ' . $provider->cron());
-            /** @var AbstractScheduleProvider $provider */
+            /** @var AbstractScheduleBiz $provider */
             $schedule->call(function () use ($provider, &$autoCleanHistory) {
                 $data = [];
                 $data['name'] = get_class($provider);

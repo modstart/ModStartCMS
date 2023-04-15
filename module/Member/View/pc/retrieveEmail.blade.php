@@ -1,8 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitleMain')通过邮箱找回密码@endsection
-@section('pageKeywords')通过邮箱找回密码@endsection
-@section('pageDescription')通过邮箱找回密码@endsection
+@section('pageTitleMain')验证邮箱找回密码@endsection
+@section('pageKeywords')验证邮箱找回密码@endsection
+@section('pageDescription')验证邮箱找回密码@endsection
 
 @section('bodyAppend')
     @parent
@@ -30,17 +30,24 @@
         <div class="box">
 
             <div class="nav">
-                <a href="javascript:;" class="active">通过邮箱找回密码</a>
+                <a href="javascript:;" class="active">
+                    <i class="iconfont icon-email"></i>
+                    验证邮箱找回密码
+                </a>
             </div>
+
+
+            @include('module::Member.View.pc.inc.retrieveNav',['current'=>1])
+
             <div class="ub-form flat">
                 <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field">
                             <div class="row no-gutters">
-                                <div class="col-6">
+                                <div class="col-7">
                                     <input type="text" class="form-lg" name="captcha" autocomplete="off" placeholder="图片验证码" />
                                 </div>
-                                <div class="col-6">
+                                <div class="col-5">
                                     <img class="captcha captcha-lg" data-captcha title="刷新验证" onclick="this.src=window.__msRoot+'retrieve/captcha?'+Math.random()" src="{{$__msRoot}}retrieve/captcha?{{time()}}" />
                                 </div>
                             </div>

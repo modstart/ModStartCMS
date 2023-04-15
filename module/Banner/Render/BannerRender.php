@@ -6,6 +6,11 @@ namespace Module\Banner\Render;
 
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class BannerRender
+ * @package Module\Banner\Render
+ * @deprecated delete at 2023-10-13
+ */
 class BannerRender
 {
     public static function position($position,

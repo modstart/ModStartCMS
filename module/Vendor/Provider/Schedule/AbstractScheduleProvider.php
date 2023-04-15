@@ -8,6 +8,7 @@ namespace Module\Vendor\Provider\Schedule;
  * Class AbstractScheduleProvider
  * @package Module\Vendor\Provider\Schedule
  * @since 1.5.0
+ * @deprecated delete at 2023-10-10
  */
 abstract class AbstractScheduleProvider
 {

@@ -407,9 +407,9 @@ class Grid
      * @param $view
      * @return $this
      */
-    public function gridTableTopView($view)
+    public function gridTableTopView($view, $viewData = [])
     {
-        return $this->gridTableTop(View::make($view, [])->render());
+        return $this->gridTableTop(View::make($view, $viewData)->render());
     }
 
     /**

@@ -19,7 +19,7 @@ class CreateMemberUser extends Migration
 
             $table->string('username', 50)->nullable()->comment('用户名');
             $table->string('phone', 20)->nullable()->comment('手机');
-            $table->string('email', 200)->nullable()->comment('邮箱');
+            $table->string('email', 200)->nullable()->comment('邮箱')->charset('utf8');
             $table->char('password', 32)->nullable()->comment('密码');
             $table->char('passwordSalt', 16)->nullable()->comment('密码Salt');
             $table->timestamp('lastLoginTime')->nullable()->comment('上次登录时间');

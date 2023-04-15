@@ -3,6 +3,6 @@
         {{$field['title']}}
     </div>
     <div class="field">
-        <input type="text" class="form" name="{{$fieldName}}" />
+        <input type="text" class="form" value="{{$value}}" name="{{$fieldName}}" />
     </div>
 </div>

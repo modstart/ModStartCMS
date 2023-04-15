@@ -500,6 +500,12 @@ a.ub-text {
     min-height: 100vh;
 }
 
+.ub-header-mobile + .ub-h-full,
+c-page-header + .ub-h-full,
+c-page-header-search + .ub-h-full {
+    min-height: calc(100vh - 50px);
+}
+
 @media (max-width: 40rem) {
     .ub-display-none-sm {
         display: none !important;

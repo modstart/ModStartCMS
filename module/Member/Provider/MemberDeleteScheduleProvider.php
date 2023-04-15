@@ -6,9 +6,9 @@ namespace Module\Member\Provider;
 
 use ModStart\Core\Dao\ModelUtil;
 use Module\Member\Util\MemberUtil;
-use Module\Vendor\Provider\Schedule\AbstractScheduleProvider;
+use Module\Vendor\Provider\Schedule\AbstractScheduleBiz;
 
-class MemberDeleteScheduleProvider extends AbstractScheduleProvider
+class MemberDeleteScheduleProvider extends AbstractScheduleBiz
 {
     public function cron()
     {

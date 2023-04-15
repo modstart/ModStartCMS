@@ -25,7 +25,7 @@ class MemberVipOrderController extends Controller
             ->init('member_vip_order')
             ->field(function ($builder) {
                 /** @var HasFields $builder */
-                $builder->display('id', '订单ID');
+                $builder->display('id', '业务订单ID');
                 $builder->datetime('created_at', '创建时间');
                 $builder->display('memberUserId', '用户')->hookRendering(function (AbstractField $field, $item, $index) {
                     return MemberCmsUtil::showFromId($item->memberUserId);
@@ -39,7 +39,7 @@ class MemberVipOrderController extends Controller
                 $builder->display('expire', '执行后会员过期时间')->width(200);
             })
             ->gridFilter(function (GridFilter $filter) {
-                $filter->eq('id', '订单ID');
+                $filter->eq('id', '业务订单ID');
                 $filter->eq('memberUserId', '用户ID');
                 $filter->eq('vipId', 'VIP')->select(MemberVipUtil::mapTitle());
                 $filter->eq('status', '状态')->select([

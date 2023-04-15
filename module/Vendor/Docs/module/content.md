@@ -11,7 +11,6 @@
 - Captcha 人机验证提供者
 - CensorImage 图片智能审核提供者
 - CensorText 文字智能审核提供者
-- ContentVerify 内容审核提供者
 - HomePage 首页提供者
 - IDManager ID管理提供者
 - LBS 地理位置服务提供者
@@ -20,7 +19,6 @@
 - Notifier 通知提供者
 - RandomImage 随机图片提供者
 - RichContent 富文本内容提供者
-- Schedule 调度提供者
 - SearchBox 多搜提供者
 - SiteTemplate 网站模板提供者
 - SiteUrl 网站链接提供者

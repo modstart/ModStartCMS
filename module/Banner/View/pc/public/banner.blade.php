@@ -1,3 +1,4 @@
+{{--delete at 2023-10-13--}}
 <?php
 $bannerId = \ModStart\Core\Util\IdUtil::generate('Banner');
 $banners = \Module\Banner\Util\BannerUtil::listByPositionWithCache($position);

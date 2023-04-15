@@ -5,7 +5,7 @@
         $f->required();
     }
     $f->renderMode(\ModStart\Field\Type\FieldRenderMode::FORM);
-    $f->value(!empty($record)?$record[$fieldName]:null);
+    $f->value(empty($value)?[]:$value);
     if(!empty($param['fileServer'])){
         $f->server($param['fileServer']);
     }

@@ -9,13 +9,13 @@ use ModStart\App\Web\Layout\WebPage;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Form\Form;
-use Module\Vendor\Provider\ContentVerify\ContentVerifyProvider;
+use Module\Vendor\Provider\ContentVerify\ContentVerifyBiz;
 
 class ContentVerifyController extends Controller
 {
     public function index(WebPage $page, $name)
     {
-        $provider = ContentVerifyProvider::get($name);
+        $provider = ContentVerifyBiz::get($name);
         BizException::throwsIfEmpty('数据异常', $provider);
         $param = InputPackage::buildFromInputJson('param')->all();
         $form = Form::make('');

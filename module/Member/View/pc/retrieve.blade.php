@@ -16,17 +16,19 @@
                 <a href="javascript:;" class="active">找回密码</a>
             </div>
 
+            @include('module::Member.View.pc.inc.retrieveNav',['current'=>0])
+
             <div class="ub-form flat">
                 <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field">
                             <?php $found = false; ?>
                             @if(modstart_config('retrieveEmailEnable',false))
-                                <a class="btn btn-lg btn-block" href="{{$__msRoot}}retrieve/email?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i class="iconfont icon-email"></i> 通过邮箱找回</a>
+                                <a class="btn btn-lg btn-block btn-lg btn-primary margin-bottom" href="{{$__msRoot}}retrieve/email?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i class="iconfont icon-email"></i> 通过邮箱找回</a>
                                 <?php $found = true; ?>
                             @endif
                             @if(modstart_config('retrievePhoneEnable',false))
-                                <a class="btn btn-lg btn-block" href="{{$__msRoot}}retrieve/phone?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i class="iconfont icon-phone"></i> 通过手机找回</a>
+                                <a class="btn btn-lg btn-block btn-lg btn-primary margin-bottom" href="{{$__msRoot}}retrieve/phone?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i class="iconfont icon-phone"></i> 通过手机找回</a>
                                 <?php $found = true; ?>
                             @endif
                             @if(!$found)

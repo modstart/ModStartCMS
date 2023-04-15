@@ -9,7 +9,7 @@ use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Module\ModuleManager;
-use Module\Vendor\Admin\Config\AdminWidgetLink;
+use Module\Vendor\Admin\Widget\AdminWidgetLink;
 
 class WidgetLinkController extends Controller
 {

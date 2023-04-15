@@ -3,7 +3,11 @@
 
 namespace Module\Vendor\Admin\Config;
 
-
+/**
+ * Class AdminWidgetLink
+ * @package Module\Vendor\Admin\Widget
+ * @deprecated delete 2023-10-13
+ */
 class AdminWidgetLink
 {
     private static $list = [];

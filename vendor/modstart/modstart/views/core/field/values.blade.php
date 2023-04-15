@@ -4,10 +4,10 @@
         @if($tip)
             <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
         @endif
-        {{$label}}:
+        {{$label}}
     </div>
     <div class="field">
-        <div id="{{$id}}Input">
+        <div id="{{$id}}Input" class="tw-border tw-border-gray-100 tw-border-solid tw-rounded">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             @if($viewMode=='mini')
                 <div class="tw-inline-block tw-w-32" v-for="(valueItem,valueIndex) in value">

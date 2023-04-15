@@ -3,6 +3,11 @@
 
 namespace Module\Vendor\Provider\ContentVerify;
 
+/**
+ * Class ContentVerifyProvider
+ * @package Module\Vendor\Provider\ContentVerify
+ * @deprecated delete at 2023-10-10
+ */
 class ContentVerifyProvider
 {
     /**

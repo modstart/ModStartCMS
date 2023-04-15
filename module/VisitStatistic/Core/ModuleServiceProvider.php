@@ -16,7 +16,7 @@ use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Widget\Box;
 use ModStart\Widget\Chart\Line;
-use Module\Vendor\Admin\Config\AdminWidgetDashboard;
+use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
 use Module\VisitStatistic\Model\VisitStatisticDailyReport;
 use Module\VisitStatistic\Model\VisitStatisticItem;
 use Module\VisitStatistic\Type\VisitStatisticDevice;

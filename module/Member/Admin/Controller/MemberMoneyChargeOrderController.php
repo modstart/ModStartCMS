@@ -24,7 +24,7 @@ class MemberMoneyChargeOrderController extends Controller
             ->init('member_money_charge_order')
             ->field(function ($builder) {
                 /** @var HasFields $builder */
-                $builder->display('id', '订单ID');
+                $builder->display('id', '业务订单ID');
                 $builder->datetime('created_at', '创建时间');
                 $builder->display('memberUserId', '用户')->hookRendering(function (AbstractField $field, $item, $index) {
                     return MemberCmsUtil::showFromId($item->memberUserId);
@@ -33,7 +33,7 @@ class MemberMoneyChargeOrderController extends Controller
                 $builder->type('status', '状态')->type(OrderStatus::class);
             })
             ->gridFilter(function (GridFilter $filter) {
-                $filter->eq('id', '订单ID');
+                $filter->eq('id', '业务订单ID');
                 $filter->eq('memberUserId', '用户ID');
                 $filter->eq('status', '状态')->select([
                     OrderStatus::WAIT_PAY => TypeUtil::name(OrderStatus::class, OrderStatus::WAIT_PAY),

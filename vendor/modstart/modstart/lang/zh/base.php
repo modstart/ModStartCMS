@@ -216,4 +216,6 @@ return [
     'Refresh Page' => '刷新页面',
     'Field %s Too Long' => '字段%s长度太长',
     'Field %s Format Error' => '字段%s格式不正确',
+    'Today' => '今天',
+    'Yesterday' => '昨天',
 ];

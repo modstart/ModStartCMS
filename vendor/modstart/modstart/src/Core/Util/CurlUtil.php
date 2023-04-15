@@ -171,6 +171,7 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_STDERR, $fp);
         }
 
+
         curl_setopt($ch, CURLOPT_HEADER, $returnHeader);
         if (!empty($sendHeaders)) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $sendHeaders);
@@ -201,7 +202,12 @@ class CurlUtil
         if (!empty($option['socks5'])) {
             curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
             curl_setopt($ch, CURLOPT_PROXY, $option['socks5']);
+        } else if (!empty($option['http_proxy'])) {
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+            curl_setopt($ch, CURLOPT_PROXY, $option['http_proxy']);
         }
+
+
         $output = curl_exec($ch);
         if (!empty($option['debugFile'])) {
             file_put_contents($option['debugFile'], "\n\n" . $output, FILE_APPEND);

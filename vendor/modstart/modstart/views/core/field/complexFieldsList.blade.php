@@ -4,7 +4,7 @@
         @if($tip)
             <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
         @endif
-        {{$label}}:
+        {{$label}}
     </div>
     <div class="field">
         <div id="{{$id}}Input">
@@ -65,7 +65,7 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! $defaultValue?json_encode($defaultValue):'[]' !!},
+                value: {!! $value?json_encode($value):($defaultValue?json_encode($defaultValue):'[]') !!},
                 icons: []
             },
             mounted(){

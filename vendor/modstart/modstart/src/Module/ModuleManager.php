@@ -94,6 +94,9 @@ class ModuleManager
             return Response::generateSuccessData(['output' => $output]);
         } catch (BizException $e) {
             return Response::generateError($e->getMessage());
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return Response::generateError(L('Server Error') . ': ' . $message);
         }
     }
 

@@ -14,6 +14,8 @@
                 <a href="javascript:;" class="active">设置新密码</a>
             </div>
 
+            @include('module::Member.View.pc.inc.retrieveNav',['current'=>2])
+
             <div class="ub-form flat">
                 <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">

@@ -6,7 +6,7 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
 use ModStart\Core\Dao\ModelUtil;
-use Module\Vendor\Admin\Config\AdminWidgetLink;
+use Module\Vendor\Admin\Widget\AdminWidgetLink;
 
 class ModuleServiceProvider extends ServiceProvider
 {
