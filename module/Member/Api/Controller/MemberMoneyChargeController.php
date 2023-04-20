@@ -18,6 +18,7 @@ class MemberMoneyChargeController extends Controller implements MemberLoginCheck
 {
     public function submit()
     {
+        BizException::throwsIf('钱包充值未开启',!modstart_config('Member_MoneyChargeEnable',false));
         $input = InputPackage::buildFromInput();
         $money = $input->getDecimal('money');
         BizException::throwsIf('金额最少为0.01元', $money < 0.01);

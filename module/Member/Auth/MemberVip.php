@@ -29,4 +29,15 @@ class MemberVip
     {
         return self::get('id', 0);
     }
+
+    public static function is($vipIds)
+    {
+        if (empty($vipIds)) {
+            return false;
+        }
+        if (!is_array($vipIds)) {
+            $vipIds = [$vipIds];
+        }
+        return in_array(self::id(), $vipIds);
+    }
 }

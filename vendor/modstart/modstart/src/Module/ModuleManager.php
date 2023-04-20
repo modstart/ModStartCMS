@@ -4,6 +4,7 @@
 namespace ModStart\Module;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
@@ -89,6 +90,7 @@ class ModuleManager
             $exitCode = Artisan::call($command, $param);
             $output = trim(Artisan::output());
             if (0 !== $exitCode) {
+                Log::error("MS.ModuleManager.CallCommand.Error - $command - $output");
                 return Response::generate(-1, "ERROR:$exitCode", ['output' => $output]);
             }
             return Response::generateSuccessData(['output' => $output]);

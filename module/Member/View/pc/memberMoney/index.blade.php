@@ -24,24 +24,20 @@
     </div>
     <div class="ub-panel" style="margin-top:-0.5rem;">
         <div class="head">
-            @if(modstart_config('Member_MoneyCashEnable',false))
-                <div class="more">
-                    @if(modstart_config('Member_MoneyChargeDesc',false))
-                        <a class="tw-ml-2" href="javascript:;" data-dialog-request="{{modstart_web_url('member_money/charge_desc')}}">
-                            <i class="iconfont icon-cny"></i>
-                            钱包充值说明
-                        </a>
-                    @endif
+            <div class="more">
+                @if(modstart_config('Member_MoneyChargeEnable',false))
+                    <a class="tw-ml-2" href="{{modstart_web_url('member_money/charge')}}">
+                        <i class="iconfont icon-cny"></i>
+                        充值
+                    </a>
+                @endif
+                @if(modstart_config('Member_MoneyCashEnable',false))
                     <a class="tw-ml-2" href="{{modstart_web_url('member_money/cash')}}">
                         <i class="iconfont icon-pay"></i>
-                        提现申请
+                        提现
                     </a>
-                    <a class="tw-ml-2" href="{{modstart_web_url('member_money/cash/log')}}">
-                        <i class="iconfont icon-time"></i>
-                        提现记录
-                    </a>
-                </div>
-            @endif
+                @endif
+            </div>
             <div class="title">
                 <i class="iconfont icon-list"></i>
                 钱包流水

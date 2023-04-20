@@ -4,9 +4,7 @@
 namespace Module\Member\Web\Controller;
 
 
-use ModStart\App\Web\Layout\WebDialogPage;
 use ModStart\App\Web\Layout\WebPage;
-use ModStart\Core\Input\Request;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Grid\Grid;
@@ -43,12 +41,5 @@ class MemberMoneyController extends MemberFrameController implements MemberLogin
         });
         list($view, $_) = $this->viewPaths('memberMoney.index');
         return $page->pageTitle('钱包')->view($view)->body($grid)->handleGrid($grid);
-    }
-
-
-    public function chargeDesc(WebDialogPage $page)
-    {
-        $html = modstart_config('Member_MoneyChargeDesc');
-        return $page->pageTitle('钱包充值说明')->body("<div class='ub-html'>$html</div>");
     }
 }

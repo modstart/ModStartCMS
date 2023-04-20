@@ -3,6 +3,7 @@
 namespace ModStart\Core\Dao;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -24,19 +25,25 @@ class ModelUtil
 //    }
 
     /**
-     * 构建模型
+     * @Util 构建模型
      * @param $model string 数据表
-     * @return Model 数据库模型
+     * @return Model|Builder 数据库模型
      * @example
-     * // 按条件查询
+     * // 查询
      * ModelUtil::model('user')->where(['id'=>1])->get()->toArray();
      * ModelUtil::model('user')->where('id','>',5)->get()->toArray();
-     * // LIKE
+     * // 查询-like
      * ModelUtil::model('user')->where('username','like','%keywords%')->get()->toArray();
-     * // 原生SQL
+     * // 查询-limit
+     * ModelUtil::model('user')->limit(5)->get()->toArray();
+     * // 查询-原生SQL
      * ModelUtil::model('user')->whereRaw(DB::raw('id > 0 OR id is null'))->get()->toArray();
      *
-     * @Util
+     * // 删除
+     * ModelUtil::model('user')->where(['id'=>1])->delete();
+     *
+     * // 更新
+     * ModelUtil::model('user')->where(['id'=>1])->update(['username'=>'aaa']);
      */
     public static function model($model)
     {
@@ -117,11 +124,13 @@ class ModelUtil
 
     /**
      * 删除记录
-     * @param $model
-     * @param $field
-     * @param $operator
-     * @param $value
+     * @param $model string 数据表
+     * @param $field string 字段
+     * @param $operator string 操作符
+     * @param $value string 值
      * @return int 被删除的记录数量
+     * @example
+     * ModelUtil::deleteOperator('user','id','>',5);
      */
     public static function deleteOperator($model, $field, $operator, $value)
     {
@@ -155,7 +164,7 @@ class ModelUtil
     }
 
     /**
-     * 更新数据表
+     * @Util更新数据表
      * @param $model string 数据库
      * @param $where int|array 更新条件
      * @param $data array 更新的数据数组
@@ -163,8 +172,6 @@ class ModelUtil
      * @example
      * ModelUtil::update('user',1,['password'=>'123456']);
      * ModelUtil::update('user',['username'=>'xxx'],['password'=>'123456']);
-     *
-     * @Util
      */
     public static function update($model, $where, $data)
     {
@@ -194,7 +201,7 @@ class ModelUtil
     }
 
     /**
-     * 获取单条记录
+     * @Util 获取单条记录
      * @param $model string 数据表
      * @param $where int|array 条件
      * @param  $fields array 数据表字段
@@ -203,8 +210,7 @@ class ModelUtil
      * @example
      * ModelUtil::get('user',1);
      * ModelUtil::get('user',['username'=>'xxx']);
-     *
-     * @Util
+     * 更复杂的数据获取可以使用 ModelUtil::model('xxx') 进行操作
      */
     public static function get($model, $where, $fields = ['*'], $order = null)
     {

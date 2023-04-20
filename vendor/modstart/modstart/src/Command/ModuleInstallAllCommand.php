@@ -20,8 +20,8 @@ class ModuleInstallAllCommand extends Command
             if (!ModuleManager::isExists($module)) {
                 continue;
             }
+            $this->warn(">>> Module $module Installing");
             $ret = ModuleManager::install($module);
-            $this->warn(">>> Module $module");
             if (Response::isSuccess($ret)) {
                 $this->info($ret['data']['output']);
             } else {

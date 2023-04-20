@@ -52,4 +52,32 @@ class ColorUtil
         $index = abs(crc32($hashString)) % count(self::$colors);
         return self::$colors[$index];
     }
+
+    public static function adjust($hexColor, $steps)
+    {
+        $hexColor = strtoupper($hexColor);
+        if (!preg_match('/^#[A-F0-9]{6}$/', $hexColor)) {
+            return $hexColor;
+        }
+
+        $hexColor = str_replace('#', '', $hexColor);
+        $rHex = substr($hexColor, 0, 2);
+        $gHex = substr($hexColor, 2, 2);
+        $bHex = substr($hexColor, 4, 2);
+
+        $r = hexdec($rHex);
+        $g = hexdec($gHex);
+        $b = hexdec($bHex);
+
+        $r = max(0, min(255, $r + $steps));
+        $g = max(0, min(255, $g + $steps));
+        $b = max(0, min(255, $b + $steps));
+
+        return '#' . strtoupper(join('', [
+                str_pad(dechex($r), 2, '0'),
+                str_pad(dechex($g), 2, '0'),
+                str_pad(dechex($b), 2, '0'),
+            ]));
+
+    }
 }

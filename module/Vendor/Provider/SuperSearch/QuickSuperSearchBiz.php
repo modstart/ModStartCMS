@@ -7,7 +7,7 @@ namespace Module\Vendor\Provider\SuperSearch;
 /**
  * Class QuickSuperSearchBiz
  * @package Module\Vendor\Provider\SuperSearch
- * @deprecated
+ * @deprecated delete at 2023-10-18
  */
 class QuickSuperSearchBiz extends AbstractSuperSearchBiz
 {

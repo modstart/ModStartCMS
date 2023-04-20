@@ -25,6 +25,7 @@ abstract class AbstractAdminSuperSearchController extends Controller
         $bizList = array_map(function ($biz) {
             return SuperSearchBiz::get($biz);
         }, $bizList);
+        $bizList = array_filter($bizList);
         if (Request::isPost()) {
             $input = InputPackage::buildFromInput();
             $bucket = $input->getTrimString('bucket');

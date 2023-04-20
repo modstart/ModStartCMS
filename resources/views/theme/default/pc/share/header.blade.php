@@ -4,7 +4,7 @@
             @if(\Module\Member\Auth\MemberUser::id())
                 <a href="{{modstart_web_url('member')}}"><i class="iconfont icon-user"></i> {{\Module\Member\Auth\MemberUser::nickname()}}</a>
             @else
-                <a href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
+                <a href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::redirectUrl()])}}" rel="nofollow">
                     <i class="iconfont icon-user"></i> 
                     登录
                 </a>

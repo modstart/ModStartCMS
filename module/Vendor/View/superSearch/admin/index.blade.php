@@ -59,7 +59,8 @@
     @if(empty($provider))
         <div class="ub-alert ub-alert-danger">
             <i class="iconfont icon-warning"></i>
-            没有配置超级搜索驱动
+            没有配置超级搜索驱动，
+            请安装 <a href="https://modstart.com/m/SuperSearchES" target="_blank">ElasticSearch</a> 超级搜索驱动。
         </div>
     @endif
 

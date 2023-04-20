@@ -26,10 +26,10 @@ Vue.prototype.L = (name, ...args) => {
 Vue.use(ElementUI, {size: 'mini', zIndex: 3000});
 Vue.use(vueTimeago, {
     name: 'TimeAgo',
-    locale: 'zh-CN',
-    // locales: {
-    //     'zh-CN': require('date-fns/locale/zh_cn'),
-    // }
+    locale: 'zh_CN',
+    locales: {
+        'zh_CN': require('date-fns/locale/zh_cn'),
+    }
 })
 Vue.use(VueClipboard)
 Vue.prototype.$doCopyText = function (text, tips) {

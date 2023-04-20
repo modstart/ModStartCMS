@@ -73,6 +73,15 @@ class Request
         return self::fixUrlSubdir($redirect);
     }
 
+    public static function redirectUrl()
+    {
+        $redirect = Input::get('redirect');
+        if (empty($redirect)) {
+            $redirect = self::currentPageUrl();
+        }
+        return $redirect;
+    }
+
     private static function fixFullUrlForceSchema($url)
     {
         if ($forceSchema = config('modstart.forceSchema')) {

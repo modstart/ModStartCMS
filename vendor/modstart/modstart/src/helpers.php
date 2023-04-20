@@ -64,7 +64,7 @@ function modstart_admin_is_tab()
 /**
  * 生成Web的文件绝对路径
  * @param string $path
- * @return string
+ * @return string 路径
  */
 function modstart_web_path($path = '')
 {
@@ -75,7 +75,7 @@ function modstart_web_path($path = '')
  * @Util 生成完整的Web路径
  * @param string $url 路径
  * @param array $param 参数
- * @return string
+ * @return string 地址
  * @example
  * // 返回 http://www.example.com/aaa/bbb
  * modstart_web_full_url('aaa/bbb')
@@ -96,7 +96,7 @@ function modstart_web_full_url($url = '', $param = [])
  * @desc 生成Web的路径，自动加前缀
  * @param string $url 路径
  * @param array $param 参数
- * @return string
+ * @return string 地址
  * @example
  * // 返回 /aaa/bbb
  * modstart_web_url('aaa/bbb')
@@ -235,7 +235,7 @@ function modstart_action($name, $parameters = [])
  * @return string|array|boolean|integer|\ModStart\Core\Config\MConfig 返回配置值或配置对象
  * @example
  * // 网站名称
- * modstart_config('siteName');
+ * modstart_config('siteName','[默认名称]');
  * // 获取一个配置数组，数组需存储成 json 格式
  * modstart_config()->getArray('xxx')
  * // 设置配置项

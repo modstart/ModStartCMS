@@ -352,24 +352,27 @@
     .panel-a {
         color: #FFF;
         padding: 2rem;
-        border-radius: 0.5rem;
         text-align: left;
 
-        .title {
-            font-size: 1.8rem;
-            line-height: 2rem;
-        }
+        .box {
+            max-width: var(--container-width);
+            margin: 0 auto;
 
-        .sub-title {
-            margin-top: 0.8rem;
-            font-size: var(--font-size-medium);
+            .title {
+                font-size: 1.8rem;
+                line-height: 2rem;
+            }
+
+            .sub-title {
+                margin-top: 0.8rem;
+                font-size: var(--font-size-medium);
+            }
         }
     }
 
     .panel-b {
         color: #FFF;
         padding: 1.5rem;
-        border-radius: 0.5rem;
         text-align: left;
         position: relative;
         overflow: hidden;
@@ -382,7 +385,6 @@
             right: 0;
             background-size: cover;
             background-position: center;
-            border-radius: 0.5rem;
         }
 
         .bg {
@@ -396,6 +398,8 @@
         .box {
             position: relative;
             text-align: left;
+            max-width: var(--container-width);
+            margin: 0 auto;
 
             .c {
                 display: flex;

@@ -15,8 +15,10 @@ use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Misc\Captcha\CaptchaFacade;
 use ModStart\Module\ModuleBaseController;
+use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserLoginedEvent;
+use Module\Member\Events\MemberUserLogoutEvent;
 use Module\Member\Events\MemberUserPasswordResetedEvent;
 use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Oauth\AbstractOauth;
@@ -590,7 +592,11 @@ class AuthController extends ModuleBaseController
      */
     public function logout()
     {
+        $memberUserId = MemberUser::id();
         Session::forget('memberUserId');
+        if ($memberUserId > 0) {
+            EventUtil::fire(new MemberUserLogoutEvent($memberUserId));
+        }
         return Response::generateSuccess();
     }
 

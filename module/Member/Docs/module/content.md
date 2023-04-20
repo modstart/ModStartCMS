@@ -20,7 +20,7 @@
 
 当前 `Controller` 实现 `Module\Member\Support\MemberLoginCheck` 接口，同时在 Route 中使用中间件 `WebAuthMiddleware`
 
-#### 如何获取到当前用户？
+#### 如何获取到当前用户分组和VIP等级？
 
 
 通过以下方法获取到当前用户
@@ -30,18 +30,3 @@
 \Module\Member\Auth\MemberUser::get()
 ```
 
-在页面上判断用户分组和VIP等级
-
-```php
-@if(\Module\Member\Auth\MemberGroup::inGroupIds([1,2]))
-    是用户组1、2、3
-@endif
-
-@if(\Module\Member\Auth\MemberVip::get('id')==1)
-    是VIP1
-@endif
-
-@if(\Module\Member\Auth\MemberVip::isDefault())
-    是默认VIP用户
-@endif
-```
