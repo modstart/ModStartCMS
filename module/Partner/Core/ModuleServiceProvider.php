@@ -21,19 +21,21 @@ class ModuleServiceProvider extends ServiceProvider
             ModuleClassLoader::addClass('MPartner', __DIR__ . '/../Helpers/MPartner.php');
         }
 
-        AdminMenu::register([
-            [
-                'title' => '物料管理',
-                'icon' => 'description',
-                'sort' => 200,
-                'children' => [
-                    [
-                        'title' => '友情链接',
-                        'url' => '\Module\Partner\Admin\Controller\PartnerController@index',
-                    ],
+        AdminMenu::register(function () {
+            return [
+                [
+                    'title' => '物料管理',
+                    'icon' => 'description',
+                    'sort' => 200,
+                    'children' => [
+                        [
+                            'title' => '友情链接',
+                            'url' => '\Module\Partner\Admin\Controller\PartnerController@index',
+                        ],
+                    ]
                 ]
-            ]
-        ]);
+            ];
+        });
     }
 
     /**

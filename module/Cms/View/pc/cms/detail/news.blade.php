@@ -54,7 +54,7 @@
                     </div>
                 @else
                     <div class="ub-content-box margin-bottom">
-                        <div class="ub-html" style="font-size:0.8rem;">
+                        <div class="ub-html lg">
                             {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
                         </div>
                         <div class="tw-bg-gray-100 tw-my-4" style="height:1px;"></div>

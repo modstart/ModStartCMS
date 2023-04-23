@@ -64,9 +64,10 @@ use ModStart\Layout\LayoutTab;
  * @method \ModStart\Field\AreaChina            areaChina($column, $label = '')
  * @method \ModStart\Field\Hidden               hidden($column, $label = '')
  * @method \ModStart\Field\Icon                 icon($column, $label = '')
- * @method \ModStart\Field\Custom               custom($column, $label = '')
  * @method \ModStart\Field\Button               button($column, $label = '')
  * @method \ModStart\Field\AdminUser            adminUser($column, $label = '')
+ * @method \ModStart\Field\ManyRelation         manyRelation($column, $label = '')
+ * @method \ModStart\Field\Custom               custom($column, $label = '')
  *
  * $callback = function (LayoutGrid $layout) { $layout->layoutColumn(4, function ($builder) { }); });
  * @method \ModStart\Layout\LayoutGrid        layoutGrid($callback)

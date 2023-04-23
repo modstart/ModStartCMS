@@ -31,6 +31,7 @@ class AdminRoleController extends Controller
             $grid->display('id', L('ID'))->sortable(true)->width(80);
             $grid->text('name', L('Role Name'))->width(200);
             $grid->tree('rules', L('Role Permission'))
+                ->columnNameChildren('children')
                 ->columnNameId('rule')->spread(false)
                 ->tree(AdminPermission::menuAll(null, true))
                 ->hookValueUnserialize(function ($value, AbstractField $field) {
@@ -55,6 +56,7 @@ class AdminRoleController extends Controller
             $form->display('id', L('ID'))->editable(true);
             $form->text('name', L('Role Name'))->required()->rules('unique:admin_role,name,' . CRUDUtil::id());
             $form->tree('rules', L('Role Permission'))->rules('required')
+                ->columnNameChildren('children')
                 ->columnNameId('rule')->tree(AdminPermission::menuAll(null, true))
                 ->hookValueUnserialize(function ($value, AbstractField $field) {
                     return collect($value)->pluck('rule');
@@ -103,7 +105,9 @@ class AdminRoleController extends Controller
         $detail = new Detail(AdminRole::class, function (Detail $detail) {
             $detail->display('id', L('ID'));
             $detail->text('name', L('Role Name'));
-            $detail->tree('rules', L('Role Permission'))->columnNameId('rule')
+            $detail->tree('rules', L('Role Permission'))
+                ->columnNameId('rule')
+                ->columnNameChildren('children')
                 ->tree(AdminPermission::menuAll(null, true))
                 ->hookValueUnserialize(function ($value, AbstractField $field) {
                     return $value->map(function ($r) {

@@ -10,9 +10,9 @@ abstract class MConfig
 {
     /**
      * 获取配置（进出都要是string）
-     * @param $key string
-     * @param $defaultValue string
-     * @param $useCache bool
+     * @param $key string 配置key
+     * @param $defaultValue string 请勿使用 null 会导致缓存不能生效
+     * @param $useCache bool 是否使用缓存
      * @return string
      */
     public abstract function get($key, $defaultValue = '', $useCache = true);

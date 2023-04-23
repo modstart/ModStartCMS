@@ -48,7 +48,7 @@
             </div>
             @if(modstart_config('Member_MoneyChargeDesc'))
                 <div class="tw-rounded-lg tw-p-3" style="background:#F8F8F8;">
-                    <div class="ub-html">
+                    <div class="ub-html lg">
                         {!! modstart_config('Member_MoneyChargeDesc') !!}
                     </div>
                 </div>

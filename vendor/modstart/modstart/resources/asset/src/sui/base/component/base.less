@@ -102,8 +102,8 @@ a.ub-text {
     max-width: var(--container-width, 57rem);
     margin-left: auto;
     margin-right: auto;
-    padding-left: calc( var(--size-margin) / 2 );
-    padding-right: calc( var(--size-margin) / 2 );
+    padding-left: calc(var(--size-margin) / 2);
+    padding-right: calc(var(--size-margin) / 2);
 
     &.narrow {
         max-width: 30rem;
@@ -442,8 +442,12 @@ a.ub-text {
     color: var(--color-tertiary) !important;
 }
 
-.ub-text-small {
-    font-size: 0.6rem;
+.ub-text-small, .ub-text-sm {
+    font-size: 0.6rem !important;
+}
+
+.ub-text-xs {
+    font-size: 0.5rem !important;
 }
 
 .ub-text-center {
@@ -482,7 +486,7 @@ a.ub-text {
     background-color: var(--color-content-bg);
 }
 
-.ub-content-box{
+.ub-content-box {
     background-color: var(--color-content-bg);
     border-radius: var(--size-radius);
     padding: var(--size-padding);

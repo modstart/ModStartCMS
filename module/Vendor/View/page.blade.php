@@ -13,7 +13,7 @@
                 <div class="ub-article">
                     <h1 class="ub-text-center">{{$pageTitle}}</h1>
                     <div class="attr"></div>
-                    <div class="content ub-html">
+                    <div class="content ub-html lg">
                         {!! $pageContent !!}
                     </div>
                 </div>

@@ -15,20 +15,22 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        AdminMenu::register([
-            [
-                'title' => L('Site Manage'),
-                'icon' => 'cog',
-                'sort' => 400,
-                'children' => [
-                    [
-                        'title' => '基本设置',
-                        'sort' => 1,
-                        'url' => '\Module\Site\Admin\Controller\ConfigController@setting',
-                    ],
+        AdminMenu::register(function () {
+            return [
+                [
+                    'title' => L('Site Manage'),
+                    'icon' => 'cog',
+                    'sort' => 400,
+                    'children' => [
+                        [
+                            'title' => '基本设置',
+                            'sort' => 1,
+                            'url' => '\Module\Site\Admin\Controller\ConfigController@setting',
+                        ],
+                    ]
                 ]
-            ]
-        ]);
+            ];
+        });
     }
 
     /**

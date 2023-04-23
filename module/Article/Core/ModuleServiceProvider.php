@@ -17,19 +17,21 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        AdminMenu::register([
-            [
-                'title' => '物料管理',
-                'icon' => 'description',
-                'sort' => 200,
-                'children' => [
-                    [
-                        'title' => '通用文章',
-                        'url' => '\Module\Article\Admin\Controller\ArticleController@index',
-                    ],
+        AdminMenu::register(function () {
+            return [
+                [
+                    'title' => '物料管理',
+                    'icon' => 'description',
+                    'sort' => 200,
+                    'children' => [
+                        [
+                            'title' => '通用文章',
+                            'url' => '\Module\Article\Admin\Controller\ArticleController@index',
+                        ],
+                    ]
                 ]
-            ]
-        ]);
+            ];
+        });
         AdminWidgetLink::register(function () {
             return AdminWidgetLink::build('通用文章', array_map(function ($record) {
                 return [

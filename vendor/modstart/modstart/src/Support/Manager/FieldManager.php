@@ -18,7 +18,6 @@ class FieldManager
             'text' => \ModStart\Field\Text::class,
             'display' => \ModStart\Field\Display::class,
             'tree' => \ModStart\Field\Tree::class,
-            'custom' => \ModStart\Field\Custom::class,
             'checkbox' => \ModStart\Field\Checkbox::class,
             'tags' => \ModStart\Field\Tags::class,
             'code' => \ModStart\Field\Code::class,
@@ -67,6 +66,8 @@ class FieldManager
             'icon' => \ModStart\Field\Icon::class,
             'button' => \ModStart\Field\Button::class,
             'adminUser' => \ModStart\Field\AdminUser::class,
+            'manyRelation' => \ModStart\Field\ManyRelation::class,
+            'custom' => \ModStart\Field\Custom::class,
 
             'layoutGrid' => \ModStart\Layout\LayoutGrid::class,
             'layoutTab' => \ModStart\Layout\LayoutTab::class,

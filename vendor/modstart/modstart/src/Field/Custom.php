@@ -11,5 +11,5 @@ namespace ModStart\Field;
  */
 class Custom extends AbstractField
 {
-    protected $isModelField = false;
+    protected $isCustomField = true;
 }

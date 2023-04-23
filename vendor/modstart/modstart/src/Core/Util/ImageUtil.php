@@ -166,11 +166,10 @@ class ImageUtil
     public static function info($file)
     {
         $img = Image::make($file);
-        $width = $img->width();
-        $height = $img->height();
         return [
-            'width' => $width,
-            'height' => $height,
+            'width' => $img->width(),
+            'height' => $img->height(),
+            'size' => $img->filesize(),
         ];
     }
 

@@ -20,19 +20,21 @@ class ModuleServiceProvider extends ServiceProvider
             ModuleClassLoader::addClass('MBanner', __DIR__ . '/../Helpers/MBanner.php');
         }
 
-        AdminMenu::register([
-            [
-                'title' => '物料管理',
-                'icon' => 'description',
-                'sort' => 200,
-                'children' => [
-                    [
-                        'title' => '轮播图片',
-                        'url' => '\Module\Banner\Admin\Controller\BannerController@index',
-                    ],
+        AdminMenu::register(function () {
+            return [
+                [
+                    'title' => '物料管理',
+                    'icon' => 'description',
+                    'sort' => 200,
+                    'children' => [
+                        [
+                            'title' => '轮播图片',
+                            'url' => '\Module\Banner\Admin\Controller\BannerController@index',
+                        ],
+                    ]
                 ]
-            ]
-        ]);
+            ];
+        });
     }
 
     /**

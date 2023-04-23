@@ -167,7 +167,7 @@
                                     <div class="item tw-hidden">
                                         <div class="tw-p-4 tw-text-lg vip-text">{{$memberVip['title']}}</div>
                                         <div class="tw-pb-4 tw-px-4 ">
-                                            <div class="ub-html">
+                                            <div class="ub-html lg">
                                                 {!! $memberVip['content'] !!}
                                             </div>
                                         </div>
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div class="body">
-                <div class="ub-html">
+                <div class="ub-html lg">
                     {!! modstart_config('Member_VipContent','VIP开通说明') !!}
                 </div>
             </div>

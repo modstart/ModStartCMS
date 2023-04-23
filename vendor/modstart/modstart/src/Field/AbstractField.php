@@ -60,6 +60,9 @@ use ModStart\Support\Concern\HasFluentAttribute;
  * > $value = function ($value, AbstractField $field) { return $value; }
  * @method AbstractField|mixed hookValueSerialize($value = null)
  *
+ * > $value = function ($itemId, AbstractField $field) {  }
+ * @method AbstractField|mixed hookValueSaved($value = null)
+ *
  * grid|form|detail模式：渲染自定义回调
  * > $value = function(AbstractField $field, $item, $index){ return $item->title; }
  * @method AbstractField|mixed hookRendering($value = null)
@@ -124,20 +127,20 @@ class AbstractField implements Renderable
 
     protected static $css = [];
     protected static $js = [];
-    private $script = '';
+    protected $script = '';
 
     /** @var Form|Grid|Detail $context */
     protected $context;
 
-    private $id;
+    protected $id;
     /**
      * @var string 表单name
      */
-    private $name;
+    protected $name;
     /**
      * @var string 数据表字段名
      */
-    private $column;
+    protected $column;
     /**
      * @var mixed|null 表单名称
      */
@@ -154,9 +157,9 @@ class AbstractField implements Renderable
      *
      * @var Model|\stdClass
      */
-    private $item;
+    protected $item;
 
-    private $fluentAttributes = [
+    protected $fluentAttributes = [
         'listable',
         'addable',
         'editable',
@@ -173,6 +176,7 @@ class AbstractField implements Renderable
         'hookFormatValue',
         'hookValueUnserialize',
         'hookValueSerialize',
+        'hookValueSaved',
         'hookRendering',
         'isLayoutField',
         'isCustomField',
@@ -188,30 +192,35 @@ class AbstractField implements Renderable
     protected $editable = true;
     protected $showable = true;
     protected $sortable = false;
-    private $renderMode;
-    private $defaultValue = null;
-    private $placeholder = null;
-    private $help = null;
-    private $tip = null;
-    private $styleFormField = null;
+    protected $renderMode;
+    protected $defaultValue = null;
+    protected $placeholder = null;
+    protected $help = null;
+    protected $tip = null;
+    protected $styleFormField = null;
     protected $width = '';
-    private $readonly = false;
+    protected $readonly = false;
     /**
      * 格式化值
      * @var \Closure
      */
-    private $hookFormatValue;
+    protected $hookFormatValue;
     /**
      * 将DB中的值反序列化
      * @var \Closure
      */
-    private $hookValueUnserialize;
+    protected $hookValueUnserialize;
     /**
      * 将值序列化存储在DB中
      * @var \Closure
      */
-    private $hookValueSerialize;
-    private $hookRendering;
+    protected $hookValueSerialize;
+    /**
+     * 保存已完成
+     * @var \Closure
+     */
+    protected $hookValueSaved;
+    protected $hookRendering;
     /**
      * 是否为布局类
      * @var bool
@@ -224,13 +233,13 @@ class AbstractField implements Renderable
     protected $isCustomField = false;
     /**
      * 数据表示模式下浮动布局
-     * @var null|left|right
+     * @var string null|left|right
      */
-    private $gridFixed = null;
+    protected $gridFixed = null;
     /**
      * @var bool 行内编辑
      */
-    private $gridEditable = false;
+    protected $gridEditable = false;
 
     public static function getAssets()
     {

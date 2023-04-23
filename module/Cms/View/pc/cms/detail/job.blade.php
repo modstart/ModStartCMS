@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="content ub-html" style="font-size:0.8rem;">
+                            <div class="content ub-html lg">
                                 {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
                             </div>
                         </div>

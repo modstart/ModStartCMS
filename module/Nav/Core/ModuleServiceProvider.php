@@ -20,19 +20,21 @@ class ModuleServiceProvider extends ServiceProvider
             ModuleClassLoader::addClass('MNav', __DIR__ . '/../Helpers/MNav.php');
         }
 
-        AdminMenu::register([
-            [
-                'title' => '物料管理',
-                'icon' => 'description',
-                'sort' => 200,
-                'children' => [
-                    [
-                        'title' => '导航设置',
-                        'url' => '\Module\Nav\Admin\Controller\NavController@index',
-                    ],
+        AdminMenu::register(function () {
+            return [
+                [
+                    'title' => '物料管理',
+                    'icon' => 'description',
+                    'sort' => 200,
+                    'children' => [
+                        [
+                            'title' => '导航设置',
+                            'url' => '\Module\Nav\Admin\Controller\NavController@index',
+                        ],
+                    ]
                 ]
-            ]
-        ]);
+            ];
+        });
     }
 
     /**

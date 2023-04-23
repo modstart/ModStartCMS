@@ -561,6 +561,11 @@ class Form implements Renderable
             }
             // exit(print_r($this->dataAdding));
             $id = $this->repository->add($this);
+            foreach ($this->addableFields() as $field) {
+                if ($field->hookValueSaved()) {
+                    call_user_func($field->hookValueSaved(), $id, $field);
+                }
+            }
             if (!empty($this->dataSubmitted['_redirect'])) {
                 return Response::json(0, null, null, $this->dataSubmitted['_redirect']);
             }
@@ -640,6 +645,19 @@ class Form implements Renderable
                 }
             }
             $this->repository()->edit($this);
+            if ('itemCellEdit' == $action) {
+                foreach ($this->editableFields() as $field) {
+                    if ($field->column() == $column && $field->hookValueSaved()) {
+                        call_user_func($field->hookValueSaved(), $this->itemId(), $field);
+                    }
+                }
+            } else {
+                foreach ($this->editableFields() as $field) {
+                    if ($field->hookValueSaved()) {
+                        call_user_func($field->hookValueSaved(), $this->itemId(), $field);
+                    }
+                }
+            }
             if (!empty($this->dataSubmitted['_redirect'])) {
                 return Response::json(0, null, null, $this->dataSubmitted['_redirect']);
             }

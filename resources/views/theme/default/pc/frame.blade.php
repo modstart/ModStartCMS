@@ -10,12 +10,12 @@
     @if('default'==\Illuminate\Support\Facades\Session::get('msSiteTemplateUsing','default'))
         <link rel="stylesheet" href="{{\ModStart\Core\Assets\AssetsUtil::fix('theme/default/css/style.css')}}"/>
     @endif
-    @if(modstart_config('sitePrimaryColor',null))
+    @if($c=modstart_config('sitePrimaryColor'))
         <style type="text/css">
             :root{
-                --theme-color-primary: {{modstart_config('sitePrimaryColor')}};
-                --theme-color-primary-light: {{modstart_config('sitePrimaryColor')}};
-                --theme-color-primary-dark: {{modstart_config('sitePrimaryColor')}};
+                --theme-color-primary: {{$c}};
+                --theme-color-primary-light: {{\ModStart\Core\Util\ColorUtil::adjust($c,20)}};
+                --theme-color-primary-dark: {{\ModStart\Core\Util\ColorUtil::adjust($c,-20)}};
             }
         </style>
     @endif

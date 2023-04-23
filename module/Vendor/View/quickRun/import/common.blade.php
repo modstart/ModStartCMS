@@ -178,7 +178,7 @@
                 <div class="body">
                     @if(!empty($pageDescription))
                         <div class="tw-rounded-lg tw-p-4 tw-bg-gray-100 tw-mb-4">
-                            <div class="ub-html">
+                            <div class="ub-html lg">
                                 {!! $pageDescription !!}
                             </div>
                         </div>

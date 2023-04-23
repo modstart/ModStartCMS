@@ -13,6 +13,9 @@ class DatabaseMConfig extends MConfig
 
     public function get($key, $defaultValue = '', $useCache = true)
     {
+        if (null === $defaultValue) {
+            $defaultValue = '';
+        }
         $cacheFlag = self::CACHE_PREFIX . $key;
         $value = null;
         if ($useCache) {

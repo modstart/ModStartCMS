@@ -13,7 +13,7 @@ class Tree extends AbstractField
     private $columnNames = [
         'id' => 'id',
         'title' => 'title',
-        'children' => 'children',
+        'children' => '_child',
     ];
 
     protected function setup()

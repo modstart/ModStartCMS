@@ -20,24 +20,26 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        AdminMenu::register([
-            [
-                'title' => L('Site Manage'),
-                'icon' => 'cog',
-                'sort' => 400,
-                'children' => [
-                    [
-                        'title' => '短信邮箱',
-                        'children' => [
-                            [
-                                'title' => '魔众短信',
-                                'url' => '\Module\SmsTecmz\Admin\Controller\ConfigController@setting',
-                            ],
+        AdminMenu::register(function () {
+            return [
+                [
+                    'title' => L('Site Manage'),
+                    'icon' => 'cog',
+                    'sort' => 400,
+                    'children' => [
+                        [
+                            'title' => '短信邮箱',
+                            'children' => [
+                                [
+                                    'title' => '魔众短信',
+                                    'url' => '\Module\SmsTecmz\Admin\Controller\ConfigController@setting',
+                                ],
+                            ]
                         ]
                     ]
                 ]
-            ]
-        ]);
+            ];
+        });
         if (modstart_config('SmsTecmz_Enable', false)) {
             $this->app['config']->set('SmsSenderProvider', 'tecmz');
             SmsSenderProvider::register(SmsSender::class);

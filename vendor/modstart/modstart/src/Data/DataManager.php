@@ -214,8 +214,13 @@ class DataManager
      * @param string $content
      * @param array|null $option
      * @param array $param
-     * @return array
-     * @throws \Exception
+     * @return array [
+     *     'data' => [
+     *         'id'=>1,
+     *     ],
+     *     'path' => 'data/image/xxxx.jpg',
+     *     'fullPath' => '/data/image/xxx.jpg',
+     * ]
      */
     public static function upload($category, $filename, $content, $option = null, $param = [])
     {

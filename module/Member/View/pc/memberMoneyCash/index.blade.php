@@ -48,7 +48,7 @@
                 <div class="title">提现说明</div>
             </div>
             <div class="body">
-                <div class="ub-html">
+                <div class="ub-html lg">
                     {!! modstart_config('Member_MoneyCashDescription') !!}
                 </div>
             </div>
