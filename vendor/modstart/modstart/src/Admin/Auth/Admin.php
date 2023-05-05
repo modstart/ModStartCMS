@@ -14,6 +14,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\AgentUtil;
+use ModStart\Core\Util\StrUtil;
 
 class Admin
 {
@@ -70,7 +71,7 @@ class Admin
         }
         AdminUserLoginAttemptEvent::fire($adminUser['id'], Request::ip(), AgentUtil::getUserAgent());
         ModelUtil::update('admin_user', $adminUser['id'], [
-            'lastLoginIp' => Request::ip(),
+            'lastLoginIp' => StrUtil::mbLimit(Request::ip(), 20),
             'lastLoginTime' => Carbon::now(),
         ]);
         return Response::generateSuccessData($adminUser);
@@ -89,7 +90,7 @@ class Admin
             return Response::generate(-2, L('Password Incorrect'));
         }
         ModelUtil::update('admin_user', $adminUser['id'], [
-            'lastLoginIp' => Request::ip(),
+            'lastLoginIp' => StrUtil::mbLimit(Request::ip(), 20),
             'lastLoginTime' => Carbon::now(),
         ]);
         return Response::generateSuccessData($adminUser);

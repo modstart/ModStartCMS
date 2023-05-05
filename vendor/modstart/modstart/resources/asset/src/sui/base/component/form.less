@@ -172,9 +172,9 @@ input[type="color"] {
     /* 3 */
     padding: 0.2rem 0.3rem;
     /* 4 */
-    border: 0.05rem solid #dddddd;
-    background: #ffffff;
-    color: #444444;
+    border: 0.05rem solid var(--color-body-line);
+    background: var(--color-input-light-bg);
+    color: var(--color-text);
     -webkit-transition: all linear 0.2s;
     transition: all linear 0.2s;
 }
@@ -198,7 +198,7 @@ input[type="tel"]:focus,
 input[type="color"]:focus {
     border-color: var(--color-primary-light);
     outline: 0;
-    color: #444444;
+    color: var(--color-text);
 }
 
 select:disabled,
@@ -218,9 +218,9 @@ input[type="url"]:disabled,
 input[type="search"]:disabled,
 input[type="tel"]:disabled,
 input[type="color"]:disabled {
-    border-color: #dddddd;
-    background-color: #f5f5f5;
-    color: #c4cfdb;
+    border-color: var(--color-body-line);
+    background-color: #F5F5F5;
+    color: #C4CFDB;
 }
 
 textarea:read-only,
@@ -238,8 +238,8 @@ input[type="url"]:read-only,
 input[type="search"]:read-only,
 input[type="tel"]:read-only,
 input[type="color"]:read-only {
-    border-color: #dddddd;
-    background-color: #f5f5f5;
+    border-color: #DDDDDD;
+    background-color: #F5F5F5;
     color: #666666;
 }
 
@@ -247,27 +247,27 @@ input[type="color"]:read-only {
  * Placeholder
  */
 :-ms-input-placeholder {
-    color: #c4cfdb !important;
+    color: #C4CFDB !important;
 }
 
 ::-moz-placeholder {
-    color: #c4cfdb;
+    color: #C4CFDB;
 }
 
 ::-webkit-input-placeholder {
-    color: #c4cfdb;
+    color: #C4CFDB;
 }
 
 :disabled:-ms-input-placeholder {
-    color: #c4cfdb !important;
+    color: #C4CFDB !important;
 }
 
 :disabled::-moz-placeholder {
-    color: #c4cfdb;
+    color: #C4CFDB;
 }
 
 :disabled::-webkit-input-placeholder {
-    color: #c4cfdb;
+    color: #C4CFDB;
 }
 
 /*

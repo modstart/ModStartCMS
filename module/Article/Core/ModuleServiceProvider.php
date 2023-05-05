@@ -33,7 +33,7 @@ class ModuleServiceProvider extends ServiceProvider
             ];
         });
         AdminWidgetLink::register(function () {
-            return AdminWidgetLink::build('通用文章', array_map(function ($record) {
+            return AdminWidgetLink::build('内容', array_map(function ($record) {
                 return [
                     $record['title'],
                     modstart_web_url($record['alias'] ? "article/$record[alias]" : "article/$record[id]"),

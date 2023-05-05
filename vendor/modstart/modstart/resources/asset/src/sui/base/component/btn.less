@@ -88,13 +88,14 @@ fieldset:disabled a.btn {
 }
 
 .btn {
-    color: #666;
-    background-color: #F7F7F7;
-    box-shadow: 0 0 1px #CCC;
-}
+    color: var(--color-body-block);
+    background-color: var(--color-body-block-bg);
+    box-shadow: 0 0 1px var(--color-body-line);
 
-.btn:hover {
-    color: #555;
+    &:hover {
+        color: var(--color-body-block-hover);
+        background-color: var(--color-body-block-bg-hover);
+    }
 }
 
 .btn-round {

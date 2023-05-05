@@ -204,6 +204,28 @@
         }
     }
 
+    &.flat {
+        .group {
+            padding: 0;
+
+            .label {
+                position: static;
+                width: auto;
+                text-align: left;
+                padding: 0.5rem 0.5rem 0 0.5rem;
+
+                .text {
+                    position: static;
+                    margin: 0;
+                }
+            }
+
+            .items {
+                position: static;
+            }
+        }
+    }
+
     .group {
         background: var(--color-content-bg);
         position: relative;
@@ -279,10 +301,6 @@
 
             .items {
                 position: static;
-
-                a, .item {
-                    min-width: auto;
-                }
             }
         }
     }

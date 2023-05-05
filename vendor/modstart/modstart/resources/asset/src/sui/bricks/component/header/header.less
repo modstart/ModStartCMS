@@ -2,7 +2,7 @@
 
 .ub-header {
     height: 3rem;
-    background: #FFF;
+    background-color: var(--color-content-bg);
 
     &.primary {
         background: var(--color-primary);
@@ -206,7 +206,7 @@
             .menu-mask {
                 content: '';
                 display: block;
-                background: rgba(0, 0, 0, 0.5);
+                background: var(--color-mask);
                 position: fixed;
                 top: 2.5rem;
                 right: 0;
@@ -420,7 +420,7 @@
 
 .ub-header-b {
     height: 3rem;
-    background: #FFF;
+    background-color: var(--color-content-bg);
     overflow: visible;
 
     &.fixed {
@@ -542,10 +542,10 @@
                 position: absolute;
                 top: 2rem;
                 left: 0;
-                background: #FFF;
+                background: var(--color-content-bg);
                 z-index: 99999;
                 border-radius: 0.25rem;
-                box-shadow: 0 0 2px #CCC;
+                box-shadow: 0 0 2px var(--color-body-line);
                 display: none;
                 padding: 0;
 
@@ -588,7 +588,7 @@
             border-radius: 1rem;
             padding: 0.2rem 0.5rem 0.2rem 0.75rem;
             width: 16em;
-            border: 0.05rem solid #EEE;
+            border: 0.05rem solid var(--color-body-line);
             transition: box-shadow 0.3s;
 
             &:hover, &:focus-within {
@@ -668,7 +668,7 @@
                     padding: 0 1.5rem 0 0;
                     border: none;
                     background: none;
-                    color: #333;
+                    color: var(--color-text);
                 }
 
                 button {
@@ -810,7 +810,7 @@
             .nav-mask {
                 content: '';
                 display: block;
-                background: rgba(0, 0, 0, 0.5);
+                background: var(--color-mask);
                 position: absolute;
                 top: 2.5rem;
                 right: 0;
@@ -882,7 +882,7 @@
         .nav {
             position: absolute;
             display: block;
-            background: #FFF;
+            background: var(--color-content-bg);
             top: 2.5rem;
             left: -60%;
             bottom: 0;
@@ -901,7 +901,7 @@
 
             a, .nav-item {
                 display: block;
-                background: #FFF;
+                background: var(--color-content-bg);
 
                 .sub-nav {
                     display: block;
@@ -1071,7 +1071,7 @@
             .menu-mask {
                 content: '';
                 display: block;
-                background: rgba(0, 0, 0, 0.5);
+                background: var(--color-mask);
                 position: fixed;
                 top: 3rem;
                 right: 0;
@@ -1101,7 +1101,7 @@
             .search-mask {
                 content: '';
                 display: block;
-                background: rgba(0, 0, 0, 0.5);
+                background: var(--color-mask);
                 position: fixed;
                 top: 3rem;
                 right: 0;

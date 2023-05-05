@@ -17,7 +17,7 @@ class CreateConfig extends Migration
             $table->timestamps();
 
             $table->string('key', 100)->nullable()->comment('');
-            $table->text('value')->nullable()->comment('');
+            $table->text('value');
 
             $table->index('key');
         });

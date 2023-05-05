@@ -22,8 +22,7 @@ body {
 }
 
 pre, code {
-    border: 1px solid #F2F2F2;
-    // background: #F4F6F8;
+    border: 1px solid var(--color-body-line);
     background-color: #FFF;
     padding: 0.25rem;
     font-size: 0.6rem;
@@ -490,6 +489,16 @@ a.ub-text {
     background-color: var(--color-content-bg);
     border-radius: var(--size-radius);
     padding: var(--size-padding);
+}
+
+.ub-content-block {
+    background-color: var(--color-body-block-bg);
+    color: var(--color-body-block);
+
+    &:hover {
+        background-color: var(--color-body-block-bg-hover);
+        color: var(--color-body-block);
+    }
 }
 
 .ub-border-bottom {

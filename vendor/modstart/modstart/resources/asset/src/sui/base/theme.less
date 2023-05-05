@@ -12,8 +12,9 @@
 @color-warning-dark: rgb(210, 103, 0);
 @color-warning-light: rgb(255, 248, 234);
 @color-link: rgb(0, 100, 250);
-@color-link-dark: rgb(0, 98, 214);
+@color-link-dark: rgb(0, 76, 165);
 @color-link-light: rgb(107, 167, 245);
+@color-link-hover: rgb(0, 76, 165);
 @color-tertiary: rgb(107, 112, 117);
 @color-tertiary-dark: rgb(85, 91, 97);
 @color-tertiary-light: rgb(198, 202, 205);
@@ -23,12 +24,20 @@
 @color-content-bg: #FFFFFF;
 @color-body-line: #E5E9EE;
 @color-input-bg: #F4F4F4;
+@color-input-light-bg: #FFFFFF;
+@color-body-block-bg: #F7F7F7;
+@color-body-block-bg-hover: darken(@color-body-block-bg, 5%);
+@color-body-block: #666666;
+@color-body-block-hover: darken(@color-body-block, 5%);
+@color-mark: rgba(0, 0, 0, 0.5);
 
 :root, page {
+    // 主色调
     --color-primary: var(--theme-color-primary, @color-primary);
     --color-primary-light: var(--theme-color-primary-light, @color-primary-light);
     --color-primary-light-bg: var(--theme-color-primary-light-bg, @color-primary-light-bg);
     --color-primary-dark: var(--theme-color-primary-dark, @color-primary-dark);
+    // 成功、警告、危险、链接 颜色
     --color-success: @color-success;
     --color-success-dark: @color-success-dark;
     --color-success-light: @color-success-light;
@@ -41,17 +50,30 @@
     --color-link: @color-link;
     --color-link-light: @color-link-light;
     --color-link-dark: @color-link-dark;
+    --color-link-hover: @color-link-hover;
     --color-tertiary: @color-tertiary;
     --color-tertiary-dark: @color-tertiary-dark;
     --color-tertiary-light: @color-tertiary-light;
+    // 输入框
     --color-input-placeholder: @color-muted;
+    // 文字颜色
     --color-muted: @color-muted;
     --color-text: var(--theme-color-text, @color-text);
+    // 页面背景、内容背景、内容线条颜色、输入框背景
     --color-body-bg: var(--theme-color-body-bg, @color-body-bg);
     --color-content-bg: var(--theme-color-content-bg, @color-content-bg);
     --color-body-line: var(--theme-color-body-line, @color-body-line);
     --color-input-bg: var(--theme-color-input-bg, @color-input-bg);
+    --color-input-light-bg: var(--theme-color-input-bg, @color-input-light-bg);
+    // 页面色块（按钮、标签）
+    --color-body-block-bg: @color-body-block-bg;
+    --color-body-block-bg-hover: @color-body-block-bg-hover;
+    --color-body-block: @color-body-block;
+    --color-body-block-hover: @color-body-block-hover;
+    // 遮罩层
+    --color-mask: @color-mark;
 
+    // 渐变色背景
     --color-primary-gradient-bg: linear-gradient(45deg, var(--color-primary) 0%, var(--color-primary-light) 150%);
 
     --size-radius: var(--theme-size-radius, 0.4rem);
@@ -71,11 +93,20 @@
 
 [data-theme="dark"] {
     &:root, page, & {
-        --color-body-bg: #151728 !important;
-        --color-content-bg: #1b1e32 !important;
-        --color-body-line: #1b1e32 !important;
-        --color-text: #80859f !important;
-        --color-input-bg: #1b1e32 !important;
-        --color-muted: #80859f !important;
+        --color-link: #a3a7bb;
+        --color-link-hover: #cacdda;
+        --color-body-bg: #151728;
+        --color-content-bg: #1b1e32;
+        --color-body-line: #424554;
+        --color-text: #a3a7bb;
+        --color-input-placeholder: #80859f;
+        --color-input-bg: #1b1e32;
+        --color-input-light-bg: #1b1e32;
+        --color-muted: #80859f;
+        --color-body-block-bg: #545767;
+        --color-body-block-bg-hover: #9396a8;
+        --color-body-block: #F8F8F8;
+        --color-body-block-hover: #FFFFFF;
+        --color-mask: rgba(240, 240, 240, 0.5);
     }
 }

@@ -9,7 +9,7 @@ use Module\Vendor\Provider\BizTrait;
  * Class ContentVerifyBiz
  * @package Module\Vendor\Provider\ContentVerify
  *
- * @method AbstractContentVerifyBiz[] static listAll()
+ * @method static AbstractContentVerifyBiz[] listAll()
  */
 class ContentVerifyBiz
 {

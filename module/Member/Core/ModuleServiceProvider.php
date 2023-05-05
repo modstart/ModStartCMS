@@ -38,10 +38,10 @@ class ModuleServiceProvider extends ServiceProvider
     public function boot(Dispatcher $events)
     {
         MemberMenu::register(function () {
-            $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable',false);
-            $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable',false);
+            $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
+            $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
             $creditName = '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分');
-            $addressEnable = ModuleManager::getModuleConfig('Member', 'addressEnable',false);
+            $addressEnable = ModuleManager::getModuleConfig('Member', 'addressEnable', false);
             return [
                 [
                     'icon' => 'details',
@@ -94,8 +94,8 @@ class ModuleServiceProvider extends ServiceProvider
         ScheduleBiz::register(MemberDeleteScheduleProvider::class);
 
         MemberHomeIcon::register(function () {
-            $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable',false);
-            $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable',false);
+            $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
+            $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
             $creditName = '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分');
             return [
                 [
@@ -158,9 +158,9 @@ class ModuleServiceProvider extends ServiceProvider
                 ['注册', modstart_web_url('register')],
                 ['登录', modstart_web_url('login')],
                 ['找回密码', modstart_web_url('retrieve')],
-                ModuleManager::getModuleConfig('Member', 'vipEnable',false) ? ['开通VIP', modstart_web_url('member_vip')] : null,
-                ModuleManager::getModuleConfig('Member', 'moneyEnable',false) ? ['用户钱包', modstart_web_url('member_money')] : null,
-                ModuleManager::getModuleConfig('Member', 'creditEnable',false) ? ['用户积分', modstart_web_url('login')] : null,
+                ModuleManager::getModuleConfig('Member', 'vipEnable', false) ? ['开通VIP', modstart_web_url('member_vip')] : null,
+                ModuleManager::getModuleConfig('Member', 'moneyEnable', false) ? ['用户钱包', modstart_web_url('member_money')] : null,
+                ModuleManager::getModuleConfig('Member', 'creditEnable', false) ? ['用户积分', modstart_web_url('login')] : null,
             ]);
         });
 
@@ -184,10 +184,10 @@ class ModuleServiceProvider extends ServiceProvider
         }
 
         AdminMenu::register(function () {
-            $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable',false);
-            $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable',false);
-            $vipEnable = ModuleManager::getModuleConfig('Member', 'vipEnable',false);
-            $groupEnable = ModuleManager::getModuleConfig('Member', 'groupEnable',false);
+            $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
+            $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
+            $vipEnable = ModuleManager::getModuleConfig('Member', 'vipEnable', false);
+            $groupEnable = ModuleManager::getModuleConfig('Member', 'groupEnable', false);
             return [
                 [
                     'title' => '用户中心',
@@ -261,12 +261,12 @@ class ModuleServiceProvider extends ServiceProvider
                             'children' => [
                                 $moneyEnable ?
                                     [
-                                        'title' => '用户钱包充值订单',
+                                        'title' => '用户-钱包充值订单',
                                         'url' => '\Module\Member\Admin\Controller\MemberMoneyChargeOrderController@index',
                                     ] : null,
                                 $vipEnable ?
                                     [
-                                        'title' => '用户VIP订单',
+                                        'title' => '用户-VIP订单',
                                         'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
                                     ] : null,
                             ],

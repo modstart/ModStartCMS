@@ -12,7 +12,8 @@ class BannerView
                                  $size = '1400x400',
                                  $ratio = '5-2',
                                  $mobileRatio = '3-2',
-                                 $round = false)
+                                 $round = false,
+                                 $container = false)
     {
         if (null === $size) {
             $size = '1400x400';
@@ -32,6 +33,7 @@ class BannerView
             'bannerRatio' => $ratio,
             'mobileBannerRatio' => $mobileRatio,
             'round' => $round,
+            'container' => $container,
         ])->render();
     }
 }

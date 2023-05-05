@@ -25,7 +25,7 @@
                                 @if($f['type']=='switch')
                                     <el-switch v-model="value[vIndex]['{{$f['name']}}']" />
                                 @elseif($f['type']=='text')
-                                    <el-input v-model="value[vIndex]['{{$f['name']}}']" size="mini" />
+                                    <el-input v-model="value[vIndex]['{{$f['name']}}']" placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}" size="mini" />
                                 @elseif($f['type']=='icon')
                                     <icon-input v-model="value[vIndex]['{{$f['name']}}']" :icons="icons" :inline="true" />
                                 @elseif($f['type']=='number')

@@ -275,6 +275,7 @@ function modstart_config($key = null, $default = '', $useCache = true)
             $lastValue = $v;
             return $v;
         }
+        $lastValue = $v;
         return $v;
     } catch (Exception $e) {
         $lastValue = $default;

@@ -118,15 +118,19 @@ sup {
 }
 
 a {
-    color: #007bff;
+    color: var(--color-link);
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+    &.default {
+        color: var(--color-text);
+    }
 }
 
 a:hover {
-    color: #0056b3;
+    color: var(--color-link-hover);
 }
 
 a:not([href]):not([tabindex]):focus {

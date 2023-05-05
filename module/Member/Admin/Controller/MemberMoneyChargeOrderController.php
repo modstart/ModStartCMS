@@ -41,6 +41,6 @@ class MemberMoneyChargeOrderController extends Controller
                 ]);
             })
             ->disableCUD()->canShow(false)
-            ->title('用户钱包充值订单');
+            ->title('用户-钱包充值订单');
     }
 }

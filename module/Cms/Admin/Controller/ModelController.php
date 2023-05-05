@@ -86,7 +86,6 @@ class ModelController extends Controller
 
             $f = CmsField::getByNameOrFail($data['fieldType']);
             $data = $f->prepareDataOrFail($data);
-            ModelUtil::transactionBegin();
             $data['fieldData'] = json_encode($data['fieldData'], JSON_UNESCAPED_UNICODE);
             if ($id) {
                 ModelUtil::update('cms_model_field', $id, $data);
@@ -99,7 +98,6 @@ class ModelController extends Controller
                 $data['fieldData'] = json_decode($data['fieldData'], true);
                 CmsModelUtil::addField($model, $data);
             }
-            ModelUtil::transactionCommit();
             CmsModelUtil::clearCache();
             return Response::generateSuccess();
         }
@@ -132,8 +130,8 @@ class ModelController extends Controller
         $id = CRUDUtil::id();
         $record = ModelUtil::get('cms_model_field', $id);
         BizException::throwsIfEmpty('记录不存在', $record);
-        ModelUtil::transactionBegin();
         CmsModelUtil::deleteField($model, $record);
+        ModelUtil::transactionBegin();
         ModelUtil::delete('cms_model_field', $id);
         ModelUtil::transactionCommit();
         CmsModelUtil::clearCache();
@@ -231,7 +229,6 @@ class ModelController extends Controller
             AdminPermission::demoCheck();
             return $form->formRequest(function (Form $form) use ($record) {
                 $data = $form->dataForming();
-                ModelUtil::transactionBegin();
                 if ($record) {
                     ModelUtil::update('cms_model', $record['id'], ArrayUtil::keepKeys($data, [
                         'title', 'enable', 'form', 'mode', 'listTemplate', 'detailTemplate', 'pageTemplate',
@@ -240,7 +237,6 @@ class ModelController extends Controller
                     $data = ModelUtil::insert('cms_model', $data);
                     CmsModelUtil::create($data);
                 }
-                ModelUtil::transactionCommit();
                 CmsModelUtil::clearCache();
                 return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
             });

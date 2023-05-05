@@ -48,6 +48,6 @@ class MemberVipOrderController extends Controller
                 ]);
             })
             ->disableCUD()->canShow(false)
-            ->title('用户VIP订单');
+            ->title('用户-VIP订单');
     }
 }
