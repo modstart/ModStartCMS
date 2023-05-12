@@ -1,7 +1,10 @@
 {
     "name": "VisitStatistic",
     "title": "网站访问记录",
-    "env": ["laravel5","laravel9"],
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
     "types": [
         "PC",
         "Mobile"

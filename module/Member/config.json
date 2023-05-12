@@ -47,7 +47,7 @@
         "MemberSSOServer",
         "MemberWechatMpLogin"
     ],
-    "version": "3.5.0",
+    "version": "3.6.0",
     "modstartVersion": ">=3.7.0",
     "author": "官方",
     "description": "提供基础的用户管理服务",

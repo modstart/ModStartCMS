@@ -1,4 +1,5 @@
 {
     "DatabaseQueue.php": "vendor/laravel/framework/src/Illuminate/Queue/DatabaseQueue.php",
-    "MySqlGrammar.php": "vendor/laravel/framework/src/Illuminate/Database/Schema/Grammars/MySqlGrammar.php"
+    "MySqlGrammar.php": "vendor/laravel/framework/src/Illuminate/Database/Schema/Grammars/MySqlGrammar.php",
+    "jobs.stub": "vendor/laravel/framework/src/Illuminate/Queue/Console/stubs/jobs.stub"
 }

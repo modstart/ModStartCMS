@@ -5,23 +5,23 @@
 
     --panel-menu-logo-color: var(--color-primary);
     --panel-menu-background: #00101C;
-    --panel-menu-text-color: #FFFFFF;
-    --panel-menu-text-color-hover: #FFFFFF;
+    --panel-menu-text-color: #FFF;
+    --panel-menu-text-color-hover: #FFF;
     --panel-menu-active-background: var(--color-primary);
-    --panel-menu-active-color: #FFFFFF;
+    --panel-menu-active-color: #FFF;
     --panel-menu-active-border-color: var(--color-primary);
     --panel-menu-search-background: #444;
     --panel-menu-search-color: #EEE;
     --panel-menu-search-color: #EEE;
-    --panel-menu-scrollbar-background: #111111;
+    --panel-menu-scrollbar-background: #111;
     --panel-menu-page-tab-scrollbar-background: var(--color-primary);
-    --panel-menu-arrow-color: #666666;
+    --panel-menu-arrow-color: #999;
 }
 
 [data-theme="light"] {
     --panel-menu-logo-color: var(--color-primary);
-    --panel-menu-background: #FFFFFF;
-    --panel-menu-text-color: #333333;
+    --panel-menu-background: #FFF;
+    --panel-menu-text-color: #333;
     --panel-menu-text-color-hover: var(--color-primary);
     --panel-menu-active-background: var(--color-primary-light-bg);
     --panel-menu-active-color: var(--color-primary);
@@ -29,9 +29,9 @@
     --panel-menu-search-background: #EEE;
     --panel-menu-search-color: #111;
     --panel-menu-search-tip-color: #999;
-    --panel-menu-scrollbar-background: #CCCCCC;
+    --panel-menu-scrollbar-background: #CCC;
     --panel-menu-page-tab-scrollbar-background: var(--color-primary);
-    --panel-menu-arrow-color: #CCCCCC;
+    --panel-menu-arrow-color: #CCC;
 }
 
 .ub-panel-frame {
@@ -238,12 +238,12 @@
                         top: 0.8rem;
                         transition: all 0.2s linear;
                         transform-origin: 25% 50% 0;
-                        transform: rotateZ(-90deg);
+                        transform: rotateZ(90deg);
                     }
 
                     &.open {
                         .arrow {
-                            transform: rotateZ(90deg);
+                            transform: rotateZ(-90deg);
                         }
                     }
 
@@ -324,6 +324,7 @@
                     display: inline-block;
                     border-top: 0.1rem solid #FFF;
                     text-decoration: none;
+                    transition: none;
 
                     .close {
                         color: var(--color-tertiary);
