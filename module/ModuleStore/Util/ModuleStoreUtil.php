@@ -120,6 +120,13 @@ class ModuleStoreUtil
             'module' => $module,
             'version' => $version,
         ], $token);
+        if ($ret['code'] && isset($ret['data']['buyCode'])) {
+            return Response::generate(-1, $ret['msg'], [
+                'msg' => $ret['data']['buyCode'],
+                'buyCodeId' => isset($ret['data']['buyCodeId']) ? $ret['data']['buyCodeId'] : null,
+                'payWatchUrl' => isset($ret['data']['payWatchUrl']) ? $ret['data']['payWatchUrl'] : null,
+            ]);
+        }
         BizException::throwsIfResponseError($ret);
         $config = $ret['data']['config'];
         $packageSize = $ret['data']['packageSize'];

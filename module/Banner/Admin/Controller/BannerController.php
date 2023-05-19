@@ -11,6 +11,7 @@ use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
 use Module\Banner\Type\BannerPosition;
+use Module\Banner\Type\BannerPositionRemark;
 use Module\Banner\Type\BannerType;
 use Module\Banner\Util\BannerUtil;
 
@@ -25,7 +26,7 @@ class BannerController extends Controller
             ->field(function ($builder) {
                 /** @var HasFields $builder */
                 $builder->id('id', 'ID');
-                $builder->select('position', '位置')->optionType(BannerPosition::class);
+                $builder->select('position', '位置')->optionType(BannerPositionRemark::class);
                 $builder->image('image', '图片');
                 $builder->radio('type', '样式类型')
                     ->optionType(BannerType::class)

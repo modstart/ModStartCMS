@@ -2,8 +2,9 @@
     <div class="name">{{$label}}</div>
     <div class="input">
         <div class="inputs" style="display:inline-block;"></div>
-        <a href="javascript:;" class="ub-text-muted" data-like-edit style="line-height:1.5rem;"><i
-                    class="iconfont icon-edit"></i></a>
+        <a href="javascript:;" class="ub-text-muted" data-like-edit style="line-height:1.5rem;">
+            <i class="iconfont icon-edit"></i>
+        </a>
     </div>
     <div style="display:none;" data-dialog-template>
         <div style="max-width:600px;">
@@ -12,42 +13,43 @@
                     <div class="title">{{L('Please Select')}}</div>
                 </div>
                 <div class="body">
-                    <div class="content" style="max-height:100px;box-shadow:0 0 5px #CCC;padding:0.5rem;border-radius:0.2rem;overflow:auto;"></div>
+                    <div class="content"
+                         style="max-height:100px;box-shadow:0 0 5px #CCC;padding:0.5rem;border-radius:0.2rem;overflow:auto;"></div>
                 </div>
-                <div class="foot ub-text-center" style="padding:10px;">
-                    <a class="btn btn-primary btn-block" href="javascript:;"
-                       data-dialog-comfirm="GridFilterField_{{$id}}">{{L('Confirm')}}</a>
+                <div class="foot ub-text-center">
+                    <div class="tw-px-3">
+                        <a class="btn btn-primary btn-block" href="javascript:;"
+                           data-dialog-comfirm="GridFilterField_{{$id}}">{{L('Confirm')}}</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/html" data-template>
         <table>
-            @{{#  layui.each(d.options, function(index, item){ }}
+            @{{# layui.each(d.options, function(index, item){ }}
             <tr>
-                <td style="width:6em;vertical-align:top;">@{{  item.groupTitle }}</td>
+                <td style="width:6em;vertical-align:top;">@{{ item.groupTitle }}</td>
                 <td>
-                    @{{#  layui.each(item.groupTags, function(index, tagitem){ }}
-                        <label style="min-width:6em;">
-                            @if($field->serializeType()===\ModStart\Field\Tags::SERIALIZE_TYPE_COLON_SEPARATED)
-                                <input type="checkbox" value=":@{{tagitem.id}}:"
-                                       title="@{{tagitem.title}}"/>
-                            @else
-                                <input type="checkbox" value="@{{tagitem.id}}"
-                                       title="@{{tagitem.title}}"/>
-                            @endif
-                            @{{ tagitem.title }}
-                        </label>
-                    @{{#  }); }}
+                    @{{# layui.each(item.groupTags, function(index, tagitem){ }}
+                    <label style="min-width:6em;">
+                        @if($field->serializeType()===\ModStart\Field\Tags::SERIALIZE_TYPE_COLON_SEPARATED)
+                            <input type="checkbox" value=":@{{tagitem.id}}:" title="@{{tagitem.title}}"/>
+                        @else
+                            <input type="checkbox" value="@{{tagitem.id}}" title="@{{tagitem.title}}"/>
+                        @endif
+                        @{{ tagitem.title }}
+                    </label>
+                    @{{# }); }}
                 </td>
             </tr>
-            @{{#  }); }}
+            @{{# }); }}
         </table>
     </script>
 </div>
 <script>
     (function () {
-        layui.use('laytpl', function() {
+        layui.use('laytpl', function () {
             var laytpl = layui.laytpl;
             var $field = $('[data-grid-filter-field={{$id}}]');
             var $dialogTemplate = $field.find('[data-dialog-template]');
@@ -62,10 +64,10 @@
                     }
                 }
             };
-            var render = function(options){
+            var render = function (options) {
                 laytpl($field.find('[data-template]').get(0).innerHTML).render({
-                    options:options
-                },function(html){
+                    options: options
+                }, function (html) {
                     $('[data-dialog-template] .body .content').html(html);
                     tagTitleMap = {};
                     $dialogTemplate.find('input[type=checkbox]').each(function (i, o) {
@@ -73,8 +75,16 @@
                     });
                 });
             };
-            render({!! json_encode($field->options()) !!});
+
             $field.find('[data-like-edit]').on('click', function () {
+                var ids = $field.data('getValue')();
+                $dialogTemplate.find('input[type=checkbox]').each(function (i, o) {
+                    if (ids.indexOf($(o).val()) >= 0) {
+                        $(o).attr('checked', 'checked');
+                    } else {
+                        $(o).removeAttr('checked');
+                    }
+                });
                 $dialogTemplate.find('.content').css('max-height', ($(window).height() - 130) + 'px');
                 dialogIndex = MS.dialog.dialogContent($dialogTemplate.html());
             });
@@ -83,27 +93,23 @@
                 $('#layui-layer' + dialogIndex).find('input[type=checkbox]:checked').each(function (i, o) {
                     ids.push($(o).val());
                 })
-                $dialogTemplate.find('input[type=checkbox]').each(function (i, o) {
-                    if (ids.indexOf($(o).val()) >= 0) {
-                        $(o).attr('checked', 'checked');
-                    } else {
-                        $(o).removeAttr('checked');
-                    }
-                });
                 MS.dialog.dialogClose(dialogIndex);
                 refreshInput(ids);
             });
             $field.on('click', '[data-input-close]', function () {
                 $(this).parent().remove();
             });
-            $field.data('get', function () {
-                var likes = [];
+            $field.data('getValue', function () {
+                var ids = [];
                 $field.find('.inputs .item').each(function (i, o) {
-                    likes.push($(o).attr('data-id'));
+                    ids.push($(o).attr('data-id'));
                 });
+                return ids;
+            });
+            $field.data('get', function () {
                 return {
                     '{{$column}}': {
-                        likes: likes
+                        likes: $field.data('getValue')()
                     }
                 };
             });
@@ -111,7 +117,7 @@
                 $field.find('.inputs').html('');
                 $dialogTemplate.find('input[type=checkbox]').removeAttr('checked');
             });
-            $field.data('setOptions',function(options){
+            $field.data('setOptions', function (options) {
                 render(options);
             });
             $field.data('init', function (data) {
@@ -123,6 +129,7 @@
                     }
                 }
             });
+            render({!! json_encode($field->options()) !!});
         });
     })();
 </script>

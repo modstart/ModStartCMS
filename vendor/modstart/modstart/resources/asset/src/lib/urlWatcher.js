@@ -5,6 +5,7 @@ var UrlWatcher = function (option) {
         data: null,
         url: null,
         maxRound: 100,
+        jsonp: false,
         preRequest: function () {
         },
         requestFinish: function (res) {
@@ -51,9 +52,25 @@ var UrlWatcher = function (option) {
             return;
         }
         opt.preRequest();
-        $.post(opt.url, opt.data, function (res) {
-            opt.requestFinish.call(me, res);
-        });
+        if (opt.jsonp) {
+            $.ajax({
+                url: opt.url,
+                dataType: 'jsonp',
+                timeout: 10 * 1000,
+                data: opt.data,
+                success: (res) => {
+                    opt.requestFinish.call(me, res);
+                },
+                error: (res) => {
+                    opt.requestFinish.call(me, {code: -1, msg: '请求出现错误'});
+                },
+                jsonp: 'callback',
+            });
+        } else {
+            $.post(opt.url, opt.data, function (res) {
+                opt.requestFinish.call(me, res);
+            });
+        }
     };
 
 };

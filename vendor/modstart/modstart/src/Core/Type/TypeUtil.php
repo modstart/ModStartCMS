@@ -72,6 +72,7 @@ class TypeUtil
             'wait_pay' => 'warning',
             'danger' => 'warning',
             'running' => 'warning',
+            'refund' => 'warning',
             'success' => 'success',
             'verified' => 'success',
             'pass' => 'success',

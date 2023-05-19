@@ -222,7 +222,9 @@ class ModuleStoreController extends Controller
                 ]);
             case 'checkPackage':
                 $ret = ModuleStoreUtil::checkPackage($token, $module, $version);
-                BizException::throwsIfResponseError($ret);
+                if (Response::isError($ret)) {
+                    return $ret;
+                }
                 $msgs = [];
                 foreach ($ret['data']['requires'] as $require) {
                     $msgs[] = '<span>&nbsp;&nbsp;</span>'
@@ -323,7 +325,9 @@ class ModuleStoreController extends Controller
                     ]);
                 case 'checkPackage':
                     $ret = ModuleStoreUtil::checkPackage($token, $module, $version);
-                    BizException::throwsIfResponseError($ret);
+                    if (Response::isError($ret)) {
+                        return $ret;
+                    }
                     $msgs = [];
                     foreach ($ret['data']['requires'] as $require) {
                         $msgs[] = '<span>&nbsp;&nbsp;</span>'

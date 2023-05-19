@@ -51,7 +51,8 @@ class MemberDashboardController extends Controller
         $page->append(Box::make(Line::make()->tableDailyCountLatest(
             [
                 ['title' => '总数', 'table' => 'member_user'],
-            ]
+            ],
+            30
         ), '会员增长趋势'));
         return $page;
     }

@@ -8,7 +8,7 @@
             <i class="iconfont icon-warning"></i>
             为了系统和数据安全，在线 <b>安装</b>、<b>卸载</b>、<b>升级</b> 模块前请做好代码和数据备份
         </div>
-        <div v-if="!memberUser.id" class="ub-alert ub-alert-warning">
+        <div v-if="d" class="ub-alert ub-alert-warning">
             <i class="iconfont icon-warning"></i>
             您还没有登录，登录后才能从模块市场安装、升级模块
             <a href="javascript:;" @click="doMemberLoginShow()"><i class="iconfont icon-user"></i>立即登录</a>
@@ -358,7 +358,7 @@
                     {{ commandDialogTitle }}
                 </div>
             </div>
-            <div class="tw-bg-gray-900 tw-font-mono tw-leading-8 tw-p-4 tw-text-white">
+            <div class="tw-bg-gray-900 tw-font-mono tw-leading-8 tw-p-4 tw-text-white" v-if="commandDialogShow">
                 <div v-for="(msg,msgIndex) in commandDialogMsgs" v-html="msg"></div>
                 <div v-if="!commandDialogFinish">
                     <i class="iconfont icon-loading tw-inline-block tw-animate-spin"></i>
@@ -411,6 +411,9 @@
 import {BeanUtil} from '@ModStartAsset/svue/lib/util'
 import {Storage} from '@ModStartAsset/svue/lib/storage'
 
+const UrlWatcher = require('@ModStartAsset/lib/urlWatcher.js');
+
+
 export default {
     name: "ModuleStore",
     data() {
@@ -454,6 +457,7 @@ export default {
             installVersionDialogShow: false,
             installVersionReleases: [],
             installVersionModule: null,
+            payWatcher: null,
         }
     },
     watch: {
@@ -673,6 +677,22 @@ export default {
                 this.storeConfig = res.data.storeConfig
             })
         },
+        commandDialogMsgsPush(msg) {
+            if (!msg) {
+                return
+            }
+            if (!Array.isArray(msg)) {
+                msg = [msg]
+            }
+            msg = msg.map(m => {
+                m = m.trim()
+                if (!m.startsWith('<')) {
+                    m = '<i class="iconfont icon-hr"></i> ' + m
+                }
+                return m
+            })
+            this.commandDialogMsgs = this.commandDialogMsgs.concat(msg)
+        },
         doCommand(command, data, step, title) {
             step = step || null
             title = title || null
@@ -683,7 +703,7 @@ export default {
             }
             if (title) {
                 this.commandDialogTitle = title
-                this.commandDialogMsgs.push('<i class="iconfont icon-hr"></i> ' + title)
+                this.commandDialogMsgsPush(title)
             }
             this.commandDialogRunStart = (new Date()).getTime()
             this.commandDialogRunElapse = 0
@@ -692,11 +712,7 @@ export default {
                 step: step,
                 data: JSON.stringify(data)
             }, res => {
-                if (Array.isArray(res.data.msg)) {
-                    this.commandDialogMsgs = this.commandDialogMsgs.concat(res.data.msg)
-                } else {
-                    this.commandDialogMsgs.push(res.data.msg)
-                }
+                this.commandDialogMsgsPush(res.data.msg)
                 if (res.data.finish) {
                     this.commandDialogFinish = true
                     this.doLoad()
@@ -707,9 +723,60 @@ export default {
                     }, 1000)
                 }
             }, res => {
-                this.commandDialogMsgs.push('<i class="iconfont icon-close ub-text-danger"></i> <span class="ub-text-danger">' + res.msg + '</span>')
+                this.commandDialogMsgsPush('<i class="iconfont icon-close ub-text-danger"></i> <span class="ub-text-danger">' + res.msg + '</span>')
+                if (res.data && res.data.msg) {
+                    this.commandDialogMsgsPush(res.data.msg)
+                }
+                if (res.data && res.data.payWatchUrl) {
+                    this.startPayWatch(res.data.buyCodeId, res.data.payWatchUrl)
+                }
                 this.commandDialogFinish = true
                 return true
+            })
+        },
+        startPayWatch(buyCodeId, payWatchUrl) {
+            const buyCodeVisible = () => {
+                return ($('[data-buy-code=' + buyCodeId + ']').length > 0)
+            }
+            this.$nextTick(() => {
+                if (this.urlWatcher) {
+                    this.urlWatcher.stop()
+                }
+                if (!buyCodeVisible()) {
+                    return;
+                }
+                this.urlWatcher = new UrlWatcher({
+                    url: payWatchUrl,
+                    jsonp: true,
+                    data: {},
+                    maxRound: 100,
+                    requestFinish: (res) => {
+                        if (!buyCodeVisible()) {
+                            this.urlWatcher.stop()
+                            return;
+                        }
+                        MS.api.defaultCallback(res, {
+                            success: (res) => {
+                                switch (res.data.status) {
+                                    case 'Payed':
+                                        this.$dialog.alertSuccess('支付成功，请关闭弹窗重新安装', () => {
+                                            this.commandDialogShow = false
+                                        })
+                                        break;
+                                    case 'WaitPay':
+                                        this.urlWatcher.next();
+                                        break;
+                                }
+                            }
+                        });
+                    },
+                    expired: () => {
+                        this.$dialog.alertError('支付超时，请关闭弹窗重新请求支付二维码', () => {
+                            this.commandDialogShow = false
+                        })
+                    },
+                })
+                this.urlWatcher.start()
             })
         },
         doInstallVersion(module) {
@@ -724,6 +791,10 @@ export default {
             })
         },
         doInstall(module) {
+            if (!this.memberUser.id) {
+                this.doMemberLoginShow()
+                return
+            }
             this.doCommand('install', {
                 module: module.name,
                 version: module.latestVersion,
@@ -731,6 +802,10 @@ export default {
             }, null, `安装模块 ${module.title}（${module.name}） V${module.latestVersion}`)
         },
         doInstallVersionSubmit(module, version) {
+            if (!this.memberUser.id) {
+                this.doMemberLoginShow()
+                return
+            }
             this.doCommand('install', {
                 module: module.name,
                 version: version,
@@ -759,6 +834,10 @@ export default {
             })
         },
         doUpgrade(module) {
+            if (!this.memberUser.id) {
+                this.doMemberLoginShow()
+                return
+            }
             this.$dialog.confirm('确认升级？', () => {
                 this.doCommand('upgrade', {
                     module: module.name,
@@ -819,7 +898,7 @@ export default {
 </script>
 
 <style lang="less">
-.pb-member-info-dialog{
-  max-width:18rem;
+.pb-member-info-dialog {
+    max-width: 18rem;
 }
 </style>

@@ -8,7 +8,7 @@ use ModStart\Core\Util\ColorUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\TimeUtil;
 
-class Line extends Chart
+class Bar extends Chart
 {
     protected $option = [
         'grid' => [
@@ -60,20 +60,20 @@ class Line extends Chart
 
     public function ySeries($i, $value, $name = '数量', $param = [])
     {
-        if (!isset($param['lineColor'])) {
-            $param['lineColor'] = ColorUtil::pick('L-' . $i);
+        if (!isset($param['barColor'])) {
+            $param['barColor'] = ColorUtil::pick('L-' . $i);
         }
         $this->option['legend']['data'][$i] = $name;
         $this->option['series'][$i] = [
             'name' => $name,
             'data' => $value,
-            'type' => 'line',
+            'type' => 'bar',
             'smooth' => true,
             'itemStyle' => [
                 'normal' => [
-                    'color' => $param['lineColor'],
-                    'lineStyle' => [
-                        'color' => $param['lineColor'],
+                    'color' => $param['barColor'],
+                    'barStyle' => [
+                        'color' => $param['barColor'],
                     ]
                 ]
             ]
@@ -100,12 +100,12 @@ class Line extends Chart
             $this->option['series'][] = [
                 'name' => $series[$index]['title'],
                 'data' => $value,
-                'type' => 'line',
+                'type' => 'bar',
                 'smooth' => true,
                 'itemStyle' => [
                     'normal' => [
                         'color' => $color,
-                        'lineStyle' => [
+                        'barStyle' => [
                             'color' => $color
                         ]
                     ]
@@ -134,12 +134,12 @@ class Line extends Chart
             $this->option['series'][] = [
                 'name' => $series[$index]['title'],
                 'data' => $value,
-                'type' => 'line',
+                'type' => 'bar',
                 'smooth' => true,
                 'itemStyle' => [
                     'normal' => [
                         'color' => $color,
-                        'lineStyle' => [
+                        'barStyle' => [
                             'color' => $color
                         ]
                     ]
