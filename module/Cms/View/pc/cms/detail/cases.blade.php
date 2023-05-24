@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="ub-container">
+    <div class="ub-container margin-bottom">
         @if(!\MCms::canVisitCat($cat))
             <div class="ub-alert ub-alert-danger">
                 <i class="iconfont icon-warning"></i>
