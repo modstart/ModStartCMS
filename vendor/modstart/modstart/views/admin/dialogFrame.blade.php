@@ -28,6 +28,7 @@
                 $foot.find('[data-submit]').show().on('click', function () {
                     $dialog.find('[data-ajax-form]').submit();
                 });
+            }else if($body.find('[data-panel-dialog-foot-show]').length>0){
             }else{
                 $foot.hide();
                 $dialog.addClass('no-foot');

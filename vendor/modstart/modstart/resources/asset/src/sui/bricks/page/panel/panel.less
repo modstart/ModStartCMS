@@ -697,5 +697,36 @@
         background: #FFF;
         z-index: 1000;
         box-shadow: 0 0 10px #EEE;
+        animation: fadein 1s ease 0s normal forwards 1;
+        -webkit-animation: fadein 1s ease 0s normal forwards 1;
+        opacity: 0;
+
+        &.left {
+            text-align: left;
+        }
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    66% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    66% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

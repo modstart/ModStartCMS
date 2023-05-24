@@ -16,7 +16,7 @@
         "Vendor:>=1.4.0"
     ],
     "modstartVersion": ">=3.7.0",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "author": "官方",
     "description": "提供各种各样的应用模块，方便应用快速集成"
 }

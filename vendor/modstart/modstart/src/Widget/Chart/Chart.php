@@ -17,10 +17,56 @@ class Chart extends AbstractWidget
      */
     protected $view = 'modstart::widget.chart';
     protected $height = 300;
-    protected $option = null;
+    protected $option = [
+        'grid' => [
+            // 'top' => '20%',
+            'right' => '1%',
+            'left' => '1%',
+            'bottom' => '10%',
+            'containLabel' => true
+        ],
+        'toolbox' => [
+            'feature' => [
+                'dataView' => [
+                    'show' => true,
+                    'readOnly' => false,
+                ],
+                'restore' => [
+                    'show' => true,
+                ],
+                'saveAsImage' => [
+                    'show' => true,
+                ],
+            ],
+        ],
+        'tooltip' => [
+            'trigger' => 'axis',
+            'axisPointer' => [
+                'type' => 'shadow',
+                'snap' => true,
+                'crossStyle' => [
+                    'color' => '#999',
+                ],
+            ],
+        ],
+        'legend' => [
+            'data' => [],
+        ],
+        'xAxis' => [
+            'type' => 'category',
+            'data' => []
+        ],
+        'yAxis' => [
+            'type' => 'value',
+            'minInterval' => 1
+        ],
+        'series' => [
+
+        ]
+    ];
 
     /**
-     * Line constructor.
+     * Chart constructor.
      */
     public function __construct()
     {

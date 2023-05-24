@@ -5,7 +5,6 @@ namespace ModStart\Widget\Chart;
 
 
 use ModStart\Core\Util\ColorUtil;
-use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\TimeUtil;
 
 class Bar extends Chart
