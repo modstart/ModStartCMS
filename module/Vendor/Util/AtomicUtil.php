@@ -9,8 +9,8 @@ use ModStart\Core\Util\RedisUtil;
 /**
  * Class AtomicUtil
  *
- * product onece
- * comsume some times
+ * product once
+ * consume some times
  *
  * example:
  * - captcha error count

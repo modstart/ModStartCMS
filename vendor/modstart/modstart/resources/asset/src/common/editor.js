@@ -71,6 +71,18 @@ var EditorUploadConfig = {
     }
 }
 
+function getEditorExtraConfig() {
+    var config = {
+        formulaConfig: {
+            imageUrlTemplate: 'https://latex.codecogs.com/svg.image?{}',
+        }
+    }
+    if (window.__editorFormulaConfig && window.__editorFormulaConfig.imageUrlTemplate) {
+        config.formulaConfig.imageUrlTemplate = window.__editorFormulaConfig.imageUrlTemplate;
+    }
+    return config;
+}
+
 var Editor = {
     basic: function (id, option, editorOption) {
 
@@ -116,11 +128,11 @@ var Editor = {
             // 'wechatcustomemotion',
         ];
 
-        if ('__editorBasicToolBars' in window) {
+        if (window.__editorBasicToolBars) {
             editorBasicToolBars = window.__editorBasicToolBars;
         }
 
-        if ('__editorBasicToolBarsExtra' in window) {
+        if (window.__editorBasicToolBarsExtra) {
             editorBasicToolBars = editorBasicToolBars.concat(window.__editorBasicToolBarsExtra);
         }
 
@@ -136,8 +148,8 @@ var Editor = {
             enableAutoSave: false,
             pasteplain: false,
             autoHeightEnabled: true,
-            focus: false
-        }, EditorUploadConfig, editorOption);
+            focus: false,
+        }, EditorUploadConfig, editorOption, getEditorExtraConfig());
 
         var ueditor = UE.getEditor(id, editorOpt);
 
@@ -169,10 +181,10 @@ var Editor = {
             //'superscript', 'subscript',
             // 'emotion','wechatcustomemotion'
         ];
-        if ('__editorSimpleToolBars' in window) {
+        if (window.__editorSimpleToolBars) {
             editorSimpleToolBars = window.__editorSimpleToolBars;
         }
-        if ('__editorSimpleToolBarsExtra' in window) {
+        if (window.__editorSimpleToolBarsExtra) {
             editorSimpleToolBars = editorSimpleToolBars.concat(window.__editorSimpleToolBarsExtra);
         }
 
@@ -189,8 +201,8 @@ var Editor = {
             pasteplain: false,
             retainOnlyLabelPasted: true,
             autoHeightEnabled: true,
-            focus: false
-        }, EditorUploadConfig, editorOption);
+            focus: false,
+        }, EditorUploadConfig, editorOption, getEditorExtraConfig());
 
         var ueditor = UE.getEditor(id, editorOpt);
 

@@ -5,6 +5,11 @@ namespace ModStart\Core\Util;
 use NinjaMutex\Lock\MySqlLock;
 use NinjaMutex\MutexFabric;
 
+/**
+ * Class DBLockUtil
+ * @package ModStart\Core\Util
+ * @deprecated delete at 2023-11-30
+ */
 class DBLockUtil
 {
     static $instance = null;

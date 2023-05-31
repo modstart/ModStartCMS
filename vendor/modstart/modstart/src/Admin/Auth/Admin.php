@@ -25,6 +25,12 @@ class Admin
         return self::id() > 0;
     }
 
+    public static function isFounder()
+    {
+        $id = self::id();
+        return $id > 0 && AdminPermission::isFounder($id);
+    }
+
     public static function isNotLogin()
     {
         return !self::isLogin();

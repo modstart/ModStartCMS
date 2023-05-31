@@ -32,6 +32,7 @@ class ModStartServiceProvider extends ServiceProvider
         \ModStart\Command\ModuleEnableCommand::class,
         \ModStart\Command\ModuleDisableCommand::class,
         \ModStart\Command\ModuleInstallAllCommand::class,
+        \ModStart\Command\ModuleRefreshAllCommand::class,
     ];
 
     protected $routeMiddleware = [

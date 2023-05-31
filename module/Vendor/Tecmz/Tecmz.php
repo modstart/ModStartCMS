@@ -276,6 +276,7 @@ class Tecmz
      * @param $docPath string
      * @param $pageLimit int
      * @return array|mixed
+     * @deprecated
      */
     public function docToImage($docPath, $pageLimit = 0)
     {

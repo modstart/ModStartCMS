@@ -15,9 +15,22 @@
                     return {
                         exportName: '{{$exportName}}',
                         format: 'xlsx',
+                        checkedHeadTitles: {!! json_encode(array_keys($headTitles)) !!}
+                    }
+                },
+                computed:{
+                    allChecked(){
+                        return this.checkedHeadTitles.length === {!! count($headTitles) !!};
                     }
                 },
                 methods: {
+                    onAllCheckChange(v){
+                        if(v){
+                            this.checkedHeadTitles = {!! json_encode(array_keys($headTitles)) !!};
+                        }else{
+                            this.checkedHeadTitles = [];
+                        }
+                    },
                     doExport() {
                         MS.importExportWork.doExportExecute(this.format, (page, cb) => {
                             MS.api.postSuccess(
@@ -26,6 +39,7 @@
                                     page: page,
                                     exportName: this.exportName,
                                     format: this.format,
+                                    checkedHeadTitles: JSON.stringify(this.checkedHeadTitles)
                                 },
                                 (res) => {
                                     cb(res.data);
@@ -56,10 +70,27 @@
                             即将导出 <span class="tw-font-bold">{{$total}}</span> 条记录
                         </div>
                     </div>
+                    @if(!empty($customHeadTitle))
+                    <div class="line">
+                        <div class="label">
+                            导出字段
+                        </div>
+                        <div class="field">
+                            <el-checkbox-group v-model="checkedHeadTitles">
+                                @foreach($headTitles as $i=>$t)
+                                    <el-checkbox style="min-width:4rem;" :label="{{$i}}" key="{{$t}}">{{$t}}</el-checkbox>
+                                @endforeach
+                            </el-checkbox-group>
+                            <div>
+                                <el-checkbox :value="allChecked" @change="onAllCheckChange">全选</el-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <div class="line">
                         <div class="label">文件格式</div>
                         <div class="field">
-                            <el-radio-group v-model="format">
+                            <el-radio-group v-model="format" >
                                 @foreach($formats as $f)
                                     <el-radio label="{{$f}}">{{$f}}</el-radio>
                                 @endforeach

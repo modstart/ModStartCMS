@@ -15,6 +15,7 @@ class ExportHandle
         'pageTitle' => '导出数据',
         'defaultExportName' => 'Export',
         'headTitles' => [],
+        'customHeadTitle' => false,
     ];
 
     private $fetchCallback;
@@ -34,6 +35,12 @@ class ExportHandle
     public function withHeadTitles($headTitles)
     {
         $this->data['headTitles'] = $headTitles;
+        return $this;
+    }
+
+    public function withCustomHeadTitle($enable)
+    {
+        $this->data['customHeadTitle'] = $enable;
         return $this;
     }
 
@@ -68,23 +75,48 @@ class ExportHandle
         }
         $pageTitle = $this->data['pageTitle'];
         $defaultExportName = $this->data['defaultExportName'];
+        $headTitles = $this->data['headTitles'];
+        $customHeadTitle = $this->data['customHeadTitle'];
         $input = InputPackage::buildFromInput();
         $page = $input->getPage();
         $pageSize = $input->getPageSize(null, null, null, 100);
         $search = $input->getJsonAsInput('_param')->getArray('search');
         $exportName = $input->getTrimString('exportName', $defaultExportName);
         $format = $input->getTrimString('format', $ext);
+        $checkedHeadTitles = $input->getJson('checkedHeadTitles');
 
         if (Request::isPost()) {
             BizException::throwsIfEmpty('导出文件名为空', $exportName);
+            BizException::throwsIfEmpty('请选择导出列', $checkedHeadTitles);
             $paginateData = call_user_func_array($this->fetchCallback, [$page, $pageSize, $search, []]);
+            if ($customHeadTitle) {
+                $list = [];
+                foreach ($paginateData['list'] as $v) {
+                    $one = [];
+                    foreach ($v as $vi => $vv) {
+                        if (in_array($vi, $checkedHeadTitles)) {
+                            $one[] = $vv;
+                        }
+                    }
+                    $list[] = $one;
+                }
+                $exportHeadTitles = [];
+                foreach ($this->data['headTitles'] as $i => $v) {
+                    if (in_array($i, $checkedHeadTitles)) {
+                        $exportHeadTitles[] = $v;
+                    }
+                }
+            } else {
+                $list = $paginateData['list'];
+                $exportHeadTitles = $this->data['headTitles'];
+            }
             $data = [];
             $data['code'] = 0;
-            $data['list'] = $paginateData['list'];
+            $data['list'] = $list;
             $data['total'] = $paginateData['total'];
             $data['finished'] = count($paginateData['list']) != $pageSize;
             $data['exportName'] = $exportName . '.' . $format;
-            $data['exportHeadTitles'] = $this->data['headTitles'];
+            $data['exportHeadTitles'] = $exportHeadTitles;
             return Response::generateSuccessData($data);
         }
 
@@ -94,6 +126,8 @@ class ExportHandle
             'exportName' => $exportName,
             'total' => $paginateData['total'],
             'formats' => $param['formats'],
+            'customHeadTitle' => $customHeadTitle,
+            'headTitles' => $headTitles,
         ]);
     }
 }

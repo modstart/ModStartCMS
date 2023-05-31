@@ -15,6 +15,7 @@ use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EncodeUtil;
 use ModStart\Core\Util\FormatUtil;
+use ModStart\Core\Util\LockUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Data\DataManager;
@@ -736,12 +737,19 @@ class MemberUtil
     public static function putOauth($memberUserId, $oauthType, $openId, $info = [])
     {
         $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];
-        $m = ModelUtil::get('member_oauth', $where);
-        if (empty($m)) {
-            ModelUtil::insert('member_oauth', array_merge($where, ['openId' => $openId], $info));
-        } else if ($m['openId'] != $openId) {
-            ModelUtil::update('member_oauth', ['id' => $m['id']], array_merge(['openId' => $openId], $info));
+        $lockKey = "MemberOauth:$memberUserId";
+        if (!LockUtil::acquire($lockKey)) {
+            BizException::throws('正在处理中，请稍后再试');
         }
+        $m = ModelUtil::get('member_oauth', $where);
+        $update = array_merge(['openId' => $openId], $info);
+        if (empty($m)) {
+            ModelUtil::delete('member_oauth', ['type' => $oauthType, 'openId' => $openId]);
+            ModelUtil::insert('member_oauth', array_merge($where, $update));
+        } else if ($m['openId'] != $openId) {
+            ModelUtil::update('member_oauth', $m['id'], $update);
+        }
+        LockUtil::release($lockKey);
     }
 
     public static function forgetOauth($oauthType, $openId)
