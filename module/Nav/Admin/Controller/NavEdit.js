@@ -1,18 +1,24 @@
 $(function () {
-    $('[name=pid] option').each(function (i, o) {
-        var $o = $(o), value = $o.attr('value');
-        if (__navPositionMap[value]) {
-            $o.html(__navPositionMap[value]);
+    $('[name="position"]').closest('.line').insertBefore($('[name="pid"]').closest('.line'));
+    var positionChange = function () {
+        var position = $('[name=position]').val();
+        var oldPid = $('[name=pid]').val();
+        $('[name=pid]').html('');
+        $('[name=pid]').append('<option value="0">顶级</option>');
+        for (var i in window.__positionNavs) {
+            var nav = window.__positionNavs[i];
+            if (nav.position !== position) {
+                continue;
+            }
+            $('[name=pid]').append('<option value="' + nav.id + '">'
+                // + nav.position + ' '
+                + MS.util.specialchars(nav.name) + '</option>');
         }
-    });
-    var pidChange = function () {
-        var pid = parseInt($('[name=pid]').val())
-        if (pid > 0) {
-            $('[name="position"]').closest('.line').hide();
-        } else {
-            $('[name="position"]').closest('.line').show();
+        $('[name=pid]').val(oldPid);
+        if (null === $('[name=pid]').val()) {
+            $('[name=pid]').val(0);
         }
     };
-    $('[name=pid]').on('change', pidChange);
-    pidChange();
+    $('[name=position]').on('change', positionChange);
+    positionChange();
 });

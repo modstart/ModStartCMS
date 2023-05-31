@@ -559,6 +559,41 @@
                         color: var(--color-primary);
                     }
                 }
+
+                .sub-nav-group {
+                    position: relative;
+
+                    &:hover {
+                        .sub-nav-group-nav {
+                            display: block;
+                        }
+                    }
+
+                    .sub-nav-group-item {
+                        display: block;
+                        line-height: 2rem;
+                        cursor: pointer;
+                        white-space: nowrap;
+                    }
+
+                    .sub-nav-group-nav {
+                        position: absolute;
+                        z-index: 99999;
+                        border-radius: 0.25rem;
+                        box-shadow: 0 0 0.25rem var(--color-body-line);
+                        display: none;
+                        left: 100%;
+                        top: 0px;
+                        background: var(--color-content-bg);
+
+                        .sub-nav-group-nav-item {
+                            white-space: nowrap;
+                            display: block;
+                            line-height: 2rem;
+                            cursor: pointer;
+                        }
+                    }
+                }
             }
         }
 
@@ -575,6 +610,23 @@
                         border-color: var(--color-muted) transparent transparent transparent;
                         vertical-align: middle;
                         transform: translateY(0.1rem);
+                        margin-left: 0.1rem;
+                    }
+                }
+            }
+
+            .sub-nav {
+                .sub-nav-group {
+                    .sub-nav-group-item:after {
+                        content: '';
+                        display: inline-block;
+                        width: 0px;
+                        height: 0px;
+                        border-width: 0.25rem;
+                        border-style: solid;
+                        border-color: transparent transparent transparent var(--color-muted);
+                        vertical-align: middle;
+                        transform: translateY(-0.1rem);
                         margin-left: 0.1rem;
                     }
                 }
@@ -911,6 +963,22 @@
                     .sub-nav-item {
                         &:last-child {
                             border-bottom: none;
+                        }
+                    }
+
+                    .sub-nav-group {
+                        .sub-nav-group-nav {
+                            display: block;
+                            position: static;
+                            padding-left: 0.5rem;
+                            box-shadow: none;
+                        }
+
+                        .sub-nav-group-item {
+                            &:after {
+                                border-color: var(--color-muted) transparent transparent transparent;
+                                transform: translateY(-0.1rem);
+                            }
                         }
                     }
                 }

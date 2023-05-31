@@ -27,11 +27,24 @@ class NavController extends Controller
     protected function crud(AdminCRUDBuilder $builder)
     {
         if ($builder->mode() == AdminCRUDBuilder::MODE_FORM) {
-            $navPositions = [];
-            foreach (ModelUtil::all('nav', ['pid' => 0], ['*']) as $item) {
-                $navPositions[$item['id']] = TypeUtil::name(NavPosition::class, $item['position']) . ' > ' . $item['name'];
+            $positionNavs = [];
+            foreach (NavUtil::tree() as $v) {
+                $positionNavs[] = [
+                    'id' => $v['id'],
+                    'position' => $v['position'],
+                    'name' => $v['name'],
+                ];
+                if (!empty($v['_child'])) {
+                    foreach ($v['_child'] as $v2) {
+                        $positionNavs[] = [
+                            'id' => $v2['id'],
+                            'position' => $v2['position'],
+                            'name' => $v['name'] . ' → ' . $v2['name'],
+                        ];
+                    }
+                }
             }
-            ModStart::script('window.__navPositionMap=' . json_encode($navPositions) . ';');
+            ModStart::script('window.__positionNavs=' . json_encode($positionNavs) . ';');
             ModStart::scriptFile('module/Nav/Admin/Controller/NavEdit.js');
         }
         $builder
@@ -83,7 +96,7 @@ class NavController extends Controller
             })
             ->canBatchDelete(true)
             ->asTree('id', 'pid', 'sort', 'name')
-            ->treeMaxLevel(2)
+            ->treeMaxLevel(3)
             ->title('导航设置');
     }
 }
