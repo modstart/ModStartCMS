@@ -57,14 +57,14 @@ class HttpMonitor
             }
 
             $queryCountPerRequest = DatabaseMonitor::getQueryCountPerRequest();
-            $param = [];
-            if ($time > 1000 || $queryCountPerRequest > 10) {
+            $param = '{}';
+            if ($time > 5000 || $queryCountPerRequest > 30) {
                 $param = ArrayUtil::serializeForLog($request->input());
             }
-            if ($time > 1000) {
+            if ($time > 5000) {
                 Log::warning("LONG_REQUEST $method [$url] ${time}ms $param");
             }
-            if ($queryCountPerRequest > 10) {
+            if ($queryCountPerRequest > 30) {
                 Log::warning("MASS_REQUEST_SQL $method [$url] $queryCountPerRequest $param -> "
                     . json_encode(DatabaseMonitor::getQueryCountPerRequestSqls(), JSON_UNESCAPED_UNICODE));
             }

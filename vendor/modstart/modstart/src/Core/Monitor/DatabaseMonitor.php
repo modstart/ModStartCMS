@@ -38,7 +38,7 @@ class DatabaseMonitor
                     'bindings' => $bindings,
                 ];
                 // Log::info("SQL $sql, " . json_encode($bindings));
-                if ($time > 500) {
+                if ($time > 5000) {
                     Log::warning("LONG_SQL ${time}ms, $sql, " . ArrayUtil::serializeForLog($bindings));
                 }
             });
