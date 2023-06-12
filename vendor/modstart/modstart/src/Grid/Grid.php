@@ -50,6 +50,7 @@ use ModStart\Support\Manager\FieldManager;
  * @method Grid|mixed canCopy($value = null)
  * @method Grid|mixed canMultiSelectItem($value = null)
  * @method Grid|mixed canSingleSelectItem($value = null)
+ * @method Grid|mixed urlGrid($value = null)
  * @method Grid|mixed urlAdd($value = null)
  * @method Grid|mixed urlEdit($value = null)
  * @method Grid|mixed textEdit($value = null)
@@ -121,6 +122,7 @@ class Grid
         'canBatchDelete',
         'canBatchSelect',
         'canSort',
+        'urlGrid',
         'urlAdd',
         'urlEdit',
         'textEdit',
@@ -170,6 +172,7 @@ class Grid
     private $canBatchDelete = false;
     private $canBatchSelect = false;
     private $canSort = false;
+    private $urlGrid;
     private $urlAdd;
     private $urlEdit;
     private $textEdit;

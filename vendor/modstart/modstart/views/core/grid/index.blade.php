@@ -114,6 +114,7 @@
             canExport: {!! json_encode(boolval($canExport)) !!},
             canImport: {!! json_encode(boolval($canImport)) !!},
             canBatchDelete: {!! json_encode(boolval($canBatchDelete)) !!},
+            urlGrid: {!! json_encode($urlGrid) !!} || window.location.href,
             urlAdd: {!! json_encode($urlAdd) !!},
             urlEdit: {!! json_encode($urlEdit) !!},
             urlDelete: {!! json_encode($urlDelete) !!},

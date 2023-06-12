@@ -17,13 +17,14 @@ var GridManager = function (opt) {
         canSort: false,
         canExport: false,
         canImport: false,
-        urlAdd: false,
-        urlEdit: false,
-        urlDelete: false,
-        urlShow: false,
-        urlExport: false,
-        urlImport: false,
-        urlSort: false,
+        urlGrid: null,
+        urlAdd: null,
+        urlEdit: null,
+        urlDelete: null,
+        urlShow: null,
+        urlExport: null,
+        urlImport: null,
+        urlSort: null,
         batchOperatePrepend: '',
         gridToolbar: '',
         defaultPageSize: 10,
@@ -137,7 +138,7 @@ var GridManager = function (opt) {
             },
             {
                 hashUrl: false,
-                server: window.location.href,
+                server: option.urlGrid,
                 showLoading: false,
                 param: {
                     pageSize: option.defaultPageSize,
@@ -169,7 +170,7 @@ var GridManager = function (opt) {
                         limit: data.pageSize,
                     });
                     var pageLayout = ['limit', 'prev', 'page', 'next', 'count'];
-                    if(option.pageJumpEnable){
+                    if (option.pageJumpEnable) {
                         pageLayout.push('skip');
                     }
                     layui.laypage.render({
@@ -231,7 +232,7 @@ var GridManager = function (opt) {
                     content: addUrl,
                     success: function (layerDom, index) {
                         lister.realtime.dialog.addWindow = $(layerDom).find('iframe').get(0).contentWindow;
-                        lister.realtime.dialog.addWindow.__dialogClose = function(){
+                        lister.realtime.dialog.addWindow.__dialogClose = function () {
                             layer.close(lister.realtime.dialog.add);
                         };
                         lister.realtime.dialog.addWindow.addEventListener('modstart:form.submitted', function (e) {
@@ -260,7 +261,7 @@ var GridManager = function (opt) {
                 content: lister.realtime.url.edit + (lister.realtime.url.edit && lister.realtime.url.edit.indexOf('?') >= 0 ? '&' : '?') + '_id=' + id,
                 success: function (layerDom, index) {
                     lister.realtime.dialog.editWindow = $(layerDom).find('iframe').get(0).contentWindow;
-                    lister.realtime.dialog.editWindow.__dialogClose = function(){
+                    lister.realtime.dialog.editWindow.__dialogClose = function () {
                         layer.close(lister.realtime.dialog.edit);
                     };
                     lister.realtime.dialog.editWindow.addEventListener('modstart:form.submitted', function (e) {

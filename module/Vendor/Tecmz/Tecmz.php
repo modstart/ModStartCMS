@@ -345,6 +345,7 @@ class Tecmz
         $post['name'] = $name;
         $post['param'] = json_encode($param, JSON_UNESCAPED_UNICODE);
         $server = $ret['data']['server'];
+        // echo "server:$server\n";
         // print_r([$post,$server]);exit();
         $ret = CurlUtil::postJSONBody($server, $post);
         // print_r($ret);exit();
