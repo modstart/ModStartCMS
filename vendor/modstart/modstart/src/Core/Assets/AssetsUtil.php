@@ -70,6 +70,15 @@ class AssetsUtil
         return $schema . '://' . Request::server('HTTP_HOST') . $path;
     }
 
+    public static function fixFullFromConfig($configKey)
+    {
+        $value = modstart_config($configKey);
+        if (empty($value)) {
+            return null;
+        }
+        return self::fixFull($value);
+    }
+
     public static function fixFull($path, $hash = true)
     {
         if (is_array($path)) {

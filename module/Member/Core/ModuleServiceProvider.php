@@ -8,6 +8,7 @@ use ModStart\Admin\Config\AdminMenu;
 use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ColorUtil;
+use ModStart\Data\Event\DataDeletedEvent;
 use ModStart\Data\Event\DataUploadedEvent;
 use ModStart\Data\Event\DataUploadingEvent;
 use ModStart\Layout\Row;
@@ -16,6 +17,7 @@ use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberHomeIcon;
 use Module\Member\Config\MemberMenu;
 use Module\Member\Model\MemberDataStatistic;
+use Module\Member\Model\MemberUpload;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Provider\MemberDeleteScheduleProvider;
 use Module\Member\Provider\VerifySmsTemplateProvider;
@@ -181,6 +183,16 @@ class ModuleServiceProvider extends ServiceProvider
                     MemberDataStatistic::updateMemberUserUsedSize($e->userId);
                 });
             }
+        }
+
+        if (class_exists(DataDeletedEvent::class)) {
+            DataDeletedEvent::listen(function (DataDeletedEvent $e) {
+                $record = MemberUpload::where(['dataId' => $e->data['id']])->first();
+                if ($record) {
+                    $record->delete();
+                    MemberDataStatistic::updateMemberUserUsedSize($record->userId);
+                }
+            });
         }
 
         AdminMenu::register(function () {

@@ -10,6 +10,7 @@ use ModStart\Field\AbstractField;
 class LayoutHtml extends AbstractField
 {
     protected $isLayoutField = true;
+    protected $view = 'modstart::core.field.layoutHtml';
 
     public function __construct($label)
     {

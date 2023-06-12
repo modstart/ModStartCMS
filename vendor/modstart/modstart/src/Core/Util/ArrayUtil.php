@@ -219,7 +219,7 @@ class ArrayUtil
         $newArr = [];
         foreach ($records as $k => $v) {
             if (is_array($v)) {
-                $newArr[$k] = self::trims($v);
+                $newArr[$k] = self::trimItems($v);
             } else {
                 $newArr[$k] = trim($v);
             }

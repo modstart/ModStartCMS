@@ -473,9 +473,29 @@ class ModelUtil
         return $changed;
     }
 
-    public static function sortNext($model, $filter = [], $sortField = 'sort')
+    public static function next($model, $current, $where = [], $sortField = 'id', $fields = ['*'])
     {
-        return intval(self::model($model)->where($filter)->max($sortField)) + 1;
+        $record = self::model($model)
+            ->where($where)
+            ->where($sortField, '>', $current)
+            ->orderBy($sortField, 'asc')
+            ->first($fields);
+        return $record ? $record->toArray() : null;
+    }
+
+    public static function prev($model, $current, $where = [], $sortField = 'id', $fields = ['*'])
+    {
+        $record = self::model($model)
+            ->where($where)
+            ->where($sortField, '<', $current)
+            ->orderBy($sortField, 'desc')
+            ->first($fields);
+        return $record ? $record->toArray() : null;
+    }
+
+    public static function sortNext($model, $where = [], $sortField = 'sort')
+    {
+        return intval(self::model($model)->where($where)->max($sortField)) + 1;
     }
 
     public static function sortMove($model, $id, $direction = 'up|down|top|bottom', $filter = [], $idField = 'id', $sortField = 'sort')

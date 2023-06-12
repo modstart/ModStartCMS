@@ -233,4 +233,13 @@ class StrUtil
         return $result;
     }
 
+    public static function split($text, $spliter = ',', $spliterReplaces = ['，', ';', '；'])
+    {
+        $text = str_replace($spliterReplaces, $spliter, $text);
+        $values = explode($spliter, $text);
+        $values = array_map('trim', $values);
+        $values = array_filter($values);
+        return $values;
+    }
+
 }

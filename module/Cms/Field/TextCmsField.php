@@ -6,6 +6,8 @@ namespace Module\Cms\Field;
 
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
+use ModStart\Core\Util\StrUtil;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 
@@ -26,6 +28,15 @@ class TextCmsField extends AbstractCmsField
         BizException::throwsIf('字段长度错误', $data['maxLength'] < 1 || $data['maxLength'] > 65535);
         return $data;
     }
+
+    public function validateInputValue($field, $value, $data)
+    {
+        if (!empty($field['maxLength']) && StrUtil::mbLengthGt($value, $field['maxLength'])) {
+            return Response::generateError("$field[title] 长度不能超过 $field[maxLength]");
+        }
+        return Response::generateSuccess();
+    }
+
 
     public function renderForGrid($viewData)
     {

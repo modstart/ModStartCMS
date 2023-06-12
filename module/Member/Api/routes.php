@@ -14,6 +14,7 @@ $router->group([
     $router->match(['post'], 'login_phone_captcha', 'AuthController@loginPhoneCaptcha');
     $router->match(['post'], 'register', 'AuthController@register');
     $router->match(['post'], 'register_email_verify', 'AuthController@registerEmailVerify');
+    $router->match(['post'], 'register_phone', 'AuthController@registerPhone');
     $router->match(['post'], 'register_phone_verify', 'AuthController@registerPhoneVerify');
     $router->match(['post'], 'register_captcha', 'AuthController@registerCaptcha');
     $router->match(['post'], 'register_captcha_verify', 'AuthController@registerCaptchaVerify');

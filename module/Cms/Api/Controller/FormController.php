@@ -55,6 +55,10 @@ class FormController extends BaseCatController
                         return Response::generateError($customField['title'] . '不能为空');
                     }
                 }
+                $ret = $f->validateInputValue($customField, $submitData[$customField['name']], $submitData);
+                if (Response::isError($ret)) {
+                    return Response::generateError($ret['message']);
+                }
                 $submitData[$customField['name']] = $f->serializeValue($submitData[$customField['name']], $submitData);
             }
         }

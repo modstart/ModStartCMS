@@ -780,6 +780,9 @@ class Form implements Renderable
             case 'gridToolbar';
             case 'pageJumpEnable';
             case 'textEdit':
+            case 'gridTableTopView':
+            case 'gridBeforeRequestScriptView':
+            case 'gridRequestScript':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

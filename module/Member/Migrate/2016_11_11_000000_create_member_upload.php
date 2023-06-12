@@ -24,6 +24,7 @@ class CreateMemberUpload extends Migration
                 $table->integer('uploadCategoryId')->nullable()->comment('分类ID');
 
                 $table->index(['userId', 'uploadCategoryId']);
+                $table->index(['dataId']);
 
             });
         }

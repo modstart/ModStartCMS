@@ -56,7 +56,7 @@
       45 =>
       array (
         'key' => 'Cms_ContactEmail',
-        'value' => 'modstart@163.com',
+        'value' => 'xxx@xxx.com',
       ),
       46 =>
       array (

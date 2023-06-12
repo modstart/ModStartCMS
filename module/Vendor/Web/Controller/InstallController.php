@@ -147,6 +147,7 @@ class InstallController extends Controller
         if (empty($password)) {
             return Response::jsonError("管理用户密码为空");
         }
+        set_time_limit(0);
         $exitCode = 0;
         try {
             $exitCode = Artisan::call("migrate");

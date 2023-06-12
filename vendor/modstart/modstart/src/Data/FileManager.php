@@ -285,7 +285,7 @@ class FileManager
     private static function listExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
         $page = $input->getPage();
-        $pageSize = $input->getPageSize();
+        $pageSize = $input->getPageSize(null, null, null, 20);
         $categoryId = $input->getInteger('categoryId');
         $option = [];
         $option['order'] = ['id', 'desc'];

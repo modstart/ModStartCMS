@@ -10,6 +10,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Data\Event\DataDeletedEvent;
 use ModStart\Data\Event\DataFileUploadedEvent;
 use ModStart\Data\Storage\FileDataStorage;
 
@@ -362,8 +363,11 @@ class DataManager
         $data = $storage->repository()->getDataById($id);
         if (empty($data)) return;
         $file = AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
-        $storage->softDelete($file);
+        if ($storage->has($file)) {
+            $storage->softDelete($file);
+        }
         $storage->repository()->deleteDataById($id);
+        DataDeletedEvent::fire($data);
     }
 
     /**
@@ -389,6 +393,7 @@ class DataManager
             $storage->softDelete($file);
         }
         $storage->repository()->deleteDataById($data['id']);
+        DataDeletedEvent::fire($data);
     }
 
     /**

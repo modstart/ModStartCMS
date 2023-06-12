@@ -29,8 +29,9 @@ MS.ready(
             });
         });
         grid.$lister.on('click', '[data-item-read]', function () {
-            $(this).closest('[data-message-id]').find('[data-message-unread],[data-item-read]').remove();
-            setAdRead($(this).closest('[data-message-id]').data('message-id'));
+            var $message = $(this).closest('[data-message-id]');
+            setAdRead($message.data('message-id'));
+            $message.find('[data-message-unread],[data-item-read]').remove();
         });
         grid.$lister.on('click', '[data-message-id]', function () {
             if ($(this).find('[data-message-unread]').length) {
