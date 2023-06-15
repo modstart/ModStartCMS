@@ -85,6 +85,7 @@ class Tecmz
         }
         return CurlUtil::postJSONBody($url, $param, [
             'timeout' => 60 * 10,
+            'userAgent' => 'TecmzApi ModStart/' . modstart_version() . ' PHP/' . PHP_VERSION . ' OS/' . PHP_OS,
         ]);
     }
 

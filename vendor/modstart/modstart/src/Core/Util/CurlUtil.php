@@ -206,7 +206,9 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
             curl_setopt($ch, CURLOPT_PROXY, $option['http_proxy']);
         }
-
+        if (!empty($option['userAgent'])) {
+            curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
+        }
 
         $output = curl_exec($ch);
         if (!empty($option['debugFile'])) {

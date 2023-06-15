@@ -7,28 +7,42 @@
         {{$label}}
     </div>
     <div class="field">
-        <div id="{{$id}}Input">
+        <div id="{{$id}}Input" v-cloak>
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
-            <el-table
-                    :data="value" size="mini" border
-                    style="width:100%;margin:0;border-radius:3px;">
-                <el-table-column width="200" label="{{$keyTitle}}">
-                    <template slot-scope="scope">
-                        <input type="text" v-model="scope.row.{{$keyLabel}}" placeholder="{{$keyPlaceholder}}" />
-                    </template>
-                </el-table-column>
-                <el-table-column label="{{$valueTitle}}">
-                    <template slot-scope="scope">
-                        <input type="text" v-model="scope.row.{{$valueLabel}}" placeholder="{{$valuePlaceholder}}" />
-                    </template>
-                </el-table-column>
-                <el-table-column width="50"  align="center">
-                    <template slot-scope="scope">
-                        <a href="javascript:;" class="ub-text-danger" @click="value.splice(scope.$index,1)"><i class="iconfont icon-trash"></i></a>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <a href="javascript:;" class="ub-text-muted" @click="value.push({ {{$keyLabel}} :'', {{$valueLabel}}:'' })"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+            <table class="ub-table border border-all">
+                <thead>
+                <tr>
+                    <th width="200">{{$keyTitle}}</th>
+                    <th>{{$valueTitle}}</th>
+                    <th width="50">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(v,vIndex) in value">
+                    <td>
+                        <input type="text" v-model="value[vIndex].{{$keyLabel}}" placeholder="{{$keyPlaceholder}}" />
+                    </td>
+                    <td>
+                        <input type="text" v-model="value[vIndex].{{$valueLabel}}" placeholder="{{$valuePlaceholder}}" />
+                    </td>
+                    <td class="tw-text-center">
+                        <a href="javascript:;" class="ub-text-danger" @click="value.splice(vIndex,1)">
+                            <i class="iconfont icon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td colspan="3">
+                        <a href="javascript:;" class="ub-text-muted" @click="doValueAdd">
+                            <i class="iconfont icon-plus"></i>
+                            {{L('Add')}}
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
@@ -48,6 +62,11 @@
             computed:{
                 jsonValue:function(){
                     return JSON.stringify(this.value);
+                }
+            },
+            methods:{
+                doValueAdd(){
+                    this.value.push({ {{$keyLabel}} :'', {{$valueLabel}}:'' });
                 }
             }
         });

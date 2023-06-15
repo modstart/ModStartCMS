@@ -10,71 +10,82 @@ class FieldManager
 {
     private static $availableFields = [];
     private static $collectedAssets = [];
-    private static $usedFields = [];
+    private static $uses = [];
+
+    public static function uses($cls)
+    {
+        if (is_array($cls)) {
+            foreach ($cls as $c) {
+                self::$uses[$c] = true;
+            }
+        } else {
+            self::$uses[$cls] = true;
+        }
+    }
 
     public static function registerBuiltinFields()
     {
         $map = [
-            'text' => \ModStart\Field\Text::class,
-            'display' => \ModStart\Field\Display::class,
-            'tree' => \ModStart\Field\Tree::class,
+            'adminUser' => \ModStart\Field\AdminUser::class,
+            'areaChina' => \ModStart\Field\AreaChina::class,
+            'audio' => \ModStart\Field\Audio::class,
+            'button' => \ModStart\Field\Button::class,
+            'captcha' => \ModStart\Field\Captcha::class,
+            'cascadeGroup' => \ModStart\Field\CascadeGroup::class,
             'checkbox' => \ModStart\Field\Checkbox::class,
-            'tags' => \ModStart\Field\Tags::class,
             'code' => \ModStart\Field\Code::class,
-            'type' => \ModStart\Field\Type::class,
-            'password' => \ModStart\Field\Password::class,
+            'color' => \ModStart\Field\Color::class,
+            'complexFields' => \ModStart\Field\ComplexFields::class,
+            'complexFieldsList' => \ModStart\Field\ComplexFieldsList::class,
+            'currency' => \ModStart\Field\Currency::class,
+            'custom' => \ModStart\Field\Custom::class,
+            'customField' => \ModStart\Field\CustomField::class,
+            'date' => \ModStart\Field\Date::class,
+            'datetime' => \ModStart\Field\Datetime::class,
+            'decimal' => \ModStart\Field\Decimal::class,
+            'display' => \ModStart\Field\Display::class,
+            'dynamicFields' => \ModStart\Field\DynamicFields::class,
+            'file' => \ModStart\Field\File::class,
+            'fileTemp' => \ModStart\Field\FileTemp::class,
+            'files' => \ModStart\Field\Files::class,
+            'hidden' => \ModStart\Field\Hidden::class,
+            'html' => \ModStart\Field\Html::class,
+            'id' => \ModStart\Field\Id::class,
             'image' => \ModStart\Field\Image::class,
             'images' => \ModStart\Field\Images::class,
             'imagesTemp' => \ModStart\Field\ImagesTemp::class,
-            'link' => \ModStart\Field\Link::class,
-            'switch' => \ModStart\Field\SwitchField::class,
-            'textarea' => \ModStart\Field\Textarea::class,
             'json' => \ModStart\Field\Json::class,
-            'jsonKeyValue' => \ModStart\Field\JsonKeyValue::class,
             'jsonIdItems' => \ModStart\Field\JsonIdItems::class,
-            'color' => \ModStart\Field\Color::class,
-            'date' => \ModStart\Field\Date::class,
-            'datetime' => \ModStart\Field\Datetime::class,
-            'time' => \ModStart\Field\Time::class,
+            'jsonKeyValue' => \ModStart\Field\JsonKeyValue::class,
+            'keyValueList' => \ModStart\Field\KeyValueList::class,
+            'link' => \ModStart\Field\Link::class,
+            'manyRelation' => \ModStart\Field\ManyRelation::class,
+            'markdown' => \ModStart\Field\Markdown::class,
+            'number' => \ModStart\Field\Number::class,
+            'password' => \ModStart\Field\Password::class,
+            'percent' => \ModStart\Field\Percent::class,
             'period' => \ModStart\Field\Period::class,
             'radio' => \ModStart\Field\Radio::class,
+            'rate' => \ModStart\Field\Rate::class,
+            'richHtml' => \ModStart\Field\RichHtml::class,
             'select' => \ModStart\Field\Select::class,
             'selectRemote' => \ModStart\Field\SelectRemote::class,
-            'richHtml' => \ModStart\Field\RichHtml::class,
-            'markdown' => \ModStart\Field\Markdown::class,
-            'keyValueList' => \ModStart\Field\KeyValueList::class,
-            'complexFields' => \ModStart\Field\ComplexFields::class,
-            'complexFieldsList' => \ModStart\Field\ComplexFieldsList::class,
+            'switch' => \ModStart\Field\SwitchField::class,
+            'tags' => \ModStart\Field\Tags::class,
+            'text' => \ModStart\Field\Text::class,
+            'textarea' => \ModStart\Field\Textarea::class,
+            'time' => \ModStart\Field\Time::class,
+            'tree' => \ModStart\Field\Tree::class,
+            'type' => \ModStart\Field\Type::class,
             'values' => \ModStart\Field\Values::class,
-            'customField' => \ModStart\Field\CustomField::class,
-            'html' => \ModStart\Field\Html::class,
-            'cascadeGroup' => \ModStart\Field\CascadeGroup::class,
-            'number' => \ModStart\Field\Number::class,
-            'rate' => \ModStart\Field\Rate::class,
-            'percent' => \ModStart\Field\Percent::class,
-            'decimal' => \ModStart\Field\Decimal::class,
-            'currency' => \ModStart\Field\Currency::class,
-            'id' => \ModStart\Field\Id::class,
-            'captcha' => \ModStart\Field\Captcha::class,
-            'fileTemp' => \ModStart\Field\FileTemp::class,
-            'file' => \ModStart\Field\File::class,
-            'files' => \ModStart\Field\Files::class,
             'video' => \ModStart\Field\Video::class,
-            'audio' => \ModStart\Field\Audio::class,
-            'areaChina' => \ModStart\Field\AreaChina::class,
-            'hidden' => \ModStart\Field\Hidden::class,
-            'icon' => \ModStart\Field\Icon::class,
-            'button' => \ModStart\Field\Button::class,
-            'adminUser' => \ModStart\Field\AdminUser::class,
-            'manyRelation' => \ModStart\Field\ManyRelation::class,
-            'custom' => \ModStart\Field\Custom::class,
 
             'layoutGrid' => \ModStart\Layout\LayoutGrid::class,
             'layoutTab' => \ModStart\Layout\LayoutTab::class,
             'layoutPanel' => \ModStart\Layout\LayoutPanel::class,
+            'layoutLine' => \ModStart\Layout\LayoutLine::class,
             'layoutSeparator' => \ModStart\Layout\LayoutSeparator::class,
             'layoutHtml' => \ModStart\Layout\LayoutHtml::class,
-            'layoutLine' => \ModStart\Layout\LayoutLine::class,
         ];
 
         foreach ($map as $abstract => $class) {
@@ -92,10 +103,8 @@ class FieldManager
         }
         $assets = collect();
         foreach (static::$availableFields as $name => $field) {
-            if (in_array($type, ['js', 'script'])) {
-                if (empty(static::$usedFields[$name])) {
-                    continue;
-                }
+            if (!isset(self::$uses[$field])) {
+                continue;
             }
             if (!method_exists($field, 'getAssets')) {
                 continue;
@@ -141,7 +150,6 @@ class FieldManager
     {
         /** @var HasFields $context */
         if ($className = static::findFieldClass($method)) {
-            static::$usedFields[$method] = true;
             $column = array_get($arguments, 0, '');
             /** @var AbstractField $element */
             $element = new $className($column, array_slice($arguments, 1));

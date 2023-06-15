@@ -6,6 +6,7 @@ namespace ModStart\Data;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -39,6 +40,7 @@ class FileManager
 
     public static function handle($category, $uploadTable, $uploadCategoryTable, $userId, $option = null, $permitCheck = null)
     {
+        // sleep(1);
         $input = InputPackage::buildFromInput();
         $action = $input->getTrimString('action', 'upload');
         if ($permitCheck) {
@@ -148,6 +150,7 @@ class FileManager
             return Response::jsonError($ret['msg']);
         }
         $data = [
+            'id' => $ret['data']['data']['id'],
             'path' => $ret['data']['path'],
             'fullPath' => $ret['data']['fullPath'],
             'filename' => $retSaveUser['data']['filename'],
@@ -285,7 +288,7 @@ class FileManager
     private static function listExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
     {
         $page = $input->getPage();
-        $pageSize = $input->getPageSize(null, null, null, 20);
+        $pageSize = $input->getPageSize(null, null, null, 24);
         $categoryId = $input->getInteger('categoryId');
         $option = [];
         $option['order'] = ['id', 'desc'];
@@ -310,7 +313,7 @@ class FileManager
             if (!empty($record['_data']['domain'])) {
                 $item['path'] = $record['_data']['domain'] . $item['path'];
             }
-            $item['fullPath'] = $item['path'];
+            $item['fullPath'] = AssetsUtil::fixFull($item['path'], false);
             $item['filename'] = htmlspecialchars($record['_data']['filename']);
             $item['type'] = FileUtil::extension($record['_data']['path']);
             $item['category'] = $category;

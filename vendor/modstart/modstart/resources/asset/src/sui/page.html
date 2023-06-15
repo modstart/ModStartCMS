@@ -6,13 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Brick UI Preview</title>
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_2778046_44ef9litrl6.css">
+    <link rel="stylesheet" href="https://ms-cdn.modstart.com/asset/vendor/iconfont/iconfont.css">
     <link rel="stylesheet/less" type="text/css" href="./base/style.less"/>
     <link rel="stylesheet/less" type="text/css" href="./bricks/component/panel/panel.less"/>
-    <script src="https://modstart.com/asset/vendor/jquery.js"></script>
-    <script src="https://modstart.com/asset/common/base.js"></script>
-    <script src="https://modstart.com/asset/common/base.js"></script>
-    <script src="./js/echarts.min.js"></script>
+    <script src="https://ms-cdn.modstart.com/asset/vendor/jquery.js"></script>
+    <script src="https://ms-cdn.modstart.com/asset/common/base.js"></script>
+    <script src="https://ms-cdn.modstart.com/asset/vendor/echarts/echarts.all.js"></script>
     <style type="text/css">
         #page-container {
         }
@@ -88,13 +87,14 @@
 </div>
 <script src="js/jquery.js"></script>
 <script>
-    var less = {
+    less = {
+        env: 'development',
         poll: 3000,
         logLevel: 2
-    }
+    };
 </script>
 <script src="js/less.js"></script>
-<script src="js/holder.min.js"></script>
+<script src="js/holder.js"></script>
 <script src="js/clipboard.min.js"></script>
 <script src="js/notify.min.js"></script>
 <script src="js/baiduTemplate.js"></script>
@@ -143,10 +143,10 @@
             })
             return html
         }
-        let pageHtmlLength = null
+        let pageHtmlMd5 = null
         const setPageHtml = function (html) {
-            console.log('setPageHtml', 'html.length=' + html.length)
-            pageHtmlLength = html.length
+            pageHtmlMd5 = MS.util.md5(html)
+            console.log('setPageHtml', 'html.md5=' + pageHtmlMd5)
             let scripts = []
             html = html.replace(/<script>[\s\S]*?<\/script>/g, function (o) {
                 // console.log('html script', o)
@@ -172,12 +172,43 @@
                     $(o).replaceWith($items.html())
                 })
             }
-            $('#page-container').html(processHtml($html.html())).append(scripts.join(''))
+            $('#page-container').html(processHtml($html.html())).append(scripts.join(''));
+            less.registerStylesheets();
+            less.refresh().then(function () {
+                $('[data-src],[data-background-url]')
+                    .filter('[data-holder-rendered!=true]')
+                    .each(function (i, o) {
+                        switch (o.tagName) {
+                            case 'IMG':
+                            case 'A':
+                            case 'DIV':
+                            case 'SPAN':
+                                Holder.run({
+                                    mode: 'background',
+                                    theme: 'gray',
+                                    domain: "placeholder",
+                                    images: o,
+                                    size: 12,
+                                    font: "Monaco",
+                                    fontweight: "normal",
+                                    outline: 'yes',
+                                    bgnodes: [o],
+                                    noBackgroundSize: true,
+                                });
+                                break
+                            default:
+                                console.warn('ProcessPlaceholder.Error', o.tagName, o.outerHTML)
+                                break
+                        }
+                    });
+            });
         }
-        let watchPageHtml = function () {
-            $.get("bricks/" + page + ".html", {}, function (html) {
-                if (pageHtmlLength !== html.length) {
+        const watchPageHtml = function () {
+            $.get("bricks/" + page + ".html?" + Math.random(), {}, function (html) {
+                const md5 = MS.util.md5(html)
+                if (pageHtmlMd5 !== md5) {
                     setPageHtml(html)
+                    pageHtmlMd5 = md5
                 }
                 setTimeout(watchPageHtml, 5000)
             }).fail(function (html) {
@@ -185,53 +216,8 @@
             })
         }
         watchPageHtml()
-        let lessProcessTimer = null
-        let lessProcessFirst = true
-        const lessProcess = function () {
-            if (lessProcessTimer) {
-                if (!lessProcessFirst) {
-                    clearTimeout(lessProcessTimer)
-                }
-                lessProcessTimer = null
-            }
-            lessProcessTimer = setTimeout(function () {
-                lessProcessFirst = false
-                // console.log('LessProcessed');
-                less.registerStylesheets().then(function () {
-                    less.refresh(true).then(function () {
-                        $('[data-src],[data-background-url]')
-                            .filter('[data-holder-rendered!=true]')
-                            .each(function (i, o) {
-                                switch (o.tagName) {
-                                    case 'IMG':
-                                    case 'A':
-                                    case 'DIV':
-                                    case 'SPAN':
-                                        Holder.run({
-                                            mode: 'background',
-                                            theme: 'gray',
-                                            domain: "placeholder",
-                                            images: o,
-                                            size: 12,
-                                            font: "Monaco",
-                                            fontweight: "normal",
-                                            outline: 'yes',
-                                            bgnodes: [o],
-                                            noBackgroundSize: true,
-                                        })
-                                        break
-                                    default:
-                                        console.warn('ProcessPlaceholder.Error', o.tagName, o.outerHTML)
-                                        break
-                                }
-                            });
-                    })
-                })
-
-            }, lessProcessFirst ? 0 : 500)
-        }
-        $('body').on('DOMSubtreeModified', lessProcess);
         less.watch()
+
         window.DelayExecute = function (delay, cb) {
             setTimeout(function () {
                 cb()

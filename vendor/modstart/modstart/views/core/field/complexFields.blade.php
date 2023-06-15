@@ -9,7 +9,7 @@
     <div class="field">
         <div id="{{$id}}Input">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
-            <table class="ub-table">
+            <table class="ub-table border">
                 <tbody>
                     @foreach($fields as $f)
                     <tr>

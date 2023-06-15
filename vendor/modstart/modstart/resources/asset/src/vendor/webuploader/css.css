@@ -30,24 +30,38 @@
 .webuploader-list {
     display: block;
     margin: 0;
-    padding: 0
+    padding: 0;
+    position: static;
+    border: 1px solid #EEE;
+    border-radius: 0.2rem;
+    padding: 0.2rem;
+    background-color: var(--color-content-bg);
+}
+
+.webuploader-list:empty {
+    display: none;
 }
 
 .webuploader-list > li {
     list-style: none;
     display: block;
-    border: 1px solid #CCC;
-    padding: 5px
+    border: 1px solid #EEE;
+    padding: 0px;
+    margin-bottom: 0.1rem;
+    background: var(--color-content-bg);
+    border-radius: 0.2rem;
 }
 
 .webuploader-list > li .progress-box {
-    height: 10px;
-    border: 1px solid #EEE
+    background-color: #EEE;
+    margin: 2px;
+    border-radius: 4px;
 }
 
 .webuploader-list > li .progress-box .progress-bar {
-    height: 10px;
-    background: #CCC
+    height: 3px;
+    background-color: var(--color-primary);
+    border-radius: 4px;
 }
 
 .webuploader-list > li .progress-info {

@@ -5,6 +5,7 @@ namespace ModStart\Field;
 
 
 use ModStart\Core\Util\ConvertUtil;
+use Module\Vendor\Markdown\MarkdownUtil;
 
 class Html extends AbstractField
 {
@@ -20,6 +21,13 @@ class Html extends AbstractField
 
     public function htmlContent($html)
     {
+        $this->html = '<div class="ub-html">' . $html . '</div>';
+        return $this;
+    }
+
+    public function htmlContentFromMarkdown($markdown)
+    {
+        $html = MarkdownUtil::convertToHtml($markdown);
         $this->html = '<div class="ub-html">' . $html . '</div>';
         return $this;
     }

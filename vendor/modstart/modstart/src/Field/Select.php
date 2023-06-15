@@ -76,7 +76,7 @@ class Select extends AbstractField
 
     public function optionModelTree($table, $idName = 'id', $pidName = 'pid', $titleName = 'title', $sortName = 'sort', $where = [])
     {
-        $items = ModelUtil::model($table)->where($where)->get([$idName, $pidName, $titleName, $sortName]);
+        $items = ModelUtil::autoModel($table)->where($where)->get([$idName, $pidName, $titleName, $sortName]);
         $items = TreeUtil::itemsMergeLevel($items, $idName, $pidName, $sortName);
         return $this->optionItems($items, $idName, $titleName);
     }

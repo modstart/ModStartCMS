@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Fluent;
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Core\Util\IdUtil;
+use ModStart\Support\Manager\WidgetManager;
 
 /**
  * Class AbstractWidget
@@ -13,6 +14,7 @@ use ModStart\Core\Util\IdUtil;
  */
 class AbstractWidget extends Fluent implements Renderable
 {
+
     protected $view;
     protected $id;
 
@@ -21,7 +23,9 @@ class AbstractWidget extends Fluent implements Renderable
      */
     public function __construct()
     {
+        parent::__construct();
         $this->id = IdUtil::generate('Widget');
+        WidgetManager::uses(static::class);
     }
 
 

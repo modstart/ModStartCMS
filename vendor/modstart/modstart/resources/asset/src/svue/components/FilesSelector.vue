@@ -4,185 +4,142 @@
                       :url="fileDialogUrl"
                       category="file"
                       :child-key="childKey"
-                      :max="max-datav.length"
+                      :max="max-currentData.length"
                       @on-select="doFileSelect"
         />
         <div class="pb-files-selector">
-            <draggable v-model="datav" handle=".handle">
+            <draggable v-model="currentData" handle=".handle">
                 <transition-group>
                     <div class="item"
                          draggable="true"
-                         v-for="(item,itemIndex) in datav"
-                         :key="itemIndex+'a'">
-                        <div class="file-cover">
-                            <i class="iconfont icon-file"></i>
-                            {{fileName(item)}}
-                        </div>
-                        <div class="mask">
-                            <a href="javascript:;" @click="doPreview(itemIndex)">
-                                <i class="iconfont icon-zoom-in"></i>
-                            </a>
-                            <a href="javascript:;" @click="doDelete(itemIndex)">
-                                <i class="iconfont icon-trash"></i>
-                            </a>
-                            <a href="javascript:;" class="handle">
-                                <i class="iconfont icon-move"></i>
-                            </a>
+                         v-for="(item,itemIndex) in currentData"
+                         :key="'a'+itemIndex">
+                        <div class="tw-flex">
+                            <div class="tw-flex-grow">
+                                <div class="btn btn-block">
+                                    {{ fileName(item) }}
+                                </div>
+                            </div>
+                            <div class="tw-pl-1">
+                                <a href="javascript:;" class="btn btn-danger"
+                                   @click="doDelete(itemIndex)">
+                                    <i class="iconfont icon-trash"></i>
+                                </a>
+                            </div>
+                            <div class="tw-pl-1" v-if="dragEnable">
+                                <a href="javascript:;" class="btn handle">
+                                    <i class="iconfont icon-move"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </transition-group>
-                <template v-if="datav.length===0 && mini">
-                    <a href="javascript:;" @click="doSelect">
-                        <i class="iconfont icon-file"></i>
-                        文件
-                    </a>
-                </template>
-                <template v-if="datav.length>0 || !mini">
-                    <div class="item" slot="footer" v-if="datav.length<max">
-                        <a href="javascript:;" class="plus" @click="doSelect">
-                            <i class="iconfont icon-plus"></i>
-                        </a>
-                    </div>
-                </template>
             </draggable>
+            <div>
+                <a href="javascript:;" class="btn" v-if="galleryEnable" @click="doSelect">
+                    <i class="iconfont icon-category"></i>
+                    {{ selectText }}
+                </a>
+                <div class="tw-inline-block tw-align-top" v-if="uploadEnable">
+                    <UploadButton :url="fileDialogUrl" category="file" auto-save @save="onUploadSuccess"/>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <style lang="less" scoped>
-    .pb-files-selector {
-        .item {
-            overflow: hidden;
-            background-color: #fff;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            border: 1px solid #c0ccda;
-            border-radius: 0.15rem;
-            box-sizing: border-box;
-            position: relative;
-            width: 100%;
-            height: 1.5rem;
-            display: inline-block;
-            .plus {
-                line-height: 1.5rem;
-                text-align: center;
-                color: #999;
-                display: block;
-            }
-            .file-cover {
-                color: var(--color-tertiary);
-                padding: 0.25rem;
-            }
-            &:hover {
-                .mask {
-                    display: block;
-                }
-            }
-            .mask {
-                background: rgba(0, 0, 0, 0.5);
-                color: #FFF;
-                text-align: right;
-                display: none;
-                position: absolute;
-                top: 0px;
-                right: 0px;
-                bottom: 0px;
-                left: 0px;
-                a {
-                    color: #CCC;
-                    display: inline-block;
-                    line-height: 30px;
-                    padding: 0 5px;
-                    &:hover {
-                        color: #FFF;
-                    }
-                }
-            }
-        }
+.pb-files-selector {
+    .item {
+        margin-bottom: 0.2rem;
     }
+}
 </style>
 
 <script>
-    import DataSelector from "./DataSelector";
-    import draggable from 'vuedraggable'
+import DataSelector from "./DataSelector";
+import draggable from 'vuedraggable'
+import {FieldVModel} from "../lib/fields-config";
+import UploadButton from "./UploadButton";
 
-    export default {
-        name: "FilesSelector",
-        components: {DataSelector, draggable},
-        model: {
-            prop: 'data',
-            event: 'FilesSelectorEvent'
+export default {
+    name: "FilesSelector",
+    mixins: [FieldVModel],
+    components: {DataSelector, UploadButton, draggable},
+    props: {
+        data: {
+            type: Array,
+            default: []
         },
-        props: {
-            data: {
-                type: Array,
-                default: []
-            },
-            fileDialogUrl: {
-                type: String,
-                default: 'member_data/file_manager'
-            },
-            max: {
-                type: Number,
-                default: 999
-            },
-            mini: {
-                type: Boolean,
-                default: false,
-            },
-            childKey: {
-                type: String,
-                default: '_child',
-            },
-            doSelectCustom: {
-                type: Function,
-                default: null,
-            }
+        fileDialogUrl: {
+            type: String,
+            default: '/member_data/file_manager'
         },
-        data() {
-            return {
-                datav: [],
-                previewFile: '',
-            }
+        max: {
+            type: Number,
+            default: 999
         },
-        mounted() {
-            this.datav = this.data
+        mini: {
+            type: Boolean,
+            default: false,
         },
-        watch: {
-            data(newValue, oldValue) {
-                if (JSON.stringify(newValue) != JSON.stringify(this.datav)) {
-                    this.datav = newValue
-                }
-            },
-            datav(newValue, oldValue) {
-                this.$emit('FilesSelectorEvent', this.datav)
-            }
+        childKey: {
+            type: String,
+            default: '_child',
         },
-        methods: {
-            fileName(file) {
-                return file.substring(file.lastIndexOf('/') + 1)
-            },
-            doFileSelect(files) {
-                files.forEach(o => {
-                    this.datav.push(o.path)
-                })
-            },
-            doDelete(index) {
-                this.datav.splice(index, 1)
-            },
-            doPreview(index) {
-                this.previewFile = this.datav[index]
-            },
-            doSelect() {
-                if (null === this.doSelectCustom) {
-                    this.$refs.fileDialog.show()
-                } else {
-                    this.doSelectCustom(items => {
-                        this.doFileSelect(items)
-                    })
-                }
-            },
+        selectText: {
+            type: String,
+            default: '选择文件',
+        },
+        doSelectCustom: {
+            type: Function,
+            default: null,
+        },
+        uploadEnable: {
+            type: Boolean,
+            default: false,
+        },
+        galleryEnable: {
+            type: Boolean,
+            default: true,
+        },
+        dragEnable: {
+            type: Boolean,
+            default: true,
         }
+    },
+    data() {
+        return {
+            previewFile: '',
+        }
+    },
+    methods: {
+        fileName(file) {
+            return file.substring(file.lastIndexOf('/') + 1)
+        },
+        doFileSelect(files) {
+            files.forEach(o => {
+                this.currentData.push(o.path)
+            })
+        },
+        onUploadSuccess(data) {
+            this.currentData.push(data.fullPath)
+        },
+        doDelete(index) {
+            this.currentData.splice(index, 1)
+        },
+        doPreview(index) {
+            this.previewFile = this.currentData[index]
+        },
+        doSelect() {
+            if (null === this.doSelectCustom) {
+                this.$refs.fileDialog.show()
+            } else {
+                this.doSelectCustom(items => {
+                    this.doFileSelect(items)
+                })
+            }
+        },
     }
+}
 </script>

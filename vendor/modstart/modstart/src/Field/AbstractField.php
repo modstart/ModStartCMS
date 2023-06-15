@@ -17,8 +17,8 @@ use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 use ModStart\ModStart;
-use ModStart\Repository\EmptyItem;
 use ModStart\Support\Concern\HasFluentAttribute;
+use ModStart\Support\Manager\FieldManager;
 
 /**
  * Class AbstractField
@@ -47,8 +47,11 @@ use ModStart\Support\Concern\HasFluentAttribute;
  *
  * form模式：帮助文字，样式
  * @method AbstractField|mixed help($value = null)
+ *
  * grid|form|detail模式：字段提示
  * @method AbstractField|mixed tip($value = null)
+ *
+ * form模式：字段样式，或直接作用到 input, textarea 等元素上
  * @method AbstractField|mixed styleFormField($value = null)
  *
  * grid模式：字段宽度
@@ -76,7 +79,7 @@ use ModStart\Support\Concern\HasFluentAttribute;
  *
  * grid.request
  * -> repository->get
- * -> hookValueUnserialize(function($value, AbstractField $field){return $value;})
+ * -> hookValueUnserialize(function($value, AbstractField $field){ return $value; })
  * -> unserializeValue($value, AbstractField $field)
  * -> hookFormatValue(function($value, AbstractField $field){ return $value;})
  * -> view->render
@@ -87,18 +90,18 @@ use ModStart\Support\Concern\HasFluentAttribute;
  * form.addRequest
  * -> prepareInput($value, $dataSubmitted)
  * -> serializeValue($value, $dataSubmitted)
- * -> hookValueSerialize(function($value, AbstractField $field){return $value;})
+ * -> hookValueSerialize(function($value, AbstractField $field){ return $value; })
  * -> repository->add
  *
  * form.formRequest
  * -> prepareInput($value, $dataSubmitted)
  * -> serializeValue($value, $dataSubmitted)
- * -> hookValueSerialize(function($value, AbstractField $field){return $value;})
+ * -> hookValueSerialize(function($value, AbstractField $field){ return $value; })
  * -> repository->add
  *
  * form.edit
  * -> repository->editing
- * -> hookValueUnserialize(function($value, AbstractField $field){return $value;})
+ * -> hookValueUnserialize(function($value, AbstractField $field){ return $value; })
  * -> unserializeValue($value, AbstractField $field)
  * -> hookFormatValue(function($value, AbstractField $field){ return $value;})
  * -> view->render
@@ -106,12 +109,12 @@ use ModStart\Support\Concern\HasFluentAttribute;
  * form.editRequest
  * -> prepareInput($value, $dataSubmitted)
  * -> serializeValue($value, $dataSubmitted)
- * -> hookValueSerialize(function($value, AbstractField $field){return $value;})
+ * -> hookValueSerialize(function($value, AbstractField $field){ return $value; })
  * -> repository->edit
  *
  * detail.show
  * -> repository->show
- * -> hookValueUnserialize(function($value, AbstractField $field){return $value;})
+ * -> hookValueUnserialize(function($value, AbstractField $field){ return $value; })
  * -> unserializeValue($value, AbstractField $field)
  * -> hookFormatValue(function($value, AbstractField $field){ return $value;})
  * -> view->render
@@ -259,6 +262,7 @@ class AbstractField implements Renderable
             $this->label = null;
         }
         $this->setup();
+        FieldManager::uses(static::class);
     }
 
     protected function setup()

@@ -1,3 +1,4 @@
+@if(!empty($script))
 <script>
     $(function () {
         @foreach($script as $s)
@@ -5,3 +6,4 @@
         @endforeach
     });
 </script>
+@endif

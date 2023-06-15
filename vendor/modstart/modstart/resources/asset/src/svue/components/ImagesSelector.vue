@@ -3,174 +3,130 @@
         <DataSelector ref="imageDialog"
                       :url="imageDialogUrl"
                       category="image"
-                      :max="max-datav.length"
+                      :max="max-currentData.length"
                       :child-key="childKey"
                       @on-select="doImageSelect"
         />
         <el-dialog :visible.sync="previewVisible">
             <img width="100%" :src="previewImage"/>
         </el-dialog>
-        <div class="pb-images-selector">
-            <draggable v-model="datav" handle=".handle">
-                <transition-group>
-                    <div class="item" draggable="true" v-for="(item,itemIndex) in datav"
-                         :key="itemIndex+'a'" :style="{backgroundImage:'url('+item+')'}">
-                        <div class="mask">
-                            <a href="javascript:;" @click="doPreview(itemIndex)">
-                                <i class="iconfont icon-zoom-in"></i>
-                            </a>
-                            <a href="javascript:;" @click="doDelete(itemIndex)">
-                                <i class="iconfont icon-trash"></i>
-                            </a>
-                            <br>
-                            <a href="javascript:;" class="handle">
-                                <i class="iconfont icon-move"></i>
-                            </a>
+        <div class="tw-mb-1" v-if="currentData.length>0">
+            <div class="ub-images-selector">
+                <draggable v-model="currentData" handle=".handle">
+                    <transition-group>
+                        <div class="item" draggable="true" v-for="(item,itemIndex) in currentData"
+                             :key="itemIndex+'a'">
+                            <div class="tools">
+                                <a href="javascript:;" class="action close" @click="doDelete(itemIndex)"><i
+                                    class="iconfont icon-close"></i></a>
+                                <a href="javascript:;" class="action preview" @click="doPreview(itemIndex)"><i
+                                    class="iconfont icon-eye"></i></a>
+                            </div>
+                            <div class="cover ub-cover-1-1" :style="{backgroundImage:`url(${item})`}"></div>
                         </div>
-                    </div>
-                </transition-group>
-                <template v-if="datav.length===0 && mini">
-                    <a href="javascript:;" @click="doSelect">
-                        <i class="iconfont icon-image"></i>
-                        图片
-                    </a>
-                </template>
-                <template v-if="datav.length>0 || !mini">
-                    <div class="item" slot="footer" v-if="datav.length<max">
-                        <a href="javascript:;" class="plus" @click="doSelect">
-                            <i class="iconfont icon-plus"></i>
-                        </a>
-                    </div>
-                </template>
-            </draggable>
+                    </transition-group>
+                </draggable>
+            </div>
+        </div>
+        <div>
+            <a href="javascript:;" class="btn" v-if="galleryEnable" @click="doSelect">
+                <i class="iconfont icon-category"></i>
+                {{ selectText }}
+            </a>
+            <div class="tw-inline-block tw-align-top" v-if="uploadEnable">
+                <UploadButton :url="imageDialogUrl" category="image" auto-save @save="onUploadSuccess"/>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import DataSelector from "./DataSelector";
-    import draggable from 'vuedraggable'
+import DataSelector from "./DataSelector";
+import draggable from 'vuedraggable'
+import UploadButton from "./UploadButton";
+import {FieldVModel} from "../lib/fields-config";
 
-    export default {
-        name: "ImagesSelector",
-        components: {DataSelector, draggable},
-        model: {
-            prop: 'data',
-            event: 'ImagesSelectorEvent'
+export default {
+    name: "ImagesSelector",
+    mixins: [FieldVModel],
+    components: {DataSelector, UploadButton, draggable},
+    props: {
+        data: {
+            type: Array,
+            default: []
         },
-        props: {
-            data: {
-                type: Array,
-                default: []
-            },
-            imageDialogUrl: {
-                type: String,
-                default: 'member_data/file_manager'
-            },
-            max: {
-                type: Number,
-                default: 999
-            },
-            mini: {
-                type: Boolean,
-                default: false,
-            },
-            childKey: {
-                type: String,
-                default: '_child',
-            },
-            doSelectCustom: {
-                type: Function,
-                default: null,
-            }
+        imageDialogUrl: {
+            type: String,
+            default: '/member_data/file_manager'
         },
-        data() {
-            return {
-                datav: [],
-                previewVisible: false,
-                previewImage: '',
-            }
+        max: {
+            type: Number,
+            default: 999
         },
-        mounted() {
-            this.datav = this.data
+        mini: {
+            type: Boolean,
+            default: false,
         },
-        watch: {
-            data(newValue, oldValue) {
-                if (JSON.stringify(newValue) != JSON.stringify(this.datav)) {
-                    this.datav = newValue
-                }
-            },
-            datav(newValue, oldValue) {
-                this.$emit('ImagesSelectorEvent', this.datav)
-            }
+        selectText: {
+            type: String,
+            default: '选择图片',
         },
-        methods: {
-            doImageSelect(items) {
-                items.forEach(o => {
-                    this.datav.push(o.path)
-                })
-            },
-            doDelete(index) {
-                this.datav.splice(index, 1)
-            },
-            doPreview(index) {
-                this.previewImage = this.datav[index]
-                this.previewVisible = true
-            },
-            doSelect() {
-                if (null === this.doSelectCustom) {
-                    this.$refs.imageDialog.show()
-                } else {
-                    this.doSelectCustom(items => {
-                        this.doImageSelect(items)
-                    })
-                }
-            },
+        childKey: {
+            type: String,
+            default: '_child',
+        },
+        doSelectCustom: {
+            type: Function,
+            default: null,
+        },
+        uploadEnable: {
+            type: Boolean,
+            default: false,
+        },
+        galleryEnable: {
+            type: Boolean,
+            default: true,
+        },
+    },
+    data() {
+        return {
+            previewVisible: false,
+            previewImage: '',
         }
+    },
+    methods: {
+        doImageSelect(items) {
+            items.forEach(o => {
+                this.currentData.push(o.path)
+            })
+        },
+        onUploadSuccess(data) {
+            this.currentData.push(data.fullPath)
+        },
+        doDelete(index) {
+            this.currentData.splice(index, 1)
+        },
+        doPreview(index) {
+            this.previewImage = this.currentData[index]
+            this.previewVisible = true
+        },
+        doSelect() {
+            if (null === this.doSelectCustom) {
+                this.$refs.imageDialog.show()
+            } else {
+                this.doSelectCustom(items => {
+                    this.doImageSelect(items)
+                })
+            }
+        },
     }
+}
 </script>
 
 <style lang="less" scoped>
-    .pb-images-selector {
-        .item {
-            overflow: hidden;
-            background-color: #fff;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            border: 1px solid #c0ccda;
-            border-radius: 6px;
-            box-sizing: border-box;
-            width: 60px;
-            height: 60px;
-            margin: 0 8px 8px 0;
-            display: inline-block;
-            .plus {
-                line-height: 60px;
-                text-align: center;
-                color: #999;
-                display: block;
-            }
-            &:hover {
-                .mask {
-                    display: block;
-                }
-            }
-            .mask {
-                background: rgba(0, 0, 0, 0.5);
-                color: #FFF;
-                text-align: center;
-                display: none;
-                a {
-                    color: #CCC;
-                    display: inline-block;
-                    line-height: 30px;
-                    padding: 0 5px;
-                    &:hover {
-                        color: #FFF;
-                    }
-                }
-            }
-        }
+.pb-images-selector {
+    .item {
+
     }
+}
 </style>

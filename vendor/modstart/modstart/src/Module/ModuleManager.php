@@ -506,9 +506,9 @@ class ModuleManager
 
     /**
      * 获取模块配置信息
-     * @param $module
-     * @param $key
-     * @param null $default
+     * @param $module string 模块名
+     * @param $key string 配置项
+     * @param $default mixed 默认值
      * @return mixed|null
      */
     public static function getModuleConfig($module, $key, $default = null)

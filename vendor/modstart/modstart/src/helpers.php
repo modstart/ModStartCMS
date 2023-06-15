@@ -227,6 +227,17 @@ function modstart_action($name, $parameters = [])
 }
 
 /**
+ * 获取模块系统配置
+ * @param $module string 模块名称
+ * @param $key string 配置名称
+ * @param $default string|array|boolean|integer 默认值
+ */
+function modstart_module_config($module, $key, $default = null)
+{
+    return ModuleManager::getModuleConfig($module, $key, $default);
+}
+
+/**
  * @Util 获取配置
  * @desc 用于获取表 config 中的配置选项
  * @param $key string 配置名称

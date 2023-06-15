@@ -138,105 +138,113 @@
 }
 
 .ub-lister-table, .ub-table {
+    --table-border-color: #EEE;
+
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     text-align: left;
     font-size: var(--font-size, 0.65rem);
-    border-radius: 3px;
+    border-radius: 0.25rem;
 
     &.mini {
         font-size: 12px;
 
-        td {
+        & > thead > tr > th, & > tbody > tr > td, & > tr > td {
             font-size: 12px;
-            padding: 0.1rem;
+            padding: 0.2rem;
         }
 
-        tbody {
-            tr {
-                &:last-child {
-                    td {
-                        border-bottom: none;
-                    }
-                }
-            }
-        }
+        //& > tbody {
+        //    & > tr {
+        //        &:last-child {
+        //            & > td {
+        //                border-bottom: none;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     &.list {
-        td, th {
+        & > tbody > tr > td, & > tr > td, & > thead > tr > th {
             padding: 5px;
             line-height: 1.2em;
         }
     }
 
     &.border {
-        border: 1px solid #EEE;
-        border-radius: 3px;
+        border: 1px solid var(--table-border-color);
+
+        & > *:last-child > tr:last-child > td {
+            border-bottom: none;
+        }
     }
 
     &.border-all {
-        tr {
-            th, td {
-                border: 1px solid #EEE;
-            }
+        border: 1px solid var(--table-border-color);
+
+        & > thead > tr > th, & > tbody > tr > td {
+            border-bottom: 1px solid var(--table-border-color);
+            border-right: 1px solid var(--table-border-color);
+        }
+
+        & > *:last-child > tr:last-child > td {
+            border-bottom: none;
         }
     }
 
-    &.record-border {
-        tr {
-            border-bottom: 1px solid #EEE;
-        }
-    }
+    //&.record-border {
+    //    tr {
+    //        border-bottom: 1px solid #EEE;
+    //    }
+    //}
 
     &.head-dark {
-        thead {
-            tr {
-                th {
-                    background: #EEE;
-                }
-            }
+        & > thead > tr > th {
+            background: #F5F7FA;
         }
     }
 
-    &.foot-dark {
-        tfoot {
-            tr {
-                th {
-                    background: #EEE;
-                }
-            }
-        }
-    }
+    //&.foot-dark {
+    //    tfoot {
+    //        tr {
+    //            th {
+    //                background: #EEE;
+    //            }
+    //        }
+    //    }
+    //}
 
     &.hover {
-        tbody {
-            tr:hover {
-                td {
+        & > tbody {
+            & > tr:hover {
+                & > td {
                     background: #F4F8FB;
                 }
             }
         }
     }
 
-    th, td {
-        padding: 8px 5px;
+    & > thead > tr > th, & > tbody > tr > td, & > tfoot > tr > td, & > tr > td {
+        padding: 0.5rem;
         line-height: 20px;
     }
 
-    thead {
-        tr {
+    & > thead {
+        & > tr {
             display: table-row;
 
-            th {
-                border-bottom: 2px solid #EEE;
+            & > th {
+                border-bottom: 2px solid var(--table-border-color);
                 color: var(--color-text);
             }
         }
     }
 
-    tbody {
-        tr {
+    & > tbody {
+
+        & > tr {
             display: table-row;
 
             &.muted {
@@ -246,19 +254,19 @@
             }
 
             &.checked {
-                td {
+                & > td {
                     background: #FED493;
                 }
             }
 
             &.focus {
-                td {
+                & > td {
                     background: #F4F8FB;
                 }
             }
 
             &.empty {
-                td {
+                & > td {
                     text-align: center;
                     color: #c4cfdb;
                     line-height: 100px;
@@ -269,8 +277,8 @@
                 cursor: pointer;
             }
 
-            td {
-                border-bottom: 1px solid #EEE;
+            & > td {
+                border-bottom: 1px solid var(--table-border-color);
                 font-size: var(--font-size, 0.65rem);
             }
         }

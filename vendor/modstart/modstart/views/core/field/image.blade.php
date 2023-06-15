@@ -26,13 +26,13 @@
                          style="background-image:url(@asset('asset/image/none.svg'));"></div>
                 @endif
             </div>
-            <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.65rem;vertical-align:bottom;line-height:1.65rem;overflow:visible;"></div>
             @if($mode=='default')
                 <a href="javascript:;" class="btn" data-gallery style="display:inline-block;vertical-align:bottom;">
                     <i class="iconfont icon-category"></i>
                     {{L('Image Gallery')}}
                 </a>
             @endif
+            <div id="{{$id}}Uploader" class="ub-upload-button" style="display:inline-block;height:1.6rem;vertical-align:bottom;line-height:1.6rem;overflow:visible;"></div>
         </div>
         {!! \ModStart\ModStart::js('asset/common/uploadButton.js') !!}
         <script>

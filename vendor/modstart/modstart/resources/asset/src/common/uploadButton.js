@@ -2,6 +2,7 @@ var WebUploader = require('./../vendor/webuploader/webuploader.js');
 
 require('./../vendor/webuploader/css.css');
 
+
 const tipError = function (msg) {
     if (MS && MS.dialog) {
         MS.dialog.alertError(msg)

@@ -3,11 +3,24 @@
 
 namespace ModStart\Support\Manager;
 
+use ModStart\Widget\AbstractWidget;
+
 class WidgetManager
 {
     private static $availableWidgets = [];
     private static $collectedAssets = null;
-    private static $usedWidgets = [];
+    private static $uses = [];
+
+    public static function uses($cls)
+    {
+        if (is_array($cls)) {
+            foreach ($cls as $c) {
+                self::$uses[$c] = true;
+            }
+        } else {
+            self::$uses[$cls] = true;
+        }
+    }
 
     public static function registerBuiltinWidgets()
     {
@@ -35,10 +48,8 @@ class WidgetManager
         }
         $assets = collect();
         foreach (static::$availableWidgets as $name => $field) {
-            if (in_array($type, ['js', 'script'])) {
-                if (empty(static::$usedWidgets[$name])) {
-                    continue;
-                }
+            if (empty(self::$uses[$field])) {
+                continue;
             }
             if (!method_exists($field, 'getAssets')) {
                 continue;
@@ -66,7 +77,6 @@ class WidgetManager
     public static function call($context, $method, $arguments)
     {
         if ($className = static::findWidgetClass($method)) {
-            static::$usedWidgets[$method] = true;
             $column = array_get($arguments, 0, '');
             $element = new $className($column, array_slice($arguments, 1));
             $context->pushField($element);

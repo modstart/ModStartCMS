@@ -11,7 +11,7 @@
             </div>
             <div style="border-bottom:1px solid #EEE;padding-bottom:7px;">
                 <div class="pb-data-upload-button" v-if="permission['Upload']">
-                    <UploadButton :url="url" :category="category" @success="onUploadButtonSuccess"/>
+                    <UploadButton :url="url" :category="category" styles="queue" @success="onUploadButtonSuccess"/>
                 </div>
                 <el-button v-if="smallWindow" @click="menuShow=!menuShow">
                     <i class="iconfont icon-list"></i>
@@ -69,18 +69,21 @@
                            :class="{active:listChecked.length>0}"
                            @click="doFileDelete">
                             <i class="iconfont icon-trash"></i>
+                            {{ L('Delete') }}
                         </a>
                         <a v-if="permission['Add/Edit']"
                            href="javascript:;" :title="L('Edit')"
                            :class="{active:listChecked.length>0}"
                            @click="doFileEdit">
                             <i class="iconfont icon-sign"></i>
+                            {{ L('Edit') }}
                         </a>
-                        <a href="javascript:;" :title="L('Copy Links')"
+                        <a href="javascript:;" :title="L('Copy Link')"
                            :class="{active:listChecked.length>0}"
-                           v-clipboard:copy='listChecked.map(o=>o.path).join("\n")'
+                           v-clipboard:copy='listChecked.map(o=>o.fullPath).join("\n")'
                            v-clipboard:success="$onCopySuccess">
                             <i class="iconfont icon-copy"></i>
+                            {{ L('Copy Link') }}
                         </a>
                     </div>
                     <div class="records" style="min-height:5rem;" v-loading="listLoading">
@@ -88,23 +91,31 @@
                             {{ L('No Records') }}
                         </div>
                         <el-row :gutter="10">
-                            <el-col :sm="6" :xs="6" v-for="(listItem,listIndex) in records" :key="listIndex">
+                            <el-col :xs="12" :sm="6" :md="4" v-for="(listItem,listIndex) in records" :key="listIndex">
                                 <div class="item" :class="{active:listItem.checked}">
                                     <div @click="doClickItem(listIndex)">
-                                        <ImageCover v-if="isImage(listItem.fullPath)"
+                                        <ImageCover v-if="isImage(listItem)"
                                                     :src="listItem.fullPath"></ImageCover>
-                                        <div class="file-cover" v-if="!isImage(listItem.fullPath)">
+                                        <div class="file-cover" v-else>
                                             <div class="text">
-                                                {{ fileExt(listItem.fullPath) }}{{ L('File(s)') }}
+                                                <div class="label">
+                                                    {{ listItem.type.toUpperCase() }}{{ L('File(s)') }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="title">{{ listItem.filename }}</div>
                                     <div class="action">
-                                        <a href="javascript:;" :title="L('Copy Link')"
-                                           v-clipboard:copy="listItem.path"
-                                           v-clipboard:success="$onCopySuccess">
+                                        <a :href="listItem.fullPath"
+                                           class="tw-mx-2"
+                                           target="_blank" rel="noreferrer">
                                             <i class="iconfont icon-link-alt"></i>
+                                        </a>
+                                        <a href="javascript:;" class="tw-mx-2"
+                                           :title="L('Copy Link')"
+                                           v-clipboard:copy="listItem.fullPath"
+                                           v-clipboard:success="$onCopySuccess">
+                                            <i class="iconfont icon-copy"></i>
                                         </a>
                                     </div>
                                     <i class="check iconfont icon-checked"></i>
@@ -297,11 +308,8 @@ export default {
             if (!value) return true
             return data.name.indexOf(value) !== -1
         },
-        fileExt(file) {
-            return file.substring(file.lastIndexOf('.') + 1).toLocaleLowerCase()
-        },
         isImage(file) {
-            return ['jpg', 'png', 'gif', 'jpeg', 'webp'].includes(this.fileExt(file))
+            return ['jpg', 'png', 'gif', 'jpeg', 'webp'].includes(file.type)
         },
         show() {
             this.visible = true
@@ -516,7 +524,6 @@ export default {
 
 <style lang="less">
 
-
 .pb-data-selector-gallery {
     padding: 10px 10px 10px 210px;
     background: #FFF;
@@ -714,14 +721,19 @@ export default {
 
                 .text {
                     position: absolute;
-                    top: 0px;
+                    top: 0;
                     right: 0;
                     bottom: 0;
                     left: 0;
                     text-align: center;
                     color: #CCC;
-                    line-height: 100px;
-                    font-size: 20px;
+                    display: flex;
+                    align-items: center;
+
+                    .label {
+                        flex-grow: 1;
+                        font-size: 1.5rem;
+                    }
                 }
 
                 &:after {

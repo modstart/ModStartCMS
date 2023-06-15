@@ -22,7 +22,7 @@
             <script>
                 $(function () {
                     var options = {};
-                    var player = window.api.videojs('player', options, function onPlayerReady() {
+                    var player = videojs('player', options, function onPlayerReady() {
                         this.play();
                         this.on('ended', function() {});
                     });

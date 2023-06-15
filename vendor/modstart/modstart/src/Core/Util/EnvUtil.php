@@ -8,6 +8,8 @@ class EnvUtil
     {
         switch ($key) {
             case 'uploadMaxSize':
+                // 模拟分片上传时，每个分片的大小
+                // return 100;
                 $upload_max_filesize = @ini_get('upload_max_filesize');
                 if (empty($upload_max_filesize)) {
                     return 0;

@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div style="margin:0 auto;" class="pb-upload-button"
+        <div class="ub-upload-button"
+             :class="{queue:styles==='queue'}"
              :style="{maxWidth:width}"
              :id="id"
         ></div>
@@ -37,6 +38,14 @@ export default {
         uploadBeforeCheck: {
             type: Function,
             default: null
+        },
+        autoSave: {
+            type: Boolean,
+            default: false
+        },
+        styles: {
+            type: String,
+            default: 'simple',
         }
     },
     data() {
@@ -53,11 +62,30 @@ export default {
             if (!!this.$store) {
                 return this.$store.state.base.config.dataUpload
             }
-            if (!window.__dataConfigLoading) {
-                window.__dataConfigLoading = true
+            if (!window.__dataConfigLoading || !window.__dataConfigLoading[this.category]) {
+                window.__dataConfigLoadingId = Object.assign({
+                    [this.category]: this.id
+                }, window.__dataConfigLoadingId)
+                window.__dataConfigLoading = Object.assign({
+                    [this.category]: true
+                }, window.__dataConfigLoading)
                 this.initConfig()
+            } else {
+                // 有可能是其他组件在加载
+                if (window.__dataConfigLoadingId && window.__dataConfigLoadingId[this.category] != this.id) {
+                    const timer = setInterval(() => {
+                        if (window.__dataConfigFromServer && window.__dataConfigFromServer[this.category]) {
+                            this.dataConfigFromServer = window.__dataConfigFromServer[this.category]
+                            clearInterval(timer)
+                        }
+                    }, 100)
+                }
             }
             return this.dataConfigFromServer
+        },
+        apiUrl() {
+            const url = `${this.url}/${this.category}`
+            return this.$api.url ? this.$api.url(url) : url
         }
     },
     mounted() {
@@ -67,6 +95,11 @@ export default {
         initConfig() {
             this.$api.post(`${this.url}/${this.category}`, {action: 'config'}, res => {
                 this.dataConfigFromServer = res.data
+                window.__dataConfigFromServer = Object.assign({
+                        [this.category]: res.data
+                    },
+                    window.__dataConfigFromServer
+                )
             })
         },
         init() {
@@ -74,23 +107,34 @@ export default {
                 setTimeout(() => {
                     this.init()
                 }, 100)
+                // console.log('Wait dataUploadConfig')
                 return
             }
-            const url = `${this.url}/${this.category}`
-            let text = '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200" style="display:block;line-height:28px;"><i class="iconfont icon-upload"></i> ' + this.L('Select Local File') + '</span>'
+            let text = '<div class="btn btn-block"><i class="iconfont icon-upload"></i> ' + this.L('Select Local File') + '</div>'
             if (this.size === 'lg') {
-                text = '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg tw-py-10" style="display:block;"><i class="iconfont icon-upload" style="font-size:2rem;"></i><br /> ' + this.L('Select Local File') + '</span>'
+                text = '<span class="btn btn-block btn-lg"><i class="iconfont icon-upload"></i> ' + this.L('Select Local File') + '</span>'
             }
             const $this = this
             UploadButtonUploader('#' + this.id, {
                 text,
-                server: this.$api.url ? this.$api.url(url) : url,
+                server: this.apiUrl,
                 extensions: this.dataUploadConfig.category[this.category].extensions.join(','),
                 sizeLimit: this.dataUploadConfig.category[this.category].maxSize,
                 chunkSize: this.dataUploadConfig.chunkSize,
                 uploadBeforeCheck: this.uploadBeforeCheck,
-                callback: function (file, me) {
+                callback: (file, me) => {
                     $this.$emit('success', file)
+                    if (this.autoSave) {
+                        this.$api.post(this.apiUrl, {
+                            action: 'save',
+                            path: file.path,
+                            name: file.name,
+                            size: file.size,
+                            categoryId: 0
+                        }, res => {
+                            $this.$emit('save', res.data)
+                        })
+                    }
                 },
                 finish: function () {
                     $this.$emit('finish')
@@ -104,4 +148,9 @@ export default {
 
 <style lang="less">
 @import "webuploader/css.less";
+
+.ub-upload-button {
+    height: 1.6rem;
+    overflow: hidden;
+}
 </style>

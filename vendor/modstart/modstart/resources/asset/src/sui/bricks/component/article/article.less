@@ -1,82 +1,84 @@
 
 .ub-article {
-  &.white {
-    background: #FFF;
-    padding: 1rem;
-  }
+    border-radius: var(--size-radius, 0.25rem);
 
-  h1 {
-    font-size: 1.5rem;
-    padding: 0;
-    margin: 0;
-    line-height: 2rem;
-  }
-
-  .attr {
-    color: #c4cfdb;
-    padding: 0.5rem 0;
-    border-bottom: 0.05rem solid #EEE;
-  }
-
-  .cover {
-    img {
-      width: 100%;
+    &.white {
+        background: #FFF;
+        padding: 1rem;
     }
-  }
 
-  .content {
-    padding: 0.5rem 0;
-  }
+    h1 {
+        font-size: 1.5rem;
+        padding: 0;
+        margin: 0;
+        line-height: 2rem;
+    }
+
+    .attr {
+        color: #c4cfdb;
+        padding: 0.5rem 0;
+        border-bottom: 0.05rem solid #EEE;
+    }
+
+    .cover {
+        img {
+            width: 100%;
+        }
+    }
+
+    .content {
+        padding: 0.5rem 0;
+    }
 }
 
 .ub-article-a {
-  background: #FFF;
-  padding: 1rem;
-  border-radius: var(--size-radius, 0.25rem);
+    background: #FFF;
+    padding: 1rem;
+    border-radius: var(--size-radius, 0.25rem);
 
-  .image {
-    border: #eeeeee 1px solid;
-    padding: 0.5rem;
-    overflow: hidden;
+    .image {
+        border: #eeeeee 1px solid;
+        padding: 0.5rem;
+        overflow: hidden;
 
-    .cover {
+        .cover {
+        }
+
+        .text {
+            color: #666;
+            padding: 0.25rem 0;
+
+            .left {
+                float: left;
+            }
+
+            .right {
+                float: right;
+            }
+        }
     }
 
-    .text {
-      color: #666;
-      padding: 0.25rem 0;
+    .content {
+        padding-left: 1rem;
 
-      .left {
-        float: left;
-      }
+        h1 {
+            color: #000;
+            font-size: var(--font-size-large, 1rem);
+            line-height: 1.5rem;
+        }
 
-      .right {
-        float: right;
-      }
+        .info {
+            padding: 0 0 0 0;
+        }
+
+        .action {
+            padding: 0.5rem 0 0 0;
+
+            .btn {
+                margin-right: 0.5rem;
+            }
+        }
     }
-  }
-
-  .content {
-    padding-left: 1rem;
-
-    h1 {
-      color: #000;
-      font-size: var(--font-size-large, 1rem);
-      line-height: 1.5rem;
-    }
-
-    .info {
-      padding: 0 0 0 0;
-    }
-
-    .action {
-      padding: 0.5rem 0 0 0;
-
-      .btn {
-        margin-right: 0.5rem;
-      }
-    }
-  }
 
 
 }

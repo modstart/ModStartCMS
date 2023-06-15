@@ -18,7 +18,7 @@
         "验证码",
         "魔众API"
     ],
-    "version": "1.3.0",
+    "version": "1.4.0",
     "author": "ModStart",
     "description": "提供魔众智能验证码验证服务",
     "providers": [

@@ -84,9 +84,34 @@ body, html {
     overflow: hidden;
     position: relative;
 
+    &.queue {
+        overflow: auto;
+        height: auto;
+
+        .webuploader-list {
+            position: static;
+
+            & > li {
+                .progress-box {
+                    height: auto;
+                }
+
+                .progress-info {
+                    display: block;
+                }
+            }
+        }
+    }
+
     .webuploader-pick {
         display: inline-block;
-        padding: 1px;
+    }
+
+    .webuploader-pick-hover {
+        .btn {
+            outline-color: var(--color-primary);
+            color: var(--color-primary);
+        }
     }
 
     .webuploader-container {
@@ -96,23 +121,14 @@ body, html {
     .webuploader-list {
         position: absolute;
         bottom: 1px;
-        left: 0;
-        right: 0;
+        left: 2px;
+        right: 2px;
+        border: none;
+        padding: 0;
 
         & > li {
             padding: 0;
             border: 0;
-
-            .progress-box {
-                height: 2px;
-                border: none;
-
-                .progress-bar {
-                    background-color: var(--color-primary);
-                    height: 2px;
-                    border-radius: 2px;
-                }
-            }
 
             .progress-info {
                 display: none;
@@ -139,3 +155,49 @@ body, html {
         }
     }
 }
+
+// 兼容之前未引入组件样式开始
+.ub-field-cascade-group {
+}
+
+.ub-field-cascade-group.cascade-group-hide {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.ub-status-text {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.ub-text-ajax-request {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.ub-text-dialog-request {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.ub-text-action {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.ub-text-link {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.ub-button-ajax-request {
+    display: inline-block;
+}
+
+.ub-button-dialog-request {
+    display: inline-block;
+}
+
+// 兼容之前未引入组件样式结束

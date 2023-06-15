@@ -238,8 +238,10 @@ class ArrayUtil
         if (empty($records) || !is_array($records)) {
             return true;
         }
-        for ($i = 0; $i < count($records); $i++) {
-            $v = trim($records[$i]);
+        foreach ($records as $v) {
+            if (is_string($v)) {
+                $v = trim($v);
+            }
             if (!empty($v)) {
                 return false;
             }
@@ -417,4 +419,5 @@ class ArrayUtil
             $original[$k] = $v;
         }
     }
+
 }

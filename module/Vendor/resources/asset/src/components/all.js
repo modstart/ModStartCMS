@@ -1,15 +1,21 @@
 import ImagesSelector from "@ModStartAsset/svue/components/ImagesSelector.vue"
 import ImageSelector from "@ModStartAsset/svue/components/ImageSelector.vue"
 import VideoSelector from "@ModStartAsset/svue/components/VideoSelector.vue"
+import AudioSelector from "@ModStartAsset/svue/components/AudioSelector.vue"
 import FileSelector from "@ModStartAsset/svue/components/FileSelector.vue"
 import FilesSelector from "@ModStartAsset/svue/components/FilesSelector.vue"
 
-const AudioSelector = Object.assign({}, FileSelector)
-AudioSelector.props = Object.assign({}, FileSelector.props)
-AudioSelector.props.doSelectCustom = Object.assign({}, FileSelector.props.doSelectCustom)
-AudioSelector.props.selectText = Object.assign({}, FileSelector.props.selectText)
+const setProp = (com, key, value) => {
+    if (com.props && (key in com.props)) {
+        com.props[key].default = value
+    } else {
+        for (const c of com.mixins) {
+            setProp(c, key, value)
+        }
+    }
+}
 
-const buildSelectorDialog = (type) => {
+const buildFileSelectorDialog = (type) => {
     return (cb) => {
         if (!('__selectorDialogServer' in window)) {
             alert('请先配置 window.__selectorDialogServer')
@@ -17,7 +23,9 @@ const buildSelectorDialog = (type) => {
         window.__selectorDialog = new window.api.selectorDialog({
             server: window.__selectorDialogServer + '/' + type,
             callback: (items) => {
-                if (items.length > 0) cb(items[0].path)
+                if (items.length > 0) {
+                    cb(items[0].path)
+                }
             }
         }).show()
     };
@@ -25,6 +33,9 @@ const buildSelectorDialog = (type) => {
 
 const buildFilesSelectorDialog = (type) => {
     return (cb) => {
+        if (!('__selectorDialogServer' in window)) {
+            alert('请先配置 window.__selectorDialogServer')
+        }
         window.__selectorDialog = new window.api.selectorDialog({
             server: window.__selectorDialogServer + '/' + type,
             callback: (items) => {
@@ -34,13 +45,12 @@ const buildFilesSelectorDialog = (type) => {
     };
 }
 
-ImageSelector.props.doSelectCustom.default = buildSelectorDialog('image')
-FileSelector.props.doSelectCustom.default = buildSelectorDialog('file')
-VideoSelector.props.doSelectCustom.default = buildSelectorDialog('video')
-AudioSelector.props.doSelectCustom.default = buildSelectorDialog('audio')
-AudioSelector.props.selectText.default = '选择音频'
+ImageSelector.props.doSelectCustom.default = buildFileSelectorDialog('image')
 ImagesSelector.props.doSelectCustom.default = buildFilesSelectorDialog('image')
+FileSelector.props.doSelectCustom.default = buildFileSelectorDialog('file')
 FilesSelector.props.doSelectCustom.default = buildFilesSelectorDialog('file')
+setProp(VideoSelector, 'doSelectCustom', buildFileSelectorDialog('video'))
+setProp(AudioSelector, 'doSelectCustom', buildFileSelectorDialog('audio'))
 
 if (window.__selectorDialogServer) {
     ImageSelector.props.imageDialogUrl.default = window.__selectorDialogServer
@@ -59,7 +69,6 @@ export default (Vue) => {
     Vue.component("smart-captcha", () => import('@ModStartAsset/svue/components/SmartCaptcha'))
     Vue.component("smart-verify", () => import('@ModStartAsset/svue/components/SmartVerify'))
 }
-
 
 // VueManager.Vue.component('icon-selector', require('./../components/IconSelector').default)
 // VueManager.Vue.component('image-link-editor', require('./../components/ImageLinkEditor').default)
