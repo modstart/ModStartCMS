@@ -56,5 +56,8 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+        // 'Area' => [
+        //     'enable' => true,
+        // ],
     ],
 ];

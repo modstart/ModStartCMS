@@ -7,6 +7,7 @@ namespace Module\Cms\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
+use ModStart\Core\Input\InputPackage;
 use ModStart\Field\AbstractField;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
@@ -24,6 +25,8 @@ class CatController extends Controller
 
     protected function crud(AdminCRUDBuilder $builder)
     {
+        $input = InputPackage::buildFromInput();
+        $pid = $input->getInteger('_pid', 0);
         $builder
             ->init('cms_cat')
             ->field(function ($builder) {
@@ -97,6 +100,8 @@ class CatController extends Controller
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })
+            ->asTree($pid)
+            // ->treeMaxLevel(3)
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('title', L('Title'));
@@ -105,7 +110,6 @@ class CatController extends Controller
                 CmsCatUtil::clearCache();
             })
             ->formClass('wide')
-            ->title('栏目管理')
-            ->asTree();
+            ->title('栏目管理');
     }
 }
