@@ -25,6 +25,7 @@ use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Widget\TextDialogRequest;
 use Module\Cms\Field\CmsField;
 use Module\Cms\Type\CmsMode;
+use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Cms\Util\CmsTemplateUtil;
 
@@ -99,6 +100,7 @@ class ModelController extends Controller
                 CmsModelUtil::addField($model, $data);
             }
             CmsModelUtil::clearCache();
+            CmsCatUtil::clearCache();
             return Response::generateSuccess();
         }
         return view('module::Cms.View.admin.model.fieldEdit', [
@@ -119,6 +121,8 @@ class ModelController extends Controller
             $filter->where(['modelId' => $modelId]);
         });
         $form->canSort(true);
+        CmsModelUtil::clearCache();
+        CmsCatUtil::clearCache();
         return $form->sortRequest($id);
     }
 
@@ -135,6 +139,8 @@ class ModelController extends Controller
         ModelUtil::delete('cms_model_field', $id);
         ModelUtil::transactionCommit();
         CmsModelUtil::clearCache();
+        CmsModelUtil::clearCache();
+        CmsCatUtil::clearCache();
         return Response::generateSuccess();
     }
 
@@ -238,6 +244,7 @@ class ModelController extends Controller
                     CmsModelUtil::create($data);
                 }
                 CmsModelUtil::clearCache();
+                CmsCatUtil::clearCache();
                 return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
             });
         }
@@ -258,6 +265,7 @@ class ModelController extends Controller
         ModelUtil::delete('cms_model_field', ['modelId' => $record['id']]);
         ModelUtil::transactionCommit();
         CmsModelUtil::clearCache();
+        CmsCatUtil::clearCache();
         return Response::redirect(CRUDUtil::jsGridRefresh());
     }
 

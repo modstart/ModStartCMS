@@ -83,37 +83,28 @@ class ModuleServiceProvider extends ServiceProvider
                             'url' => '\Module\Cms\Admin\Controller\CatController@index',
                         ],
                         [
-                            'title' => '基础设置',
-                            'url' => '\Module\Cms\Admin\Controller\ConfigController@basic',
-                        ],
-                        [
                             'title' => '内容管理',
                             'children' => $contentMenus
                         ],
                         [
-                            'title' => 'CMS管理',
-                            'children' => [
-                                [
-                                    'title' => '内容模型',
-                                    'url' => '\Module\Cms\Admin\Controller\ModelController@index',
-                                ],
-                                [
-                                    'title' => '模板管理',
-                                    'url' => '\Module\Cms\Admin\Controller\TemplateController@index',
-                                ],
-                                [
-                                    'title' => '数据备份',
-                                    'url' => '\Module\Cms\Admin\Controller\BackupController@index',
-                                ],
-                                [
-                                    'title' => '数据恢复',
-                                    'url' => '\Module\Cms\Admin\Controller\RestoreController@index',
-                                ],
-                                [
-                                    'title' => 'CMS设置',
-                                    'url' => '\Module\Cms\Admin\Controller\ConfigController@setting',
-                                ],
-                            ]
+                            'title' => '模型管理',
+                            'url' => '\Module\Cms\Admin\Controller\ModelController@index',
+                        ],
+                        [
+                            'title' => '模板管理',
+                            'url' => '\Module\Cms\Admin\Controller\TemplateController@index',
+                        ],
+                        [
+                            'title' => '数据备份',
+                            'url' => '\Module\Cms\Admin\Controller\BackupController@index',
+                        ],
+                        [
+                            'title' => '数据恢复',
+                            'url' => '\Module\Cms\Admin\Controller\RestoreController@index',
+                        ],
+                        [
+                            'title' => '功能设置',
+                            'url' => '\Module\Cms\Admin\Controller\ConfigController@setting',
                         ],
                     ]
                 ],
