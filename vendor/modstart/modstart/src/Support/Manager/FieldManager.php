@@ -50,6 +50,7 @@ class FieldManager
             'files' => \ModStart\Field\Files::class,
             'hidden' => \ModStart\Field\Hidden::class,
             'html' => \ModStart\Field\Html::class,
+            'icon' => \ModStart\Field\Icon::class,
             'id' => \ModStart\Field\Id::class,
             'image' => \ModStart\Field\Image::class,
             'images' => \ModStart\Field\Images::class,
