@@ -7,7 +7,6 @@ namespace ModStart\Core\Monitor;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use ModStart\Core\Util\ArrayUtil;
 
 class DatabaseMonitor

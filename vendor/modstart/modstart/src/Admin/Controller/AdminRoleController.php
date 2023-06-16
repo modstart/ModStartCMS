@@ -11,9 +11,11 @@ use ModStart\Admin\Concern\HasAdminCRUD;
 use ModStart\Admin\Model\AdminRole;
 use ModStart\Admin\Model\AdminRoleRule;
 use ModStart\Admin\Model\AdminUser;
+use ModStart\Admin\Provider\AdminRoleConfigProvider;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\RenderUtil;
 use ModStart\Detail\Detail;
 use ModStart\Field\AbstractField;
 use ModStart\Form\Form;
@@ -37,6 +39,13 @@ class AdminRoleController extends Controller
                 ->hookValueUnserialize(function ($value, AbstractField $field) {
                     return $value->pluck('rule');
                 });
+            if (!AdminRoleConfigProvider::isEmpty()) {
+                $grid->display('config', '配置')->hookRendering(function (AbstractField $field, $item, $index) {
+                    return RenderUtil::view('modstart::admin.role.configGrid', [
+                        'item' => $item,
+                    ]);
+                });
+            }
             $grid->textarea('remark', L('Remark'));
             $grid->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
@@ -66,8 +75,15 @@ class AdminRoleController extends Controller
                         return ['rule' => $item];
                     });
                 });
+            if (!AdminRoleConfigProvider::isEmpty()) {
+                $form->display('config', '配置')->hookRendering(function (AbstractField $field, $item, $index) {
+                    return RenderUtil::view('modstart::admin.role.configForm', [
+                        'item' => $item,
+                    ]);
+                })->formShowOnly(true);
+            }
             $form->textarea('remark', L('Remark'));
-            $form->display('created_at', L('Created At'));
+            $form->display('created_at', L('Created At'))->formShowOnly(true);
             $form->display('updated_at', L('Updated At'));
             $form->hookSaving(function (Form $form) {
                 if (FormMode::EDIT == $form->mode()) {
@@ -92,6 +108,19 @@ class AdminRoleController extends Controller
                     }
                 }
             });
+            $form->hookSaved(function (Form $form) {
+                $item = $form->item();
+                foreach (AdminRoleConfigProvider::listAll() as $provider) {
+                    $provider->saved($item);
+                }
+            });
+            $form->hookDeleted(function (Form $form) {
+                $form->item()->each(function ($item) {
+                    foreach (AdminRoleConfigProvider::listAll() as $provider) {
+                        $provider->deleted($item);
+                    }
+                });
+            });
         });
         if (AdminPermission::isNotPermit('AdminRoleManage')) {
             $form->canAdd(false)->canEdit(false)->canDelete(false);
@@ -114,6 +143,13 @@ class AdminRoleController extends Controller
                         return $r['rule'];
                     })->toArray();
                 });
+            if (!AdminRoleConfigProvider::isEmpty()) {
+                $detail->display('config', '配置')->hookRendering(function (AbstractField $field, $item, $index) {
+                    return RenderUtil::view('modstart::admin.role.configDetail', [
+                        'item' => $item,
+                    ]);
+                });
+            }
             $detail->display('remark', L('Remark'));
             $detail->display('created_at', L('Created At'));
             $detail->display('updated_at', L('Updated At'));

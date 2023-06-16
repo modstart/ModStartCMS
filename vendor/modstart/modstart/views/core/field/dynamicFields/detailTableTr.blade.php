@@ -1,3 +1,4 @@
+@if(!empty($fields))
 @foreach($fields as $f)
     <tr>
         <td>{{$f['title']}}</td>
@@ -41,3 +42,4 @@
         </td>
     </tr>
 @endforeach
+@endif

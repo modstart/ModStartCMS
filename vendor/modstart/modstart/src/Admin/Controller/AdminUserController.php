@@ -10,10 +10,12 @@ use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Concern\HasAdminCRUD;
 use ModStart\Admin\Model\AdminUser;
+use ModStart\Admin\Provider\AdminUserConfigProvider;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\RenderUtil;
 use ModStart\Detail\Detail;
 use ModStart\Field\AbstractField;
 use ModStart\Form\Form;
@@ -44,6 +46,13 @@ class AdminUserController extends Controller
                 }
                 return collect($value)->pluck('name')->toArray();
             });
+            if (!AdminUserConfigProvider::isEmpty()) {
+                $grid->display('config', '配置')->hookRendering(function (AbstractField $field, $item, $index) {
+                    return RenderUtil::view('modstart::admin.user.configGrid', [
+                        'item' => $item,
+                    ]);
+                });
+            }
             $grid->text('lastLoginTime', L('Last Login Time'));
             $grid->text('lastLoginIp', L('Last Login Ip'));
             $grid->gridFilter(function (GridFilter $filter) {
@@ -94,6 +103,13 @@ class AdminUserController extends Controller
             if ($form->isModeEdit() && AdminPermission::isFounder($item->id)) {
                 $rolesField->editable(false);
             }
+            if (!AdminUserConfigProvider::isEmpty()) {
+                $form->display('config', '配置')->hookRendering(function (AbstractField $field, $item, $index) {
+                    return RenderUtil::view('modstart::admin.user.configForm', [
+                        'item' => $item,
+                    ]);
+                })->formShowOnly(true);
+            }
             $form->display('created_at', L('Created At'))->editable(true);
             $form->hookSaving(function (Form $form) {
                 if ($form->isModeAdd()) {
@@ -116,6 +132,19 @@ class AdminUserController extends Controller
                 $form->item()->each(function ($item) {
                     if (AdminPermission::isFounder($item->id)) {
                         BizException::throws(L('Admin Founder Delete Forbidden'));
+                    }
+                });
+            });
+            $form->hookSaved(function (Form $form) {
+                $item = $form->item();
+                foreach (AdminUserConfigProvider::listAll() as $provider) {
+                    $provider->saved($item);
+                }
+            });
+            $form->hookDeleted(function (Form $form) {
+                $form->item()->each(function ($item) {
+                    foreach (AdminUserConfigProvider::listAll() as $provider) {
+                        $provider->deleted($item);
                     }
                 });
             });
@@ -146,6 +175,13 @@ class AdminUserController extends Controller
                 }
                 return collect($value)->pluck('name')->toArray();
             });
+            if (!AdminUserConfigProvider::isEmpty()) {
+                $detail->display('config', '配置')->hookRendering(function (AbstractField $field, $item, $index) {
+                    return RenderUtil::view('modstart::admin.user.configDetail', [
+                        'item' => $item,
+                    ]);
+                });
+            }
             $detail->display('created_at', L('Created At'));
             $detail->display('updated_at', L('Updated At'));
         });

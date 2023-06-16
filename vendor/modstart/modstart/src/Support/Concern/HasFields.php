@@ -170,12 +170,13 @@ trait HasFields
 
     /**
      * 获取所有可增加字段
+     * @param $includeShowOnly bool 是否包含只读字段
      * @return AbstractField[]
      */
-    public function addableFields()
+    public function addableFields($includeShowOnly = false)
     {
-        return $this->fields->filter(function (AbstractField $item) {
-            return $item->addable();
+        return $this->fields->filter(function (AbstractField $item) use ($includeShowOnly) {
+            return $item->addable() || ($includeShowOnly && $item->formShowOnly());
         });
     }
 
@@ -183,10 +184,10 @@ trait HasFields
      *  获取所有可详情显示字段
      * @return AbstractField[]
      */
-    protected function editableFields()
+    protected function editableFields($includeShowOnly = false)
     {
-        return $this->fields->filter(function (AbstractField $item) {
-            return $item->editable();
+        return $this->fields->filter(function (AbstractField $item) use ($includeShowOnly) {
+            return $item->editable() || ($includeShowOnly && $item->formShowOnly());
         });
     }
 

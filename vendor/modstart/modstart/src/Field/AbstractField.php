@@ -30,6 +30,8 @@ use ModStart\Support\Manager\FieldManager;
  *
  * @method AbstractField|mixed editable($value = null)
  *
+ * @method AbstractField|mixed formShowOnly($value = null)
+ *
  * @method AbstractField|mixed showable($value = null)
  *
  * @method AbstractField|mixed sortable($value = null)
@@ -166,6 +168,7 @@ class AbstractField implements Renderable
         'listable',
         'addable',
         'editable',
+        'formShowOnly',
         'showable',
         'sortable',
         'renderMode',
@@ -193,6 +196,7 @@ class AbstractField implements Renderable
     protected $listable = true;
     protected $addable = true;
     protected $editable = true;
+    protected $formShowOnly = false;
     protected $showable = true;
     protected $sortable = false;
     protected $renderMode;

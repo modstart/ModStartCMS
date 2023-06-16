@@ -70,6 +70,14 @@
 
 }
 
+.btn.btn-outline-none, .btn[class*="ub-bg-"] {
+    outline: none;
+
+    &:hover, &:hover:not(.disabled) {
+        outline: none;
+    }
+}
+
 .btn.disabled, .btn:disabled {
     opacity: 0.65;
     cursor: not-allowed;

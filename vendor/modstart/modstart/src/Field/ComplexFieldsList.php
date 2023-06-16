@@ -4,6 +4,8 @@
 namespace ModStart\Field;
 
 
+use ModStart\Core\Exception\BizException;
+
 /**
  * Json多组键值对字段
  * Class ComplexFields
@@ -19,13 +21,15 @@ class ComplexFieldsList extends AbstractField
     {
         $this->addVariables([
             'fields' => [
-                // ['name' => 'xxx', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'placeholder'=>'', ],
-                // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'placeholder'=>'', ],
-                // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', ],
-                // ['name' => 'xxx', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'placeholder'=>'', ],
+                // ['name' => 'xxx1', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'placeholder'=>'', ],
+                // ['name' => 'xxx2', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'placeholder'=>'', ],
+                // ['name' => 'xxx3', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', ],
+                // ['name' => 'xxx4', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'placeholder'=>'', ],
+                // ['name' => 'xxx5', 'title' => '数字', 'type' => 'number-text', 'defaultValue' => 0, 'placeholder'=>'', ],
             ],
             'valueItem' => new \stdClass(),
             'iconServer' => modstart_admin_url('widget/icon'),
+            'hasIcon' => false,
         ]);
     }
 
@@ -35,6 +39,9 @@ class ComplexFieldsList extends AbstractField
         $valueItem = [];
         foreach ($fields as $f) {
             $valueItem[$f['name']] = isset($f['defaultValue']) ? $f['defaultValue'] : null;
+        }
+        if (empty($valueItem)) {
+            $valueItem = new \stdClass();
         }
         return $valueItem;
     }
@@ -49,6 +56,14 @@ class ComplexFieldsList extends AbstractField
     {
         $this->addVariables(['fields' => $value]);
         $this->addVariables(['valueItem' => $this->getValueItem()]);
+        $nameMap = [];
+        foreach ($value as $f) {
+            BizException::throwsIf('ComplexFieldsList.字段名重复 - ' . $f['name'], isset($nameMap[$f['name']]));
+            $nameMap[$f['name']] = true;
+            if ($f['type'] == 'icon') {
+                $this->addVariables(['hasIcon' => true]);
+            }
+        }
         return $this;
     }
 

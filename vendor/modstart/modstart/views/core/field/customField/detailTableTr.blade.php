@@ -1,3 +1,4 @@
+@if(!empty($fields))
 @foreach($fields as $f)
     @if(!empty($f))
     <tr>
@@ -18,12 +19,16 @@
                         </a>
                     </div>
                 @elseif($f['type']==\ModStart\Field\Type\CustomFieldType::TYPE_FILES)
-                    @foreach($value[$f['_name']] as $v)
-                        <a href="{{$v}}" target="_blank">
-                            <i class="iconfont icon-file"></i>
-                            {{$v}}
-                        </a>
-                    @endforeach
+                    @if(!empty($value[$f['_name']]) && is_array($value[$f['_name']]))
+                        @foreach($value[$f['_name']] as $v)
+                            <a href="{{$v}}" target="_blank">
+                                <i class="iconfont icon-file"></i>
+                                {{$v}}
+                            </a>
+                        @endforeach
+                    @else
+                        <span class="ub-text-muted">-</span>
+                    @endif
                 @else
                     暂未支持 {{$f['type']}}
                     <code>{{json_encode($f,JSON_UNESCAPED_UNICODE)}}</code>
@@ -33,3 +38,4 @@
     </tr>
     @endif
 @endforeach
+@endif

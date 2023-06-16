@@ -5,13 +5,13 @@
     font-size: .65rem;
     height: 1.2rem;
     line-height: 0.8rem;
-    color: #fff;
+    color: var(--color-text);
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: 50rem;
     cursor: default;
-    background-color: rgb(108, 117, 125);
+    background-color: rgba(0, 0, 0, 0.04);
 
     &.sm {
         font-size: 0.5rem;
@@ -27,24 +27,27 @@
     }
 
     &.danger {
-        background-color: var(--color-danger);
+        color: var(--color-danger);
+        background-color: #fff2f0;
     }
 
     &.warning {
-        background-color: var(--color-warning);
+        color: var(--color-warning);
+        background-color: #fff2f0
     }
 
     &.success {
-        background-color: var(--color-success);
+        color: var(--color-success);
+        background-color: #f6ffed;
     }
 
     &.primary {
-        background-color: var(--color-primary);
+        color: var(--color-primary);
     }
 
     &.info {
-        background-color: #f4f4f5;
-        color: #909399;
+        background-color: #e6f4ff;
+        color: #1677ff;
     }
 }
 
