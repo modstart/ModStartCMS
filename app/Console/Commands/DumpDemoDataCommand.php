@@ -24,9 +24,9 @@ class DumpDemoDataCommand extends BaseDumpDemoDataCommand
                         'Cms_HomeInfoImage',
                         'Cms_HomeInfoContent',
                         'Cms_CompanyName',
-                        'Cms_ContactEmail',
-                        'Cms_ContactPhone',
-                        'Cms_ContactAddress',
+                        'Site_ContactEmail',
+                        'Site_ContactPhone',
+                        'Site_ContactAddress',
                     ]);
                 }],
                 'cms_content',

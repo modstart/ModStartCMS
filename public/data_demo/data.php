@@ -55,17 +55,17 @@
       ),
       45 =>
       array (
-        'key' => 'Cms_ContactEmail',
+        'key' => 'Site_ContactEmail',
         'value' => 'xxx@xxx.com',
       ),
       46 =>
       array (
-        'key' => 'Cms_ContactPhone',
+        'key' => 'Site_ContactPhone',
         'value' => '021-88888888',
       ),
       47 =>
       array (
-        'key' => 'Cms_ContactAddress',
+        'key' => 'Site_ContactAddress',
         'value' => '陕西省西安市西安区XX街道XX号',
       ),
     ),

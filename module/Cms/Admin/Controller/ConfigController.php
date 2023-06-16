@@ -23,9 +23,9 @@ class ConfigController extends Controller
         $builder->pageTitle('基础信息');
 
         $builder->text('Cms_CompanyName', '企业名称');
-        $builder->text('Cms_ContactEmail', '企业邮箱');
-        $builder->text('Cms_ContactPhone', '企业电话');
-        $builder->text('Cms_ContactAddress', '企业地址');
+        // $builder->text('Cms_ContactEmail', '企业邮箱');
+        // $builder->text('Cms_ContactPhone', '企业电话');
+        // $builder->text('Cms_ContactAddress', '企业地址');
         $builder->text('Cms_ContactFax', '企业传真');
         $builder->text('Cms_ContactContactPerson', '联系人');
         $builder->text('Cms_ContactQQ', '企业联系QQ');
