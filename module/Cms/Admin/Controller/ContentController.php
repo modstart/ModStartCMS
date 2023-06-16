@@ -245,54 +245,56 @@ class ContentController extends Controller
         $form = Form::make(null);
         $catOptions = $this->getCatOptions();
         $form->layoutGrid(function (LayoutGrid $layout) use ($catOptions) {
-            $layout->layoutColumn(8, function (Form $form) use ($catOptions) {
+            $layout->layoutColumn(
+                in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE]) ? 8 : 12,
+                function (Form $form) use ($catOptions) {
 
-                $form->layoutPanel('基本信息', function (Form $form) use ($catOptions) {
-                    $form->select('catId', '栏目')->options($catOptions);
-                    if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
-                        $form->text('title', '标题')->required();
-                    }
-                    if (!empty($this->model['_customFields'])) {
-                        $fields = $this->model['_customFields'];
-                        foreach ($fields as $field) {
-                            $cmsF = CmsField::getByNameOrFail($field['fieldType']);
-                            $f = $cmsF->renderForForm($form, $field);
-                            if (empty($f)) {
-                                BizException::throws('未知的字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
-                            }
-                            if ($field['isRequired']) {
-                                $f->required();
+                    $form->layoutPanel('基本信息', function (Form $form) use ($catOptions) {
+                        $form->select('catId', '栏目')->options($catOptions);
+                        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+                            $form->text('title', '标题')->required();
+                        }
+                        if (!empty($this->model['_customFields'])) {
+                            $fields = $this->model['_customFields'];
+                            foreach ($fields as $field) {
+                                $cmsF = CmsField::getByNameOrFail($field['fieldType']);
+                                $f = $cmsF->renderForForm($form, $field);
+                                if (empty($f)) {
+                                    BizException::throws('未知的字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
+                                }
+                                if ($field['isRequired']) {
+                                    $f->required();
+                                }
                             }
                         }
-                    }
-                    $form->richHtml('content', '内容');
+                        $form->richHtml('content', '内容');
 
-                    if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
-                        $form->textarea('summary', '摘要');
-                        $form->image('cover', '封面');
+                        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+                            $form->textarea('summary', '摘要');
+                            $form->image('cover', '封面');
+                        }
+
+                    });
+
+                    if (
+                        in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])
+                        || modstart_config('CmsUrlMix_Enable', false)
+                    ) {
+                        $form->layoutPanel('内容访问', function () use ($form) {
+                            if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
+                                $form->text('alias', '别名')
+                                    ->ruleUnique($this->modelTable)
+                                    ->ruleRegex('/^[a-z0-9_]*[a-z][a-z0-9_]*$/')
+                                    ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
+                            }
+                            if (modstart_config('CmsUrlMix_Enable', false)) {
+                                $form->text('fullUrl', '[增强]全路径')->listable(false)
+                                    ->help('如 product/view/1.html');
+                            }
+                        });
                     }
 
                 });
-
-                if (
-                    in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])
-                    || modstart_config('CmsUrlMix_Enable', false)
-                ) {
-                    $form->layoutPanel('内容访问', function () use ($form) {
-                        if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
-                            $form->text('alias', '别名')
-                                ->ruleUnique($this->modelTable)
-                                ->ruleRegex('/^[a-z0-9_]*[a-z][a-z0-9_]*$/')
-                                ->help('数字字母下划线组成，不能是纯数字，可以通过 <code>a/别名</code> 别名访问内容');
-                        }
-                        if (modstart_config('CmsUrlMix_Enable', false)) {
-                            $form->text('fullUrl', '[增强]全路径')->listable(false)
-                                ->help('如 product/view/1.html');
-                        }
-                    });
-                }
-
-            });
             $layout->layoutColumn(4, function ($form) {
 
                 if (in_array($this->model['mode'], [CmsMode::LIST_DETAIL, CmsMode::PAGE])) {
