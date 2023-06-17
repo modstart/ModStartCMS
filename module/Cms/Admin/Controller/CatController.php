@@ -101,7 +101,7 @@ class CatController extends Controller
                 $builder->display('updated_at', L('Updated At'))->listable(false);
             })
             // 树状模式
-            ->asTree($pid)
+            ->asTree()
             // 多级模式
             // ->asTreeMass($pid)->treeMaxLevel(3)
             ->gridFilter(function (GridFilter $filter) {
