@@ -277,6 +277,11 @@ var GridManager = function (opt) {
         }
 
         if (option.canEdit) {
+            $lister.on('click', '[data-tab-open][data-refresh-grid-on-close]', function () {
+                window._pageTabManager.runsOnFocus.push(function () {
+                    lister.refresh();
+                });
+            });
             $lister.find('[data-table]').on('click', '[data-edit]', function () {
                 doEdit(this);
             });

@@ -1,4 +1,4 @@
-<div class="line">
+<div class="line" id="{{$id}}">
     <div class="label">
         {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)

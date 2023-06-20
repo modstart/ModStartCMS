@@ -12,17 +12,6 @@ import vueTimeago from 'vue-timeago';
 import VueClipboard from 'vue-clipboard2';
 import {EventBus} from '@ModStartAsset/svue/lib/event-bus';
 
-Vue.prototype.L = (name, ...args) => {
-    let tpl = name
-    if (window.lang && window.lang[name]) {
-        tpl = window.lang[name]
-    }
-    if (args.length) {
-        return StrUtil.sprintf(tpl, ...args)
-    }
-    return tpl
-}
-
 Vue.use(ElementUI, {size: 'mini', zIndex: 3000});
 Vue.use(vueTimeago, {
     name: 'TimeAgo',
@@ -142,14 +131,13 @@ Vue.prototype.L = function () {
     args.splice(0, 1)
     if (window.lang && window.lang[name]) {
         if (args.length) {
-            return StrUtil.sprintf(name, ...args)
+            return StrUtil.sprintf(window.lang[name], ...args)
         }
         return window.lang[name]
     }
     if (args.length) {
         return StrUtil.sprintf(name, ...args)
     }
-
     return name
 }
 

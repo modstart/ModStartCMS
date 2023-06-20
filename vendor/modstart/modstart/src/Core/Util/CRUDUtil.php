@@ -112,19 +112,19 @@ class CRUDUtil
 
     public static function adminRedirectOrTabClose($url)
     {
-        $redirect = $url;
+        $redirect = modstart_admin_url($url);
         if (View::shared('_isTab')) {
             $redirect = '[tab-close]';
         }
         return $redirect;
     }
 
-    public static function adminUrlWithTab($redirect, $query = [])
+    public static function adminUrlWithTab($url, $query = [])
     {
         if (View::shared('_isTab')) {
             $query['_is_tab'] = 1;
         }
-        return modstart_admin_url($redirect, $query);
+        return modstart_admin_url($url, $query);
     }
 
 }

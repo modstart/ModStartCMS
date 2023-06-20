@@ -70,9 +70,11 @@ class KeyValueList extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
-        $value = @json_decode($value, true);
-        if (empty($value)) {
-            $value = [];
+        if (null !== $value) {
+            $value = @json_decode($value, true);
+            if (empty($value)) {
+                $value = [];
+            }
         }
         return $value;
     }

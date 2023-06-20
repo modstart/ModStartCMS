@@ -82,6 +82,7 @@ class FieldManager
             'video' => \ModStart\Field\Video::class,
 
             'layoutGrid' => \ModStart\Layout\LayoutGrid::class,
+            'layoutTable' => \ModStart\Layout\LayoutTable::class,
             'layoutTab' => \ModStart\Layout\LayoutTab::class,
             'layoutPanel' => \ModStart\Layout\LayoutPanel::class,
             'layoutLine' => \ModStart\Layout\LayoutLine::class,

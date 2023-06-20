@@ -1,3 +1,19 @@
+/**
+ * Timeago is a jQuery plugin that makes it easy to support automatically
+ * updating fuzzy timestamps (e.g. "4 minutes ago" or "about 1 day ago").
+ *
+ * @name timeago
+ * @version 1.6.7
+ * @requires jQuery >=1.5.0 <4.0
+ * @author Ryan McGeary
+ * @license MIT License - http://www.opensource.org/licenses/mit-license.php
+ *
+ * For usage and examples, visit:
+ * http://timeago.yarp.com/
+ *
+ * Copyright (c) 2008-2019, Ryan McGeary (ryan -[at]- mcgeary [*dot*] org)
+ */
+
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -33,20 +49,20 @@
       strings: {
         prefixAgo: null,
         prefixFromNow: null,
-        suffixAgo: "前",
+        suffixAgo: "ago",
         suffixFromNow: "from now",
-        inPast: 'any moment now',
-        seconds: "少于1分钟",
-        minute: "大约1分钟",
-        minutes: "%d分钟",
-        hour: "大约1小时",
-        hours: "大约%d小时",
-        day: "1天",
-        days: "%d天",
-        month: "大约1个月",
-        months: "%d个月",
-        year: "大约1年",
-        years: "%d年",
+        inPast: "any moment now",
+        seconds: "less than a minute",
+        minute: "about a minute",
+        minutes: "%d minutes",
+        hour: "about an hour",
+        hours: "about %d hours",
+        day: "a day",
+        days: "%d days",
+        month: "about a month",
+        months: "%d months",
+        year: "about a year",
+        years: "%d years",
         wordSeparator: " ",
         numbers: []
       }
@@ -124,6 +140,7 @@
   // functions are called with context of a single element
   var functions = {
     init: function() {
+      functions.dispose.call(this);
       var refresh_el = $.proxy(refresh, this);
       refresh_el();
       var $s = $t.settings;
@@ -134,7 +151,9 @@
     update: function(timestamp) {
       var date = (timestamp instanceof Date) ? timestamp : $t.parse(timestamp);
       $(this).data('timeago', { datetime: date });
-      if ($t.settings.localeTitle) $(this).attr("title", date.toLocaleString());
+      if ($t.settings.localeTitle) {
+        $(this).attr("title", date.toLocaleString());
+      }
       refresh.apply(this);
     },
     updateFromDOM: function() {
@@ -174,7 +193,7 @@
     var data = prepareData(this);
 
     if (!isNaN(data.datetime)) {
-      if ( $s.cutoff == 0 || Math.abs(distance(data.datetime)) < $s.cutoff) {
+      if ( $s.cutoff === 0 || Math.abs(distance(data.datetime)) < $s.cutoff) {
         $(this).text(inWords(data.datetime));
       } else {
         if ($(this).attr('title').length > 0) {

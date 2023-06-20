@@ -27,6 +27,8 @@ abstract class MConfig
 
     public abstract function remove($key);
 
+    public abstract function has($key);
+
     public function getWithEnv($key, $defaultValue = null)
     {
         $value = config('env.CONFIG_' . $key);

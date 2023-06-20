@@ -109,12 +109,18 @@ class AdminConfigBuilder implements Renderable
         }
         if (null === $item) {
             $item = [];
+            $config = modstart_config();
             foreach ($this->form->fields() as $field) {
                 /** @var $field AbstractField */
                 if ($field->isLayoutField()) {
                     continue;
                 }
-                $v = modstart_config($field->column(), $field->defaultValue());
+                $hasValue = $config->has($field->column());
+                if ($hasValue) {
+                    $v = modstart_config($field->column());
+                } else {
+                    $v = null;
+                }
                 if (is_array($v)) {
                     $v = json_encode($v, JSON_UNESCAPED_UNICODE);
                 }

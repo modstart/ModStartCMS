@@ -238,6 +238,26 @@ function modstart_module_config($module, $key, $default = null)
 }
 
 /**
+ * @Util 获取多个配置中第一个非空值
+ * @param $keys array 多个配置名
+ * @param $default string 默认值
+ * @return array|bool|int|mixed|\ModStart\Core\Config\MConfig|string
+ */
+function modstart_configs($keys, $default = '')
+{
+    if (is_string($keys)) {
+        $keys = explode(',', $keys);
+    }
+    foreach ($keys as $key) {
+        $v = modstart_config($key);
+        if ($v) {
+            return $v;
+        }
+    }
+    return $default;
+}
+
+/**
  * @Util 获取配置
  * @desc 用于获取表 config 中的配置选项
  * @param $key string 配置名称

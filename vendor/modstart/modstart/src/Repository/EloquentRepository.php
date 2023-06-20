@@ -179,6 +179,7 @@ class EloquentRepository extends Repository
         // var_dump($model->getQueries());exit();
         // var_dump($model->grid()->isDynamicModel());exit();
         $joins = $model->grid()->gridFilterJoins();
+        // var_dump($joins);
         if (!empty($joins)) {
             $methodMap = [
                 'left' => 'leftJoin',
@@ -219,6 +220,7 @@ class EloquentRepository extends Repository
         $query = $this->newQuery();
         // var_dump($this->relations);exit();
         // $this->relations = ['doc','memberUser'];
+        // var_dump($this->relations);exit();
         if ($this->relations) {
             $query->with($this->relations);
         }
@@ -264,6 +266,8 @@ class EloquentRepository extends Repository
             }
             $query = call_user_func_array([$query, $value['method']], $value['arguments'] ? $value['arguments'] : []);
         });
+        // var_dump($query);
+        // var_dump($this->relations);exit();
         return $query;
     }
 

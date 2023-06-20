@@ -7,7 +7,10 @@
                 <span>{{ L('Please Select') }}</span>
             </div>
             <div slot="footer">
-                <el-button type="primary" @click="doSubmit">{{ L('Confirm') }}</el-button>
+                <el-button type="primary" @click="doSubmit">
+                    <i class="iconfont icon-check-simple"></i>
+                    {{ L('Confirm') }}
+                </el-button>
             </div>
             <div style="border-bottom:1px solid #EEE;padding-bottom:7px;">
                 <div class="pb-data-upload-button" v-if="permission['Upload']">

@@ -57,11 +57,61 @@
     .form {
         padding-top: 1rem;
 
+        .tab {
+            .tab-item {
+                color: #FFF;
+                display: inline-block;
+                line-height: 1.8rem;
+                padding: 0 1rem;
+                border-radius: 0.5rem 0.5rem 0 0;
+
+                &.active {
+                    background: var(--color-content-bg);
+                    color: var(--color-primary);
+                }
+            }
+        }
+
+        .keywords {
+            line-height: 1.5rem;
+            color: var(--color-content-bg);
+            margin-top: 1.5rem;
+
+            .keywords-label {
+                display: inline-block;
+                line-height: 1.5rem;
+            }
+
+            .keywords-item {
+                display: inline-block;
+                line-height: 1.5rem;
+                background: rgba(0, 0, 0, 0.1);
+                border-radius: 0.3rem;
+                color: #FFF;
+                padding: 0 0.5rem;
+
+                &:hover {
+                    background-color: var(--color-content-bg);
+                    color: var(--color-text);
+                }
+            }
+        }
+
         .box {
             max-width: 25rem;
             margin: 0 auto;
             position: relative;
             height: 2.5rem;
+
+            &.rect {
+                input {
+                    border-radius: 0.5rem;
+                }
+
+                button {
+                    border-radius: 0.5rem;
+                }
+            }
 
             &.captcha {
                 img {
@@ -81,6 +131,7 @@
                 line-height: 2.5rem;
                 height: 2.5rem;
                 padding: 0 1rem;
+                outline: none;
             }
 
             button {
@@ -96,6 +147,14 @@
                 padding: 0 1rem;
                 margin: 0;
             }
+        }
+    }
+}
+
+@media (max-width: 40rem) {
+    .ub-search-block {
+        .title {
+            font-size: 1rem;
         }
     }
 }

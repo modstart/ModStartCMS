@@ -1,6 +1,52 @@
-<link rel="stylesheet/less" type="text/css" href="./bricks/component/search/search.less" />
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/search/search.less"/>
 
 <div class="ub-container">
+
+
+    <div class="ub-search-block">
+        <div class="title">
+            Brick UI 搜索中心
+            Brick UI 搜索中心
+            Brick UI 搜索中心
+        </div>
+        <div class="form">
+            <div class="tab">
+                <a class="tab-item" href="javascript:;">
+                    百度
+                </a>
+                <a class="tab-item active" href="javascript:;">
+                    Google
+                </a>
+                <a class="tab-item" href="javascript:;">
+                    本站
+                </a>
+            </div>
+            <form action="?" method="get">
+                <div class="box rect">
+                    <input type="text" name="keyword" class="form form-lg" placeholder="输入关键词搜索"/>
+                    <button type="submit" class="btn btn-lg"><i class="iconfont icon-search"></i> 搜索</button>
+                </div>
+            </form>
+            <div class="keywords">
+                <span class="keywords-label">
+                    热搜词：
+                </span>
+                <a class="keywords-item" href="#">
+                    关键词A
+                </a>
+                <a class="keywords-item" href="#">
+                    关键词B
+                </a>
+                <a class="keywords-item" href="#">
+                    关键词C
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-breaker"></div>
+
+
     <div class="ub-search-block">
         <div class="title">
             Brick UI 搜索中心
@@ -8,15 +54,15 @@
         <div class="form">
             <form action="?" method="get">
                 <div class="box">
-                    <input type="text" name="keyword" class="form form-lg" placeholder="输入关键词搜索" />
+                    <input type="text" name="keyword" class="form form-lg" placeholder="输入关键词搜索"/>
                     <button type="submit" class="btn btn-lg"><i class="iconfont icon-search"></i> 搜索</button>
                 </div>
                 <div class="box">
-                    <input type="text" name="keyword" class="form form-lg" placeholder="输入关键词搜索" />
+                    <input type="text" name="keyword" class="form form-lg" placeholder="输入关键词搜索"/>
                 </div>
                 <div class="box captcha">
-                    <input type="text" name="captcha" class="form form-lg" placeholder="输入验证码" />
-                    <img src="https://modstart.com/placeholder/600x200" />
+                    <input type="text" name="captcha" class="form form-lg" placeholder="输入验证码"/>
+                    <img src="https://modstart.com/placeholder/600x200"/>
                     <button type="submit" class="btn btn-lg"><i class="iconfont icon-search"></i> 确定</button>
                 </div>
             </form>
@@ -28,7 +74,8 @@
 
     <form action="?" method="get">
         <div class="ub-search-block-a">
-            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索 模块" />
+            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}"
+                   placeholder="搜索 模块"/>
             <a class="search-btn" href="javascript:;"
                onclick="$(this).closest('form').submit();">
                 <span class="iconfont icon-search"></span>
@@ -41,7 +88,8 @@
 
     <form action="?" method="get">
         <div class="ub-search-block-a mini">
-            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索 模块" />
+            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}"
+                   placeholder="搜索 模块"/>
             <a class="search-btn" href="javascript:;"
                onclick="$(this).closest('form').submit();">
                 <span class="iconfont icon-search"></span>
@@ -54,7 +102,8 @@
 
     <form action="?" method="get">
         <div class="ub-search-block-a lg">
-            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}" placeholder="搜索 模块" />
+            <input class="input" type="text" name="keywords" value="{{ empty($keywords) ? '' : $keywords }}"
+                   placeholder="搜索 模块"/>
             <a class="search-btn" href="javascript:;"
                onclick="$(this).closest('form').submit();">
                 <span class="iconfont icon-search"></span>
@@ -74,7 +123,7 @@
         <div class="center">
             <div class="box">
                 <i class="icon iconfont icon-search"></i>
-                <input type="text" class="input" />
+                <input type="text" class="input"/>
             </div>
         </div>
         <div class="right">
@@ -95,7 +144,7 @@
         <div class="center">
             <div class="box">
                 <i class="icon iconfont icon-search"></i>
-                <input type="text" class="input" />
+                <input type="text" class="input"/>
             </div>
         </div>
         <div class="right">

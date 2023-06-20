@@ -64,4 +64,11 @@ class DatabaseMConfig extends MConfig
         Cache::forget($cacheFlag);
     }
 
+    public function has($key)
+    {
+        $config = ModelUtil::get('config', ['key' => $key]);
+        return !!$config;
+    }
+
+
 }

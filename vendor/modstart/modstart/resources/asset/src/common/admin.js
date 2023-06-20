@@ -15,7 +15,7 @@ window._pageTabManager = {
         }
         var tabPageId = window.frameElement.getAttribute("data-tab-page")
         window.parent._pageTabManager.updateTitle(tabPageId, title)
-    }
+    },
 };
 
 $(window).on('load', function () {
@@ -151,6 +151,7 @@ $(window).on('load', function () {
         var tabManager = Object.assign(window._pageTabManager, {
             data: [],
             id: 1,
+            runsOnFocus: [],
             normalTabUrl(url) {
                 if (url.indexOf('_is_tab=1') > 0) {
                     return url
@@ -269,6 +270,21 @@ $(window).on('load', function () {
                     }
                     this.data[i].active = active;
                 }
+
+                var $iframes = $adminTabPage.find('iframe:not(.hidden)');
+                for (var i = 0; i < $iframes.length; i++) {
+                    var $iframe = $iframes[i];
+                    if ($iframe.contentWindow
+                        && $iframe.contentWindow._pageTabManager
+                        && $iframe.contentWindow._pageTabManager.runsOnFocus) {
+                        for (var j = 0; j < $iframe.contentWindow._pageTabManager.runsOnFocus.length; j++) {
+                            var fn = $iframe.contentWindow._pageTabManager.runsOnFocus[j];
+                            fn();
+                        }
+                        $iframe.contentWindow._pageTabManager.runsOnFocus = [];
+                    }
+                }
+
                 this.updateMainPage()
             },
             open: function (url, title, option) {

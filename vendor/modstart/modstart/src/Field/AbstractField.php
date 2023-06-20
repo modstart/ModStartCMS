@@ -150,8 +150,17 @@ class AbstractField implements Renderable
      * @var mixed|null 表单名称
      */
     protected $label;
+    /**
+     * @var null 字段值，null表示为空，非null表示有值
+     */
     protected $value = null;
+    /**
+     * @var null ?
+     */
     protected $fixedValue = null;
+    /**
+     * @var array 校验规则，如['required']，表单模式下生效
+     */
     protected $rules = [];
     protected $view = null;
     protected $variables = [];
@@ -394,9 +403,6 @@ class AbstractField implements Renderable
     public function value($value = null)
     {
         if (null === $value) {
-            if (null === $this->value) {
-                return $this->defaultValue();
-            }
             return $this->value;
         }
         $this->value = $value;

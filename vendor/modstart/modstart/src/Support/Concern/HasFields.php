@@ -68,15 +68,17 @@ use ModStart\Field\Type\FieldRenderMode;
  * @method \ModStart\Field\Video                video($column, $label = '')
  *
  * @example $callback = function (LayoutGrid $layout) { $layout->layoutColumn(4, function ($builder) { }); });
- * @method \ModStart\Layout\LayoutGrid        layoutGrid($callback)
+ * @method \ModStart\Layout\LayoutGrid          layoutGrid($callback)
+ * @example $callback = function (LayoutTable $layout) { $layout->layoutRow( function ($layout) {  $layout->layoutCol(function ($builder) { });  }); });
+ * @method \ModStart\Layout\LayoutTable         layoutTable($callback)
  * @example $callback = function (LayoutTab $layout) { $layout->tab('title',closure});
- * @method \ModStart\Layout\LayoutTab         layoutTab($callback)
+ * @method \ModStart\Layout\LayoutTab           layoutTab($callback)
  * @example $title = 'title', $callback = function (Form $form) { })
- * @method \ModStart\Layout\LayoutPanel       layoutPanel($title, $callback)
+ * @method \ModStart\Layout\LayoutPanel         layoutPanel($title, $callback)
  * @example $title = 'title', $callback = function (Form $form) { })
- * @method \ModStart\Layout\LayoutLine        layoutLine($title, $callback)
- * @method \ModStart\Layout\LayoutSeparator   layoutSeparator($title)
- * @method \ModStart\Layout\LayoutHtml        layoutHtml($html)
+ * @method \ModStart\Layout\LayoutLine          layoutLine($title, $callback)
+ * @method \ModStart\Layout\LayoutSeparator     layoutSeparator($title)
+ * @method \ModStart\Layout\LayoutHtml          layoutHtml($html)
  */
 trait HasFields
 {
