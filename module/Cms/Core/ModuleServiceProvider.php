@@ -11,10 +11,12 @@ use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
 use ModStart\Module\ModuleManager;
+use Module\Banner\Biz\BannerPositionBiz;
 use Module\Cms\Provider\CmsHomePageProvider;
 use Module\Cms\Provider\Theme\CmsThemeProvider;
 use Module\Cms\Provider\Theme\DefaultThemeProvider;
 use Module\Cms\Util\CmsModelUtil;
+use Module\Partner\Biz\PartnerPositionBiz;
 use Module\TagManager\Biz\TagManagerBiz;
 use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
 use Module\Vendor\Admin\Widget\AdminWidgetLink;
@@ -42,6 +44,12 @@ class ModuleServiceProvider extends ServiceProvider
         HomePageProvider::register(CmsHomePageProvider::class);
         if (class_exists(SiteUrlBiz::class)) {
             SiteUrlBiz::register(CmsSiteUrlBiz::class);
+        }
+        if (modstart_module_enabled('Banner')) {
+            BannerPositionBiz::registerQuick('Cms', 'CMS系统');
+        }
+        if (modstart_module_enabled('Banner')) {
+            PartnerPositionBiz::registerQuick('Cms', 'CMS系统');
         }
 
         AdminWidgetLink::register(function () {

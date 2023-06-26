@@ -7,9 +7,9 @@
 
     <div style="background:#FFF;">
         @if(\ModStart\Core\Util\AgentUtil::isMobile())
-            {!! \Module\Banner\View\BannerView::basic('home',null,'5-3') !!}
+            {!! \Module\Banner\View\BannerView::basic('Cms',null,'5-3') !!}
         @else
-            {!! \Module\Banner\View\BannerView::basic('home',null,'5-2') !!}
+            {!! \Module\Banner\View\BannerView::basic('Cms',null,'5-2') !!}
         @endif
     </div>
 
@@ -106,7 +106,7 @@
                 合作伙伴
             </div>
             <div class="" data-scroll-animate="animated fadeInUp">
-                {!! \Module\Partner\View\PartnerView::raw('home') !!}
+                {!! \Module\Partner\View\PartnerView::raw('Cms') !!}
             </div>
         </div>
 
