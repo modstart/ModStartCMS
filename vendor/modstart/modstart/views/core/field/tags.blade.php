@@ -1,7 +1,15 @@
 <?php
 $valueTags = [];
-foreach ($value as $v) {
-    $valueTags[]=(isset($tags[$v])?$tags[$v]:$v);
+if(null===$value){
+    if(!empty($defaultValue)){
+        foreach ($defaultValue as $v) {
+            $valueTags[]=(isset($tags[$v])?$tags[$v]:$v);
+        }
+    }
+}else{
+    foreach ($value as $v) {
+        $valueTags[]=(isset($tags[$v])?$tags[$v]:$v);
+    }
 }
 ?>
 <div class="line" id="{{$id}}">

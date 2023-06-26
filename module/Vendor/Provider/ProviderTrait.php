@@ -90,7 +90,7 @@ trait ProviderTrait
         return empty(self::$list);
     }
 
-    private static function getByName($name)
+    public static function getByName($name)
     {
         foreach (self::listAll() as $item) {
             if ($item->name() == $name) {

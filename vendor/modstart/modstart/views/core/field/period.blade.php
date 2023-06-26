@@ -10,9 +10,15 @@
         <input type="hidden"
                name="{{$name}}"
                id="{{$id}}Input"
-               value="{{$value}}" />
+               value="{{null===$value?$defaultValue:$value}}" />
         <div>
-            <?php $valuePcs = ( $value ? explode(':',$value): [] ); ?>
+            <?php
+            $v = $value;
+            if(null===$v){
+                $v = $defaultValue;
+            }
+            $valuePcs = ( $v ? explode(':',$v): [] );
+            ?>
             <input type="number"
                    {{$readonly?'readonly':''}}
                    class="form  tw-text-center"

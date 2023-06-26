@@ -16,7 +16,6 @@ namespace ModStart\Field;
  */
 class KeyValueList extends AbstractField
 {
-    protected $value = [];
     protected $width = 300;
     protected $listable = false;
 
@@ -70,11 +69,12 @@ class KeyValueList extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
-        if (null !== $value) {
-            $value = @json_decode($value, true);
-            if (empty($value)) {
-                $value = [];
-            }
+        if (null === $value) {
+            return $value;
+        }
+        $value = @json_decode($value, true);
+        if (empty($value)) {
+            $value = [];
         }
         return $value;
     }

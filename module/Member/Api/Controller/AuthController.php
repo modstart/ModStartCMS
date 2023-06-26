@@ -3,6 +3,7 @@
 
 namespace Module\Member\Api\Controller;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
@@ -27,9 +28,9 @@ use Module\Member\Provider\RegisterProcessor\MemberRegisterProcessorProvider;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\SecurityUtil;
 use Module\Vendor\Job\MailSendJob;
-use Module\Vendor\Util\SessionUtil;
 use Module\Vendor\Job\SmsSendJob;
 use Module\Vendor\Support\ResponseCodes;
+use Module\Vendor\Util\SessionUtil;
 
 /**
  * 相关配置开关
@@ -246,7 +247,9 @@ class AuthController extends ModuleBaseController
             if (empty($phone)) {
                 return Response::generate(-1, '请输入手机');
             }
-            if ($phoneVerify != Session::get('oauthBindPhoneVerify')) {
+            $phoneVerifyCheck = Session::get('oauthBindPhoneVerify');
+            if ($phoneVerify != $phoneVerifyCheck) {
+                Log::info('Member.OauthBind.PhoneVerifyError - ' . $phoneVerify . ' - ' . $phoneVerifyCheck);
                 return Response::generate(-1, '手机验证码不正确.');
             }
             if (Session::get('oauthBindPhoneVerifyTime') + 60 * 60 < time()) {
@@ -260,7 +263,9 @@ class AuthController extends ModuleBaseController
             if (empty($email)) {
                 return Response::generate(-1, '请输入邮箱');
             }
-            if ($emailVerify != Session::get('oauthBindEmailVerify')) {
+            $emailVerifyCheck = Session::get('oauthBindEmailVerify');
+            if ($emailVerify != $emailVerifyCheck) {
+                Log::info('Member.OauthBind.EmailVerifyError - ' . $emailVerify . ' - ' . $emailVerifyCheck);
                 return Response::generate(-1, '邮箱验证码不正确.');
             }
             if (Session::get('oauthBindEmailVerifyTime') + 60 * 60 < time()) {
@@ -694,7 +699,9 @@ class AuthController extends ModuleBaseController
         if (empty($verify)) {
             return Response::generate(-1, '验证码不能为空');
         }
-        if ($verify != Session::get('loginPhoneVerify')) {
+        $verifyCheck = Session::get('loginPhoneVerify');
+        if ($verify != $verifyCheck) {
+            Log::info('Member.LoginPhone.LoginVerifyError - ' . $verify . ' - ' . $verifyCheck);
             return Response::generate(-1, '手机验证码不正确');
         }
         if (Session::get('loginPhoneVerifyTime') + 60 * 60 < time()) {
@@ -855,7 +862,9 @@ class AuthController extends ModuleBaseController
         if (empty($phone)) {
             return Response::generate(-1, '请输入手机');
         }
-        if ($phoneVerify != Session::get('registerPhoneVerify')) {
+        $phoneVerifyCheck = Session::get('registerPhoneVerify');
+        if ($phoneVerify != $phoneVerifyCheck) {
+            Log::info('Member.RegisterPhone.PhoneVerifyError - ' . $phoneVerify . ' - ' . $phoneVerifyCheck);
             return Response::generate(-1, '手机验证码不正确.');
         }
         if (Session::get('registerPhoneVerifyTime') + 60 * 60 < time()) {
@@ -959,7 +968,9 @@ class AuthController extends ModuleBaseController
             if (empty($phone)) {
                 return Response::generate(-1, '请输入手机');
             }
-            if ($phoneVerify != Session::get('registerPhoneVerify')) {
+            $phoneVerifyCheck = Session::get('registerPhoneVerify');
+            if ($phoneVerify != $phoneVerifyCheck) {
+                Log::info('Member.Register.PhoneVerifyError - ' . $phoneVerify . ' - ' . $phoneVerifyCheck);
                 return Response::generate(-1, '手机验证码不正确.');
             }
             if (Session::get('registerPhoneVerifyTime') + 60 * 60 < time()) {
@@ -973,7 +984,9 @@ class AuthController extends ModuleBaseController
             if (empty($email)) {
                 return Response::generate(-1, '请输入邮箱');
             }
-            if ($emailVerify != Session::get('registerEmailVerify')) {
+            $emailVerifyCheck = Session::get('registerEmailVerify');
+            if ($emailVerify != $emailVerifyCheck) {
+                Log::info('Member.Register.EmailVerifyError - ' . $emailVerify . ' - ' . $emailVerifyCheck);
                 return Response::generate(-1, '邮箱验证码不正确.');
             }
             if (Session::get('registerEmailVerifyTime') + 60 * 60 < time()) {
@@ -1332,7 +1345,9 @@ class AuthController extends ModuleBaseController
         if (empty($verify)) {
             return Response::generate(-1, '验证码不能为空');
         }
-        if ($verify != Session::get('retrievePhoneVerify')) {
+        $verifyCheck = Session::get('retrievePhoneVerify');
+        if ($verify != $verifyCheck) {
+            Log::info('Member.RetrievePhone.PhoneVerifyError - ' . $verify . ' - ' . $verifyCheck);
             return Response::generate(-1, '手机验证码不正确');
         }
         if (Session::get('retrievePhoneVerifyTime') + 60 * 60 < time()) {
@@ -1425,7 +1440,9 @@ class AuthController extends ModuleBaseController
         if (empty($verify)) {
             return Response::generate(-1, '验证码不能为空');
         }
-        if ($verify != Session::get('retrieveEmailVerify')) {
+        $verifyCheck = Session::get('retrieveEmailVerify');
+        if ($verify != $verifyCheck) {
+            Log::info('Member.RetrieveEmail.PhoneVerifyError - ' . $verify . '- ' . $verifyCheck);
             return Response::generate(-1, '邮箱验证码不正确');
         }
         if (Session::get('retrieveEmailVerifyTime') + 60 * 60 < time()) {

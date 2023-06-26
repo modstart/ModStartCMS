@@ -11,7 +11,7 @@
         <textarea name="{{$name}}" rows="3"
                   placeholder="{{$placeholder}}"
                   @if($styleFormField) style="{!! $styleFormField !!}" @endif
-            {{$readonly?'readonly':''}}>{{$value}}</textarea>
+            {{$readonly?'readonly':''}}>{{null==$value?$defaultValue:$value}}</textarea>
         @if($autoHeight)
             <script>
                 $(function () {

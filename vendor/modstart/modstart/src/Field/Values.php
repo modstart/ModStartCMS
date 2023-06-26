@@ -6,7 +6,6 @@ namespace ModStart\Field;
 
 class Values extends AbstractField
 {
-    protected $value = [];
     protected $width = 300;
     protected $listable = false;
 
@@ -35,6 +34,9 @@ class Values extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
+        if (null === $value) {
+            return $value;
+        }
         $value = @json_decode($value, true);
         if (empty($value)) {
             $value = [];
@@ -44,7 +46,7 @@ class Values extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value);
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
 
     public function prepareInput($value, $model)

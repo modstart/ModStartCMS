@@ -8,7 +8,7 @@
     </div>
     <div class="field" >
         @if($readonly)
-            <input type="hidden" name="{{$name}}" value="{{$value}}" />
+            <input type="hidden" name="{{$name}}" value="{{null==$value?$defaultValue:$value}}" />
         @endif
         <select class="form" name="{{$name}}" lay-filter="{{$id}}Select"
                 @if($readonly) disabled @endif
@@ -17,7 +17,7 @@
                 @endif
         >
             @foreach($valueMap as $k=>$v)
-                <option value="{{$k}}" @if($k==$value) selected @endif>{{$v}}</option>
+                <option value="{{$k}}" @if((null===$value&&$k==$defaultValue)||(null!==$value&&$k==$value)) selected @endif>{{$v}}</option>
             @endforeach
         </select>
         @if(!empty($help))

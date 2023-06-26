@@ -8,7 +8,7 @@
     </div>
     <div class="field">
         <div>
-            <textarea id="{{$id}}Editor" name="{{$name}}" style="height:0px;overflow:hidden;">{!! htmlspecialchars($value) !!}</textarea>
+            <textarea id="{{$id}}Editor" name="{{$name}}" style="height:0px;overflow:hidden;">{!! htmlspecialchars(null===$value?$defaultValue:$value) !!}</textarea>
         </div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

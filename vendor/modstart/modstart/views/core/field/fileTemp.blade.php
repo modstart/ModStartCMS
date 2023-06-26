@@ -13,7 +13,7 @@
                data-value-holder
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{$value}}"/>
+               value="{{null===$value?$defautValue:$value}}"/>
         <div class="ub-file-selector" style="border:1px solid #EEE;position:relative;margin-bottom:0.5rem;border-radius:0.2rem;padding:0 2rem 0 0.5rem;display:inline-block;">
             <div data-value></div>
             <a data-close href="javascript:;" style="position:absolute;right:0px;top:0px;display:inline-block;line-height:1.5rem;width:1rem;text-align:center;color:#999;"><i class="iconfont icon-close"></i></a>

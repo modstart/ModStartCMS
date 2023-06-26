@@ -13,7 +13,7 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                @if(null===$fixedValue)
-               value="{{$value}}"
+               value="{{null==$value?$defaultValue:$value}}"
                @else
                value="{{$fixedValue}}"
                @endif

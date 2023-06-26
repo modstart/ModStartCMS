@@ -28,6 +28,9 @@ class ImagesTemp extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
+        if (null === $value) {
+            return $value;
+        }
         return ConvertUtil::toArray($value);
     }
 

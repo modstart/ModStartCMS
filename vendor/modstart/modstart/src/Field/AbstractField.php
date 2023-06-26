@@ -151,9 +151,13 @@ class AbstractField implements Renderable
      */
     protected $label;
     /**
-     * @var null 字段值，null表示为空，非null表示有值
+     * @var null 字段值，null表示没有值，非null表示有值
      */
     protected $value = null;
+    /**
+     * @var null 默认值，null表示没有默认值，非null表示有默认值
+     */
+    protected $defaultValue = null;
     /**
      * @var null ?
      */
@@ -209,7 +213,6 @@ class AbstractField implements Renderable
     protected $showable = true;
     protected $sortable = false;
     protected $renderMode;
-    protected $defaultValue = null;
     protected $placeholder = null;
     protected $help = null;
     protected $tip = null;

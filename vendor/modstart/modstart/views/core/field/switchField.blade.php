@@ -8,7 +8,7 @@
     </div>
     <div class="field layui-form" lay-filter="{{$name}}">
         <div style="margin-top:-4px;">
-            <input type="checkbox" value="1" name="{{$name}}" lay-skin="switch" lay-text="{!! join('|',array_values($options)) !!}"  @if(!empty($value)) checked @endif />
+            <input type="checkbox" value="1" name="{{$name}}" lay-skin="switch" lay-text="{!! join('|',array_values($options)) !!}"  @if( (null===$value&&$defaultValue) || $value ) checked @endif />
         </div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

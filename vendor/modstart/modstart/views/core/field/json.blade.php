@@ -13,13 +13,13 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                @if(null===$fixedValue)
-               value="{{empty($value)?'':json_encode($value,JSON_UNESCAPED_UNICODE)}}"
+               value="{{json_encode(null===$value?(null===$defaultValue?'':$defaultValue):$value,JSON_UNESCAPED_UNICODE)}}"
                @else
-               value="{{empty($fixedValue)?'':json_encode($fixedValue,JSON_UNESCAPED_UNICODE)}}"
+               value="{{json_encode($fixedValue?$fixedValue:'',JSON_UNESCAPED_UNICODE)}}"
                @endif
                @if($styleFormField) style="{!! $styleFormField !!}" @endif
         />
-        <div id="{{$id}}Editor" style="width:100%;height:{{$editorHeight}};">{{empty($value)?'':json_encode($value,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)}}</div>
+        <div id="{{$id}}Editor" style="width:100%;height:{{$editorHeight}};">{{json_encode(null===$value?(null===$defaultValue?'':$defaultValue):$value,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)}}</div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif

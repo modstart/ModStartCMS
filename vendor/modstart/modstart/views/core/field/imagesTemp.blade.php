@@ -12,7 +12,7 @@
                class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{json_encode($value)}}"/>
+               value="{{json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value)}}"/>
         <div class="ub-images-selector">
         </div>
         <div id="{{$id}}Uploader" style="width:9.4rem;border:1px solid #EEE;border-radius:0.2rem;min-height:1.6rem;"></div>

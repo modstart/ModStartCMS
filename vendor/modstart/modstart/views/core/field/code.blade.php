@@ -10,7 +10,7 @@
         <textarea name="{{$name}}" rows="3"
                   placeholder="{{$placeholder}}"
                   @if($styleFormField) style="{!! $styleFormField !!}" @endif
-                   {{$readonly?'readonly':''}}>{{$value}}</textarea>
+                   {{$readonly?'readonly':''}}>{{null===$value?$defaultValue:$value}}</textarea>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif

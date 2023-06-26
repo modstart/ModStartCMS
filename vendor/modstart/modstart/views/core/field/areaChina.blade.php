@@ -14,7 +14,7 @@
             <input type="hidden"
                    data-title
                    name="{{$name}}"
-                   value="{{$value}}"
+                   value="{{null===$value?$defaultValue:$value}}"
             />
         </div>
         @if(!empty($help))

@@ -15,7 +15,7 @@
            step="any"
            name="{{$name}}"
            placeholder="{{$placeholder}}"
-           value="{{$value}}" />
+           value="{{null==$value?$defaultValue:$value}}" />
         {{empty($unit)?'':$unit}}
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

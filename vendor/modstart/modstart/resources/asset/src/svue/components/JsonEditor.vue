@@ -25,7 +25,8 @@ export default {
             const editor = ace.edit(this.id);
             editor.setTheme("ace/theme/monokai");
             editor.session.setMode("ace/mode/json");
-            editor.session.on('change', function () {
+            editor.session.on('change', () => {
+                // console.log('JsonEditor.changed', editor.session.getValue());
                 this.currentData = editor.session.getValue();
             })
         }

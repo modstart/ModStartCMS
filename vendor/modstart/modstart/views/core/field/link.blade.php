@@ -13,7 +13,7 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                style="width:50%;"
-               value="{{$value}}" />
+               value="{{null===$value?$defaultValue:$value}}" />
         <a href="javascript:;" class="btn" id="{{$name}}Selector"><i class="iconfont icon-list-alt"></i></a>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

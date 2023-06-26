@@ -26,7 +26,7 @@ class SwitchField extends AbstractField
     public function unserializeValue($value, AbstractField $field)
     {
         if (null === $value) {
-            return null;
+            return $value;
         }
         return $value ? true : false;
     }

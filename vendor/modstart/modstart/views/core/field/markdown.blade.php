@@ -8,7 +8,7 @@
     </div>
     <div class="field">
         <div>
-            <textarea name="{{$name}}" id="{{$name}}">{!! $value !!}</textarea>
+            <textarea name="{{$name}}" id="{{$name}}">{!! null===$value?$defaultValue:$value !!}</textarea>
         </div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>

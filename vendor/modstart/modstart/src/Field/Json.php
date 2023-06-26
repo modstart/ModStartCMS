@@ -29,6 +29,9 @@ class Json extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
+        if (null === $value) {
+            return $value;
+        }
         return @json_decode($value, true);
     }
 

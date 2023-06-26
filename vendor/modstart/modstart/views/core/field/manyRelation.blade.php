@@ -41,7 +41,7 @@
             el: '#{{$id}}Input',
             data: {
                 groupTags: {!! json_encode($groupTags) !!},
-                value: {!! json_encode(null===$value?$defaultValue:$value) !!}
+                value: {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
             },
             computed: {
                 jsonValue: function () {

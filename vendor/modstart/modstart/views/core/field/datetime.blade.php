@@ -15,7 +15,7 @@
                id="{{$id}}Input"
                placeholder="{{$placeholder}}"
                autocomplete="off"
-               value="{{$value}}" />
+               value="{{null===$value?$defaultValue:$value}}" />
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif

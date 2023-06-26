@@ -43,7 +43,7 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: Object.assign({!! $defaultValue?json_encode($defaultValue):'{}' !!},{!! empty($value)?json_encode($defaultValue?$defaultValue:new \stdClass()):json_encode($value) !!}),
+                value: {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!},
                 icons: []
             },
             mounted(){

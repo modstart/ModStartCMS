@@ -12,7 +12,7 @@
                class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{$value}}"/>
+               value="{{null===$value?$defaultValue:$value}}"/>
         <div id="{{$name}}Selector">
             <div class="ub-audio-selector" style="display:inline-block;border:1px solid #EEE;position:relative;border-radius:0.2rem;line-height:1.3rem;padding:0 2rem 0 0.5rem;vertical-align:bottom;">
                 <div data-value>{{empty($value)?L('None'):$value}}</div>

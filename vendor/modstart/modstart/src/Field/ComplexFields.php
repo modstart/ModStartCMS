@@ -11,7 +11,6 @@ namespace ModStart\Field;
  */
 class ComplexFields extends AbstractField
 {
-    protected $value = [];
     protected $width = 300;
     protected $listable = false;
 
@@ -53,6 +52,9 @@ class ComplexFields extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
+        if (null === $value) {
+            return $value;
+        }
         $value = @json_decode($value, true);
         if (empty($value)) {
             $value = new \stdClass();

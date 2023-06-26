@@ -14,7 +14,7 @@
                name="{{$name}}"
                id="{{$id}}Input"
                placeholder="{{$placeholder}}"
-               value="{{$value}}" />
+               value="{{null==$value?$defaultValue:$value}}" />
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif

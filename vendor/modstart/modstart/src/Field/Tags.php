@@ -19,8 +19,6 @@ class Tags extends AbstractField
      */
     const SERIALIZE_TYPE_COLON_SEPARATED = 1;
 
-    protected $value = [];
-
     protected function setup()
     {
         $this->addVariables([
@@ -83,6 +81,9 @@ class Tags extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
+        if (null === $value) {
+            return $value;
+        }
         switch ($this->getVariable('serializeType')) {
             case self::SERIALIZE_TYPE_COLON_SEPARATED:
                 return TagUtil::string2Array($value);

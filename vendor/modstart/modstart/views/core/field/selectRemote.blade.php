@@ -42,7 +42,7 @@
         var app = new Vue({
             el: '#{{$id}}Container',
             data: {
-                value: {!! json_encode($value) !!},
+                value: {!! json_encode(null===$value?$defaultValue:$value) !!},
                 loading: false,
                 options: [],
                 searchTimer: null

@@ -12,7 +12,7 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                @if($styleFormField) style="{!! $styleFormField !!}" @endif
-               value="{{$value}}" />
+               value="{{null===$value?$defaultValue:$value}}" />
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif

@@ -17,7 +17,6 @@ use ModStart\Field\Type\DynamicFieldsType;
  */
 class DynamicFields extends AbstractField
 {
-    protected $value = [];
     protected $width = 300;
     protected $listable = false;
 
@@ -30,6 +29,9 @@ class DynamicFields extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
+        if (null === $value) {
+            return $value;
+        }
         $value = @json_decode($value, true);
         if (empty($value)) {
             $value = [];

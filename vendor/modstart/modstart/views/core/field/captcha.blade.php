@@ -15,7 +15,7 @@
                    placeholder="{{$placeholder}}"
                    style="max-width:100%;"
                    autocomplete="off"
-                   value="{{$value}}" />
+                   value="{{null===$value?$defaultValue:$value}}" />
             <img data-captcha src="{{$url}}"
                  style="height:29px;border-radius:3px;cursor:pointer;position:absolute;right:0px;top:1px;bottom:1px;border-left:1px solid #EEE;"
                  title="{{L('Click To Refresh')}}"

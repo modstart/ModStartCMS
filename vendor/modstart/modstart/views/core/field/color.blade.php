@@ -14,7 +14,7 @@
                    style="width:8em;vertical-align:middle;"
                    name="{{$name}}"
                    placeholder="{{$placeholder}}"
-                   value="{{$value}}" />
+                   value="{{null===$value?$defaultValue:$value}}" />
             <div id="{{$id}}Color" style="vertical-align:top;"></div>
         </div>
         @if(!empty($help))
@@ -27,7 +27,7 @@
         var colorpicker = layui.colorpicker;
         colorpicker.render({
             elem: '#{{$id}}Color',
-            color: '{{$value}}',
+            color: '{{null===$value?$defaultValue:$value}}',
             done: function (color) {
                 $('[name={{$name}}]').val(color);
             }

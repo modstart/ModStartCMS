@@ -12,19 +12,19 @@
                class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{$value}}"/>
+               value="{{null===$value?$defaultValue:$value}}"/>
         <div id="{{$name}}Selector" class="ub-file-selector">
             <div class="ub-file-selector__value" data-value>
-                {{empty($value)?L('None'):$value}}
+                {{null===$value?($defaultValue?$defaultValue:L('None')):$value}}
             </div>
-            <div data-close class="ub-file-selector__close {{empty($value)?'hidden':''}}">
+            <div data-close class="ub-file-selector__close {{ ((null===$value&&!$defaultValue)||!$value) ? '' : 'hidden' }}">
                 <i class="iconfont icon-close"></i>
             </div>
-            <div class="ub-file-selector__action {{empty($value)?'':'hidden'}}">
+            <div class="ub-file-selector__action {{ ((null===$value&&!$defaultValue)||!$value) ?'':'hidden'}}">
                 <div id="{{$id}}Uploader" class="ub-upload-button"></div>
             </div>
             @if($mode=='default')
-                <div class="ub-file-selector__action {{empty($value)?'':'hidden'}}">
+                <div class="ub-file-selector__action {{ ((null===$value&&!$defaultValue)||!$value) ?'':'hidden'}}">
                     <a href="javascript:;" class="btn" data-gallery>
                         <i class="iconfont icon-category"></i>
                         {{L('Video Gallery')}}

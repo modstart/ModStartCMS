@@ -9,7 +9,6 @@ use ModStart\Field\Type\FieldRenderMode;
 
 class Tree extends AbstractField
 {
-    protected $value = [];
     private $columnNames = [
         'id' => 'id',
         'title' => 'title',
@@ -65,6 +64,9 @@ class Tree extends AbstractField
 
     public function unserializeValue($value, AbstractField $field)
     {
+        if (null === $value) {
+            return $value;
+        }
         return ConvertUtil::toArray($value);
     }
 
