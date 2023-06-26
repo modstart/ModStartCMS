@@ -11,7 +11,7 @@
                {{$readonly?'readonly':''}}
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{null===$value?$defautValue:$value}}"/>
+               value="{{null===$value?$defaultValue:$value}}"/>
         <div id="{{$name}}Selector">
             <div class="ub-file-selector">
                 <div class="ub-file-selector__items">

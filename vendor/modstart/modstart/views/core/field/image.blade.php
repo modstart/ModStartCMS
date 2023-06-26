@@ -12,7 +12,7 @@
                class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{null===$value?$defautValue:$value}}"/>
+               value="{{null===$value?$defaultValue:$value}}"/>
         <div id="{{$name}}Selector" style="padding-left:1px;">
             <div class="ub-image-selector @if((null===$value&&$defaultValue)||(null!==$value&&$value)) has-value @endif" style="vertical-align:bottom;">
                 <div class="tools">
@@ -20,7 +20,7 @@
                     <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
                 </div>
                 @if((null===$value&&$defaultValue)||(null!==$value&&$value))
-                    <div class="cover ub-cover-1-1 contain" style="background-image:url({{null===$value?$defautValue:$value}});"></div>
+                    <div class="cover ub-cover-1-1 contain" style="background-image:url({{null===$value?$defaultValue:$value}});"></div>
                 @else
                     <div class="cover ub-cover-1-1 contain"
                          style="background-image:url(@asset('asset/image/none.svg'));"></div>

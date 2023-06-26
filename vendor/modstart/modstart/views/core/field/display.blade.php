@@ -9,7 +9,7 @@
         @endif
     </div>
     <div class="field">
-        <div class="value">{{null===$value?$defautValue:$value}}</div>
+        <div class="value">{{null===$value?$defaultValue:$value}}</div>
         <input type="hidden" name="{{$name}}" value="{{null===$value?$defaultValue:$value}}"/>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
