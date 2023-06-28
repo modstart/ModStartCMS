@@ -681,6 +681,7 @@ class Grid
             case 'hookSaving':
             case 'formClass':
             case 'gridFilter':
+            case 'sortAddPosition':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

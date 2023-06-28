@@ -9,7 +9,7 @@ class CascadeGroup extends AbstractField
     public static function getAssets()
     {
         return [
-            'style' => '.ub-field-cascade-group{} .ub-field-cascade-group.cascade-group-hide{visibility:hidden;height:0;width:0;overflow:hidden;}',
+            // 'style' => '.ub-field-cascade-group{} .ub-field-cascade-group.cascade-group-hide{visibility:hidden;height:0;width:100%;overflow:hidden;}',
         ];
     }
 

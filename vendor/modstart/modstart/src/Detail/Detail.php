@@ -213,6 +213,7 @@ class Detail implements Renderable
             case 'gridTableTopView':
             case 'gridBeforeRequestScriptView':
             case 'gridRequestScript':
+            case 'sortAddPosition':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

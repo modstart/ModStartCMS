@@ -6,7 +6,7 @@
         @endif
         {{$label}}
     </div>
-    <div class="field layui-form" lay-filter="{{$id}}Radio">
+    <div class="field layui-form" lay-filter="{{$name}}">
         @foreach($options as $k=>$v)
             @if(!empty($vertical)) <div> @endif
             <input type="radio" value="{{$k}}" name="{{$name}}" @if((null===$value&&$k==$defaultValue)||(null!==$value&&$k==$value)) checked @endif title="{{$v}}" />

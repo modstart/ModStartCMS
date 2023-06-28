@@ -15,6 +15,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Exception\ResultException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Type\SortAddOrder;
 use ModStart\Core\Type\SortDirection;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\IdUtil;
@@ -97,6 +98,8 @@ use stdClass;
  * @method  Form|mixed canEdit($value = null)
  * @method  Form|mixed canDelete($value = null)
  * @method  Form|mixed canCopy($value = null)
+ * 增加时排序字段模式，默认为 tail @see SortAddOrder
+ * @method  Form|mixed sortAddPosition($value = null)
  * @method  Form|mixed formClass($value = null)
  * @method  Form|mixed treeMaxLevel($value = null)
  * @method  Form|mixed treeRootPid($value = null)
@@ -153,6 +156,7 @@ class Form implements Renderable
         'canDelete',
         'canSort',
         'canCopy',
+        'sortAddPosition',
         'formClass',
         'treeMaxLevel',
         'treeRootPid',
@@ -239,6 +243,7 @@ class Form implements Renderable
     private $canDelete = true;
     private $canSort = false;
     private $canCopy = false;
+    private $sortAddPosition = false;
     private $formClass = '';
     private $treeMaxLevel = 99;
     private $treeRootPid = 0;

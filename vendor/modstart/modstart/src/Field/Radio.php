@@ -12,8 +12,6 @@ class Radio extends AbstractField
 {
     use CanCascadeFields;
 
-    protected $value = [];
-
     protected function setup()
     {
         $this->addVariables([

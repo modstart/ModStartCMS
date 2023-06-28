@@ -426,7 +426,11 @@ var GridManager = function (opt) {
                 var id = getId(this);
                 var direction = $(this).attr('data-sort');
                 window.api.dialog.loadingOn();
-                window.api.base.post(lister.realtime.url.sort, {_id: id, direction: direction}, function (res) {
+                window.api.base.post(lister.realtime.url.sort, {
+                    _id: id,
+                    direction: direction,
+                    param: JSON.stringify(lister.getParam()),
+                }, function (res) {
                     window.api.dialog.loadingOff();
                     window.api.base.defaultFormCallback(res, {
                         success: function (res) {

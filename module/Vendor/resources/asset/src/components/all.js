@@ -63,7 +63,7 @@ export default (Vue) => {
     Vue.component("files-selector", FilesSelector)
     Vue.component("video-selector", VideoSelector)
     Vue.component("audio-selector", AudioSelector)
-    Vue.component("json-editor", () => import("@ModStartAsset/svue/components/JsonEditor.vue"))
+    Vue.component("code-editor", () => import("@ModStartAsset/svue/components/CodeEditor.vue"))
     Vue.component('rich-editor', () => import('./RichEditor'))
     Vue.component('name-value-list-editor', () => import('./NameValueListEditor'))
     Vue.component("smart-link", () => import('@ModStartAsset/svue/components/SmartLink'))
