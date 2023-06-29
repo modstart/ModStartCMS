@@ -1424,7 +1424,9 @@ class ModelUtil
             return $model;
         }
 
-        if (isset($model[$key])) {
+        if (($model instanceof \stdClass) && isset($model->{$key})) {
+            return $model->{$key};
+        } else if (isset($model[$key])) {
             return $model[$key];
         }
 

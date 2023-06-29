@@ -556,7 +556,7 @@ class FileUtil
     public static function savePathToLocalTemp($path, $ext = null, $downloadStream = false)
     {
         if (@file_exists($path)) {
-            return $path;
+            return realpath($path);
         }
         if (empty($ext)) {
             $ext = self::extension($path);

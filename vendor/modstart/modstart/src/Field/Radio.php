@@ -15,7 +15,7 @@ class Radio extends AbstractField
     protected function setup()
     {
         $this->addVariables([
-            'vertical'=>false,
+            'vertical' => false,
             'options' => [],
         ]);
     }
@@ -24,6 +24,14 @@ class Radio extends AbstractField
     {
         $this->addVariables(['vertical' => $value]);
         return $this;
+    }
+
+    public function optionValues($values)
+    {
+        $values = array_build($values, function ($key, $value) {
+            return [$value, $value];
+        });
+        return $this->options($values);
     }
 
     public function options($options)

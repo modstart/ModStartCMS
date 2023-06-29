@@ -22,7 +22,7 @@ use ModStart\Widget\Box;
  *
  * @mixin Page
  * @mixin Form
- * @method $this disableBoxWrap($enable)
+ * @method $this disableBoxWrap($disable)
  */
 class AdminConfigBuilder implements Renderable
 {

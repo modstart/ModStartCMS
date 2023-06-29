@@ -13,7 +13,6 @@ class MigrateJob extends Command
 
     public function handle()
     {
-
     }
 
     private function storageTest()

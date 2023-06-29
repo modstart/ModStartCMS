@@ -294,9 +294,9 @@ class CustomField extends AbstractField
     }
 
 
-    public static function renderAllFormVue($fields, $param = [])
+    public static function renderAllFormFieldVue($fields, $param = [])
     {
-        return View::make('modstart::core.field.customField.formVue', [
+        return View::make('modstart::core.field.customField.formFieldVue', [
             'fields' => $fields,
             'param' => $param,
         ])->render();

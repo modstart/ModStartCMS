@@ -4,8 +4,8 @@ html {
     font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", FontAwesome, sans-serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    background: #F4F6F8;
-    color: #34495e;
+    background: var(--color-body-bg);
+    color: var(--color-text);
 }
 
 body {
@@ -543,6 +543,10 @@ c-page-header-search + .ub-h-full {
 
     .body-scroll-lock-hide {
         visibility: hidden;
+    }
+
+    .body-scroll-lock-none {
+        display: none;
     }
 }
 

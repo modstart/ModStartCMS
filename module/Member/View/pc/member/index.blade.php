@@ -16,7 +16,7 @@
                     {{\Module\Member\Auth\MemberUser::nickname()}}
                     ，欢迎您！
                     @if(\ModStart\Module\ModuleManager::getModuleConfig('Member', 'vipEnable',false))
-                        <a class="tw-my-1 tw-mr-1 ub-tag warning ub-text-white ub-cursor-pointer" href="{{modstart_web_url('member_vip')}}">
+                        <a class="tw-my-1 tw-mr-1 ub-tag warning ub-cursor-pointer" href="{{modstart_web_url('member_vip')}}">
                             @if(\Module\Member\Auth\MemberVip::get('icon'))
                                 <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(\Module\Member\Auth\MemberVip::get('icon'))}}"
                                      class="tw-h-4 tw-w-4 tw-overflow-hidden" />
@@ -26,17 +26,17 @@
                     @endif
                     @if($_certType!==null)
                         @if($_certType==\Module\MemberCert\Type\CertType::INDIVIDUAL)
-                            <a class="tw-my-1 tw-mr-1 ub-tag success ub-text-white ub-cursor-pointer" href="{{modstart_web_url('member_cert')}}">
+                            <a class="tw-my-1 tw-mr-1 ub-tag success ub-cursor-pointer" href="{{modstart_web_url('member_cert')}}">
                                 <i class="iconfont icon-user"></i>
                                 个人认证
                             </a>
                         @elseif($_certType==\Module\MemberCert\Type\CertType::CORP)
-                            <a class="tw-my-1 tw-mr-1 ub-tag success ub-text-white ub-cursor-pointer" href="{{modstart_web_url('member_cert')}}">
+                            <a class="tw-my-1 tw-mr-1 ub-tag success ub-cursor-pointer" href="{{modstart_web_url('member_cert')}}">
                                 <i class="iconfont icon-corp"></i>
                                 企业认证
                             </a>
                         @else
-                            <a class="tw-my-1 tw-mr-1 ub-tag ub-text-white ub-cursor-pointer" href="{{modstart_web_url('member_cert')}}">
+                            <a class="tw-my-1 tw-mr-1 ub-tag ub-cursor-pointer" href="{{modstart_web_url('member_cert')}}">
                                 <i class="iconfont icon-question"></i>
                                 未认证
                             </a>

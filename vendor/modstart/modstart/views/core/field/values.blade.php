@@ -19,7 +19,7 @@
                 </div>
                 <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
             @else
-                <table class="ub-table">
+                <table class="ub-table tw-bg-white mini">
                     <body>
                     <tr v-for="(valueItem,valueIndex) in value">
                         <td>

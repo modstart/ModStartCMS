@@ -627,6 +627,7 @@ class AbstractField implements Renderable
                             'tip' => $this->tip,
                             'help' => $this->help,
                             'value' => $ret->getValue(),
+                            'rules' => $this->rules,
                         ])->render();
                     }
                     return $ret;

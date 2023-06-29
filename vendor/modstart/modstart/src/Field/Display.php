@@ -20,24 +20,34 @@ class Display extends AbstractField
         return $this;
     }
 
-    public function asLink($linkTemplate, $openInBlank = true)
+    public function asLink($linkTemplate = null, $openInBlank = true)
     {
         $this->hookRendering(function (AbstractField $field, $item, $index) use ($linkTemplate, $openInBlank) {
-            if (preg_match_all('/\\{(.+?)\\}/', $linkTemplate, $mat)) {
-                foreach ($mat[1] as $i => $k) {
-                    $linkValue = ModelUtil::traverse($item, $k);
-                    $linkTemplate = str_replace($mat[0][$i], $linkValue, $linkTemplate);
+            if (null !== $linkTemplate) {
+                $linkUrl = $linkTemplate;
+                if (preg_match_all('/\\{(.+?)\\}/', $linkUrl, $mat)) {
+                    foreach ($mat[1] as $i => $k) {
+                        $v = ModelUtil::traverse($item, $k);
+                        $linkUrl = str_replace($mat[0][$i], $v, $linkUrl);
+                    }
                 }
+                $linkTitle = ModelUtil::traverse($item, $field->column());
+            } else {
+                $linkUrl = ModelUtil::traverse($item, $field->column());
+                $linkTitle = $linkUrl;
             }
-            $linkTitle = ModelUtil::traverse($item, $field->column());
-            $html = [
-                '<a href="', $linkTemplate, '" target="_blank" ref="noreferrer noopener" ',
-                ($openInBlank ? 'target="_blank"' : ''),
-                '>',
-                ($openInBlank ? '<i class="iconfont icon-link"></i> ' : ''), $linkTitle,
-                htmlspecialchars($linkTitle),
-                '</a>',
-            ];
+            if (!empty($linkTitle)) {
+                $html = [
+                    '<a href="', $linkUrl, '" target="_blank" ref="noreferrer noopener" ',
+                    ($openInBlank ? 'target="_blank"' : ''),
+                    '>',
+                    ($openInBlank ? '<i class="iconfont icon-link"></i> ' : ''),
+                    htmlspecialchars($linkTitle),
+                    '</a>',
+                ];
+            } else {
+                $html = [];
+            }
             return AutoRenderedFieldValue::make(join('', $html));
         });
         return $this;
