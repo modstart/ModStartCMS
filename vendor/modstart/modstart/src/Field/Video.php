@@ -14,6 +14,7 @@ class Video extends AbstractField
     protected function setup()
     {
         $this->addVariables([
+            'category' => 'video',
             'mode' => self::MODE_DEFAULT,
             'server' => modstart_admin_url('data/file_manager/video'),
         ]);

@@ -14,6 +14,7 @@ class Audio extends AbstractField
     protected function setup()
     {
         $this->addVariables([
+            'category' => 'audio',
             'mode' => self::MODE_DEFAULT,
             'server' => modstart_admin_url('data/file_manager/audio'),
         ]);

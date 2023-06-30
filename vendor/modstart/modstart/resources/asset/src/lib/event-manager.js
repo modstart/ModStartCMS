@@ -9,6 +9,17 @@ const EventManager = {
         } else {
             window.fireEvent(event)
         }
+    },
+    fireElementEvent(element, name, detail) {
+        detail = detail || {}
+        const event = new CustomEvent(name, {
+            detail: detail
+        });
+        if (element.dispatchEvent) {
+            element.dispatchEvent(event)
+        } else {
+            element.fireEvent(event)
+        }
     }
 }
 

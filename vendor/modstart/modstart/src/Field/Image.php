@@ -14,6 +14,7 @@ class Image extends AbstractField
     protected function setup()
     {
         $this->addVariables([
+            'category' => 'image',
             'mode' => self::MODE_DEFAULT,
             'server' => modstart_admin_url('data/file_manager/image'),
         ]);

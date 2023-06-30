@@ -5,6 +5,7 @@ const Dialog = require('./../lib/dialog');
 const Lister = require('./../lib/lister');
 const Util = require('./../lib/util');
 const Url = require('./../lib/url');
+const EventManager = require('./../lib/event-manager');
 const SelectorDialog = require('./../lib/selectorDialog');
 import {Tree} from './../svue/lib/tree';
 
@@ -120,6 +121,7 @@ const MS = {
     header: Header,
     tree: Tree,
     url: Url,
+    eventManager: EventManager,
     L: function () {
         var lang = arguments[0]
         if (MS.trans && (lang in MS.trans)) {

@@ -12,6 +12,7 @@ class File extends AbstractField
     protected function setup()
     {
         $this->addVariables([
+            'category' => 'file',
             'mode' => self::MODE_DEFAULT,
             'server' => modstart_admin_url('data/file_manager/file'),
         ]);
