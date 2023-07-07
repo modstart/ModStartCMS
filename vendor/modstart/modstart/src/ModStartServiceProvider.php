@@ -6,6 +6,7 @@ namespace ModStart;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -15,9 +16,11 @@ use ModStart\App\Api\ModStartApi;
 use ModStart\App\OpenApi\ModStartOpenApi;
 use ModStart\App\Web\ModStartWeb;
 use ModStart\Core\Facades\ModStart;
+use ModStart\Core\Input\Request;
 use ModStart\Core\Monitor\DatabaseMonitor;
 use ModStart\Core\Monitor\HttpMonitor;
 use ModStart\Core\Monitor\StatisticMonitor;
+use ModStart\Core\Util\ShellUtil;
 use ModStart\Module\ModuleManager;
 
 /**
@@ -106,6 +109,21 @@ class ModStartServiceProvider extends ServiceProvider
         $this->registerRoutePattern();
 
         $this->setupMonitor();
+
+
+        if (config('modstart.xForwardedHostVisitRedirect', true)) {
+            if (!ShellUtil::isCli()) {
+                $forwardedHost = Request::headerGet('x-forwarded-host');
+                $domain = Request::domain();
+                if ($forwardedHost && $domain && $forwardedHost != $domain) {
+                    $redirect = Request::domainUrl() . Request::basePathWithQueries();
+                    Log::info('xForwardedHostVisitRedirect - ' . $forwardedHost . ' to ' . $redirect);
+                    header("HTTP/1.1 301 Moved Permanently");
+                    header("Location: " . $redirect);
+                    exit();
+                }
+            }
+        }
     }
 
     private function listModuleServiceProviders()

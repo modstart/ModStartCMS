@@ -16,7 +16,7 @@
                     <th width="100">标题</th>
                     <th width="100">
                         标识
-                        <a href="javascript:;" data-tip-popover="字母数字下划线，作为字段的唯一标识" class="ub-text-muted">
+                        <a href="javascript:;" data-tip-popover="字母数字下划线，不能重复，通常为字段标题的英文或拼音" class="ub-text-muted">
                             <i class="iconfont icon-warning"></i>
                         </a>
                     </th>

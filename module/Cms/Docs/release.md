@@ -1,4 +1,4 @@
-## 3.4.0
+## 3.4.0 友情链接和Banner标识由home调整为Cms
 
 - 新增：友情链接和Banner标识由home调整为Cms
 

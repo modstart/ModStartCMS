@@ -362,6 +362,7 @@ class ModuleStoreController extends Controller
         $basic = ModuleManager::getModuleBasic($module);
         $builder->useDialog();
         $builder->pageTitle(htmlspecialchars($basic['title']) . ' ' . L('Module Config'));
+        $builder->layoutHtml('<div class="ub-alert ub-alert-danger"><i class="iconfont icon-warning"></i> 本页面包含的配置仅供开发使用，设置不当可能会导致系统功能异常</div>');
         $moduleInfo = ModuleManager::getInstalledModuleInfo($module);
         BizException::throwsIfEmpty('Module config error', $basic['config']);
         foreach ($basic['config'] as $key => $callers) {

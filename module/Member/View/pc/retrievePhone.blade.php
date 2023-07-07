@@ -4,6 +4,11 @@
 @section('pageKeywords')验证手机找回密码@endsection
 @section('pageDescription')验证手机找回密码@endsection
 
+@section('headAppend')
+    @parent
+    <link rel="canonical" href="{{modstart_web_url('retrieve/phone')}}"/>
+@endsection
+
 @section('bodyAppend')
     @parent
     {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}

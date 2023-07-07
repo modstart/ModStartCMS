@@ -4,6 +4,11 @@
 @section('pageKeywords')找回密码@endsection
 @section('pageDescription')找回密码@endsection
 
+@section('headAppend')
+    @parent
+    <link rel="canonical" href="{{modstart_web_url('retrieve')}}"/>
+@endsection
+
 @section('bodyContent')
 
     <div class="ub-account">

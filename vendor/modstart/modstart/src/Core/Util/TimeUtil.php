@@ -262,4 +262,9 @@ class TimeUtil
         }
         return $seconds;
     }
+
+    public static function microtime()
+    {
+        return intval(microtime(true) * 1000000);
+    }
 }

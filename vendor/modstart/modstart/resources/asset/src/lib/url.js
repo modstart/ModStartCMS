@@ -1,5 +1,14 @@
 module.exports = {
+    getQuery: function (name, defaultValue) {
+        defaultValue = defaultValue || null
+        let query = this.parse().query
+        if (name) {
+            return query[name] || defaultValue
+        }
+        return query
+    },
     parse: function (url) {
+        url = url || window.location.href;
         const u = new URL(url);
         let query = {}
         u.searchParams.forEach((v, k) => {

@@ -6,6 +6,7 @@
 
 @section('headAppend')
     @parent
+    <link rel="canonical" href="{{modstart_web_url('register')}}"/>
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageHeadAppend'); !!}
 @endsection
 

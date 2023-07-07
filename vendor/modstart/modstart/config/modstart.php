@@ -13,6 +13,9 @@ return [
     'subdirUrl' => env('SUBDIR_URL', null),
     'subdir' => env('SUBDIR', '/'),
 
+    // 防止X-Forwarded-Host直接访问，遇到通过CDN域名直接访问的情况，直接跳转到主域名
+    'xForwardedHostVisitRedirect' => true,
+
     'admin' => [
         'prefix' => trim(env('ADMIN_PATH', 'admin'), '/'),
         'directory' => app_path('Admin'),
