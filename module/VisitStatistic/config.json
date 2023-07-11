@@ -14,7 +14,7 @@
         "Vendor:>=3.8.0"
     ],
     "suggest": [],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "modstartVersion": ">=3.7.0",
     "author": "ModStart",
     "description": "提供内置的网站访问记录功能",

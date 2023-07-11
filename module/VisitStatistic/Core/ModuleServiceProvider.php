@@ -35,6 +35,16 @@ class ModuleServiceProvider extends ServiceProvider
                 if (CurrentApp::is(CurrentApp::ADMIN) || !$e->isGet() || !$e->isHtml()) {
                     return;
                 }
+                $userAgent = AgentUtil::getUserAgent();
+                if (empty($userAgent)) {
+                    return;
+                }
+                if (modstart_config('VisitStatistic_IgnoreRobot', false)) {
+                    $robot = AgentUtil::detectRobot($userAgent);
+                    if ($robot) {
+                        return;
+                    }
+                }
                 $data = [];
                 $data['url'] = $e->url;
                 if (strlen($data['url']) > 200) {
@@ -43,7 +53,7 @@ class ModuleServiceProvider extends ServiceProvider
                 $data['ip'] = Request::ip();
                 $data['device'] = VisitStatisticDevice::current();
                 if (!modstart_config('VisitStatistic_UaDisable', false)) {
-                    $data['ua'] = StrUtil::mbLimit(AgentUtil::getUserAgent(), 200);
+                    $data['ua'] = StrUtil::mbLimit($userAgent, 200);
                 }
                 try {
                     ModelUtil::insert('visit_statistic_item', $data);

@@ -1441,4 +1441,59 @@ class ModelUtil
         return $model;
     }
 
+    /**
+     * @param $query \Illuminate\Database\Eloquent\Builder
+     * @param $type
+     * @param $column
+     */
+    public static function queryRemoveCondition($query, $type, $column)
+    {
+        $type = strtolower($type);
+        BizException::throwsIf('Unsupported type ' . $type, !in_array($type, ['basic', 'in']));
+        $wheres = $query->getQuery()->wheres;
+        $bindings = $query->getQuery()->getRawBindings();
+        $bindingsWhere = $bindings['where'];
+        $bindingIndex = 0;
+        $newWheres = $wheres;
+        $newBindingsWhere = $bindingsWhere;
+        // echo json_encode($newWheres, JSON_PRETTY_PRINT) . "\n";
+        // echo json_encode($newBindingsWhere, JSON_PRETTY_PRINT) . "\n";
+        foreach ($wheres as $i => $v) {
+            $bindingsCount = self::getBindingsCount([$v]);
+            if (strtolower($v['type']) == $type && $v['column'] == $column) {
+                array_splice($newWheres, $i, 1);
+                array_splice($newBindingsWhere, $bindingIndex, $bindingsCount);
+                break;
+            }
+            $bindingIndex += $bindingsCount;
+        }
+        // echo json_encode($newWheres, JSON_PRETTY_PRINT) . "\n";
+        // echo json_encode($newBindingsWhere, JSON_PRETTY_PRINT) . "\n";
+        $query->getQuery()->wheres = $newWheres;
+        $query->getQuery()->setBindings($newBindingsWhere);
+        // exit();
+        return $query;
+    }
+
+    private static function getBindingsCount($wheres)
+    {
+        $count = 0;
+        foreach ($wheres as $v) {
+            switch (strtolower($v['type'])) {
+                case 'in':
+                    $count += count($v['values']);
+                    break;
+                case 'raw':
+                    break;
+                case 'nested':
+                    $count += self::getBindingsCount($v['query']->wheres);
+                    break;
+                default:
+                    $count++;
+                    break;
+            }
+        }
+        return $count;
+    }
+
 }

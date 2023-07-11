@@ -441,6 +441,10 @@
         margin: 0 0 0.5rem 0;
         display: block;
 
+        &:last-child {
+            margin-bottom: 0;
+        }
+
         &:hover {
             border-color: #CCC;
         }
@@ -453,6 +457,15 @@
                 height: 1.5rem;
                 width: 1.5rem;
                 border: none;
+            }
+
+            .cover {
+                display: block;
+                width: 1.5rem;
+                height: 1.5rem;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
             }
 
             i {

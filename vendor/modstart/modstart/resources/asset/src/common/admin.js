@@ -92,6 +92,11 @@ $(window).on('load', function () {
                 $(o).attr('data-keywords-item', 'show').prev().attr('data-keywords-item', 'show');
             }
         });
+        $menu.find('[data-keywords-filter=show][data-menu-title]').each(function (i, o) {
+            var $next = $(o).next();
+            $next.attr('data-keywords-item', 'show');
+            $next.find('[data-keywords-filter]').attr('data-keywords-filter', 'show').attr('data-keywords-item', 'show');
+        });
     };
     var menuFilterTimer = null;
     var $keywords = $frame.find('#menuSearchKeywords');

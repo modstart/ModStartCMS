@@ -300,12 +300,25 @@ class AuthController extends ModuleBaseController
         EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
         if (!empty($oauthUserInfo['avatar'])) {
             $avatarExt = FileUtil::extension($oauthUserInfo['avatar']);
-            $avatar = CurlUtil::getRaw($oauthUserInfo['avatar']);
-            if (!empty($avatar)) {
-                if (empty($avatarExt)) {
-                    $avatarExt = 'jpg';
+            $allowImageExts = ['jpg', 'jpeg', 'png', 'gif'];
+            if (!in_array($avatarExt, $allowImageExts)) {
+                Log::info('Member.Auth.OauthBind.AvatarExtError - ' . $avatarExt . ' - ' . $oauthUserInfo['avatar']);
+                $avatarExt = null;
+            }
+            $avatarRet = CurlUtil::get($oauthUserInfo['avatar'], [], [
+                'returnHeader' => true,
+            ]);
+            if (!empty($avatarRet['body'])) {
+                if (empty($avatarExt) && !empty($ret['headerMap']['content-type'])) {
+                    $avatarExt = FileUtil::mimeToExt($ret['headerMap']['content-type']);
+                    if (!in_array($avatarExt, $allowImageExts)) {
+                        Log::info('Member.Auth.OauthBind.AvatarExtGuessError - ' . $avatarExt . ' - ' . $oauthUserInfo['avatar']);
+                        $avatarExt = null;
+                    }
                 }
-                MemberUtil::setAvatar($memberUserId, $avatar, $avatarExt);
+                if (!empty($avatarExt)) {
+                    MemberUtil::setAvatar($memberUserId, $avatarRet['body'], $avatarExt);
+                }
             }
         }
         Session::put('memberUserId', $memberUserId);

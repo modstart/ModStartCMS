@@ -60,7 +60,7 @@
                             </a>
                         @else
                             <a href="javascript:;" class="title @if(!empty($_v1['_active'])) open @endif"
-                               data-keywords-item onclick="$(this).toggleClass('open')">
+                               data-keywords-item data-keywords-filter data-menu-title onclick="$(this).toggleClass('open')">
                                 <i class="arrow"></i>
                                 {!! empty($_v1['icon'])?'<i class="icon iconfont icon-list"></i>':$_v1['icon'] !!}
                                 <span class="text">{{$_v1['title']}}</span>
@@ -74,7 +74,7 @@
                                                 <span class="text">{{$_v2['title']}}</span>
                                             </a>
                                         @else
-                                            <a href="javascript:;" data-keywords-item
+                                            <a href="javascript:;" data-keywords-item data-keywords-filter data-menu-title
                                                class="title @if(!empty($_v2['_active'])) open @endif"
                                                onclick="$(this).toggleClass('open')">
                                                 <i class="arrow"></i>

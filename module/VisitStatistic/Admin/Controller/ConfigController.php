@@ -20,6 +20,8 @@ class ConfigController extends Controller
             ->defaultValue(15);
         $builder->switch('VisitStatistic_UaDisable', '不记录UserAgent')
             ->help('开启后不记录UserAgent，节省数据库空间');
+        $builder->switch('VisitStatistic_IgnoreRobot', '忽略搜索引擎')
+            ->help('开启后不记录搜索引擎的访问记录');
         $builder->formClass('wide');
         $builder->useDialog();
         $builder->pageTitle('网站访问记录设置');

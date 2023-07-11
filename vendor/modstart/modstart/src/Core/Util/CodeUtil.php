@@ -138,7 +138,7 @@ class CodeUtil
 
     public static function htmlBeauty($html)
     {
-        $tidy = tidy_parse_string($html, array(
+        $tidy = \tidy_parse_string($html, array(
             'indent-spaces' => 4,
             'indent' => true,
             'output-xhtml' => true,

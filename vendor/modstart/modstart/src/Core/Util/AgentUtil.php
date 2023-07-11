@@ -68,4 +68,42 @@ class AgentUtil
         return !Agent::isPhone() && !Agent::isTablet();
     }
 
+    private static $robots = [
+        '/Googlebot/i' => 'Google',
+        '/Baiduspider/i' => 'Baidu',
+        '/360Spider/i' => '360',
+        '/Sogou/i' => 'Sogou',
+        '/bingbot/i' => 'Bing',
+
+        '/YisouSpider/i' => 'Yisou',
+        '/Bytespider/i' => 'TouTiao',
+        '/duckduckgo\\.com/i' => 'DuckDuckGo',
+        '/DotBot/i' => 'Moz',
+        '/AhrefsBot/i' => 'Ahrefs',
+        '/SemrushBot/i' => 'Semrush',
+        '/GeedoBot/i' => 'GeedoBot',
+        '/AwarioBot/i' => 'Awario',
+
+        '/Apache\\-HttpClient/i' => 'Other',
+        '/github\\-camo/i' => 'Other',
+        '/python\\-http/i' => 'Other',
+        '/Go\\-http\\-client/i' => 'Other',
+        '/msray/i' => 'Other',
+        '/crawler/i' => 'Other',
+        '/spider/i' => 'Other',
+    ];
+
+    public static function detectRobot($userAgent = null)
+    {
+        if (null === $userAgent) {
+            $userAgent = AgentUtil::getUserAgent();
+        }
+        foreach (self::$robots as $regex => $robot) {
+            if (preg_match($regex, $userAgent)) {
+                return $robot;
+            }
+        }
+        return null;
+    }
+
 }

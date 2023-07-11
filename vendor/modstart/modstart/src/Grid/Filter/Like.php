@@ -2,9 +2,11 @@
 
 namespace ModStart\Grid\Filter;
 
+use ModStart\Core\Util\StrUtil;
+
 class Like extends AbstractFilter
 {
-    private $handle;
+    private $handle = null;
 
     /**
      * Get condition of this filter.
@@ -30,5 +32,23 @@ class Like extends AbstractFilter
     public function handle(\Closure $closure)
     {
         $this->handle = $closure;
+    }
+
+    public function wordSplit()
+    {
+        $this->handle = function ($keywords) {
+            return [
+                [
+                    'where' => [
+                        function ($query) use ($keywords) {
+                            $pcs = StrUtil::wordSplit($keywords);
+                            foreach ($pcs as $p) {
+                                $query->where($this->column, 'like', '%' . $p . '%');
+                            }
+                        }
+                    ]
+                ],
+            ];
+        };
     }
 }

@@ -386,7 +386,7 @@ function L($name, ...$params)
         $sessionLocale = \Illuminate\Support\Facades\Session::get('_locale', null);
         $locale = config('app.locale');
         $fallbackLocale = config('app.fallback_locale');
-        $trackMissing = config('modstart.lang.track_missing', false);
+        $trackMissing = config('modstart.trackMissingLang', false);
         if (ModuleManager::isModuleInstalled('I18n') && \ModStart\Core\Dao\ModelManageUtil::hasTable('lang_trans')) {
             $langTrans = \Module\I18n\Util\LangTransUtil::map();
         }

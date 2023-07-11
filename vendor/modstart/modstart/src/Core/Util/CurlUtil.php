@@ -157,6 +157,7 @@ class CurlUtil
         $result['body'] = null;
         if ($returnHeader) {
             $result['header'] = [];
+            $result['headerMap'] = [];
         }
         if ($option['method'] == 'get') {
             if (!empty($param)) {
@@ -225,6 +226,7 @@ class CurlUtil
                     $result['header'] [] = [
                         trim($mat[1]) => trim($mat[2])
                     ];
+                    $result['headerMap'][trim($mat[1])] = trim($mat[2]);
                 }
             }
         } else {

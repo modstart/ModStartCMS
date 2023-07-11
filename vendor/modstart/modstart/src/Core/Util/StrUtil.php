@@ -242,4 +242,20 @@ class StrUtil
         return $values;
     }
 
+    /**
+     * @Util 中文分词，如果未安装分词模块，则使用正则表达式分词
+     * @param $content string 分词的内容
+     * @return array 分词结果
+     */
+    public static function wordSplit($content)
+    {
+        if (modstart_module_enabled('WordSpliter')) {
+            $pcs = \Module\WordSpliter\Util\WordSpliterUtil::cut($content);
+        } else {
+            preg_match_all('/[\x{4e00}-\x{9fa5}]|\b[A-Za-z]+\b/u', $content, $mat);
+            $pcs = array_filter($mat[0]);
+        }
+        return $pcs;
+    }
+
 }

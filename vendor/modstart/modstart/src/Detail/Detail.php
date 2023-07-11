@@ -214,6 +214,8 @@ class Detail implements Renderable
             case 'gridBeforeRequestScriptView':
             case 'gridRequestScript':
             case 'sortAddPosition':
+            case 'titleAdd':
+            case 'titleEdit':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

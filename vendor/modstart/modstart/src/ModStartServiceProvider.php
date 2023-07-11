@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use ModStart\Admin\ModStartAdmin;
 use ModStart\App\Api\ModStartApi;
 use ModStart\App\OpenApi\ModStartOpenApi;
@@ -116,11 +117,24 @@ class ModStartServiceProvider extends ServiceProvider
                 $forwardedHost = Request::headerGet('x-forwarded-host');
                 $domain = Request::domain();
                 if ($forwardedHost && $domain && $forwardedHost != $domain) {
-                    $redirect = Request::domainUrl() . Request::basePathWithQueries();
-                    Log::info('xForwardedHostVisitRedirect - ' . $forwardedHost . ' to ' . $redirect);
-                    header("HTTP/1.1 301 Moved Permanently");
-                    header("Location: " . $redirect);
-                    exit();
+                    $localIgnores = [
+                        'localhost',
+                        '127.0.0.1'
+                    ];
+                    $isLocal = false;
+                    foreach ($localIgnores as $li) {
+                        if (Str::contains($forwardedHost, $li)) {
+                            $isLocal = true;
+                            break;
+                        }
+                    }
+                    if (!$isLocal) {
+                        $redirect = Request::domainUrl() . Request::basePathWithQueries();
+                        Log::info('xForwardedHostVisitRedirect - ' . $forwardedHost . ' to ' . $redirect);
+                        header("HTTP/1.1 301 Moved Permanently");
+                        header("Location: " . $redirect);
+                        exit();
+                    }
                 }
             }
         }
