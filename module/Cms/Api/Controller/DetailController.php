@@ -36,7 +36,11 @@ class DetailController extends ModuleBaseController
         CmsContentUtil::increaseView($data['record']['id']);
         $cat = CmsCatUtil::get($data['record']['catId']);
         BizException::throwsIfEmpty('栏目不存在', $cat);
-        $view = $cat['detailTemplate'];
+        $record = $data['record'];
+        $view = $record['detailTemplate'];
+        if (empty($view)) {
+            $view = $cat['detailTemplate'];
+        }
         if (empty($view)) {
             $view = $data['model']['detailTemplate'];
         }
@@ -45,11 +49,8 @@ class DetailController extends ModuleBaseController
         $catRootChildren = CmsCatUtil::children($catRoot['id']);
         $viewData = [];
         $viewData['view'] = $view;
-        // print_r($cat);exit();
-        if (CmsMemberPermitUtil::canVisitCat($cat)) {
-            $record = $data['record'];
-        } else {
-            $record = ArrayUtil::keepKeys($data['record'], [
+        if (!CmsMemberPermitUtil::canVisitCat($cat)) {
+            $record = ArrayUtil::keepKeys($record, [
                 'title', 'summary', 'cover', 'catId', 'id',
                 'seoTitle', 'seoKeywords', 'seoDescription',
             ]);

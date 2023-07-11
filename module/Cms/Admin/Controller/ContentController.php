@@ -36,6 +36,7 @@ use Module\Cms\Type\CmsMode;
 use Module\Cms\Type\CmsModelContentStatus;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsModelUtil;
+use Module\Cms\Util\CmsTemplateUtil;
 use Module\Member\Util\MemberFieldUtil;
 use Module\TagManager\Model\TagManager;
 
@@ -318,6 +319,10 @@ class ContentController extends Controller
                         $form->tags('tags', '标签')->serializeType(Tags::SERIALIZE_TYPE_COLON_SEPARATED);
                         $form->text('author', '作者');
                         $form->text('source', '来源');
+                        $options = array_merge([
+                            '' => '默认',
+                        ], CmsTemplateUtil::allDetailTemplateMap());
+                        $form->select('detailTemplate', '模板')->options($options);
                     });
                 }
 
@@ -332,7 +337,8 @@ class ContentController extends Controller
                 $recordValue = ArrayUtil::keepKeys($data, [
                     'catId', 'title', 'alias', 'title', 'summary', 'cover', 'postTime',
                     'status', 'isRecommend', 'isTop', 'tags', 'author', 'source',
-                    'seoTitle', 'seoDescription', 'seoKeywords'
+                    'seoTitle', 'seoDescription', 'seoKeywords',
+                    'detailTemplate',
                 ]);
                 if (modstart_config('CmsUrlMix_Enable', false)) {
                     $recordValue['fullUrl'] = (empty($data['fullUrl']) ? null : $data['fullUrl']);

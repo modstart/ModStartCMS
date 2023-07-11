@@ -18,7 +18,7 @@
     "tags": [
         "通用CMS"
     ],
-    "version": "3.4.0",
+    "version": "3.5.0",
     "modstartVersion": ">=2.9.0",
     "author": "ModStart",
     "description": "提供通用的动态模型内容管理系统",
