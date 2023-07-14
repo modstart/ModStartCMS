@@ -22,11 +22,19 @@ export default {
             type: String,
             default: '/member_data/ueditor'
         },
+        editorOption: {
+            type: Object,
+            default: () => {
+                return {}
+            },
+        },
     },
     data() {
         return {
             id: null,
             editor: null,
+            editorReady: false,
+            ignoreChangedContent: null,
         }
     },
     mounted() {
@@ -34,10 +42,22 @@ export default {
         this.htmlEditorInit()
     },
     beforeDestroy() {
-        if (this.htmlEditor) {
-            this.htmlEditor.destroy()
-            this.htmlEditor = null
+        if (this.editor) {
+            this.editor.destroy()
+            this.editor = null
         }
+    },
+    watch: {
+        data: {
+            handler(n, o) {
+                if (this.ignoreChangedContent && this.ignoreChangedContent === n) {
+                    this.ignoreChangedContent = null
+                    return
+                }
+                this.setContent(n)
+            },
+            immediate: true,
+        },
     },
     methods: {
         htmlEditorInit() {
@@ -51,20 +71,32 @@ export default {
                     editorCallback = MS.editor.simple
                     break
             }
-            this.htmlEditor = editorCallback(this.id, {
+            this.editor = editorCallback(this.id, {
                 server: this.server,
                 ready: () => {
-                    // console.log('htmlEditor.ready', this.htmlEditor)
-                    if (this.data) {
-                        this.htmlEditor.setContent(this.data)
-                    }
+                    this.editorReady = true
                 }
-            })
-            this.htmlEditor.addListener('contentChange', () => {
-                // console.log('htmlEditor.contentChange', this.htmlEditor.getContent())
-                this.$emit('input', this.htmlEditor.getContent())
+            }, Object.assign({
+                zIndex: 10000,
+            }, this.editorOption))
+            this.setContent(this.data)
+            this.editor.addListener('contentChange', () => {
+                // console.log('editor.contentChange', this.editor.getContent())
+                const content = this.editor.getContent()
+                this.ignoreChangedContent = content
+                this.$emit('input', content)
             })
         },
+        setContent(content) {
+            if (!this.editorReady) {
+                setTimeout(() => {
+                    this.setContent(content)
+                }, 100)
+                return
+            }
+            // console.log('editor.setContent', content)
+            this.editor.setContent(content)
+        }
     }
 }
 </script>

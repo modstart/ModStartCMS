@@ -4,7 +4,7 @@
 <script>
     layui.use('tree', function () {
         var tree = layui.tree;
-        var ids = {!! json_encode($value) !!};
+        var ids = {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!};
         var filter = function (nodes) {
             var newNodes = [];
             for (var i = 0; i < nodes.length; i++) {

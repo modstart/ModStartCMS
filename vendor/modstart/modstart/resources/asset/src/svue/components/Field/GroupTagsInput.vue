@@ -1,13 +1,11 @@
 <template>
     <div class="pb-group-tags-input">
-        <div v-if="!option.length" class="ub-text-muted">
+        <div v-if="!filteredOption.length" class="ub-text-muted">
             无
         </div>
         <div v-else>
-            <table>
-                <tr v-for="(gt,gtIndex) in option"
-                    v-if="groupFilter(gt)"
-                    :key="gtIndex">
+            <table class="ub-table mini">
+                <tr v-for="(gt,gtIndex) in filteredOption">
                     <td style="width:6em;vertical-align:top;">{{ gt[groupTitleKey] }}</td>
                     <td>
                         <el-checkbox v-for="(gtItem,gtIndex) in gt[childKey]"
@@ -42,6 +40,18 @@ export default {
         groupFilter: {
             type: Function,
             default: (group) => true
+        }
+    },
+    computed: {
+        filteredOption() {
+            let result
+            if (this.groupFilter) {
+                result = this.option.filter(this.groupFilter)
+            } else {
+                result = this.option
+            }
+            this.$emit('on-option-filtered', result)
+            return result
         }
     },
     methods: {

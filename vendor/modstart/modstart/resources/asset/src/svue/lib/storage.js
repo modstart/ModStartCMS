@@ -36,6 +36,14 @@ const Storage = {
         }
         return defaultValue
     },
+    prepare(k, cb, failCb) {
+        let v = Storage.get(k, null)
+        if (null !== v) {
+            cb(v)
+        } else {
+            failCb()
+        }
+    },
 }
 
 

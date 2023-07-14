@@ -5,72 +5,82 @@
 </template>
 
 <script>
-    import {FieldInputMixin, FieldVModel} from "@ModStartAsset/svue/lib/fields-config";
-    import {StrUtil} from "@ModStartAsset//svue/lib/util"
+import {FieldInputMixin, FieldVModel} from "@ModStartAsset/svue/lib/fields-config";
+import {StrUtil} from "@ModStartAsset/svue/lib/util"
 
-    export default {
-        name: "RichEditor",
-        mixins: [FieldInputMixin, FieldVModel],
-        data() {
-            return {
-                id: null,
-                editor: null,
-                ignoreChange: false,
-            }
-        },
-        watch: {
-            data: {
-                handler(n, o) {
-                    // console.log('data.change', this.ignoreChange, n)
-                    if (this.ignoreChange) {
-                        this.ignoreChange = false
-                        return
-                    }
-                    this.setContent(n)
-                    this.currentData = n
-                },
-                immediate: true,
+export default {
+    name: "RichEditor",
+    mixins: [FieldInputMixin, FieldVModel],
+    props: {
+        editorOption: {
+            type: Object,
+            default: () => {
+                return {}
             },
         },
-        mounted() {
-            this.id = StrUtil.randomString()
-            $(this.$refs.editor).attr('id', this.id)
-            this.$nextTick(() => {
-                this.editor = window.api.editor.basic(this.id, {
-                    ready: () => {
-                        // console.log('editor.ready', this.editor)
-                        //TODO 该段代码会导致插入图片时不能插入正确的位置
-                        // $(this.editor.container).click((e) => {
-                        //    e.stopPropagation()
-                        //    this.editor.setContent(this.currentData)
-                        //})
-                    },
-                },{
-                    zIndex: 10000,
-                })
-                this.editor.on('contentchange', () => {
-                    this.currentData = this.editor.getContent()
-                    this.ignoreChange = true
-                })
-            })
-        },
-        methods: {
-            setContent(content) {
-                if (!this.editor || !this.editor.body) {
-                    setTimeout(() => {
-                        this.setContent(content)
-                    }, 100)
+    },
+    data() {
+        return {
+            id: null,
+            editor: null,
+            editorReady: false,
+            ignoreChangedContent: null,
+        }
+    },
+    watch: {
+        data: {
+            handler(n, o) {
+                if (this.ignoreChangedContent && this.ignoreChangedContent === n) {
+                    this.ignoreChangedContent = null
                     return
                 }
-                // console.log('editor.setContent', content)
+                this.setContent(n)
+            },
+            immediate: true,
+        },
+    },
+    mounted() {
+        this.id = StrUtil.randomString()
+        $(this.$refs.editor).attr('id', this.id)
+        this.$nextTick(() => {
+            this.editor = MS.editor.basic(this.id, {
+                ready: () => {
+                    this.editorReady = true;
+                    // console.log('editor.ready', this.editor)
+                    //TODO 该段代码会导致插入图片时不能插入正确的位置
+                    // $(this.editor.container).click((e) => {
+                    //    e.stopPropagation()
+                    //    this.editor.setContent(this.currentData)
+                    //})
+                },
+            }, Object.assign({
+                zIndex: 10000,
+            }, this.editorOption))
+            this.editor.on('contentchange', () => {
+                // console.log('xxx','contentchange');
+                const content = this.editor.getContent()
+                this.currentData = content
+                this.ignoreChangedContent = content
+            })
+        })
+    },
+    beforeDestroy() {
+        if (this.editor) {
+            this.editor.destroy()
+            this.editor = null
+        }
+    },
+    methods: {
+        setContent(content) {
+            if (!this.editorReady) {
                 setTimeout(() => {
-                    this.editor.setContent(content)
+                    this.setContent(content)
                 }, 100)
+                return
             }
+            // console.log('editor.setContent', content)
+            this.editor.setContent(content)
         }
     }
+}
 </script>
-
-<style scoped>
-
-</style>
