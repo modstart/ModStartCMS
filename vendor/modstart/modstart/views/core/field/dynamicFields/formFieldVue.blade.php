@@ -15,13 +15,9 @@ if(!empty($param['modelPrefix'])){
         </div>
         <div class="field">
             @if($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_TEXT)
-                <el-input v-model="{{$modelPrefix}}['{{$f['name']}}']"
-                          placeholder="{{$f['placeholder']}}"
-                ></el-input>
+                <el-input v-model="{{$modelPrefix}}['{{$f['name']}}']"></el-input>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_NUMBER)
-                <el-input-number v-model="{{$modelPrefix}}['{{$f['name']}}']"
-                                 placeholder="{{$f['placeholder']}}"
-                ></el-input-number>
+                <el-input-number v-model="{{$modelPrefix}}['{{$f['name']}}']"></el-input-number>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_SWITCH)
                 <el-switch v-model="{{$modelPrefix}}['{{$f['name']}}']"></el-switch>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_RADIO)
@@ -43,12 +39,25 @@ if(!empty($param['modelPrefix'])){
                     @endforeach
                 </el-checkbox-group>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_FILE)
-                <file-selector v-model="{{$modelPrefix}}['{{$f['name']}}']" upload-enable></file-selector>
+                <file-selector v-model="{{$modelPrefix}}['{{$f['name']}}']"
+                               upload-text="{{empty($f['data']['text1'])?'':$f['data']['text1']}}"
+                               :gallery-enable="!{{json_encode(boolval(!empty($f['data']['switch1'])))}}"
+                               upload-enable
+                ></file-selector>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_FILES)
-                <files-selector v-model="{{$modelPrefix}}['{{$f['name']}}']" upload-enable></files-selector>
+                <files-selector v-model="{{$modelPrefix}}['{{$f['name']}}']"
+                                upload-text="{{empty($f['data']['text1'])?'':$f['data']['text1']}}"
+                                :gallery-enable="!{{json_encode(boolval(!empty($f['data']['switch1'])))}}"
+                                upload-enable
+                ></files-selector>
             @else
                 暂未支持 {{$f['type']}}
                 <code>{{json_encode($f)}}</code>
+            @endif
+            @if(!empty($f['placeholder']))
+                <div class="help">
+                    {{$f['placeholder']}}
+                </div>
             @endif
         </div>
     </div>

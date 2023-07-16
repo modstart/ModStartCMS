@@ -20,9 +20,9 @@
                             <i class="iconfont icon-warning"></i>
                         </a>
                     </th>
-                    <th width="100">类型</th>
+                    <th width="150">类型</th>
                     <th>参数</th>
-                    <th width="50">&nbsp;</th>
+                    <th width="150">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -67,6 +67,18 @@
                                         默认选中
                                     </span>
                                 </el-radio>
+                            </div>
+                        </div>
+                        <div v-else-if="['file','files'].includes(value[vIndex].type)">
+                            <div>
+                                <el-checkbox v-model="value[vIndex].data.switch1">
+                                    <span class="tw-text-sm">不使用文件管理器</span>
+                                </el-checkbox>
+                            </div>
+                            <div>
+                                <el-input v-model="value[vIndex].data.text1">
+                                    <template slot="prepend">上传按钮文字</template>
+                                </el-input>
                             </div>
                         </div>
                         <div v-else-if="['radio','select','checkbox'].includes(value[vIndex].type)">
@@ -114,12 +126,19 @@
                             </el-input>
                         </div>
                         <div class="tw-mt-2">
-                            <el-checkbox v-model="value[vIndex].isRequired"><span class="tw-text-sm">必填</span>
+                            <el-checkbox v-model="value[vIndex].isRequired">
+                                <span class="tw-text-sm">必填</span>
                             </el-checkbox>
                         </div>
                     </td>
-                    <td class="tw-text-center">
-                        <a href="javascript:;" class="ub-text-danger" @click="value.splice(vIndex,1)">
+                    <td class="tw-text-right">
+                        <a href="javascript:;" class="btn btn-sm btn-round" @click="up(value,vIndex)" v-if="vIndex>0">
+                            <i class="iconfont icon-direction-up"></i>
+                        </a>
+                        <a href="javascript:;" class="btn btn-sm btn-round" @click="down(value,vIndex)" v-if="vIndex<value.length-1">
+                            <i class="iconfont icon-direction-down"></i>
+                        </a>
+                        <a href="javascript:;" class="btn btn-sm btn-round ub-text-danger" @click="value.splice(vIndex,1)">
                             <i class="iconfont icon-trash"></i>
                         </a>
                     </td>
@@ -160,13 +179,19 @@
                 }
             },
             methods: {
+                up:MS.collection.sort.up,
+                down:MS.collection.sort.down,
                 doValueAdd() {
                     this.value.push({
                         name: '',
                         title: '',
                         type: 'text',
                         data: {
-                            options: []
+                            options: [],
+                            switch1: false,
+                            switch2: false,
+                            text1: '',
+                            text2: '',
                         },
                         isRequired: false,
                         placeholder: '',

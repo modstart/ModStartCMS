@@ -41,7 +41,7 @@
                     {{ selectText }}
                 </a>
                 <div class="tw-inline-block tw-align-top" v-if="uploadEnable">
-                    <UploadButton :url="fileDialogUrl" category="file" auto-save @save="onUploadSuccess"/>
+                    <UploadButton :url="fileDialogUrl" category="file" :upload-text="uploadText" auto-save @save="onUploadSuccess"/>
                 </div>
             </div>
         </div>
@@ -90,6 +90,10 @@ export default {
         selectText: {
             type: String,
             default: '选择文件',
+        },
+        uploadText: {
+            type: String,
+            default: null,
         },
         doSelectCustom: {
             type: Function,

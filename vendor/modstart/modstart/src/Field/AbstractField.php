@@ -662,10 +662,10 @@ class AbstractField implements Renderable
                     return htmlspecialchars($value);
             }
         } catch (\Throwable $e) {
-            Log::error('Field renderMode error - ' . $e->getMessage() . ' - ' . $e->getTraceAsString());
-            return new \Exception('Field renderMode error');
+            Log::error('FieldRenderModeError - ' . $e->getMessage() . ' - ' . $e->getTraceAsString());
+            return new \Exception('FieldRenderModeError - ' . $e->getMessage());
         }
-        throw new \Exception('Field renderMode not exists');
+        throw new \Exception('FieldRenderModeNotExist');
     }
 
     public function __call($method, $arguments)

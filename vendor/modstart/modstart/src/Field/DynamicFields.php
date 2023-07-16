@@ -37,6 +37,18 @@ class DynamicFields extends AbstractField
         if (empty($value)) {
             $value = [];
         }
+        foreach ($value as $i => $v) {
+            foreach ([
+                         'switch1' => false,
+                         'switch2' => false,
+                         'text1' => '',
+                         'text2' => '',
+                     ] as $k => $dv) {
+                if (!isset($v['data'][$k])) {
+                    $value[$i]['data'][$k] = $dv;
+                }
+            }
+        }
         return $value;
     }
 
