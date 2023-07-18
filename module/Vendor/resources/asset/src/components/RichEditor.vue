@@ -57,8 +57,8 @@ export default {
                 zIndex: 10000,
             }, this.editorOption))
             this.editor.on('contentchange', () => {
-                // console.log('xxx','contentchange');
                 const content = this.editor.getContent()
+                console.log('RichEditor.contentchange',content);
                 this.currentData = content
                 this.ignoreChangedContent = content
             })

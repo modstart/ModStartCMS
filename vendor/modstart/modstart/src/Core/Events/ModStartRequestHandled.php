@@ -20,7 +20,9 @@ class ModStartRequestHandled
     public function isHtml()
     {
         try {
-            return Str::contains($this->response->headers->get('content-type'), 'text/html');
+            if ($this->response->headers) {
+                return Str::contains($this->response->headers->get('content-type'), 'text/html');
+            }
         } catch (\Exception $e) {
             Log::info('MS.ModStartRequestHandled.Unknown - ' . get_class($this->response));
         }

@@ -72,7 +72,16 @@ trait ExceptionReportHandleTrait
     private function getExceptionResponse($exception)
     {
         if ($exception instanceof BizException) {
+            $exceptionParam = $exception->param;
             $ret = Response::sendError($exception->getMessage());
+            if (!\ModStart\Core\Input\Request::isAjax()) {
+                if (!empty($exceptionParam['view'])) {
+                    $ret = view($exceptionParam['view'], [
+                        '_viewFrame' => 'theme.default.pc.frame',
+                        'msg' => $exception->getMessage(),
+                    ]);
+                }
+            }
             if ($ret instanceof View) {
                 return response()->make($ret);
             }

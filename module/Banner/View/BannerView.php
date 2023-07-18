@@ -10,8 +10,8 @@ class BannerView
 {
     public static function basic($position,
                                  $size = '1400x400',
-                                 $ratio = '5-2',
-                                 $mobileRatio = '3-2',
+                                 $ratio = null,
+                                 $mobileRatio = null,
                                  $round = false,
                                  $container = false)
     {
@@ -22,7 +22,7 @@ class BannerView
             $ratio = '5-2';
         }
         if (null === $mobileRatio) {
-            $mobileRatio = '1-1';
+            $mobileRatio = $ratio;
         }
         if (null === $round) {
             $round = false;

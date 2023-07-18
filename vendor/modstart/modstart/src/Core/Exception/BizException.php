@@ -5,42 +5,56 @@ namespace ModStart\Core\Exception;
 
 class BizException extends \Exception
 {
-    public static function throws($msg)
+    public $param = [];
+
+    public static function throws($msg, $param = [])
     {
-        throw new BizException($msg);
+        $e = new BizException($msg);
+        $e->param = $param;
+        throw $e;
     }
 
-    public static function throwsIf($msg, $condition)
+    public static function throwsIf($msg, $condition, $param = [])
     {
         if ($condition) {
-            throw new BizException($msg);
+            $e = new BizException($msg);
+            $e->param = $param;
+            throw $e;
         }
     }
 
-    public static function throwsIfResponseError($response, $prefix = '')
+    public static function throwsIfResponseError($response, $prefix = '', $param = [])
     {
         if ($prefix) {
             $prefix = $prefix . ':';
         }
         if (empty($response)) {
-            throw new BizException($prefix . 'Response Empty');
+            $e = new BizException($prefix . 'Response Empty');
+            $e->param = $param;
+            throw $e;
         }
         if ($response['code']) {
-            throw new BizException($prefix . $response['msg']);
+            $e = new BizException($prefix . $response['msg']);
+            $e->param = $param;
+            throw $e;
         }
     }
 
-    public static function throwsIfEmpty($msg, $object)
+    public static function throwsIfEmpty($msg, $object, $param = [])
     {
         if (empty($object)) {
-            throw new BizException($msg);
+            $e = new BizException($msg);
+            $e->param = $param;
+            throw $e;
         }
     }
 
-    public static function throwsIfNotEmpty($msg, $object)
+    public static function throwsIfNotEmpty($msg, $object, $param = [])
     {
         if (!empty($object)) {
-            throw new BizException($msg);
+            $e = new BizException($msg);
+            $e->param = $param;
+            throw $e;
         }
     }
 
