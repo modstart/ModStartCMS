@@ -9,11 +9,16 @@
     <div class="field">
         <div id="{{$id}}Input">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
-            <table class="ub-table border">
+            <table class="ub-table border tw-bg-white">
                 <tbody>
                     @foreach($fields as $f)
                     <tr>
-                        <td width="1%" class="ub-text-truncate">{{empty($f['title'])?$f['name']:$f['title']}}</td>
+                        <td width="1%" class="ub-text-truncate">
+                            {{empty($f['title'])?$f['name']:$f['title']}}
+                            @if(!empty($f['tip']))
+                                <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$f['tip']}}"><i class="iconfont icon-warning"></i></a>
+                            @endif
+                        </td>
                         <td>
                             @if($f['type']=='switch')
                                 <el-switch v-model="value['{{$f['name']}}']" />

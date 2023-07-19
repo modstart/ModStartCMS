@@ -18,10 +18,10 @@ class ComplexFields extends AbstractField
     {
         $this->addVariables([
             'fields' => [
-                // ['name' => 'xxx', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false],
-                // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => ''],
-                // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home'],
-                // ['name' => 'xxx', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0],
+                // ['name' => 'xxx', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'tip'=>'xxx', ],
+                // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'tip'=>'xxx', ],
+                // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'tip'=>'xxx', ],
+                // ['name' => 'xxx', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'tip'=>'xxx', ],
             ],
             'iconServer' => modstart_admin_url('widget/icon'),
         ]);

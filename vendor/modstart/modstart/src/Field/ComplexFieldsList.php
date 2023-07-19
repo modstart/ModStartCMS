@@ -21,11 +21,13 @@ class ComplexFieldsList extends AbstractField
     {
         $this->addVariables([
             'fields' => [
-                // ['name' => 'xxx1', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'placeholder'=>'', ],
-                // ['name' => 'xxx2', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'placeholder'=>'', ],
-                // ['name' => 'xxx3', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', ],
-                // ['name' => 'xxx4', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'placeholder'=>'', ],
-                // ['name' => 'xxx5', 'title' => '数字', 'type' => 'number-text', 'defaultValue' => 0, 'placeholder'=>'', ],
+                // ['name' => 'xxx', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '数字', 'type' => 'number-text', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '图片', 'type' => 'image', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '多字符串值', 'type' => 'values', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
             ],
             'valueItem' => new \stdClass(),
             'iconServer' => modstart_admin_url('widget/icon'),

@@ -14,7 +14,12 @@
                 <thead>
                 <tr>
                     @foreach($fields as $f)
-                        <th>{{empty($f['title'])?$f['name']:$f['title']}}</th>
+                        <th>
+                            {{empty($f['title'])?$f['name']:$f['title']}}
+                            @if(!empty($f['tip']))
+                                <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$f['tip']}}"><i class="iconfont icon-warning"></i></a>
+                            @endif
+                        </th>
                     @endforeach
                     <td>&nbsp;</td>
                 </tr>
@@ -32,6 +37,10 @@
                             @elseif($f['type']=='icon')
                                 <icon-input v-model="value[vIndex]['{{$f['name']}}']" :icons="icons"
                                             :inline="true"></icon-input>
+                            @elseif($f['type']=='image')
+                                <image-selector v-model="value[vIndex]['{{$f['name']}}']"></image-selector>
+                            @elseif($f['type']=='values')
+                                <values-editor v-model="value[vIndex]['{{$f['name']}}']"></values-editor>
                             @elseif($f['type']=='number')
                                 <el-input-number v-model="value[vIndex]['{{$f['name']}}']"
                                                  placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"

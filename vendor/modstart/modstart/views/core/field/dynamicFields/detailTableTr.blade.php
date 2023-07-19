@@ -8,6 +8,8 @@
             @else
                 @if($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_TEXT)
                     {{$valueObject[$f['name']]}}
+                @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_TEXTAREA)
+                    {{$valueObject[$f['name']]}}
                 @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_NUMBER)
                     {{$valueObject[$f['name']]}}
                 @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_SWITCH)

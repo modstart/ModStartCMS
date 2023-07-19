@@ -25,7 +25,9 @@
                         <td>
                             <input type="text" v-model="value[valueIndex]" />
                         </td>
-                        <td width="50">
+                        <td width="80" class="tw-text-right">
+                            <a href="javascript:;" class="ub-text-primary" v-if="valueIndex>0" @click="doUp(value,valueIndex)"><i class="iconfont icon-direction-up"></i></a>
+                            <a href="javascript:;" class="ub-text-primary" v-if="valueIndex<value.length-1" @click="doDown(value,valueIndex)"><i class="iconfont icon-direction-down"></i></a>
                             <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
                         </td>
                     </tr>
@@ -55,7 +57,8 @@
                 }
             },
             methods:{
-
+                doUp:MS.collection.sort.up,
+                doDown:MS.collection.sort.down,
             }
         });
     });

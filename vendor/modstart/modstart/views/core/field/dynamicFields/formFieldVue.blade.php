@@ -16,6 +16,8 @@ if(!empty($param['modelPrefix'])){
         <div class="field">
             @if($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_TEXT)
                 <el-input v-model="{{$modelPrefix}}['{{$f['name']}}']"></el-input>
+            @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_TEXTAREA)
+                <el-input type="textarea" v-model="{{$modelPrefix}}['{{$f['name']}}']"></el-input>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_NUMBER)
                 <el-input-number v-model="{{$modelPrefix}}['{{$f['name']}}']"></el-input-number>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_SWITCH)

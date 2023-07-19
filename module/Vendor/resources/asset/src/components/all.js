@@ -4,6 +4,12 @@ import VideoSelector from "@ModStartAsset/svue/components/VideoSelector.vue"
 import AudioSelector from "@ModStartAsset/svue/components/AudioSelector.vue"
 import FileSelector from "@ModStartAsset/svue/components/FileSelector.vue"
 import FilesSelector from "@ModStartAsset/svue/components/FilesSelector.vue"
+import CodeEditor from "@ModStartAsset/svue/components/CodeEditor.vue"
+import RichEditor from "./RichEditor"
+import NameValueListEditor from "./NameValueListEditor"
+import SmartLink from "@ModStartAsset/svue/components/SmartLink"
+import SmartCaptcha from "@ModStartAsset/svue/components/SmartCaptcha"
+import SmartVerify from "@ModStartAsset/svue/components/SmartVerify"
 
 const setProp = (com, key, value) => {
     if (com.props && (key in com.props)) {
@@ -63,12 +69,12 @@ export default (Vue) => {
     Vue.component("files-selector", FilesSelector)
     Vue.component("video-selector", VideoSelector)
     Vue.component("audio-selector", AudioSelector)
-    Vue.component("code-editor", () => import("@ModStartAsset/svue/components/CodeEditor.vue"))
-    Vue.component('rich-editor', () => import('./RichEditor'))
-    Vue.component('name-value-list-editor', () => import('./NameValueListEditor'))
-    Vue.component("smart-link", () => import('@ModStartAsset/svue/components/SmartLink'))
-    Vue.component("smart-captcha", () => import('@ModStartAsset/svue/components/SmartCaptcha'))
-    Vue.component("smart-verify", () => import('@ModStartAsset/svue/components/SmartVerify'))
+    Vue.component("code-editor", CodeEditor)
+    Vue.component('rich-editor', RichEditor)
+    Vue.component('name-value-list-editor', NameValueListEditor)
+    Vue.component("smart-link", SmartLink)
+    Vue.component("smart-captcha", SmartCaptcha)
+    Vue.component("smart-verify", SmartVerify)
 }
 
 // VueManager.Vue.component('icon-selector', require('./../components/IconSelector').default)

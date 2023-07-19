@@ -127,6 +127,21 @@ class CustomField extends AbstractField
         return $valueObjectForField;
     }
 
+    public static function fetchedValueToString($field, $value, $param = [])
+    {
+        switch ($field['type']) {
+            case CustomFieldType::TYPE_TEXT:
+            case CustomFieldType::TYPE_RADIO:
+            case CustomFieldType::TYPE_FILE:
+                return $value;
+            case CustomFieldType::TYPE_FILES:
+                return join(',', $value);
+            default:
+                BizException::throws($param['tipPrefix'] . "不支持的字段类型: {$field['type']}");
+        }
+        return null;
+    }
+
     public static function renderAllDetailTableTr($fields, $valueObject, $param = [])
     {
 

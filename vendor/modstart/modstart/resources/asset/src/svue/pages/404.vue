@@ -59,6 +59,7 @@
 <style lang="less">
     .pb-page-404 {
         text-align: center;
+        flex-grow: 1;
 
         .box {
             color: #CCC;

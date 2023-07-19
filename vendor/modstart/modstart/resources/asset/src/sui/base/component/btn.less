@@ -10,12 +10,12 @@
     -ms-user-select: none;
     user-select: none;
     border: none;
-    padding: 0.3rem 0.7rem;
+    padding: 0.25rem 0.65rem;
     height: 1.6rem;
     line-height: 1rem;
     font-size: 0.65rem;
     border-radius: 0.2rem;
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, outline 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
     -webkit-appearance: none;
     box-sizing: border-box;
 }
@@ -41,7 +41,7 @@
 
 
 .btn-lg {
-    padding: 0.4rem 0.9rem;
+    padding: 0.35rem 0.85rem;
     font-size: 0.8rem;
     line-height: 1rem;
     border-radius: 0.24rem;
@@ -49,7 +49,7 @@
 }
 
 .btn-sm {
-    padding: 0.2rem 0.4rem;
+    padding: 0.15rem 0.35rem;
     font-size: 0.5rem;
     height: 1.4rem;
     border-radius: 0.16rem;
@@ -70,11 +70,11 @@
 
 }
 
-.btn.btn-outline-none, .btn[class*="ub-bg-"] {
-    outline: none;
+.btn.btn-border-none, .btn[class*="ub-bg-"] {
+    border: none;
 
     &:hover, &:hover:not(.disabled) {
-        outline: none;
+        border: none;
     }
 }
 
@@ -99,12 +99,11 @@ fieldset:disabled a.btn {
 .btn {
     color: var(--color-body-block);
     background-color: var(--color-content-bg);
-    outline: 1px solid var(--color-body-line);
-    outline-offset: -1px;
+    border: 0.05rem solid var(--color-body-line);
 
     &:hover:not(.disabled) {
         color: var(--color-primary);
-        outline: 1px solid var(--color-primary);
+        border: 0.05rem solid var(--color-primary);
     }
 }
 
@@ -123,12 +122,12 @@ fieldset:disabled a.btn {
 .btn-primary {
     color: #fff;
     background-color: var(--color-primary);
-    outline-color: var(--color-primary);
+    border-color: var(--color-primary);
 
     &:hover:not(.disabled) {
         color: #fff;
         background-color: var(--color-primary-dark);
-        outline-color: var(--color-primary-dark);
+        border-color: var(--color-primary-dark);
     }
 
     &.disabled, &:disabled {
@@ -150,8 +149,7 @@ fieldset:disabled a.btn {
 
 .btn-primary-line {
     color: var(--color-primary);
-    outline: 1px solid var(--color-primary);
-    outline-offset: -1px;
+    border: 0.05rem solid var(--color-primary);
     background: transparent;
 
     &:hover:not(.disabled) {
@@ -172,12 +170,12 @@ fieldset:disabled a.btn {
 .btn-success {
     color: #fff;
     background-color: var(--color-success);
-    outline-color: var(--color-success);
+    border-color: var(--color-success);
 
     &:hover:not(.disabled) {
         color: #fff;
         background-color: var(--color-success-dark);
-        outline-color: var(--color-success-dark);
+        border-color: var(--color-success-dark);
     }
 
     &.disabled, &:disabled {
@@ -198,12 +196,12 @@ fieldset:disabled a.btn {
 .btn-warning {
     color: #FFF;
     background-color: var(--color-warning);
-    outline-color: var(--color-warning);
+    border-color: var(--color-warning);
 
     &:hover:not(.disabled) {
         color: #fff;
         background-color: var(--color-warning-dark);
-        outline-color: var(--color-warning-dark);
+        border-color: var(--color-warning-dark);
     }
 
     &.disabled, &:disabled {
@@ -225,12 +223,12 @@ fieldset:disabled a.btn {
 .btn-danger {
     color: #fff;
     background-color: var(--color-danger);
-    outline-color: var(--color-danger);
+    border-color: var(--color-danger);
 
     &:hover:not(.disabled) {
         color: #fff;
         background-color: var(--color-danger-dark);
-        outline-color: var(--color-danger-dark);
+        border-color: var(--color-danger-dark);
     }
 
     &.disabled, &:disabled {
@@ -251,12 +249,12 @@ fieldset:disabled a.btn {
 .btn-vip {
     background-image: linear-gradient(90deg, #EDD3B0 0%, #DDB888 100%);
     color: #805D2D;
-    outline-color: #EDD3B0;
+    border-color: #EDD3B0;
 
     &:hover, &:active, &:not(:disabled):not(.disabled):active {
         background-image: linear-gradient(90deg, #DDB888 100%, #EDD3B0 0%);
         color: #805D2D !important;
-        outline-color: #EDD3B0 !important;
+        border-color: #EDD3B0 !important;
     }
 }
 

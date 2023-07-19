@@ -10,7 +10,7 @@
     <div class="field">
         <div id="{{$id}}Input">
             <input type="hidden" name="{{$name}}" :value="jsonValue"/>
-            <table class="ub-table border-all head-dark">
+            <table class="ub-table border-all tw-bg-white">
                 <thead>
                 <tr>
                     <th width="100">标题</th>
@@ -31,12 +31,14 @@
                         <el-input v-model="value[vIndex].title" plaleholder="中文提示"/>
                     </td>
                     <td>
-                        <el-input v-model="value[vIndex].name" placeholder="字母数字下划线"/>
+                        <el-input v-model="value[vIndex].name" placeholder="a-zA-Z0-9"/>
                     </td>
                     <td>
                         <el-select v-model="value[vIndex].type" placeholder="请选择">
                             @foreach(\ModStart\Field\Type\DynamicFieldsType::getList() as $k=>$v)
-                                <el-option label="{{$v}}" value="{{$k}}"></el-option>
+                                @if(null===$enabledFieldTypes||in_array($k,$enabledFieldTypes))
+                                    <el-option label="{{$v}}" value="{{$k}}"></el-option>
+                                @endif
                             @endforeach
                         </el-select>
                     </td>
@@ -99,7 +101,9 @@
                                         <td>
                                             <el-switch v-model="value[vIndex].data.options[oIndex].active"/>
                                         </td>
-                                        <td class="ub-text-center">
+                                        <td class="ub-text-right" width="80">
+                                            <a href="javascript:;" class="ub-text-muted" v-if="oIndex>0" @click="up(value[vIndex].data.options,oIndex)"><i class="iconfont icon-direction-up"></i></a>
+                                            <a href="javascript:;" class="ub-text-muted" v-if="oIndex<value[vIndex].data.options.length-1" @click="down(value[vIndex].data.options,oIndex)"><i class="iconfont icon-direction-down"></i></a>
                                             <a href="javascript:;" class="ub-text-muted"
                                                @click="value[vIndex].data.options.splice(oIndex,1)">
                                                 <i class="iconfont icon-trash"></i>
@@ -175,6 +179,10 @@
             },
             computed: {
                 jsonValue: function () {
+                    // fire change event
+                    setTimeout(function () {
+                        $('[name={{$name}}]').trigger('change');
+                    }, 0);
                     return JSON.stringify(this.value);
                 }
             },

@@ -23,9 +23,9 @@ class DynamicFields extends AbstractField
 
     protected function setup()
     {
-        // $this->addVariables([
-        //
-        // ]);
+        $this->addVariables([
+            'enabledFieldTypes' => null,
+        ]);
     }
 
     public function unserializeValue($value, AbstractField $field)
@@ -50,6 +50,12 @@ class DynamicFields extends AbstractField
             }
         }
         return $value;
+    }
+
+    public function enabledFieldTypes($enabledFieldTypes)
+    {
+        $this->addVariables(['enabledFieldTypes' => $enabledFieldTypes]);
+        return $this;
     }
 
     public function serializeValue($value, $model)
@@ -149,6 +155,26 @@ class DynamicFields extends AbstractField
         return $valueObject;
     }
 
+    public static function fetchedValueToString($field, $value, $param = [])
+    {
+        switch ($field['type']) {
+            case DynamicFieldsType::TYPE_TEXT:
+            case DynamicFieldsType::TYPE_TEXTAREA:
+            case DynamicFieldsType::TYPE_NUMBER:
+            case DynamicFieldsType::TYPE_SWITCH:
+            case DynamicFieldsType::TYPE_RADIO:
+            case DynamicFieldsType::TYPE_SELECT:
+            case DynamicFieldsType::TYPE_FILE:
+                return $value;
+            case DynamicFieldsType::TYPE_CHECKBOX:
+            case DynamicFieldsType::TYPE_FILES:
+                return join(',', $value);
+            default:
+                BizException::throws($param['tipPrefix'] . "不支持的字段类型: {$field['type']}");
+        }
+        return null;
+    }
+
     public static function renderAllDetailTableTr($fields, $valueObject, $param = [])
     {
         return View::make('modstart::core.field.dynamicFields.detailTableTr', [
@@ -176,6 +202,7 @@ class DynamicFields extends AbstractField
         foreach ($fields as $f) {
             switch ($f['type']) {
                 case DynamicFieldsType::TYPE_TEXT:
+                case DynamicFieldsType::TYPE_TEXTAREA:
                 case DynamicFieldsType::TYPE_NUMBER:
                 case DynamicFieldsType::TYPE_SWITCH:
                 case DynamicFieldsType::TYPE_RADIO:
