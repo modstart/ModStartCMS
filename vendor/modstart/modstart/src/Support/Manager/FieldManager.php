@@ -68,6 +68,7 @@ class FieldManager
             'period' => \ModStart\Field\Period::class,
             'radio' => \ModStart\Field\Radio::class,
             'rate' => \ModStart\Field\Rate::class,
+            'raw' => \ModStart\Field\Raw::class,
             'richHtml' => \ModStart\Field\RichHtml::class,
             'select' => \ModStart\Field\Select::class,
             'selectRemote' => \ModStart\Field\SelectRemote::class,

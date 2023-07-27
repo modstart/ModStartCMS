@@ -50,6 +50,13 @@
                                 </el-input>
                             </div>
                         </div>
+                        <div v-else-if="value[vIndex].type==='textarea'">
+                            <div>
+                                <el-input v-model="value[vIndex].defaultValue">
+                                    <template slot="prepend">默认值</template>
+                                </el-input>
+                            </div>
+                        </div>
                         <div v-else-if="value[vIndex].type==='number'">
                             <div>
                                 <el-input-number v-model="value[vIndex].defaultValue">

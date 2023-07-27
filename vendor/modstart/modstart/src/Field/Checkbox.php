@@ -7,9 +7,12 @@ namespace ModStart\Field;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Core\Util\TagUtil;
+use ModStart\Field\Concern\CanCascadeFields;
 
 class Checkbox extends AbstractField
 {
+    use CanCascadeFields;
+
     /**
      * 使用JSON
      */
@@ -89,6 +92,12 @@ class Checkbox extends AbstractField
             default:
                 return ConvertUtil::toArray($value);
         }
+    }
+
+    public function render()
+    {
+        $this->addCascadeScript();
+        return parent::render();
     }
 
 }

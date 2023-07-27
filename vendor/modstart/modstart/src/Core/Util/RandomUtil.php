@@ -142,6 +142,11 @@ class RandomUtil
             . self::hexString(12);
     }
 
+    /**
+     * @Util 随机概率
+     * @param $value int 概率值
+     * @return bool 是否成功
+     */
     public static function percent($value)
     {
         return rand(0, 99) < $value;

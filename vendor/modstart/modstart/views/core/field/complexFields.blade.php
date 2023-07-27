@@ -21,13 +21,17 @@
                         </td>
                         <td>
                             @if($f['type']=='switch')
-                                <el-switch v-model="value['{{$f['name']}}']" />
+                                <el-switch v-model="value['{{$f['name']}}']"></el-switch>
                             @elseif($f['type']=='text')
-                                <el-input v-model="value['{{$f['name']}}']" size="mini" />
+                                <el-input v-model="value['{{$f['name']}}']" size="mini"></el-input>
                             @elseif($f['type']=='icon')
-                                <icon-input v-model="value['{{$f['name']}}']" :icons="icons" :inline="true" />
+                                <icon-input v-model="value['{{$f['name']}}']" :icons="icons" :inline="true"></icon-input>
                             @elseif($f['type']=='number')
-                                <el-input-number v-model="value['{{$f['name']}}']" size="mini" />
+                                <el-input-number v-model="value['{{$f['name']}}']" size="mini"></el-input-number>
+                            @elseif($f['type']=='slider')
+                                <el-slider v-model="value['{{$f['name']}}']" size="mini"
+                                           :min="{{$f['min']}}" :max="{{$f['max']}}" :step="{{$f['step']}}"
+                                ></el-slider>
                             @endif
                         </td>
                     </tr>

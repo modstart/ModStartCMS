@@ -207,6 +207,9 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
             curl_setopt($ch, CURLOPT_PROXY, $option['http_proxy']);
         }
+        if (!isset($option['userAgent'])) {
+            $option['userAgent'] = self::defaultUserAgent();
+        }
         if (!empty($option['userAgent'])) {
             curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
         }
@@ -289,6 +292,12 @@ class CurlUtil
         }
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        if (!isset($option['userAgent'])) {
+            $option['userAgent'] = self::defaultUserAgent();
+        }
+        if (!empty($option['userAgent'])) {
+            curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
+        }
         $temp = curl_exec($ch);
         curl_close($ch);
         return $temp;
@@ -324,8 +333,32 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         }
+        if (!isset($option['userAgent'])) {
+            $option['userAgent'] = self::defaultUserAgent();
+        }
+        if (!empty($option['userAgent'])) {
+            curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
+        }
         $temp = curl_exec($ch);
         curl_close($ch);
         return $temp;
+    }
+
+    public static function defaultUserAgent()
+    {
+        $userAgent = 'ModStart/' . modstart_version() . ' PHP/' . PHP_VERSION . ' OS/' . PHP_OS;
+        $appInfo = [];
+        if (class_exists(\App\Constant\AppConstant::class)) {
+            if (defined('\\App\\Constant\\AppConstant::APP')) {
+                $appInfo[] = strtoupper(\App\Constant\AppConstant::APP);
+            }
+            if (defined('\\App\\Constant\\AppConstant::VERSION')) {
+                $appInfo[] = \App\Constant\AppConstant::VERSION;
+            }
+        }
+        if (!empty($appInfo)) {
+            $userAgent = implode('/', $appInfo) . ' ' . $userAgent;
+        }
+        return $userAgent;
     }
 }

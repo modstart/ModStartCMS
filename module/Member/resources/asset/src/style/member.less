@@ -3,9 +3,8 @@
 
 .pb-page-member-vip {
     background-color: @memberVipBgColor;
-    border-radius: 0 0.5rem 0.5rem 0.5rem;
+    border-radius: 0.5rem;
     padding: 1rem;
-    margin-top: 4rem;
     position: relative;
 
     .vip-button {
@@ -38,21 +37,7 @@
     }
 
     .top {
-        display: flex;
-        align-items: center;
-        background: @memberVipBgColor;
-        height: 4rem;
-        position: absolute;
-        left: 0;
-        top: -3rem;
-        border-radius: 0.5rem 0.5rem 0 0;
-        padding: 0 1rem;
-
-        .member-info {
-            color: @memberVipTextColor;
-
-
-        }
+        margin-bottom: 0.5rem;
     }
 
     .body {
@@ -60,7 +45,6 @@
         border-radius: 0.5rem;
 
         .pb-member-vip {
-            padding: 1rem;
 
             .vip-list-container-box {
                 position: relative;
@@ -132,14 +116,4 @@
     }
 }
 
-@media (max-width: 40rem) {
-    .pb-page-member-vip {
-        margin-top: 3.2rem;
-        padding: 1rem 0.2rem 0.2rem 0.2rem;
-
-        .top {
-            right: 0;
-        }
-    }
-}
 

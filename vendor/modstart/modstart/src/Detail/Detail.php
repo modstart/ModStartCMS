@@ -30,7 +30,7 @@ use ModStart\Support\Manager\FieldManager;
  * @method  Detail|mixed title($value = null)
  * @method  Detail|mixed formClass($value = null)
  * @method  Detail|array|integer|string itemId($value = null)
- * @method  Detail|\Illuminate\Database\Eloquent\Model|\stdClass item($value = null)
+ * @method  Detail|Model|\stdClass item($value = null)
  *
  */
 class Detail implements Renderable
@@ -99,7 +99,7 @@ class Detail implements Renderable
         if (
             is_object($model)
             ||
-            (class_exists($model) && is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class))
+            (class_exists($model) && is_subclass_of($model, Model::class))
         ) {
             return new Detail($model, $builder);
         }
@@ -222,5 +222,14 @@ class Detail implements Renderable
             return $this->fluentAttribute($method, $arguments);
         }
         return FieldManager::call($this, $method, $arguments);
+    }
+
+    public function __toString()
+    {
+        try {
+            return $this->render();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

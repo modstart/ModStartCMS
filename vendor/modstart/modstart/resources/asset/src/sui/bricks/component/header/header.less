@@ -759,6 +759,39 @@
             position: relative;
             height: 2rem;
 
+            &:hover {
+                .sub-title {
+                    color: var(--color-primary);
+                }
+
+                .sub-nav {
+                    display: block;
+                }
+            }
+
+
+            .sub-nav {
+                position: absolute;
+                background: var(--color-content-bg);
+                z-index: 99999;
+                border-radius: 0.25rem;
+                box-shadow: 0 0 2px var(--color-body-line);
+                display: none;
+                right: 0px;
+
+                .sub-nav-item {
+                    display: block;
+                    line-height: 2rem;
+                    white-space: nowrap;
+                    margin-left: 0;
+                    padding: 0 0.5rem;
+
+                    &:hover {
+                        color: var(--color-primary);
+                    }
+                }
+            }
+
             &.menu-btn {
                 border-radius: 1rem;
                 height: 1.5rem;

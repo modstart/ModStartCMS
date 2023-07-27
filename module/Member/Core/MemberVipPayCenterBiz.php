@@ -5,7 +5,10 @@ namespace Module\Member\Core;
 
 
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleManager;
+use Module\Member\Api\Controller\MemberVipController;
 use Module\Member\Util\MemberCreditUtil;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\MemberVipUtil;
@@ -43,6 +46,36 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
                 MemberCreditUtil::change($order['memberUserId'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
             }
         }
+    }
+
+    public function createOrderForQuick($quickOrder, $param = [])
+    {
+        $memberUserId = $quickOrder['session']['memberUserId'];
+        BizException::throwsIfEmpty('用户ID为空', $memberUserId);
+        $vipId = $quickOrder['param']['vipId'];
+        BizException::throwsIfEmpty('请选择会员类型', $vipId);
+        $memberVip = MemberVipUtil::get($vipId);
+        BizException::throwsIfEmpty('会员类型不存在', $memberVip);
+        $api = app(MemberVipController::class);
+        $priceInfoRet = $api->calc($vipId);
+        BizException::throwsIf($priceInfoRet['msg'], $priceInfoRet['code']);
+        $money = $priceInfoRet['data']['price'];
+        BizException::throwsIf('充值金额异常', $money < 0.01 || $money > 1000 * 10000);
+        $order = ModelUtil::insert('member_vip_order', [
+            'status' => OrderStatus::WAIT_PAY,
+            'memberUserId' => $memberUserId,
+            'vipId' => $memberVip['id'],
+            'payFee' => $money,
+            'expire' => $priceInfoRet['data']['expire'],
+            'type' => $priceInfoRet['data']['type'],
+        ]);
+        return Response::generateSuccessData([
+            'bizId' => $order['id'],
+            'feeTotal' => $money,
+            'body' => '开通VIP',
+            'param' => [],
+            'redirect' => modstart_web_url('member_vip'),
+        ]);
     }
 
 

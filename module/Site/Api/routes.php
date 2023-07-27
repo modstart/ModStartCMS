@@ -6,6 +6,6 @@ $router->group([
     ],
 ], function () use ($router) {
 
-    $router->match(['post'], 'site/get', 'SiteController@get');
+    $router->match(['post'], 'site/contact', 'SiteController@contact');
 
 });

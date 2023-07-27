@@ -44,6 +44,9 @@ trait BizTrait
         return null;
     }
 
+    /**
+     * @return array 返回name到title的映射数组
+     */
     public static function allMap()
     {
         return array_build(self::listAll(), function ($k, $v) {

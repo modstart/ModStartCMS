@@ -54,6 +54,7 @@ use ModStart\Field\Type\FieldRenderMode;
  * @method \ModStart\Field\Period               period($column, $label = '')
  * @method \ModStart\Field\Radio                radio($column, $label = '')
  * @method \ModStart\Field\Rate                 rate($column, $label = '')
+ * @method \ModStart\Field\Raw                  raw($column, $label = '')
  * @method \ModStart\Field\RichHtml             richHtml($column, $label = '')
  * @method \ModStart\Field\Select               select($column, $label = '')
  * @method \ModStart\Field\SelectRemote         selectRemote($column, $label = '')

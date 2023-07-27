@@ -27,6 +27,7 @@ return [
                 'epub',
                 'ai', 'psd', 'cad',
                 'css', 'html',
+                'ttf',
             ]
         ],
         'document' => [

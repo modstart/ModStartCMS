@@ -23,6 +23,42 @@ const FieldWidthDefaults = {
     Decimal: 80,
 }
 
+export const VModelMixin = {
+    model: {
+        prop: 'value',
+        event: 'input'
+    },
+    computed: {
+        modelValue: {
+            get() {
+                return this.value
+            },
+            set(value) {
+                this.onInput(value)
+            }
+        }
+    },
+    methods: {
+        onInput(value) {
+            if (typeof value === 'object') {
+                if (value.type && value.target && value.detail) {
+                    value = value.detail.value
+                }
+            }
+            this.$emit("input", value)
+        }
+    },
+    props: {
+        value: {
+            type: [Number, String, Object, Boolean, Array],
+            default: null
+        },
+    }
+}
+
+/**
+ * @deprecated
+ */
 export const FieldVModel = {
     model: {
         prop: 'data',
@@ -43,6 +79,9 @@ export const FieldVModel = {
     }
 }
 
+/**
+ * @deprecated
+ */
 export const FieldInputMixin = {
     model: {
         prop: 'data',
@@ -84,6 +123,9 @@ export const FieldInputMixin = {
 }
 
 
+/**
+ * @deprecated
+ */
 export const FieldFilterMixin = {
     model: {
         prop: 'data',

@@ -45,6 +45,41 @@ class NumberUtil
             return $min;
         }
         $value = rand(intval(bcmul($min, 100)), intval(bcmul($max, 100)));
-        return bcdiv($value,100,2);
+        return bcdiv($value, 100, 2);
+    }
+
+    public static function numToZH($number)
+    {
+        $chineseNumber = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+        $chineseUnit = ['', '十', '百', '千', '万', '亿'];
+
+        if ($number == 0) {
+            return $chineseNumber[0];
+        }
+
+        $strNumber = strval($number);
+        $strLen = strlen($strNumber);
+        $result = '';
+
+        for ($i = 0; $i < $strLen; $i++) {
+            $digit = (int)$strNumber[$i];
+            $unit = $strLen - $i - 1;
+
+            if ($digit != 0) {
+                $result .= $chineseNumber[$digit] . $chineseUnit[$unit];
+            } else {
+                // 处理零的情况，避免出现连续多个零
+                if ($result[strlen($result) - 1] !== $chineseNumber[0]) {
+                    $result .= $chineseNumber[$digit];
+                }
+            }
+        }
+
+        // 处理十位数以一开头的情况（如：一十一）
+        if ($strLen > 1 && $strNumber[0] == 1 && $result[0] == $chineseNumber[1]) {
+            $result = substr($result, 1);
+        }
+
+        return $result;
     }
 }

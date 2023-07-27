@@ -446,51 +446,55 @@
 
         .swiper-slide {
             &.a {
-                .content {
-                    padding: 1rem;
-                    text-align: center;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    border: 0;
-                    margin: 0;
-                    height: calc(100% - 50px);
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
+                .cover {
+                    .content {
+                        padding: 1rem;
+                        text-align: center;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        border: 0;
+                        margin: 0;
+                        height: calc(100% - 50px);
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
 
-                    .title {
-                        font-size: 1.2rem;
-                    }
+                        .title {
+                            font-size: 1.2rem;
+                        }
 
-                    .slogan {
-                        padding: 0.5rem 0;
-                    }
+                        .slogan {
+                            padding: 0.5rem 0;
+                        }
 
-                    .link {
-                        line-height: 1.5rem;
-                        height: 1.5rem;
+                        .link {
+                            line-height: 1.5rem;
+                            height: 1.5rem;
+                        }
                     }
                 }
             }
 
             &.b {
-                .content {
-                    flex-direction: column;
+                .cover {
+                    .content {
+                        flex-direction: column;
 
-                    .left {
-                        width: 100%;
-                        height: 50%;
-                        text-align: center;
-                        padding-left: 0;
-                    }
+                        .left {
+                            width: 100%;
+                            height: 50%;
+                            text-align: center;
+                            padding-left: 0;
+                        }
 
-                    .right {
-                        width: 100%;
-                        height: 50%;
-                        margin-top: 1rem;
+                        .right {
+                            width: 100%;
+                            height: 50%;
+                            margin-top: 1rem;
+                        }
                     }
                 }
             }

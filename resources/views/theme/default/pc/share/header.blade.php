@@ -2,7 +2,19 @@
     <div class="ub-container">
         <div class="menu">
             @if(\Module\Member\Auth\MemberUser::id())
-                <a href="{{modstart_web_url('member')}}"><i class="iconfont icon-user"></i> {{\Module\Member\Auth\MemberUser::nickname()}}</a>
+                <div class="item">
+                    <a href="{{modstart_web_url('member')}}" class="sub-title">
+                        <i class="iconfont icon-user"></i>
+                        {{\Module\Member\Auth\MemberUser::get('username')}}
+                    </a>
+                    <div class="sub-nav">
+                        {!! \Module\Member\Config\MemberNavMenu::render() !!}
+                        <a class="sub-nav-item" href="javascript:;"
+                           data-href="{{modstart_web_url('logout')}}" data-confirm="确认退出登录？">
+                            退出登录
+                        </a>
+                    </div>
+                </div>
             @else
                 <a href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::redirectUrl()])}}" rel="nofollow">
                     <i class="iconfont icon-user"></i> 

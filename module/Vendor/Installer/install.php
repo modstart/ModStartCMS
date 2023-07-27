@@ -334,7 +334,7 @@ include __DIR__ . '/function.php';
     $(function () {
         var $rewriteCheck = $('[data-rewrite-check]');
         $.ajax({
-            url: '/install/ping',
+            url: '/install/ping?'+Math.random(),
             type: 'GET',
             success: function(data){
                 if('ok'===data){

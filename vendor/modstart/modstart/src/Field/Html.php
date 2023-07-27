@@ -32,9 +32,16 @@ class Html extends AbstractField
         return $this;
     }
 
-    public function plain()
+    public function htmlPlain($html)
     {
+        $this->html = $html;
         $this->plain = true;
+        return $this;
+    }
+
+    public function plain($plain = true)
+    {
+        $this->plain = $plain;
         return $this;
     }
 

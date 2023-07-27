@@ -88,12 +88,37 @@ class DynamicFields extends AbstractField
         return $value;
     }
 
+    public static function getEmptyValueObject($fields)
+    {
+        $value = [];
+        foreach ($fields as $f) {
+            $v = null;
+            switch ($f['type']) {
+                case DynamicFieldsType::TYPE_CHECKBOX:
+                case DynamicFieldsType::TYPE_FILES:
+                    $v = [];
+                    break;
+            }
+            $value[$f['name']] = $v;
+        }
+        return $value;
+    }
 
     public static function getDefaultValueObject($fields)
     {
         $value = [];
         foreach ($fields as $f) {
             switch ($f['type']) {
+                case DynamicFieldsType::TYPE_SELECT:
+                case DynamicFieldsType::TYPE_RADIO:
+                    $f['defaultValue'] = null;
+                    foreach ($f['data']['options'] as $o) {
+                        if (!empty($o['active'])) {
+                            $f['defaultValue'] = $o['title'];
+                            break;
+                        }
+                    }
+                    break;
                 case DynamicFieldsType::TYPE_CHECKBOX:
                     $f['defaultValue'] = [];
                     foreach ($f['data']['options'] as $o) {

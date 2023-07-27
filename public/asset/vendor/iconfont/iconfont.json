@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1433847",
+      "name": "star",
+      "font_class": "star",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "14342021",
+      "name": "star",
+      "font_class": "star-alt",
+      "unicode": "e7c5",
+      "unicode_decimal": 59333
+    },
+    {
       "icon_id": "2423300",
       "name": "无数据",
       "font_class": "empty-box",
@@ -32,20 +46,6 @@
       "font_class": "check-simple",
       "unicode": "e65f",
       "unicode_decimal": 58975
-    },
-    {
-      "icon_id": "4766954",
-      "name": "star",
-      "font_class": "star-alt",
-      "unicode": "e7df",
-      "unicode_decimal": 59359
-    },
-    {
-      "icon_id": "1222755",
-      "name": "eglass-star",
-      "font_class": "star",
-      "unicode": "e65e",
-      "unicode_decimal": 58974
     },
     {
       "icon_id": "7239636",

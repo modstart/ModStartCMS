@@ -14,7 +14,7 @@
     <div class="toolbox-container">
         @if($canAdd)
             @if($addBlankPage)
-                <a href="{{$urlAdd}}" class="btn btn-primary" data-tab-open>
+                <a href="{{$urlAdd}}" class="btn btn-primary" data-tab-open data-refresh-grid-on-close>
                     <i class="iconfont icon-plus"></i> {{L('Add')}}
                 </a>
             @else

@@ -3,6 +3,7 @@
 namespace Module\Member\Util;
 
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\IdUtil;
 use Module\Member\Type\MemberMoneyCashStatus;
 use Module\Member\Type\MemberMoneyChargeStatus;
@@ -36,19 +37,19 @@ class MemberMoneyUtil
     public static function change($memberUserId, $change, $remark)
     {
         if (!$change) {
-            throw new \Exception('MemberMoneyService -> change empty');
+            BizException::throws('Member.MoneyChangeUtil -> change empty');
         }
         $m = ModelUtil::getWithLock('member_money', ['memberUserId' => $memberUserId]);
         if (empty($m)) {
             $m = ModelUtil::insert('member_money', ['memberUserId' => $memberUserId, 'total' => 0,]);
         }
         if ($change < 0 && $m['total'] + $change < 0) {
-            throw new \Exception('MemberMoneyService -> total change to empty');
+            BizException::throws('Member.MoneyChangeUtil -> total change to empty');
         }
         ModelUtil::insert('member_money_log', ['memberUserId' => $memberUserId, 'change' => $change, 'remark' => $remark]);
         $m = ModelUtil::update('member_money', ['id' => $m['id']], ['total' => $m['total'] + $change]);
         if ($m['total'] < 0) {
-            throw new \Exception('MemberMoneyService -> total empty');
+            BizException::throws('Member.MoneyChangeUtil -> total empty');
         }
     }
 

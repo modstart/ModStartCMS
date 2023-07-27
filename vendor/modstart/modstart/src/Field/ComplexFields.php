@@ -22,6 +22,7 @@ class ComplexFields extends AbstractField
                 // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'tip'=>'xxx', ],
                 // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'tip'=>'xxx', ],
                 // ['name' => 'xxx', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'tip'=>'xxx', ],
+                // ['name' => 'xxx', 'title' => '数字', 'type' => 'slider', 'defaultValue' => 0, 'min' => 1, 'max' => 5, 'step' => 1, 'tip'=>'xxx', ],
             ],
             'iconServer' => modstart_admin_url('widget/icon'),
         ]);

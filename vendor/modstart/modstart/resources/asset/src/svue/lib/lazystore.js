@@ -41,7 +41,7 @@ const LazyStore = function (store, option) {
             if (arguments[i] in nameLoaded) {
                 const name = arguments[i]
                 delete nameLoaded[name]
-                store.commit(opt.commitName, [name + '_init', false])
+                // store.commit(opt.commitName, [name + '_init', false])
                 me.load(name)
             }
         }

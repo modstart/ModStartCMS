@@ -2,6 +2,7 @@
 
 namespace ModStart\Core\Util;
 
+use BaconQrCode\Encoder\Encoder;
 use ModStart\Core\Exception\BizException;
 use ModStart\ModStart;
 
@@ -34,7 +35,7 @@ class QrcodeUtil
             );
         }
         $writer = new \BaconQrCode\Writer($renderer);
-        return $writer->writeString($content);
+        return $writer->writeString($content,'UTF-8');
     }
 
     /**

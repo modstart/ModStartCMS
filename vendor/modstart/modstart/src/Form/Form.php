@@ -15,7 +15,6 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Exception\ResultException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
-use ModStart\Core\Type\SortAddOrder;
 use ModStart\Core\Type\SortDirection;
 use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\IdUtil;
@@ -801,5 +800,14 @@ class Form implements Renderable
             return $this->fluentAttribute($method, $arguments);
         }
         return FieldManager::call($this, $method, $arguments);
+    }
+
+    public function __toString()
+    {
+        try {
+            return $this->render();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

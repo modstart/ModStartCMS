@@ -46,6 +46,16 @@ class TimeUtil
         return date('Y-m-d 23:59:59', time() - self::PERIOD_DAY);
     }
 
+    public static function todayStart()
+    {
+        return date('Y-m-d 00:00:00', time());
+    }
+
+    public static function todayEnd()
+    {
+        return date('Y-m-d 23:59:59', time());
+    }
+
     public static function humanTimeLength($timeSeconds, $lang = 'zh')
     {
         $langMap = [

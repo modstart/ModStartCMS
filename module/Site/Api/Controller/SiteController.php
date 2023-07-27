@@ -10,7 +10,7 @@ use ModStart\Core\Input\Response;
 
 class SiteController extends Controller
 {
-    public function get()
+    public function contact()
     {
         $data = [];
         $data['email'] = modstart_config('Site_ContactEmail', '');

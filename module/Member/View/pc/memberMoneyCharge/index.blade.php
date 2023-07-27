@@ -23,7 +23,7 @@
                     请先安装 <a href="https://modstart.com/m/PayCenter" target="_blank">PayCenter</a> 模块
                 </div>
             @elseif(\Module\PayCenter\Util\PayUtil::preferShowQuick())
-                <div class="ub-form">
+                <div class="ub-form vertical">
                     <div class="line">
                         <div class="label">充值金额</div>
                         <div class="field">
@@ -79,28 +79,17 @@
         </div>
     </div>
 
-    <div class="ub-panel">
-        <div class="head">
-            <div class="title">充值说明</div>
-        </div>
-        <div class="body">
-            <div class="margin-bottom">
-                @if(!modstart_module_enabled('PayCenter'))
-                    <div class="ub-alert ub-alert-warning">
-                        <i class="iconfont icon-warning"></i>
-                        请先安装 <a href="https://modstart.com/m/PayCenter" target="_blank">PayCenter</a> 模块
-                    </div>
-                @else
-                    @include('module::PayCenter.View.pc.pay.types')
-                @endif
+    @if(modstart_config('Member_MoneyChargeDesc'))
+        <div class="ub-panel">
+            <div class="head">
+                <div class="title">充值说明</div>
             </div>
-            @if(modstart_config('Member_MoneyChargeDesc'))
-                <div class="tw-rounded-lg tw-p-3" style="background:#F8F8F8;">
-                    <div class="ub-html lg">
-                        {!! modstart_config('Member_MoneyChargeDesc') !!}
-                    </div>
+            <div class="body">
+                <div class="ub-html">
+                    {!! modstart_config('Member_MoneyChargeDesc') !!}
                 </div>
-            @endif
+            </div>
         </div>
-    </div>
+    @endif
+
 @endsection
