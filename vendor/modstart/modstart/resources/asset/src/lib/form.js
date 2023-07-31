@@ -42,7 +42,10 @@ var winReload = function (w) {
 };
 
 var Form = {
-    defaultTimeout:10 * 60 * 1000,
+    defaultTimeout: 10 * 60 * 1000,
+    delaySubmit: function (cb) {
+        setTimeout(cb, 0)
+    },
     responseToRes: function (response) {
         var res = {
             code: -999,
@@ -196,44 +199,46 @@ var Form = {
                 method = 'get';
             }
 
-            var data = $(this).serializeArray();
-
             $form.data('submiting', true);
             if (Dialog) {
                 var msg = $(this).attr('data-form-loading');
                 Dialog.loadingOn(msg);
             }
+            var $this = $(this);
             // console.log('form', method, action);
-            $.ajax({
-                type: method,
-                url: action,
-                dataType: "json",
-                timeout: Form.defaultTimeout,
-                data: data,
-                success: function (res) {
-                    // console.log('success', res);
-                    EventManager.fire('modstart:form.submitted', {
-                        $form: $form,
-                        res: res,
-                    });
-                    $form.data('submiting', null);
-                    if (Dialog) {
-                        Dialog.loadingOff();
+            Form.delaySubmit(function () {
+                var data = $this.serializeArray();
+                $.ajax({
+                    type: method,
+                    url: action,
+                    dataType: "json",
+                    timeout: Form.defaultTimeout,
+                    data: data,
+                    success: function (res) {
+                        // console.log('success', res);
+                        EventManager.fire('modstart:form.submitted', {
+                            $form: $form,
+                            res: res,
+                        });
+                        $form.data('submiting', null);
+                        if (Dialog) {
+                            Dialog.loadingOff();
+                        }
+                        return callback(res, {}, Dialog);
+                    },
+                    error: function (res) {
+                        res = Form.responseToRes(res);
+                        EventManager.fire('modstart:form.submitted', {
+                            $form: $form,
+                            res: res,
+                        });
+                        $form.data('submiting', null);
+                        if (Dialog) {
+                            Dialog.loadingOff();
+                        }
+                        return callback(res, {}, Dialog);
                     }
-                    return callback(res, {}, Dialog);
-                },
-                error: function (res) {
-                    res = Form.responseToRes(res);
-                    EventManager.fire('modstart:form.submitted', {
-                        $form: $form,
-                        res: res,
-                    });
-                    $form.data('submiting', null);
-                    if (Dialog) {
-                        Dialog.loadingOff();
-                    }
-                    return callback(res, {}, Dialog);
-                }
+                });
             });
 
             return false;

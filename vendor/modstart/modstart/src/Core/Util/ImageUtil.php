@@ -4,6 +4,7 @@ namespace ModStart\Core\Util;
 
 use Intervention\Image\ImageManagerStatic as Image;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Provider\FontProvider;
 
 class ImageUtil
 {
@@ -125,7 +126,7 @@ class ImageUtil
                 $img->text($content, $width - $gap, $height - $gap,
                     function ($font) use ($width, $height) {
                         $fontSize = max(min($width, $height) / 30, 10);
-                        $font->file(base_path('vendor/modstart/modstart/resources/font/SourceHanSansCN-Medium.ttf'));
+                        $font->file(FontProvider::firstLocalPathOrFail());
                         $font->size($fontSize);
                         $font->color('rgba(255, 255, 255, 0.5)');
                         $font->align('right');

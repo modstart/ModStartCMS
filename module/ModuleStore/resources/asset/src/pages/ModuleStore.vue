@@ -611,6 +611,9 @@ export default {
             }
         },
         doMemberLoginSubmit() {
+            if (!this.memberLoginInfo.username || !this.memberLoginInfo.password || !this.memberLoginInfo.captcha) {
+                return
+            }
             if (!this.memberLoginInfo.agree) {
                 this.$dialog.tipError('请先同意使用协议')
                 return

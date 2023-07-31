@@ -2,6 +2,11 @@
     width: device-width;
 }
 
+@width-sm: 40rem; // 800px
+@width-md: 50rem; // 1000px
+@width-lg: 60rem; // 1200px
+@width-xl: 90rem; // 1800px
+
 html {
     box-sizing: border-box;
     -ms-overflow-style: auto;
@@ -353,7 +358,7 @@ html {
     margin-left: 91.666667%;
 }
 
-@media (min-width: 30rem) {
+@media (min-width: @width-sm) {
     .col-sm {
         -ms-flex-preferred-size: 0;
         flex-basis: 0;
@@ -594,7 +599,7 @@ html {
     }
 }
 
-@media (min-width: 40rem) {
+@media (min-width: @width-md) {
     .col-md {
         -ms-flex-preferred-size: 0;
         flex-basis: 0;
@@ -837,7 +842,7 @@ html {
 
 /* #ifdef DISABLE_UNIAPP */
 
-@media (min-width: 50rem) {
+@media (min-width:@width-lg) {
     .col-lg {
         -ms-flex-preferred-size: 0;
         flex-basis: 0;
@@ -1078,7 +1083,7 @@ html {
     }
 }
 
-@media (min-width: 60rem) {
+@media (min-width: @width-xl) {
     .col-xl {
         -ms-flex-preferred-size: 0;
         flex-basis: 0;
@@ -1361,7 +1366,7 @@ html {
     display: inline-flex !important;
 }
 
-@media (min-width: 30rem) {
+@media (min-width: @width-sm) {
     .d-sm-none {
         display: none !important;
     }
@@ -1405,7 +1410,7 @@ html {
 
 /* #ifdef DISABLE_UNIAPP */
 
-@media (min-width: 40rem) {
+@media (min-width: @width-sm) {
     .d-md-none {
         display: none !important;
     }
@@ -1447,7 +1452,7 @@ html {
     }
 }
 
-@media (min-width: 50rem) {
+@media (min-width: @width-lg) {
     .d-lg-none {
         display: none !important;
     }
@@ -1489,7 +1494,7 @@ html {
     }
 }
 
-@media (min-width: 60rem) {
+@media (min-width: @width-xl) {
     .d-xl-none {
         display: none !important;
     }
@@ -1737,7 +1742,7 @@ html {
     align-self: stretch !important;
 }
 
-@media (min-width: 30rem) {
+@media (min-width: @width-sm) {
     .flex-sm-row {
         -webkit-box-orient: horizontal !important;
         -webkit-box-direction: normal !important;
@@ -1903,7 +1908,7 @@ html {
 
 /* #ifdef DISABLE_UNIAPP */
 
-@media (min-width: 40rem) {
+@media (min-width: @width-md) {
     .flex-md-row {
         -webkit-box-orient: horizontal !important;
         -webkit-box-direction: normal !important;
@@ -2067,7 +2072,7 @@ html {
     }
 }
 
-@media (min-width: 50rem) {
+@media (min-width: @width-lg) {
     .flex-lg-row {
         -webkit-box-orient: horizontal !important;
         -webkit-box-direction: normal !important;
@@ -2231,7 +2236,7 @@ html {
     }
 }
 
-@media (min-width: 60rem) {
+@media (min-width: @width-xl) {
     .flex-xl-row {
         -webkit-box-orient: horizontal !important;
         -webkit-box-direction: normal !important;

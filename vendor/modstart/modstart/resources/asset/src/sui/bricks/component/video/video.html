@@ -1,55 +1,146 @@
-<link rel="stylesheet/less" type="text/css" href="./bricks/component/video/video-js.less" />
-<script src="./bricks/component/video/video-js.js"></script>
+<script src="https://modstart.com/asset/vendor/xgplayer.js"></script>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/tag/tag.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/misc/misc.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/video/video.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/header/header.less"/>
 
-<link rel="stylesheet/less" type="text/css" href="./bricks/component/video/video.less" />
-<link rel="stylesheet/less" type="text/css" href="./bricks/component/header/header.less" />
+<div class="ub-video-container margin-bottom">
+    <div class="ub-container">
+        <div class="ub-video">
+            <div class="main">
+                <div class="player-box">
+                    <div id="player" class="player body-scroll-lock-hide"></div>
+                    <script>
+                        setTimeout(function () {
+                            window.__player = new Player({
+                                id: 'player',
+                                width: '100%',
+                                height: '100%',
+                                fitVideoSize: 'fixed',
+                                videoFillMode: 'contain',
+                                url: '//vjs.zencdn.net/v/oceans.mp4',
+                                'x5-video-player-type': 'h5',
+                                playsinline: false,
+                                autoplay: true,
+                                playbackRate: [0.5, 0.75, 1, 1.5, 2],
+                                defaultPlaybackRate: 1.0
+                            });
+                        }, 1000);
+                    </script>
+                    <div class="player-info">
+                        <div class="player-info-body">
+                            您的内容无法播放
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-box">
+                    <a class="item ub-display-none-sm" href="javascript:;"
+                       onclick="$(this).closest('.ub-video').toggleClass('full-page');"
+                    >
+                        <i class="iconfont icon-desktop"></i>
+                        剧场模式
+                    </a>
+                    <a class="item" href="#">
+                        <i class="iconfont icon-comment"></i>
+                        关闭字幕
+                    </a>
+                </div>
+            </div>
+            <div class="side ub-scroll-bar-mini">
+                <div>
+                    <p data-repeat="100">节目列表</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ub-video-container margin-bottom">
+    <div class="ub-container">
+        <div class="ub-video">
+            <div class="main">
+                <div class="player-box">
+                    <div class="player">
+                        <iframe frameborder="0"
+                                class="iframe"
+                                src="https://player.youku.com/embed/XNTk1NTA1NzA4MA=="
+                                referrerpolicy="unsafe-url" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="tool-box">
+                    <a class="item" href="javascript:;"
+                       onclick="$(this).closest('.ub-video').toggleClass('full-page');"
+                    >
+                        <i class="iconfont icon-desktop"></i>
+                        剧场模式
+                    </a>
+                    <a class="item" href="#">
+                        <i class="iconfont icon-comment"></i>
+                        关闭字幕
+                    </a>
+                </div>
+            </div>
+            <div class="side">
+                侧边栏一些内容
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="ub-video-container margin-bottom">
+    <div class="ub-container">
+        <div class="ub-video">
+            <div class="main">
+                <div class="player-box">
+                    <div class="player">
+                        <div class="player-iframe-mask">
+                            <iframe frameborder="0"
+                                    src="https://player.youku.com/embed/XNTk1NTA1NzA4MA=="
+                                    referrerpolicy="unsafe-url" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-box">
+                    <a class="item" href="javascript:;"
+                       onclick="$(this).closest('.ub-video').toggleClass('full-page');"
+                    >
+                        <i class="iconfont icon-desktop"></i>
+                        剧场模式
+                    </a>
+                    <a class="item" href="#">
+                        <i class="iconfont icon-comment"></i>
+                        关闭字幕
+                    </a>
+                </div>
+            </div>
+            <div class="side">
+                侧边栏一些内容
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="ub-container">
-
-    <div class="ub-video">
-        <div class="player">
-            <video id="player"
-                   class="video-js"
-                   controls
-                   preload="auto"
-                   poster="//vjs.zencdn.net/v/oceans.png"
-                   data-setup='{}'>
-                <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
-                <p class="vjs-no-js">
-                    当前浏览器不支持JavaScript
-                </p>
-            </video>
-            <script>
-                $(function () {
-                    var options = {};
-                    var player = videojs('player', options, function onPlayerReady() {
-                        this.play();
-                        this.on('ended', function() {});
-                    });
-                });
-            </script>
+    <div class="ub-content-box">
+        <h1 class="ub-text-lg">
+            {ZH,50,100}
+        </h1>
+        <div class="margin-bottom">
+            <a href="#" class="ub-tag tw-mr-2">分类A</a>
+            <a href="#" class="ub-text-default tw-inline-block tw-mr-2">
+                <i class="iconfont icon-play"></i>
+                333
+            </a>
+            <a href="#" class="ub-text-default tw-inline-block tw-mr-2">
+                <i class="iconfont icon-thumb-up"></i>
+                333
+            </a>
+        </div>
+        <div class="ub-text-tertiary">
+            视频介绍视频介绍视频介绍视频介绍视频介绍视频介绍视频介绍
         </div>
     </div>
-
-    <div class="margin-top">
-        <div class="ub-video-info">
-            <h1>视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题视频标题</h1>
-            <div class="stat">
-                <a href="#">分类A</a>
-                <a href="#">
-                    <i class="iconfont icon-play"></i>
-                    333
-                </a>
-                <a href="#">
-                    <i class="iconfont icon-thumb-up"></i>
-                    333
-                </a>
-            </div>
-            <div class="summary">
-                视频介绍视频介绍视频介绍视频介绍视频介绍视频介绍视频介绍
-            </div>
-        </div>
-    </div>
-
 </div>
 

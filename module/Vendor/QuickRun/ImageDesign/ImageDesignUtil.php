@@ -6,6 +6,8 @@ namespace Module\Vendor\QuickRun\ImageDesign;
 
 use Intervention\Image\Facades\Image;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
+use ModStart\Core\Provider\FontProvider;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\QrcodeUtil;
 
@@ -15,6 +17,14 @@ class ImageDesignUtil
     {
         $image = self::render($imageConfig, $variables);
         return 'data:image/png;base64,' . base64_encode($image);
+    }
+
+    public static function renderResponse($imageConfig, $variables = [])
+    {
+        $image = self::render($imageConfig, $variables);
+        return Response::raw($image, [
+            'Content-Type' => 'image/png'
+        ]);
     }
 
     public static function render($imageConfig, $variables = [])
@@ -34,7 +44,7 @@ class ImageDesignUtil
         BizException::throwsIf('blocks empty', !isset($imageConfig['blocks']));
 
         if (empty($imageConfig['font'])) {
-            $fontPath = base_path('vendor/modstart/modstart/resources/font/SourceHanSansCN-Medium.ttf');
+            $fontPath = FontProvider::firstLocalPathOrFail();
         } else {
             $fontPath = FileUtil::savePathToLocalTemp($imageConfig['font'], 'ttf', true);
         }

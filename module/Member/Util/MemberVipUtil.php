@@ -175,6 +175,18 @@ class MemberVipUtil
         return null;
     }
 
+    public static function calcExpire($oldExpire, $newVipId)
+    {
+        $newVip = self::get($newVipId);
+        $newDays = ($newVip ? $newVip['vipDays'] : 0);
+        $oldExpireTimestamp = (strtotime($oldExpire) > 0 ? strtotime($oldExpire) : 0);
+        $timestamp = time();
+        if ($oldExpireTimestamp > time()) {
+            $timestamp = $oldExpireTimestamp;
+        }
+        return date('Y-m-d', $oldExpireTimestamp + $newDays * 24 * 3600);
+    }
+
     /**
      * 会员卡升级差价计算
      *

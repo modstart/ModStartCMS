@@ -196,7 +196,7 @@
                                 <div class="row">
                                     @foreach($memberVipRights as $r)
                                         <div class="col-md-2 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
-                                            <div class="tw-flex tw-items-center ub-text-small">
+                                            <div class="tw-flex tw-items-center ub-text-sm">
                                                 <div class="tw-pr-2">
                                                     <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full" src="{{$r['image']}}" />
                                                 </div>

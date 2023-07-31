@@ -47,4 +47,14 @@ class CacheUtil
     {
         self::client()->forever($key, $value);
     }
+
+    public static function executeInterval($key, $callback, $minutes = 5)
+    {
+        $cacheKey = 'Vendor:CacheInterval:' . $key;
+        $c = intval(self::get($cacheKey));
+        if ($c <= 0 || $c < time()) {
+            self::put($cacheKey, time() + $minutes * 60, $minutes * 60);
+            call_user_func($callback);
+        }
+    }
 }

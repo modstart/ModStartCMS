@@ -18,6 +18,7 @@ use ModStart\Module\ModuleManager;
 class ModuleStoreUtil
 {
     const REMOTE_BASE = 'https://modstart.com';
+    // const REMOTE_BASE = 'http://org.demo.soft.host';
 
     public static function remoteModuleData()
     {

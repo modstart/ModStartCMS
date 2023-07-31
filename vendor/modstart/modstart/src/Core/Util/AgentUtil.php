@@ -95,6 +95,7 @@ class AgentUtil
         '/ZoominfoBot/i' => 'Other',
         '/PetalBot/i' => 'Other',
         '/SurdotlyBot/i' => 'Other',
+        '/DataForSeoBot/i' => 'Other',
         '/linkfluence/i' => 'Other',
         '/SeznamBot/i' => 'Other',
         '/Ruby/i' => 'Other',
