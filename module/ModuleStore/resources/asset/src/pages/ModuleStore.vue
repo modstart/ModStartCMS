@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div v-if="storeConfig.disable" class="ub-alert ub-alert-danger">
+        <div v-if="storeConfig.disable" class="ub-alert danger">
             <i class="iconfont icon-close-o"></i>
             当前环境禁止「模块管理」相关操作
         </div>
-        <div class="ub-alert ub-alert-warning">
+        <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
             为了系统和数据安全，在线 <b>安装</b>、<b>卸载</b>、<b>升级</b> 模块前请做好代码和数据备份
         </div>
-        <div v-if="d" class="ub-alert ub-alert-warning">
+        <div v-if="d" class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
             您还没有登录，登录后才能从模块市场安装、升级模块
             <a href="javascript:;" @click="doMemberLoginShow()"><i class="iconfont icon-user"></i>立即登录</a>

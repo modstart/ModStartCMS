@@ -43,7 +43,7 @@
 
                 <div class="ub-panel" style="padding:1rem;">
                     @if(!\MCms::canVisitCat($cat))
-                        <div class="ub-alert ub-alert-danger">
+                        <div class="ub-alert danger">
                             <i class="iconfont icon-warning"></i>
                             您没有权限访问该栏目内容
                         </div>

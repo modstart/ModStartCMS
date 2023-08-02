@@ -1,6 +1,13 @@
 const FileSaver = require('file-saver');
 
 export const FileUtil = {
+    blobToBase64(blob, callback) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            callback(e.target.result);
+        };
+        reader.readAsDataURL(blob);
+    },
     base64toBlob(b64Data, contentType = '', sliceSize = 512) {
         const byteCharacters = atob(b64Data);
         const byteArrays = [];

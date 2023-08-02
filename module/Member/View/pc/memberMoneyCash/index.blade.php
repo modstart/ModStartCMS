@@ -77,7 +77,7 @@
                         <div class="line">
                             <div class="label">&nbsp;</div>
                             <div class="field">
-                                <div class="ub-alert ub-alert-warning">
+                                <div class="ub-alert warning">
                                     暂时不能申请，单次提现最小金额为 ￥{{sprintf('%0.2f',modstart_config('Member_MoneyCashMin',100))}}
                                 </div>
                             </div>

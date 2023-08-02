@@ -4,7 +4,7 @@
 
 @section($_tabSectionName)
 
-    <div class="ub-alert ub-alert-warning">
+    <div class="ub-alert warning">
         <i class="iconfont icon-warning"></i>
         说明：系统提供了CMS小数据量的恢复功能，如果数据库比较大，请使用专业的数据库操作软件。
     </div>

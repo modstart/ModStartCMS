@@ -26,7 +26,7 @@ trait CmsSiteTemplateFillDataTrait
         $initDataFile = ModuleManager::path($module, 'demo_data.php');
         BizException::throwsIf('演示文件不存在（' . $module . '/demo_data.php）', !file_exists($initDataFile));
         $demoData = (include $initDataFile);
-        $builder->display('_display', '')->content('<div class="ub-alert ub-alert-warning"><i class="iconfont icon-warning"></i> 初始化信息前清空对应的信息记录</div>')->addable(true);
+        $builder->display('_display', '')->content('<div class="ub-alert warning"><i class="iconfont icon-warning"></i> 初始化信息前清空对应的信息记录</div>')->addable(true);
         $recordFields = [
             'banner' => '轮播',
             'news' => '新闻资讯',

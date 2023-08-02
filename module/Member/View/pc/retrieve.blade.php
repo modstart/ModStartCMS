@@ -37,7 +37,7 @@
                                 <?php $found = true; ?>
                             @endif
                             @if(!$found)
-                                <div class="ub-alert ub-alert-danger">没有开启任何找回密码方式</div>
+                                <div class="ub-alert danger">没有开启任何找回密码方式</div>
                             @endif
                         </div>
                     </div>

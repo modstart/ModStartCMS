@@ -18,7 +18,7 @@
         </div>
         <div class="body">
             @if(!modstart_module_enabled('PayCenter'))
-                <div class="ub-alert ub-alert-warning">
+                <div class="ub-alert warning">
                     <i class="iconfont icon-warning"></i>
                     请先安装 <a href="https://modstart.com/m/PayCenter" target="_blank">PayCenter</a> 模块
                 </div>
