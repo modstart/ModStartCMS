@@ -1,6 +1,6 @@
-var WebUploader = require('./../vendor/webuploader/webuploader.js');
+var WebUploader = require('./../lib/webuploader/webuploader.js');
 
-require('./../vendor/webuploader/webuploader.css');
+require('./../lib/webuploader/webuploader.css');
 
 
 const tipError = function (msg) {
@@ -92,6 +92,11 @@ var UploadButton = function (selector, option) {
         showFileQueue: true,
         fileNumLimit: 1000,
         uploadBeforeCheck: null,
+        compress: {
+            enable: true,
+            maxWidthOrHeight: 4000,
+            maxSize: 10 * 1024 * 1024,
+        },
         tipError: function (msg) {
             if (MS && MS.dialog) {
                 MS.dialog.tipError(msg)
@@ -141,6 +146,7 @@ var UploadButton = function (selector, option) {
             formData: {},
             duplicate: false,
             uploadBeforeCheck: opt.uploadBeforeCheck,
+            compress: opt.compress,
         });
 
         uploader.on('fileQueued', function (file) {

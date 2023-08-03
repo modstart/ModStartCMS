@@ -92,6 +92,11 @@ export const UploadButtonUploader = function (selector, option) {
         chunked: true,
         chunkSize: 5 * 1024 * 1024,
         uploadBeforeCheck: null,
+        compress: {
+            enable: true,
+            maxWidthOrHeight: 4000,
+            maxSize: 10 * 1024 * 1024,
+        },
         tipError: function (msg) {
             if (MS && MS.dialog) {
                 MS.dialog.tipError(msg)
@@ -140,6 +145,7 @@ export const UploadButtonUploader = function (selector, option) {
             headers: headers,
             duplicate: false,
             uploadBeforeCheck: opt.uploadBeforeCheck,
+            compress: opt.compress,
         });
 
         uploader.on('fileQueued', function (file) {
