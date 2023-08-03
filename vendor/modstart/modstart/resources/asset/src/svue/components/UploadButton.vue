@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "webuploader/css.less";
+@import "webuploader/webuploader.css";
 
 .ub-upload-button {
     // Wenku 上传时高度不显示进度条，先注释掉

@@ -1,3 +1,8 @@
+:root {
+    --webuploader-color-primary: var(--color-primary, #00B7EE);
+    --webuploader-color-content-bg: var(--color-content-bg, #FFFFFF);
+}
+
 .webuploader-container {
     position: relative
 }
@@ -35,7 +40,7 @@
     border: 1px solid #EEE;
     border-radius: 0.2rem;
     padding: 0.2rem;
-    background-color: var(--color-content-bg);
+    background-color: var(--webuploader-color-content-bg);
 }
 
 .webuploader-list:empty {
@@ -48,7 +53,7 @@
     border: 1px solid #EEE;
     padding: 0px;
     margin-bottom: 0.1rem;
-    background: var(--color-content-bg);
+    background: var(--webuploader-color-content-bg);
     border-radius: 0.2rem;
 }
 
@@ -60,7 +65,7 @@
 
 .webuploader-list > li .progress-box .progress-bar {
     height: 3px;
-    background-color: var(--color-primary);
+    background-color: var(--webuploader-color-primary);
     border-radius: 4px;
 }
 
@@ -79,3 +84,5 @@
     display: inline;
     line-height: 20px
 }
+
+

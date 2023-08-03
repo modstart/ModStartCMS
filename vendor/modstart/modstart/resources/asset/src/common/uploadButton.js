@@ -1,6 +1,6 @@
 var WebUploader = require('./../vendor/webuploader/webuploader.js');
 
-require('./../vendor/webuploader/css.css');
+require('./../vendor/webuploader/webuploader.css');
 
 
 const tipError = function (msg) {

@@ -5,6 +5,7 @@ namespace ModStart\Core\Util;
 use Illuminate\Support\Facades\Log;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @Util 文件
@@ -113,6 +114,24 @@ class FileUtil
             }
         }
         return null;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
+    public static function getUploadFileNameWithExt($file)
+    {
+        $filename = $file->getClientOriginalName();
+        if ('blob' == $filename) {
+            $ext = FileUtil::mimeToExt($file->getMimeType());
+            if ($ext) {
+                $filename = 'blob.' . $ext;
+            } else {
+                BizException::throws('获取到的文件名称为空');
+            }
+        }
+        return $filename;
     }
 
     public static function filePathWritableCheck($paths)

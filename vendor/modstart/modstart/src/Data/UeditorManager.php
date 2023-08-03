@@ -168,7 +168,7 @@ class UeditorManager
                 if (empty($file)) {
                     return self::resultError($editorRet, 'File Empty');
                 }
-                $filename = $file->getClientOriginalName();
+                $filename = FileUtil::getUploadFileNameWithExt($file);
                 $content = file_get_contents($file->getRealPath());
                 $ret = DataManager::upload('image', $filename, $content, $option);
                 if ($ret['code']) {
