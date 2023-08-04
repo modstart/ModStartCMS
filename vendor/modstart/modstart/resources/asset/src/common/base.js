@@ -98,17 +98,21 @@ const Dom = {
 
 const Ui = {
     onResize(ele, cb) {
-        if (!window.ResizeObserver) {
+        if (!ele || !window.ResizeObserver) {
             return;
         }
+        var doc = ele.ownerDocument;
+        var win = doc.defaultView;
         var resizeTimer = null;
-        var resizeObserver = new ResizeObserver(function (entries) {
+        // 如果不取 win.ResizeObserver 在父页面监听iframe的元素会抛异常
+        // ResizeObserver loop completed with undelivered notifications
+        var resizeObserver = new win.ResizeObserver(function (entries) {
             if (resizeTimer) {
                 clearTimeout(resizeTimer);
             }
             resizeTimer = setTimeout(function () {
                 cb();
-            }, 100);
+            }, 1000);
         });
         resizeObserver.observe(ele);
     }
