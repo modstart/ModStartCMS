@@ -1,15 +1,16 @@
 
 .ub-search-block {
-    background: var(--color-primary, #419488);
+    background-color: var(--color-primary);
     padding: 2rem 0.5rem 3rem 0.5rem;
     text-align: center;
     position: relative;
+    background-size: cover;
 
-    &.white {
-        background: #FFF;
+    &.light {
+        background-color: #FFF;
 
         .title {
-            color: #34495e;
+            color: var(--color-text-default);
         }
 
         .form {
@@ -20,7 +21,7 @@
                 }
 
                 button {
-                    background: var(--color-primary);
+                    background-color: var(--color-primary);
                     color: #FFF;
                 }
             }
@@ -66,7 +67,7 @@
                 border-radius: 0.5rem 0.5rem 0 0;
 
                 &.active {
-                    background: var(--color-content-bg);
+                    background-color: var(--color-content-bg);
                     color: var(--color-primary);
                 }
             }
@@ -85,7 +86,7 @@
             .keywords-item {
                 display: inline-block;
                 line-height: 1.5rem;
-                background: rgba(0, 0, 0, 0.1);
+                background-color: rgba(0, 0, 0, 0.1);
                 border-radius: 0.3rem;
                 color: #FFF;
                 padding: 0 0.5rem;
@@ -138,7 +139,7 @@
                 position: absolute;
                 right: 0.05rem;
                 top: 0.05rem;
-                background: #FFF;
+                background-color: #FFF;
                 border: none;
                 border-radius: 1.25rem;
                 color: var(--color-primary, #419488);
@@ -163,7 +164,7 @@
     display: flex;
     height: 2rem;
     overflow: hidden;
-    background: var(--color-content-bg);
+    background-color: var(--color-content-bg);
     line-height: 2rem;
     padding: 0 0.5rem;
 
@@ -202,7 +203,7 @@
             margin-top: 0.3rem;
             position: relative;
             height: 1.4rem;
-            background: var(--color-input-bg);
+            background-color: var(--color-input-bg);
             border-radius: 0.7rem;
 
             .icon {
@@ -226,7 +227,7 @@
                 width: calc(100% - 2rem);
                 height: 1rem;
                 line-height: 1rem;
-                background: transparent;
+                background-color: transparent;
                 outline: none;
                 padding: 0;
             }
@@ -255,7 +256,7 @@
 }
 
 .ub-search-result {
-    background: #FFF;
+    background-color: #FFF;
     padding: var(--size-margin, 0.5rem);
 
     .keyword {

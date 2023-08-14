@@ -33,6 +33,12 @@ class ModelManageUtil
         }
     }
 
+    public static function tableComment($table, $comment, $conn)
+    {
+        $table = self::table($table, $conn);
+        self::statement("ALTER TABLE `$table` COMMENT = '$comment'", $conn);
+    }
+
     public static function listTables($conn = 'mysql')
     {
         $results = self::query('SHOW TABLES', $conn);
@@ -100,7 +106,7 @@ class ModelManageUtil
 
     public static function query($sql, $conn = 'mysql')
     {
-        $results = DB::select(DB::raw($sql));
+        $results = DB::connection($conn)->select(DB::raw($sql));
         if (is_array($results)) {
             foreach ($results as $k => $result) {
                 if ($result instanceof \stdClass) {
@@ -295,6 +301,72 @@ class ModelManageUtil
         BizException::throwsIfEmpty('ShowTableStructureError', $result);
         $result = str_replace("`$tablePrefixed`", "`__table_prefix__$table`", $result);
         return $result;
+    }
+
+    public static function databaseStructure($conn = 'mysql',
+                                             $buildInTableComment = [],
+                                             $buildColumnComment = []
+    )
+    {
+        $buildColumnComment = array_merge([
+            'id' => 'ID',
+            'created_at' => L('Created At'),
+            'updated_at' => L('Updated At'),
+        ], $buildColumnComment);
+        $tables = self::query('SHOW TABLE STATUS;', $conn);
+        $result = [];
+        foreach ($tables as $item) {
+            $tableName = $item['Name'];
+            $one = [];
+            $one['table'] = [
+                'name' => $tableName,
+                'comment' => $item['Comment'],
+            ];
+            if (empty($one['table']['comment'])) {
+                if (isset($buildInTableComment[$tableName])) {
+                    $one['table']['comment'] = $buildInTableComment[$tableName];
+                }
+            }
+            $columns = self::query("SHOW FULL FIELDS FROM `" . $one['table']['name'] . "`;", $conn);
+            $one['columns'] = [];
+            foreach ($columns as $column) {
+                $c = [
+                    'name' => $column['Field'],
+                    'type' => strtoupper($column['Type']),
+                    'comment' => $column['Comment'],
+                ];
+                if (empty($c['comment'])) {
+                    $map = [
+                        'id' => 'ID',
+                        'created_at' => L('Created At'),
+                        'updated_at' => L('Updated At'),
+                    ];
+                    $c['comment'] = isset($buildColumnComment[$c['name']]) ? $buildColumnComment[$c['name']] : '';
+                }
+                $one['columns'][] = $c;
+            }
+            $result[] = $one;
+        }
+        return $result;
+    }
+
+    public static function databaseStructureMarkdown($conn = 'mysql')
+    {
+        $result = self::databaseStructure($conn);
+        $markdown = [];
+        foreach ($result as $r) {
+            $markdown[] = "## {$r['table']['name']} {$r['table']['comment']}";
+            $markdown[] = '';
+            $markdown[] = '';
+            $markdown[] = '| ' . join(' | ', ['字段', '类型', '说明']) . ' |';
+            $markdown[] = '| ' . join(' | ', ['---', '---', '---']) . ' |';
+            foreach ($r['columns'] as $c) {
+                $markdown[] = '| ' . join(' | ', [$c['name'], $c['type'], $c['comment'] ? $c['comment'] : '-']) . ' |';
+            }
+            $markdown[] = '';
+            $markdown[] = '';
+        }
+        return join("\n", $markdown);
     }
 
 }

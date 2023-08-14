@@ -360,7 +360,7 @@ class FileUtil
     {
         $size = sprintf("%u", $bytes);
         if ($size == 0) {
-            return ("0 Bytes");
+            return ("0B");
         }
         $units = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
         return round($size / pow(1024, ($i = floor(log($size, 1024)))), $decimals) . $units[$i];
@@ -639,22 +639,30 @@ class FileUtil
     /**
      * 产生一个本地临时路径
      *
-     * @param string $ext
+     * @param $ext string 文件后缀
+     * @param $hash string 用于产生唯一路径的hash，相同的hash会产生相同的路径
+     * @param $realpath bool 是否返回绝对路径
      * @return string
      * @throws BizException
      */
-    public static function generateLocalTempPath($ext = 'tmp')
+    public static function generateLocalTempPath($ext = 'tmp', $hash = null, $realpath = true)
     {
         if (!file_exists(public_path('temp'))) {
             @mkdir(public_path('temp'));
         }
-        for ($i = 0; $i < 10; $i++) {
-            $tempPath = public_path('temp/' . RandomUtil::lowerString(32) . '.' . $ext);
-            if (!file_exists($tempPath)) {
-                return $tempPath;
+        if (empty($hash)) {
+            for ($i = 0; $i < 10; $i++) {
+                $p = 'temp/' . RandomUtil::lowerString(32) . '.' . $ext;
+                $tempPath = public_path($p);
+                if (!file_exists($tempPath)) {
+                    return $realpath ? $tempPath : $p;
+                }
             }
+            BizException::throws('FileUtil generateLocalTempPath error');
         }
-        BizException::throws('FileUtil generateLocalTempPath error');
+        $appKey = config('env.APP_KEY');
+        $p = 'temp/' . md5($appKey . ':' . $hash) . '.' . $ext;
+        return $realpath ? public_path($p) : $p;
     }
 
 }

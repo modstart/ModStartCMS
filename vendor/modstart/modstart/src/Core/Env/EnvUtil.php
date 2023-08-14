@@ -4,15 +4,8 @@ namespace ModStart\Core\Env;
 
 class EnvUtil
 {
-    public static function all($file = null)
+    public static function parse($file)
     {
-        global $__msConfig;
-        if (!empty($__msConfig)) {
-            return $__msConfig;
-        }
-        if (null === $file) {
-            $file = base_path('.env');
-        }
         $all = [];
         if (file_exists($file)) {
             foreach (explode("\n", file_get_contents($file)) as $line) {
@@ -47,5 +40,17 @@ class EnvUtil
             }
         }
         return $all;
+    }
+
+    public static function all($file = null)
+    {
+        global $__msConfig;
+        if (!empty($__msConfig)) {
+            return $__msConfig;
+        }
+        if (null === $file) {
+            $file = base_path('.env');
+        }
+        return self::parse($file);
     }
 }

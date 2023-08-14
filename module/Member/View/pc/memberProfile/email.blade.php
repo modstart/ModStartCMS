@@ -32,7 +32,7 @@
 
             @if(! \Module\Vendor\Provider\MailSender\MailSenderProvider::hasProvider())
                 <div class="line">
-                    <div class="ub-alert ub-alert-danger">
+                    <div class="ub-alert danger">
                         <i class="ub-icon-warning"></i>
                         系统没有开启邮箱发送服务，验证码可能无法发送。
                     </div>
@@ -94,7 +94,7 @@
             @else
                 @if($_memberUser['email'])
                     <div class="line">
-                        <div class="ub-alert ub-alert-danger">
+                        <div class="ub-alert danger">
                             邮箱还没有进行验证
                         </div>
                     </div>

@@ -15,7 +15,9 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        $this->commands(ScheduleRunnerCommand::class);
+        $this->commands([
+            ScheduleRunnerCommand::class,
+        ]);
     }
 
     /**

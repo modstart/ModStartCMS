@@ -90,7 +90,7 @@ include __DIR__ . '/function.php';
 <div style="width:960px;min-height:100vh;margin:0 auto;">
 
     <?php if (file_exists(APP_PATH . '/storage/install.lock')) { ?>
-        <div class="ub-alert ub-alert-danger ub-text-center">系统无需重复安装</div>
+        <div class="ub-alert danger ub-text-center">系统无需重复安装</div>
     <?php } else { ?>
         <h1 class="ub-text-center" style="color:#FFF;">
             <i class="iconfont icon-tools"></i>
@@ -195,9 +195,9 @@ include __DIR__ . '/function.php';
                     </div>
                     <div class="content-item-foot">
                         <?php if (error_counter(0) > 0) { ?>
-                            <div class="ub-alert ub-alert-danger ub-text-center">请解决以上 <?php echo error_counter(0); ?> 个问题再进行安装</div>
+                            <div class="ub-alert danger ub-text-center">请解决以上 <?php echo error_counter(0); ?> 个问题再进行安装</div>
                         <?php } else if (!env_writable()) { ?>
-                            <div class="ub-alert ub-alert-danger ub-text-center">/.env文件不可写，请手动配置安装</div>
+                            <div class="ub-alert danger ub-text-center">/.env文件不可写，请手动配置安装</div>
                         <?php } else { ?>
                             <div style="display:none;margin-top:0.5rem;" data-step-env-next>
                                 <?php if(defined('LICENSE_URL')) { ?>

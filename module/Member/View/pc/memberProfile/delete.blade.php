@@ -34,7 +34,7 @@
                 <div class="line">
                     <div class="label"></div>
                     <div class="field">
-                        <div class="ub-alert ub-alert-danger">
+                        <div class="ub-alert danger">
                             您的账号将于 {{date('Y-m-d H:i:s',$_memberUser['deleteAtTime'])}} 删除，期间您还可以继续使用
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="line">
                     <div class="label">二次确认：</div>
                     <div class="field">
-                        <div class="ub-alert ub-alert-danger">
+                        <div class="ub-alert danger">
                             注销账号申请后30天内账号将会删除，删除后账号所有相关数据也会被删除
                         </div>
                         <label>

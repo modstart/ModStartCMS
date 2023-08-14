@@ -207,7 +207,7 @@ function text_error($msg, $solutionUrl = null, $count = true)
     if ($count) {
         error_counter();
     }
-    echo '<div class="ub-alert ub-alert-danger">× ' . $msg . ' ' . ($solutionUrl ? '<a target="_blank" href="' . $solutionUrl . '">解决办法</a>' : '') . '</div>';
+    echo '<div class="ub-alert danger">× ' . $msg . ' ' . ($solutionUrl ? '<a target="_blank" href="' . $solutionUrl . '">解决办法</a>' : '') . '</div>';
 }
 
 function text_warning($msg, $solutionUrl = null)

@@ -32,7 +32,7 @@
 
             @if(!\Module\Vendor\Provider\SmsSender\SmsSenderProvider::hasProvider())
                 <div class="line">
-                    <div class="ub-alert ub-alert-danger">
+                    <div class="ub-alert danger">
                         <i class="ub-icon-warning"></i>
                         系统没有开启短信发送服务，验证码可能无法发送。
                     </div>
@@ -94,7 +94,7 @@
             @else
                 @if($_memberUser['phone'])
                     <div class="line">
-                        <div class="ub-alert ub-alert-danger">
+                        <div class="ub-alert danger">
                             手机还没有进行验证
                         </div>
                     </div>
