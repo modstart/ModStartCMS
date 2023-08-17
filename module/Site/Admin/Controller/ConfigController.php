@@ -16,8 +16,8 @@ class ConfigController extends Controller
         $builder->image('siteLogo', '网站Logo');
         $builder->text('siteName', '网站名称');
         $builder->text('siteSlogan', '网站副标题');
-        $builder->text('siteDomain', '网站域名')->help('如 xxx.com');
-        $builder->text('siteUrl', '网站地址')->help('如 https://xxx.com 主要用于后台任务地址转换');
+        $builder->text('siteDomain', '网站域名')->help('如 example.com');
+        $builder->text('siteUrl', '网站地址')->help('如 https://example.com 主要用于后台任务地址转换');
         $builder->text('siteKeywords', '网站关键词');
         $builder->textarea('siteDescription', '网站描述');
         $builder->image('siteFavIco', '网站ICO');

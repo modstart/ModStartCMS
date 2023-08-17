@@ -185,6 +185,7 @@ class ModStartServiceProvider extends ServiceProvider
         Route::pattern('id', '[0-9]+');
         Route::pattern('alias', '[a-zA-Z0-9]+');
         Route::pattern('alias_url', '[a-zA-Z0-9_]+');
+        Route::pattern('locale', '[a-z]{2}');
     }
 
     private function setupMonitor()

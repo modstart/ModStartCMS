@@ -335,24 +335,68 @@ function modstart_module_enabled($module, $version = null)
     }
 }
 
-function LM($module, $name, ...$params)
+function L_locale()
 {
-    static $sessionLocale = null;
-    static $locale = null;
-    static $fallbackLocale = null;
-    if (null === $locale) {
-        $sessionLocale = \Illuminate\Support\Facades\Session::get('_locale', null);
+    static $useLocale = null;
+    if (null === $useLocale) {
+        // routeLocale > sessionLocale > i18nLocale > locale > fallbackLocale
+        $sessionLocaleKey = '_locale';
+        if (\ModStart\App\Core\CurrentApp::is(\ModStart\App\Core\CurrentApp::ADMIN)) {
+            $sessionLocaleKey = '_adminLocale';
+        }
+        $routeLocale = \Illuminate\Support\Facades\Request::route('locale');
+        $sessionLocale = \Illuminate\Support\Facades\Session::get($sessionLocaleKey, null);
+        $i18nLocale = null;
         $locale = config('app.locale');
         $fallbackLocale = config('app.fallback_locale');
+        if (!\ModStart\App\Core\CurrentApp::is(\ModStart\App\Core\CurrentApp::ADMIN)
+            &&
+            ModuleManager::isModuleInstalled('I18n')) {
+            $i18nLocale = \Module\I18n\Util\LangUtil::getDefault('shortName');
+            $langTrans = \Module\I18n\Util\LangTransUtil::map();
+        }
+        $useLocale = $routeLocale;
+        if (empty($useLocale)) {
+            $useLocale = $sessionLocale;
+        }
+        if (empty($useLocale)) {
+            $useLocale = $i18nLocale;
+        }
+        if (empty($useLocale)) {
+            $useLocale = $locale;
+        }
+        if (empty($useLocale)) {
+            $useLocale = $fallbackLocale;
+        }
+        \Illuminate\Support\Facades\Session::put($sessionLocaleKey, $useLocale);
+    }
+    return $useLocale;
+}
+
+/**
+ * @Util 多语言（模块）
+ * @param $module string 模块名称
+ * @param $name string 多语言
+ * @param ...$params string|int 多语言参数
+ * @return string 多语言翻译
+ * @example
+ * // 获取模块Member的多语言
+ * LM('Member','Message')
+ * // 获取模块Member的多语言，带参数
+ * LM('Member','File Size Limit %s','10M')
+ */
+function LM($module, $name, ...$params)
+{
+    static $trackMissing = null;
+    static $useLocale = null;
+    if (null === $useLocale) {
+        $useLocale = L_locale();
+        $trackMissing = config('modstart.trackMissingLang', false);
     }
     static $langs = [];
     if (!isset($langs[$module])) {
         $langs[$module] = [];
-        if ($sessionLocale && file_exists($file = ModuleManager::path($module, "Lang/$sessionLocale.php"))) {
-            $langs[$module] = (require $file);
-        } else if (file_exists($file = ModuleManager::path($module, "Lang/$locale.php"))) {
-            $langs[$module] = (require $file);
-        } else if (file_exists($file = ModuleManager::path($module, "Lang/$fallbackLocale.php"))) {
+        if ($useLocale && file_exists($file = ModuleManager::path($module, "Lang/$useLocale.php"))) {
             $langs[$module] = (require $file);
         }
     }
@@ -376,20 +420,14 @@ function LM($module, $name, ...$params)
  */
 function L($name, ...$params)
 {
-    static $sessionLocale = null;
-    static $locale = null;
-    static $fallbackLocale;
-    static $langTrans = [];
-    static $trackMissing = false;
-    static $trackMissingData = null;
-    if (null === $locale) {
-        $sessionLocale = \Illuminate\Support\Facades\Session::get('_locale', null);
-        $locale = config('app.locale');
-        $fallbackLocale = config('app.fallback_locale');
+    static $trackMissing = null;
+    static $useLocale = null;
+    if (null === $useLocale) {
+        $useLocale = L_locale();
         $trackMissing = config('modstart.trackMissingLang', false);
-        if (ModuleManager::isModuleInstalled('I18n') && \ModStart\Core\Dao\ModelManageUtil::hasTable('lang_trans')) {
-            $langTrans = \Module\I18n\Util\LangTransUtil::map();
-        }
+    }
+    if (empty($useLocale)) {
+        return $name;
     }
     if ($trackMissing && null === $trackMissingData) {
         $trackMissingData = [];
@@ -398,50 +436,46 @@ function L($name, ...$params)
         }
         register_shutdown_function(function () use (&$trackMissingData, $file) {
             ksort($trackMissingData);
-            file_put_contents($file, '<?php return ' . var_export($trackMissingData, true) . ';');
+            file_put_contents($file, '<?ph' . 'p return ' . var_export($trackMissingData, true) . ';');
         });
     }
-    if ($sessionLocale && isset($langTrans[$sessionLocale][$name])) {
-        if ($trackMissing && isset($trackMissingData[$name])) unset($trackMissingData[$name]);
-        if (!empty($params)) {
-            return call_user_func_array('sprintf', array_merge([$langTrans[$sessionLocale][$name]], $params));
+    if ($useLocale && isset($langTrans[$useLocale][$name])) {
+        if ($trackMissing && isset($trackMissingData[$name])) {
+            unset($trackMissingData[$name]);
         }
-        return $langTrans[$sessionLocale][$name];
-    } else if (isset($langTrans[$locale][$name])) {
-        if ($trackMissing && isset($trackMissingData[$name])) unset($trackMissingData[$name]);
         if (!empty($params)) {
-            return call_user_func_array('sprintf', array_merge([$langTrans[$locale][$name]], $params));
+            return call_user_func_array('sprintf', array_merge([$langTrans[$useLocale][$name]], $params));
         }
-        return $langTrans[$locale][$name];
-    } else if (isset($langTrans[$fallbackLocale][$name])) {
-        if ($trackMissing && isset($trackMissingData[$name])) unset($trackMissingData[$name]);
-        if (!empty($params)) {
-            return call_user_func_array('sprintf', array_merge([$langTrans[$fallbackLocale][$name]], $params));
-        }
-        return $langTrans[$fallbackLocale][$name];
+        return $langTrans[$useLocale][$name];
     }
     $ids = [
         'base.' . $name,
         'modstart::base.' . $name,
     ];
-    if (strpos($name, '.') !== false) {
+    $nameRaw = $name;
+    if (preg_match('/^[a-z0-9]+\.(.+)$/i', $name, $mat)) {
         array_unshift($ids, $name);
+        $nameRaw = $mat[1];
     }
     foreach ($ids as $id) {
-        $trans = trans($id);
+        $trans = trans($id, [], 'messages', $useLocale);
         if ($trans !== $id) {
-            if ($trackMissing && isset($trackMissingData[$name])) unset($trackMissingData[$name]);
+            if ($trackMissing && isset($trackMissingData[$nameRaw])) {
+                unset($trackMissingData[$nameRaw]);
+            }
             if (!empty($params)) {
                 return call_user_func_array('sprintf', array_merge([$trans], $params));
             }
             return $trans;
         }
     }
-    if ($trackMissing) $trackMissingData[$name] = $name;
+    if ($trackMissing) {
+        $trackMissingData[$nameRaw] = $nameRaw;
+    }
     if (!empty($params)) {
         return call_user_func_array('sprintf', array_merge([$name], $params));
     }
-    return $name;
+    return $nameRaw;
 }
 
 if (!function_exists('array_build')) {
