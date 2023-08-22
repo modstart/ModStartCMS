@@ -116,9 +116,9 @@ class UeditorManager
 
             // 公式编辑
             "formulaConfig" => [
-                "imageUrlTemplate" => modstart_config('UEditor_FormulaImageUrlTemplate', 'https://latexeasy.com/svg.image?{}'),
-                'editorMode' => 'live',
-                'editorLiveServer' => 'https://latexeasy.com',
+                "imageUrlTemplate" => modstart_config('UEditor_FormulaImageUrlTemplate', 'https://r.latexeasy.com/image.svg?{}'),
+                'editorMode' => modstart_config('UEditor_FormulaEditorMode', 'live'),
+                'editorLiveServer' => modstart_config('UEditor_FormulaEditorLiveServer', 'https://latexeasy.com'),
             ]
         ];
         return $config;
