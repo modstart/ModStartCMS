@@ -199,7 +199,7 @@ function request_post($k, $defaultValue = '')
 
 function text_success($msg)
 {
-    echo '<div class="ub-alert ub-alert-success">√ ' . $msg . '</div>';
+    echo '<div class="ub-alert success">√ ' . $msg . '</div>';
 }
 
 function text_error($msg, $solutionUrl = null, $count = true)
@@ -212,7 +212,7 @@ function text_error($msg, $solutionUrl = null, $count = true)
 
 function text_warning($msg, $solutionUrl = null)
 {
-    echo '<div class="ub-alert ub-alert-warning">? ' . $msg . ' ' . ($solutionUrl ? '<a target="_blank" href="' . $solutionUrl . '">解决办法</a>' : '') . '</div>';
+    echo '<div class="ub-alert warning">? ' . $msg . ' ' . ($solutionUrl ? '<a target="_blank" href="' . $solutionUrl . '">解决办法</a>' : '') . '</div>';
 }
 
 function error_counter($inc = 1)

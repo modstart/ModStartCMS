@@ -421,6 +421,7 @@ function LM($module, $name, ...$params)
 function L($name, ...$params)
 {
     static $trackMissing = null;
+    static $trackMissingData = null;
     static $useLocale = null;
     if (null === $useLocale) {
         $useLocale = L_locale();
@@ -457,8 +458,13 @@ function L($name, ...$params)
         array_unshift($ids, $name);
         $nameRaw = $mat[1];
     }
+    $env = ModStart::env();
     foreach ($ids as $id) {
-        $trans = trans($id, [], 'messages', $useLocale);
+        if ($env == 'laravel9') {
+            $trans = trans($id, [], $useLocale);
+        } else {
+            $trans = trans($id, [], 'messages', $useLocale);
+        }
         if ($trans !== $id) {
             if ($trackMissing && isset($trackMissingData[$nameRaw])) {
                 unset($trackMissingData[$nameRaw]);

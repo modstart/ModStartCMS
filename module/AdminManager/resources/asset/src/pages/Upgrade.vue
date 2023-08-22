@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-loading="loading">
-            <div v-if="!memberUser.id" class="ub-alert ub-alert-warning">
+            <div v-if="!memberUser.id" class="ub-alert warning">
                 <i class="iconfont icon-warning"></i>
                 您还没有登录，登录后才能进行升级操作
                 <a href="javascript:;" @click="doMemberLoginShow()"><i class="iconfont icon-user"></i>立即登录</a>

@@ -5,6 +5,7 @@ const Dialog = require('./../lib/dialog');
 const Lister = require('./../lib/lister');
 const Util = require('./../lib/util');
 const Url = require('./../lib/url');
+const Ui = require('./../lib/ui');
 const EventManager = require('./../lib/event-manager');
 const SelectorDialog = require('./../lib/selectorDialog');
 import {Tree} from './../svue/lib/tree';
@@ -93,28 +94,6 @@ const Dom = {
         } else {
             ele.value += text;
         }
-    }
-}
-
-const Ui = {
-    onResize(ele, cb) {
-        if (!ele || !window.ResizeObserver) {
-            return;
-        }
-        var doc = ele.ownerDocument;
-        var win = doc.defaultView;
-        var resizeTimer = null;
-        // 如果不取 win.ResizeObserver 在父页面监听iframe的元素会抛异常
-        // ResizeObserver loop completed with undelivered notifications
-        var resizeObserver = new win.ResizeObserver(function (entries) {
-            if (resizeTimer) {
-                clearTimeout(resizeTimer);
-            }
-            resizeTimer = setTimeout(function () {
-                cb();
-            }, 1000);
-        });
-        resizeObserver.observe(ele);
     }
 }
 

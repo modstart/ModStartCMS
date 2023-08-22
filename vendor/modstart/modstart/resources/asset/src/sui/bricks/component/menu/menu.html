@@ -78,38 +78,12 @@
     <div style="padding:1rem;">
         <div class="row">
             <div class="col-4">
-                <div>.ub-menu.page-menu</div>
-                <div class="ub-menu page-menu" data-menu-page-menu>
-                    <div class="title">标题1</div>
-                    <div class="items">
-                        <a class="active" href="#">标题1-1</a>
-                        <a href="#">标题1-2</a>
-                    </div>
-                    <div class="title">标题2</div>
-                    <div class="items">
-                        <a href="#">标题2-1</a>
-                        <a href="#">标题2-2</a>
-                    </div>
-                    <div class="title">标题3</div>
-                    <div class="items">
-                        <a href="#">标题3-1</a>
-                        <a href="#">标题3-2</a>
-                    </div>
-                    <a class="page-menu-toggle" href="javascript:;"
-                       onclick="$('body').toggleClass('ub-menu-page-show')">
-                        <i class="icon iconfont icon-list"></i>
+                <div>
+                    .ub-menu
+                    <a href="./page.html?url=component/menu/menu-page-menu" target="_blank">
+                        .page-menu
                     </a>
                 </div>
-                <script>
-                    $(function () {
-                        $('[data-menu-page-menu]').on('click','.title',function(){
-                            $(this).next().toggleClass('open');
-                        });
-                    });
-                </script>
-            </div>
-            <div class="col-4">
-                <div>.ub-menu</div>
                 <div class="ub-menu" data-menu>
                     <div class="title">标题1</div>
                     <div class="items">
@@ -143,45 +117,13 @@
                 </div>
             </div>
             <div class="col-4">
-                <div>.ub-menu-tree 多级菜单</div>
-                <div class="ub-menu-tree" data-menu-tree>
-                    <div class="item" data-repeat="2">
-                        <a class="title" href="javascript:;">菜单 {ZH,1,1}</a>
-                        <div class="group">
-                            <div class="item" data-repeat="2">
-                                <a class="title" href="javascript:;">菜单 {ZH,2,2}</a>
-                            </div>
-                            <div class="item" data-repeat="2">
-                                <a class="title" href="javascript:;">菜单 {ZH,3,3}</a>
-                                <div class="group">
-                                    <div class="item" data-repeat="2">
-                                        <a class="title" href="javascript:;">菜单 {ZH,40,400}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    $(function () {
-                        $('[data-menu-tree]').each(function (i, o) {
-                            $(o).find('.title')
-                                .each(function (i, o) {
-                                    if ($(o).next().is('.group')) $(o).addClass('has-group');
-                                })
-                                .on('click', function () {
-                                    if ($(this).is('.has-group')) {
-                                        $(this).toggleClass('open');
-                                        return false;
-                                    }
-                                });
-                        });
-                    });
-                </script>
-            </div>
-            <div class="col-4">
                 <div>
-                    <div>nav-menu</div>
+                    <div>
+                        .ub-menu.nav-menu
+                        <a href="javascript:;" onclick="$('[data-menu-nav-menu]').toggleClass('lg')">
+                            .lg
+                        </a>
+                    </div>
                     <div class="ub-menu nav-menu" data-menu-nav-menu>
                         <div class="title">
                             <a href="#">标题1</a>
@@ -228,54 +170,115 @@
             </div>
             <div class="col-4">
                 <div>
-                    <div>nav-menu</div>
-                    <div class="ub-menu nav-menu lg" data-menu-nav-menu-lg>
+                    .ub-menu-tree
+                    <a href="javascript:;" onclick="$('[data-menu-tree]').toggleClass('no-arrow')">
+                        .no-arrow
+                    </a>
+                    <a href="./page.html?url=component/menu/menu-tree-page-menu" target="_blank">
+                        .page-menu
+                    </a>
+                </div>
+                <div class="ub-menu-tree" data-menu-tree>
+                    <div class="item" data-repeat="2">
                         <div class="title">
-                            <a href="#">标题1</a>
+                            <a class="title-text" href="javascript:;">菜单 {ZH,1,100}</a>
+                            <div class="title-action">
+                                <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                    <i class="iconfont icon-angle-right"></i>
+                                </a>
+                                <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                    <i class="iconfont icon-angle-down"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="items">
-                            <a class="active" href="#">标题1-1</a>
-                            <a href="#">标题1-2</a>
+                        <div class="group">
+                            <div class="item" data-repeat="2">
+                                <div class="title">
+                                    <a class="title-text" href="javascript:;">菜单 {ZH,2,100}</a>
+                                    <div class="title-action">
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                            <i class="iconfont icon-angle-right"></i>
+                                        </a>
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                            <i class="iconfont icon-angle-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item" data-repeat="2">
+                                <div class="title">
+                                    <a class="title-text" href="javascript:;">菜单 {ZH,3,100}</a>
+                                    <div class="title-action">
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                            <i class="iconfont icon-angle-right"></i>
+                                        </a>
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                            <i class="iconfont icon-angle-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="item" data-repeat="2">
+                                        <div class="title">
+                                            <a class="title-text" href="javascript:;">菜单 {ZH,40,400}</a>
+                                            <div class="title-action">
+                                                <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                                    <i class="iconfont icon-angle-right"></i>
+                                                </a>
+                                                <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                                    <i class="iconfont icon-angle-down"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="title active">标题2</div>
-                        <div class="items">
-                            <a href="#">标题2-1</a>
-                            <a href="#">标题2-2</a>
+                    </div>
+                </div>
+                <script>
+                    $(function () {
+                        $('[data-menu-tree]').find('.title.active').parents('.group').prev().addClass('open group-active');
+                        $('[data-menu-tree]').on('click','.title-action-icon',function(){
+                            $(this).closest('.title').toggleClass('open');
+                        });
+                    });
+                </script>
+            </div>
+
+
+            <div class="col-4">
+                <div>
+                    .ub-menu-tree-simple
+                </div>
+                <div class="ub-menu-tree-simple">
+                    <div class="item-container">
+                        <div data-repeat="2" class="item level-1">
+                            <a href="javascript:;">{ZH,2,100}</a>
                         </div>
-                        <div class="title">标题3</div>
-                        <div class="items">
-                            <a href="#">标题3-1</a>
-                            <a href="#">标题3-2</a>
+                        <div data-repeat="2" class="item level-2">
+                            <a href="javascript:;">{ZH,2,100}</a>
                         </div>
-                        <a class="page-menu-toggle" href="javascript:;"
-                           onclick="$('body').toggleClass('ub-menu-page-show')">
-                            <i class="icon iconfont icon-list"></i>
+                        <div data-repeat="3" class="item level-2">
+                            <a href="javascript:;">{ZH,2,100}</a>
+                        </div>
+                        <div data-repeat="4" class="item level-2">
+                            <a href="javascript:;">{ZH,2,100}</a>
+                        </div>
+                        <div data-repeat="2" class="item level-2">
+                            <a href="javascript:;">{ZH,2,100}</a>
+                        </div>
+                    </div>
+                    <div class="tool" onclick="$(this).closest('.ub-menu-tree-simple').toggleClass('close')">
+                        <a href="javascript:;" class="tool-close">
+                            <i class="iconfont icon-angle-up"></i>
+                        </a>
+                        <a href="javascript:;" class="tool-open">
+                            <i class="iconfont icon-angle-down"></i>
                         </a>
                     </div>
-                    <script>
-                        $(function () {
-                            var $menu = $('[data-menu-nav-menu-lg]');
-                            if($(window).width()>600) {
-                                $menu.find('.items').addClass('open');
-                            }else{
-                                $menu.on('click','.title',function(){
-                                    $menu.find('.items').removeClass('open');
-                                    $(this).next().addClass('open')
-                                        .css('left',$(this).offset().left+'px')
-                                        .css('width',$(this).width()+'px');
-                                    return false;
-                                });
-                                $(document).on('click',function(){
-                                    $menu.find('.items').removeClass('open');
-                                });
-                            }
-                        });
-                    </script>
                 </div>
             </div>
-        </div>
-        <div class="block-placeholder">
-            <p data-repeat="20">话说天下大势，合久必分，分久必合。</p>
         </div>
     </div>
 </div>

@@ -230,4 +230,5 @@ return [
     'Nav' => '导航',
     'Examples' => '例子',
     'Under Development' => '开发中',
+    'Price' => '价格',
 ];

@@ -582,6 +582,20 @@ class FileUtil
         return file_get_contents($path);
     }
 
+    public static function fopenGetContext()
+    {
+        return stream_context_create([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+            'http' => [
+                'method' => 'GET',
+                'user_agent' => CurlUtil::defaultUserAgent(),
+            ],
+        ]);
+    }
+
     /**
      * 将远程文件保存为本地可用
      * @param $path string 可以为 http://example.com/xxxxx.xxx /data/xxxxx.xxx
@@ -608,7 +622,7 @@ class FileUtil
             }
             @mkdir(public_path('temp'));
             if ($downloadStream) {
-                $f = @fopen($path, 'r');
+                $f = @fopen($path, 'rb', false, self::fopenGetContext());
                 if ($f) {
                     file_put_contents($tempPath, $f);
                 }

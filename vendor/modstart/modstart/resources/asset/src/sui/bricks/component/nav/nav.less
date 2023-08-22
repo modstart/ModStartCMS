@@ -89,10 +89,16 @@
         line-height: 1rem;
 
         &:after {
-            content: '/';
+            content: '';
             display: inline-block;
             margin-left: 0.5rem;
             color: var(--color-tertiary-light);
+            background-image: var(--icon-arrow);
+            width: 0.4rem;
+            height: 0.4rem;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.3;
         }
 
         &:last-child {

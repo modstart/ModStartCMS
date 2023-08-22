@@ -1,0 +1,83 @@
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/menu/menu.less"/>
+<link rel="stylesheet/less" type="text/css" href="./bricks/component/header/header.less"/>
+
+
+<div>
+    <div class="row">
+        <div class="col-3">
+            <div class="ub-menu-tree page-menu no-arrow" data-menu-tree>
+                <div class="page-menu-container">
+                    <div class="item" data-repeat="2">
+                        <div class="title">
+                            <a class="title-text" href="javascript:;">菜单 {ZH,1,100}</a>
+                            <div class="title-action">
+                                <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                    <i class="iconfont icon-angle-right"></i>
+                                </a>
+                                <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                    <i class="iconfont icon-angle-down"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="item" data-repeat="2">
+                                <div class="title">
+                                    <a class="title-text" href="javascript:;">菜单 {ZH,2,100}</a>
+                                    <div class="title-action">
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                            <i class="iconfont icon-angle-right"></i>
+                                        </a>
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                            <i class="iconfont icon-angle-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item" data-repeat="2">
+                                <div class="title">
+                                    <a class="title-text" href="javascript:;">菜单 {ZH,3,100}</a>
+                                    <div class="title-action">
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                            <i class="iconfont icon-angle-right"></i>
+                                        </a>
+                                        <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                            <i class="iconfont icon-angle-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="item" data-repeat="2">
+                                        <div class="title">
+                                            <a class="title-text" href="javascript:;">菜单 {ZH,40,400}</a>
+                                            <div class="title-action">
+                                                <a href="javascript:;" class="title-action-icon title-action-icon-open">
+                                                    <i class="iconfont icon-angle-right"></i>
+                                                </a>
+                                                <a href="javascript:;" class="title-action-icon title-action-icon-close">
+                                                    <i class="iconfont icon-angle-down"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="page-menu-toggle" href="javascript:;"
+                   onclick="$('body').toggleClass('ub-menu-page-show')">
+                    <i class="icon iconfont icon-list"></i>
+                </a>
+            </div>
+            <script>
+                $(function () {
+                    var $menu = $('[data-menu-tree]');
+                    $menu.find('.title.active').parents('.group').prev().addClass('open group-active');
+                    $menu.on('click','.title-action-icon',function(){
+                        $(this).closest('.title').toggleClass('open');
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>

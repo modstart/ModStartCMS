@@ -33,10 +33,17 @@ class ModelManageUtil
         }
     }
 
-    public static function tableComment($table, $comment, $conn)
+    public static function tableComment($table, $comment, $conn = 'mysql')
     {
         $table = self::table($table, $conn);
         self::statement("ALTER TABLE `$table` COMMENT = '$comment'", $conn);
+    }
+
+    public static function tablesComment($tableCommentMap, $conn = 'mysql')
+    {
+        foreach ($tableCommentMap as $table => $comment) {
+            self::tableComment($table, $comment, $conn);
+        }
     }
 
     public static function listTables($conn = 'mysql')

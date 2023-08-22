@@ -10,7 +10,7 @@
 
     <div class="tw-px-3 tw-py-20 tw-rounded-b-lg tw-bg-white">
         @if(empty($oauthRecord))
-            <div class="ub-alert ub-alert-warning">
+            <div class="ub-alert warning">
                 当前账号暂未绑定 {{$oauth->title()}}
                 @if($oauth->bindRender())
                     {!! $oauth->bindRender() !!}
@@ -20,7 +20,7 @@
                 @endif
             </div>
         @else
-            <div class="ub-alert ub-alert-success">
+            <div class="ub-alert success">
                 当前账号已绑定 {{$oauth->title()}}
             </div>
             <div class="tw-my-4">

@@ -125,6 +125,7 @@ class AgentUtil
         '/Dataprovider\\.com/i' => 'Other',
         '/Wordupindexinfo/i' => 'Other',
         '/researchscan/i' => 'Other',
+        '/robot/i' => 'Other',
         '/spider/i' => 'Other',
     ];
 
