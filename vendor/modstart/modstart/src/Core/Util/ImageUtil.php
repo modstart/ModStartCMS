@@ -18,11 +18,15 @@ class ImageUtil
 
     public static function limitSizeAndDetectOrientation($path, $maxWidth = 1000, $maxHeight = 1000)
     {
+        $extensionPermit = [
+            'jpg', 'jpeg', 'png', 'gif',
+        ];
+        $ext = FileUtil::extension($path);
+        if (!in_array($ext, $extensionPermit)) {
+            return;
+        }
         try {
             $changed = false;
-            if (ends_with(strtolower($path), '.webp')) {
-                return;
-            }
             $exif = @exif_read_data($path);
             $image = Image::make($path);
             if (!empty($exif['Orientation'])) {

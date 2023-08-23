@@ -6,6 +6,6 @@
             <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
             <a href="javascript:;" class="action preview" data-image-preview><i class="iconfont icon-eye"></i></a>
         </div>
-        <div class="cover ub-cover-1-1" data-value-background></div>
+        <div class="cover ub-cover-1-1 contain" data-value-background></div>
     </div>
 @overwrite

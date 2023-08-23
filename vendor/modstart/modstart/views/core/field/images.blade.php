@@ -19,14 +19,14 @@
                     <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
                     <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
                 </div>
-                <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500"></div>
+                <div class="cover ub-cover-1-1 contain" data-background-src="placeholder/500x500"></div>
             </div>
             <div class="item">
                 <div class="tools">
                     <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>
                     <a href="javascript:;" class="action preview" data-preview><i class="iconfont icon-eye"></i></a>
                 </div>
-                <div class="cover ub-cover-1-1" data-background-src="placeholder/500x500"></div>
+                <div class="cover ub-cover-1-1 contain" data-background-src="placeholder/500x500"></div>
             </div>
             <div class="item add">
                 <a href="javascript:;" class="action add" data-add><i class="iconfont icon-plus"></i></a>
@@ -60,7 +60,7 @@
                     '                <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>' +
                     '                <a href="javascript:;" class="action preview" data-preview data-image-preview="'+images[i]+'"><i class="iconfont icon-eye"></i></a>' +
                     '            </div>' +
-                    '            <div class="cover ub-cover-1-1" style="background-image:url('+images[i]+');"></div>' +
+                    '            <div class="cover ub-cover-1-1 contain" style="background-image:url('+images[i]+');"></div>' +
                     '        </div>');
                 $selector.append($item);
             }

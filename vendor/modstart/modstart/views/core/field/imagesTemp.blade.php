@@ -46,7 +46,7 @@
                     '                <a href="javascript:;" class="action close" data-close><i class="iconfont icon-close"></i></a>' +
                     '                <a href="javascript:;" class="action preview" data-preview data-image-preview="'+previews[i]+'"><i class="iconfont icon-eye"></i></a>' +
                     '            </div>' +
-                    '            <div class="cover ub-cover-1-1" style="background-image:url('+previews[i]+');"></div>' +
+                    '            <div class="cover ub-cover-1-1 contain" style="background-image:url('+previews[i]+');"></div>' +
                     '        </div>');
                 $selector.append($item);
             }

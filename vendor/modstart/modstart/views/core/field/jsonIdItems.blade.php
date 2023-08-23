@@ -20,7 +20,7 @@
                 @if($itemStyle=='coverTitle')
                 <el-table-column label="{{L('Cover')}}">
                     <template slot-scope="scope">
-                        <div class="ub-cover-1-1 tw-w-10 tw-rounded tw-bg-gray-100" :style="{backgroundImage:'url('+scope.row.cover+')'}"></div>
+                        <div class="ub-cover-1-1 contain tw-w-10 tw-rounded tw-bg-gray-100" :style="{backgroundImage:'url('+scope.row.cover+')'}"></div>
                     </template>
                 </el-table-column>
                 @endif
