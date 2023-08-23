@@ -4,6 +4,7 @@
 namespace Module\Member\Core;
 
 
+use Illuminate\Support\Facades\Log;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
@@ -56,11 +57,15 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
         BizException::throwsIfEmpty('请选择会员类型', $vipId);
         $memberVip = MemberVipUtil::get($vipId);
         BizException::throwsIfEmpty('会员类型不存在', $memberVip);
-        $api = app(MemberVipController::class);
-        $priceInfoRet = $api->calc($vipId);
-        BizException::throwsIf($priceInfoRet['msg'], $priceInfoRet['code']);
+        $memberUser = MemberUtil::get($memberUserId);
+        BizException::throwsIfEmpty('会员不存在', $memberUser);
+        // $api = app(MemberVipController::class);
+        // $priceInfoRet = $api->calc($vipId);
+        $priceInfoRet = MemberVipUtil::calcPrice($memberUser['vipId'], $memberUser['vipExpire'], $vipId);
+        BizException::throwsIf($priceInfoRet['msg'], $priceInfoRet['code'] > 0);
         $money = $priceInfoRet['data']['price'];
-        BizException::throwsIf('充值金额异常', $money < 0.01 || $money > 1000 * 10000);
+        // Log::info('MemberVipPayCenterBiz.createOrderForQuick - ' . json_encode([$quickOrder, $priceInfoRet], JSON_UNESCAPED_UNICODE));
+        BizException::throwsIf('订单金额异常', $money < 0.01 || $money > 1000 * 10000);
         $order = ModelUtil::insert('member_vip_order', [
             'status' => OrderStatus::WAIT_PAY,
             'memberUserId' => $memberUserId,

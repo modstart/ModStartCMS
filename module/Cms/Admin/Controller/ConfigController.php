@@ -31,6 +31,10 @@ class ConfigController extends Controller
 
         $builder->layoutPanel('使用设置', function (Form $builder) {
             $builder->radio('Cms_ContentUrlMode', '内容URL模式')->optionType(ContentUrlMode::class)->defaultValue(ContentUrlMode::A);
+            $builder->radio('Cms_CatAdminTreeMode', '后台栏目管理模式')->options([
+                'tree' => '全部显示',
+                'list' => '只显示一级',
+            ])->defaultValue('list');
         });
 
         $builder->formClass('wide');

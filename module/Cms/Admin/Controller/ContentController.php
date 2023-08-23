@@ -202,6 +202,7 @@ class ContentController extends Controller
         $grid->canDelete(true)->urlDelete(action('\\' . __CLASS__ . '@delete', ['modelId' => $this->modelId]));
         $grid->canBatchDelete(true);
         $grid->batchOperatePrepend('<button class="btn" data-batch-dialog-operate="' . modstart_admin_url('cms/content/batch_move/' . $this->modelId) . '"><i class="iconfont icon-right"></i> 批量移动</button>');
+        $grid->pageJumpEnable(true);
         if (Request::isPost()) {
             return $grid->request();
         }

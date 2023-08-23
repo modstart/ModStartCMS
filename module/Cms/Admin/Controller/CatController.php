@@ -99,11 +99,14 @@ class CatController extends Controller
                 $builder->number('pageSize', '默认分页大小')->help('默认为10')->listable(false);
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
-            })
-            // 树状模式
-            ->asTree()
-            // 多级模式
-            // ->asTreeMass($pid)->treeMaxLevel(3)
+            });
+        if ('list' == modstart_config('Cms_CatAdminTreeMode', 'tree')) {
+            $builder->asTreeMass($pid);
+        } else {
+            $builder->asTree();
+        }
+        $builder
+            ->treeMaxLevel(999)
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('title', L('Title'));
