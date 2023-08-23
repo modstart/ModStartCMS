@@ -54,7 +54,7 @@ if(!isset($container)){
                                 </div>
                             </div>
                         </div>
-                    @elseif($b['type']==\Module\Banner\Type\BannerType::VIDEO && !\ModStart\Core\Util\AgentUtil::isMobile())
+                    @elseif($b['type']==\Module\Banner\Type\BannerType::VIDEO)
                         <a class="swiper-slide {{$round?'tw-rounded':''}} video"
                            style="background-color:{{$b['backgroundColor']?$b['backgroundColor']:'transparent'}};"
                            @if($b['link']) href="{{$b['link']}}" target="_blank" @else href="javascript:;" @endif>

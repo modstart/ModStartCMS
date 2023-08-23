@@ -26,16 +26,10 @@ return [
             ],
         ],
         'Banner' => [
-            'enable' => true,
-            'config' => [
-                'position' => '[{"k":"home","v":"首页"}]',
-            ],
+            'enable' => true
         ],
         'Partner' => [
             'enable' => true,
-            'config' => [
-                'position' => '[{"k":"home","v":"首页"}]',
-            ],
         ],
         'CaptchaTecmz' => [
             'enable' => true,
