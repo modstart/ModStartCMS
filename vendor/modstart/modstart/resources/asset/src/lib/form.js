@@ -43,8 +43,20 @@ var winReload = function (w) {
 
 var Form = {
     defaultTimeout: 10 * 60 * 1000,
-    delaySubmit: function (cb) {
-        setTimeout(cb, 0)
+    delaySubmit: function ($form, cb) {
+        var pass = true;
+        $form.find('[data-form-process]').each(function (i, o) {
+            if ($(o).attr('data-form-process') == 'processing') {
+                pass = false;
+            }
+        });
+        if (pass) {
+            cb();
+        } else {
+            setTimeout(function () {
+                Form.delaySubmit($form, cb);
+            }, 100);
+        }
     },
     responseToRes: function (response) {
         var res = {
@@ -206,7 +218,7 @@ var Form = {
             }
             var $this = $(this);
             // console.log('form', method, action);
-            Form.delaySubmit(function () {
+            Form.delaySubmit($form, function () {
                 var data = $this.serializeArray();
                 $.ajax({
                     type: method,

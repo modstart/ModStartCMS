@@ -72,7 +72,7 @@ class CodeUtil
     public static function phpVarExportReturnFile($var)
     {
         $content = self::phpVarExport($var);
-        return "<?php\nreturn $content;";
+        return "<" . "?php\nreturn $content;";
     }
 
     public static function getFullClassNameForContent($content)

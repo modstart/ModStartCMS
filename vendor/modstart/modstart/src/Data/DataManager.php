@@ -14,6 +14,14 @@ use ModStart\Data\Event\DataDeletedEvent;
 use ModStart\Data\Event\DataFileUploadedEvent;
 use ModStart\Data\Storage\FileDataStorage;
 
+/**
+ * Class DataManager
+ * @package ModStart\Data
+ *
+ * @example
+ * 测试新存储
+ * var_dump(DataManager::upload('file', 'test111.txt', 'test', ['driver' => 'DataStorage_DataSFtp']));
+ */
 class DataManager
 {
     /** @var AbstractDataStorage[] */

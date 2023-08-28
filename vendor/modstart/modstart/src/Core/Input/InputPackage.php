@@ -85,6 +85,17 @@ class InputPackage
         return new InputPackage(Input::all());
     }
 
+    public static function buildFromGzipJsonBody()
+    {
+        $contentEncoding = Request::headerGet('content-encoding');
+        if ('gzip' == $contentEncoding) {
+            $content = gzdecode(Request::instance()->getContent());
+        } else {
+            $content = file_get_contents('php://input');
+        }
+        return self::build(@json_decode($content, true));
+    }
+
     /**
      * @return InputPackage
      */

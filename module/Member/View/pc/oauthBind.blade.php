@@ -15,10 +15,12 @@
                 window.api.base.defaultFormCallback(res,{
                     success:function (res) {
                         $('[data-captcha-status]').hide().filter('[data-captcha-status=success]').show();
+                        $('[name=captcha]').attr('data-form-process','success');
                     },
                     error:function (res) {
                         $('[data-captcha-status]').hide().filter('[data-captcha-status=error]').show();
                         $('[data-captcha]').click();
+                        $('[name=captcha]').attr('data-form-process','error');
                     }
                 })
             })
@@ -74,7 +76,9 @@
                         <div class="field">
                             <div class="row no-gutters">
                                 <div class="col-7">
-                                    <input type="text" class="form-lg" name="captcha" autocomplete="off" onblur="__memberCheckCaptcha()" placeholder="图片验证码" />
+                                    <input type="text" class="form-lg" name="captcha" autocomplete="off"
+                                           onfocus="$(this).attr('data-form-process','processing')"
+                                           onblur="__memberCheckCaptcha()" placeholder="图片验证码" />
                                 </div>
                                 <div class="col-5">
                                     <img class="captcha captcha-lg" data-captcha title="刷新验证" onclick="this.src=window.__msRoot+'oauth_bind/captcha?'+Math.random()" src="{{$__msRoot}}oauth_bind/captcha?{{time()}}" />

@@ -124,7 +124,6 @@ var Editor = {
             'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
             'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
             'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',
-            'formula',
             // 'wechatcustomemotion',
         ];
 

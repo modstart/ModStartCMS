@@ -75,6 +75,9 @@ use ModStart\Support\Manager\FieldManager;
  * @method AbstractField|mixed isLayoutField($vlaue = null)
  * @method AbstractField|mixed isCustomField($vlaue = null)
  * @method AbstractField|mixed gridFixed($vlaue = null)
+ * grid模式：是否启用快捷编辑
+ * > $value = true
+ * > $value = function(AbstractField $field, $item, $index){ return true; }
  * @method AbstractField|mixed gridEditable($vlaue = null)
  *
  * >>>>>> 数据流转换流程 >>>>>>
@@ -597,6 +600,22 @@ class AbstractField implements Renderable
         return $variables;
     }
 
+    private function transformVariables($variables, $param)
+    {
+        switch ($this->renderMode()) {
+            case FieldRenderMode::GRID:
+                if ($variables['gridEditable'] instanceof \Closure) {
+                    $variables['gridEditable'] = call_user_func_array($variables['gridEditable'], [
+                        $this,
+                        $param['item'],
+                        $param['index'],
+                    ]);
+                }
+                break;
+        }
+        return $variables;
+    }
+
     public function view($mode = '', $name = null)
     {
         if (!empty($this->view)) {
@@ -634,21 +653,26 @@ class AbstractField implements Renderable
                 }
             }
             ModStart::script($this->script);
+            $variables = $this->variables();
             switch ($this->renderMode) {
                 case FieldRenderMode::FORM:
-                    return View::make($this->view(), $this->variables())->render();
+                    return View::make($this->view(), $variables)->render();
                 case FieldRenderMode::DETAIL:
                     if (view()->exists($view = $this->view($this->renderMode))) {
-                        return View::make($view, $this->variables())->render();
+                        return View::make($view, $variables)->render();
                     }
-                    return View::make($this->view($this->renderMode, 'text'), $this->variables())->render();
+                    return View::make($this->view($this->renderMode, 'text'), $variables)->render();
                 case FieldRenderMode::GRID:
                     if (view()->exists($view = $this->view($this->renderMode))) {
                         // echo json_encode($this->variables())."\n";
+                        $variables = $this->transformVariables($variables, [
+                            'item' => $item,
+                            'index' => $index,
+                        ]);
                         return View::make($view, array_merge([
                             'item' => $item,
                             '_index' => $index,
-                        ], $this->variables()))->render();
+                        ], $variables))->render();
                     }
                     if (is_array($item->{$column})) {
                         return join(', ', $item->{$column});

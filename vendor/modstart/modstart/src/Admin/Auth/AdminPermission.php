@@ -59,7 +59,7 @@ class AdminPermission
 
     public static function founderId()
     {
-        return AdminConfig::get('founderId', 1);
+        return intval(AdminConfig::get('founderId', 1));
     }
 
     public static function isUrlAction($url)
