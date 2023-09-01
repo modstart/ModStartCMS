@@ -22,8 +22,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileManager
 {
+    public static $slowDebug = false;
+
     public static function handleUpload($category, $option = null, $permitCheck = null)
     {
+        if (self::$slowDebug) {
+            sleep(10);
+        }
         $input = InputPackage::buildFromInput();
         $action = $input->getTrimString('action', 'upload');
         if ($permitCheck) {
@@ -40,7 +45,9 @@ class FileManager
 
     public static function handle($category, $uploadTable, $uploadCategoryTable, $userId, $option = null, $permitCheck = null)
     {
-        // sleep(1);
+        if (self::$slowDebug) {
+            sleep(10);
+        }
         $input = InputPackage::buildFromInput();
         $action = $input->getTrimString('action', 'upload');
         if ($permitCheck) {

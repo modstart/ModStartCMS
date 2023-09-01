@@ -104,6 +104,9 @@ export const UploadButtonUploader = function (selector, option) {
                 alert(msg)
             }
         },
+        ready: function (me) {
+
+        },
         callback: function (file, me) {
             // file.name
             // file.size
@@ -229,6 +232,8 @@ export const UploadButtonUploader = function (selector, option) {
                 opt.tipError('文件大小不合法');
             }
         });
+
+        opt.ready(uploader);
 
     });
 

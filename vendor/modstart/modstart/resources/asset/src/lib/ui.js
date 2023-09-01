@@ -1,4 +1,10 @@
 const Ui = {
+    /**
+     * @Util 用于监听元素大小变化
+     * @method MS.ui.onResize
+     * @param ele Element 监听的元素
+     * @param cb Function 回调函数
+     */
     onResize(ele, cb) {
         if (!ele || !window.ResizeObserver) {
             return;
@@ -51,6 +57,11 @@ const Ui = {
             });
         }
     },
+    /**
+     * @Util 获取页面大小
+     * @method MS.ui.size
+     * @return string sm,md,lg,xl
+     */
     size: function () {
         // @width-sm-max: 40rem; // 0px    - 800px
         // @width-md: 40rem; // 800px - 1199px
@@ -67,9 +78,10 @@ const Ui = {
         return 'sm';
     },
     /**
-     * 是否为指定大小的屏幕
+     * @Util 是否为指定大小的屏幕
+     * @method MS.ui.isSize
      * @param sizes array ['sm','md','lg','xl']
-     * @param cb function
+     * @param cb function 回调函数
      */
     sizeCall: function (sizes, cb) {
         if (sizes === 'all') {

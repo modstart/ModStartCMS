@@ -84,14 +84,50 @@ body, html {
     overflow: hidden;
     position: relative;
 
+    &.flat {
+        margin: 0 auto;
+
+        .webuploader-container {
+            display: block;
+
+            .webuploader-pick {
+                display: block;
+            }
+        }
+    }
+
     &.queue {
         overflow: auto;
         height: auto;
 
         .webuploader-list {
             position: static;
+            max-height: 10rem;
+            overflow-y: auto;
+            border: 1px solid var(--color-body-line);
+            background: var(--color-body-bg);
+            padding: 0.25rem;
+
+            &::-webkit-scrollbar-track {
+                background-color: var(--color-scrollbar-bg);
+                border: none;
+            }
+
+            &::-webkit-scrollbar {
+                width: 0.25rem;
+                height: 0.25rem;
+                background-color: var(--scolor-scrollbar-thumb);
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 0.5rem;
+                background-color: var(--scolor-scrollbar-thumb);
+            }
 
             & > li {
+                margin-bottom: 0.5rem;
+                padding: 0.25rem;
+
                 .progress-box {
                     height: auto;
                 }
@@ -155,8 +191,6 @@ body, html {
         }
     }
 }
-
-
 
 
 // 兼容之前未引入组件样式开始

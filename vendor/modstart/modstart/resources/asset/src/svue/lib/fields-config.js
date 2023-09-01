@@ -57,7 +57,7 @@ export const VModelMixin = {
 }
 
 /**
- * @deprecated
+ * @deprecated use VModelMixin
  */
 export const FieldVModel = {
     model: {
@@ -80,7 +80,7 @@ export const FieldVModel = {
 }
 
 /**
- * @deprecated
+ * @deprecated use VModelMixin
  */
 export const FieldInputMixin = {
     model: {
@@ -124,7 +124,7 @@ export const FieldInputMixin = {
 
 
 /**
- * @deprecated
+ * @deprecated use VModelMixin
  */
 export const FieldFilterMixin = {
     model: {

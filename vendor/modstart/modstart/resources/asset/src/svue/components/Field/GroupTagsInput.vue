@@ -40,17 +40,31 @@ export default {
         groupFilter: {
             type: Function,
             default: (group) => true
+        },
+        groupFilterParam: {
+            type: Object,
+            default: () => {
+                return null
+            }
+        },
+        optionFilteredParam: {
+            type: Object,
+            default: () => {
+                return null
+            }
         }
     },
     computed: {
         filteredOption() {
             let result
             if (this.groupFilter) {
-                result = this.option.filter(this.groupFilter)
+                result = this.option.filter(o => {
+                    return this.groupFilter(o, this.groupFilterParam)
+                })
             } else {
                 result = this.option
             }
-            this.$emit('on-option-filtered', result)
+            this.$emit('on-option-filtered', result, this.optionFilteredParam)
             return result
         }
     },

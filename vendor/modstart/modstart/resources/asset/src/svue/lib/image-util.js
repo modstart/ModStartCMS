@@ -1,4 +1,10 @@
 export const ImageUtil = {
+    /**
+     * @Util 获取图片尺寸
+     * @method MS.image.getSize
+     * @param imageOrImageFile Image|File 图片或者图片文件
+     * @param cb Function 回调函数
+     */
     getSize(imageOrImageFile, cb) {
         let img = new Image()
         img.onload = function () {

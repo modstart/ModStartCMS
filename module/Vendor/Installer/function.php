@@ -5,6 +5,8 @@ define('APP_PATH', realpath(__DIR__ . '/../../../'));
 if (file_exists($f = APP_PATH . '/app/Constant/AppConstant.php')) {
     include $f;
 }
+
+include APP_PATH . '/vendor/modstart/modstart/src/Data/FileManager.php';
 include APP_PATH . '/vendor/modstart/modstart/src/Core/Env/EnvUtil.php';
 include APP_PATH . '/vendor/modstart/modstart/src/Core/Util/EnvUtil.php';
 include APP_PATH . '/vendor/modstart/modstart/src/Core/Util/RandomUtil.php';

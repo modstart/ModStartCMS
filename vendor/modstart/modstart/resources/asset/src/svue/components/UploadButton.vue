@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="ub-upload-button"
-             :class="{queue:styles==='queue'}"
+             :class="classes"
              :style="{maxWidth:width}"
              :id="id"
         ></div>
@@ -55,10 +55,18 @@ export default {
     data() {
         return {
             id: 'UploadButtonUploader_' + StrUtil.randomString(10),
+            uploader: null,
             dataConfigFromServer: null,
         }
     },
     computed: {
+        classes() {
+            let classes = [
+                this.size,
+                this.styles
+            ]
+            return classes
+        },
         dataUploadConfig() {
             if (!!this.uploadConfig) {
                 return this.uploadConfig
@@ -106,6 +114,9 @@ export default {
                 )
             })
         },
+        addFile(file) {
+            this.uploader.addFile(file)
+        },
         init() {
             if (!this.dataUploadConfig) {
                 setTimeout(() => {
@@ -118,6 +129,8 @@ export default {
             let text = '<div class="btn btn-block"><i class="iconfont icon-upload"></i> ' + uploadText + '</div>'
             if (this.size === 'lg') {
                 text = '<span class="btn btn-block btn-lg"><i class="iconfont icon-upload"></i> ' + uploadText + '</span>'
+            } else if (this.size === 'flat') {
+                text = '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg tw-py-10" style="display:block;"><i class="iconfont icon-upload" style="font-size:2rem;"></i><br /> ' + uploadText + '</span>'
             }
             const $this = this
             UploadButtonUploader('#' + this.id, {
@@ -127,6 +140,9 @@ export default {
                 sizeLimit: this.dataUploadConfig.category[this.category].maxSize,
                 chunkSize: this.dataUploadConfig.chunkSize,
                 uploadBeforeCheck: this.uploadBeforeCheck,
+                ready: (uploader) => {
+                    $this.uploader = uploader
+                },
                 callback: (file, me) => {
                     $this.$emit('success', file)
                     if (this.autoSave) {
@@ -153,10 +169,4 @@ export default {
 
 <style lang="less">
 @import "webuploader/webuploader.css";
-
-.ub-upload-button {
-    // Wenku 上传时高度不显示进度条，先注释掉
-    // height: 1.6rem;
-    overflow: hidden;
-}
 </style>

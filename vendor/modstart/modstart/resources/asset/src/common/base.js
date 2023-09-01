@@ -74,6 +74,12 @@ const Header = {
 }
 
 const Dom = {
+    /**
+     * @Util 为textarea插入文本内容
+     * @method MS.dom.insertText
+     * @param ele Element|string textarea元素或者选择器
+     * @param text String 要插入的文本
+     */
     insertText(ele, text) {
         if (typeof ele === 'string') {
             ele = document.querySelector(ele)
@@ -98,6 +104,21 @@ const Dom = {
 }
 
 const MS = {
+    /**
+     * @Util 准备完成后触发
+     * @method MS.ready
+     * @param ...Function|Boolean 准备条件
+     * @param Function 回调函数
+     * @example
+     * MS.ready(
+     *      function(){
+     *          return true
+     *      },
+     *      function(){
+     *          console.log('ready')
+     *      }
+     * )
+     */
     ready() {
         let args = Array.from(arguments)
         const cb = args.pop()
@@ -140,6 +161,12 @@ const MS = {
     url: Url,
     storage: Storage,
     eventManager: EventManager,
+    /**
+     * @Util 获取当前语言的翻译
+     * @method MS.L
+     * @param lang string 语言
+     * @return string 翻译后的字符串
+     */
     L: function () {
         var lang = arguments[0]
         if (MS.trans && (lang in MS.trans)) {

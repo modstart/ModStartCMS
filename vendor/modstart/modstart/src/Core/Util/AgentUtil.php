@@ -2,12 +2,11 @@
 
 namespace ModStart\Core\Util;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Facades\Agent;
 
 /**
- * @Util
+ * @Util 客户端
  */
 class AgentUtil
 {
@@ -69,16 +68,17 @@ class AgentUtil
     }
 
     private static $robots = [
+
         '/Googlebot/i' => 'Google',
         '/Baiduspider/i' => 'Baidu',
         '/360Spider/i' => '360',
         '/Sogou/i' => 'Sogou',
         '/bingbot/i' => 'Bing',
         '/Bytespider/i' => 'TouTiao',
-        '/YisouSpider/i' => 'Yisou',
 
-        '/duckduckgo\\.com/i' => 'Other',
+        '/YisouSpider/i' => 'Other',
         '/DotBot/i' => 'Other',
+        '/SeekportBot/i' => 'Other',
         '/AhrefsBot/i' => 'Other',
         '/SemrushBot/i' => 'Other',
         '/GeedoBot/i' => 'Other',
@@ -86,49 +86,61 @@ class AgentUtil
         '/MJ12bot/i' => 'Other',
         '/YandexBot/i' => 'Other',
         '/YandexImages/i' => 'Other',
-        '/serpstatbot/i' => 'Other',
-        '/NetcraftSurveyAgent/i' => 'Other',
         '/CensysInspect/i' => 'Other',
-        '/Scrapy/i' => 'Other',
         '/Amazonbot/i' => 'Other',
         '/Applebot/i' => 'Other',
         '/ZoominfoBot/i' => 'Other',
         '/PetalBot/i' => 'Other',
         '/SurdotlyBot/i' => 'Other',
         '/DataForSeoBot/i' => 'Other',
-        '/linkfluence/i' => 'Other',
-        '/SeznamBot/i' => 'Other',
-        '/Ruby/i' => 'Other',
-        '/aiohttp/i' => 'Other',
         '/Twitterbot/i' => 'Other',
-        '/Slackbot\\-LinkExpanding/i' => 'Other',
-        '/Apache\\-HttpClient/i' => 'Other',
-        '/github\\-camo/i' => 'Other',
+        '/GPTBot/i' => 'Other',
+        '/SeznamBot/i' => 'Other',
+        '/DingTalkBot/i' => 'Other',
+
+        '/duckduckgo\\.com/i' => 'Other',
+        '/Dataprovider\\.com/i' => 'Other',
+
+        '/Wget\\/\\d+/i' => 'Other',
         '/python\\-http/i' => 'Other',
         '/python\\-requests/i' => 'Other',
-        '/Go\\-http\\-client/i' => 'Other',
-        '/cpp\\-httplib/i' => 'Other',
-        '/node\\-fetch/i' => 'Other',
-        '/okhttp/i' => 'Other',
-        '/msray/i' => 'Other',
-        '/linkdexbot/i' => 'Other',
-        '/GPTBot/i' => 'Other',
-        '/crawler/i' => 'Other',
+        '/python\\-urllib/i' => 'Other',
         '/curl\\/\\d+\\.\\d+\\./i' => 'Other',
         '/Java\\/\\d+\\.\\d+\\./i' => 'Other',
+        '/Ruby/i' => 'Other',
+        '/aiohttp/i' => 'Other',
+        '/cpp\\-httplib/i' => 'Other',
+        '/node\\-fetch/i' => 'Other',
+        '/Go\\-http\\-client/i' => 'Other',
+        '/okhttp/i' => 'Other',
+        '/Apache\\-HttpClient/i' => 'Other',
+
+        '/serpstatbot/i' => 'Other',
+        '/NetcraftSurveyAgent/i' => 'Other',
+        '/Scrapy/i' => 'Other',
+        '/linkfluence/i' => 'Other',
+        '/Slackbot\\-LinkExpanding/i' => 'Other',
+        '/github\\-camo/i' => 'Other',
+        '/msray/i' => 'Other',
+        '/linkdexbot/i' => 'Other',
         '/InternetMeasurement/i' => 'Other',
-        '/DingTalkBot/i' => 'Other',
         '/Vue\\-Telescope/i' => 'Other',
         '/2ip\\.io/i' => 'Other',
         '/facebookexternalhit/i' => 'Other',
         '/coccocbot\\-web/i' => 'Other',
-        '/Dataprovider\\.com/i' => 'Other',
         '/Wordupindexinfo/i' => 'Other',
         '/researchscan/i' => 'Other',
+
+        '/crawler/i' => 'Other',
         '/robot/i' => 'Other',
         '/spider/i' => 'Other',
     ];
 
+    /**
+     * @Util 获取机器人类型
+     * @param $userAgent string|null 浏览器UserAgent，为空时自动获取
+     * @return string|null 机器人名称，非机器人时返回null
+     */
     public static function detectRobot($userAgent = null)
     {
         if (null === $userAgent) {

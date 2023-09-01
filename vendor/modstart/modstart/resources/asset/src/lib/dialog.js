@@ -11,6 +11,12 @@ let Util = require('./util.js');
 let Dialog = {
     device: 'pc',
     // [开始] 这部分的提示需处理
+    /**
+     * @Util 页面遮罩显示
+     * @method MS.dialog.loadingOn
+     * @param msg string 提示信息
+     * @return index 遮罩的index
+     */
     loadingOn: function (msg) {
         msg = msg || null;
         if (msg) {
@@ -28,13 +34,29 @@ let Dialog = {
             return layer.load(2);
         }
     },
+    /**
+     * @Util 页面遮罩更新
+     * @method MS.dialog.loadingUpdate
+     * @param loading 遮罩的index
+     * @param msg string 提示信息
+     */
     loadingUpdate: function (loading, msg) {
         $('#layui-layer' + loading + ' .loading-text').html(msg)
         $(window).resize()
     },
+    /**
+     * @Util 页面遮罩关闭
+     * @method MS.dialog.loadingOff
+     */
     loadingOff: function () {
         layer.closeAll('loading');
     },
+    /**
+     * @Util 页面提示成功信息
+     * @method MS.dialog.tipSuccess
+     * @param msg string 提示信息
+     * @param cb function 回调函数
+     */
     tipSuccess: function (msg, cb) {
         let ms = 2000;
         if (msg && msg.length > 10) {
@@ -42,6 +64,12 @@ let Dialog = {
         }
         layer.msg(msg, {shade: 0.3, time: ms, shadeClose: true, anim: -1}, cb);
     },
+    /**
+     * @Util 页面提示错误信息
+     * @method MS.dialog.tipError
+     * @param msg string 提示信息
+     * @param cb function 回调函数
+     */
     tipError: function (msg, cb) {
         let ms = 2000;
         if (msg.length > 10) {
@@ -67,6 +95,12 @@ let Dialog = {
             $(ele).data('popover-dialog', null);
         }
     },
+    /**
+     * @Util 页面提示确认信息
+     * @method MS.dialog.tipConfirm
+     * @param msg string 提示信息
+     * @param callback function 回调函数
+     */
     alertSuccess: function (msg, callback) {
         layer.alert(msg, {icon: 1, closeBtn: 0}, function (index) {
             layer.close(index);
@@ -85,6 +119,12 @@ let Dialog = {
         } catch (e) {
         }
     },
+    /**
+     * @Util 页面提示错误信息
+     * @method MS.dialog.tipError
+     * @param msg string 提示信息
+     * @param callback function 回调函数
+     */
     alertError: function (msg, callback) {
         let index = layer.alert(msg, {icon: 2, closeBtn: 0}, function (index) {
             layer.close(index);
@@ -104,6 +144,14 @@ let Dialog = {
         }
         return index;
     },
+    /**
+     * @Util 页面提示确认信息
+     * @method MS.dialog.tipConfirm
+     * @param msg string 提示信息
+     * @param callbackYes function 确认回调函数
+     * @param callbackNo function 取消回调函数
+     * @param options object 配置参数
+     */
     confirm: function (msg, callbackYes, callbackNo, options) {
         options = options || {icon: 3, title: '提示'};
         callbackYes = callbackYes || false;
@@ -120,6 +168,12 @@ let Dialog = {
             }
         });
     },
+    /**
+     * @Util 弹出URL页面
+     * @method MS.dialog.dialog
+     * @param url string 页面URL
+     * @param option object 配置参数
+     */
     dialog: function (url, option) {
         let opt = $.extend({
             title: null,
@@ -166,6 +220,12 @@ let Dialog = {
             }
         });
     },
+    /**
+     * @Util 弹出HTML内容
+     * @method MS.dialog.dialogContent
+     * @param content string 内容
+     * @param option object 配置参数
+     */
     dialogContent: function (content, option) {
         let opt = $.extend({
             skin: null,
