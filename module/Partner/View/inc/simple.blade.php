@@ -10,7 +10,7 @@
             @foreach($records as $r)
                 <div class="col-md-2 col-4">
                     <div class="item-n">
-                        @if($linkDisable)
+                        @if(!empty($linkDisable))
                             @if(!empty($r['logo']))
                                 <div class="image">
                                     <div class="cover contain ub-cover-3-1" data-src="{{$r['logo']}}"></div>

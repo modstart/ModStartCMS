@@ -48,11 +48,18 @@
                     <div class="ub-article">
                         <h1>{{$record['title']}}</h1>
                         <div class="attr">
-                            <i class="iconfont icon-eye"></i>
-                            {{$record['viewCount']?$record['viewCount']:'-'}}
-                            &nbsp;&nbsp;
-                            <i class="iconfont icon-time"></i>
-                            {{($record['postTime'])}}
+                            <div class="tw-flex tw-items-center">
+                                <i class="iconfont icon-eye"></i>
+                                {{$record['viewCount']?$record['viewCount']:'-'}}
+                                &nbsp;&nbsp;
+                                <i class="iconfont icon-time"></i>
+                                {{($record['postTime'])}}
+                            </div>
+                            <div>
+                                @if(modstart_config('Cms_LikeAnonymityEnable',false))
+                                    {!! \Module\Cms\View\CmsView::likeBtn($record['id'],['count'=>$record['likeCount']]) !!}
+                                @endif
+                            </div>
                         </div>
                         @if(!\MCms::canVisitCat($cat))
                             <div class="ub-alert danger">

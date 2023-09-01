@@ -58,20 +58,28 @@
                             {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
                         </div>
                         <div class="tw-bg-gray-100 tw-my-4" style="height:1px;"></div>
-                        <div class="tw-text-right">
-                            <i class="iconfont icon-eye"></i>
-                            {{$record['viewCount']?$record['viewCount']:'-'}}
-                            &nbsp;&nbsp;
-                            <i class="iconfont icon-time"></i>
-                            {{($record['postTime'])}}
-                            &nbsp;&nbsp;
-                            @foreach($record['_tags'] as $tag)
-                                <i class="iconfont icon-tag"></i>
-                                <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
-                                   href="{{modstart_web_url('tag/'.urlencode($tag))}}">
-                                    {{$tag}}
-                                </a>
-                            @endforeach
+                        <div class="tw-flex">
+                            <div class="tw-flex-grow">
+                                @if(modstart_config('Cms_LikeAnonymityEnable',false))
+                                    {!! \Module\Cms\View\CmsView::likeBtn($record['id'],['count'=>$record['likeCount']]) !!}
+                                @endif
+                                &nbsp;
+                            </div>
+                            <div>
+                                <i class="iconfont icon-eye"></i>
+                                {{$record['viewCount']?$record['viewCount']:'-'}}
+                                &nbsp;&nbsp;
+                                <i class="iconfont icon-time"></i>
+                                {{($record['postTime'])}}
+                                &nbsp;&nbsp;
+                                @foreach($record['_tags'] as $tag)
+                                    <i class="iconfont icon-tag"></i>
+                                    <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
+                                       href="{{modstart_web_url('tag/'.urlencode($tag))}}">
+                                        {{$tag}}
+                                    </a>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 @endif

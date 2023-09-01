@@ -43,7 +43,7 @@
     <div class="ub-container">
 
         @if(\MCms::canVisitCat($cat))
-            <div class="ub-article-a">
+            <div class="ub-article-a margin-bottom">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="image">
@@ -74,7 +74,7 @@
             </div>
         @endif
 
-        <div class="row margin-top">
+        <div class="row">
             <div class="col-md-9">
                 @if(!\MCms::canVisitCat($cat))
                     <div class="ub-alert danger">
@@ -82,7 +82,7 @@
                         您没有权限访问该栏目内容
                     </div>
                 @else
-                    <div class="tw-bg-white tw-rounded">
+                    <div class="tw-bg-white tw-rounded margin-bottom">
                         <div class="ub-html lg" style="padding:1rem;">
                             {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
                         </div>
@@ -90,7 +90,7 @@
                 @endif
             </div>
             <div class="col-md-3">
-                <div class="ub-menu simple">
+                <div class="ub-menu margin-bottom simple">
                     <a class="title @if($catRoot['url']==\ModStart\Core\Input\Request::path()) active @endif"
                        href="{{modstart_web_url($catRoot['url'])}}">{{$catRoot['title']}}</a>
                     @foreach($catRootChildren as $c)

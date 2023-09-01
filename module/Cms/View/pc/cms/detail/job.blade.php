@@ -51,19 +51,28 @@
                         <div class="ub-article">
                             <h1>{{$record['title']}}</h1>
                             <div class="attr">
-                                <i class="iconfont icon-eye"></i>
-                                {{$record['viewCount']?$record['viewCount']:'-'}}
-                                &nbsp;&nbsp;
-                                <i class="iconfont icon-time"></i>
-                                {{($record['postTime'])}}
-                                &nbsp;&nbsp;
-                                @foreach($record['_tags'] as $tag)
-                                    <i class="iconfont icon-tag"></i>
-                                    <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
-                                       href="{{modstart_web_url('tag/'.urlencode($tag))}}">
-                                        {{$tag}}
-                                    </a>
-                                @endforeach
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-flex-grow">
+                                        <i class="iconfont icon-eye"></i>
+                                        {{$record['viewCount']?$record['viewCount']:'-'}}
+                                        &nbsp;&nbsp;
+                                        <i class="iconfont icon-time"></i>
+                                        {{($record['postTime'])}}
+                                        &nbsp;&nbsp;
+                                        @foreach($record['_tags'] as $tag)
+                                            <i class="iconfont icon-tag"></i>
+                                            <a class="tw-bg-gray-100 tw-leading-6 tw-inline-block tw-px-3 tw-rounded-2xl tw-text-gray-800 tw-mr-2 tw-mb-2"
+                                               href="{{modstart_web_url('tag/'.urlencode($tag))}}">
+                                                {{$tag}}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                    <div>
+                                        @if(modstart_config('Cms_LikeAnonymityEnable',false))
+                                            {!! \Module\Cms\View\CmsView::likeBtn($record['id'],['count'=>$record['likeCount']]) !!}
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             <div class="tw-p-4 tw-rounded tw-bg-gray-100">
                                 <div class="ub-pair">

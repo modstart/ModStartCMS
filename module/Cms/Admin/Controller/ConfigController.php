@@ -35,6 +35,7 @@ class ConfigController extends Controller
                 'tree' => '全部显示',
                 'list' => '只显示一级',
             ])->defaultValue('list');
+            $builder->switch('Cms_LikeAnonymityEnable', '匿名点赞')->defaultValue(false);
         });
 
         $builder->formClass('wide');

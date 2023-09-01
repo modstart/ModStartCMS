@@ -15,7 +15,7 @@
     "require": [
         "Vendor:>=3.0.0"
     ],
-    "version": "1.6.0",
+    "version": "1.7.0",
     "modstartVersion": ">=3.0.0",
     "author": "官方",
     "description": "提供友情链接基础管理功能",

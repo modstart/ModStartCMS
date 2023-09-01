@@ -11,5 +11,6 @@ $router->group([
     $router->match(['post'], 'cms/form', 'FormController@index');
     $router->match(['post'], 'cms/form/submit', 'FormController@submit');
     $router->match(['post'], 'cms/page', 'PageController@index');
+    $router->match(['post'], 'cms/operate/like', 'OperateController@like');
 
 });
