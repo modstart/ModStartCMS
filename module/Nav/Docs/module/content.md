@@ -31,3 +31,5 @@
 @endforeach
 ```
 
+{ADMIN_MENUS}
+

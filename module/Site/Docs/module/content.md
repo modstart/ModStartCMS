@@ -14,3 +14,6 @@
 ## 多模板选项使用
 
 继承 `AbstractSiteTemplateProvider` 实现网站多模板功能 
+
+
+{ADMIN_MENUS}

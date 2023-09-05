@@ -6,6 +6,10 @@ $router->match(['get', 'post'], 'member/config/setting', 'ConfigController@setti
 $router->match(['get', 'post'], 'member/config/agreement', 'ConfigController@agreement');
 $router->match(['get', 'post'], 'member/config/money', 'ConfigController@money');
 $router->match(['get', 'post'], 'member/config/credit', 'ConfigController@credit');
+$router->match(['get', 'post'], 'member/config/message', 'ConfigController@message');
+
+$router->match(['get'], 'member/config/param', 'ConfigController@param');
+
 $router->match(['post'], 'member/config/data_statistic', 'ConfigController@dataStatistic');
 
 $router->match(['get', 'post'], 'member/dashboard', 'MemberDashboardController@index');

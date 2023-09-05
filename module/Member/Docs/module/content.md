@@ -49,3 +49,4 @@
 \Module\Member\Auth\MemberUser::get()
 ```
 
+{ADMIN_MENUS}

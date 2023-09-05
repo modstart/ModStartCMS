@@ -68,3 +68,6 @@ if (class_exists(BannerPositionProvider::class)) {
 - `10-1`
 
 如果需要其他尺寸，可自行在 `module/Banner/View/pc/public/banner.blade.php` 模板文件中调整。
+
+
+{ADMIN_MENUS}

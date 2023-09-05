@@ -3,6 +3,7 @@
 namespace Module\Member\Core;
 
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
 use ModStart\Admin\Widget\DashboardItemA;
@@ -16,6 +17,7 @@ use ModStart\Module\ModuleManager;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberHomeIcon;
 use Module\Member\Config\MemberMenu;
+use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Model\MemberDataStatistic;
 use Module\Member\Model\MemberUpload;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
@@ -23,10 +25,14 @@ use Module\Member\Provider\MemberDeleteScheduleProvider;
 use Module\Member\Provider\VerifySmsTemplateProvider;
 use Module\Member\Util\MemberCreditUtil;
 use Module\Member\Util\MemberDataStatisticUtil;
+use Module\Member\Util\MemberMessageUtil;
 use Module\Member\Util\MemberMoneyUtil;
+use Module\Member\Util\MemberParamUtil;
+use Module\Member\Util\MemberUtil;
 use Module\PayCenter\Biz\PayCenterBiz;
 use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
 use Module\Vendor\Admin\Widget\AdminWidgetLink;
+use Module\Vendor\Job\MailSendJob;
 use Module\Vendor\Provider\Schedule\ScheduleBiz;
 use Module\Vendor\Provider\SmsTemplate\SmsTemplateProvider;
 
@@ -195,6 +201,25 @@ class ModuleServiceProvider extends ServiceProvider
             });
         }
 
+        Event::listen(MemberUserRegisteredEvent::class, function (MemberUserRegisteredEvent $e) {
+            $message = modstart_config('Member_Registered_Message', '');
+            if ($message) {
+                $memberUser = MemberUtil::getCached($e->memberUserId);
+                $message = MemberParamUtil::replaceParam($message, $memberUser);
+                MemberMessageUtil::send($e->memberUserId, MemberParamUtil::replaceParam($message, $memberUser));
+            }
+            $emailContent = modstart_config('Member_Registered_Email', '');
+            $emailTitle = modstart_config('Member_Registered_EmailTitle', '');
+            if ($emailTitle && $emailContent) {
+                $memberUser = MemberUtil::getCached($e->memberUserId);
+                if (!empty($memberUser['email'])) {
+                    $emailTitle = MemberParamUtil::replaceParam($emailTitle, $memberUser);
+                    $emailContent = MemberParamUtil::replaceParam($emailContent, $memberUser);
+                    MailSendJob::createHtml($memberUser['email'], $emailTitle, $emailContent);
+                }
+            }
+        });
+
         AdminMenu::register(function () {
             $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
             $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
@@ -239,12 +264,16 @@ class ModuleServiceProvider extends ServiceProvider
                             'sort' => 999999,
                             'children' => [
                                 [
-                                    'title' => '用户设置',
+                                    'title' => '注册登录',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@setting',
                                 ],
                                 [
                                     'title' => '用户协议',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@agreement',
+                                ],
+                                [
+                                    'title' => '消息设置',
+                                    'url' => '\Module\Member\Admin\Controller\ConfigController@message',
                                 ],
                                 $moneyEnable ? [
                                     'title' => '钱包设置',

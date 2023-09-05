@@ -29,4 +29,5 @@
 - OCR 图片文字识别
 
 
+{ADMIN_MENUS}
 

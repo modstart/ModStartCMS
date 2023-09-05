@@ -11,18 +11,20 @@ use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
 use Module\Member\Model\MemberDataStatistic;
+use Module\Member\Util\MemberParamUtil;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class ConfigController extends Controller
 {
     public static $PermitMethodMap = [
+        'param' => '*',
         'dataStatistic' => '\\Module\\Member\\Admin\\Controller\\MemberController@index',
     ];
 
     public function setting(AdminConfigBuilder $builder)
     {
         $captchaType = array_merge(['' => '默认'], CaptchaProvider::nameTitleMap());
-        $builder->pageTitle('用户设置');
+        $builder->pageTitle('注册登录');
         $builder->layoutPanel('登录', function ($builder) use ($captchaType) {
             /** @var HasFields $builder */
             $builder->switch('loginCaptchaEnable', '启用登录验证码')
@@ -138,10 +140,9 @@ class ConfigController extends Controller
     }
 
 
-
     public function money(AdminConfigBuilder $builder)
     {
-        $builder->pageTitle('用户钱包设置');
+        $builder->pageTitle('钱包设置');
         $builder->switch('Member_MoneyCashEnable', '开启用户提现')->when('=', 1, function (Form $form) {
             $form->number('Member_MoneyCashMin', '最小提现金额')->help('默认为 100');
             $form->number('Member_MoneyCashTaxRate', '用户提现手续费')->help('如 1.00 表示手续费为 1.00%');
@@ -149,6 +150,16 @@ class ConfigController extends Controller
         });
         $builder->switch('Member_MoneyChargeEnable', '开启钱包充值');
         $builder->richHtml('Member_MoneyChargeDesc', '钱包充值说明');
+        $builder->formClass('wide');
+        return $builder->perform();
+    }
+
+    public function message(AdminConfigBuilder $builder)
+    {
+        $builder->pageTitle('消息设置');
+        $builder->richHtml('Member_Registered_Message', '注册成功站内信')->help(MemberParamUtil::paramTitle());
+        $builder->text('Member_Registered_EmailTitle', '注册成功邮件标题')->help(MemberParamUtil::paramTitle());
+        $builder->richHtml('Member_Registered_Email', '注册成功邮件')->help(MemberParamUtil::paramTitle());
         $builder->formClass('wide');
         return $builder->perform();
     }
@@ -162,5 +173,10 @@ class ConfigController extends Controller
         $data['sizeLimit'] = $input->getInteger('sizeLimit');
         MemberDataStatistic::updateMemberUser($memberUserId, $data);
         return Response::generateSuccess('保存成功');
+    }
+
+    public function param()
+    {
+        return view('module::Member.View.admin.config.param');
     }
 }

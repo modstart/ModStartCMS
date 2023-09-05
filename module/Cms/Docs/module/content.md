@@ -14,3 +14,5 @@
 
 
 
+
+{ADMIN_MENUS}

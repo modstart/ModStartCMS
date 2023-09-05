@@ -51,3 +51,5 @@
 ```html
 {!! \Module\Partner\View\PartnerView::transparent('位置') !!}
 ```
+
+{ADMIN_MENUS}
