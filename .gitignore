@@ -9,8 +9,8 @@ Homestead.json
 /public/ueditor-plus-doc/
 /public/layui/
 /public/layui-mine/
-/public/webuploader/
-/public/webuploader-doc/
+/public/webuploader-plus/
+/public/webuploader-plus-doc/
 /storage/install.lock
 /storage/backup/
 .DS_Store

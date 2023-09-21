@@ -7,7 +7,15 @@
     </div>
     <div class="field">
         @if(isset($options[$value]))
-            {{$options[$value]}}
+            @if(isset($options[$value]['label']))
+                @if(isset($options[$value]['title']))
+                    {{$options[$value]['title']}}
+                @else
+                    {{$options[$value]['label']}}
+                @endif
+            @else
+                {{$options[$value]}}
+            @endif
         @else
             @if($value)
                 {{$value}}

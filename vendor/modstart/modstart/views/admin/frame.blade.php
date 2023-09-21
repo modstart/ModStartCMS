@@ -163,7 +163,7 @@
                                    href="{{action('\ModStart\Admin\Controller\ProfileController@changePassword')}}">{{L('Change Password')}}</a>
                             @endif
                             <a class="dropdown-item" href="javascript:;" data-confirm="{{L('Confirm Logout ?')}}"
-                               data-href="{{action('\ModStart\Admin\Controller\AuthController@logout')}}">{{L('Logout')}}</a>
+                               data-href="{{modstart_admin_url('logout')}}">{{L('Logout')}}</a>
                         </div>
                     </div>
                 </div>

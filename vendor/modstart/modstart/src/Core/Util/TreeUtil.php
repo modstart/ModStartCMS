@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use ModStart\Core\Dao\ModelUtil;
 
+/**
+ * @Util Tree工具
+ */
 class TreeUtil
 {
     /**
@@ -21,6 +24,11 @@ class TreeUtil
     public static function setChildKey($key)
     {
         self::$CHILD_KEY = $key;
+    }
+
+    public static function itemLevelPrefix($level)
+    {
+        return str_repeat('├', $level);
     }
 
     /**
@@ -176,7 +184,7 @@ class TreeUtil
             }
         }
         return array_values(array_filter($tree, function ($o) use ($pidName, $pid) {
-            return $o[$pidName] == $pid;
+            return self::_pidEqual($o[$pidName], $pid);
         }));
     }
 
@@ -195,7 +203,7 @@ class TreeUtil
         foreach ($tree as &$r) {
             $item = array(
                 'id' => $r[$keyId],
-                'title' => str_repeat('├', $level) . htmlspecialchars($r[$keyTitle]),
+                'title' => self::itemLevelPrefix($level) . htmlspecialchars($r[$keyTitle]),
             );
             if (!empty($keepKeys)) {
                 foreach ($keepKeys as $k) {
@@ -435,17 +443,26 @@ class TreeUtil
     }
 
     /**
-     * 为列表增加_level属性
-     * @param $items
-     * @param string $idName
-     * @param string $pidName
-     * @param string $sortName
-     * @param int $pid
-     * @param int $level
-     * @param null $newItems
-     * @return Collection|mixed|null
+     * @Util 为列表增加 _level 属性
+     * @param $items array|Collection 数据记录
+     * @param $idName string ID字段名，默认为 id
+     * @param $pidName string 父级ID字段名，默认为 pid
+     * @param $sortName string 排序字段名，默认为 sort
+     * @param $pid int|string 父级ID，默认为 0
+     * @return Collection 返回带有 _level 属性的集合
      */
-    public static function itemsMergeLevel($items, $idName = 'id', $pidName = 'pid', $sortName = 'sort', $pid = 0, $level = 1, $newItems = null)
+    public static function itemsMergeLevel($items, $idName = 'id', $pidName = 'pid', $sortName = 'sort', $pid = 0)
+    {
+        return self::_itemsMergeLevel($items, $idName, $pidName, $sortName, $pid);
+    }
+
+    private static function _pidEqual($pid1, $pid2)
+    {
+        // '0' - 0 -> true
+        return $pid1 === $pid2 || $pid1 === $pid2 . '';
+    }
+
+    private static function _itemsMergeLevel($items, $idName = 'id', $pidName = 'pid', $sortName = 'sort', $pid = 0, $level = 1, $newItems = null)
     {
         if (!($items instanceof Collection)) {
             $items = collect($items);
@@ -459,21 +476,21 @@ class TreeUtil
         $items->each(function ($item) use ($idName, $pidName, $sortName, $pid, $level, $items, $newItems) {
             if ($item instanceof Model) {
                 if (!isset($item->_level)) {
-                    if ($item->{$pidName} == $pid) {
+                    if (self::_pidEqual($item->{$pidName}, $pid)) {
                         $item->_level = $level;
                         $newItems->push($item);
                         if ($level < 99) {
-                            self::itemsMergeLevel($items, $idName, $pidName, $sortName, $item->{$idName}, $level + 1, $newItems);
+                            self::_itemsMergeLevel($items, $idName, $pidName, $sortName, $item->{$idName}, $level + 1, $newItems);
                         }
                     }
                 }
             } else {
                 if (!property_exists($item, '_level')) {
-                    if ($item->{$pidName} == $pid) {
+                    if (self::_pidEqual($item->{$pidName}, $pid)) {
                         $item->_level = $level;
                         $newItems->push($item);
                         if ($level < 99) {
-                            self::itemsMergeLevel($items, $idName, $pidName, $sortName, $item->{$idName}, $level + 1, $newItems);
+                            self::_itemsMergeLevel($items, $idName, $pidName, $sortName, $item->{$idName}, $level + 1, $newItems);
                         }
                     }
                 }

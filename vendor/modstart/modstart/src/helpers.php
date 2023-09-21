@@ -335,9 +335,14 @@ function modstart_module_enabled($module, $version = null)
     }
 }
 
-function L_locale()
+function L_locale($locale = null)
 {
     static $useLocale = null;
+    if (null !== $locale) {
+        if (in_array($locale, ['en', 'zh'])) {
+            $useLocale = $locale;
+        }
+    }
     if (null === $useLocale) {
         // routeLocale > sessionLocale > i18nLocale > locale > fallbackLocale
         $sessionLocaleKey = '_locale';
@@ -388,9 +393,8 @@ function L_locale()
 function LM($module, $name, ...$params)
 {
     static $trackMissing = null;
-    static $useLocale = null;
-    if (null === $useLocale) {
-        $useLocale = L_locale();
+    $useLocale = L_locale();
+    if (null === $trackMissing) {
         $trackMissing = config('modstart.trackMissingLang', false);
     }
     static $langs = [];
@@ -422,9 +426,8 @@ function L($name, ...$params)
 {
     static $trackMissing = null;
     static $trackMissingData = null;
-    static $useLocale = null;
-    if (null === $useLocale) {
-        $useLocale = L_locale();
+    $useLocale = L_locale();
+    if (null === $trackMissing) {
         $trackMissing = config('modstart.trackMissingLang', false);
     }
     if (empty($useLocale)) {

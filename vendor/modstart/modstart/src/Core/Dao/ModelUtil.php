@@ -10,8 +10,6 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\PageHtmlUtil;
 
 /**
- * Class ModelUtil
- * @package ModStart\Core\Dao
  * @Util 数据库
  */
 class ModelUtil

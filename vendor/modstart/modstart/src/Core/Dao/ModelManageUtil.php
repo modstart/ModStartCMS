@@ -4,10 +4,13 @@
 namespace ModStart\Core\Dao;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
+use ModStart\Core\Util\StrUtil;
 
 class ModelManageUtil
 {
@@ -308,6 +311,72 @@ class ModelManageUtil
         BizException::throwsIfEmpty('ShowTableStructureError', $result);
         $result = str_replace("`$tablePrefixed`", "`__table_prefix__$table`", $result);
         return $result;
+    }
+
+    public static function fields($table, $conn = 'mysql')
+    {
+        return Cache::remember('ModelManageUtil:fields:' . $table, 60, function () use ($table, $conn) {
+            $tablePrefixed = self::table($table, $conn);
+            $result = self::query("SHOW COLUMNS FROM `$tablePrefixed`", $conn);
+            $records = [];
+            foreach ($result as $r) {
+                $records[] = [
+                    'field' => $r['Field'],
+                    'type' => strtoupper($r['Type']),
+                    'null' => $r['Null'],
+                    'key' => $r['Key'],
+                    'default' => $r['Default'],
+                    'extra' => $r['Extra'],
+                ];
+            }
+            return $records;
+        });
+    }
+
+    public static function field($table, $field, $conn = 'mysql')
+    {
+        foreach (self::fields($table, $conn) as $item) {
+            if ($item['field'] == $field) {
+                return $item;
+            }
+        }
+        return null;
+    }
+
+    public static function fieldValueCheckOrFail($label, $value, $table, $field, $conn = 'mysql')
+    {
+        $ret = self::fieldValueCheck($value, $table, $field, $conn);
+        if (Response::isError($ret)) {
+            BizException::throws($label . $ret['msg']);
+        }
+    }
+
+    /**
+     * 判断字段值是否合法
+     * @param $value
+     * @param $table
+     * @param $field
+     * @param string $conn
+     */
+    public static function fieldValueCheck($value, $table, $field, $conn = 'mysql')
+    {
+        $f = self::field($table, $field, $conn);
+        if (empty($f)) {
+            return Response::generateError("字段不存在");
+        }
+        // print_r($f);
+        if ('TEXT' == $f['type']) {
+            // 最多存储 65535 个字节
+            if (strlen($value) > 65535) {
+                return Response::generateError("长度不能超过 65535");
+            }
+        } else if (preg_match('/^VARCHAR\((\d+)\)$/', $f['type'], $m)) {
+            // 最多存储 $m[1] 个字节
+            if (StrUtil::mbLength($value) > $m[1]) {
+                return Response::generateError("长度不能超过 {$m[1]}");
+            }
+        }
+        return Response::generateSuccess();
     }
 
     public static function databaseStructure($conn = 'mysql',

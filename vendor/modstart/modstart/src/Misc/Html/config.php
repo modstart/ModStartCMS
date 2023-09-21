@@ -14,7 +14,7 @@ return [
                 'table[style|cellspacing|width],tbody[style],tbody[style],tr[style],td[style|rowspan|colspan|width|valign],th[style|rowspan|colspan|width|valign]',
                 'iframe[src|width|height|frameborder|style]',
                 'video[controls|height|poster|preload|src|width|crossorigin]',
-                'audio[controls|preload|src|crossorigin]',
+                'audio[controls|preload|src|crossorigin],source[src|type]',
                 'section[style],blockquote[style]',
                 'svg[viewbox|xmlns|xml:space|style|x|y|xmlns:xlink|version|space]',
                 'g[transform]',

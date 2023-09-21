@@ -201,9 +201,9 @@ class ArrayUtil
         if (empty($records)) {
             return null;
         }
-        if (count($records) == 1) {
-            return $records[0];
-        }
+        // if (count($records) == 1) {
+        //     return $records[0];
+        // }
         return $records[array_rand($records)];
     }
 

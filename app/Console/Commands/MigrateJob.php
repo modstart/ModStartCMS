@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 
 
 use Illuminate\Console\Command;
+use ModStart\Core\Util\HtmlUtil;
 use ModStart\Data\DataManager;
 
 class MigrateJob extends Command
@@ -13,6 +14,7 @@ class MigrateJob extends Command
 
     public function handle()
     {
+
     }
 
     private function storageTest()

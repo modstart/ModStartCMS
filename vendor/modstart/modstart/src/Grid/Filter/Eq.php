@@ -48,7 +48,7 @@ class Eq extends AbstractFilter
                     continue;
                 }
             }
-            $options[$item->{$idName}] = str_repeat('├', $item->_level) . $item->{$titleName};
+            $options[$item->{$idName}] = TreeUtil::itemLevelPrefix($item->_level) . $item->{$titleName};
         }
         return $this->select($options);
     }

@@ -20,7 +20,11 @@
                     @endif
             >
                 @foreach($options as $k=>$v)
-                    <option value="{{$k}}" @if((null===$value&&$k==$defaultValue)||(null!==$value&&$k==$value)) selected @endif>{{$v}}</option>
+                    @if(isset($v['label']))
+                        <option value="{{$k}}" @if((null===$value&&$k==$defaultValue)||(null!==$value&&$k==$value)) selected @endif @if(isset($v['title'])) title="{{$v['title']}}" @endif>{{$v['label']}}</option>
+                    @else
+                        <option value="{{$k}}" @if((null===$value&&$k==$defaultValue)||(null!==$value&&$k==$value)) selected @endif>{{$v}}</option>
+                    @endif
                 @endforeach
             </select>
         </div>

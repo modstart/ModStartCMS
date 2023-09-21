@@ -91,13 +91,30 @@ class Select extends AbstractField
     {
         $options = [];
         $options[0] = L('Root');
+        if ($treeMaxLevel > 0) {
+            $items = $items->filter(function ($item) use ($treeMaxLevel) {
+                return $item->_level <= $treeMaxLevel - 1;
+            });
+        }
+        $prevLevel = 0;
+        $titles = [];
         foreach ($items as $i => $item) {
-            if ($treeMaxLevel > 0) {
-                if ($item->_level > $treeMaxLevel - 1) {
-                    continue;
+            $prefix = TreeUtil::itemLevelPrefix($item->_level);
+            if ($item->_level > $prevLevel) {
+                array_push($titles, $item->{$titleName});
+            } else {
+                while ($item->_level < $prevLevel) {
+                    array_pop($titles);
+                    $prevLevel--;
                 }
+                array_pop($titles);
+                array_push($titles, $item->{$titleName});
             }
-            $options[$item->{$idName}] = str_repeat('├', $item->_level) . $item->{$titleName};
+            $prevLevel = $item->_level;
+            $options[$item->{$idName}] = [
+                'label' => $prefix . $item->{$titleName},
+                'title' => join('-', $titles)
+            ];
         }
         return $this->options($options);
     }

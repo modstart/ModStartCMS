@@ -90,7 +90,7 @@ class Checkbox extends AbstractField
             case self::SERIALIZE_TYPE_COLON_SEPARATED:
                 return TagUtil::string2Array($value);
             default:
-                return ConvertUtil::toArray($value);
+                return ConvertUtil::toArray($value, false);
         }
     }
 

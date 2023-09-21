@@ -4,6 +4,8 @@
 @section('pageKeywords'){{modstart_config('Partner_Title','友情链接')}}@endsection
 @section('pageDescription'){{modstart_config('Partner_Title','友情链接')}}@endsection
 
+{!! \ModStart\ModStart::js('asset/common/lazyLoad.js') !!}
+
 @section('bodyContent')
 
     <div class="ub-content">

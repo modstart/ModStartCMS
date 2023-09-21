@@ -32,7 +32,7 @@ class ProfileController extends Controller
                 $ret = Admin::changePassword(Admin::id(), $data['password'], $data['passwordNew']);
                 ResultException::throwsIfFail($ret);
                 Admin::addInfoLog(Admin::id(), L('Change password'));
-                return Response::json(0, L('Password change correct, please relogin'), null, action('\ModStart\Admin\Controller\AuthController@logout'));
+                return Response::json(0, L('Password change correct, please relogin'), null, modstart_admin_url('logout'));
             });
         }
         return $adminPage

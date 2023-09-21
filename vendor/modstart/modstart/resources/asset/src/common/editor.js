@@ -68,6 +68,22 @@ var EditorUploadConfig = {
                 }
             }).show();
         }
+    },
+    audioConfig: {
+        disableUpload: true,
+        selectCallback: function (editor, cb) {
+            window.__selectorDialog = new window.api.selectorDialog({
+                server: window.__selectorDialogServer + '/audio',
+                callback: function (items) {
+                    if (items.length) {
+                        cb({
+                            path: items[0].path,
+                            name: items[0].filename,
+                        })
+                    }
+                }
+            }).show();
+        }
     }
 }
 
@@ -110,7 +126,8 @@ var Editor = {
             'insertimage',
             'uploadimage',
             'insertvideo',
-            //'attachment', 'map',
+            'insertaudio',
+            'attachment',
             'bold', 'italic', 'underline', //'fontborder',
             'strikethrough',
             'superscript', 'subscript', 'blockquote',

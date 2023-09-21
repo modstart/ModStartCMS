@@ -10,6 +10,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
+use Module\Member\Provider\Auth\MemberAuthProvider;
 
 // =====================================================================================================================
 // ================================================== Routes ===========================================================
@@ -64,6 +65,10 @@ class AuthController extends ModuleBaseController
             $redirectData['dialog'] = $dialog;
         }
         $this->api->checkRedirectSafety($redirect);
+        $result = MemberAuthProvider::call('onWebLogin', $redirectData);
+        if (null !== $result) {
+            return $result;
+        }
         if (Request::isPost()) {
             $ret = $this->api->login();
             if (Response::isError($ret)) {
@@ -188,6 +193,13 @@ class AuthController extends ModuleBaseController
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url(''));
         $this->api->checkRedirectSafety($redirect);
+        $redirectData = [
+            'redirect' => $redirect,
+        ];
+        $result = MemberAuthProvider::call('onWebLogout', $redirectData);
+        if (null !== $result) {
+            return $result;
+        }
         if (modstart_config('ssoClientEnable', false) && modstart_config('ssoClientLogoutSyncEnable', false)) {
             Input::merge(['domainUrl' => Request::domainUrl()]);
             $ret = $this->api->ssoClientLogoutPrepare();

@@ -102,10 +102,10 @@ class AuthMiddleware
         if (!$this->isAuthIgnore($urlController, $urlMethod)) {
             if ($adminUserId && !$adminUser) {
                 Session::forget('_adminUserId');
-                return Response::redirect(action('\ModStart\Admin\Controller\AuthController@login', ['redirect' => Request::currentPageUrl()]));
+                return Response::redirect(modstart_admin_url('login', ['redirect' => Request::currentPageUrl()]));
             }
             if (empty($adminUser)) {
-                return Response::redirect(action('\ModStart\Admin\Controller\AuthController@login', ['redirect' => Request::currentPageUrl()]));
+                return Response::redirect(modstart_admin_url('login', ['redirect' => Request::currentPageUrl()]));
             }
 
             $rules = array_build(AdminPermission::rules(), function ($k, $v) {
@@ -240,7 +240,9 @@ class AuthMiddleware
 
     private function isAuthIgnore($controller, $action)
     {
-        foreach ($this->authIgnores as $item) {
+        $buildInAuthIgnores = config('modstart.admin.authIgnores', []);
+        $authIgnores = array_merge($this->authIgnores, $buildInAuthIgnores);
+        foreach ($authIgnores as $item) {
             if (Str::contains($item, '@')) {
                 if ($controller . '@' . $action == $item) {
                     return true;

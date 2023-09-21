@@ -39,12 +39,33 @@ class SiteUrlProvider
     /**
      * 链接更新/新增触发
      * @param $url string 使用绝对路径，不要带 http 协议，如 /xxx/xxx
-     * @param $title string
+     * @param $title string 链接标题
+     * @param $param array ['biz'=>'xxx']
+     * @example
+     * SiteUrlProvider::updateBiz('xxx', modstart_web_url('xxx/xxx'));
+     * SiteUrlProvider::updateBiz('xxx', modstart_web_url('xxx/xxx'), 'xxx');
+     * SiteUrlProvider::updateBiz('xxx', modstart_web_url('xxx/xxx'), 'xxx', ['biz'=>'xxx']);
+     */
+    public static function updateBiz($biz, $url, $title = '', $param = [])
+    {
+        $param['biz'] = $biz;
+        BizException::throwsIfEmpty('SiteUrlProvider.Error -> url empty', $url);
+        foreach (self::get() as $instance) {
+            /** @var AbstractSiteUrlProvider $instance */
+            $instance->update($url, $title, $param);
+        }
+    }
+
+    /**
+     * 链接更新/新增触发
+     * @param $url string 使用绝对路径，不要带 http 协议，如 /xxx/xxx
+     * @param $title string 链接标题
      * @param $param array ['biz'=>'xxx']
      * @example
      * SiteUrlProvider::update(modstart_web_url('xxx/xxx'));
      * SiteUrlProvider::update(modstart_web_url('xxx/xxx'), 'xxx');
      * SiteUrlProvider::update(modstart_web_url('xxx/xxx'), 'xxx', ['biz'=>'xxx']);
+     * @deprecated delete at 2024-03-14
      */
     public static function update($url, $title = '', $param = [])
     {

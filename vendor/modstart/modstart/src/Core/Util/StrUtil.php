@@ -164,7 +164,7 @@ class StrUtil
         if (empty($text)) {
             return 0;
         }
-        return intval(mb_strwidth($text, 'UTF-8'));
+        return intval(mb_strlen($text, 'UTF-8'));
     }
 
     public static function mbLengthGt($text, $limit)
