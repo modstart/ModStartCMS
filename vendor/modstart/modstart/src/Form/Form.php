@@ -628,6 +628,11 @@ class Form implements Renderable
                             continue;
                         }
                         if ($field->column() == $column) {
+                            $value = $field->prepareInput($value, $this->dataSubmitted);
+                            $value = $field->serializeValue($value, $field);
+                            if ($field->hookValueSerialize()) {
+                                $value = call_user_func($field->hookValueSerialize(), $value, $field);
+                            }
                             $this->dataEditing[$field->column()] = $value;
                             break;
                         }

@@ -209,7 +209,7 @@ class InputPackage
         if (isset($this->data[$key])) {
             $value = @trim((string)$this->data[$key]);
             $value = StrUtil::filterSpecialChars($value);
-            if ($value) {
+            if ($value !== '' && $value !== null) {
                 return $value;
             }
         }

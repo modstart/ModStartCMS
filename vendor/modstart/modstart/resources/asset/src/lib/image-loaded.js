@@ -13,7 +13,7 @@ var ImageLoaded = function (images, option) {
     if (typeof option == 'function') {
         option = {onCompleted: option};
     }
-    var opt = $.extend(defaultOption, option);
+    var opt = Object.assign({}, defaultOption, option);
     var successLoadedImages = [];
     var errorLoadedImages = [];
     var imagesObj = [];

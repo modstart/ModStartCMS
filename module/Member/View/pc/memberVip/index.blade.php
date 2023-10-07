@@ -243,6 +243,10 @@
             </div>
         </div>
 
+        @if(modstart_module_enabled('MemberOrderCard'))
+            @include('module::MemberOrderCard.View.inc.memberOrderCard.form')
+        @endif
+
     </div>
 
 

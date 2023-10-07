@@ -20,6 +20,14 @@
         </div>
         <el-dialog class="pb-image-selector-preview" :visible.sync="previewVisible" append-to-body>
             <img width="100%" :src="currentData"/>
+            <div
+                v-if="showPreviewUrl"
+                class="tw-absolute tw-bg-black tw-bg-opacity-50 tw-bottom-0 tw-cursor-pointer tw-leading-6 tw-left-0 tw-px-3 tw-right-0 tw-text-center tw-text-white tw-truncate"
+                v-clipboard:copy="currentData"
+                v-clipboard:success="$onCopySuccess"
+            >
+                {{ currentData }}
+            </div>
         </el-dialog>
         <DataSelector ref="imageDialog"
                       :url="imageDialogUrl"
@@ -84,6 +92,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        showPreviewUrl: {
+            type: Boolean,
+            default: false,
+        }
     },
     data() {
         return {

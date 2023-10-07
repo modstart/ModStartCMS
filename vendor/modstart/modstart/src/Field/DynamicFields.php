@@ -161,8 +161,10 @@ class DynamicFields extends AbstractField
     public static function fetchValueObject($fields, $values, $param = [])
     {
         $valueObject = [];
-        foreach ($values as $value) {
-            $valueObject[$value['name']] = $value['value'];
+        if (!empty($values)) {
+            foreach ($values as $value) {
+                $valueObject[$value['name']] = $value['value'];
+            }
         }
         foreach ($fields as $f) {
             switch ($f['type']) {

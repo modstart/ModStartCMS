@@ -79,7 +79,8 @@ class AgentUtil
         '/crawler/i' => 'Other',
         '/spider/i' => 'Other',
         // 通用匹配 XxxBot
-        '/(?:^|[\\W])\\w+bot[\\W]/i' => 'Other',
+        '/(?:^|[\\W])\\w+bot[\\W]*/i' => 'Other',
+        '/Detector/' => 'Other',
 
         // 其他一些爬虫
         '/YandexImages/i' => 'Other',

@@ -1,6 +1,10 @@
 {
     "name": "Member",
     "title": "通用用户系统",
+    "version": "4.0.0",
+    "modstartVersion": ">=3.7.0",
+    "author": "官方",
+    "description": "提供基础的用户管理服务",
     "env": [
         "laravel5",
         "laravel9"
@@ -45,12 +49,10 @@
         "MemberSign",
         "MemberSSOClient",
         "MemberSSOServer",
-        "MemberWechatMpLogin"
+        "MemberWechatMpLogin",
+        "MemberOrderCard",
+        "MemberChargeCard"
     ],
-    "version": "3.9.0",
-    "modstartVersion": ">=3.7.0",
-    "author": "官方",
-    "description": "提供基础的用户管理服务",
     "config": {
         "moneyEnable": [
             [

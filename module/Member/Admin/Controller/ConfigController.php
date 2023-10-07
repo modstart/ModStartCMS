@@ -30,7 +30,7 @@ class ConfigController extends Controller
             $builder->switch('loginCaptchaEnable', '启用登录验证码')
                 ->when('=', true, function (Form $form) use ($captchaType) {
                     $form->select('loginCaptchaProvider', '登录验证码类型')->options($captchaType)
-                        ->help('用于 用户名密码登录（/login）、手机快捷登录（/login_phone） 的人机验证');
+                        ->help('用于 用户名密码登录（/login）、手机快捷登录（/login/phone） 的人机验证');
                 });
             $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录')
                 ->when('=', true, function (Form $form) {
@@ -44,7 +44,7 @@ class ConfigController extends Controller
                     $form->switch('Member_LoginPhoneAutoRegister', '手机快捷登录自动注册')
                         ->help('开启后，手机快捷登录遇用户不存在则自动注册，关闭表示手机号不存在不能登录');
                 })
-                ->help('开启手机快捷登录（/login_phone）');
+                ->help('开启手机快捷登录（/login/phone）');
             $loginDefaultOptions = [
                 'default' => '用户名密码登录 /login',
                 'phone' => '手机快捷登录 /login/phone',
