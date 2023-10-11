@@ -599,9 +599,9 @@ class FileUtil
     /**
      * 将远程文件保存为本地可用
      * @param $path string 可以为 http://example.com/xxxxx.xxx /data/xxxxx.xxx
-     * @param string $ext 文件后缀
-     * @param string $downloadStream 是否使用流下载
-     * @return string|null 返回本地临时路径或本地文件绝对路径，注意使用safeCleanLocalTemp来清理文件，如果是本地其他路径可能会误删
+     * @param $ext string 文件后缀
+     * @param $downloadStream boolean 是否使用流下载，默认为false
+     * @return string|null 返回本地临时路径或本地文件绝对路径，注意使用 safeCleanLocalTemp 来清理文件，如果是本地其他路径可能会误删
      */
     public static function savePathToLocalTemp($path, $ext = null, $downloadStream = false)
     {
@@ -611,8 +611,12 @@ class FileUtil
         if (empty($ext)) {
             $ext = self::extension($path);
         }
-        $appKey = config('env.APP_KEY');
-        $tempPath = public_path('temp/' . md5($appKey . ':' . $path) . (starts_with($ext, '.') ? $ext : '.' . $ext));
+        $ext = ltrim(strtolower($ext), '.');
+        BizException::throwsIf('Unsupported Path Extension', in_array($ext, [
+            'php', 'php3', 'php4', 'php5', 'phps', 'phtml',
+        ]));
+        $securityKey = md5(json_encode(config('env')));
+        $tempPath = public_path('temp/' . md5($securityKey . ':' . $path) . '.' . $ext);
         if (file_exists($tempPath)) {
             return $tempPath;
         }
@@ -674,8 +678,8 @@ class FileUtil
             }
             BizException::throws('FileUtil generateLocalTempPath error');
         }
-        $appKey = config('env.APP_KEY');
-        $p = 'temp/' . md5($appKey . ':' . $hash) . '.' . $ext;
+        $securityKey = md5(json_encode(config('env')));
+        $p = 'temp/' . md5($securityKey . ':' . $hash) . '.' . $ext;
         return $realpath ? public_path($p) : $p;
     }
 

@@ -50,6 +50,7 @@ class ModuleInstallAllCommand extends Command
                 if (ModelUtil::count('admin_user') <= 0) {
                     foreach ($initUsers as $initUser) {
                         Admin::add($initUser['user'], $initUser['password']);
+                        $this->warn(">>> Init User: {$initUser['user']}");
                     }
                 }
             }

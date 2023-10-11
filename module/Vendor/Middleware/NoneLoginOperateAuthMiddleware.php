@@ -21,8 +21,6 @@ class NoneLoginOperateAuthMiddleware
      */
     public function handle($request, \Closure $next)
     {
-        $appKey = config('env.APP_KEY');
-        BizException::throwsIfEmpty('APP_KEY为空', $appKey);
         $input = InputPackage::buildFromInput();
         $timestamp = $input->getInteger('timestamp');
         BizException::throwsIf('已超时效（操作时间显示为24小时内，timestamp=' . time() . '）', !($timestamp <= time() && $timestamp > time() - TimeUtil::PERIOD_DAY));

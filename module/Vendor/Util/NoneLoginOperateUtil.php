@@ -6,6 +6,7 @@ namespace Module\Vendor\Util;
 
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Request;
+use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\RandomUtil;
 
 class NoneLoginOperateUtil
@@ -25,8 +26,7 @@ class NoneLoginOperateUtil
 
     public static function sign($url, $nonce, $timestamp, $param)
     {
-        $appKey = config('env.APP_KEY');
-        BizException::throwsIfEmpty('APP_KEY为空', $appKey);
-        return md5($url . ':' . $appKey . ':' . $nonce . ':' . $timestamp . ':' . $param);
+        $securityKey = EnvUtil::securityKey();
+        return md5($url . ':' . $securityKey . ':' . $nonce . ':' . $timestamp . ':' . $param);
     }
 }

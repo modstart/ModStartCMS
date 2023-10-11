@@ -37,4 +37,13 @@ class EnvUtil
     {
         return @ini_get($key);
     }
+
+    public static function securityKey()
+    {
+        static $key = null;
+        if (null === $key) {
+            $key = md5(json_encode(config('env')));
+        }
+        return $key;
+    }
 }

@@ -347,6 +347,23 @@ class MemberUtil
         ]);
     }
 
+    public static function registerId($id, $data = [])
+    {
+        $memberUser = ModelUtil::insert('member_user', array_merge([
+            'id' => $id,
+            'status' => MemberStatus::NORMAL,
+            'vipId' => MemberVipUtil::defaultVipId(),
+            'groupId' => MemberGroupUtil::defaultGroupId(),
+            'isDeleted' => false,
+        ], $data));
+        return Response::generate(0, 'ok', $memberUser);
+    }
+
+    public static function registerUsername($username)
+    {
+        return self::register($username, '', '', '', true);
+    }
+
     public static function registerUsernameQuick($username)
     {
         $suggestionUsername = $username;
@@ -558,6 +575,9 @@ class MemberUtil
      */
     public static function setAvatar($userId, $avatarData, $avatarExt = 'jpg')
     {
+        if (!in_array($avatarExt, ['jpg', 'jpeg', 'png', 'gif'])) {
+            return Response::generate(-1, '图片格式不正确');
+        }
         $memberUser = self::get($userId);
         if (empty($memberUser)) {
             return Response::generate(-1, '用户不存在');
