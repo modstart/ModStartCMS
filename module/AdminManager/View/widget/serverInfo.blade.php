@@ -9,6 +9,14 @@
         <table class="ub-table tw-font-mono">
             <tbody>
             <tr>
+                <td class="tw-font-bold">
+                    安全公告
+                </td>
+                <td>
+                    <div data-system-notice></div>
+                </td>
+            </tr>
+            <tr>
                 <td width="100" class="tw-font-bold">
                     MSCore
                 </td>
@@ -62,14 +70,6 @@
                 <td class="tw-font-bold">分配内存限制</td>
                 <td>
                     {{@ini_get('memory_limit')}}
-                </td>
-            </tr>
-            <tr>
-                <td class="tw-font-bold">
-                    安全公告
-                </td>
-                <td>
-                    <div data-system-notice></div>
                 </td>
             </tr>
             </tbody>
