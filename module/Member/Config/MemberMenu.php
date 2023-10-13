@@ -6,6 +6,9 @@ namespace Module\Member\Config;
 
 use Illuminate\Support\Str;
 
+/**
+ * 用户中心左侧菜单
+ */
 class MemberMenu
 {
     private static $menu = [];

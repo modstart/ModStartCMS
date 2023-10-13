@@ -11,6 +11,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Layout\Row;
 use ModStart\Widget\Box;
 use Module\Member\Config\MemberHomeIcon;
+use Module\Member\Config\MemberHomePanel;
 use Module\Member\Support\MemberLoginCheck;
 
 class MemberController extends MemberFrameController implements MemberLoginCheck
@@ -33,6 +34,13 @@ class MemberController extends MemberFrameController implements MemberLoginCheck
     {
         list($view, $viewFrame) = $this->viewPaths('member.index');
         $page->view($view);
+        foreach (MemberHomePanel::get() as $panel) {
+            $page->append(new Row(function (Row $row) use ($panel) {
+                call_user_func_array($panel, [
+                    $row
+                ]);
+            }));
+        }
         foreach (MemberHomeIcon::get() as $group) {
             $page->append(Box::make(new Row(function (Row $row) use ($group) {
                 foreach ($group['children'] as $child) {

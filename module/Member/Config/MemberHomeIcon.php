@@ -8,9 +8,6 @@ use Illuminate\Support\Str;
 
 /**
  * 用户首页图标
- * Class MemberHomeIcon
- * @package Module\Member\Config
- * @since 1.5.0
  */
 class MemberHomeIcon
 {

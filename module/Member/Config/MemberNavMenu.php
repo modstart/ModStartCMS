@@ -7,6 +7,9 @@ namespace Module\Member\Config;
 use Illuminate\Support\Str;
 use ModStart\Core\Util\RenderUtil;
 
+/**
+ * 右上角菜单
+ */
 class MemberNavMenu
 {
     private static $menu = [];

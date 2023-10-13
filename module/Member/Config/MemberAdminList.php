@@ -4,6 +4,9 @@
 namespace Module\Member\Config;
 
 
+/**
+ * 用户管理后台配置
+ */
 class MemberAdminList
 {
     private static $gridFields = [];

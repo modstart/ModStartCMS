@@ -7,6 +7,9 @@ namespace Module\Member\Config;
 use ModStart\Core\Exception\BizException;
 use Module\Member\Oauth\AbstractOauth;
 
+/**
+ * 用户第三方授权登录配置
+ */
 class MemberOauth
 {
     private static $list = [];
