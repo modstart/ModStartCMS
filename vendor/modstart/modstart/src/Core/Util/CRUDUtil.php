@@ -12,10 +12,16 @@ use ModStart\Grid\Type\GridEngine;
 
 class CRUDUtil
 {
-    public static function copyId()
+    public static function copyId($defaultValue = null)
     {
         $input = InputPackage::buildFromInput();
-        return $input->getInteger('_copyId');
+        return $input->getInteger('_copyId', $defaultValue);
+    }
+
+    public static function scope($defaultValue = null)
+    {
+        $input = InputPackage::buildFromInput();
+        return $input->getTrimString('_scope', $defaultValue);
     }
 
     public static function id()

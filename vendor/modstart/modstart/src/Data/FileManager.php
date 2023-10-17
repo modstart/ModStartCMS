@@ -6,6 +6,7 @@ namespace ModStart\Data;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
@@ -18,6 +19,7 @@ use ModStart\Core\Util\PathUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Data\Event\DataUploadedEvent;
 use ModStart\Data\Event\DataUploadingEvent;
+use ModStart\Data\Support\FileManagerProvider;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileManager
@@ -296,7 +298,21 @@ class FileManager
     {
         $page = $input->getPage();
         $pageSize = $input->getPageSize(null, null, null, 24);
-        $categoryId = $input->getInteger('categoryId');
+        $categoryId = $input->getTrimString('categoryId');
+        if (Str::startsWith($categoryId, ':')) {
+            $pcs = explode(':', $categoryId);
+            BizException::throwsIf('Unsupported category id', count($pcs) < 2);
+            $provider = FileManagerProvider::getByName($pcs[1]);
+            BizException::throwsIfEmpty('provider not found', $provider);
+            $categoryId = (isset($pcs[2]) ? trim($pcs[2]) : null);
+            return $provider->listExecute($category, $categoryId, [
+                'uploadTable' => $uploadTable,
+                'uploadCategoryTable' => $uploadCategoryTable,
+                'userId' => $userId,
+                'option' => $option,
+            ]);
+        }
+        $categoryId = intval($categoryId);
         $option = [];
         $option['order'] = ['id', 'desc'];
         $option['where'] = ['userId' => $userId, 'category' => $category];
@@ -405,6 +421,17 @@ class FileManager
                 'id' => -1,
             ]
         ];
+        foreach (FileManagerProvider::listAll() as $provider) {
+            $categoryTree = $provider->getCategoryTree($category, [
+                'uploadTable' => $uploadTable,
+                'uploadCategoryTable' => $uploadCategoryTable,
+                'userId' => $userId,
+                'option' => $option,
+            ]);
+            if (!empty($categoryTree)) {
+                $categoryTreeAll[] = $categoryTree;
+            }
+        }
         $categoryListParent = TreeUtil::treeToListWithIndent($categoryTreeParent, 'id', 'name');
         $categoryListAll = TreeUtil::treeToListWithIndent($categoryTreeAll, 'id', 'name');
         return Response::jsonSuccessData([

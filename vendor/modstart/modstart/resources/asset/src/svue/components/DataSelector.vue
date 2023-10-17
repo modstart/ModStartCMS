@@ -69,14 +69,14 @@
                     <div class="action">
                         <a v-if="permission['Delete']"
                            href="javascript:;" :title="L('Delete')"
-                           :class="{active:listChecked.length>0}"
+                           :class="{active:activeFileOperate}"
                            @click="doFileDelete">
                             <i class="iconfont icon-trash"></i>
                             {{ L('Delete') }}
                         </a>
                         <a v-if="permission['Add/Edit']"
                            href="javascript:;" :title="L('Edit')"
-                           :class="{active:listChecked.length>0}"
+                           :class="{active:activeFileOperate}"
                            @click="doFileEdit">
                             <i class="iconfont icon-sign"></i>
                             {{ L('Edit') }}
@@ -284,20 +284,22 @@ export default {
     watch: {
         categoryFilter(val) {
             this.$refs.$categoryTreeAll.filter(val)
-        }
+        },
     },
     computed: {
         apiUrl() {
             return this.url + '/' + this.category
         },
         listChecked() {
-            return this.records.filter(o => o.checked
-            )
+            return this.records.filter(o => o.checked)
         },
         listCheckedIds() {
             return this.listChecked.map(o => o.id
             )
-        }
+        },
+        activeFileOperate() {
+            return this.listChecked.length > 0 && this.listChecked.filter(f => f.id > 0).length === this.listChecked.length
+        },
     },
     mounted() {
         if ('flat' === this.mode) {
@@ -340,6 +342,9 @@ export default {
             Dialog.tipError(this.L('Select %d item(s) at most', this.max))
         },
         doFileEdit() {
+            if (!this.activeFileOperate) {
+                return
+            }
             this.fileEdit.categoryId = this.currentCategoryId
             this.fileVisible = true
         },
@@ -362,13 +367,12 @@ export default {
             })
         },
         doFileDelete() {
-            const ids = this.listCheckedIds;
-            if (ids.length === 0) {
+            if (!this.activeFileOperate || !this.listCheckedIds.length) {
                 return;
             }
             Dialog.confirm(this.L('Confirm Delete ?'), () => {
                 Dialog.loadingOn()
-                this.$api.post(this.apiUrl, JsonUtil.extend({id: ids.join(',')}, {action: 'fileDelete'}), res => {
+                this.$api.post(this.apiUrl, JsonUtil.extend({id: this.listCheckedIds.join(',')}, {action: 'fileDelete'}), res => {
                     Dialog.loadingOff()
                     Dialog.tipSuccess(this.L('Delete Success'))
                     this.doList(1)

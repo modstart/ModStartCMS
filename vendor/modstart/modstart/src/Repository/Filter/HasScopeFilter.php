@@ -18,9 +18,9 @@ trait HasScopeFilter
     /**
      * Set the scope filter.
      *
-     * @param string $name
-     * @param string $title
-     * @param Closure $callback function(ScopeFilter $filter){ $filter->where('userId','1'); }
+     * @param $name string
+     * @param $title string
+     * @param $callback \Closure function(ScopeFilter $filter){ $filter->where('userId','1'); }
      * @return $this
      */
     public function scopeFilter($name, $title, \Closure $callback = null)
