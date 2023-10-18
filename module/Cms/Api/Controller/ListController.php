@@ -25,9 +25,12 @@ class ListController extends BaseCatController
         $catId = $input->getTrimString('cat');
         BizException::throwsIfEmpty('分类为空', $catId);
         $data = parent::setup($catId);
-        $cat = $data['cat'];
         $page = $input->getPage();
-        $pageSize = $input->getPageSize('pageSize');
+        $cat = $data['cat'];
+        if (empty($cat['pageSize']) || $cat['pageSize'] < 0) {
+            $cat['pageSize'] = 12;
+        }
+        $pageSize = $input->getPageSize('pageSize', null, null, $cat['pageSize']);
         $searchInput = $input->getAsInput('search');
         $option = [
             'where' => [],
