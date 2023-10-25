@@ -286,7 +286,7 @@ function env($key, $defaultValue = '')
 {
     static $values = null;
     if (null === $values) {
-        $values = \ModStart\Core\Env\EnvUtil::all(ENV_FILE_EXAMPLE);
+        $values = \ModStart\Core\Util\EnvUtil::all(ENV_FILE_EXAMPLE);
     }
     return isset($values[$key]) ? $values[$key] : $defaultValue;
 }

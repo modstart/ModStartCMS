@@ -2,6 +2,8 @@
 
 namespace ModStart\Core\Util;
 
+use ModStart\Core\Exception\BizException;
+
 class SecureUtil
 {
     const DEFAULT_CIPHER_ALGO = 'aes-256-cbc';
@@ -53,6 +55,7 @@ class SecureUtil
      */
     public static function aesDecode($key, $data, $keyIsBase64 = false)
     {
+        BizException::throwsIfEmpty('SecureUtil.Key Empty', $key);
         $encryptionKey = $key;
         if ($keyIsBase64) {
             $encryptionKey = base64_decode($encryptionKey);
@@ -84,6 +87,6 @@ class SecureUtil
 
     public static function encryptKey()
     {
-        return modstart_config('EncryptKey', 'mock-encrypt-key-random-string--');
+        return config('env.ENCRYPT_KEY');
     }
 }

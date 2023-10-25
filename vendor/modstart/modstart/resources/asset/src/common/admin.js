@@ -1,3 +1,4 @@
+window._rootWindow = MS.util.getRootWindow();
 window._pageTabManager = {
     closeFromTab: function () {
         if (window == parent.window) {
@@ -16,6 +17,25 @@ window._pageTabManager = {
         var tabPageId = window.frameElement.getAttribute("data-tab-page")
         window.parent._pageTabManager.updateTitle(tabPageId, title)
     },
+    activeUrl: function (url) {
+        var $menu = _rootWindow.$('.ub-panel-frame .left .menu');
+        var normalUrl = _rootWindow._pageTabManager.normalTabUrl(url);
+        $menu.find('a').each(function (i, o) {
+            var url = $(o).attr('href');
+            if (url === 'javascript:;') {
+                return;
+            }
+            if (_rootWindow._pageTabManager.normalTabUrl(url) === normalUrl) {
+                $(o).parents('.children').prev().addClass('open');
+                $menu.find('.menu-item').removeClass('active');
+                $(o).closest('.menu-item').addClass('active');
+                try {
+                    o.scrollIntoView({block: 'center', behavior: 'smooth'});
+                } catch (e) {
+                }
+            }
+        });
+    }
 };
 
 $(window).on('load', function () {
@@ -51,6 +71,13 @@ $(window).on('load', function () {
             );
         });
     }
+
+    // 后台Logo
+    var $logo = $frame.find('.left .logo');
+    $logo.on('click', function () {
+        $($menu.find('a')[0]).click();
+        return false;
+    });
 
     // 后台菜单搜索
     var $menu = $frame.find('.left .menu');
@@ -291,6 +318,8 @@ $(window).on('load', function () {
                 }
 
                 this.updateMainPage()
+
+
             },
             open: function (url, title, option) {
                 option = Object.assign({
@@ -372,16 +401,15 @@ $(window).on('load', function () {
             if (!title) {
                 title = $(this).text();
             }
-            if (window.parent !== window) {
-                window.parent._pageTabManager.open(url, title)
-            } else {
-                tabManager.open(url, title)
-            }
+            _rootWindow._pageTabManager.open(url, title, {
+                focus: function () {
+                    tabManager.activeUrl(url);
+                }
+            });
             return false;
         });
         window._pageTabManager = tabManager
     } else {
-        // console.log('page-tabs-disabled')
         $adminTabRefresh.remove();
     }
 

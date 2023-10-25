@@ -232,4 +232,5 @@ return [
     'Examples' => '例子',
     'Under Development' => '开发中',
     'Price' => '价格',
+    '%s is default, please change it' => '%s 为默认值，请修改',
 ];

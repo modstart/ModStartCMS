@@ -18,15 +18,15 @@ class Number extends AbstractField
         ]);
     }
 
-    public function autoColor($value)
+    public function autoColor($enable)
     {
-        $this->setVariable('autoColor', $value);
+        $this->setVariable('autoColor', $enable);
         return $this;
     }
 
-    public function signShow($value)
+    public function signShow($enable)
     {
-        $this->setVariable('signShow', $value);
+        $this->setVariable('signShow', $enable);
         return $this;
     }
 

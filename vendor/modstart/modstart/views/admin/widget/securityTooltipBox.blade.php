@@ -41,4 +41,16 @@
             <a href="{{action('\ModStart\Admin\Controller\AdminUserController@changePassword')}}">{{L('Process Now')}}</a>
         </div>
     @endif
+    @if(config('env.APP_KEY')=='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+        <div class="ub-alert warning">
+            <i class="iconfont icon-warning"></i>
+            {{L('Security Warning')}}: {{L('%s is default, please change it','APP_KEY')}}
+        </div>
+    @endif
+    @if(config('env.ENCRYPT_KEY')=='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+        <div class="ub-alert warning">
+            <i class="iconfont icon-warning"></i>
+            {{L('Security Warning')}}: {{L('%s is default, please change it','ENCRYPT_KEY')}}
+        </div>
+    @endif
 </div>

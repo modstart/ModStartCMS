@@ -101,6 +101,13 @@ class MemberVipUtil
         } else {
             $vip = self::get(null);
         }
+        // 过期的用户，需要更新数据库
+        if (!empty($memberUser['vipExpire']) && strtotime($memberUser['vipExpire']) <= time()) {
+            MemberUtil::update($memberUser['id'], [
+                'vipId' => self::defaultVipId(),
+                'vipExpire' => null
+            ]);
+        }
         if (empty($vip)) {
             return null;
         }

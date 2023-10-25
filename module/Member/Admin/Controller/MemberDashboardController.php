@@ -23,6 +23,7 @@ class MemberDashboardController extends Controller
         $report['yesterdayCount'] = ModelUtil::model('member_user')
             ->where('created_at', '>=', TimeUtil::yesterdayStart())
             ->where('created_at', '<=', TimeUtil::yesterdayEnd())
+            ->where(['isDeleted' => false])
             ->count();
 
         $w = date('w');
@@ -33,6 +34,7 @@ class MemberDashboardController extends Controller
         $report['lastWeekCount'] = ModelUtil::model('member_user')
             ->where('created_at', '>=', date('Y-m-d 00:00:00', $lastWeek))
             ->where('created_at', '<=', date('Y-m-d 23:59:59', $lastWeek + TimeUtil::PERIOD_DAY * 7))
+            ->where(['isDeleted' => false])
             ->count();
         $page->row(function (Row $row) use ($report) {
             $row->column(4, DashboardItemA::makeIconNumberTitle(
@@ -50,7 +52,7 @@ class MemberDashboardController extends Controller
         });
         $page->append(Box::make(Line::make()->tableDailyCountLatest(
             [
-                ['title' => '总数', 'table' => 'member_user'],
+                ['title' => '总数', 'table' => 'member_user', 'where' => ['isDeleted' => false]],
             ],
             30
         ), '会员增长趋势'));

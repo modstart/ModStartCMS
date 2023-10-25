@@ -40,9 +40,9 @@ trait DSTrait
                 $seriesItem['where'] = [];
             }
             $data = ModelUtil::model($seriesItem['table'])
-                ->where($seriesItem['where'])
                 ->where('created_at', '>=', $startTime)
                 ->where('created_at', '<', $endTime)
+                ->where($seriesItem['where'])
                 ->groupBy('_time')
                 ->get([
                     DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') _time"),

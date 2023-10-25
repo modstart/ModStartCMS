@@ -1,2 +1,2 @@
 <?php
-return \ModStart\Core\Env\EnvUtil::all();
+return \ModStart\Core\Util\EnvUtil::all();

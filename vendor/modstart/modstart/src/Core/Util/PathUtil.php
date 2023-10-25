@@ -77,4 +77,27 @@ class PathUtil
         }
         return self::fixFull($path, $cdn, $schema);
     }
+
+    /**
+     * 将外网地址转换为内网地址
+     * @param $path string
+     * @return string
+     */
+    public static function convertPublicToInternal($path)
+    {
+        if (empty($path)) {
+            return $path;
+        }
+        $urlMap = modstart_config('Site_PublicInternalUrlMap', []);
+        if (empty($urlMap) || !is_array($urlMap)) {
+            return $path;
+        }
+        foreach ($urlMap as $urlPair) {
+            if (!isset($urlPair['public']) || !isset($urlPair['internal'])) {
+                continue;
+            }
+            $path = str_replace($urlPair['public'], $urlPair['internal'], $path);
+        }
+        return $path;
+    }
 }

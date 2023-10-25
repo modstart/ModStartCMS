@@ -2,6 +2,11 @@
 
 namespace ModStart\Core\Env;
 
+/**
+ * Class EnvUtil
+ * @package ModStart\Core\Env
+ * @deprecated delete at 2024-04-24 use Util\EnvUtil instead
+ */
 class EnvUtil
 {
     public static function parse($file)

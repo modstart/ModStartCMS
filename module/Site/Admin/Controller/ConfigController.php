@@ -38,6 +38,14 @@ class ConfigController extends Controller
         $builder->text('Site_ContactAddress', '地址');
         $builder->image('Site_ContactQrcode', '联系二维码')->help('可传带二维码的公众号/微信/QQ等，方便用户扫码联系');
 
+        $builder->layoutSeparator('其他配置');
+        $builder->complexFieldsList('Site_PublicInternalUrlMap', '内外网链接节流映射')
+            ->fields([
+                ['name' => 'public', 'title' => '外网地址', 'type' => 'text', 'defaultValue' => '', 'placeholder' => 'https://public.example.com', 'tip' => '',],
+                ['name' => 'internal', 'title' => '内网地址', 'type' => 'text', 'defaultValue' => '', 'placeholder' => 'https://internal.example.com', 'tip' => '',],
+            ])
+            ->help('在使用第三方存储时，程序拉取外网地址会造成流量浪费，使用此功能可将外网地址映射为内网地址，节省流量');
+
         $builder->formClass('wide');
         return $builder->perform();
     }

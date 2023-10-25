@@ -110,6 +110,7 @@ class InstallController extends Controller
         // 替换.env文件
         $envContent = file_get_contents(base_path('env.example'));
 
+        $envContent = preg_replace("/APP_DEBUG=(.*?)\\n/", "APP_DEBUG=false\n", $envContent);
         $envContent = preg_replace("/DB_HOST=(.*?)\\n/", "DB_HOST=" . $dbHost . "\n", $envContent);
         $envContent = preg_replace("/DB_PORT=(.*?)\\n/", "DB_PORT=" . $dbPort . "\n", $envContent);
         $envContent = preg_replace("/DB_DATABASE=(.*?)\\n/", "DB_DATABASE=" . $dbDatabase . "\n", $envContent);
@@ -117,6 +118,7 @@ class InstallController extends Controller
         $envContent = preg_replace("/DB_PASSWORD=(.*?)\\n/", "DB_PASSWORD=" . $dbPassword . "\n", $envContent);
         $envContent = preg_replace("/DB_PREFIX=(.*?)\\n/", "DB_PREFIX=" . $dbPrefix . "\n", $envContent);
         $envContent = preg_replace("/APP_KEY=(.*?)\\n/", "APP_KEY=" . RandomUtil::string(32) . "\n", $envContent);
+        $envContent = preg_replace("/ENCRYPT_KEY=(.*?)\\n/", "ENCRYPT_KEY=" . RandomUtil::string(32) . "\n", $envContent);
         if (!empty($installConfig['envs'])) {
             foreach ($installConfig['envs'] as $envField) {
                 $envContent = preg_replace(

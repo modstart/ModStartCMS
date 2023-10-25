@@ -156,7 +156,7 @@ class ModuleServiceProvider extends ServiceProvider
             $row->column(3, DashboardItemA::makeIconNumberTitle(
                 'iconfont icon-user',
                 ModelUtil::count('member_user', ['isDeleted' => false]),
-                '用户',
+                '用户管理',
                 modstart_admin_url('member'), ColorUtil::randomColor()
             ));
         });

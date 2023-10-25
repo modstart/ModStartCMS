@@ -15,19 +15,19 @@ class Decimal extends AbstractField
             // 自动着色，正数绿色，负数红色
             'autoColor' => false,
             // 是否显示符号
-            'signShow'=>false,
+            'signShow' => false,
         ]);
     }
 
-    public function autoColor($value)
+    public function autoColor($enable)
     {
-        $this->setVariable('autoColor', $value);
+        $this->setVariable('autoColor', $enable);
         return $this;
     }
 
-    public function signShow($value)
+    public function signShow($enable)
     {
-        $this->setVariable('signShow', $value);
+        $this->setVariable('signShow', $enable);
         return $this;
     }
 
