@@ -4,6 +4,8 @@
 namespace ModStart\Field;
 
 
+use ModStart\Core\Util\SerializeUtil;
+
 /**
  * Json多组键值对字段
  * Class ComplexFields
@@ -65,7 +67,7 @@ class ComplexFields extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)

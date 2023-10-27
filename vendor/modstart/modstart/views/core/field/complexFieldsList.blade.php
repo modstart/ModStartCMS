@@ -85,7 +85,7 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! $value?json_encode($value):($defaultValue?json_encode($defaultValue):'[]') !!},
+                value: {!! $value?\ModStart\Core\Util\SerializeUtil::jsonEncode($value):($defaultValue?\ModStart\Core\Util\SerializeUtil::jsonEncode($defaultValue):'[]') !!},
                 icons: []
             },
             mounted() {
@@ -102,7 +102,7 @@
             },
             methods: {
                 doValueAdd() {
-                    this.value.push({!! json_encode($valueItem) !!});
+                    this.value.push({!! \ModStart\Core\Util\SerializeUtil::jsonEncode($valueItem) !!});
                 }
             }
         });

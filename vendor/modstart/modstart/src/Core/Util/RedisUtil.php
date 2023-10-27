@@ -52,7 +52,7 @@ class RedisUtil
 
     public static function setexObject($key, $value, $expireSecond)
     {
-        self::client()->setex($key, $expireSecond, json_encode($value));
+        self::client()->setex($key, $expireSecond, SerializeUtil::jsonEncode($value));
     }
 
     public static function delete($key)

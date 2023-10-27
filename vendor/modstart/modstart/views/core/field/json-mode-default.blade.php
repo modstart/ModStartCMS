@@ -5,14 +5,14 @@
        name="{{$name}}"
        placeholder="{{$placeholder}}"
        @if(null===$fixedValue)
-       value="{{json_encode(null===$value?(null===$defaultValue?'':$defaultValue):$value,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)}}"
+       value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?'':$defaultValue):$value)}}"
        @else
-       value="{{json_encode($fixedValue?$fixedValue:'',JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)}}"
+       value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($fixedValue?$fixedValue:'')}}"
        @endif
        @if($styleFormField) style="{!! $styleFormField !!}" @endif
 />
 <div class="pb-code-editor">
-    <div id="{{$id}}Editor" style="width:100%;height:{{$editorHeight}};">{{json_encode(null===$value?(null===$defaultValue?new \stdClass():$defaultValue):$value,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)}}</div>
+    <div id="{{$id}}Editor" style="width:100%;height:{{$editorHeight}};">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty(null===$value?(null===$defaultValue?new \stdClass():$defaultValue):$value)}}</div>
 </div>
 <style>
     .pb-code-editor {

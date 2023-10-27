@@ -113,6 +113,7 @@ abstract class AbstractDataStorage
      * @return mixed|string
      * 如果path是公共路径（http,https）直接返回
      * 如果是本地路径，返回完整路径，如 /data/xxxxx.xx
+     * @deprecated delete at 2024-04-25 请使用 getDriverFullPath
      */
     public function getDriverFullPathInternal($path)
     {

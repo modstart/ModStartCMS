@@ -61,9 +61,9 @@
                 MS.uploadButton('#{{$id}}Uploader', {
                     text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
                     server: "{{$server}}",
-                    extensions: {!! json_encode(join(',',config('data.upload.'.$category.'.extensions'))) !!},
-                    sizeLimit: {!! json_encode(config('data.upload.'.$category.'.maxSize')) !!},
-                    chunkSize: {!! json_encode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
+                    extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.'.$category.'.extensions'))) !!},
+                    sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.'.$category.'.maxSize')) !!},
+                    chunkSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
                     showFileQueue: true,
                     fileNumLimit: 1,
                     callback: function (file, me) {

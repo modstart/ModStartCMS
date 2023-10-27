@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use ModStart\Core\Events\ModStartRequestHandled;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EventUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 class HttpMonitor
 {
@@ -66,7 +67,7 @@ class HttpMonitor
             }
             if ($queryCountPerRequest > 30) {
                 Log::warning("MASS_REQUEST_SQL $method [$url] $queryCountPerRequest $param -> "
-                    . json_encode(DatabaseMonitor::getQueryCountPerRequestSqls(), JSON_UNESCAPED_UNICODE));
+                    . SerializeUtil::jsonEncode(DatabaseMonitor::getQueryCountPerRequestSqls()));
             }
 
         });

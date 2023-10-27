@@ -14,6 +14,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\AgentUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\StrUtil;
 
 class Admin
@@ -153,7 +154,7 @@ class Admin
         }
         $adminLog = ModelUtil::insert('admin_log', ['adminUserId' => $adminUserId, 'type' => AdminLogType::INFO, 'summary' => $summary]);
         if (!empty($content)) {
-            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => json_encode($content, JSON_UNESCAPED_UNICODE)]);
+            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => SerializeUtil::jsonEncode($content)]);
         }
     }
 
@@ -168,7 +169,7 @@ class Admin
         }
         $adminLog = ModelUtil::insert('admin_log', ['adminUserId' => $adminUserId, 'type' => AdminLogType::ERROR, 'summary' => $summary]);
         if (!empty($content)) {
-            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => json_encode($content)]);
+            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => SerializeUtil::jsonEncode($content)]);
         }
     }
 

@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Monitor\StatisticMonitor;
 use ModStart\Core\Util\CurlUtil;
+use ModStart\Core\Util\SerializeUtil;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -53,7 +54,7 @@ trait ExceptionReportHandleTrait
             foreach ($error as &$v) {
                 $v = str_replace(base_path(), '', $v);
             }
-            CurlUtil::get($errorReportUrl, ['data' => json_encode($error)]);
+            CurlUtil::get($errorReportUrl, ['data' => SerializeUtil::jsonEncode($error)]);
         } catch (\Exception $e) {
             // do nothing
         }
@@ -75,11 +76,19 @@ trait ExceptionReportHandleTrait
             $exceptionParam = $exception->param;
             $ret = Response::sendError($exception->getMessage());
             if (!\ModStart\Core\Input\Request::isAjax()) {
+                if (empty($exceptionParam['view'])
+                    && !empty($exceptionParam['statusCode'])
+                    && in_array($exceptionParam['statusCode'], [403, 404, 500])) {
+                    $exceptionParam['view'] = 'modstart::core.msg.' . $exceptionParam['statusCode'];
+                }
                 if (!empty($exceptionParam['view'])) {
-                    $ret = view($exceptionParam['view'], [
+                    if (!isset($exceptionParam['viewData'])) {
+                        $exceptionParam['viewData'] = [];
+                    }
+                    $ret = view($exceptionParam['view'], array_merge([
                         '_viewFrame' => 'theme.default.pc.frame',
                         'msg' => $exception->getMessage(),
-                    ]);
+                    ], $exceptionParam['viewData']));
                 }
             }
             if ($ret instanceof View) {

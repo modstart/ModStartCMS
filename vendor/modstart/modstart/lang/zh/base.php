@@ -117,6 +117,7 @@ return [
     'Loading' => '加载中',
     'No Records' => '没有记录',
     'Page Not Found' => '页面不存在',
+    'Internal Server Error' => '访问出现错误',
     'Api Not Found : %s' => '接口不存在 : %s',
     'View Not Found : %s' => '视图未找到 : %s',
     'Parent' => '上级',

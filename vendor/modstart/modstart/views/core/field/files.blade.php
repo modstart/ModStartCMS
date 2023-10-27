@@ -12,7 +12,7 @@
                class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value)}}"/>
+               value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value)}}"/>
         <div class="ub-file-selector">
             <div class="ub-file-selector__items"></div>
             <div class="ub-file-selector__action">
@@ -71,9 +71,9 @@
         MS.uploadButton('#{{$id}}Uploader', {
             text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
             server: "{{$server}}",
-            extensions: {!! json_encode(join(',',config('data.upload.file.extensions'))) !!},
-            sizeLimit: {!! json_encode(config('data.upload.file.maxSize')) !!},
-            chunkSize: {!! json_encode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
+            extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.file.extensions'))) !!},
+            sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.file.maxSize')) !!},
+            chunkSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
             showFileQueue: true,
             fileNumLimit: 1,
             callback: function (file, me) {

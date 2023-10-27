@@ -19,7 +19,7 @@ class ArrayUtil
     {
         sort($arr1);
         sort($arr2);
-        return json_encode($arr1) == json_encode($arr2);
+        return SerializeUtil::jsonEncode($arr1) == SerializeUtil::jsonEncode($arr2);
     }
 
     /**
@@ -410,7 +410,7 @@ class ArrayUtil
                 }
             }
         }
-        return json_encode($params, JSON_UNESCAPED_UNICODE);
+        return SerializeUtil::jsonEncode($params);
     }
 
     public static function update(&$original, $update)

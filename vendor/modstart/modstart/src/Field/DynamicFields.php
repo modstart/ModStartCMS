@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\RenderUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Field\Type\DynamicFieldsType;
 
@@ -60,7 +61,7 @@ class DynamicFields extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)

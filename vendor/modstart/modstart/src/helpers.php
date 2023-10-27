@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\View;
 use ModStart\Admin\Config\AdminConfig;
 use ModStart\Core\Input\Request;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
 
@@ -286,7 +287,7 @@ function modstart_config($key = null, $default = '', $useCache = true)
         $lastKey = $key;
         $configDefault = $default;
         if (is_array($default)) {
-            $configDefault = json_encode($default, JSON_UNESCAPED_UNICODE);
+            $configDefault = SerializeUtil::jsonEncode($default);
         }
         $v = app('modstartConfig')->get($key, $configDefault, $useCache);
         if (true === $default || false === $default) {

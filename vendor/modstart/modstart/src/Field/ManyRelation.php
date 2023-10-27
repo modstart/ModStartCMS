@@ -6,6 +6,7 @@ namespace ModStart\Field;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\ConvertUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 class ManyRelation extends AbstractField
 {
@@ -87,7 +88,7 @@ class ManyRelation extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)

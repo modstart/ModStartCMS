@@ -14,7 +14,7 @@
 <script>
     layui.use('tree', function () {
         var tree = layui.tree;
-        var ids = {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!};
+        var ids = {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!};
         var filter = function (nodes) {
             var newNodes = [];
             for (var i = 0; i < nodes.length; i++) {
@@ -35,7 +35,7 @@
         tree.render({
             id: '{{$name}}Tree',
             elem: '#{{$name}}Tree',
-            data: filter({!! json_encode($nodes) !!})
+            data: filter({!! \ModStart\Core\Util\SerializeUtil::jsonEncode($nodes) !!})
         });
     });
 </script>

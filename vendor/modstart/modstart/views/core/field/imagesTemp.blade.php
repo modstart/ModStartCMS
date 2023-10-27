@@ -12,7 +12,7 @@
                class="form"
                name="{{$name}}"
                placeholder="{{$placeholder}}"
-               value="{{json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value)}}"/>
+               value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value)}}"/>
         <div class="ub-images-selector">
         </div>
         <div id="{{$id}}Uploader" style="width:9.4rem;border:1px solid #EEE;border-radius:0.2rem;min-height:1.6rem;"></div>
@@ -63,9 +63,9 @@
         window.api.uploadButton('#{{$id}}Uploader', {
             text: '<div style="width:100%;box-sizing:border-box;line-height:1.5rem;height:1.5rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.5rem;height:1.5rem;"></span> 上传</div>',
             server: "{{$server}}",
-            extensions: {!! json_encode(join(',',config('data.upload.image.extensions'))) !!},
-            sizeLimit: {!! json_encode(config('data.upload.image.maxSize')) !!},
-            chunkSize: {!! json_encode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
+            extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.image.extensions'))) !!},
+            sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.maxSize')) !!},
+            chunkSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
             callback: function (file, me) {
                 images.push(file.path);
                 previews.push(file.preview);

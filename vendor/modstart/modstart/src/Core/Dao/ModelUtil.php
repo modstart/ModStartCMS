@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\PageHtmlUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 /**
  * @Util 数据库
@@ -1172,7 +1173,7 @@ class ModelUtil
             if (empty($record[$key])) {
                 $record[$key] = $default;
             }
-            $record[$key] = @json_encode($record[$key]);
+            $record[$key] = @SerializeUtil::jsonEncode($record[$key]);
         }
     }
 
@@ -1189,7 +1190,7 @@ class ModelUtil
                 if (empty($record[$key])) {
                     $record[$key] = $default;
                 }
-                $record[$key] = @json_encode($record[$key]);
+                $record[$key] = @SerializeUtil::jsonEncode($record[$key]);
             }
         }
     }

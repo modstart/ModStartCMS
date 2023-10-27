@@ -182,7 +182,7 @@
                         shade: 0.8,
                         maxmin: false,
                         scrollbar: false,
-                        area: {!! json_encode($addDialogSize) !!},
+                        area: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($addDialogSize) !!},
                         content: lister.realtime.url.add,
                         success: function (layerDom, index) {
                             lister.realtime.dialog.addWindow = $(layerDom).find('iframe').get(0).contentWindow;

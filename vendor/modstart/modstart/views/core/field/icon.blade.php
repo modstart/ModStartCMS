@@ -30,7 +30,7 @@
         var app = new window.__vueManager.Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! json_encode(null===$value?$defaultValue:$value) !!},
+                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?$defaultValue:$value) !!},
                 icons: [],
             },
             computed:{

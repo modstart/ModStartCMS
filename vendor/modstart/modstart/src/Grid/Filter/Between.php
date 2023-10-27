@@ -2,6 +2,8 @@
 
 namespace ModStart\Grid\Filter;
 
+use ModStart\Core\Util\SerializeUtil;
+
 class Between extends AbstractFilter
 {
     /**
@@ -95,8 +97,8 @@ class Between extends AbstractFilter
         $options['format'] = array_get($options, 'format', 'YYYY-MM-DD HH:mm:ss');
         $options['locale'] = array_get($options, 'locale', config('app.locale'));
 
-        $startOptions = json_encode($options);
-        $endOptions = json_encode($options + ['useCurrent' => false]);
+        $startOptions = SerializeUtil::jsonEncode($options);
+        $endOptions = SerializeUtil::jsonEncode($options + ['useCurrent' => false]);
     }
 
     public function render()

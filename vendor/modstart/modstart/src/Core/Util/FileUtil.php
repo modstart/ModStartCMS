@@ -398,6 +398,13 @@ class FileUtil
         return ($extension ? $pathInfo['basename'] : $pathInfo['filename']);
     }
 
+    public static function ensureDir($dir)
+    {
+        if (!file_exists($dir)) {
+            @mkdir($dir, 0755, true);
+        }
+    }
+
     public static function ensureFilepathDir($pathname)
     {
         $dir = dirname($pathname);

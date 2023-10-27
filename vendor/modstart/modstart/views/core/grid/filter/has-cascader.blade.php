@@ -17,7 +17,7 @@
             el: '#{{$id}}App',
             data: {
                 value: [],
-                nodes: {!! json_encode($field->nodes()) !!}
+                nodes: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($field->nodes()) !!}
             },
             computed: {
                 optionTree() {

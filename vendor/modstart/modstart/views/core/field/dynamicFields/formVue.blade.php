@@ -12,7 +12,7 @@
             el: '#{{$id}}',
             data() {
                 return {
-                    value: {!! \ModStart\Core\Util\SerializeUtil::jsonObject($fieldsData) !!}
+                    value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncodeObject($fieldsData) !!}
                 };
             },
             computed: {

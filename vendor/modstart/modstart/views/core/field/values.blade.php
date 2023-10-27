@@ -49,7 +49,7 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
+                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
             },
             computed:{
                 jsonValue:function(){

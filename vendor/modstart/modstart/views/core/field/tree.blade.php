@@ -9,7 +9,7 @@
     <div class="field">
         <input type="hidden"
                name="{{$name}}"
-               value='{{json_encode(null==$value?($defaultValue?$defaultValue:[]):$value)}}'/>
+               value='{{\ModStart\Core\Util\SerializeUtil::jsonEncode(null==$value?($defaultValue?$defaultValue:[]):$value)}}'/>
         <div style="border:1px solid #DDD;border-radius:3px;padding:0 0 0.5rem 0;background:#FFF;">
             <div id="{{$name}}Tree"></div>
         </div>
@@ -37,7 +37,7 @@
             id: '{{$name}}Tree',
             elem: '#{{$name}}Tree',
             showCheckbox: true,
-            data: {!! json_encode($nodes) !!},
+            data: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($nodes) !!},
             oncheck: function (obj) {
                 var nodes = tree.getChecked('{{$name}}Tree');
                 $('[name={{$name}}]').val(JSON.stringify(getNodeIds(nodes)));

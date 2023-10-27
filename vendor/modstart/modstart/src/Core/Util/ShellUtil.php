@@ -34,12 +34,12 @@ class ShellUtil
     public static function run($command, $log = true)
     {
         if ($log) {
-            Log::info("MS.ShellUtil.Run -> " . $command);
+            Log::info("ShellUtil.Run -> " . $command);
         }
         $ret = shell_exec($command);
         $ret = @trim($ret);
         if ($log) {
-            Log::info("MS.ShellUtil.Run.Result -> " . $ret);
+            Log::info("ShellUtil.Run.Result -> " . $ret);
         }
         return $ret;
     }

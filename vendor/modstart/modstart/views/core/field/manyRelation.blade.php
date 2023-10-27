@@ -40,8 +40,8 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                groupTags: {!! json_encode($groupTags) !!},
-                value: {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
+                groupTags: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($groupTags) !!},
+                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
             },
             computed: {
                 jsonValue: function () {

@@ -151,7 +151,7 @@ if(null===$apiValue){
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! json_encode($apiValue) !!}
+                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($apiValue) !!}
             },
             computed: {
                 jsonValue: function () {

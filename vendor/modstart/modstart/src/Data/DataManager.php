@@ -10,6 +10,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Data\Event\DataDeletedEvent;
 use ModStart\Data\Event\DataFileUploadedEvent;
 use ModStart\Data\Storage\FileDataStorage;
@@ -73,7 +74,7 @@ class DataManager
         if (null === self::$config) {
             self::$config = config('data.upload', []);
         }
-        $hash = md5(json_encode($option));
+        $hash = md5(SerializeUtil::jsonEncode($option));
         if (isset(self::$storages[$hash])) {
             return $option;
         }
@@ -92,7 +93,7 @@ class DataManager
         if (null === $option) {
             $option = self::prepareOption();
         }
-        $hash = md5(json_encode($option));
+        $hash = md5(SerializeUtil::jsonEncode($option));
         BizException::throwsIf('Storage empty', !isset(self::$storages[$hash]));
         return self::$storages[$hash];
     }
@@ -428,7 +429,7 @@ class DataManager
     /**
      * 解析已上传文件路径
      *
-     * @param $url 文件路径 /data/xxxxxxx.xxx http://xxx.com/data/xxxxxxx.xxx
+     * @param $url string 文件路径 /data/xxxxxxx.xxx http://xxx.com/data/xxxxxxx.xxx
      * @return array
      */
     public static function parseDataUrl($url)
@@ -462,8 +463,10 @@ class DataManager
         if (!file_exists($localFile)) {
             return Response::generate(-1, L('Safe File Error') . ' - ' . $path);
         }
+        $base = public_path('');
         return Response::generate(0, null, [
             'path' => $localFile,
+            'baseUrl' => ltrim(str_replace('\\', '/', substr($localFile, strlen($base))), '/\\'),
             'name' => basename($localFile),
         ]);
     }
@@ -475,6 +478,7 @@ class DataManager
      * @param $option
      * @return array
      * @throws
+     * @deprecated delete at 2024-04-25 使用 preparePathForLocal 即可
      */
     public static function preparePathInternalForLocal($path, $option = null)
     {

@@ -188,13 +188,23 @@ class TreeUtil
         }));
     }
 
+    public static function treeMap(&$tree, $callback)
+    {
+        foreach ($tree as &$node) {
+            call_user_func_array($callback, [&$node]);
+            if (isset($node[self::$CHILD_KEY])) {
+                self::treeMap($node[self::$CHILD_KEY], $callback);
+            }
+        }
+    }
+
     /**
      * 将Tree转换为带缩进的List，主要用于select操作
-     * @param $tree
-     * @param string $keyId
-     * @param string $keyTitle
-     * @param int $level
-     * @param array $keepKeys
+     * @param $tree array 树
+     * @param $keyId string id字段名
+     * @param $keyTitle string title字段名
+     * @param $level int 层级
+     * @param $keepKeys array 保留的字段
      * @return array
      */
     public static function treeToListWithIndent(&$tree, $keyId = 'id', $keyTitle = 'title', $level = 0, $keepKeys = [])

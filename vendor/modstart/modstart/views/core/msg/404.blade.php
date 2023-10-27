@@ -344,7 +344,11 @@
             </g>
         </svg>
         <h1 class="error-title">
-            {{ L('Page Not Found') }} :(
+            @if(!empty($msg))
+                {{ $msg }}
+            @else
+                {{ L('Page Not Found') }} :(
+            @endif
         </h1>
         <div class="error-subtitle">
             <a href="{{modstart_web_url()}}">{{ L('Visit Home')  }}</a>

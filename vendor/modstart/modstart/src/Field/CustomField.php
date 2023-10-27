@@ -7,6 +7,7 @@ namespace ModStart\Field;
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\Type\CustomFieldType;
 
 /**
@@ -49,7 +50,7 @@ class CustomField extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)
@@ -272,9 +273,9 @@ class CustomField extends AbstractField
                 return $input->getFilePath($fieldName);
             case 'Files':
                 $data = $input->getJsonFilesPath($fieldName);
-                return json_encode($data, JSON_UNESCAPED_UNICODE);
+                return SerializeUtil::jsonEncode($data);
         }
-        BizException::throws('未知的自定义字段类型:' . json_encode($field));
+        BizException::throws('未知的自定义字段类型:' . SerializeUtil::jsonEncode($field));
     }
 
     /**

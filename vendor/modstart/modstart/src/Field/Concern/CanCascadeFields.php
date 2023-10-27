@@ -4,6 +4,7 @@ namespace ModStart\Field\Concern;
 
 use Illuminate\Support\Arr;
 use ModStart\Core\Util\ArrayUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\Checkbox;
 use ModStart\Field\Radio;
@@ -74,7 +75,7 @@ trait CanCascadeFields
     protected function formatValues($operator, &$value)
     {
         if (in_array($operator, ['in', 'notIn'])) {
-            $value = json_encode($value);
+            $value = SerializeUtil::jsonEncode($value);
         }
         if (is_array($value)) {
             $value = array_map('strval', $value);
@@ -116,7 +117,7 @@ trait CanCascadeFields
         $cascadeGroups = collect($this->conditions)->map(function ($condition) use (&$index) {
             return ArrayUtil::keepKeys($condition, ['operator', 'value', 'index']);
         })->toJson(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        $whenHelps = json_encode($this->whenHelps, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $whenHelps = SerializeUtil::jsonEncode($this->whenHelps);
         $id = $this->id();
         $script = <<<JS
 (function () {
@@ -251,7 +252,7 @@ JS;
                     throw new \InvalidArgumentException('Invalid form field type');
             }
         } else {
-            $value = json_encode($this->value);
+            $value = SerializeUtil::jsonEncode($this->value);
             switch (get_class($this)) {
                 case Select::class:
                 case Type::class:

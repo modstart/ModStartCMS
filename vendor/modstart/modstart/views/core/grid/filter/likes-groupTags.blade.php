@@ -129,7 +129,7 @@
                     }
                 }
             });
-            render({!! json_encode($field->options()) !!});
+            render({!! \ModStart\Core\Util\SerializeUtil::jsonEncode($field->options()) !!});
         });
     })();
 </script>

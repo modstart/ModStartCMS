@@ -6,6 +6,7 @@ namespace ModStart\Field;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ConvertUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\TagUtil;
 
 class Tags extends AbstractField
@@ -98,7 +99,7 @@ class Tags extends AbstractField
             case self::SERIALIZE_TYPE_COLON_SEPARATED:
                 return TagUtil::array2String($value);
             default:
-                return json_encode($value);
+                return SerializeUtil::jsonEncode($value);
         }
     }
 

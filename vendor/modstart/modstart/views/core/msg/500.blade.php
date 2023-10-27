@@ -344,11 +344,15 @@
             </g>
         </svg>
         <h1 class="error-title">
-            您访问的页面出现错误了 :(
+            @if(!empty($msg))
+                {{ $msg }}
+            @else
+                {{L('Internal Server Error')}} :(
+            @endif
         </h1>
         <div class="error-subtitle">
-            <a href="javascript:;" onclick="window.location.reload();">刷新页面</a>
-            <a href="/">访问首页</a>
+            <a href="javascript:;" onclick="window.location.reload();">{{L('Refresh Page')}}</a>
+            <a href="{{modstart_web_url('')}}">{{L('Visit Home')}}</a>
         </div>
     </div>
 @endsection

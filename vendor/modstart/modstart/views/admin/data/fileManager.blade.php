@@ -46,10 +46,10 @@
             url: "{{\ModStart\Core\Input\Request::currentPageUrlWithOutQueries()}}".replace(/\/\w+$/, ''),
             category: '{{$category}}',
             permission: {
-                'View':{!! json_encode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerView')) !!},
-                'Upload':{!! json_encode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerUpload')) !!},
-                'Delete':{!! json_encode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerDelete')) !!},
-                'Add/Edit':{!! json_encode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerAdd/Edit')) !!}
+                'View':{!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerView')) !!},
+                'Upload':{!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerUpload')) !!},
+                'Delete':{!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerDelete')) !!},
+                'Add/Edit':{!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Admin\Auth\AdminPermission::permit('DataFileManagerAdd/Edit')) !!}
             }
         };
     </script>

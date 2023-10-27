@@ -21,7 +21,7 @@
             topOffset: 0
         };
         @if(!empty($editorOption));
-            option = Object.assign(option,{!! json_encode($editorOption) !!});
+            option = Object.assign(option,{!! \ModStart\Core\Util\SerializeUtil::jsonEncode($editorOption) !!});
         @endif
         @if($editorMode=='simple')
             window.api.editor.simple('{{$id}}Editor', {

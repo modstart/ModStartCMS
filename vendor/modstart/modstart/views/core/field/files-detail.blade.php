@@ -18,6 +18,6 @@
                 <span class="ub-text-muted">-</span>
             @endif
         </div>
-        <input type="hidden" name="{{$name}}" value="{{json_encode($value)}}"/>
+        <input type="hidden" name="{{$name}}" value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($value)}}"/>
     </div>
 </div>

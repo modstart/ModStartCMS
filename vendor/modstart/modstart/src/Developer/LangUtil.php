@@ -4,6 +4,8 @@
 namespace ModStart\Developer;
 
 
+use ModStart\Core\Util\SerializeUtil;
+
 class LangUtil
 {
     public static function extractFileLangScripts($file)
@@ -22,7 +24,7 @@ class LangUtil
                 }
             }
             ksort($langs);
-            return "\n{!! \ModStart\Developer\LangUtil::langScriptPrepare(" . json_encode(array_keys($langs), JSON_PRETTY_PRINT) . ") !!}";
+            return "\n{!! \ModStart\Developer\LangUtil::langScriptPrepare(" . SerializeUtil::jsonEncodePretty(array_keys($langs)) . ") !!}";
         }
         return '';
     }
@@ -33,7 +35,7 @@ class LangUtil
         $script[] = "\n(function(){";
         $script[] = "  window.lang = window.lang||{};";
         foreach ($langs as $l) {
-            $script[] = "  window.lang[" . json_encode($l) . "]=" . json_encode(L($l), JSON_UNESCAPED_UNICODE) . ";";
+            $script[] = "  window.lang[" . SerializeUtil::jsonEncode($l) . "]=" . SerializeUtil::jsonEncode(L($l)) . ";";
         }
         $script[] = "})();";
         return join("\n", $script);

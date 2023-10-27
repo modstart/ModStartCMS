@@ -4,6 +4,7 @@
 namespace ModStart\Field;
 
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Util\SerializeUtil;
 
 /**
  * JsonID内容字段
@@ -55,7 +56,7 @@ class JsonIdItems extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)

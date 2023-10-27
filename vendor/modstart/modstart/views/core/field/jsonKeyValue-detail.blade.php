@@ -18,7 +18,7 @@
                 </table>
             </div>
         @elseif(!empty($value))
-            <pre style="margin:0;line-height:1rem;overflow:auto;">{{json_encode($value,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)}}</pre>
+            <pre style="margin:0;line-height:1rem;overflow:auto;">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty($value)}}</pre>
         @else
             <span class="ub-text-muted">-</span>
         @endif

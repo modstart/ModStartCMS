@@ -100,7 +100,7 @@ TEXT;
         ];
         $results = [];
         for ($i = 0; $i < count($tests); $i += 2) {
-            $results[] = sprintf('%-10s%-20s%s', $tests[$i], $tests[$i + 1], json_encode(self::match($tests[$i], $tests[$i + 1])));
+            $results[] = sprintf('%-10s%-20s%s', $tests[$i], $tests[$i + 1], SerializeUtil::jsonEncode(self::match($tests[$i], $tests[$i + 1])));
         }
         return join("\n", $results);
     }

@@ -50,7 +50,7 @@
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!},
+                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!},
                 records: [],
             },
             computed:{
@@ -60,7 +60,7 @@
             },
             mounted:function(){
                 @if(!empty($value))
-                    this.doPreview({!! json_encode($value) !!});
+                    this.doPreview({!! \ModStart\Core\Util\SerializeUtil::jsonEncode($value) !!});
                 @endif
             },
             methods:{

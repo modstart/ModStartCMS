@@ -3,6 +3,7 @@
 
 namespace ModStart\Support\Manager;
 
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Widget\AbstractWidget;
 
 class WidgetManager
@@ -82,7 +83,7 @@ class WidgetManager
             $context->pushField($element);
             return $element;
         }
-        throw new \Exception("Widget [" . ucfirst($method) . "] not exists or registered, available: " . json_encode(array_keys(static::$availableWidgets)));
+        throw new \Exception("Widget [" . ucfirst($method) . "] not exists or registered, available: " . SerializeUtil::jsonEncode(array_keys(static::$availableWidgets)));
     }
 
 }

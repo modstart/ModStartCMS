@@ -43,18 +43,18 @@ if(!empty($param['modelPrefix'])){
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_FILE)
                 <file-selector v-model="{{$modelPrefix}}['{{$f['name']}}']"
                                upload-text="{{empty($f['data']['text1'])?'':$f['data']['text1']}}"
-                               :gallery-enable="!{{json_encode(boolval(!empty($f['data']['switch1'])))}}"
+                               :gallery-enable="!{{\ModStart\Core\Util\SerializeUtil::jsonEncode(boolval(!empty($f['data']['switch1'])))}}"
                                upload-enable
                 ></file-selector>
             @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_FILES)
                 <files-selector v-model="{{$modelPrefix}}['{{$f['name']}}']"
                                 upload-text="{{empty($f['data']['text1'])?'':$f['data']['text1']}}"
-                                :gallery-enable="!{{json_encode(boolval(!empty($f['data']['switch1'])))}}"
+                                :gallery-enable="!{{\ModStart\Core\Util\SerializeUtil::jsonEncode(boolval(!empty($f['data']['switch1'])))}}"
                                 upload-enable
                 ></files-selector>
             @else
                 暂未支持 {{$f['type']}}
-                <code>{{json_encode($f)}}</code>
+                <code>{{\ModStart\Core\Util\SerializeUtil::jsonEncode($f)}}</code>
             @endif
             @if(!empty($f['placeholder']))
                 <div class="help">

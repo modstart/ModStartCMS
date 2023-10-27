@@ -27,7 +27,7 @@ if(null===$value){
                name="{{$name}}"
                id="{{$id}}Tags"
                placeholder="{{$placeholder}}"
-               value="{!! htmlspecialchars(json_encode($valueTags)) !!}" />
+               value="{!! htmlspecialchars(\ModStart\Core\Util\SerializeUtil::jsonEncode($valueTags)) !!}" />
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif
@@ -39,7 +39,7 @@ if(null===$value){
     $(function () {
         var $field = $('#{{$id}}');
         var $tag = $('#{{$id}}Tags').tagify({
-            whitelist : {!! json_encode(array_values($tags)) !!},
+            whitelist : {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(array_values($tags)) !!},
             dropdown: {
                 maxItems: 20,
                 classname: "tagify-dropdown-list",

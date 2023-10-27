@@ -96,7 +96,7 @@ class EnvUtil
     {
         static $key = null;
         if (null === $key) {
-            $key = md5(json_encode(config('env')));
+            $key = md5(SerializeUtil::jsonEncode(config('env')));
         }
         return $key;
     }

@@ -3,6 +3,7 @@
 
 namespace ModStart\Support\Manager;
 
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Support\Concern\HasFields;
 
@@ -162,7 +163,7 @@ class FieldManager
             $element->postSetup();
             return $element;
         }
-        throw new \Exception("Field [" . ucfirst($method) . "] not exists or registered, available: " . json_encode(array_keys(static::$availableFields)));
+        throw new \Exception("Field [" . ucfirst($method) . "] not exists or registered, available: " . SerializeUtil::jsonEncode(array_keys(static::$availableFields)));
     }
 
 }

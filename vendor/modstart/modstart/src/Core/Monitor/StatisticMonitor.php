@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use ModStart\Core\Util\SerializeUtil;
 
 class StatisticMonitor
 {
@@ -117,7 +118,7 @@ class StatisticMonitor
             'code' => $code,
             'msg' => $msg
         );
-        $string = json_encode($data);
+        $string = SerializeUtil::jsonEncode($data);
         $packData = pack('N', strlen($string)) . $string;
         return $packData;
     }

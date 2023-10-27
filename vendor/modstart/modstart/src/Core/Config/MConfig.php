@@ -3,6 +3,8 @@
 namespace ModStart\Core\Config;
 
 
+use ModStart\Core\Util\SerializeUtil;
+
 /**
  * 提供统一的配置读写接口，都是操作string
  */
@@ -43,12 +45,12 @@ abstract class MConfig
 
     public function setArray($key, $value)
     {
-        $this->set($key, json_encode($value));
+        $this->set($key, SerializeUtil::jsonEncode($value));
     }
 
     public function getArray($key, $defaultValue = [], $useCache = true)
     {
-        $value = $this->get($key, json_encode($defaultValue), $useCache);
+        $value = $this->get($key, SerializeUtil::jsonEncode($defaultValue), $useCache);
         $value = @json_decode($value, true);
         if (!is_array($value) || empty($value)) {
             $value = [];

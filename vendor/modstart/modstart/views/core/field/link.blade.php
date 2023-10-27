@@ -26,7 +26,7 @@
         var $selector = $('#{{$name}}Selector');
         $selector.on('click', function () {
             window.__selectorDialog = new window.api.selectorDialog({
-                server: {!! json_encode($server) !!},
+                server: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($server) !!},
                 callback: (items) => {
                     // console.log('doSelect', items)
                     if (items.length > 0) {

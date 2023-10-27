@@ -7,7 +7,7 @@
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
     <script>
         window.__data = {
-            links: {!! json_encode($links) !!}
+            links: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($links) !!}
         };
     </script>
     <script src="@asset('asset/entry/dialogLinkSelector.js')"></script>

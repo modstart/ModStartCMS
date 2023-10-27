@@ -31,7 +31,7 @@
                     @endif
                 @else
                     暂未支持 {{$f['type']}}
-                    <code>{{json_encode($f,JSON_UNESCAPED_UNICODE)}}</code>
+                    <code>{{\ModStart\Core\Util\SerializeUtil::jsonEncode($f)}}</code>
                 @endif
             @endif
         </td>

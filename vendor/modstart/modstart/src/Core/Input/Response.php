@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 class Response
 {
@@ -262,7 +263,7 @@ class Response
         }
         if (\Illuminate\Support\Facades\Request::ajax()) {
             header('Content-Type: application/json; charset=UTF-8');
-            echo json_encode($response);
+            echo SerializeUtil::jsonEncode($response);
         } else {
             header('Content-Type: text/html; charset=UTF-8');
             echo View::make('modstart::core.msg.msg', $response)->render();

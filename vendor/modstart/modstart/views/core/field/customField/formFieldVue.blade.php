@@ -27,7 +27,7 @@ if(!empty($param['modelPrefix'])){
                     <files-selector v-model="{{$modelPrefix}}['{{$f['_name']}}']" upload-enable></files-selector>
                 @else
                     暂未支持 {{$f['type']}}
-                    <pre>{{json_encode($f)}}</pre>
+                    <pre>{{\ModStart\Core\Util\SerializeUtil::jsonEncode($f)}}</pre>
                 @endif
             </div>
         </div>

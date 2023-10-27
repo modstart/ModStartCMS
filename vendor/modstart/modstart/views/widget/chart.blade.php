@@ -1,8 +1,8 @@
 {!! \ModStart\ModStart::js('asset/vendor/echarts/echarts.all.js') !!}
 {!! \ModStart\ModStart::script("
-var ele = document.getElementById(".json_encode($id).");
+var ele = document.getElementById(".\ModStart\Core\Util\SerializeUtil::jsonEncode($id).");
 var chart = echarts.init(ele);
-chart.setOption(".json_encode(empty($option)?new \stdClass():$option).");
+chart.setOption(".\ModStart\Core\Util\SerializeUtil::jsonEncode(empty($option)?new \stdClass():$option).");
 MS.ui.onResize( ele, chart.resize );
 $(ele).data('chart',chart);
 ") !!}

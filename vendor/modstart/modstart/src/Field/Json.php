@@ -5,6 +5,7 @@ namespace ModStart\Field;
 
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\CurlUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 /**
  * Json字段
@@ -50,7 +51,7 @@ class Json extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)

@@ -5,6 +5,7 @@ namespace ModStart\Layout;
 
 
 use ModStart\Core\Util\IdUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 
 class LayoutTab extends AbstractField
@@ -29,7 +30,7 @@ class LayoutTab extends AbstractField
         $titles = array_map(function ($title) {
             return '<a href="javascript:;">' . $title . '</a>';
         }, $this->tabTitles);
-        $titles = json_encode(join('', $titles));
+        $titles = SerializeUtil::jsonEncode(join('', $titles));
         $column = $this->column();
         $scripts = <<< JS
 <script>

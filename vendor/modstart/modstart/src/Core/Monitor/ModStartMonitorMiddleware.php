@@ -6,6 +6,7 @@ namespace ModStart\Core\Monitor;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use ModStart\Core\Util\SerializeUtil;
 
 /**
  * Class ModStartMonitorMiddleware
@@ -24,14 +25,14 @@ class ModStartMonitorMiddleware
             $url = $request->url();
             $method = $request->method();
             if ($time > 1000) {
-                $param = json_encode($input, JSON_UNESCAPED_UNICODE);
+                $param = SerializeUtil::jsonEncode($input);
                 Log::warning("LONG_REQUEST $method [$url] ${time}ms $param");
             }
             $queryCountPerRequest = DatabaseMonitor::getQueryCountPerRequest();
             if ($queryCountPerRequest > 10) {
-                $param = json_encode($input, JSON_UNESCAPED_UNICODE);
+                $param = SerializeUtil::jsonEncode($input);
                 Log::warning("MASS_REQUEST_SQL $queryCountPerRequest $method [$url] $param -> "
-                    . json_encode(DatabaseMonitor::getQueryCountPerRequestSqls()));
+                    . SerializeUtil::jsonEncode(DatabaseMonitor::getQueryCountPerRequestSqls()));
             }
         }
         return $response;

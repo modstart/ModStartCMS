@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use LogicException;
+use ModStart\Core\Util\SerializeUtil;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
@@ -1250,7 +1251,7 @@ trait HasAttributes
      */
     protected function asJson($value)
     {
-        return json_encode($value);
+        return SerializeUtil::jsonEncode($value);
     }
 
     /**

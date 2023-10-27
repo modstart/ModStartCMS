@@ -6,6 +6,7 @@ namespace ModStart\Field;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ConvertUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\TagUtil;
 use ModStart\Field\Concern\CanCascadeFields;
 
@@ -80,7 +81,7 @@ class Checkbox extends AbstractField
                         }
                     }
                 }
-                return json_encode($value, JSON_UNESCAPED_UNICODE);
+                return SerializeUtil::jsonEncode($value);
         }
     }
 

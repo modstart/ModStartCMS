@@ -9,6 +9,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\VersionUtil;
 
 class ModuleManager
@@ -456,7 +457,7 @@ class ModuleManager
                 if (!empty($errors)) {
                     BizException::throws(L('Module Not Fully Installed') . ' ' . join('; ', $errors));
                 } else {
-                    BizException::throws(L('Module Not Fully Installed') . ' ' . L('Requires') . '  ' . json_encode($modules));
+                    BizException::throws(L('Module Not Fully Installed') . ' ' . L('Requires') . '  ' . SerializeUtil::jsonEncode($modules));
                 }
             }
         }

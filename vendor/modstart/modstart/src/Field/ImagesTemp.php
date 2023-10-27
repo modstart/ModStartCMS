@@ -6,6 +6,7 @@ namespace ModStart\Field;
 
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ConvertUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Data\DataManager;
 
 class ImagesTemp extends AbstractField
@@ -36,7 +37,7 @@ class ImagesTemp extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)

@@ -10,6 +10,7 @@ use ModStart\Core\Dao\DynamicModel;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\IdUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Form\Form;
 use ModStart\Layout\Page;
@@ -122,7 +123,7 @@ class AdminConfigBuilder implements Renderable
                     $v = null;
                 }
                 if (is_array($v)) {
-                    $v = json_encode($v, JSON_UNESCAPED_UNICODE);
+                    $v = SerializeUtil::jsonEncode($v);
                 }
                 $item[$field->column()] = $v;
             }

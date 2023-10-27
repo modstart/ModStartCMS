@@ -6,6 +6,7 @@ namespace ModStart\App\OpenApi\Util;
 
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\SignUtil;
 
 class ModStartOpenApi
@@ -59,7 +60,7 @@ class ModStartOpenApi
         $param['key'] = $this->key;
         $param['timestamp'] = time();
         $param['sign'] = SignUtil::common($param, $this->secret);
-        $ret = CurlUtil::postJSON($this->apiBase . $url, json_encode(array_merge($param, $data)), [
+        $ret = CurlUtil::postJSON($this->apiBase . $url, SerializeUtil::jsonEncode(array_merge($param, $data)), [
             'header' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',

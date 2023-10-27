@@ -5,6 +5,7 @@ namespace ModStart\Field;
 
 
 use ModStart\Core\Util\ConvertUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 class Files extends AbstractField
 {
@@ -49,7 +50,7 @@ class Files extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function prepareInput($value, $model)

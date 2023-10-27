@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ConstantUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 class TypeUtil
 {
@@ -18,7 +19,7 @@ class TypeUtil
         $content = [];
         $content [] = "// This file is created by " . Request::currentPageUrl() . "\n";
         foreach ($constants as $name => $json) {
-            $content[] = "export const $name = " . json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . ";";
+            $content[] = "export const $name = " . SerializeUtil::jsonEncodePretty($json) . ";";
         }
         return Response::raw(join("\n", $content), ['Content-Type' => 'text/plain']);
     }
