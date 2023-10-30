@@ -17,7 +17,7 @@ window.UE = baidu.editor = {
     instants: {},
     I18N: {},
     _customizeUI: {},
-    version: "3.6.0-beta",
+    version: "3.6.0",
     constants: {
         STATEFUL: {
             DISABLED: -1,
@@ -7454,7 +7454,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
                         me.options.lang +
                         "/" +
                         me.options.lang +
-                        ".js?1698647523",
+                        ".js?1698648173",
                     tag: "script",
                     type: "text/javascript",
                     defer: "defer"
@@ -8931,7 +8931,7 @@ UE.Editor.defaultOptions = function (editor) {
         initialContent: "",
         initialStyle: "",
         autoClearinitialContent: false,
-        iframeCssUrl: _url + "themes/iframe.css?1698647523",
+        iframeCssUrl: _url + "themes/iframe.css?1698648173",
         iframeCssUrlsAddition: [],
         textarea: "editorValue",
         focus: false,
@@ -28688,7 +28688,6 @@ UE.plugins["shortcutmenu"] = function () {
 
     // contextmenu
     me.addListener("mouseup", function (type, e) {
-        return;
         var me = this,
             customEvt = {
                 type: type,
@@ -34453,26 +34452,26 @@ UE.ui = baidu.editor.ui = {};
     };
 
     var iframeUrlMap = {
-        anchor: "~/dialogs/anchor/anchor.html?1698647523",
-        insertimage: "~/dialogs/image/image.html?1698647523",
-        link: "~/dialogs/link/link.html?1698647523",
-        spechars: "~/dialogs/spechars/spechars.html?1698647523",
-        searchreplace: "~/dialogs/searchreplace/searchreplace.html?1698647523",
-        insertvideo: "~/dialogs/video/video.html?1698647523",
-        insertaudio: "~/dialogs/audio/audio.html?1698647523",
-        help: "~/dialogs/help/help.html?1698647523",
-        preview: "~/dialogs/preview/preview.html?1698647523",
-        emotion: "~/dialogs/emotion/emotion.html?1698647523",
-        wordimage: "~/dialogs/wordimage/wordimage.html?1698647523",
-        formula: "~/dialogs/formula/formula.html?1698647523",
-        attachment: "~/dialogs/attachment/attachment.html?1698647523",
-        insertframe: "~/dialogs/insertframe/insertframe.html?1698647523",
-        edittip: "~/dialogs/table/edittip.html?1698647523",
-        edittable: "~/dialogs/table/edittable.html?1698647523",
-        edittd: "~/dialogs/table/edittd.html?1698647523",
-        scrawl: "~/dialogs/scrawl/scrawl.html?1698647523",
-        template: "~/dialogs/template/template.html?1698647523",
-        background: "~/dialogs/background/background.html?1698647523",
+        anchor: "~/dialogs/anchor/anchor.html?1698648173",
+        insertimage: "~/dialogs/image/image.html?1698648173",
+        link: "~/dialogs/link/link.html?1698648173",
+        spechars: "~/dialogs/spechars/spechars.html?1698648173",
+        searchreplace: "~/dialogs/searchreplace/searchreplace.html?1698648173",
+        insertvideo: "~/dialogs/video/video.html?1698648173",
+        insertaudio: "~/dialogs/audio/audio.html?1698648173",
+        help: "~/dialogs/help/help.html?1698648173",
+        preview: "~/dialogs/preview/preview.html?1698648173",
+        emotion: "~/dialogs/emotion/emotion.html?1698648173",
+        wordimage: "~/dialogs/wordimage/wordimage.html?1698648173",
+        formula: "~/dialogs/formula/formula.html?1698648173",
+        attachment: "~/dialogs/attachment/attachment.html?1698648173",
+        insertframe: "~/dialogs/insertframe/insertframe.html?1698648173",
+        edittip: "~/dialogs/table/edittip.html?1698648173",
+        edittable: "~/dialogs/table/edittable.html?1698648173",
+        edittd: "~/dialogs/table/edittd.html?1698648173",
+        scrawl: "~/dialogs/scrawl/scrawl.html?1698648173",
+        template: "~/dialogs/template/template.html?1698648173",
+        background: "~/dialogs/background/background.html?1698648173",
     };
     //为工具栏添加按钮，以下都是统一的按钮触发命令，所以写在一起
     var btnCmds = [
@@ -36307,7 +36306,7 @@ UE.ui = baidu.editor.ui = {};
         editor.options.editor = editor;
         utils.loadFile(document, {
             href:
-                editor.options.themePath + editor.options.theme + "/css/ueditor.css?1698647523",
+                editor.options.themePath + editor.options.theme + "/css/ueditor.css?1698648173",
             tag: "link",
             type: "text/css",
             rel: "stylesheet"
