@@ -1,4 +1,4 @@
-@if($gridEditable)
+@if(!empty($gridEditable))
     <div data-value-show="{{$name}}_{{$_index}}" class="tw-cursor-text tw-rounded tw-px-1 tw--mx-1 hover:tw-bg-gray-100">
         {{$value?$value:'&nbsp;'}}
     </div>

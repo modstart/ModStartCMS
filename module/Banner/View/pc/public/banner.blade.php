@@ -62,7 +62,7 @@ if(!isset($container)){
                             <div class="cover">
                                 <video class="video-player"
                                        src="{{\ModStart\Core\Assets\AssetsUtil::fix($b['video'])}}"
-                                       autoplay="autoplay" loop="loop" muted="muted"></video>
+                                       autoplay loop muted playsinline></video>
                             </div>
                         </a>
                     @endif
