@@ -17,7 +17,14 @@ window.UE = baidu.editor = {
     instants: {},
     I18N: {},
     _customizeUI: {},
-    version: "3.6.0-beta"
+    version: "3.6.0-beta",
+    constants: {
+        STATEFUL: {
+            DISABLED: -1,
+            OFF: 0,
+            ON: 1,
+        },
+    }
 };
 var dom = (UE.dom = {});
 
@@ -7447,7 +7454,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
                         me.options.lang +
                         "/" +
                         me.options.lang +
-                        ".js?20230921",
+                        ".js?1698647523",
                     tag: "script",
                     type: "text/javascript",
                     defer: "defer"
@@ -8802,6 +8809,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             return count;
         },
 
+        getScrollTop: function () {
+            return Math.max(this.document.documentElement.scrollTop, this.document.body.scrollTop);
+        },
+        getScrollLeft: function () {
+            return Math.max(this.document.documentElement.scrollLeft, this.document.body.scrollLeft);
+        },
+
         /**
          * 注册输入过滤规则
          * @method  addInputRule
@@ -8917,7 +8931,7 @@ UE.Editor.defaultOptions = function (editor) {
         initialContent: "",
         initialStyle: "",
         autoClearinitialContent: false,
-        iframeCssUrl: _url + "themes/iframe.css?20221113",
+        iframeCssUrl: _url + "themes/iframe.css?1698647523",
         iframeCssUrlsAddition: [],
         textarea: "editorValue",
         focus: false,
@@ -15318,7 +15332,7 @@ UE.commands["imagefloat"] = {
             range = me.selection.getRange();
         if (!range.collapsed) {
             var img = range.getClosedNode();
-            if (img && img.tagName == "IMG") {
+            if (img && img.tagName === "IMG") {
                 switch (align) {
                     case "left":
                     case "right":
@@ -15452,7 +15466,7 @@ UE.commands["imagefloat"] = {
         if (range.collapsed) return -1;
 
         startNode = range.getClosedNode();
-        if (startNode && startNode.nodeType == 1 && startNode.tagName == "IMG") {
+        if (startNode && startNode.nodeType === 1 && startNode.tagName === "IMG") {
             return 0;
         }
         return -1;
@@ -16177,10 +16191,10 @@ UE.plugins["font"] = function () {
 
                                 text.parentNode.insertBefore(span, text);
                                 //修复，span套span 但样式不继承的问题
-                                if (!browser.ie || (browser.ie && browser.version == 9)) {
+                                if (!browser.ie || (browser.ie && browser.version === 9)) {
                                     var spanParent = span.parentNode;
                                     while (!domUtils.isBlockElm(spanParent)) {
-                                        if (spanParent.tagName == "SPAN") {
+                                        if (spanParent.tagName === "SPAN") {
                                             //opera合并style不会加入";"
                                             span.style.cssText =
                                                 spanParent.style.cssText + ";" + span.style.cssText;
@@ -16222,9 +16236,9 @@ UE.plugins["font"] = function () {
                             !domUtils.isBlockElm(tmpNode) &&
                             !domUtils.isBody(tmpNode)
                             ) {
-                            if (tmpNode.nodeType == 1) {
+                            if (tmpNode.nodeType === 1) {
                                 value = domUtils.getComputedStyle(tmpNode, style);
-                                if (value != "none") {
+                                if (value !== "none") {
                                     return value;
                                 }
                             }
@@ -16280,10 +16294,10 @@ UE.plugins["font"] = function () {
                 queryCommandState: function (cmdName) {
                     if (!needCmd[cmdName]) return 0;
                     var val = this.queryCommandValue(cmdName);
-                    if (cmdName == "fontborder") {
+                    if (cmdName === "fontborder") {
                         return /1px/.test(val) && /solid/.test(val);
                     } else {
-                        return cmdName == "underline"
+                        return cmdName === "underline"
                             ? /underline/.test(val)
                             : /line\-through/.test(val);
                     }
@@ -22264,11 +22278,11 @@ UE.plugins["fiximgclick"] = (function () {
                     "position:absolute;display:none;z-index:" +
                     me.editor.options.zIndex +
                     ";filter:alpha(opacity=0); opacity:0;background:#CCC;";
-                domUtils.on(cover, "mousedown click", function () {
+                domUtils.on(cover, "mousedown", function (e) {
                     me.hide();
                 });
 
-                for (i = 0; i < 8; i++) {
+                for (var i = 0; i < 8; i++) {
                     hands.push(
                         '<span class="edui-editor-imagescale-hand' + i + '"></span>'
                     );
@@ -22315,8 +22329,8 @@ UE.plugins["fiximgclick"] = (function () {
                         var hand = e.target || e.srcElement,
                             hand;
                         if (
-                            hand.className.indexOf("edui-editor-imagescale-hand") != -1 &&
-                            me.dragId == -1
+                            hand.className.indexOf("edui-editor-imagescale-hand") !== -1 &&
+                            me.dragId === -1
                         ) {
                             me.dragId = hand.className.slice(-1);
                             me.startPos.x = me.prePos.x = e.clientX;
@@ -22325,7 +22339,7 @@ UE.plugins["fiximgclick"] = (function () {
                         }
                         break;
                     case "mousemove":
-                        if (me.dragId != -1) {
+                        if (me.dragId !== -1) {
                             me.updateContainerStyle(me.dragId, {
                                 x: e.clientX - me.prePos.x,
                                 y: e.clientY - me.prePos.y
@@ -22337,13 +22351,15 @@ UE.plugins["fiximgclick"] = (function () {
                         }
                         break;
                     case "mouseup":
-                        if (me.dragId != -1) {
+                        if (me.dragId !== -1) {
                             me.updateContainerStyle(me.dragId, {
                                 x: e.clientX - me.prePos.x,
                                 y: e.clientY - me.prePos.y
                             });
                             me.updateTargetElement();
-                            if (me.target.parentNode) me.attachTo(me.target);
+                            if (me.target.parentNode) {
+                                me.attachTo(me.target);
+                            }
                             me.dragId = -1;
                         }
                         domUtils.un(me.doc, "mousemove", me.proxy(me._eventHandler, me));
@@ -22442,7 +22458,9 @@ UE.plugins["fiximgclick"] = (function () {
             show: function (targetObj) {
                 var me = this;
                 me.resizer.style.display = "block";
-                if (targetObj) me.attachTo(targetObj);
+                if (targetObj) {
+                    me.attachTo(targetObj);
+                }
 
                 domUtils.on(this.resizer, "mousedown", me.proxy(me._eventHandler, me));
                 domUtils.on(me.doc, "mouseup", me.proxy(me._eventHandler, me));
@@ -22479,14 +22497,14 @@ UE.plugins["fiximgclick"] = (function () {
                     left:
                         iframePos.x +
                         imgPos.x -
-                        me.editor.document.body.scrollLeft -
+                        me.editor.getScrollLeft() -
                         editorPos.x -
                         parseInt(resizer.style.borderLeftWidth) +
                         "px",
                     top:
                         iframePos.y +
                         imgPos.y -
-                        me.editor.document.body.scrollTop -
+                        me.editor.getScrollTop() -
                         editorPos.y -
                         parseInt(resizer.style.borderTopWidth) +
                         "px"
@@ -22506,7 +22524,11 @@ UE.plugins["fiximgclick"] = (function () {
                 var range = me.selection.getRange(),
                     img = range.getClosedNode();
 
-                if (img && img.tagName == "IMG" && me.body.contentEditable != "false") {
+                if (img
+                    && img.tagName === "IMG"
+                    && me.body.contentEditable !== "false"
+                    && img === e.target
+                ) {
                     if (
                         img.getAttribute("anchorname") ||
                         domUtils.hasClass(img, "uep-loading") ||
@@ -22522,15 +22544,16 @@ UE.plugins["fiximgclick"] = (function () {
 
                         var _keyDownHandler = function (e) {
                                 imageScale.hide();
-                                if (imageScale.target)
+                                if (imageScale.target) {
                                     me.selection.getRange().selectNode(imageScale.target).select();
+                                }
                             },
                             _mouseDownHandler = function (e) {
                                 var ele = e.target || e.srcElement;
                                 if (
                                     ele &&
                                     (ele.className === undefined ||
-                                        ele.className.indexOf("edui-editor-imagescale") == -1)
+                                        ele.className.indexOf("edui-editor-imagescale") === -1)
                                 ) {
                                     _keyDownHandler(e);
                                 }
@@ -22560,7 +22583,7 @@ UE.plugins["fiximgclick"] = (function () {
                             var ele = e.target || e.srcElement;
                             if (
                                 ele &&
-                                ele.className.indexOf("edui-editor-imagescale-hand") == -1
+                                ele.className.indexOf("edui-editor-imagescale-hand") === -1
                             ) {
                                 timer = setTimeout(function () {
                                     imageScale.hide();
@@ -22573,7 +22596,7 @@ UE.plugins["fiximgclick"] = (function () {
                             var ele = e.target || e.srcElement;
                             if (
                                 ele &&
-                                ele.className.indexOf("edui-editor-imagescale-hand") == -1
+                                ele.className.indexOf("edui-editor-imagescale-hand") === -1
                             ) {
                                 clearTimeout(timer);
                             }
@@ -22581,15 +22604,16 @@ UE.plugins["fiximgclick"] = (function () {
                     }
                     imageScale.show(img);
                 } else {
-                    if (imageScale && imageScale.resizer.style.display != "none")
+                    if (imageScale && imageScale.resizer.style.display !== "none") {
                         imageScale.hide();
+                    }
                 }
             });
         }
 
         if (browser.webkit) {
             me.addListener("click", function (type, e) {
-                if (e.target.tagName == "IMG" && me.body.contentEditable != "false") {
+                if (e.target.tagName === "IMG" && me.body.contentEditable !== "false") {
                     var range = new dom.Range(me.document);
                     range.selectNode(e.target).select();
                 }
@@ -28662,7 +28686,9 @@ UE.plugins["shortcutmenu"] = function () {
         return;
     }
 
-    me.addListener("contextmenu mouseup", function (type, e) {
+    // contextmenu
+    me.addListener("mouseup", function (type, e) {
+        return;
         var me = this,
             customEvt = {
                 type: type,
@@ -28672,31 +28698,35 @@ UE.plugins["shortcutmenu"] = function () {
                 clientX: e.clientX,
                 clientY: e.clientY
             };
+        console.log('shortcutmenu.mouseup', e, e.target, me.selection.getRange());
 
         setTimeout(function () {
-            var rng = me.selection.getRange();
-            if (rng.collapsed === false || type == "contextmenu") {
-                // 未选中文字情况下不显示
-                if (!me.selection.getText()) {
-                    return
-                }
-                if (!menu) {
-                    menu = new baidu.editor.ui.ShortCutMenu({
-                        editor: me,
-                        items: items,
-                        theme: me.options.theme,
-                        className: "edui-shortcutmenu"
-                    });
+            // console.log(e, me.selection.getRange());
+            // var rng = me.selection.getRange();
+            // if (rng.collapsed) {
+            //     return;
+            // }
+            // if (rng.collapsed === false || type === "contextmenu") {
+            // 未选中文字情况下不显示
+            // if (!me.selection.getText()) {
+            //     return
+            // }
+            if (!menu) {
+                menu = new baidu.editor.ui.ShortCutMenu({
+                    editor: me,
+                    items: items,
+                    theme: me.options.theme,
+                    className: "edui-shortcutmenu"
+                });
 
-                    menu.render();
-                    me.fireEvent("afterrendershortcutmenu", menu);
-                }
-
-                menu.show(customEvt, !!UE.plugins["contextmenu"]);
+                menu.render();
+                me.fireEvent("afterrendershortcutmenu", menu);
             }
+            menu.show(customEvt, !!UE.plugins["contextmenu"]);
+            // }
         });
 
-        if (type == "contextmenu") {
+        if (type === "contextmenu") {
             domUtils.preventDefault(e);
             if (browser.ie9below) {
                 var ieRange;
@@ -28714,7 +28744,7 @@ UE.plugins["shortcutmenu"] = function () {
     });
 
     me.addListener("keydown", function (type) {
-        if (type == "keydown") {
+        if (type === "keydown") {
             menu && !menu.isHidden && menu.hide();
         }
     });
@@ -31100,7 +31130,7 @@ UE.ui = baidu.editor.ui = {};
                 element.unselectable = "on";
                 if (element.hasChildNodes()) {
                     for (var i = 0; i < element.childNodes.length; i++) {
-                        if (element.childNodes[i].nodeType == 1) {
+                        if (element.childNodes[i].nodeType === 1) {
                             uiUtils.makeUnselectable(element.childNodes[i]);
                         }
                     }
@@ -31224,6 +31254,24 @@ UE.ui = baidu.editor.ui = {};
             var box = this.getDom();
             if (box) baidu.editor.dom.domUtils.remove(box);
             uiUtils.unsetGlobal(this.id);
+        },
+        uiIsShow: true,
+        uiShowStyleBackupValue: null,
+        uiShow: function (enable) {
+            if (enable) {
+                if (this.uiIsShow) {
+                    return;
+                }
+                this.getDom().style.display = this.uiShowStyleBackupValue;
+                this.uiIsShow = true;
+            } else {
+                if (!this.uiIsShow) {
+                    return;
+                }
+                this.uiShowStyleBackupValue = this.getDom().style.display;
+                this.getDom().style.display = 'none';
+                this.uiIsShow = false;
+            }
         }
     };
     utils.inherits(UIBase, EventBase);
@@ -31330,7 +31378,7 @@ UE.ui = baidu.editor.ui = {};
                     if (
                         evt &&
                         /scroll/gi.test(evt.type) &&
-                        pop.className == "edui-wordpastepop"
+                        pop.className === "edui-wordpastepop"
                     )
                         return;
                     pop.hide();
@@ -32143,7 +32191,7 @@ UE.ui = baidu.editor.ui = {};
             if (this.fireEvent("picknocolor") !== false) {
                 this.popup.hide();
             }
-        }
+        },
     };
     utils.inherits(ColorButton, SplitButton);
 })();
@@ -34106,7 +34154,7 @@ UE.ui = baidu.editor.ui = {};
 
                     if (UI[item]) {
                         this.items[i] = new UI[item](this.editor);
-                        this.items[i].className += " edui-shortcutsubmenu ";
+                        this.items[i].className += " edui-short-cut-sub-menu ";
                     }
                 }
             }
@@ -34122,11 +34170,11 @@ UE.ui = baidu.editor.ui = {};
             isSubMenuShow = false;
             var layerEle = uiUtils.getFixedLayer();
             var list = domUtils.getElementsByTagName(layerEle, "div", function (node) {
-                return domUtils.hasClass(node, "edui-shortcutsubmenu edui-popup");
+                return domUtils.hasClass(node, "edui-short-cut-sub-menu edui-popup");
             });
 
             for (var i = 0, node; (node = list[i++]);) {
-                if (node.style.display != "none") {
+                if (node.style.display !== "none") {
                     isSubMenuShow = true;
                 }
             }
@@ -34137,6 +34185,12 @@ UE.ui = baidu.editor.ui = {};
                 offset = {},
                 el = this.getDom(),
                 fixedlayer = uiUtils.getFixedLayer();
+
+            for (let item of this.items) {
+                if ('shouldUiShow' in item) {
+                    item.uiShow(item.shouldUiShow());
+                }
+            }
 
             function setPos(offset) {
                 if (offset.left < 0) {
@@ -34166,26 +34220,26 @@ UE.ui = baidu.editor.ui = {};
             me.eventType = e.type;
             el.style.cssText = "display:block;left:-9999px";
 
-            if (e.type == "contextmenu" && hasContextmenu) {
-                var menu = domUtils.getElementsByTagName(
-                    fixedlayer,
-                    "div",
-                    "edui-contextmenu"
-                )[0];
-                if (menu) {
-                    setPosByCxtMenu(menu);
-                } else {
-                    me.editor.addListener("aftershowcontextmenu", function (type, menu) {
-                        setPosByCxtMenu(menu);
-                    });
-                }
-            } else {
-                offset = uiUtils.getViewportOffsetByEvent(e);
-                offset.top -= el.offsetHeight + me.SPACE;
-                offset.left += me.SPACE + 20;
-                setPos(offset);
-                me.setOpacity(el, 1);
-            }
+            // if (e.type === "contextmenu" && hasContextmenu) {
+            //     var menu = domUtils.getElementsByTagName(
+            //         fixedlayer,
+            //         "div",
+            //         "edui-contextmenu"
+            //     )[0];
+            //     if (menu) {
+            //         setPosByCxtMenu(menu);
+            //     } else {
+            //         me.editor.addListener("aftershowcontextmenu", function (type, menu) {
+            //             setPosByCxtMenu(menu);
+            //         });
+            //     }
+            // } else {
+            offset = uiUtils.getViewportOffsetByEvent(e);
+            offset.top -= el.offsetHeight + me.SPACE;
+            offset.left += me.SPACE + 20;
+            setPos(offset);
+            me.setOpacity(el, 1);
+            // }
 
             me.isHidden = false;
             me.left = e.screenX + el.offsetWidth / 2 - me.SPACE;
@@ -34399,26 +34453,26 @@ UE.ui = baidu.editor.ui = {};
     };
 
     var iframeUrlMap = {
-        anchor: "~/dialogs/anchor/anchor.html?20220503",
-        insertimage: "~/dialogs/image/image.html?20220503",
-        link: "~/dialogs/link/link.html?20220503",
-        spechars: "~/dialogs/spechars/spechars.html?20220503",
-        searchreplace: "~/dialogs/searchreplace/searchreplace.html?20220503",
-        insertvideo: "~/dialogs/video/video.html?20220503",
-        insertaudio: "~/dialogs/audio/audio.html?20220503",
-        help: "~/dialogs/help/help.html?20220503",
-        preview: "~/dialogs/preview/preview.html?20220503",
-        emotion: "~/dialogs/emotion/emotion.html?20220503",
-        wordimage: "~/dialogs/wordimage/wordimage.html?20220902",
-        formula: "~/dialogs/formula/formula.html?20230822",
-        attachment: "~/dialogs/attachment/attachment.html?20220503",
-        insertframe: "~/dialogs/insertframe/insertframe.html?20220503",
-        edittip: "~/dialogs/table/edittip.html?20220503",
-        edittable: "~/dialogs/table/edittable.html?20220503",
-        edittd: "~/dialogs/table/edittd.html?20220503",
-        scrawl: "~/dialogs/scrawl/scrawl.html?20220503",
-        template: "~/dialogs/template/template.html?20220503",
-        background: "~/dialogs/background/background.html?20220503",
+        anchor: "~/dialogs/anchor/anchor.html?1698647523",
+        insertimage: "~/dialogs/image/image.html?1698647523",
+        link: "~/dialogs/link/link.html?1698647523",
+        spechars: "~/dialogs/spechars/spechars.html?1698647523",
+        searchreplace: "~/dialogs/searchreplace/searchreplace.html?1698647523",
+        insertvideo: "~/dialogs/video/video.html?1698647523",
+        insertaudio: "~/dialogs/audio/audio.html?1698647523",
+        help: "~/dialogs/help/help.html?1698647523",
+        preview: "~/dialogs/preview/preview.html?1698647523",
+        emotion: "~/dialogs/emotion/emotion.html?1698647523",
+        wordimage: "~/dialogs/wordimage/wordimage.html?1698647523",
+        formula: "~/dialogs/formula/formula.html?1698647523",
+        attachment: "~/dialogs/attachment/attachment.html?1698647523",
+        insertframe: "~/dialogs/insertframe/insertframe.html?1698647523",
+        edittip: "~/dialogs/table/edittip.html?1698647523",
+        edittable: "~/dialogs/table/edittable.html?1698647523",
+        edittd: "~/dialogs/table/edittd.html?1698647523",
+        scrawl: "~/dialogs/scrawl/scrawl.html?1698647523",
+        template: "~/dialogs/template/template.html?1698647523",
+        background: "~/dialogs/background/background.html?1698647523",
     };
     //为工具栏添加按钮，以下都是统一的按钮触发命令，所以写在一起
     var btnCmds = [
@@ -34477,6 +34531,22 @@ UE.ui = baidu.editor.ui = {};
                     theme: editor.options.theme,
                     showText: false
                 });
+                switch (cmd) {
+                    case 'bold':
+                    case 'italic':
+                    case 'underline':
+                    case 'strikethrough':
+                    case 'fontborder':
+                        ui.shouldUiShow = (function (cmdInternal) {
+                            return function () {
+                                if (!editor.selection.getText()) {
+                                    return false;
+                                }
+                                return editor.queryCommandState(cmdInternal) !== UE.constants.STATEFUL.DISABLED;
+                            }
+                        })(cmd);
+                        break;
+                }
                 editorui.buttons[cmd] = ui;
                 editor.addListener("selectionchange", function (
                     type,
@@ -34484,8 +34554,7 @@ UE.ui = baidu.editor.ui = {};
                     uiReady
                 ) {
                     var state = editor.queryCommandState(cmd);
-                    // console.log('selectionchange',cmd,uiReady,state);
-                    if (state == -1) {
+                    if (state === -1) {
                         ui.setDisabled(true);
                         ui.setChecked(false);
                     } else {
@@ -34522,10 +34591,52 @@ UE.ui = baidu.editor.ui = {};
         return ui;
     };
 
+    var imageTypeSet = [
+        'none', 'left', 'center', 'right'
+    ];
+    for (let value of imageTypeSet) {
+        (function (value) {
+            editorui['image' + value] = function (editor) {
+                var ui = new editorui.Button({
+                    className: "edui-for-" + 'image' + value,
+                    title:
+                        editor.options.labelMap['image' + value] ||
+                        editor.getLang(
+                            "labelMap." + 'image' + value
+                        ) ||
+                        "",
+                    theme: editor.options.theme,
+                    onclick: function () {
+                        editor.execCommand('imagefloat', value);
+                    },
+                    shouldUiShow: function () {
+                        let closedNode = editor.selection.getRange().getClosedNode();
+                        if (!closedNode || closedNode.tagName !== "IMG") {
+                            return false;
+                        }
+                        if (domUtils.hasClass(closedNode, "uep-loading") || domUtils.hasClass(closedNode, "uep-loading-error")) {
+                            return false;
+                        }
+                        return editor.queryCommandState('imagefloat') !== UE.constants.STATEFUL.DISABLED;
+                    }
+                });
+                editorui.buttons['image' + value] = ui;
+                editor.addListener("selectionchange", function (
+                    type,
+                    causeByUi,
+                    uiReady
+                ) {
+                    ui.setDisabled(editor.queryCommandState('imagefloat') === UE.constants.STATEFUL.DISABLED);
+                    ui.setChecked(editor.queryCommandValue('imagefloat') === value && !uiReady);
+                });
+                return ui;
+            };
+        })(value);
+    }
+
     //排版，图片排版，文字方向
     var typeset = {
         justify: ["left", "right", "center", "justify"],
-        imagefloat: ["none", "left", "center", "right"],
         directionality: ["ltr", "rtl"]
     };
 
@@ -34585,8 +34696,15 @@ UE.ui = baidu.editor.ui = {};
                     },
                     onbuttonclick: function () {
                         editor.execCommand(cmd, this.color);
+                    },
+                    shouldUiShow: function () {
+                        if (!editor.selection.getText()) {
+                            return false;
+                        }
+                        return editor.queryCommandState(cmd) !== UE.constants.STATEFUL.DISABLED;
                     }
                 });
+
                 editorui.buttons[cmd] = ui;
                 editor.addListener("selectionchange", function () {
                     ui.setDisabled(editor.queryCommandState(cmd) == -1);
@@ -34650,7 +34768,7 @@ UE.ui = baidu.editor.ui = {};
                                         fullscreen: /preview/.test(cmd),
                                         closeDialog: editor.getLang("closeDialog")
                                     },
-                                    type == "ok"
+                                    type === "ok"
                                         ? {
                                             buttons: [
                                                 {
@@ -34697,7 +34815,7 @@ UE.ui = baidu.editor.ui = {};
                                             }
                                             break;
                                         case "scrawl":
-                                            if (editor.queryCommandState("scrawl") != -1) {
+                                            if (editor.queryCommandState("scrawl") !== -1) {
                                                 dialog.render();
                                                 dialog.open();
                                             }
@@ -34710,9 +34828,28 @@ UE.ui = baidu.editor.ui = {};
                                 }
                             },
                             theme: editor.options.theme,
-                            disabled:
-                                (cmd == "scrawl" && editor.queryCommandState("scrawl") == -1)
+                            disabled: (cmd === "scrawl" && editor.queryCommandState("scrawl") === -1)
                         });
+                        switch (cmd) {
+                            case 'insertimage':
+                            case 'formula':
+                                ui.shouldUiShow = (function (cmd) {
+                                    return function () {
+                                        let closedNode = editor.selection.getRange().getClosedNode();
+                                        if (!closedNode || closedNode.tagName !== "IMG") {
+                                            return false;
+                                        }
+                                        if ('formula' === cmd && closedNode.getAttribute('data-formula-image') !== null) {
+                                            return true;
+                                        }
+                                        if ('insertimage' === cmd) {
+                                            return true;
+                                        }
+                                        return false;
+                                    };
+                                })(cmd);
+                                break;
+                        }
                         editorui.buttons[cmd] = ui;
                         editor.addListener("selectionchange", function () {
                             //只存在于右键菜单而无工具栏按钮的ui不需要检测状态
@@ -34721,7 +34858,7 @@ UE.ui = baidu.editor.ui = {};
 
                             var state = editor.queryCommandState(cmd);
                             if (ui.getDom()) {
-                                ui.setDisabled(state == -1);
+                                ui.setDisabled(state === -1);
                                 ui.setChecked(state);
                             }
                         });
@@ -35411,6 +35548,7 @@ UE.ui = baidu.editor.ui = {};
                 baidu.editor.ui.Popup.postHide(evt, el);
                 baidu.editor.ui.ShortCutMenu.postHide(evt);
             });
+
             editor.addListener("delcells", function () {
                 if (UE.ui["edittip"]) {
                     new UE.ui["edittip"](editor);
@@ -35607,26 +35745,29 @@ UE.ui = baidu.editor.ui = {};
                     }
                 });
                 editor.addListener("selectionchange", function (t, causeByUi) {
-                    if (!causeByUi) return;
+                    if (!causeByUi) {
+                        return;
+                    }
                     var html = "",
                         str = "",
-                        img = editor.selection.getRange().getClosedNode(),
+                        closedNode = editor.selection.getRange().getClosedNode(),
                         dialogs = editor.ui._dialogs;
-                    if (img && img.tagName == "IMG") {
+                    // 图片选中处理
+                    if (closedNode && closedNode.tagName === "IMG") {
                         var dialogName = "insertimageDialog";
                         if (
-                            img.className.indexOf("edui-faked-video") != -1 ||
-                            img.className.indexOf("edui-upload-video") != -1
+                            closedNode.className.indexOf("edui-faked-video") !== -1 ||
+                            closedNode.className.indexOf("edui-upload-video") !== -1
                         ) {
                             dialogName = "insertvideoDialog";
                         }
                         if (
-                            img.className.indexOf("edui-faked-audio") != -1 ||
-                            img.className.indexOf("edui-upload-audio") != -1
+                            closedNode.className.indexOf("edui-faked-audio") !== -1 ||
+                            closedNode.className.indexOf("edui-upload-audio") !== -1
                         ) {
                             dialogName = "insertaudioDialog";
                         }
-                        if (img.getAttribute("anchorname")) {
+                        if (closedNode.getAttribute("anchorname")) {
                             dialogName = "anchorDialog";
                             html = popup.formatHtml(
                                 "<nobr>" +
@@ -35644,8 +35785,8 @@ UE.ui = baidu.editor.ui = {};
                         //   dialogName = "wordimageDialog";
                         // }
                         if (
-                            domUtils.hasClass(img, "uep-loading") ||
-                            domUtils.hasClass(img, "uep-loading-error")
+                            domUtils.hasClass(closedNode, "uep-loading") ||
+                            domUtils.hasClass(closedNode, "uep-loading-error")
                         ) {
                             dialogName = "";
                         }
@@ -35654,36 +35795,25 @@ UE.ui = baidu.editor.ui = {};
                         }
 
                         var actions = [];
-                        actions.push('<nobr />');
-                        actions.push('<span onclick=$$._onImgSetFloat("none") class="edui-clickable edui-popup-action-item">' +
-                            editor.getLang("default") +
-                            "</span>");
-                        actions.push('<span onclick=$$._onImgSetFloat("left") class="edui-clickable edui-popup-action-item">' +
-                            editor.getLang("justifyleft") +
-                            "</span>");
-                        actions.push('<span onclick=$$._onImgSetFloat("right") class="edui-clickable edui-popup-action-item">' +
-                            editor.getLang("justifyright") +
-                            "</span>");
-                        actions.push('<span onclick=$$._onImgSetFloat("center") class="edui-clickable edui-popup-action-item">' +
-                            editor.getLang("justifycenter") +
-                            "</span>");
-                        if (img.getAttribute('data-formula-image') !== null) {
-                            actions.push("<span onclick=\"$$._onImgEditButtonClick('formulaDialog');\" class='edui-clickable edui-popup-action-item'>" +
-                                editor.getLang("formulaedit") + "</span>");
-                        }
-                        if (img.getAttribute("data-word-image")) {
+                        if (closedNode.getAttribute("data-word-image")) {
                             actions.push("<span onclick=\"$$._onImgEditButtonClick('wordimageDialog');\" class='edui-clickable edui-popup-action-item'>" +
                                 editor.getLang("save") +
                                 "</span>");
                         } else {
-                            actions.push("<span onclick=\"$$._onImgEditButtonClick('" + dialogName + '\');" class="edui-clickable edui-popup-action-item">' +
-                                editor.getLang("modify") +
-                                "</span>");
+                            // actions.push("<span onclick=\"$$._onImgEditButtonClick('" + dialogName + '\');" class="edui-clickable edui-popup-action-item">' +
+                            //     editor.getLang("modify") +
+                            //     "</span>");
                         }
-                        actions.push("</nobr>");
+
+                        if (actions.length > 0) {
+                            // wrap with <nobr> </nobr>
+                            actions.unshift('<nobr>');
+                            actions.push('</nobr>');
+                        }
 
                         !html && (html = popup.formatHtml(actions.join("")));
                     }
+                    // 链接选中处理
                     if (editor.ui._dialogs.linkDialog) {
                         var link = editor.queryCommandValue("link");
                         var url;
@@ -35721,7 +35851,7 @@ UE.ui = baidu.editor.ui = {};
 
                     if (html) {
                         popup.getDom("content").innerHTML = html;
-                        popup.anchorEl = img || link;
+                        popup.anchorEl = closedNode || link;
                         popup.showAnchor(popup.anchorEl);
                     } else {
                         popup.hide();
@@ -36177,7 +36307,7 @@ UE.ui = baidu.editor.ui = {};
         editor.options.editor = editor;
         utils.loadFile(document, {
             href:
-                editor.options.themePath + editor.options.theme + "/css/ueditor.css?20230921",
+                editor.options.themePath + editor.options.theme + "/css/ueditor.css?1698647523",
             tag: "link",
             type: "text/css",
             rel: "stylesheet"

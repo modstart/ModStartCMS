@@ -114,8 +114,8 @@
                 "|",
                 "imagenone",           // 图片默认
                 "imageleft",           // 图片左浮动
-                "imageright",          // 图片右浮动
                 "imagecenter",         // 图片居中
+                "imageright",          // 图片右浮动
                 "|",
                 "simpleupload",        // 单图上传
                 "insertimage",         // 多图上传
@@ -316,7 +316,8 @@
         // 是否开启初始化时即全屏，默认关闭
         , fullscreen: false
 
-        //,imagePopup:true      //图片操作的浮层开关，默认打开
+        // 图片操作的浮层开关，默认打开
+        //,imagePopup:true
 
         // 自动同步编辑器要提交的数据
         //,autoSyncData:true
@@ -454,6 +455,12 @@
             "forecolor",    // 字体颜色
             // "shadowcolor", // 字体阴影
             "backcolor",   // 背景色
+            "imagenone",
+            "imageleft",
+            "imagecenter",
+            "imageright",
+            "insertimage",
+            "formula",
             // "justifyleft",    // 居左对齐
             // "justifycenter",  // 居中对齐
             // "justifyright",   // 居右对齐
