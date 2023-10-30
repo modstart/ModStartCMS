@@ -1,5 +1,5 @@
 <?php $valueLabel = isset($valueMap[$value])?$valueMap[$value]:$value; ?>
-@if($gridEditable)
+@if(!empty($gridEditable))
     <select lay-ignore data-type="{{$name}}_{{$_index}}" class="form-sm {{isset($colorMap[$value])?$colorMap[$value]:'default'}}">
         @foreach($valueMap as $k=>$v)
             <option value="{{$k}}" @if($value==$k) selected @endif>

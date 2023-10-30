@@ -1,4 +1,4 @@
-@if($gridEditable)
+@if(!empty($gridEditable))
     <div>
         <input type="checkbox" value="1" name="{{$name}}_{{$_index}}" lay-skin="switch"
                lay-filter="{{$name}}_{{$_index}}"
