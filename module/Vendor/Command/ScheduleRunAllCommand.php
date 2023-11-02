@@ -29,7 +29,7 @@ class ScheduleRunAllCommand extends Command
         });
         shuffle($projects);
         foreach ($projects as $project) {
-            $start = TimeUtil::microtime();
+            $start = TimeUtil::millitime();
             $command = "$php {$project['pathname']}/artisan schedule:run";
             echo "$command -> ";
             ShellUtil::run($command);
