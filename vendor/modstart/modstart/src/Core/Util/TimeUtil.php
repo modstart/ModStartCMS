@@ -277,4 +277,9 @@ class TimeUtil
     {
         return intval(microtime(true) * 1000000);
     }
+
+    public static function millitime()
+    {
+        return intval(microtime(true) * 1000);
+    }
 }
