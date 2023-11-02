@@ -25,8 +25,10 @@ class ScheduleRunAllCommand extends Command
                 && !Str::startsWith($p['filename'], '_delete.')
                 && file_exists($p['pathname'] . '/vendor/modstart/modstart-' . ModStart::env());
         });
+        shuffle($projects);
         foreach ($projects as $project) {
             $command = "$php {$project['pathname']}/artisan schedule:run";
+            echo "$command\n";
             ShellUtil::run($command);
         }
     }
