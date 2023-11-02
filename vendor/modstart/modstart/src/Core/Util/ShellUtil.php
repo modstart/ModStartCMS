@@ -39,7 +39,7 @@ class ShellUtil
         $ret = shell_exec($command);
         $ret = @trim($ret);
         if ($log) {
-            Log::info("ShellUtil.Run.Result -> " . $ret);
+            Log::info("ShellUtil.Result -> " . $ret);
         }
         return $ret;
     }
