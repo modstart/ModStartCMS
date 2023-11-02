@@ -22,10 +22,10 @@ class ScheduleRunAllCommand extends Command
         $projects = FileUtil::listFiles($dir);
         $projects = array_filter($projects, function ($p) {
             return $p['isDir']
-                && file_exists($p['pathname'] . '/artisan')
-                && file_exists($p['pathname'] . '/.env')
+                && @file_exists($p['pathname'] . '/artisan')
+                && @file_exists($p['pathname'] . '/.env')
                 && !Str::startsWith($p['filename'], '_delete.')
-                && file_exists($p['pathname'] . '/vendor/modstart/modstart-' . ModStart::env());
+                && @file_exists($p['pathname'] . '/vendor/modstart/modstart-' . ModStart::env());
         });
         shuffle($projects);
         foreach ($projects as $project) {
