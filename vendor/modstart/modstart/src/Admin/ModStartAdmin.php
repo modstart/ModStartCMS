@@ -31,6 +31,7 @@ class ModStartAdmin
             $router->match(['get'], 'sso/server_logout', 'AuthController@ssoServerLogout');
 
             $router->match(['post'], 'util/frame', 'UtilController@frame');
+            $router->match(['get'], 'util/switch_lang', 'UtilController@switchLang');
 
             $router->match(['post'], 'system/clear_cache', 'SystemController@clearCache');
             $router->match(['get', 'post'], 'system/security_fix', 'SystemController@securityFix');

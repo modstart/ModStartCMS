@@ -17,4 +17,13 @@ class UtilController extends Controller
         Session::put('_adminFrameLeftToggle', $input->getBoolean('frameLeftToggle'));
         return Response::jsonSuccess();
     }
+
+    public function switchLang()
+    {
+        $input = InputPackage::buildFromInput();
+        $redirect = $input->getTrimString('redirect', modstart_admin_url(''));
+        $lang = $input->getTrimString('lang');
+        L_locale($lang);
+        return Response::redirect($redirect);
+    }
 }

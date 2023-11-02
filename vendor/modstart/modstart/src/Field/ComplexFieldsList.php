@@ -29,6 +29,7 @@ class ComplexFieldsList extends AbstractField
                 // ['name' => 'xxx', 'title' => '数字', 'type' => 'number-text', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '图片', 'type' => 'image', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '多字符串值', 'type' => 'values', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '模块', 'type' => 'select', 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
             ],
             'valueItem' => new \stdClass(),
             'iconServer' => modstart_admin_url('widget/icon'),

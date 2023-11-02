@@ -44,7 +44,9 @@ class ButtonDialogRequest extends AbstractWidget
     }
 
     /**
-     * @param mixed ...$arguments
+     * @param $type string
+     * @param $text string
+     * @param $url string
      * @return ButtonDialogRequest
      */
     public static function make(...$arguments)

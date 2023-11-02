@@ -192,6 +192,7 @@ $(window).on('load', function () {
                 url = u.href
                 let pcs = url.split('#');
                 let path = pcs[0];
+                path = path.replace(/\/$/, '')
                 path = path + (path.indexOf('?') > -1 ? '&' : '?') + '_is_tab=1'
                 return path + (pcs[1] ? '#' + pcs[1] : '');
             },
@@ -241,6 +242,8 @@ $(window).on('load', function () {
                 let hasTab = (this.data.filter(o => o.active).length > 0)
                 $adminMainPage.toggleClass('hidden', hasTab);
                 $adminTabPage.toggleClass('hidden', !hasTab);
+                let $menuMain = $menu.find('.menu-item.page-main');
+                $menuMain.toggleClass('active', !hasTab);
             },
             activeId: function () {
                 for (var i = 0; i < this.data.length; i++) {
@@ -270,9 +273,9 @@ $(window).on('load', function () {
                 if (!id) {
                     $adminTabPage.find('iframe').addClass('hidden')
                     $adminTabMenu.find('a').removeClass('active')
+                    let $tabMenu = $adminTabMenu.find('[data-tab-menu-main]').addClass('active');
                     try {
-                        let $menu = $adminTabMenu.find('[data-tab-menu-main]').addClass('active');
-                        $menu[0].scrollIntoView({block: 'center', behavior: 'smooth'});
+                        $tabMenu[0].scrollIntoView({block: 'center', behavior: 'smooth'});
                     } catch (e) {
                     }
                     for (var i = 0; i < this.data.length; i++) {
@@ -286,9 +289,9 @@ $(window).on('load', function () {
                 }
                 $adminTabPage.find('iframe').addClass('hidden').filter('[data-tab-page=' + id + ']').removeClass('hidden');
                 $adminTabMenu.find('a').removeClass('active').filter('[data-tab-menu=' + id + ']').addClass('active');
+                let $tabMenu = $adminTabMenu.find('[data-tab-menu=' + id + ']');
                 try {
-                    let $menu = $adminTabMenu.find('[data-tab-menu=' + id + ']');
-                    $menu[0].scrollIntoView({block: 'center', behavior: 'smooth'});
+                    $tabMenu[0].scrollIntoView({block: 'center', behavior: 'smooth'});
                 } catch (e) {
                 }
                 for (var i = 0; i < this.data.length; i++) {
@@ -329,6 +332,11 @@ $(window).on('load', function () {
                     },
                 }, option)
                 url = this.normalTabUrl(url)
+                var urlMain = this.normalTabUrl(window.location.href);
+                if (urlMain === url) {
+                    this.active(0)
+                    return
+                }
                 var current = this.getByUrl(url);
                 if (current) {
                     this.active(current.id);

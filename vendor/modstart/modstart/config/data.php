@@ -6,16 +6,22 @@ return [
             'maxSize' => 1024 * 1024 * 1024,
             'maxWidth' => 9999,
             'maxHeight' => 9999,
-            'extensions' => ['jpg', 'png', 'gif', 'jpeg', 'ico', 'webp'],
+            'extensions' => [
+                'jpg', 'png', 'gif', 'jpeg', 'ico', 'webp'
+            ],
             'compress' => true,
         ],
         'video' => [
             'maxSize' => 1024 * 1024 * 1024,
-            'extensions' => ['mp4', 'flv']
+            'extensions' => [
+                'mp4',
+            ]
         ],
         'audio' => [
             'maxSize' => 1024 * 1024 * 1024,
-            'extensions' => ['mp3']
+            'extensions' => [
+                'mp3'
+            ]
         ],
         'file' => [
             'maxSize' => 1024 * 1024 * 1024,
@@ -25,18 +31,22 @@ return [
                 'pdf', 'txt', 'ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'csv',
                 'zip',
                 'epub',
-                'ai', 'psd', 'cad',
+                'ai', 'psd', 'dwg',
                 'css', 'html',
                 'ttf',
             ]
         ],
         'document' => [
             'maxSize' => 1024 * 1024 * 1024,
-            'extensions' => ['jpg', 'png', 'pdf', 'bmp', 'mov']
+            'extensions' => [
+                'jpg', 'png', 'pdf', 'bmp', 'mov'
+            ]
         ],
         'zip' => [
             'maxSize' => 1024 * 1024 * 1024,
-            'extensions' => ['zip']
+            'extensions' => [
+                'zip'
+            ]
         ]
     ]
 ];

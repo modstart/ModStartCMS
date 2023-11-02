@@ -75,11 +75,13 @@ trait ExceptionReportHandleTrait
         if ($exception instanceof BizException) {
             $exceptionParam = $exception->param;
             $ret = Response::sendError($exception->getMessage());
+            $statusCode = 200;
             if (!\ModStart\Core\Input\Request::isAjax()) {
                 if (empty($exceptionParam['view'])
                     && !empty($exceptionParam['statusCode'])
                     && in_array($exceptionParam['statusCode'], [403, 404, 500])) {
                     $exceptionParam['view'] = 'modstart::core.msg.' . $exceptionParam['statusCode'];
+                    $statusCode = $exceptionParam['statusCode'];
                 }
                 if (!empty($exceptionParam['view'])) {
                     if (!isset($exceptionParam['viewData'])) {
@@ -92,7 +94,7 @@ trait ExceptionReportHandleTrait
                 }
             }
             if ($ret instanceof View) {
-                return response()->make($ret);
+                return response()->make($ret, $statusCode);
             }
             return $ret;
         } else if ($exception instanceof MethodNotAllowedHttpException) {

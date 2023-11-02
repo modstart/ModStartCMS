@@ -421,7 +421,24 @@ class DataManager
         $storage = self::storage($option);
         $dataTemp = $storage->repository()->getTempByPath($tempDataPath);
         if (empty($dataTemp)) return;
-        $storage->delete($tempDataPath);
+        try {
+            $storage->delete($tempDataPath);
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $ignores = [
+                'File not found at path'
+            ];
+            $found = false;
+            foreach ($ignores as $ignore) {
+                if (strstr($msg, $ignore)) {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                throw $e;
+            }
+        }
         $storage->repository()->deleteTempById($dataTemp['id']);
     }
 

@@ -19,6 +19,7 @@ namespace ModStart\Widget;
  * @method ButtonLink url($url)
  * @method ButtonLink disabled($boolean)
  * @method ButtonLink blank($boolean)
+ * @method ButtonLink attr($attr)
  *
  * @since 2.1.0
  */
@@ -29,6 +30,21 @@ class ButtonLink extends AbstractWidget
         return [
             'style' => '',
         ];
+    }
+
+    /**
+     * @param $type string
+     * @param $text string
+     * @param $url string
+     * @return ButtonLink
+     */
+    public static function make(...$arguments)
+    {
+        $ins = new static();
+        $ins->type($arguments[0]);
+        $ins->text($arguments[1]);
+        $ins->url($arguments[2]);
+        return $ins;
     }
 
     public static function __callStatic($name, $arguments)
@@ -48,9 +64,9 @@ class ButtonLink extends AbstractWidget
     public function render()
     {
         if ($this->disabled) {
-            return '<a href="javascript:;" ' . ($this->blank ? 'target="_blank"' : '') . ' class="btn btn-' . $this->type . '">' . $this->text . '</a>';
+            return '<a href="javascript:;" ' . ($this->blank ? 'target="_blank"' : '') . ' class="btn btn-' . $this->type . '" ' . $this->attr . '>' . $this->text . '</a>';
         } else {
-            return '<a href="' . $this->url . '" ' . ($this->blank ? 'target="_blank"' : '') . ' class="btn btn-' . $this->type . '">' . $this->text . '</a>';
+            return '<a href="' . $this->url . '" ' . ($this->blank ? 'target="_blank"' : '') . ' class="btn btn-' . $this->type . '" ' . $this->attr . '>' . $this->text . '</a>';
         }
     }
 

@@ -51,7 +51,7 @@
                     <i class="iconfont icon-search"></i>
                 </div>
                 @foreach(\ModStart\Admin\Auth\AdminPermission::menu($_controllerMethod) as $_v1)
-                    <div class="menu-item @if(!empty($_v1['_active'])) active @endif">
+                    <div class="menu-item @if(!empty($_v1['_active'])) page-main active @endif">
                         @if(empty($_v1['children']))
                             <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v1['url'])}}" class="title"
                                data-keywords-item data-keywords-filter>
@@ -67,7 +67,7 @@
                             </a>
                             <div class="children" data-keywords-item>
                                 @foreach($_v1['children'] as $_v2)
-                                    <div class="menu-item @if(!empty($_v2['_active'])) active @endif">
+                                    <div class="menu-item @if(!empty($_v2['_active'])) page-main active @endif">
                                         @if(empty($_v2['children']))
                                             <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v2['url'])}}"
                                                class="title" data-keywords-item data-keywords-filter>
@@ -82,7 +82,7 @@
                                             </a>
                                             <div class="children" data-keywords-item>
                                                 @foreach($_v2['children'] as $_v3)
-                                                    <div class="menu-item @if(!empty($_v3['_active'])) active @endif">
+                                                    <div class="menu-item @if(!empty($_v3['_active'])) page-main active @endif">
                                                         <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v3['url'])}}"
                                                            class="title" data-keywords-filter>
                                                             <span class="text">{{$_v3['title']}}</span>
@@ -150,6 +150,19 @@
                             </div>
                         </div>
                         @endif
+                    @endif
+                    @if(config('modstart.admin.i18n.enable',false))
+                        <div class="menu-item">
+                            <a class="title admin-user" href="javascript:;">
+                                <i class="fa fa-globe"></i>
+                                {{L_locale_title()}}
+                            </a>
+                            <div class="dropdown">
+                                @foreach(config('modstart.admin.i18n.langs',[]) as $l=>$lt)
+                                    <a class="dropdown-item" href="{{modstart_admin_url('util/switch_lang',['lang'=>$l])}}">{{$lt}}</a>
+                                @endforeach
+                            </div>
+                        </div>
                     @endif
                     <div class="menu-item">
                         <a class="title admin-user" href="javascript:;">

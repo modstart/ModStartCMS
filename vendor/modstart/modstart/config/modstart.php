@@ -42,6 +42,19 @@ return [
          * 例如：['\App\Admin\Controller\AuthController@login', '\App\Admin\Controller\AuthController']
          */
         'authIgnores' => [],
+        /**
+         * 后台多语言配置
+         */
+        'i18n' => [
+            /**
+             * 后台是否开启多语言
+             */
+            'enable' => false,
+            'langs' => [
+                'zh' => '简体中文',
+                'en' => 'English',
+            ]
+        ]
     ],
 
     'web' => [
@@ -68,5 +81,12 @@ return [
     'config' => [
         'driver' => \ModStart\Core\Config\Driver\DatabaseMConfig::class,
     ],
+
+    'i18n' => [
+        'langs' => [
+            'zh' => '简体中文',
+            'en' => 'English',
+        ]
+    ]
 
 ];

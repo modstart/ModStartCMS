@@ -11,6 +11,11 @@
             background-size: cover;
         }
     </style>
+    <script>
+        if(MS.util.getRootWindow()!==window){
+            MS.util.getRootWindow().location.reload();
+        }
+    </script>
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminLoginHeadAppend'); !!}
 @endsection
 

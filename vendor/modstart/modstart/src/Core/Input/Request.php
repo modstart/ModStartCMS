@@ -233,6 +233,14 @@ class Request
     }
 
     /**
+     * 将请求标记为ajax请求
+     */
+    public static function treatAsAjax()
+    {
+        self::headerSet('is-ajax', '1');
+    }
+
+    /**
      * check if current request is jsonp
      * @return bool
      */
