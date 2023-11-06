@@ -13,7 +13,7 @@ class ConfigController extends Controller
 {
     public static function setting(AdminConfigBuilder $builder)
     {
-        $builder->pageTitle('CMS设置');
+        $builder->pageTitle('功能设置');
 
         $builder->layoutPanel('文案设置', function (Form $builder) {
             $builder->text('Cms_CompanyName', '企业名称');

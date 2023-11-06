@@ -20,11 +20,20 @@ class CmsBackupUtil
             $root = ModuleManager::path($theme->name(), 'Backup/');
             $files = FileUtil::listFiles($root, '*.json');
             foreach ($files as $file) {
+                $content = file_get_contents($file['pathname']);
+                if (empty($content)) {
+                    continue;
+                }
+                $json = @json_decode($content, true);
+                if (empty($json) || empty($json['structure'])) {
+                    continue;
+                }
                 $results[] = [
                     'module' => $theme->name(),
                     'root' => 'module/' . $theme->name() . '/Backup',
                     'filename' => $file['filename'],
                     'size' => $file['size'],
+                    'tables' => array_keys($json['structure']),
                 ];
             }
         }
@@ -60,6 +69,27 @@ class CmsBackupUtil
         $tables = array_filter($tables, function ($table) {
             return self::isCmsTable($table);
         });
+        $tables = array_map(function ($table) {
+            return [
+                'name' => $table,
+                'checked' => true,
+            ];
+        }, $tables);
+        foreach ([
+                     'Banner' => ['banner'],
+                     'Partner' => ['partner'],
+                     'Nav' => ['nav'],
+                 ] as $module => $moduleTables) {
+            if (!modstart_module_enabled($module)) {
+                continue;
+            }
+            foreach ($moduleTables as $moduleTable) {
+                $tables[] = [
+                    'name' => $moduleTable,
+                    'checked' => false,
+                ];
+            }
+        }
         return $tables;
     }
 

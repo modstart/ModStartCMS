@@ -1,6 +1,6 @@
 @extends('modstart::admin.frame')
 
-@section('pageTitle')数据备份@endsection
+@section('pageTitle')数据库备份@endsection
 
 @section($_tabSectionName)
 
@@ -12,7 +12,7 @@
     <div class="ub-panel">
         <div class="head">
             <div class="title">
-                数据备份
+                数据库备份
             </div>
         </div>
         <div class="body">
@@ -22,10 +22,13 @@
                         <div class="label">备份CMS表</div>
                         <div class="field">
                             @foreach(\Module\Cms\Util\CmsBackupUtil::listBackupTables() as $table)
-                                <div class="tw-font-mono">
-                                    <input type="checkbox" style="vertical-align:middle;" name="table[]" checked value="{{$table}}" />
-                                    {{$table}}
-                                </div>
+                                <label class="tw-font-mono tw-block">
+                                    <input type="checkbox" style="vertical-align:middle;" name="table[]"
+                                           value="{{$table['name']}}"
+                                           @if($table['checked']) checked @endif
+                                    />
+                                    {{$table['name']}}
+                                </label>
                             @endforeach
                         </div>
                     </div>

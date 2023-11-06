@@ -13,6 +13,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleManager;
 
 class BackupController extends Controller
@@ -40,7 +41,7 @@ class BackupController extends Controller
                 $backup['structure'][$table] = ModelManageUtil::tableStructure($table);
                 $backup['backup'][$table] = ModelUtil::all($table);
             }
-            FileUtil::write($savePath, json_encode($backup, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            FileUtil::write($savePath, SerializeUtil::jsonEncodePretty($backup));
             return Response::generateSuccess('备份成功');
         }
         return view('module::Cms.View.admin.backup.index');

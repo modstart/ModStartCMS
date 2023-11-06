@@ -1,6 +1,6 @@
 @extends('modstart::admin.frame')
 
-@section('pageTitle')数据恢复@endsection
+@section('pageTitle')数据库恢复@endsection
 
 @section($_tabSectionName)
 
@@ -12,23 +12,30 @@
     <div class="ub-panel">
         <div class="head">
             <div class="title">
-                数据恢复
+                数据库恢复
             </div>
         </div>
         <div class="body">
             <table class="ub-table">
                 <thead>
                 <tr>
-                    <th>目录</th>
+                    <th class="ub-text-truncate">模块</th>
                     <th>名称</th>
+                    <th>
+                        数据表
+                        <a href="javascript:;" class="ub-text-muted"
+                           data-tip-popover="恢复后这些表会被覆盖，记得提前备份">
+                            <i class="iconfont icon-warning"></i>
+                        </a>
+                    </th>
                     <th>大小</th>
-                    <th>&nbsp;</th>
+                    <th width="150">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 @if(empty($backups))
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <div class="ub-empty">
                                 <div class="icon">
                                     <div class="iconfont icon-empty-box"></div>
@@ -40,11 +47,16 @@
                 @endif
                 @foreach($backups as $backup)
                     <tr>
-                        <td class="tw-font-mono">{{$backup['root']}}</td>
-                        <td class="tw-font-mono">{{$backup['filename']}}</td>
-                        <td class="tw-font-mono">{{\ModStart\Core\Util\FileUtil::formatByte($backup['size'])}}</td>
+                        <td class="tw-font-mono ub-text-truncate">{{$backup['module']}}</td>
+                        <td class="tw-font-mono ub-text-truncate">{{$backup['filename']}}</td>
+                        <td class="tw-font-mono">
+                            @foreach($backup['tables'] as $table)
+                                <span class="ub-tag tw-mb-1">{{$table}}</span>
+                            @endforeach
+                        </td>
+                        <td class="tw-font-mono ub-text-truncate">{{\ModStart\Core\Util\FileUtil::formatByte($backup['size'])}}</td>
                         <td>
-                            <a class="ub-lister-action" href="javascript:;"
+                            <a class="btn btn-warning btn-sm tw-mb-1" href="javascript:;"
                                data-confirm="确定恢复？"
                                data-method="post"
                                data-ajax-request-loading
@@ -52,7 +64,7 @@
                                 <i class="iconfont icon-credit"></i>
                                 恢复
                             </a>
-                            <a class="ub-lister-action danger" href="javascript:;"
+                            <a class="btn btn-danger btn-sm tw-mb-1" href="javascript:;"
                                data-confirm="确定删除？"
                                data-method="post"
                                data-ajax-request-loading
