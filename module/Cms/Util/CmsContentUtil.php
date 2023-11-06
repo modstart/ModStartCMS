@@ -159,6 +159,44 @@ class CmsContentUtil
         return self::paginate($page, $pageSize, $option);
     }
 
+    public static function mergeRecordsData(&$records, $param = [])
+    {
+        if (!isset($param['canVisit'])) {
+            $param['canVisit'] = false;
+        }
+        $modelGroup = [];
+        foreach ($records as $k => $record) {
+            $modelGroup[$record['modelId']][] = $record['id'];
+        }
+        $recordsMap = [];
+        foreach ($modelGroup as $modelId => $contentIds) {
+            $model = CmsModelUtil::get($modelId);
+            $recordDataList = ModelUtil::allIn($model['_table'], 'id', $contentIds, ['*']);
+            $guestVisitVisibleFields = array_map(function ($f) {
+                return $f['name'];
+            }, array_filter($model['_customFields'], function ($o) {
+                return $o['guestVisitVisible'];
+            }));
+            $guestVisitVisibleFields[] = 'id';
+            $guestVisitVisibleFields[] = 'created_at';
+            $guestVisitVisibleFields[] = 'updated_at';
+            $recordDataList = ArrayUtil::keepItemsKeys($recordDataList, $guestVisitVisibleFields);
+            foreach ($recordDataList as $recordData) {
+                foreach ($model['_customFields'] as $v) {
+                    if (!$v['guestVisitVisible']) {
+                        continue;
+                    }
+                    $f = CmsField::getByName($v['fieldType']);
+                    $recordData[$v['name']] = $f->unserializeValue($recordData[$v['name']], $recordData);
+                }
+                $recordsMap[$recordData['id']] = $recordData;
+            }
+        }
+        foreach ($records as $k => $record) {
+            $records[$k]['_data'] = isset($recordsMap[$record['id']]) ? $recordsMap[$record['id']] : null;
+        }
+    }
+
     public static function get($id)
     {
         $record = ModelUtil::get('cms_content', $id);

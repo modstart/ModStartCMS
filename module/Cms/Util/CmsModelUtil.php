@@ -66,6 +66,9 @@ class CmsModelUtil
                         }
                     }
                 }
+                foreach ($models as $k => $model) {
+                    $models[$k]['_table'] = 'cms_m_' . $model['name'];
+                }
                 return $models;
             } catch (\Exception $e) {
                 return [];

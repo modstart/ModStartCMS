@@ -84,6 +84,14 @@
                         <el-switch v-model="data.isList"></el-switch>
                     </div>
                 </div>
+                <div class="line">
+                    <div class="label">
+                        访客列表页面可见
+                    </div>
+                    <div class="field">
+                        <el-switch v-model="data.guestVisitVisible"></el-switch>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -115,6 +123,7 @@
                             isRequired: true,
                             isSearch: true,
                             isList: true,
+                            guestVisitVisible: false,
                             placeholder: ""
                         }, {!! json_encode($record) !!}),
                         nameReadOnly: false

@@ -45,6 +45,7 @@ class ModelController extends Controller
             'isRequired' => true,
             'isSearch' => true,
             'isList' => true,
+            'guestVisitVisible' => false,
             'placeholder' => '',
             'maxLength' => 100,
         ];
@@ -52,7 +53,7 @@ class ModelController extends Controller
             $record = ModelUtil::get('cms_model_field', $id);
             BizException::throwsIfEmpty('记录不存在', $record);
             ModelUtil::decodeRecordJson($record, ['fieldData']);
-            ModelUtil::decodeRecordBoolean($record, ['enable', 'isRequired', 'isSearch', 'isList']);
+            ModelUtil::decodeRecordBoolean($record, ['enable', 'isRequired', 'isSearch', 'isList', 'guestVisitVisible',]);
         }
         if (Request::isPost()) {
             AdminPermission::demoCheck();
@@ -66,6 +67,7 @@ class ModelController extends Controller
             $data['isRequired'] = $input->getBoolean('isRequired');
             $data['isSearch'] = $input->getBoolean('isSearch');
             $data['isList'] = $input->getBoolean('isList');
+            $data['guestVisitVisible'] = $input->getBoolean('guestVisitVisible');
             $data['placeholder'] = $input->getTrimString('placeholder');
             $data['maxLength'] = $input->getInteger('maxLength');
             BizException::throwsIfEmpty('标题为空', $data['title']);
