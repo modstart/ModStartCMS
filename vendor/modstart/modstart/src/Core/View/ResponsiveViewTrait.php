@@ -59,6 +59,35 @@ trait ResponsiveViewTrait
         return null;
     }
 
+    protected function viewTemplateProvider()
+    {
+        $provider = null;
+        $t = Input::get('msSiteTemplate', null);
+        if (!empty($t)) {
+            $provider = SiteTemplateProvider::get($t);
+            if (!empty($provider)) {
+                Session::flash('msSiteTemplate', $t);
+            }
+        }
+        if (empty($provider)) {
+            $t = Session::get('msSiteTemplate', null);
+            if (!empty($t)) {
+                $provider = SiteTemplateProvider::get($t);
+                if (empty($provider)) {
+                    Session::forget('msSiteTemplate');
+                }
+            }
+        }
+        if (empty($provider)) {
+            $t = modstart_config()->getWithEnv('siteTemplate', 'default');
+            $provider = SiteTemplateProvider::get($t);
+            if (empty($provider)) {
+                $t = null;
+            }
+        }
+        return $provider;
+    }
+
     /**
      * @param $view
      * @return array
@@ -69,43 +98,26 @@ trait ResponsiveViewTrait
      */
     protected function viewPaths($view)
     {
+        /**
+         * 存储当前模板名称，如 default, xxxxx
+         */
         static $templateName = null;
-        static $provider = null;
-        static $module = null;
+
+        /**
+         * 当前模板根目录
+         */
         static $templateRoot = null;
         if (null === $templateName) {
-            $msSiteTemplate = Input::get('msSiteTemplate', null);
-            if (!empty($msSiteTemplate)) {
-                $provider = SiteTemplateProvider::get($msSiteTemplate);
-                if (!empty($provider)) {
-                    Session::put('msSiteTemplate', $msSiteTemplate);
-                }
-            }
-            if (empty($provider)) {
-                $msSiteTemplate = Session::get('msSiteTemplate', null);
-                if (!empty($msSiteTemplate)) {
-                    $provider = SiteTemplateProvider::get($msSiteTemplate);
-                    if (empty($provider)) {
-                        Session::forget('msSiteTemplate');
-                    }
-                }
-            }
-            $module = $this->getModule();
-            if (empty($provider)) {
-                $templateName = modstart_config()->getWithEnv('siteTemplate', 'default');
-                $provider = SiteTemplateProvider::get($templateName);
-            }
-            if ($provider && $provider->root()) {
-                $templateRoot = $provider->root();
-                $templateName = $provider->name();
-            } else {
-                $templateRoot = "theme.$templateName";
-            }
+            $provider = $this->viewTemplateProvider();
+            $templateName = ($provider ? $provider->name() : 'default');
+            $templateRoot = ($provider ? $provider->root() : 'theme.' . $templateName);
             Session::put('msSiteTemplateUsing', $templateName);
+            // print_r([$templateName, $templateRoot, $provider]);
         }
 
         $useView = null;
         $useFrameView = null;
+        $module = $this->getModule();
         if ($this->isMobile()) {
             $useView = $this->fetchViewPath($templateName, $templateRoot, $module, 'm', $view);
             $useFrameView = $this->fetchViewPath($templateName, $templateRoot, $module, 'm', 'frame');

@@ -40,7 +40,7 @@ class ImageDesignUtil
 
         BizException::throwsIf('width empty', empty($imageConfig['width']));
         BizException::throwsIf('height empty', empty($imageConfig['height']));
-        BizException::throwsIf('backgroundImage 为空', empty($imageConfig['backgroundImage']));
+        BizException::throwsIf('backgroundImage 和 backgroundColor 为空', empty($imageConfig['backgroundImage']) && empty($imageConfig['backgroundColor']));
         BizException::throwsIf('blocks empty', !isset($imageConfig['blocks']));
 
         if (empty($imageConfig['font'])) {
@@ -49,8 +49,12 @@ class ImageDesignUtil
             $fontPath = FileUtil::savePathToLocalTemp($imageConfig['font'], 'ttf', true);
         }
 
-        $backgroundImage = FileUtil::savePathToLocalTemp($imageConfig['backgroundImage']);
-        $image = Image::make($backgroundImage);
+        if (!empty($imageConfig['backgroundImage'])) {
+            $backgroundImage = FileUtil::savePathToLocalTemp($imageConfig['backgroundImage']);
+            $image = Image::make($backgroundImage);
+        } else {
+            $image = Image::canvas($imageConfig['width'], $imageConfig['height'], $imageConfig['backgroundColor']);
+        }
 
         foreach ($imageConfig['blocks'] as $item) {
             switch ($item['type']) {

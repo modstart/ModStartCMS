@@ -86,6 +86,9 @@ export const FormatUtil = {
     }
 }
 
+/**
+ * @deprecated use str-util
+ */
 export const StrUtil = {
     randomString(len) {
         len = len || 32;
@@ -110,6 +113,9 @@ export const StrUtil = {
         var regex = new RegExp(pattern)
         return regex.test(text)
     },
+    /**
+     * @deprecated use str-util
+     */
     sprintf() {
         const args = Array.from(arguments)
         return sprintf.call(null, ...args)

@@ -23,6 +23,11 @@ class SiteTemplateProvider
         self::$instances[] = $provider;
     }
 
+    public static function registerQuick($name, $title, $root = null)
+    {
+        self::register(QuickSiteTemplateProvider::make($name, $title, $root));
+    }
+
     /**
      * @return AbstractSiteTemplateProvider[]
      */

@@ -10,7 +10,7 @@
         <div id="{{$id}}Input" class="tw-border tw-border-gray-100 tw-border-solid tw-rounded">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             @if($viewMode=='mini')
-                <div class="tw-inline-block tw-w-32" v-for="(valueItem,valueIndex) in value">
+                <div class="tw-inline-block tw-w-32 tw-p-2" v-for="(valueItem,valueIndex) in value">
                     <el-input placeholder="请输入内容" size="mini" v-model="value[valueIndex]">
                         <template slot="append">
                             <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>

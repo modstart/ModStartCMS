@@ -14,7 +14,7 @@ return [
         'video' => [
             'maxSize' => 1024 * 1024 * 1024,
             'extensions' => [
-                'mp4',
+                'mp4', 'mov',
             ]
         ],
         'audio' => [

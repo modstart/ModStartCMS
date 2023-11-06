@@ -15,6 +15,9 @@
            step="any"
            name="{{$name}}"
            placeholder="{{$placeholder}}"
+           @if(isset($min)&&null!==$min) min="{{$min}}" @endif
+           @if(isset($max)&&null!==$max) max="{{$max}}" @endif
+           @if(isset($step)&&null!==$step) step="{{$step}}" @endif
            value="{{null===$value?$defaultValue:$value}}" />
         {{empty($unit)?'':$unit}}
         @if(!empty($help))
