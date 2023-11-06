@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TagUtil;
 use Module\Cms\Field\CmsField;
@@ -48,6 +49,15 @@ class CmsContentUtil
                 ['postTime', 'desc'],
             ];
         }
+
+        if (!empty($option['fieldFilterTable']) && !empty($option['fieldFilter'])) {
+            $query = ModelUtil::model($option['fieldFilterTable'])->select(['id']);
+            ModelUtil::queryFilterExecute($query, $option['fieldFilter']);
+            $sql = $query->toSql();
+            $bindings = $query->getBindings();
+            $option['whereRaw'] = ["( id IN ( {$sql} ) )", $bindings];
+        }
+
         $paginateData = ModelUtil::paginate('cms_content', $page, $pageSize, $option);
         foreach ($paginateData['records'] as $k => $record) {
             if (!empty($record['cover'])) {
@@ -286,5 +296,36 @@ class CmsContentUtil
     public static function delete($id)
     {
 
+    }
+
+    public static function buildFilter($option, $model)
+    {
+        $input = InputPackage::buildFromInput();
+        $filters = [];
+        foreach ($model['_customFields'] as $f) {
+            if (!$f['guestVisitVisible'] || !$f['isSearch']) {
+                continue;
+            }
+            $value = $input->getTrimString($f['name']);
+            if ('' === $value) {
+                continue;
+            }
+            $field = CmsField::getByName($f['fieldType']);
+            switch ($field->name()) {
+                case 'text':
+                case 'number':
+                    $filters[] = [
+                        'condition' => 'is',
+                        'field' => $f['name'],
+                        'value' => $value,
+                    ];
+                    break;
+            }
+        }
+        if (!empty($filters)) {
+            $option['fieldFilterTable'] = "cms_m_{$model['name']}";
+            $option['fieldFilter'] = $filters;
+        }
+        return $option;
     }
 }

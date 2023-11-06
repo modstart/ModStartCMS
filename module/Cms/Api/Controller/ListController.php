@@ -28,6 +28,8 @@ class ListController extends BaseCatController
         $data = parent::setup($catId);
         $page = $input->getPage();
         $cat = $data['cat'];
+        $model = $data['model'];
+
         if (empty($cat['pageSize']) || $cat['pageSize'] < 0) {
             $cat['pageSize'] = 12;
         }
@@ -40,6 +42,7 @@ class ListController extends BaseCatController
         if ($isRecommend) {
             $option['where']['isRecommend'] = true;
         }
+        $option = CmsContentUtil::buildFilter($option, $model);
         $paginateData = CmsContentUtil::paginateCat($cat['id'], $page, $pageSize, $option);
         CmsContentUtil::mergeRecordsData($paginateData['records'], [
             'canVisit' => CmsMemberPermitUtil::canVisitCat($cat),

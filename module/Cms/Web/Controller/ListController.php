@@ -17,6 +17,7 @@ class ListController extends BaseCatController
         $data = parent::setup($id);
         $view = $this->getView($data, 'listTemplate');
         $cat = $data['cat'];
+        $model = $data['model'];
 
         $input = InputPackage::buildFromInput();
         $page = $input->getPage();
@@ -24,7 +25,10 @@ class ListController extends BaseCatController
             $cat['pageSize'] = 12;
         }
         $pageSize = $input->getPageSize('pageSize', null, null, $cat['pageSize']);
-        $paginateData = CmsContentUtil::paginateCat($cat['id'], $page, $pageSize);
+
+        $option = [];
+        $option = CmsContentUtil::buildFilter($option, $model);
+        $paginateData = CmsContentUtil::paginateCat($cat['id'], $page, $pageSize, $option);
         CmsContentUtil::mergeRecordsData($paginateData['records'], [
             'canVisit' => CmsMemberPermitUtil::canVisitCat($cat),
         ]);

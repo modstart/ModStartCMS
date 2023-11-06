@@ -730,7 +730,11 @@ class ModelUtil
         }
 
         if (!empty($option['whereRaw'])) {
-            $o = $o->whereRaw($option['whereRaw']);
+            if (is_array($option['whereRaw'])) {
+                $o = $o->whereRaw($option['whereRaw'][0], $option['whereRaw'][1]);
+            } else {
+                $o = $o->whereRaw($option['whereRaw']);
+            }
         }
 
         /**
@@ -882,54 +886,60 @@ class ModelUtil
         }
 
         /**
-         * $filter = []
+         * $filter = [];
+         * $filter[] = [ 'condition'=>'is', 'field'=>'field1', 'value'=>'value1' ];
          */
         if (!empty($option['filter']) && is_array($option['filter'])) {
-            $o = $o->where(function ($queryBase) use (&$option) {
-                foreach ($option['filter'] as $oneFilter) {
-                    switch ($oneFilter['condition']) {
-                        case 'is':
-                            $queryBase = $queryBase->where([$oneFilter['field'] => $oneFilter['value']]);
-                            break;
-                        case 'is_not':
-                            $queryBase = $queryBase->where($oneFilter['field'], '<>', $oneFilter['value']);
-                            break;
-                        case 'contains':
-                            $queryBase = $queryBase->where($oneFilter['field'], 'like', '%' . $oneFilter['value'] . '%');
-                            break;
-                        case 'not_contains':
-                            $queryBase = $queryBase->where($oneFilter['field'], 'not like', '%' . $oneFilter['value'] . '%');
-                            break;
-                        case 'range':
-                            if (!empty($oneFilter['value'][0])) {
-                                $queryBase = $queryBase->where($oneFilter['field'], '>=', $oneFilter['value'][0]);
-                            }
-                            if (!empty($oneFilter['value'][1])) {
-                                $queryBase = $queryBase->where($oneFilter['field'], '<=', $oneFilter['value'][1]);
-                            }
-                            break;
-                        case 'is_empty':
-                            $queryBase = $queryBase->where($oneFilter['field'], '=', '');
-                            break;
-                        case 'is_not_empty':
-                            $queryBase = $queryBase->where($oneFilter['field'], '<>', '');
-                            break;
-                        case 'gt':
-                            $queryBase = $queryBase->where($oneFilter['field'], '>', $oneFilter['value']);
-                            break;
-                        case 'egt':
-                            $queryBase = $queryBase->where($oneFilter['field'], '>=', $oneFilter['value']);
-                            break;
-                        case 'lt':
-                            $queryBase = $queryBase->where($oneFilter['field'], '<', $oneFilter['value']);
-                            break;
-                        case 'elt':
-                            $queryBase = $queryBase->where($oneFilter['field'], '<=', $oneFilter['value']);
-                            break;
-                    }
-                }
-            });
+            self::queryFilterExecute($o, $option['filter']);
         }
+    }
+
+    public static function queryFilterExecute(&$query, $filters)
+    {
+        $query = $query->where(function ($queryBase) use (&$filters) {
+            foreach ($filters as $filter) {
+                switch ($filter['condition']) {
+                    case 'is':
+                        $queryBase = $queryBase->where([$filter['field'] => $filter['value']]);
+                        break;
+                    case 'is_not':
+                        $queryBase = $queryBase->where($filter['field'], '<>', $filter['value']);
+                        break;
+                    case 'contains':
+                        $queryBase = $queryBase->where($filter['field'], 'like', '%' . $filter['value'] . '%');
+                        break;
+                    case 'not_contains':
+                        $queryBase = $queryBase->where($filter['field'], 'not like', '%' . $filter['value'] . '%');
+                        break;
+                    case 'range':
+                        if (!empty($filter['value'][0])) {
+                            $queryBase = $queryBase->where($filter['field'], '>=', $filter['value'][0]);
+                        }
+                        if (!empty($filter['value'][1])) {
+                            $queryBase = $queryBase->where($filter['field'], '<=', $filter['value'][1]);
+                        }
+                        break;
+                    case 'is_empty':
+                        $queryBase = $queryBase->where($filter['field'], '=', '');
+                        break;
+                    case 'is_not_empty':
+                        $queryBase = $queryBase->where($filter['field'], '<>', '');
+                        break;
+                    case 'gt':
+                        $queryBase = $queryBase->where($filter['field'], '>', $filter['value']);
+                        break;
+                    case 'egt':
+                        $queryBase = $queryBase->where($filter['field'], '>=', $filter['value']);
+                        break;
+                    case 'lt':
+                        $queryBase = $queryBase->where($filter['field'], '<', $filter['value']);
+                        break;
+                    case 'elt':
+                        $queryBase = $queryBase->where($filter['field'], '<=', $filter['value']);
+                        break;
+                }
+            }
+        });
     }
 
     public static function paginateQuick($model, $page = null, $pageSize = null, $option = [], $pageUrl = '?page={page}')

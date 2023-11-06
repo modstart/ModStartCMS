@@ -37,6 +37,7 @@ class BaseCatController extends ModuleBaseController
             'catChildren' => $catChildren,
             'catRootChildren' => $catRootChildren,
             'catChain' => $catChain,
+            'model'=>$model,
         ];
     }
 
