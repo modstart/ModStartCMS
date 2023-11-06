@@ -737,205 +737,220 @@ class ModelUtil
             }
         }
 
-        /**
-         * $search = [];
-         * $search[] = ['field1'=>['equal'=>value],'field2'=>['equal'=>value]];
-         * $search[] = ['field1'=>['exp'=>'or', 'equal'=>value1, 'like'=>'value2'],'field2'=>['equal'=>value]];
-         * $search[] = ['__exp'=>'and|or','field1'=>[...],'field2'=>[...],];
-         */
         if (!empty($option['search']) && is_array($option['search'])) {
-            foreach ($option['search'] as $searchItem) {
-
-                if (!isset($searchItem['__exp'])) {
-                    $searchItem['__exp'] = 'and';
-                } else {
-                    $searchItem['__exp'] = strtolower($searchItem['__exp']);
-                }
-
-                $whereExpFirst = true;
-                $whereExp = 'where';
-                if ($searchItem['__exp'] == 'or') {
-                    $whereExp = 'orWhere';
-                }
-
-                $o = $o->where(function ($queryBase) use (&$searchItem, $whereExpFirst, $whereExp) {
-
-                    foreach ($searchItem as $field => $searchInfo) {
-                        if (in_array($field, ['__exp'])) {
-                            continue;
-                        }
-                        if (!isset($searchInfo['exp'])) {
-                            $searchInfo['exp'] = 'and';
-                        }
-                        $searchInfo['exp'] = strtolower($searchInfo['exp']);
-
-                        if ($whereExpFirst) {
-                            $where = 'where';
-                            $whereExpFirst = false;
-                        } else {
-                            $where = $whereExp;
-                        }
-
-                        $queryBase = $queryBase->$where(function ($query) use (&$field, &$searchInfo) {
-                            $first = true;
-                            foreach ($searchInfo as $k => $v) {
-                                switch ($k) {
-                                    case 'likes':
-                                        $query->where(function ($q) use ($v, $field) {
-                                            foreach ($v as $vv) {
-                                                $q->where($field, 'like', '%' . $vv . '%');
-                                            }
-                                        });
-                                        break;
-                                    case 'like':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->where($field, 'like', '%' . $v . '%');
-                                        } else {
-                                            $query->orWhere($field, 'like', '%' . $v . '%');
-                                        }
-                                        break;
-                                    case 'leftLike':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->where($field, 'like', $v . '%');
-                                        } else {
-                                            $query->orWhere($field, 'like', $v . '%');
-                                        }
-                                        break;
-                                    case 'rightLike':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->where($field, 'like', '%' . $v);
-                                        } else {
-                                            $query->orWhere($field, 'like', '%' . $v);
-                                        }
-                                        break;
-                                    case 'equal':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->where($field, '=', $v);
-                                        } else {
-                                            $query->orWhere($field, '=', $v);
-                                        }
-                                        break;
-                                    case 'min':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->where($field, '>=', $v);
-                                        } else {
-                                            $query->orWhere($field, '>=', $v);
-                                        }
-                                        break;
-                                    case 'max':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->where($field, '<=', $v);
-                                        } else {
-                                            $query->orWhere($field, '<=', $v);
-                                        }
-                                        break;
-                                    case 'eq':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->where($field, '=', $v);
-                                        } else {
-                                            $query->orWhere($field, '=', $v);
-                                        }
-                                        break;
-                                    case 'in':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->whereIn($field, $v);
-                                        } else {
-                                            $query->whereIn($field, $v, 'or');
-                                        }
-                                        break;
-                                    case 'is':
-                                        if (null === $v) {
-                                            if ($first || $searchInfo['exp'] == 'and') {
-                                                $first = false;
-                                                $query->whereNull($field);
-                                            } else {
-                                                $query->orWhereNull($field);
-                                            }
-                                        } else {
-                                            exit('TODO');
-                                        }
-                                        break;
-                                    case 'raw':
-                                        if ($first || $searchInfo['exp'] == 'and') {
-                                            $first = false;
-                                            $query->whereRaw($v);
-                                        } else {
-                                            $query->orWhereRaw($v);
-                                        }
-                                        break;
-                                    case 'exp':
-                                        break;
-                                    default:
-                                        BizException::throws('unknown search exp : ' . $k);
-                                }
-                            }
-                        });
-
-                    }
-
-                });
-            }
+            self::querySearchExecute($o, $option['search']);
         }
 
-        /**
-         * $filter = [];
-         * $filter[] = [ 'condition'=>'is', 'field'=>'field1', 'value'=>'value1' ];
-         */
         if (!empty($option['filter']) && is_array($option['filter'])) {
             self::queryFilterExecute($o, $option['filter']);
         }
     }
 
+    /**
+     * 对查询执行搜索条件，支持多字段搜索
+     * @param $query Model|Builder 查询对象
+     * @param $searches array 搜索条件
+     * @example
+     * /**
+     * $searches = [];
+     * $searches[] = ['field1'=>['equal'=>value],'field2'=>['equal'=>value]];
+     * $searches[] = ['field1'=>['exp'=>'or', 'equal'=>value1, 'like'=>'value2'],'field2'=>['equal'=>value]];
+     * $searches[] = ['__exp'=>'and|or','field1'=>[...],'field2'=>[...],];
+     */
+    public static function querySearchExecute(&$query, $searches)
+    {
+        foreach ($searches as $searchItem) {
+
+            if (!isset($searchItem['__exp'])) {
+                $searchItem['__exp'] = 'and';
+            } else {
+                $searchItem['__exp'] = strtolower($searchItem['__exp']);
+            }
+
+            $whereExpFirst = true;
+            $whereExp = 'where';
+            if ($searchItem['__exp'] == 'or') {
+                $whereExp = 'orWhere';
+            }
+
+            $query = $query->where(function ($queryBase) use (&$searchItem, $whereExpFirst, $whereExp) {
+
+                foreach ($searchItem as $field => $searchInfo) {
+                    if (in_array($field, ['__exp'])) {
+                        continue;
+                    }
+                    if (!isset($searchInfo['exp'])) {
+                        $searchInfo['exp'] = 'and';
+                    }
+                    $searchInfo['exp'] = strtolower($searchInfo['exp']);
+
+                    if ($whereExpFirst) {
+                        $where = 'where';
+                        $whereExpFirst = false;
+                    } else {
+                        $where = $whereExp;
+                    }
+
+                    $queryBase = $queryBase->$where(function ($query) use (&$field, &$searchInfo) {
+                        $first = true;
+                        foreach ($searchInfo as $k => $v) {
+                            switch ($k) {
+                                case 'likes':
+                                    $query->where(function ($q) use ($v, $field) {
+                                        foreach ($v as $vv) {
+                                            $q->where($field, 'like', '%' . $vv . '%');
+                                        }
+                                    });
+                                    break;
+                                case 'like':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->where($field, 'like', '%' . $v . '%');
+                                    } else {
+                                        $query->orWhere($field, 'like', '%' . $v . '%');
+                                    }
+                                    break;
+                                case 'leftLike':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->where($field, 'like', $v . '%');
+                                    } else {
+                                        $query->orWhere($field, 'like', $v . '%');
+                                    }
+                                    break;
+                                case 'rightLike':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->where($field, 'like', '%' . $v);
+                                    } else {
+                                        $query->orWhere($field, 'like', '%' . $v);
+                                    }
+                                    break;
+                                case 'equal':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->where($field, '=', $v);
+                                    } else {
+                                        $query->orWhere($field, '=', $v);
+                                    }
+                                    break;
+                                case 'eq':
+                                case 'min':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->where($field, '>=', $v);
+                                    } else {
+                                        $query->orWhere($field, '>=', $v);
+                                    }
+                                    break;
+                                case 'max':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->where($field, '<=', $v);
+                                    } else {
+                                        $query->orWhere($field, '<=', $v);
+                                    }
+                                    break;
+                                case 'in':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->whereIn($field, $v);
+                                    } else {
+                                        $query->whereIn($field, $v, 'or');
+                                    }
+                                    break;
+                                case 'is':
+                                    if (null === $v) {
+                                        if ($first || $searchInfo['exp'] == 'and') {
+                                            $first = false;
+                                            $query->whereNull($field);
+                                        } else {
+                                            $query->orWhereNull($field);
+                                        }
+                                    } else {
+                                        exit('TODO');
+                                    }
+                                    break;
+                                case 'raw':
+                                    if ($first || $searchInfo['exp'] == 'and') {
+                                        $first = false;
+                                        $query->whereRaw($v);
+                                    } else {
+                                        $query->orWhereRaw($v);
+                                    }
+                                    break;
+                                case 'exp':
+                                    break;
+                                default:
+                                    BizException::throws('unknown search exp : ' . $k);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    /**
+     * 对请求执行过滤条件，通常用于用户前台动态筛选
+     * @param $query Model|Builder 查询对象
+     * @param $filters array 过滤条件
+     * @example
+     * $filter = [];
+     * $filter[] = [ 'condition'=>'is', 'field'=>'field1', 'value'=>'value1' ];
+     * $filter[] = [ 'condition'=>'is_not', 'field'=>'field2', 'value'=>'value2' ];
+     * $filter[] = [ 'condition'=>'contains', 'field'=>'field3', 'value'=>'value3' ];
+     * $filter[] = [ 'condition'=>'not_contains', 'field'=>'field4', 'value'=>'value4' ];
+     * $filter[] = [ 'condition'=>'range', 'field'=>'field5', 'value'=>['value5_min', 'value5_max'] ];
+     * $filter[] = [ 'condition'=>'is_empty', 'field'=>'field6' ];
+     * $filter[] = [ 'condition'=>'is_not_empty', 'field'=>'field7' ];
+     * $filter[] = [ 'condition'=>'gt', 'field'=>'field8', 'value'=>'value8' ];
+     * $filter[] = [ 'condition'=>'egt', 'field'=>'field9', 'value'=>'value9' ];
+     * $filter[] = [ 'condition'=>'lt', 'field'=>'field10', 'value'=>'value10' ];
+     * $filter[] = [ 'condition'=>'elt', 'field'=>'field11', 'value'=>'value11' ];
+     */
     public static function queryFilterExecute(&$query, $filters)
     {
-        $query = $query->where(function ($queryBase) use (&$filters) {
+        $query = $query->where(function ($q) use (&$filters) {
             foreach ($filters as $filter) {
                 switch ($filter['condition']) {
                     case 'is':
-                        $queryBase = $queryBase->where([$filter['field'] => $filter['value']]);
+                        $q = $q->where([$filter['field'] => $filter['value']]);
                         break;
                     case 'is_not':
-                        $queryBase = $queryBase->where($filter['field'], '<>', $filter['value']);
+                        $q = $q->where($filter['field'], '<>', $filter['value']);
                         break;
                     case 'contains':
-                        $queryBase = $queryBase->where($filter['field'], 'like', '%' . $filter['value'] . '%');
+                        $q = $q->where($filter['field'], 'like', '%' . $filter['value'] . '%');
                         break;
                     case 'not_contains':
-                        $queryBase = $queryBase->where($filter['field'], 'not like', '%' . $filter['value'] . '%');
+                        $q = $q->where($filter['field'], 'not like', '%' . $filter['value'] . '%');
                         break;
                     case 'range':
                         if (!empty($filter['value'][0])) {
-                            $queryBase = $queryBase->where($filter['field'], '>=', $filter['value'][0]);
+                            $q = $q->where($filter['field'], '>=', $filter['value'][0]);
                         }
                         if (!empty($filter['value'][1])) {
-                            $queryBase = $queryBase->where($filter['field'], '<=', $filter['value'][1]);
+                            $q = $q->where($filter['field'], '<=', $filter['value'][1]);
                         }
                         break;
                     case 'is_empty':
-                        $queryBase = $queryBase->where($filter['field'], '=', '');
+                        $q = $q->where($filter['field'], '=', '');
                         break;
                     case 'is_not_empty':
-                        $queryBase = $queryBase->where($filter['field'], '<>', '');
+                        $q = $q->where($filter['field'], '<>', '');
                         break;
                     case 'gt':
-                        $queryBase = $queryBase->where($filter['field'], '>', $filter['value']);
+                        $q = $q->where($filter['field'], '>', $filter['value']);
                         break;
                     case 'egt':
-                        $queryBase = $queryBase->where($filter['field'], '>=', $filter['value']);
+                        $q = $q->where($filter['field'], '>=', $filter['value']);
                         break;
                     case 'lt':
-                        $queryBase = $queryBase->where($filter['field'], '<', $filter['value']);
+                        $q = $q->where($filter['field'], '<', $filter['value']);
                         break;
                     case 'elt':
-                        $queryBase = $queryBase->where($filter['field'], '<=', $filter['value']);
+                        $q = $q->where($filter['field'], '<=', $filter['value']);
                         break;
                 }
             }
