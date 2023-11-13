@@ -4,6 +4,7 @@ namespace ModStart\Core\Util;
 
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Facades\Agent;
+use ModStart\Core\Exception\BizException;
 
 /**
  * @Util 客户端
@@ -69,52 +70,21 @@ class AgentUtil
 
     private static $robots = [
 
-        '/Googlebot/i' => 'Google',
-        '/Baiduspider/i' => 'Baidu',
-        '/360Spider/i' => '360',
-        '/Sogou/i' => 'Sogou',
+        '/googlebot/i' => 'Google',
+        '/baiduspider/i' => 'Baidu',
+        '/360spider/i' => '360',
+        '/sogou/i' => 'Sogou',
         '/bingbot/i' => 'Bing',
-        '/Bytespider/i' => 'TouTiao',
+        '/bytespider/i' => 'TouTiao',
 
         '/crawler/i' => 'Other',
         '/spider/i' => 'Other',
-        // 通用匹配 XxxBot
-        '/(?:^|[\\W])\\w+bot[\\W]*/i' => 'Other',
-        '/Detector/' => 'Other',
+        // xxxbot
+        '/(?:^|[\\W])\\w*bot([\\W\\s]|$)/i' => 'Other',
+        '/detector/' => 'Other',
 
         // 其他一些爬虫
-        '/YandexImages/i' => 'Other',
-        '/CensysInspect/i' => 'Other',
-        '/GoogleOther/i' => 'Other',
-        '/duckduckgo\\.com/i' => 'Other',
-        '/Dataprovider\\.com/i' => 'Other',
-        '/NetcraftSurveyAgent/i' => 'Other',
-        '/Scrapy/i' => 'Other',
-        '/linkfluence/i' => 'Other',
-        '/github\\-camo/i' => 'Other',
-        '/msray/i' => 'Other',
-        '/InternetMeasurement/i' => 'Other',
-        '/Vue\\-Telescope/i' => 'Other',
-        '/2ip\\.io/i' => 'Other',
-        '/facebookexternalhit/i' => 'Other',
-        '/Wordupindexinfo/i' => 'Other',
-        '/researchscan/i' => 'Other',
-        '/woorankreview/i' => 'Other',
-        '/Avant Browser/i' => 'Other',
-
-        // 一些语言库、命令行
-        '/Wget\\/\\d+/i' => 'Other',
-        '/python\\-(http|requests|urllib)/i' => 'Other',
-        '/curl\\/\\d+\\.\\d+\\./i' => 'Other',
-        '/Java\\/\\d+\\.\\d+\\./i' => 'Other',
-        '/Ruby/i' => 'Other',
-        '/aiohttp/i' => 'Other',
-        '/cpp\\-httplib/i' => 'Other',
-        '/node\\-fetch/i' => 'Other',
-        '/Go\\-http\\-client/i' => 'Other',
-        '/okhttp/i' => 'Other',
-        '/GuzzleHttp/i' => 'Other',
-        '/Apache\\-HttpClient/i' => 'Other',
+        '/ows\\.eu/i' => 'Other',     // OpenWebSearch
     ];
 
     /**

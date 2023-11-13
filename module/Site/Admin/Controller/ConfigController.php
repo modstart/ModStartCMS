@@ -3,11 +3,56 @@
 namespace Module\Site\Admin\Controller;
 
 use Illuminate\Routing\Controller;
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminConfigBuilder;
+use ModStart\Admin\Layout\AdminDialogPage;
+use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Input\Response;
+use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\SerializeUtil;
+use ModStart\Form\Form;
+use ModStart\ModStart;
 use Module\Vendor\Provider\SiteTemplate\SiteTemplateProvider;
 
 class ConfigController extends Controller
 {
+    public static $PermitMethodMap = [
+        'config' => 'setting',
+    ];
+
+    public function config(AdminDialogPage $page)
+    {
+        $input = InputPackage::buildFromInput();
+        $template = $input->getTrimString('template');
+        BizException::throwsIfEmpty('请选择主题', $template);
+        $provider = SiteTemplateProvider::get($template);
+        BizException::throwsIfEmpty('主题不存在', $provider);
+        $form = Form::make('');
+        $provider->config($form);
+        $config = modstart_config();
+        $data = [];
+        $form->fields()->each(function ($field) use (&$config, &$data) {
+            if ($config->has($field->name())) {
+                $data[$field->name()] = $config->get($field->name());
+            } else {
+                $data[$field->name()] = null;
+            }
+        });
+        $form->item($data)->fillFields();
+        $form->showSubmit(false)->showReset(false);
+        return $page->pageTitle('主题设置')
+            ->body($form)
+            ->handleForm($form, function (Form $form) {
+                AdminPermission::demoCheck();
+                $config = modstart_config();
+                foreach ($form->dataForming() as $k => $v) {
+                    $config->set($k, $v);
+                }
+                return Response::redirect(CRUDUtil::jsDialogClose());
+            });
+    }
+
     public function setting(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('基本设置');
@@ -24,7 +69,32 @@ class ConfigController extends Controller
 
         $builder->layoutSeparator('模板主题');
         $builder->color('sitePrimaryColor', '网站主色调');
-        $builder->select('siteTemplate', '网站模板')->options(SiteTemplateProvider::map());
+        $builder->select('siteTemplate', '网站主题')->options(SiteTemplateProvider::map())
+            ->help("<a href='javascript:;' id='siteTemplateConfig'><i class='iconfont icon-cog'></i> 主题设置</a>");
+        $templates = [];
+        foreach (SiteTemplateProvider::all() as $provider) {
+            $templates[$provider->name()] = [
+                'hasConfig' => $provider->hasConfig(),
+            ];
+        }
+        $templates = SerializeUtil::jsonEncodeObject($templates);
+        $templateConfigUrl = modstart_admin_url('site/config/config');
+        $script = <<<SCRIPT
+var templates = {$templates};
+var checkTemplate = function () {
+    var template = $('[name=siteTemplate]').val();
+    $('#siteTemplateConfig').attr('data-dialog-request', '{$templateConfigUrl}?template=' + template);
+    if (templates[template].hasConfig) {
+        $('#siteTemplateConfig').show();
+    } else {
+        $('#siteTemplateConfig').hide();
+    }
+};
+$('[name=siteTemplate]').change(checkTemplate);
+checkTemplate();
+SCRIPT;
+
+        ModStart::script($script);
 
         $builder->layoutSeparator('备案信息');
         $builder->text('siteBeian', 'ICP备案编号');

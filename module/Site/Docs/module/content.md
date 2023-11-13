@@ -11,7 +11,7 @@
 - 配置主色调
 - 配置网站模板
 
-## 多模板选项使用
+## 多主题选项使用
 
 继承 `AbstractSiteTemplateProvider` 实现网站多模板功能 
 

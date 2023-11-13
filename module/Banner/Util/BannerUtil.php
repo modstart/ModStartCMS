@@ -3,6 +3,7 @@
 namespace Module\Banner\Util;
 
 use Illuminate\Support\Facades\Cache;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use Module\Banner\Type\BannerPosition;
 
@@ -18,7 +19,16 @@ class BannerUtil
      */
     public static function listByPosition($position = 'home')
     {
-        return ModelUtil::model('banner')->where(['position' => $position])->orderBy('sort', 'asc')->get()->toArray();
+        $records = ModelUtil::model('banner')->where(['position' => $position])->orderBy('sort', 'asc')->get()->toArray();
+        foreach ($records as $i => $v) {
+            if ($v['image']) {
+                $records[$i]['image'] = AssetsUtil::fixFull($v['image']);
+            }
+            if ($v['video']) {
+                $records[$i]['video'] = AssetsUtil::fixFull($v['video']);
+            }
+        }
+        return $records;
     }
 
     /**

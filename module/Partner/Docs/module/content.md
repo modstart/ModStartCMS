@@ -10,9 +10,7 @@
     一行代码在系统中引入
 ```
 
-## 如何调用友情链接
-
-需要使用的 `blade` 模板中直接引入
+## 快速调用
 
 **常规版本**
 
@@ -32,9 +30,25 @@
 {!! \Module\Partner\View\PartnerView::text('位置') !!}
 ```
 
-## 快速实现自定义位置的友情链接
+## 循环显示友情链接
 
-### 第一步，增加一组友情链接位置
+```php
+// 循环特定位置友情链接
+@foreach(\MPartner::all('Xxx') as $partner)
+  <a href="{{ $partner['link'] }}">{{ $partner['title'] }}</a>
+@endforeach
+```
+
+## 不同位置友情链接
+
+```php
+// 位置 Blog
+\MPartner::all('Blog')
+// 位置 Cms
+\MPartner::all('Cms')
+```
+
+## 位置注册
 
 **使用界面方式**
 
@@ -46,10 +60,5 @@
 \Module\Partner\Biz\PartnerPositionBiz::registerQuick('位置', '描述');
 ```
 
-### 第二步，使用如下代码在blade页面调用
-
-```html
-{!! \Module\Partner\View\PartnerView::transparent('位置') !!}
-```
 
 {ADMIN_MENUS}

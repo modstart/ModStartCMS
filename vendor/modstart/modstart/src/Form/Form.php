@@ -195,6 +195,7 @@ class Form implements Renderable
      */
     private $itemId = null;
     /**
+     * 表单编辑、删除的记录，该数组值都为已序列化的字符串
      * @var Model|stdClass
      */
     private $item;

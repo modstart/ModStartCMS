@@ -1,6 +1,7 @@
 <!doctype html>
 <html @yield('htmlProperties','')>
 <head>
+    @section('headPrepend')@show
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="@yield('pageFavIco','')" />
     <meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=5, user-scalable=no">

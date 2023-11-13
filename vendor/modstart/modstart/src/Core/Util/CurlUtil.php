@@ -210,6 +210,9 @@ class CurlUtil
         if (!isset($option['userAgent'])) {
             $option['userAgent'] = self::defaultUserAgent();
         }
+        if (isset($option['userAgentAppend'])) {
+            $option['userAgent'] .= ' ' . $option['userAgentAppend'];
+        }
         if (!empty($option['userAgent'])) {
             curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
         }
@@ -340,13 +343,17 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
         }
         $temp = curl_exec($ch);
+        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        if (200 != $statusCode) {
+            return null;
+        }
         return $temp;
     }
 
     public static function defaultUserAgent()
     {
-        $userAgent = 'ModStart/' . modstart_version() . ' PHP/' . PHP_VERSION . ' OS/' . PHP_OS;
+        $userAgent = 'MSCore/' . modstart_version() . ' PHP/' . PHP_VERSION . ' OS/' . PHP_OS;
         $appInfo = [];
         if (class_exists(\App\Constant\AppConstant::class)) {
             if (defined('\\App\\Constant\\AppConstant::APP')) {

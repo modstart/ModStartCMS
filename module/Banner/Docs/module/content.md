@@ -14,45 +14,40 @@
 
 ## 使用方式
 
-在需要使用到的地方通过如下代码调用
+```php
+// 循环特定位置轮播
+@foreach(\MBanner::all('Xxx') as $banner)
+    @if($banner['type']===\Module\Banner\Type\BannerType::IMAGE)
+        图片
+        <a href="{{ $banner['link'] }}">{{ $banner['image'] }}</a>
+    @elseif($banner['type']===\Module\Banner\Type\BannerType::IMAGE_TITLE_SLOGAN_LINK)
+        图片+标题+描述+链接
+        <a href="{{ $banner['link'] }}">{{ $banner['image'] }}</a>
+    @elseif($banner['type']===\Module\Banner\Type\BannerType::VIDEO)
+        视频
+        <a href="{{ $banner['link'] }}">{{ $banner['video'] }}</a>
+    @endif
+@endforeach
 
-```html
-{!! \Module\Banner\View\BannerView::simple('位置') !!}
+// 循环特定位置轮播（仅包含图片）
+@foreach(\MBanner::allImage('Xxx') as $banner)
+  <a href="{{ $banner['link'] }}">{{ $banner['image'] }}</a>
+@endforeach
 ```
 
-## 模块位置信息注册
-
-通过以下方式可以实现一个轮播位置，其中name为位置（position），title为标题。
+### 不同位置轮播
 
 ```php
-class XxxBannerPositionProvider extends AbstractBannerPositionProvider
-{
-    public function name()
-    {
-        return 'wendaHome';
-    }
-
-    public function title()
-    {
-        return '问答首页';
-    }
-}
+// 位置 Blog
+\MBanner::all('Blog')
+// 位置 Cms
+\MBanner::all('Cms')
 ```
 
-同时在 `ModuleServiceProvider` 中注册轮播位置
+### 快速渲染
 
 ```php
-if (class_exists(BannerPositionProvider::class)) {
-    BannerPositionProvider::register(XxxBannerPositionProvider::class);
-}
-```
-
-如此便可在通用轮播管理的页面进行轮播的管理
-
-## 如何调整轮播的比例和大小
-
-```html
-{!! \Module\Banner\View\BannerView::render('位置',['bannerRatio'=>'5-2']) !!}
+{!! \Module\Banner\View\BannerView::basic('位置') !!}
 ```
 
 默认情况下，轮播使用了 `5-2` 的比例，还支持的内置比例有，调用时候只需要添加 `宽-高` 的 `bannerRatio` 变量即可。
@@ -69,5 +64,32 @@ if (class_exists(BannerPositionProvider::class)) {
 
 如果需要其他尺寸，可自行在 `module/Banner/View/pc/public/banner.blade.php` 模板文件中调整。
 
+
+## 模块位置信息注册
+
+通过以下方式可以实现一个轮播位置，其中name为位置（position），title为标题。
+
+```php
+class XxxBannerPositionBiz extends \Module\Banner\Biz\AbstractBannerPositionBiz
+{
+    public function name()
+    {
+        return 'Xxx';
+    }
+
+    public function title()
+    {
+        return '特定位置';
+    }
+}
+```
+
+同时在 `XxxBannerPositionBiz` 中注册轮播位置
+
+```php
+\Module\Banner\Biz\BannerPositionBiz::register(XxxBannerPositionBiz::class);
+```
+
+如此便可在通用轮播管理的页面进行轮播的管理
 
 {ADMIN_MENUS}

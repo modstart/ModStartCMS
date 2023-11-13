@@ -6,6 +6,8 @@ use Module\Cms\Util\CmsMemberPermitUtil;
 
 /**
  * @Util CMS操作
+ * 1 统一用单数
+ * 2 分页统一使用 page
  */
 class MCms
 {
@@ -88,13 +90,12 @@ class MCms
     }
 
     /**
+     * @Util 根据栏目ID获取内容列表（包含副表字段），不包含子栏目
      * @param $catId int 栏目ID
      * @param $page int 页码
      * @param $pageSize int 分页大小
      * @param $option array 其他选项
      * @return array
-     *
-     * @Util 根据栏目ID获取内容列表（包含副表字段），不包含子栏目
      */
     public static function pageContentWithDataByCat($catId, $page = 1, $pageSize = 10, $option = [])
     {
@@ -117,13 +118,12 @@ class MCms
     }
 
     /**
+     * @Util 根据多个栏目ID获取内容列表（包含副表字段），不包含子栏目，多个栏目必须为相同的模型
      * @param $catIds int[] 栏目ID
      * @param $page int 页码
      * @param $pageSize int 分页大小
      * @param $option array 其他选项
      * @return array
-     *
-     * @Util 根据多个栏目ID获取内容列表（包含副表字段），不包含子栏目，多个栏目必须为相同的模型
      */
     public static function pageContentWithDataByCats($catIds, $page = 1, $pageSize = 10, $option = [])
     {

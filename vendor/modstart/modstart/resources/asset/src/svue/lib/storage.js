@@ -17,6 +17,9 @@ const Storage = {
      */
     get: function (key, defaultValue) {
         let value = window.localStorage.getItem(key)
+        if (null === value) {
+            return defaultValue
+        }
         try {
             return JSON.parse(value);
         } catch (e) {

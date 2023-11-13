@@ -9,7 +9,7 @@
     <div class="field">
         <div id="{{$id}}Input" v-cloak>
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
-            <table class="ub-table border border-all">
+            <table class="ub-table border border-all tw-bg-white">
                 <thead>
                 <tr>
                     <th width="200">{{$keyTitle}}</th>

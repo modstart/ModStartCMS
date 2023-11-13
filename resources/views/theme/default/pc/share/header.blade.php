@@ -9,6 +9,9 @@
                     </a>
                     <div class="sub-nav">
                         {!! \Module\Member\Config\MemberNavMenu::render() !!}
+                        <a class="sub-nav-item" href="{{modstart_web_url('member')}}">
+                            用户中心
+                        </a>
                         <a class="sub-nav-item" href="javascript:;"
                            data-href="{{modstart_web_url('logout')}}" data-confirm="确认退出登录？">
                             退出登录

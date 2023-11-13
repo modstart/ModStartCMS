@@ -25,7 +25,7 @@ class AdminLogController extends Controller
             $grid->select('adminUserId', L('Admin User'))->optionModel('admin_user', 'id', 'username');
             $grid->type('type', L('Type'))->type(AdminLogType::class)->width(100);
             $grid->display('summary', L('Title'));
-            $grid->jsonKeyValue('data.content', L('Data'));
+            $grid->jsonKeyValue('data.content', L('Data'))->width(200);
             $grid->display('created_at', L('Created At'))->width(160);
             $grid->gridFilter(function (GridFilter $filter) {
                 $filter->eq('adminUserId', L('Admin User'))->selectModel('admin_user', 'id', 'username');

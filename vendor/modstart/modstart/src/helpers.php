@@ -316,6 +316,18 @@ function modstart_config($key = null, $default = '', $useCache = true)
 }
 
 /**
+ * @Util 获取配置资源路径
+ * @param $key string 配置名称
+ * @param $default string 默认值
+ * @return string
+ */
+function modstart_config_asset_url($key, $default = '')
+{
+    $value = modstart_config($key, $default);
+    return \ModStart\Core\Assets\AssetsUtil::fixFull($value);
+}
+
+/**
  * @Util 模块判断
  * @desc 判断模块是否已安装并启用
  * @param $module string 模块名称，如 Member

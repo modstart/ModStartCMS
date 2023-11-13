@@ -5,9 +5,7 @@ namespace Module\Vendor\Provider\SiteTemplate;
 
 
 /**
- * Class SiteTemplateProvider
- * @package Module\Vendor\Provider\SiteTemplate
- * @since 1.5.0
+ * 模板提供者，所有模板都需要在这里注册
  */
 class SiteTemplateProvider
 {
