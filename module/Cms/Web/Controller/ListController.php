@@ -37,13 +37,20 @@ class ListController extends BaseCatController
         $viewData['page'] = $page;
         $viewData['pageSize'] = $pageSize;
         $viewData['records'] = $paginateData['records'];
+        $viewData['total'] = $paginateData['total'];
         $pageTemplate = '?page={page}';
         if (!empty($cat['pageFullUrl'])) {
             $pageTemplate = modstart_web_url($cat['pageFullUrl']);
         }
+        $viewData['pageTemplate'] = $pageTemplate;
         $viewData['pageNextUrl'] = PageHtmlUtil::nextPageUrl($paginateData['total'], $pageSize, $page, $pageTemplate);
         $viewData['pagePrevUrl'] = PageHtmlUtil::prevPageUrl($paginateData['total'], $pageSize, $page, $pageTemplate);
         $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, $pageTemplate);
+
+        $viewData['pageTitle'] = ($cat['seoTitle'] ? $cat['seoTitle'] : $cat['title']) . ' | ' . modstart_config('siteName');
+        $viewData['pageKeywords'] = $cat['seoKeywords'] ? $cat['seoKeywords'] : $cat['title'];
+        $viewData['pageDescription'] = $cat['seoDescription'] ? $cat['seoDescription'] : $cat['title'];
+
         return $this->view('cms.list.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

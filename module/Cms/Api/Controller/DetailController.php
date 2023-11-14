@@ -68,6 +68,11 @@ class DetailController extends ModuleBaseController
                 BizException::throws('记录未审核');
             }
         }
+
+        $viewData['pageTitle'] = ($record['seoTitle'] ? $record['seoTitle'] : $record['title']) . ' | ' . modstart_config('siteName');
+        $viewData['pageKeywords'] = $record['seoKeywords'] ? $record['seoKeywords'] : $record['title'];
+        $viewData['pageDescription'] = $record['seoDescription'] ? $record['seoDescription'] : $record['title'];
+
         return Response::generateSuccessData($viewData);
     }
 }

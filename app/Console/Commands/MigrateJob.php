@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\HtmlUtil;
 use ModStart\Data\DataManager;
 
@@ -15,12 +17,6 @@ class MigrateJob extends Command
 
     public function handle()
     {
-        print_r(ModelUtil::paginate('cms_content', 1, 10, [
-            'whereOperate'=>['id','>',0],
-            'where' => [
-                'id' => 2
-            ]
-        ]));
     }
 
     private function storageTest()

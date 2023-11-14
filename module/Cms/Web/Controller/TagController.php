@@ -25,8 +25,14 @@ class TagController extends ModuleBaseController
         $viewData = [];
         $viewData['tag'] = $tag;
         $viewData['records'] = $paginateData['records'];
+        $viewData['page'] = $page;
+        $viewData['pageSize'] = $pageSize;
         $viewData['total'] = $paginateData['total'];
+        $viewData['pageTemplate'] = '?page={page}';
         $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, '?page={page}');
+        $viewData['pageTitle'] = $tag . ' | ' . modstart_config('siteName');
+        $viewData['pageKeywords'] = $tag;
+        $viewData['pageDescription'] = $tag;
         return $this->view('cms.tag.index', $viewData);
     }
 }

@@ -30,9 +30,16 @@ class SearchController extends ModuleBaseController
         $paginateData = CmsContentUtil::paginate($page, $pageSize, $option);
         $viewData = [];
         $viewData['keywords'] = $keywords;
+        $viewData['page'] = $page;
+        $viewData['pageSize'] = $pageSize;
         $viewData['records'] = $paginateData['records'];
         $viewData['total'] = $paginateData['total'];
+        $viewData['pageTemplate'] = '?' . Request::mergeQueries(['page' => ['{page}']]);
         $viewData['pageHtml'] = PageHtmlUtil::render($paginateData['total'], $pageSize, $page, '?' . Request::mergeQueries(['page' => ['{page}']]));
+        $viewData['pageTitle'] = '搜索：' . $keywords . ' | ' . modstart_config('siteName');
+        $viewData['pageKeywords'] = '搜索：' . $keywords;
+        $viewData['pageDescription'] = '搜索：' . $keywords;
+
         return $this->view('cms.search.index', $viewData);
     }
 }
