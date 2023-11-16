@@ -20,6 +20,11 @@ class ContentUrlMode implements BaseType
         ];
     }
 
+    /**
+     * @param $content
+     * @return string
+     * @deprecated delete at 2024-05-15
+     */
     public static function url($content)
     {
         if (!empty($content['fullUrl'])) {

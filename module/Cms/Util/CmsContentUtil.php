@@ -63,7 +63,7 @@ class CmsContentUtil
             if (!empty($record['cover'])) {
                 $paginateData['records'][$k]['cover'] = AssetsUtil::fixFull($record['cover']);
             }
-            $paginateData['records'][$k]['_url'] = ContentUrlMode::url($record);
+            $paginateData['records'][$k]['_url'] = UrlUtil::content($record);
             $paginateData['records'][$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
             $paginateData['records'][$k]['_tags'] = TagUtil::string2Array($record['tags']);
         }
@@ -90,7 +90,7 @@ class CmsContentUtil
             if (!empty($record['cover'])) {
                 $records[$k]['cover'] = AssetsUtil::fixFull($record['cover']);
             }
-            $records[$k]['_url'] = ContentUrlMode::url($record);
+            $records[$k]['_url'] = UrlUtil::content($record);
             $records[$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
             $records[$k]['_tags'] = TagUtil::string2Array($record['tags']);
             $model = CmsModelUtil::get($record['modelId']);
@@ -150,7 +150,7 @@ class CmsContentUtil
             if (!empty($record['cover'])) {
                 $paginateData['records'][$k]['cover'] = AssetsUtil::fixFull($record['cover']);
             }
-            $paginateData['records'][$k]['_url'] = ContentUrlMode::url($record);
+            $paginateData['records'][$k]['_url'] = UrlUtil::content($record);
             $paginateData['records'][$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
             $paginateData['records'][$k]['_tags'] = TagUtil::string2Array($record['tags']);
             $paginateData['records'][$k] = CmsModelUtil::decodeCustomField($dataModel, $paginateData['records'][$k]);

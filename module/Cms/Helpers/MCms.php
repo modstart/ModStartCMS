@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsMemberPermitUtil;
@@ -356,6 +357,22 @@ class MCms
     {
         $cat = self::getCatByUrl($cateUrl);
         return self::latestRecommendContentByCat($cat['id'], $limit);
+    }
+
+    /**
+     * @Util 根据栏目ID获取司机记录
+     * @param $catId int 栏目ID
+     * @param $limit int 数量
+     * @return array
+     */
+    public static function randomContentByCat($catId, $limit = 10)
+    {
+        $option = [
+            'order' => [DB::raw('RAND()'), ''],
+        ];
+        $paginateData = CmsContentUtil::paginateCat($catId, 1, $limit, $option);
+        $records = $paginateData['records'];
+        return $records;
     }
 
     /**

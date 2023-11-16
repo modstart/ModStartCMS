@@ -5,6 +5,7 @@ namespace Module\Cms\Util;
 
 
 use Illuminate\Support\Facades\Cache;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TreeUtil;
@@ -43,6 +44,10 @@ class CmsCatUtil
                 $records[$k]['_model'] = CmsModelUtil::get($v['modelId']);
                 $records[$k]['_url'] = CatUrlMode::url($v);
             }
+            AssetsUtil::recordsFixFullOrDefault($records, [
+                'cover',
+                'bannerBg',
+            ]);
             return $records;
         });
     }

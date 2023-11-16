@@ -5,7 +5,7 @@ namespace Module\Cms\Core;
 
 
 use ModStart\Core\Dao\ModelUtil;
-use Module\Cms\Type\ContentUrlMode;
+use Module\Cms\Util\UrlUtil;
 use Module\Vendor\Provider\SiteUrl\AbstractSiteUrlBiz;
 
 class CmsSiteUrlBiz extends AbstractSiteUrlBiz
@@ -29,7 +29,7 @@ class CmsSiteUrlBiz extends AbstractSiteUrlBiz
         $finish = empty($batchRet['records']);
         foreach ($batchRet['records'] as $record) {
             $records[] = [
-                'url' => ContentUrlMode::url($record),
+                'url' => UrlUtil::content($record),
                 'updateTime' => $record['updated_at'],
             ];
         }

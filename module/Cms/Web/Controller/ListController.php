@@ -51,6 +51,7 @@ class ListController extends BaseCatController
         $viewData['pageKeywords'] = $cat['seoKeywords'] ? $cat['seoKeywords'] : $cat['title'];
         $viewData['pageDescription'] = $cat['seoDescription'] ? $cat['seoDescription'] : $cat['title'];
 
+        // return $viewData;
         return $this->view('cms.list.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

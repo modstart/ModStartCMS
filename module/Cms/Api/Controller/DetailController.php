@@ -13,6 +13,7 @@ use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsMemberPermitUtil;
+use Module\Cms\Util\UrlUtil;
 use Module\Member\Auth\MemberUser;
 
 /**
@@ -55,6 +56,7 @@ class DetailController extends ModuleBaseController
                 'seoTitle', 'seoKeywords', 'seoDescription',
             ]);
         }
+        $record['_url'] = UrlUtil::content($record);
         $viewData['record'] = $record;
         $viewData['recordPrev'] = \MCms::prevContent($record['catId'], $record['id']);
         $viewData['recordNext'] = \MCms::nextContent($record['catId'], $record['id']);

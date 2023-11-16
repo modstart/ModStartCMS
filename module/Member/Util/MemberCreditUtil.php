@@ -43,10 +43,7 @@ class MemberCreditUtil
             throw new \Exception('MemberCreditUtil -> total change to empty');
         }
         ModelUtil::insert('member_credit_log', ['memberUserId' => $memberUserId, 'change' => $change, 'remark' => $remark]);
-        $m = ModelUtil::update('member_credit', ['id' => $m['id']], ['total' => $m['total'] + $change]);
-        if ($m['total'] < 0) {
-            throw new \Exception('MemberCreditUtil -> total empty');
-        }
+        ModelUtil::update('member_credit', ['id' => $m['id']], ['total' => $m['total'] + $change]);
     }
 
 }
