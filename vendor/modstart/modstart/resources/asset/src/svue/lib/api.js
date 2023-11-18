@@ -82,7 +82,8 @@ const processResponse = (res, failCB, successCB) => {
             }
         }
         if (!processed) {
-            if (!failCB(res)) {
+            // 只有返回 true 表示已经处理了响应
+            if (true !== failCB(res)) {
                 Message({
                     message: res.msg,
                     type: 'error',
@@ -91,7 +92,8 @@ const processResponse = (res, failCB, successCB) => {
             }
         }
     } else {
-        if (successCB(res)) {
+        // 只有返回 true 表示需要处理响应
+        if (true === successCB(res)) {
             Message({
                 message: res.msg,
                 type: 'success',

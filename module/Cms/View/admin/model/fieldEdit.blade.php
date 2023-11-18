@@ -63,6 +63,8 @@
                 <div class="line">
                     <div class="label">
                         是否必填
+                        <i class="iconfont icon-warning"
+                           data-tip-popover="后台编辑时是否必填"></i>
                     </div>
                     <div class="field">
                         <el-switch v-model="data.isRequired"></el-switch>
@@ -70,7 +72,7 @@
                 </div>
                 <div class="line">
                     <div class="label">
-                        后台搜索
+                        后台列表搜索
                     </div>
                     <div class="field">
                         <el-switch v-model="data.isSearch"></el-switch>
@@ -78,7 +80,7 @@
                 </div>
                 <div class="line">
                     <div class="label">
-                        列表显示
+                        后台列表显示
                     </div>
                     <div class="field">
                         <el-switch v-model="data.isList"></el-switch>
@@ -87,6 +89,8 @@
                 <div class="line">
                     <div class="label">
                         访客列表页面可见
+                        <i class="iconfont icon-warning"
+                           data-tip-popover="关闭后，在前台列表页面不可见该字段"></i>
                     </div>
                     <div class="field">
                         <el-switch v-model="data.guestVisitVisible"></el-switch>
@@ -132,10 +136,10 @@
                 watch: {
                     data: {
                         handler(n, o) {
-                            if(!FieldCustomScript[this.data.fieldType]){
+                            if (!FieldCustomScript[this.data.fieldType]) {
                                 return;
                             }
-                            if(!FieldCustomScript[this.data.fieldType]['onDataChange']){
+                            if (!FieldCustomScript[this.data.fieldType]['onDataChange']) {
                                 return;
                             }
                             FieldCustomScript[this.data.fieldType]['onDataChange'].call(this);
@@ -160,6 +164,9 @@
                             return
                         }
                         if (!this.data.title) {
+                            return
+                        }
+                        if(this.data.name){
                             return
                         }
                         let value, s, i
@@ -194,13 +201,13 @@
                     doSubmit() {
                         MS.dialog.loadingOn()
                         MS.api.post(window.location.href, {data: JSON.stringify(this.data)}, res => {
-                            MS.api.defaultCallback(res,{
-                                success:res=>{
+                            MS.api.defaultCallback(res, {
+                                success: res => {
                                     MS.dialog.loadingOff()
                                     parent.__grids.get(0).lister.refresh()
                                     parent.layer.closeAll()
                                 },
-                                error:res=>{
+                                error: res => {
                                     MS.dialog.loadingOff()
                                 }
                             })

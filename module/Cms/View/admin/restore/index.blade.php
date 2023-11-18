@@ -28,6 +28,13 @@
                             <i class="iconfont icon-warning"></i>
                         </a>
                     </th>
+                    <th>
+                        配置
+                        <a href="javascript:;" class="ub-text-muted"
+                           data-tip-popover="恢复后如果存在同名配置，这些配置会被覆盖，记得提前备份">
+                            <i class="iconfont icon-warning"></i>
+                        </a>
+                    </th>
                     <th>大小</th>
                     <th width="150">操作</th>
                 </tr>
@@ -51,7 +58,12 @@
                         <td class="tw-font-mono ub-text-truncate">{{$backup['filename']}}</td>
                         <td class="tw-font-mono">
                             @foreach($backup['tables'] as $table)
-                                <span class="ub-tag tw-mb-1">{{$table}}</span>
+                                <span class="ub-tag tw-mb-1 ub-text-sm">{{$table}}</span>
+                            @endforeach
+                        </td>
+                        <td class="tw-font-mono">
+                            @foreach($backup['config'] as $k=>$v)
+                                <span class="ub-tag tw-mb-1 ub-text-sm">{{$k}}</span>
                             @endforeach
                         </td>
                         <td class="tw-font-mono ub-text-truncate">{{\ModStart\Core\Util\FileUtil::formatByte($backup['size'])}}</td>

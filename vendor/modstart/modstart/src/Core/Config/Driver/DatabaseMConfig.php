@@ -4,6 +4,7 @@
 namespace ModStart\Core\Config\Driver;
 
 use Illuminate\Support\Facades\Cache;
+use ModStart\Admin\Model\Config;
 use ModStart\Core\Config\MConfig;
 use ModStart\Core\Dao\ModelUtil;
 
@@ -70,5 +71,14 @@ class DatabaseMConfig extends MConfig
         return !!$config;
     }
 
-
+    public function all($prefix = null)
+    {
+        $query = Config::query();
+        if (null !== $prefix) {
+            $query->where('key', 'like', $prefix . '%');
+        }
+        $configs = $query->get(['key', 'value'])->toArray();
+        return $configs;
+        return array_column($configs, 'value', 'key');
+    }
 }

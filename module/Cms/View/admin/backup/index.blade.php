@@ -33,6 +33,19 @@
                         </div>
                     </div>
                     <div class="line">
+                        <div class="label">备份配置</div>
+                        <div class="field">
+                            @foreach($configs as $c)
+                                <label class="tw-font-mono tw-inline-block" style="min-width:15rem;">
+                                    <input type="checkbox" style="vertical-align:middle;" name="config[]"
+                                           value="{{$c['key']}}"
+                                    />
+                                    {{$c['key']}}
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="line">
                         <div class="label">
                             备份保存目录
                         </div>
@@ -42,12 +55,28 @@
                                     <option value="{{$theme->name()}}">module/{{$theme->name()}}/Backup</option>
                                 @endforeach
                             </select>
+                            <script>
+                                $(function () {
+                                    var change = function () {
+                                        var val = $('[name="module"]').val();
+                                        $('[name="config[]"]').each(function () {
+                                            var $this = $(this);
+                                            if ($this.val().indexOf(val) === 0) {
+                                                $this.prop('checked', true);
+                                            } else {
+                                                $this.prop('checked', false);
+                                            }
+                                        });
+                                    };
+                                    $('[name="module"]').on('change', change);
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="line">
                         <div class="label">备份文件名称</div>
                         <div class="field">
-                            <input name="filename" class="form tw-w-full" value="{{date('Ymd_His')}}" />
+                            <input name="filename" class="form tw-w-full" value="{{date('Ymd_His')}}"/>
                             <div class="help">
                                 规则：数字字母下划线组成
                             </div>

@@ -118,11 +118,9 @@ var Form = {
             data = res.data;
         }
 
-        var successFunc = function () {
-            if ("success" in callback) {
-                callback.success(res);
-            } else if (redirect) {
-                if (msg) {
+        var defaultSuccessFunc = function () {
+            if (msg) {
+                if (redirect) {
                     if (Dialog) {
                         Dialog.alertSuccess(msg, function () {
                             Form.redirectProcess(redirect);
@@ -132,24 +130,32 @@ var Form = {
                         Form.redirectProcess(redirect);
                     }
                 } else {
-                    Form.redirectProcess(redirect);
-                }
-            } else {
-                if (msg) {
                     if (Dialog) {
                         Dialog.tipSuccess(msg);
                     } else {
                         alert(msg);
                     }
                 }
+            } else {
+                if (redirect) {
+                    Form.redirectProcess(redirect);
+                }
+            }
+        }
+
+        var successFunc = function () {
+            if ("success" in callback) {
+                if (true === callback.success(res)) {
+                    defaultSuccessFunc();
+                }
+            } else {
+                defaultSuccessFunc();
             }
         };
 
-        var errorFunc = function () {
-            if ("error" in callback) {
-                callback.error(res);
-            } else if (redirect) {
-                if (msg) {
+        var defaultErrorFunc = function () {
+            if (msg) {
+                if (redirect) {
                     if (Dialog) {
                         Dialog.alertError(msg, function () {
                             Form.redirectProcess(redirect);
@@ -159,14 +165,26 @@ var Form = {
                         Form.redirectProcess(redirect);
                     }
                 } else {
-                    Form.redirectProcess(redirect);
+                    if (Dialog) {
+                        Dialog.tipError(msg);
+                    } else {
+                        alert(msg);
+                    }
                 }
             } else {
-                if (Dialog) {
-                    Dialog.tipError(msg);
-                } else {
-                    alert(msg);
+                if (redirect) {
+                    Form.redirectProcess(redirect);
                 }
+            }
+        };
+
+        var errorFunc = function () {
+            if ("error" in callback) {
+                if (true !== callback.error(res)) {
+                    defaultErrorFunc()
+                }
+            } else {
+                defaultErrorFunc()
             }
         };
 

@@ -32,7 +32,7 @@ class MemberVipSetController extends Controller
                         ->defaultValue(ModelUtil::sortNext('member_vip_set', [], 'id'));
                     $builder->text('title', '名称')->required()->ruleUnique('member_vip_set');
                     $builder->text('flag', '英文标识')->required()->ruleUnique('member_vip_set');
-                    $builder->switch('visible', '可见')->gridEditable(true)->tip('开启后前台用户可见');
+                    $builder->switch('visible', '可见')->gridEditable(true)->tip('开启后前台用户VIP开通页面可见');
                     $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级')->required();
                     $builder->image('icon', '图标');
                     $builder->currency('price', '价格')->required();

@@ -28,12 +28,16 @@ class CmsBackupUtil
                 if (empty($json) || empty($json['structure'])) {
                     continue;
                 }
+                if (empty($json['config'])) {
+                    $json['config'] = [];
+                }
                 $results[] = [
                     'module' => $theme->name(),
                     'root' => 'module/' . $theme->name() . '/Backup',
                     'filename' => $file['filename'],
                     'size' => $file['size'],
                     'tables' => array_keys($json['structure']),
+                    'config' => $json['config'],
                 ];
             }
         }
@@ -60,6 +64,12 @@ class CmsBackupUtil
                 continue;
             }
             ModelUtil::insertAll($table, $data, false);
+        }
+        if (!empty($backup['config'])) {
+            $config = modstart_config();
+            foreach ($backup['config'] as $k => $v) {
+                $config->set($k, $v);
+            }
         }
     }
 

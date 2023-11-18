@@ -62,11 +62,19 @@ class FormController extends BaseCatController
                 $submitData[$customField['name']] = $f->serializeValue($submitData[$customField['name']], $submitData);
             }
         }
-        if (empty($submitData['content'])) {
-            if (Request::isAjax()) {
-                return Response::generateError('内容为空');
+        $hasContent = false;
+        foreach ($submitData as $v) {
+            if (is_null($v) || $v === '') {
+            } else {
+                $hasContent = true;
+                break;
             }
-            return Response::send(-1, '内容为空', null, Request::headerReferer());
+        }
+        if (!$hasContent) {
+            if (Request::isAjax()) {
+                return Response::generateError('提交内容为空');
+            }
+            return Response::send(-1, '提交内容为空', null, Request::headerReferer());
         }
         $submitDataPrimary = [];
         $submitDataPrimary['catId'] = $data['cat']['id'];
