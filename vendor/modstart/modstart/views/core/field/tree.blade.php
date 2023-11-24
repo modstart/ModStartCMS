@@ -37,6 +37,7 @@
             id: '{{$name}}Tree',
             elem: '#{{$name}}Tree',
             showCheckbox: true,
+            independentEnable: {!! json_encode(!empty($independentEnable)) !!},
             data: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($nodes) !!},
             oncheck: function (obj) {
                 var nodes = tree.getChecked('{{$name}}Tree');

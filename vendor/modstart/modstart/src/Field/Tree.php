@@ -20,6 +20,7 @@ class Tree extends AbstractField
     {
         $this->addVariables([
             'spread' => true,
+            'independentEnable' => false,
             'nodes' => [],
         ]);
     }
@@ -57,9 +58,25 @@ class Tree extends AbstractField
         return $this;
     }
 
+    /**
+     * 设置是否展开
+     * @param $value bool 是否展开
+     * @return $this
+     */
     public function spread($value)
     {
         $this->addVariables(['spread' => $value]);
+        return $this;
+    }
+
+    /**
+     * 是否为独立模式，独立模式下，树状的节点父子选项不会做任何关联
+     * @param $enable bool 是否启用独立模式
+     * @return $this
+     */
+    public function independentEnable($enable)
+    {
+        $this->addVariables(['independentEnable' => $enable]);
         return $this;
     }
 
