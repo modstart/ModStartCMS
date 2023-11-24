@@ -47,6 +47,9 @@ return [
         'VisitStatistic' => [
             'enable' => true,
         ],
+        'ContentBlock' => [
+            'enable' => true,
+        ],
         'Cms' => [
             'enable' => true,
         ],

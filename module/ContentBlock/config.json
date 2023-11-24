@@ -1,0 +1,25 @@
+{
+    "name": "ContentBlock",
+    "title": "内容区块",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "types": [
+        "PC",
+        "Mobile"
+    ],
+    "tags": [],
+    "require": [
+        "Vendor:>=4.1.0"
+    ],
+    "suggest": [],
+    "version": "1.1.0",
+    "modstartVersion": ">=3.7.0",
+    "author": "ModStart",
+    "description": "后台提供便捷的的内容块管理代码，方便前端调用展示",
+    "providers": [
+    ],
+    "config": {
+    }
+}

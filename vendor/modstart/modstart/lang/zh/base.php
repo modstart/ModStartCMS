@@ -198,7 +198,6 @@ return [
     'No Permission' => '没有权限',
     'Edit File' => '编辑文件',
     'View File' => '查看文件',
-    'Reverse Select Order' => '反转选择顺序',
     'Expand All' => '展开全部',
     'Phone' => '手机',
     'Email' => '邮箱',

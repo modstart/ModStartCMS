@@ -11,6 +11,8 @@
 - Captcha 人机验证提供者
 - CensorImage 图片智能审核提供者
 - CensorText 文字智能审核提供者
+- ContentVerify 内容审核提供者
+- DataRef 上传文件引用引用提供者
 - HomePage 首页提供者
 - IDManager ID管理提供者
 - LBS 地理位置服务提供者

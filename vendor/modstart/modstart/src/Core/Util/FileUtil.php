@@ -694,4 +694,20 @@ class FileUtil
         return $realpath ? public_path($p) : $p;
     }
 
+    /**
+     * 将目标文件或目录创建为符号链接。如果目标是文件，则在Windows上创建硬链接。
+     *
+     * @param string $target
+     * @param string $link
+     * @return void
+     */
+    public static function link($target, $link)
+    {
+        if (PlatformUtil::isWindows()) {
+            $mode = is_dir($target) ? 'J' : 'H';
+            exec("mklink /{$mode} " . escapeshellarg($link) . ' ' . escapeshellarg($target));
+        } else {
+            symlink($target, $link);
+        }
+    }
 }

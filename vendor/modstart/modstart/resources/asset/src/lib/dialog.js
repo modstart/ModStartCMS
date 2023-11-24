@@ -1,15 +1,22 @@
 let $ = require('jquery');
 
-if ('layer' in window) {
-    console.error('ERR: dialog should required only once, use window.api.dialog instead')
-}
-
-// let layer = require('./layer/layer.js');
-// let layerLess = require('./layer/theme/default/layer.less');
 let Util = require('./util.js');
+
+function createDialogHtml(dialogIndex, html) {
+    if (!$('#msDialogStyle').length) {
+        $('head').append('<style id="msDialogStyle">@keyframes ms-rotate { from { transform: rotate(0) } to { transform: rotate(360deg) } }</style>');
+    }
+    return '<div data-ms-dialog id="msDialog' + dialogIndex
+        + '" style="display:flex;align-items:center;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.01);z-index:' + Util.getNextMaxZIndex() + ';">'
+        + '<div style="flex-grow:1;text-align:center;">'
+        + html
+        + '</div>'
+        + '</div>';
+}
 
 let Dialog = {
     device: 'pc',
+    dialogIndex: 1,
     // [开始] 这部分的提示需处理
     /**
      * @Util 页面遮罩显示
@@ -19,20 +26,29 @@ let Dialog = {
      */
     loadingOn: function (msg) {
         msg = msg || null;
-        if (msg) {
-            let index = layer.open({
-                type: 1,
-                content: '<div style="padding:10px;height:32px;box-sizing:content-box;"><div class="layui-layer-ico16" style="display:inline-block;margin-right:10px;"></div><div style="display:inline-block;line-height:32px;vertical-align:top;font-size:13px;" class="loading-text">' + msg + '</div></div>',
-                shade: [0.3, '#000'],
-                closeBtn: false,
-                title: false,
-                area: ['auto', 'auto']
-            });
-            $('#layui-layer' + index).attr('type', 'loading');
-            return index
-        } else {
+        if (window.layer) {
+            if (msg) {
+                let index = layer.open({
+                    type: 1,
+                    content: '<div style="padding:10px;height:32px;box-sizing:content-box;"><div class="layui-layer-ico16" style="display:inline-block;margin-right:10px;"></div><div style="display:inline-block;line-height:32px;vertical-align:top;font-size:13px;" class="loading-text">' + msg + '</div></div>',
+                    shade: [0.3, '#000'],
+                    closeBtn: false,
+                    title: false,
+                    area: ['auto', 'auto']
+                });
+                $('#layui-layer' + index).attr('type', 'loading');
+                return index
+            }
             return layer.load(2);
         }
+        let dialogIndex = (Dialog.dialogIndex++)
+        let $dialog = $(createDialogHtml(dialogIndex,
+            '<div style="animation:ms-rotate 1s infinite;display:inline-block;position:relative;border:3px solid #EEE;border-right-color:#3555CC;border-radius:50%;width:30px;height:30px;vertical-align:middle;margin-right:10px;">'
+            + '</div>'
+            + '<div data-text style="display:inline-block;">'
+            + (msg ? msg : '')
+            + '</div>')).appendTo('body');
+        return dialogIndex
     },
     /**
      * @Util 页面遮罩更新
@@ -41,7 +57,11 @@ let Dialog = {
      * @param msg string 提示信息
      */
     loadingUpdate: function (loading, msg) {
-        $('#layui-layer' + loading + ' .loading-text').html(msg)
+        if (window.layer) {
+            $('#layui-layer' + loading + ' .loading-text').html(msg)
+        } else {
+            $('#msDialog' + loading).find('[data-text]').html(msg)
+        }
         $(window).resize()
     },
     /**
@@ -49,7 +69,11 @@ let Dialog = {
      * @method MS.dialog.loadingOff
      */
     loadingOff: function () {
-        layer.closeAll('loading');
+        if (window.layer) {
+            layer.closeAll('loading');
+        } else {
+            $('[data-ms-dialog]').remove();
+        }
     },
     /**
      * @Util 页面提示成功信息
@@ -62,7 +86,18 @@ let Dialog = {
         if (msg && msg.length > 10) {
             ms = 1000 * parseInt(msg.length / 5);
         }
-        layer.msg(msg, {shade: 0.3, time: ms, shadeClose: true, anim: -1}, cb);
+        if (window.layer) {
+            layer.msg(msg, {shade: 0.3, time: ms, shadeClose: true, anim: -1}, cb);
+        } else {
+            let dialogIndex = (Dialog.dialogIndex++)
+            let $dialog = $(createDialogHtml(dialogIndex,
+                '<div data-text style="display:inline-block;background:rgba(0,0,0,0.5);color:#FFF;padding:10px;border-radius:5px;">'
+                + msg
+                + '</div>')).appendTo('body');
+            setTimeout(function () {
+                $dialog.remove();
+            }, ms);
+        }
     },
     /**
      * @Util 页面提示错误信息
@@ -75,7 +110,11 @@ let Dialog = {
         if (msg.length > 10) {
             ms = 1000 * parseInt(msg.length / 5);
         }
-        layer.msg(msg, {shade: 0.3, time: ms, shadeClose: true, anim: 6}, cb);
+        if (window.layer) {
+            layer.msg(msg, {shade: 0.3, time: ms, shadeClose: true, anim: 6}, cb);
+        } else {
+            Dialog.tipSuccess(msg, cb)
+        }
     },
     tipPopoverShow: function (ele, msg) {
         let index = $(ele).data('popover-dialog');
@@ -102,22 +141,25 @@ let Dialog = {
      * @param callback function 回调函数
      */
     alertSuccess: function (msg, callback) {
-        layer.alert(msg, {icon: 1, closeBtn: 0}, function (index) {
-            layer.close(index);
-            if (callback) {
-                callback();
-            }
-        });
-        try {
-            document.activeElement.blur();
-            let $layer = $('#layui-layer' + index);
-            let $layerOK = $layer.find('.layui-layer-btn0');
-            $layerOK.attr('tabindex', 0).css({outline: 'none'}).get(0).focus();
-            $layer.on('keypress', function () {
-                $layerOK.click();
+        if (window.layer) {
+            let index = layer.alert(msg, {icon: 1, closeBtn: 0}, function (index) {
+                layer.close(index);
+                callback && callback();
             });
-        } catch (e) {
+            try {
+                document.activeElement.blur();
+                let $layer = $('#layui-layer' + index);
+                let $layerOK = $layer.find('.layui-layer-btn0');
+                $layerOK.attr('tabindex', 0).css({outline: 'none'}).get(0).focus();
+                $layer.on('keypress', function () {
+                    $layerOK.click();
+                });
+            } catch (e) {
+            }
+            return index
         }
+        alert(msg);
+        callback && callback();
     },
     /**
      * @Util 页面提示错误信息
@@ -126,23 +168,27 @@ let Dialog = {
      * @param callback function 回调函数
      */
     alertError: function (msg, callback) {
-        let index = layer.alert(msg, {icon: 2, closeBtn: 0}, function (index) {
-            layer.close(index);
-            if (callback) {
-                callback();
-            }
-        });
-        try {
-            document.activeElement.blur();
-            let $layer = $('#layui-layer' + index);
-            let $layerOK = $layer.find('.layui-layer-btn0');
-            $layerOK.attr('tabindex', 0).css({outline: 'none'}).get(0).focus();
-            $layer.on('keypress', function () {
-                $layerOK.click();
+        if (window.layer) {
+            let index = layer.alert(msg, {icon: 2, closeBtn: 0}, function (index) {
+                layer.close(index);
+                if (callback) {
+                    callback();
+                }
             });
-        } catch (e) {
+            try {
+                document.activeElement.blur();
+                let $layer = $('#layui-layer' + index);
+                let $layerOK = $layer.find('.layui-layer-btn0');
+                $layerOK.attr('tabindex', 0).css({outline: 'none'}).get(0).focus();
+                $layer.on('keypress', function () {
+                    $layerOK.click();
+                });
+            } catch (e) {
+            }
+            return index;
         }
-        return index;
+        alert(msg);
+        callback && callback();
     },
     /**
      * @Util 页面提示确认信息
@@ -156,17 +202,21 @@ let Dialog = {
         options = options || {icon: 3, title: '提示'};
         callbackYes = callbackYes || false;
         callbackNo = callbackNo || false;
-        layer.confirm(msg, options, function (index) {
-            layer.close(index);
-            if (callbackYes) {
-                callbackYes();
+        if (window.layer) {
+            layer.confirm(msg, options, function (index) {
+                layer.close(index);
+                callbackYes && callbackYes();
+            }, function (index) {
+                layer.close(index);
+                callbackNo && callbackNo();
+            });
+        } else {
+            if (confirm(msg)) {
+                callbackYes && callbackYes();
+            } else {
+                callbackNo && callbackNo();
             }
-        }, function (index) {
-            layer.close(index);
-            if (callbackNo) {
-                callbackNo();
-            }
-        });
+        }
     },
     /**
      * @Util 弹出URL页面

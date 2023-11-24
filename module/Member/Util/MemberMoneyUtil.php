@@ -47,10 +47,7 @@ class MemberMoneyUtil
             BizException::throws('Member.MoneyChangeUtil -> total change to empty');
         }
         ModelUtil::insert('member_money_log', ['memberUserId' => $memberUserId, 'change' => $change, 'remark' => $remark]);
-        $m = ModelUtil::update('member_money', ['id' => $m['id']], ['total' => $m['total'] + $change]);
-        if ($m['total'] < 0) {
-            BizException::throws('Member.MoneyChangeUtil -> total empty');
-        }
+        ModelUtil::update('member_money', ['id' => $m['id']], ['total' => $m['total'] + $change]);
     }
 
     /**

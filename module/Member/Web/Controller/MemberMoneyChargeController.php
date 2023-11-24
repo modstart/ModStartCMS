@@ -5,6 +5,7 @@ namespace Module\Member\Web\Controller;
 
 
 use Module\Member\Support\MemberLoginCheck;
+use ModStart\Core\Exception\BizException;
 
 class MemberMoneyChargeController extends MemberFrameController implements MemberLoginCheck
 {
@@ -23,6 +24,7 @@ class MemberMoneyChargeController extends MemberFrameController implements Membe
 
     public function index()
     {
+        BizException::throwsIf('钱包充值未开启', !modstart_config('Member_MoneyChargeEnable', false));
         return $this->view('memberMoneyCharge.index', [
             'pageTitle' => '钱包充值',
         ]);

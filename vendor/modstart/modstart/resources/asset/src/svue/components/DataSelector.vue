@@ -25,9 +25,6 @@
                 <el-button :type="tab==='input'?'primary':''" @click="tab='input'">
                     <i class="iconfont icon-edit"></i> {{ L('Custom Link') }}
                 </el-button>
-                <span class="tw-ml-4" v-if="max>1 && tab==='list' && listChecked.length>1">
-                    <el-checkbox v-model="reverseSelectOrder">{{ L('Reverse Select Order') }}</el-checkbox>
-                </span>
             </div>
             <div class="pb-data-selector-gallery" :class="{'small-window':smallWindow,'menu-show':menuShow}"
                  v-show="tab==='list'">
@@ -94,20 +91,21 @@
                             {{ L('No Records') }}
                         </div>
                         <el-row :gutter="10">
-                            <el-col :xs="12" :sm="6" :md="4" v-for="(listItem,listIndex) in records" :key="listIndex">
+                            <el-col :xs="8" :sm="4" :md="4" :lg="3" v-for="(listItem,listIndex) in records"
+                                    :key="listIndex">
                                 <div class="item" :class="{active:listItem.checked}">
                                     <div @click="doClickItem(listIndex)">
                                         <ImageCover v-if="isImage(listItem)"
                                                     :src="listItem.fullPath"></ImageCover>
                                         <div class="file-cover" v-else>
-                                            <div class="text">
-                                                <div class="label">
-                                                    {{ listItem.type.toUpperCase() }}{{ L('File(s)') }}
-                                                </div>
+                                            <div class="cover"
+                                                 :style="{backgroundImage:`url(${listItem.previewInfo.url})`}"></div>
+                                            <div class="label" v-if="!listItem.previewInfo.support">
+                                                {{ listItem.type.toUpperCase() }}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="title">{{ listItem.filename }}</div>
+                                    <div class="title" :title="listItem.filename">{{ listItem.filename }}</div>
                                     <div class="action">
                                         <a :href="listItem.fullPath"
                                            class="tw-mx-2"
@@ -121,7 +119,9 @@
                                             <i class="iconfont icon-copy"></i>
                                         </a>
                                     </div>
-                                    <i class="check iconfont icon-checked"></i>
+                                    <div class="check">
+                                        {{ listItem.checkedNumber }}
+                                    </div>
                                 </div>
                             </el-col>
                         </el-row>
@@ -278,7 +278,6 @@ export default {
             input: {
                 path: '',
             },
-            reverseSelectOrder: false,
         }
     },
     watch: {
@@ -291,7 +290,8 @@ export default {
             return this.url + '/' + this.category
         },
         listChecked() {
-            return this.records.filter(o => o.checked)
+            let checked = this.records.filter(o => o.checked)
+            return checked.sort((a, b) => a.checkedNumber - b.checkedNumber)
         },
         listCheckedIds() {
             return this.listChecked.map(o => o.id
@@ -309,6 +309,22 @@ export default {
         }
     },
     methods: {
+        filePreviewInfo(file) {
+            const extMapSupport = [
+                'ai', 'apk', 'chm', 'css', 'doc', 'docx', 'dwg', 'gif', 'html',
+                'jpeg', 'jpg', 'log', 'mp3', 'mp4', 'pdf', 'png', 'ppt', 'pptx',
+                'psd', 'rar', 'svg', 'torrent', 'txt', 'xls', 'xlsx', 'zip'
+            ]
+            const result = {
+                support: false,
+                url: this.$url.cdn('asset/vendor/ueditor/themes/default/exts/unknown.svg')
+            }
+            if (extMapSupport.includes(file.type)) {
+                result.support = true
+                result.url = this.$url.cdn('asset/vendor/ueditor/themes/default/exts/' + file.type + '.svg')
+            }
+            return result
+        },
         categoryFilterCallback(value, data) {
             if (!value) return true
             return data.name.indexOf(value) !== -1
@@ -323,20 +339,30 @@ export default {
         hide() {
             this.visible = false
         },
+        updateRecordsCheckedNumber() {
+            let checked = this.records.filter(o => o.checked)
+            checked.sort((a, b) => a.checkedNumber - b.checkedNumber)
+            checked.map((o, index) => {
+                o.checkedNumber = index + 1
+            })
+        },
         doClickItem(index) {
-            const item = this.records[index]
-            if (item.checked) {
-                item.checked = false
+            if (this.records[index].checked) {
+                this.records[index].checked = false
+                this.records[index].checkedNumber = 0
+                this.updateRecordsCheckedNumber()
                 return
             }
-            const records = this.listChecked
-            if (records.length < this.max) {
-                item.checked = true
-                return
-            }
-            if (this.max === 1) {
-                this.records.map(o => o.checked = false)
-                item.checked = true
+            if (this.listChecked.length < this.max) {
+                if (this.max === 1) {
+                    this.records.map(o => {
+                        o.checked = false
+                        o.checkedNumber = 0
+                    })
+                }
+                this.records[index].checked = true
+                this.records[index].checkedNumber = this.records.length
+                this.updateRecordsCheckedNumber()
                 return
             }
             Dialog.tipError(this.L('Select %d item(s) at most', this.max))
@@ -464,7 +490,11 @@ export default {
             }, res => {
                 this.tab = 'list'
                 let records = res.data.records
-                records.map(o => (o.checked = false, o))
+                records.map(o => {
+                    o.checked = false
+                    o.checkedNumber = 0
+                    o.previewInfo = this.filePreviewInfo(o)
+                })
                 this.records = records
                 this.total = res.data.total
                 this.pageSize = res.data.pageSize
@@ -518,9 +548,6 @@ export default {
             } else if (records.length > this.max) {
                 Dialog.tipError(this.L('Select %d item(s) at most', this.max))
                 return
-            }
-            if (this.reverseSelectOrder) {
-                records.reverse()
             }
             this.$emit('on-select', records)
             this.visible = false
@@ -726,21 +753,25 @@ export default {
                 overflow: hidden;
                 display: block;
 
-                .text {
+                .cover {
                     position: absolute;
-                    top: 0;
-                    right: 0;
-                    bottom: 0;
-                    left: 0;
-                    text-align: center;
-                    color: #CCC;
-                    display: flex;
-                    align-items: center;
+                    width: 70%;
+                    height: 70%;
+                    background: no-repeat center;
+                    background-size: contain;
+                    left: 15%;
+                    top: 15%;
+                }
 
-                    .label {
-                        flex-grow: 1;
-                        font-size: 1.5rem;
-                    }
+                .label {
+                    position: absolute;
+                    background: rgba(0, 0, 0, 0.5);
+                    color: #FFF;
+                    font-size: 10px;
+                    padding: 0 0.5rem;
+                    border-radius: 0.25rem;
+                    left: 0.25rem;
+                    bottom: 0.25rem;
                 }
 
                 &:after {
@@ -765,15 +796,18 @@ export default {
 
             .check {
                 position: absolute;
-                top: 0px;
-                right: 0px;
-                color: var(--color-primary, #419488);
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-                font-size: 20px;
+                top: 10px;
+                right: 10px;
+                background-color: var(--color-primary, #419488);
+                color: #FFF;
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
                 text-align: center;
                 display: none;
+                border-radius: 50%;
+                font-size: 12px;
+                text-align: center;
             }
 
             .title {
@@ -782,17 +816,17 @@ export default {
                 color: #999;
                 height: 20px;
                 overflow: hidden;
-                width: 100%;
                 text-overflow: ellipsis;
                 border-top: 1px solid #EEE;
-                padding: 5px 0;
+                padding: 0.25rem;
                 box-sizing: content-box;
+                white-space: nowrap;
             }
 
             .action {
                 text-align: center;
                 border-top: 1px dashed #EEE;
-                padding: 5px 0;
+                padding: 0.25rem;
                 text-decoration: none;
 
                 a {

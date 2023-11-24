@@ -13,6 +13,8 @@ use ModStart\Core\Util\QrcodeUtil;
 
 class ImageDesignUtil
 {
+    const LINE_BREAK = '[BR]';
+
     public static function renderBase64DataString($imageConfig, $variables = [])
     {
         $image = self::render($imageConfig, $variables);
@@ -46,6 +48,12 @@ class ImageDesignUtil
         $imagick->clear();
         $imagick->destroy();
         return $out;
+    }
+
+    public static function textLineCount($text)
+    {
+        $pcs = explode(self::LINE_BREAK, $text);
+        return count($pcs);
     }
 
     public static function render($imageConfig, $variables = [])
@@ -82,21 +90,40 @@ class ImageDesignUtil
             $item['y'] = intval($item['y']);
             switch ($item['type']) {
                 case 'text':
-                    $lines = explode("[BR]", $item['data']['text']);
-                    $y = $item['y'];
-                    foreach ($lines as $line) {
-                        $line = trim($line);
-                        if (empty($line)) {
-                            continue;
+                    $lineHeight = isset($item['data']['lineHeight']) ? $item['data']['lineHeight'] : 1.2;
+                    $lines = explode(self::LINE_BREAK, $item['data']['text']);
+                    $offsets = [];
+                    if (!empty($item['data']['shadowOffset'])) {
+                        if (empty($item['data']['shadowColor'])) {
+                            $item['data']['shadowColor'] = '#000000';
                         }
-                        $image->text($line, $item['x'], $y, function ($font) use ($item, $fontPath) {
-                            $font->file($fontPath);
-                            $font->size($item['data']['size']);
-                            $font->color($item['data']['color']);
-                            $font->align($item['data']['align']);
-                            $font->valign('top');
-                        });
-                        $y += $item['data']['size'] * 1.2;
+                        $offsets[] = [
+                            'x' => $item['data']['shadowOffset'],
+                            'y' => $item['data']['shadowOffset'],
+                            'color' => $item['data']['shadowColor']
+                        ];
+                    }
+                    $offsets[] = [
+                        'x' => 0,
+                        'y' => 0,
+                        'color' => $item['data']['color']
+                    ];
+                    foreach ($offsets as $offset) {
+                        $y = $item['y'];
+                        foreach ($lines as $line) {
+                            $line = trim($line);
+                            if (empty($line)) {
+                                continue;
+                            }
+                            $image->text($line, $item['x'] + $offset['x'], $y + $offset['y'], function ($font) use ($item, $offset, $fontPath) {
+                                $font->file($fontPath);
+                                $font->size($item['data']['size']);
+                                $font->color($offset['color']);
+                                $font->align($item['data']['align']);
+                                $font->valign('top');
+                            });
+                            $y += $item['data']['size'] * $lineHeight;
+                        }
                     }
                     break;
                 case 'rect':

@@ -18,6 +18,7 @@ use ModStart\Module\ModuleManager;
 class ModuleStoreUtil
 {
     const REMOTE_BASE = 'https://modstart.com';
+
     // const REMOTE_BASE = 'http://org.demo.soft.host';
 
     public static function remoteModuleData()
@@ -232,6 +233,7 @@ class ModuleStoreUtil
             $results[] = "备份模块 $module 到 $moduleBackup";
         }
         BizException::throwsIf('模块目录 module/' . $module . ' 不正常，请手动删除', file_exists($moduleDir));
+        @set_time_limit(60 * 10);
         $zipper = new Zipper();
         $zipper->make($package);
         if ($zipper->contains($module . '/config.json')) {
