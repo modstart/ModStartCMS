@@ -81,10 +81,13 @@ class AgentUtil
         '/spider/i' => 'Other',
         // xxxbot
         '/(?:^|[\\W])\\w*bot([\\W\\s]|$)/i' => 'Other',
-        '/detector/' => 'Other',
+        '/detector/i' => 'Other',
+
+        // 其他一些库
+        '/(curl|python|java|node-fetch|http-client|msray-plus)/i' => 'Other',
 
         // 其他一些爬虫
-        '/ows\\.eu/i' => 'Other',     // OpenWebSearch
+        '/(ows.eu|researchscan|github|LogStatistic|Dataprovider|facebook)/i' => 'Other',
     ];
 
     /**
