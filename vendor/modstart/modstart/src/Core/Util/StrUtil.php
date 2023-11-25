@@ -252,7 +252,7 @@ class StrUtil
         if (modstart_module_enabled('WordSpliter')) {
             $pcs = \Module\WordSpliter\Util\WordSpliterUtil::cut($content);
         } else {
-            preg_match_all('/[\x{4e00}-\x{9fa5}]|\b[A-Za-z]+\b/u', $content, $mat);
+            preg_match_all('/[\x{4e00}-\x{9fa5}]|[A-Za-z]+/u', $content, $mat);
             $pcs = array_filter($mat[0]);
         }
         return $pcs;

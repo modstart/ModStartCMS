@@ -97,6 +97,7 @@
 <script>
     (function () {
         new MS.GridManager({
+            mode: 'default',
             id: '{{$id}}',
             canBatchSelect: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canBatchSelect)) !!},
             canSingleSelectItem: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canSingleSelectItem)) !!},
@@ -132,7 +133,8 @@
             showDialogSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($showDialogSize) !!},
             importDialogSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($importDialogSize) !!},
             pageJumpEnable: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($pageJumpEnable)) !!},
-            lang:{
+            gridRowCols: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($gridRowCols) !!},
+            lang: {
                 loading: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Loading')) !!},
                 noRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('No Records')) !!},
                 add: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Add')) !!},

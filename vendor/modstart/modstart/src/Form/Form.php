@@ -794,6 +794,8 @@ class Form implements Renderable
             case 'gridTableTopView':
             case 'gridBeforeRequestScriptView':
             case 'gridRequestScript':
+            case 'useSimple':
+            case 'gridRowCols':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

@@ -216,6 +216,8 @@ class Detail implements Renderable
             case 'sortAddPosition':
             case 'titleAdd':
             case 'titleEdit':
+            case 'useSimple':
+            case 'gridRowCols':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

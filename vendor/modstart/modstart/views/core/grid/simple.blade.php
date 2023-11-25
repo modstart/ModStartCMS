@@ -1,4 +1,16 @@
 <div id="{{$id}}" data-basic-lister class="ub-lister-table-container">
+    @if(!empty($scopes))
+        <div class="tw-pb-3">
+            <div class="ub-nav-tab mini">
+                @foreach($scopes as $scope)
+                    <a class="{{$scopeCurrent==$scope['name']?'active':''}}"
+                       href="?{{\ModStart\Core\Input\Request::mergeQueries(['_scope'=>$scope['name']])}}">
+                        {{$scope['title']}}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
     <div class="toolbox-container">
         @if($canAdd)
             @if($addBlankPage)
@@ -11,7 +23,12 @@
                 </a>
             @endif
         @endif
-        {!! $batchOperatePrepend !!}
+        @if($canImport)
+            <a href="javascript:;" class="btn btn-primary" data-import-button>
+                <i class="iconfont icon-upload"></i> {{L('Import')}}
+            </a>
+        @endif
+        {!! $gridOperateAppend !!}
     </div>
     <div data-search class="ub-lister-search">
         @foreach($filters as $filter)
@@ -53,41 +70,19 @@
             @endforeach
         </div>
     </div>
+    <div class="layui-btn-container margin-bottom">
+        {!! $batchOperatePrepend !!}
+        @if($canDelete && $canBatchDelete)
+            <button class="btn" data-batch-delete><i class="iconfont icon-trash"></i> {{L('Batch Delete')}}</button>
+        @endif
+    </div>
     <div style="overflow:hidden;" data-table></div>
     @if($enablePagination)
-        <div id="{{$id}}Pager" class="padding-top"></div>
+        @if($enablePagination)
+            <div class="page-container" id="{{$id}}Pager"></div>
+        @endif
     @endif
-    <script type="text/html" id="{{$id}}pageHtml">
-        <div class="ub-paginate-mobile">
-            @{{#  if(d.totalPage >= 1){ }}
-                @{{#  if(d.page > 1){ }}
-                <a class="ub-paginate-mobile__btn ub-paginate-mobile--enabled" href="javascript:;" data-page-action="prev">
-                    <span class="ub-paginate-mobile__child-btn">{{L('PrevPage')}}</span>
-                </a>
-                @{{# }else{  }}
-                <a class="ub-paginate-mobile__btn ub-paginate-mobile--disabled" href="javascript:;">
-                    <span class="ub-paginate-mobile__child-btn">{{L('PrevPage')}}</span>
-                </a>
-                @{{# } }}
-                <div class="ub-paginate-mobile__num">
-                    <div class="ub-paginate-mobile__num-page">
-                        <span class="ub-paginate-mobile__num-page-span current">@{{ d.page }}</span>
-                        <span class="ub-paginate-mobile__num-page-span">/@{{ d.totalPage }}</span>
-                    </div>
-                </div>
-                @{{#  if(d.page < d.totalPage){ }}
-                <a class="ub-paginate-mobile__btn ub-paginate-mobile--enabled" href="javascript:;" data-page-action="next">
-                    <span class="ub-paginate-mobile__child-btn">{{L('NextPage')}}</span>
-                </a>
-                @{{# }else{  }}
-                <a class="ub-paginate-mobile__btn ub-paginate-mobile--disabled" href="javascript:;">
-                    <span class="ub-paginate-mobile__child-btn">{{L('NextPage')}}</span>
-                </a>
-                @{{# } }}
-            @{{# } }}
-        </div>
-    </script>
-    <script type="text/html" id="{{$id}}emptyHtml">
+    <script type="text/html" id="{{$id}}EmptyHtml">
         <div class="ub-empty">
             <div class="icon">
                 <div class="iconfont icon-empty-box"></div>
@@ -96,188 +91,59 @@
         </div>
     </script>
 </div>
+<script src="@asset('asset/common/gridManager.js')"></script>
 <script>
     (function () {
-        var $grid = $('#{{$id}}');
-        var listerData = {
-            page: 1,
-            pageSize: 1,
-            records: [],
-            total: 1,
-            head: []
-        };
-        var pageHtml = $('#{{$id}}pageHtml').html();
-        var emptyHtml = $('#{{$id}}emptyHtml').html();
-        var getId = function (o) {
-            var index = parseInt($(o).closest('[data-index]').attr('data-index'));
-            return listerData.records[index]._id;
-        };
-        layui.use(['laytpl'], function () {
-            $('#{{$id}}Pager').on('click','[data-page-action]',function(){
-                var action = $(this).attr('data-page-action');
-                switch(action){
-                    case 'prev':
-                        lister.setPage(listerData.page-1);
-                        break;
-                    case 'next':
-                        lister.setPage(listerData.page+1);
-                        break;
-                }
-                lister.load();
-            });
-            var $lister = $('#{{$id}}');
-            var lister = new window.api.lister({
-                lister: $lister,
-                search: $lister.find('[data-search]'),
-                table: $lister.find('[data-table]')
-            }, {
-                hashUrl: false,
-                server: window.location.href,
-                render: function (data) {
-                    listerData = data;
-                    data.totalPage = Math.ceil(data.total / data.pageSize);
-                    layui.laytpl(pageHtml).render(data, function(html){
-                        $('#{{$id}}Pager').html(html);
-                    });
-                    var html = [];
-                    @if(!empty($gridRowCols))
-                        html.push('<div class="row">');
-                        for(var i =0;i<data.records.length;i++){
-                            html.push('<div class="col-md-{{$gridRowCols[0]}} col-{{$gridRowCols[1]}}" data-index="'+i+'">'+data.records[i].html+'</div>');
-                        }
-                        html.push('</div>');
-                    @else
-                        for(var i =0;i<data.records.length;i++){
-                            html.push('<div data-index="'+i+'">'+data.records[i].html+'</div>');
-                        }
-                    @endif
-                    $grid.find('[data-table]').html(html.join(''));
-                    if(!data.records.length){
-                        $grid.find('[data-table]').html(emptyHtml);
-                    }
-                }
-            });
-            lister.realtime = {
-                url: {
-                    add: '{{$urlAdd}}',
-                    edit: '{{$urlEdit}}',
-                    delete: '{{$urlDelete}}',
-                    show: '{{$urlShow}}',
-                    export: '{{$urlExport}}',
-                    sort: '{{$urlSort}}',
-                },
-                dialog: {
-                    add: null,
-                    addWindow: null,
-                    edit: null,
-                    editWindow: null,
-                }
-            };
-            @if($canAdd)
-                $lister.find('[data-add-button]').on('click', function () {
-                    lister.realtime.dialog.add = layer.open({
-                        type: 2,
-                        title: "{{ empty($titleAdd) ? ($title?$title.' '.L('Add'):L('Add')) : $titleAdd }}",
-                        shadeClose: false,
-                        shade: 0.8,
-                        maxmin: false,
-                        scrollbar: false,
-                        area: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($addDialogSize) !!},
-                        content: lister.realtime.url.add,
-                        success: function (layerDom, index) {
-                            lister.realtime.dialog.addWindow = $(layerDom).find('iframe').get(0).contentWindow;
-                            lister.realtime.dialog.addWindow.addEventListener('modstart:form.submitted', function (e) {
-                                if (0 === e.detail.res.code) {
-                                    layer.close(lister.realtime.dialog.add);
-                                }
-                            });
-                        },
-                        end: function () {
-                            lister.refresh();
-                        }
-                    });
-                });
-            @endif
-            @if($canEdit)
-                $lister.find('[data-table]').on('click', '[data-edit]', function () {
-                    var id = getId(this);
-                    lister.realtime.dialog.edit = layer.open({
-                        type: 2,
-                        title: "{{ empty($titleEdit) ? ($title?$title.' '.L('Edit'):L('Edit')) : $titleEdit }}",
-                        shadeClose: false,
-                        shade: 0.8,
-                        maxmin: false,
-                        scrollbar: false,
-                        area: ['95%', '95%'],
-                        content: lister.realtime.url.edit + '?_id=' + id,
-                        success: function (layerDom, index) {
-                            lister.realtime.dialog.editWindow = $(layerDom).find('iframe').get(0).contentWindow;
-                            lister.realtime.dialog.editWindow.addEventListener('modstart:form.submitted', function (e) {
-                                if (0 === e.detail.res.code) {
-                                    layer.close(lister.realtime.dialog.edit);
-                                }
-                            });
-                        },
-                        end: function () {
-                            lister.refresh();
-                        }
-                    });
-                });
-            @endif
-            @if($canDelete)
-                $lister.find('[data-table]').on('click', '[data-delete]', function () {
-                    var id = getId(this);
-                    window.api.dialog.confirm("{{L('Confirm Delete ?')}}", function () {
-                        window.api.dialog.loadingOn();
-                        window.api.base.post(lister.realtime.url.delete, {_id: id}, function (res) {
-                            window.api.dialog.loadingOff();
-                            window.api.base.defaultFormCallback(res, {
-                                success: function (res) {
-                                    lister.refresh();
-                                }
-                            });
-                        })
-                    });
-                });
-            @endif
-            @if($canShow)
-                $lister.find('[data-table]').on('click', '[data-show]', function () {
-                    var id = getId(this);
-                    lister.realtime.dialog.show = layer.open({
-                        type: 2,
-                        title: "{{ empty($titleShow) ? ($title?$title.' '.L('Show'):L('Show')) : $titleShow }}",
-                        shadeClose: false,
-                        shade: 0.8,
-                        maxmin: false,
-                        scrollbar: false,
-                        area: ['95%', '95%'],
-                        content: lister.realtime.url.show + '?_id=' + id,
-                        success: function (layerDom, index) {
-                        },
-                        end: function () {
-                        }
-                    });
-                });
-            @endif
-            window.__grids = window.__grids || {
-                instances: {},
-                get: function (key) {
-                    if (typeof key === 'number') {
-                        var count = 0;
-                        for (var k in window.__grids.instances) {
-                            if (count === key) {
-                                return window.__grids.instances[k];
-                            }
-                            count++;
-                        }
-                    }
-                    return window.__grids.instances[key];
-                }
-            };
-            window.__grids.instances['{{$id}}'] = {
-                $lister: $lister,
-                lister: lister
-            };
+        new MS.GridManager({
+            mode: 'simple',
+            id: '{{$id}}',
+            canBatchSelect: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canBatchSelect)) !!},
+            canSingleSelectItem: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canSingleSelectItem)) !!},
+            canMultiSelectItem: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canMultiSelectItem)) !!},
+            title: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($title) !!},
+            titleAdd: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(empty($titleAdd)?null:$titleAdd) !!},
+            titleEdit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(empty($titleEdit)?null:$titleEdit) !!},
+            titleShow: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(empty($titleShow)?null:$titleShow) !!},
+            titleImport: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(empty($titleImport)?null:$titleImport) !!},
+            canAdd: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canAdd)) !!},
+            canEdit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canEdit)) !!},
+            canDelete: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canDelete)) !!},
+            canShow: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canShow)) !!},
+            canSort: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canSort)) !!},
+            canExport: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canExport)) !!},
+            canImport: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canImport)) !!},
+            canBatchDelete: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canBatchDelete)) !!},
+            urlGrid: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlGrid) !!} || window.location.href,
+            urlAdd: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlAdd) !!},
+            urlEdit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlEdit) !!},
+            urlDelete: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlDelete) !!},
+            urlShow: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlShow) !!},
+            urlExport: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlExport) !!},
+            urlImport: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlImport) !!},
+            urlSort: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($urlSort) !!},
+            batchOperatePrepend: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($batchOperatePrepend) !!},
+            gridToolbar: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($gridToolbar) !!},
+            defaultPageSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($defaultPageSize) !!},
+            gridBeforeRequestScript: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($gridBeforeRequestScript) !!},
+            pageSizes: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($pageSizes) !!},
+            addDialogSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($addDialogSize) !!},
+            editDialogSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($editDialogSize) !!},
+            showDialogSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($showDialogSize) !!},
+            importDialogSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($importDialogSize) !!},
+            pageJumpEnable: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($pageJumpEnable)) !!},
+            gridRowCols: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($gridRowCols) !!},
+            lang: {
+                loading: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Loading')) !!},
+                noRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('No Records')) !!},
+                add: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Add')) !!},
+                edit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Edit')) !!},
+                show: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Show')) !!},
+                import: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Import')) !!},
+                confirmDelete: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Confirm Delete ?')) !!},
+                pleaseSelectRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Please Select Records')) !!},
+                confirmDeleteRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Confirm Delete %d records ?')) !!},
+            },
         });
     })();
 </script>
+{!! $bodyAppend !!}
