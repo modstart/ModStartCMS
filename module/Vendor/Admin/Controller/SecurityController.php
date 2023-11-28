@@ -4,8 +4,8 @@
 namespace Module\Vendor\Admin\Controller;
 
 
-use Edwin404\Base\Support\InputPackage;
 use Illuminate\Routing\Controller;
+use ModStart\Core\Input\InputPackage;
 use Illuminate\Support\Facades\Session;
 use ModStart\Admin\Layout\AdminPage;
 use ModStart\Core\Exception\BizException;

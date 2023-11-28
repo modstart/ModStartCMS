@@ -4,6 +4,7 @@ var GridManager = function (opt) {
         mode: 'default',
         id: '',
         canBatchSelect: false,
+        batchSelectInOrder: false,
         canSingleSelectItem: false,
         canMultiSelectItem: false,
         title: null,
@@ -53,6 +54,7 @@ var GridManager = function (opt) {
 
     var $grid = $('#' + option.id);
 
+    var recordIdsChecked = [];
     var listerData = {
         page: 1,
         pageSize: 1,
@@ -80,6 +82,11 @@ var GridManager = function (opt) {
         for (var i = 0; i < data.length; i++) {
             ids.push(data[i]._id);
         }
+        if (option.batchSelectInOrder) {
+            ids.sort(function (a, b) {
+                return recordIdsChecked.indexOf(a) - recordIdsChecked.indexOf(b);
+            });
+        }
         return ids;
     };
     var getCheckedItems = function () {
@@ -95,7 +102,25 @@ var GridManager = function (opt) {
         for (var i = 0; i < data.length; i++) {
             items.push(data[i]);
         }
+        if (option.batchSelectInOrder) {
+            items.sort(function (a, b) {
+                return recordIdsChecked.indexOf(a._id) - recordIdsChecked.indexOf(b._id);
+            });
+        }
         return items;
+    };
+    var updateTableCheckedOrder = function () {
+        $grid.find('[data-index]').each(function (i, o) {
+            var $field = $(o).find('[data-field="0"]');
+            if (!$field.length) {
+                return;
+            }
+            $field.find('[data-checked-order]').remove();
+            var order = recordIdsChecked.indexOf(listerData.records[i]._id);
+            if (order >= 0) {
+                $field.append('<div data-checked-order>' + (order + 1) + '</div>');
+            }
+        });
     };
 
     layui.use(['table', 'laypage'], function () {
@@ -140,6 +165,7 @@ var GridManager = function (opt) {
                 },
                 render: function (data) {
                     listerData = data;
+                    recordIdsChecked = [];
                     renderPaginate();
                     var html = [];
                     if (option.gridRowCols) {
@@ -195,7 +221,26 @@ var GridManager = function (opt) {
                 }
                 lister.setPage(1);
                 lister.load();
-            })
+            });
+            layui.table.on('checkbox(' + option.id + 'Table)', function (obj) {
+                if (option.batchSelectInOrder) {
+                    var records = layui.table.checkStatus(option.id + 'Table').data;
+                    var recordIds = [];
+                    for (var i = 0; i < records.length; i++) {
+                        recordIds.push(records[i]._id);
+                        if (recordIdsChecked.indexOf(records[i]._id) === -1) {
+                            recordIdsChecked.push(records[i]._id);
+                        }
+                    }
+                    for (var i = 0; i < recordIdsChecked.length; i++) {
+                        if (recordIds.indexOf(recordIdsChecked[i]) === -1) {
+                            recordIdsChecked.splice(i, 1);
+                            i--;
+                        }
+                    }
+                    updateTableCheckedOrder();
+                }
+            });
             lister = new window.api.lister(
                 {
                     lister: $lister,
@@ -221,6 +266,7 @@ var GridManager = function (opt) {
                     },
                     render: function (data) {
                         listerData = data;
+                        recordIdsChecked = [];
                         if (option.canSingleSelectItem) {
                             data.head.splice(0, 0, {type: 'radio'});
                         } else if (option.canMultiSelectItem) {

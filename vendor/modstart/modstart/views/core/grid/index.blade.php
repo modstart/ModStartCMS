@@ -100,6 +100,7 @@
             mode: 'default',
             id: '{{$id}}',
             canBatchSelect: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canBatchSelect)) !!},
+            batchSelectInOrder: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($batchSelectInOrder)) !!},
             canSingleSelectItem: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canSingleSelectItem)) !!},
             canMultiSelectItem: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(boolval($canMultiSelectItem)) !!},
             title: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($title) !!},

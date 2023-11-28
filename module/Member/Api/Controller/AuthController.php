@@ -694,15 +694,13 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @Api 手机快捷登录-登录提交
+     * @Api 短信验证登录-登录提交
      * @ApiBodyParam phone string 手机号
      * @ApiBodyParam verify string 手机验证码
      */
     public function loginPhone()
     {
-        if (!modstart_config('Member_LoginPhoneEnable', false)) {
-            return Response::generate(-1, '手机快捷登录未开启');
-        }
+        BizException::throwsIf('短信验证登录未开启', !modstart_config('Member_LoginPhoneEnable', false));
         $input = InputPackage::buildFromInput();
         $phone = $input->getPhone('phone');
         $verify = $input->getTrimString('verify');
@@ -767,14 +765,14 @@ class AuthController extends ModuleBaseController
 
     /**
      * @return array
-     * @Api 手机快捷登录-获取手机验证码
+     * @Api 短信验证登录-获取手机验证码
      * @ApiBodyParam target string 手机号
      * @ApiBodyParam captcha string 图片验证码
      */
     public function loginPhoneVerify()
     {
         if (!modstart_config('Member_LoginPhoneEnable', false)) {
-            return Response::generate(-1, '手机快捷登录未开启');
+            return Response::generate(-1, '短信验证登录未开启');
         }
 
         $input = InputPackage::buildFromInput();
@@ -820,7 +818,7 @@ class AuthController extends ModuleBaseController
     /**
      * @return array
      *
-     * @Api 手机快捷登录-图片验证码
+     * @Api 短信验证登录-图片验证码
      * @ApiResponseData {
      *   "image":"图片Base64"
      * }
@@ -850,19 +848,15 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @Api 注册-手机快速注册
+     * @Api 注册-短信验证注册
      * @ApiBodyParam phone string 手机号
      * @ApiBodyParam phoneVerify string 手机验证码
      * @ApiBodyParam agreement boolean 是否同意协议
      */
     public function registerPhone()
     {
-        if (modstart_config('registerDisable', false)) {
-            return Response::generate(-1, '禁止注册');
-        }
-        if (!modstart_config('Member_RegisterPhoneEnable', false)) {
-            return Response::generate(-1, '手机快速注册未开启');
-        }
+        BizException::throwsIf('禁止注册', modstart_config('registerDisable', false));
+        BizException::throwsIf('短信验证注册未开启', !modstart_config('Member_RegisterPhoneEnable', false));
         $input = InputPackage::buildFromInput();
         if (modstart_config('Member_AgreementEnable', false)) {
             if (!$input->getBoolean('agreement')) {
@@ -871,6 +865,13 @@ class AuthController extends ModuleBaseController
         }
         $phone = $input->getPhone('phone');
         $phoneVerify = $input->getTrimString('phoneVerify');
+        $password = null;
+        $ignorePassword = true;
+        if (modstart_config('Member_RegisterPhonePasswordEnable', false)) {
+            $password = $input->getTrimString('password');
+            BizException::throwsIfEmpty('请输入密码', $password);
+            $ignorePassword = false;
+        }
 
         if (empty($phone)) {
             return Response::generate(-1, '请输入手机');
@@ -895,7 +896,7 @@ class AuthController extends ModuleBaseController
             }
         }
 
-        $ret = MemberUtil::register(null, $phone, null, null, true);
+        $ret = MemberUtil::register(null, $phone, null, $password, $ignorePassword);
         if ($ret['code']) {
             return Response::generate(-1, $ret['msg']);
         }

@@ -40,7 +40,8 @@ class ArticleController extends Controller
                                 );
                         }
                     });
-                $builder->text('alias', '别名')->help('默认留空，可通过链接 /article/别名 访问');
+                $builder->text('alias', '别名')
+                    ->help('默认留空，可通过链接 /article/别名 访问，不能为纯数字');
                 $builder->richHtml('content', '内容')->listable(false);
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);

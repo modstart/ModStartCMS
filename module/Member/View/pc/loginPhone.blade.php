@@ -1,8 +1,8 @@
 @extends($_viewFrame)
 
-@section('pageTitleMain')手机快捷登录@endsection
-@section('pageKeywords')手机快捷登录@endsection
-@section('pageDescription')手机快捷登录@endsection
+@section('pageTitleMain')短信验证登录@endsection
+@section('pageKeywords')短信验证登录@endsection
+@section('pageDescription')短信验证登录@endsection
 
 @section('headAppend')
     @parent

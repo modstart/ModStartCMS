@@ -30,51 +30,62 @@ class ConfigController extends Controller
             $builder->switch('loginCaptchaEnable', '启用登录验证码')
                 ->when('=', true, function (Form $form) use ($captchaType) {
                     $form->select('loginCaptchaProvider', '登录验证码类型')->options($captchaType)
-                        ->help('用于 用户名密码登录（/login）、手机快捷登录（/login/phone） 的人机验证');
+                        ->help('用于 用户名密码登录（/login）、短信验证登录（/login/phone） 的人机验证');
                 });
-            $builder->switch('Member_LoginPhoneEnable', '启用手机快捷登录')
-                ->when('=', true, function (Form $form) {
-                    $form->text('Member_LoginPhoneNameSuggest', '手机快捷登录用户名')
-                        ->defaultValue('用户')
-                        ->help(join('', [
-                            '<p>默认为"用户"，用户注册后自动设置用户名和昵称为 "用户xxxx"。</p>',
-                            '<p>可使用占位符，如"用户{Phone}"表示注册后自动设置为"用户+手机号"，用户名如遇冲突将会自动追加随机字符串。</p>',
-                            '<p>其他占位符：{Phone}用户手机、{Phone4}手机后4位、{Uid}用户ID</p>',
-                        ]));
-                    $form->switch('Member_LoginPhoneAutoRegister', '手机快捷登录自动注册')
-                        ->help('开启后，手机快捷登录遇用户不存在则自动注册，关闭表示手机号不存在不能登录');
-                })
-                ->help('开启手机快捷登录（/login/phone）');
             $loginDefaultOptions = [
                 'default' => '用户名密码登录 /login',
-                'phone' => '手机快捷登录 /login/phone',
+                'phone' => '短信验证登录 /login/phone',
             ];
             if (modstart_config('ssoClientEnable', false)) {
                 $loginDefaultOptions['sso'] = 'SSO单点登录 /login/sso';
             }
             if (modstart_module_enabled('MemberWechatMpLogin')) {
-                $loginDefaultOptions['other'] = '扫码/其他登录方式 /login/other';
+                $loginDefaultOptions['other'] = '扫码登录方式 /login/other';
             }
-            $builder->select('Member_LoginDefault', '默认登录方式')->options($loginDefaultOptions);
+            $builder->select('Member_LoginDefault', '默认登录方式')
+                ->options($loginDefaultOptions);
+            $builder->switch('Member_LoginPhoneEnable', '启用短信验证登录')
+                ->when('=', true, function (Form $form) {
+                    $form->switch('Member_LoginPhoneAutoRegister', '短信验证登录自动注册')
+                        ->help('开启后，短信验证登录遇用户不存在则自动注册，关闭表示手机号不存在不能登录')
+                        ->when('=', true, function (Form $form) {
+                            $form->text('Member_LoginPhoneNameSuggest', '短信验证登录用户名')
+                                ->defaultValue('用户')
+                                ->help(join('', [
+                                    '<p>默认为 <span class="ub-text-warning">用户</span>，用户注册后自动设置用户名和昵称为 <span class="ub-text-warning">用户xxxx</span></p>',
+                                    '<p>可使用占位符，如 <span class="ub-text-warning">用户{Phone}</span> 表示注册后自动设置为 <span class="ub-text-warning">用户+手机号</span>，用户名如遇冲突将会自动追加随机字符串</p>',
+                                    '<p>其它可用占位符：<span class="ub-text-warning">{Phone}</span> 用户手机、<span class="ub-text-warning">{Phone4}</span> 手机后4位、<span class="ub-text-warning">{Uid}</span> 用户ID</p>',
+                                ]));
+                        });
+                })
+                ->help('开启短信验证登录 /login/phone');
 
         });
         $builder->layoutPanel('注册', function ($builder) use ($captchaType) {
             /** @var HasFields $builder */
             $builder->select('Member_RegisterCaptchaProvider', '注册验证码类型')->options($captchaType)
-                ->help('用于 普通注册（/register）、手机快捷注册（/register_phone） 的人机验证');
+                ->help('用于 普通注册（/register）、短信验证注册（/register/phone） 的人机验证');
             $builder->switch('registerDisable', '禁用注册')
                 ->when('!=', true, function ($builder) {
-                    $builder->switch('registerEmailEnable', '注册时填写邮箱');
-                    $builder->switch('registerPhoneEnable', '注册时填写手机');
-                    $builder->switch('Member_RegisterPhoneEnable', '启用手机快捷注册')->help('开启后用户可通过手机验证码快捷注册（/register_phone）');
                     $builder->select('Member_RegisterDefault', '默认注册方式')->options([
-                        'default' => '用户名密码注册',
-                        'phone' => '手机快捷注册',
+                        'default' => '普通注册 /register',
+                        'phone' => '短信验证注册 /register/phone',
                     ]);
+                    $builder->switch('Member_RegisterPhoneEnable', '启用短信验证注册')
+                        ->help('开启短信验证注册 /register/phone')
+                        ->when('=', true, function (Form $form) {
+                            $form->switch('Member_RegisterPhonePasswordEnable', '短信验证注册设置密码');
+                        });
+                    $builder->switch('registerEmailEnable', '普通注册时填写邮箱');
+                    $builder->switch('registerPhoneEnable', '普通注册时填写手机');
                 })
                 ->when('=', true, function ($builder) {
-                    $builder->switch('registerOauthEnable', '允许以授权方式注册');
-                });
+                    if (modstart_module_enabled('MemberOauth')) {
+                        $builder->switch('registerOauthEnable', '允许以授权方式注册');
+                    }
+                })
+                ->help('禁用后，可通过后台增加账号');
+
             if (modstart_module_enabled('MemberOauth')) {
                 $builder->switch('Member_OauthBindPhoneEnable', '授权登录需绑定手机');
                 $builder->switch('Member_OauthBindEmailEnable', '授权登录需绑定邮箱');

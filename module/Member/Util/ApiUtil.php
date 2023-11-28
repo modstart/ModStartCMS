@@ -27,9 +27,10 @@ class ApiUtil
         $data['registerDisable'] = $config->getBoolean('registerDisable');
         $data['registerEmailEnable'] = $config->getBoolean('registerEmailEnable');
         $data['registerPhoneEnable'] = $config->getBoolean('registerPhoneEnable');
+        $data['Member_RegisterDefault'] = $config->get('Member_RegisterDefault');
         $data['Member_RegisterCaptchaProvider'] = $config->get('Member_RegisterCaptchaProvider');
         $data['Member_RegisterPhoneEnable'] = $config->getBoolean('Member_RegisterPhoneEnable', false);
-        $data['Member_RegisterDefault'] = $config->get('Member_RegisterDefault');
+        $data['Member_RegisterPhonePasswordEnable'] = $config->getBoolean('Member_RegisterPhonePasswordEnable', false);
         $data['registerOauthEnable'] = $config->getBoolean('registerOauthEnable', false);
 
         // 授权登录
@@ -49,13 +50,13 @@ class ApiUtil
         $data['Member_ProfilePhoneEnable'] = $config->getBoolean('Member_ProfilePhoneEnable', false);
 
         // VIP
-        $data['Member_VipEnable'] = ModuleManager::getModuleConfig('Member', 'vipEnable',false);
+        $data['Member_VipEnable'] = ModuleManager::getModuleConfig('Member', 'vipEnable', false);
 
         // 资产
-        $data['Member_MoneyEnable'] = ModuleManager::getModuleConfig('Member', 'moneyEnable',false);
+        $data['Member_MoneyEnable'] = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
         $data['Member_MoneyChargeEnable'] = modstart_config('Member_MoneyChargeEnable', false);
         $data['Member_MoneyCashEnable'] = modstart_config('Member_MoneyCashEnable', false);
-        $data['Member_CreditEnable'] = ModuleManager::getModuleConfig('Member', 'creditEnable',false);
+        $data['Member_CreditEnable'] = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
 
         // 其他
         $data['Member_AgreementEnable'] = $config->getBoolean('Member_AgreementEnable', false);

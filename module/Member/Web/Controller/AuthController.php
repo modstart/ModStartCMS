@@ -5,6 +5,7 @@ namespace Module\Member\Web\Controller;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
@@ -53,9 +54,8 @@ class AuthController extends ModuleBaseController
         $this->api = app(\Module\Member\Api\Controller\AuthController::class);
     }
 
-    public function login()
+    private function getRedirectData(InputPackage $input)
     {
-        $input = InputPackage::buildFromInput();
         $dialog = $input->getInteger('dialog');
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         $redirectData = [
@@ -64,7 +64,14 @@ class AuthController extends ModuleBaseController
         if ($dialog) {
             $redirectData['dialog'] = $dialog;
         }
-        $this->api->checkRedirectSafety($redirect);
+        return $redirectData;
+    }
+
+    public function login()
+    {
+        $input = InputPackage::buildFromInput();
+        $redirectData = $this->getRedirectData($input);
+        $this->api->checkRedirectSafety($redirectData['redirect']);
         $result = MemberAuthProvider::call('onWebLogin', $redirectData);
         if (null !== $result) {
             return $result;
@@ -74,25 +81,24 @@ class AuthController extends ModuleBaseController
             if (Response::isError($ret)) {
                 return Response::sendFromGenerate($ret);
             }
-            if ($dialog) {
-                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($redirect) . ';');
+            if (!empty($redirectData['dialog'])) {
+                return Response::send(0, '', '',
+                    '[js]parent.location.href=' . json_encode($redirectData['redirect']) . ';');
             }
-            return Response::send(0, '', '', $redirect);
+            return Response::send(0, '', '', $redirectData['redirect']);
         }
         $loginDefault = modstart_config('Member_LoginDefault', 'default');
-        if ('sso' == $loginDefault && modstart_config('ssoClientEnable', false)) {
-            $force = $input->getBoolean('force', false);
-            if (!$force) {
-                return Response::redirect(modstart_web_url('login/sso', $redirectData));
-            }
-        } else if ('phone' == $loginDefault && modstart_config('Member_LoginPhoneEnable', false)) {
-            $force = $input->getBoolean('force', false);
-            if (!$force) {
-                return Response::redirect(modstart_web_url('login/phone', $redirectData));
-            }
+        $force = $input->getBoolean('force', false);
+        $forceRedirects = [
+            'sso' => modstart_web_url('login/sso', $redirectData),
+            'phone' => modstart_web_url('login/phone', $redirectData),
+            'other' => modstart_web_url('login/other', $redirectData),
+        ];
+        if (!$force && !empty($forceRedirects[$loginDefault])) {
+            return Response::redirect($forceRedirects[$loginDefault]);
         }
         $view = 'login';
-        if ($dialog) {
+        if (!empty($redirectData['dialog'])) {
             $view = 'loginDialog';
         }
         return $this->view($view, $redirectData);
@@ -104,22 +110,15 @@ class AuthController extends ModuleBaseController
             return Response::generateError('SSO登录未开启');
         }
         $input = InputPackage::buildFromInput();
-        $dialog = $input->getInteger('dialog');
-        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
-        $redirectData = [
-            'redirect' => $redirect,
-        ];
-        if ($dialog) {
-            $redirectData['dialog'] = $dialog;
-        }
-        $this->api->checkRedirectSafety($redirect);
+        $redirectData = $this->getRedirectData($input);
+        $this->api->checkRedirectSafety($redirectData['redirect']);
         Input::merge(['client' => Request::domainUrl() . '/sso/client']);
         $ret = $this->api->ssoClientPrepare();
         if ($ret['code']) {
             return Response::send(-1, $ret['msg']);
         }
-        Session::put('ssoClientRedirect', $redirect);
-        if ($dialog) {
+        Session::put('ssoClientRedirect', $redirectData['redirect']);
+        if (!empty($redirectData['dialog'])) {
             return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($ret['data']['redirect']) . ';');
         }
         return Response::send(0, null, null, $ret['data']['redirect']);
@@ -128,18 +127,11 @@ class AuthController extends ModuleBaseController
     public function loginOther()
     {
         $input = InputPackage::buildFromInput();
-        $dialog = $input->getInteger('dialog');
-        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
-        $redirectData = [
-            'redirect' => $redirect,
-        ];
-        if ($dialog) {
-            $redirectData['dialog'] = $dialog;
-        }
-        $this->api->checkRedirectSafety($redirect);
-        $view = 'login';
-        if ($dialog) {
-            $view = 'loginDialog';
+        $redirectData = $this->getRedirectData($input);
+        $this->api->checkRedirectSafety($redirectData['redirect']);
+        $view = 'loginOther';
+        if (!empty($redirectData['dialog'])) {
+            $view = 'loginOtherDialog';
         }
         return $this->view($view, $redirectData);
     }
@@ -151,28 +143,22 @@ class AuthController extends ModuleBaseController
 
     public function loginPhone()
     {
+        BizException::throwsIf('短信验证登录未开启', !modstart_config('Member_LoginPhoneEnable', false));
         $input = InputPackage::buildFromInput();
-        $dialog = $input->getInteger('dialog');
-        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
-        $redirectData = [
-            'redirect' => $redirect,
-        ];
-        if ($dialog) {
-            $redirectData['dialog'] = $dialog;
-        }
-        $this->api->checkRedirectSafety($redirect);
+        $redirectData = $this->getRedirectData($input);
+        $this->api->checkRedirectSafety($redirectData['redirect']);
         if (Request::isPost()) {
             $ret = $this->api->loginPhone();
             if ($ret['code']) {
                 return Response::send(-1, $ret['msg']);
             }
-            if ($dialog) {
-                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($redirect) . ';');
+            if (!empty($redirectData['dialog'])) {
+                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($redirectData['redirect']) . ';');
             }
-            return Response::send(0, null, null, $redirect);
+            return Response::send(0, null, null, $redirectData['redirect']);
         }
         $view = 'loginPhone';
-        if ($dialog) {
+        if (!empty($redirectData['dialog'])) {
             $view = 'loginPhoneDialog';
         }
         return $this->view($view, $redirectData);
@@ -191,11 +177,8 @@ class AuthController extends ModuleBaseController
     public function logout()
     {
         $input = InputPackage::buildFromInput();
-        $redirect = $input->getTrimString('redirect', modstart_web_url(''));
-        $this->api->checkRedirectSafety($redirect);
-        $redirectData = [
-            'redirect' => $redirect,
-        ];
+        $redirectData = $this->getRedirectData($input);
+        $this->api->checkRedirectSafety($redirectData['redirect']);
         $result = MemberAuthProvider::call('onWebLogout', $redirectData);
         if (null !== $result) {
             return $result;
@@ -206,7 +189,7 @@ class AuthController extends ModuleBaseController
             if ($ret['code']) {
                 return Response::send(-1, $ret['msg']);
             }
-            Session::put('ssoLogoutRedirect', $redirect);
+            Session::put('ssoLogoutRedirect', $redirectData['redirect']);
             return Response::send(0, null, null, $ret['data']['redirect']);
         }
         $ret = $this->api->logout();
@@ -221,15 +204,9 @@ class AuthController extends ModuleBaseController
 
     public function register()
     {
+        BizException::throwsIf('禁止注册', modstart_config('registerDisable', false));
         $input = InputPackage::buildFromInput();
-        $dialog = $input->getInteger('dialog');
-        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
-        $redirectData = [
-            'redirect' => $redirect,
-        ];
-        if ($dialog) {
-            $redirectData['dialog'] = $dialog;
-        }
+        $redirectData = $this->getRedirectData($input);
         if (Request::isPost()) {
             $ret = $this->api->register();
             if ($ret['code']) {
@@ -251,7 +228,7 @@ class AuthController extends ModuleBaseController
             }
         }
         $view = 'register';
-        if ($dialog) {
+        if (!empty($redirectData['dialog'])) {
             $view = 'registerDialog';
         }
         return $this->view($view, $redirectData);
@@ -259,25 +236,20 @@ class AuthController extends ModuleBaseController
 
     public function registerPhone()
     {
+        BizException::throwsIf('禁止注册', modstart_config('registerDisable', false));
+        BizException::throwsIf('短信验证注册未开启', !modstart_config('Member_RegisterPhoneEnable', false));
         $input = InputPackage::buildFromInput();
-        $dialog = $input->getInteger('dialog');
-        $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
-        $redirectData = [
-            'redirect' => $redirect,
-        ];
-        if ($dialog) {
-            $redirectData['dialog'] = $dialog;
-        }
-        $this->api->checkRedirectSafety($redirect);
+        $redirectData = $this->getRedirectData($input);
+        $this->api->checkRedirectSafety($redirectData['redirect']);
         if (Request::isPost()) {
             $ret = $this->api->registerPhone();
             if ($ret['code']) {
                 return Response::send(-1, $ret['msg']);
             }
-            return Response::send(0, null, null, $redirect);
+            return Response::send(0, null, null, $redirectData['redirect']);
         }
         $view = 'registerPhone';
-        if ($dialog) {
+        if (!empty($redirectData['dialog'])) {
             $view = 'registerPhoneDialog';
         }
         return $this->view($view, $redirectData);

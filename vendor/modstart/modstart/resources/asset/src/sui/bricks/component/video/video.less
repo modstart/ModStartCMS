@@ -3,21 +3,13 @@
 }
 
 .ub-video {
-    --video-height: 25rem;
     display: flex;
     background: #151728;
-    height: calc(2rem + var(--video-height));
 
     &.full-page {
-        --video-height: 30rem;
-
         .side {
             display: none;
         }
-    }
-
-    &.no-tool-box {
-        height: var(--video-height);
     }
 
     .main {
@@ -25,9 +17,17 @@
         width: 0;
 
         .player-box {
-            height: var(--video-height);
             width: 100%;
             position: relative;
+            display: block;
+            overflow: hidden;
+
+            &:after {
+                content: '';
+                display: block;
+                margin-top: 56.25%;
+                height: 0;
+            }
 
             .player-info {
                 position: absolute;
@@ -48,6 +48,8 @@
             .player {
                 height: 100%;
                 width: 100%;
+                position: absolute;
+                inset: 0;
 
                 .iframe {
                     width: 100% !important;
@@ -87,10 +89,15 @@
     .side {
         width: 10rem;
         flex-shrink: 0;
-        color: #FFF;
-        overflow: auto;
-        color: rgb(156, 162, 172);
-        --color-scrollbar-bg: #1b1e32;
+        position: relative;
+
+        .side-container {
+            position: absolute;
+            inset: 0;
+            overflow: auto;
+            color: rgb(156, 162, 172);
+            --color-scrollbar-bg: #1b1e32;
+        }
     }
 }
 
@@ -98,7 +105,6 @@
 @media screen and (max-width: 40rem) {
     .ub-video {
         flex-direction: column;
-        --video-height: 13rem;
         height: auto;
 
         .main {
@@ -107,6 +113,10 @@
 
         .side {
             width: 100%;
+
+            .side-container {
+                position: relative;
+            }
         }
     }
 }

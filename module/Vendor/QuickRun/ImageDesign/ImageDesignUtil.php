@@ -103,6 +103,20 @@ class ImageDesignUtil
                             'color' => $item['data']['shadowColor']
                         ];
                     }
+                    if (!empty($item['data']['shadowBorder'])) {
+                        if (empty($item['data']['shadowColor'])) {
+                            $item['data']['shadowColor'] = '#000000';
+                        }
+                        foreach ([-$item['data']['shadowBorder'], 0, $item['data']['shadowBorder']] as $x) {
+                            foreach ([-$item['data']['shadowBorder'], 0, $item['data']['shadowBorder']] as $y) {
+                                $offsets[] = [
+                                    'x' => $x,
+                                    'y' => $y,
+                                    'color' => $item['data']['shadowColor']
+                                ];
+                            }
+                        }
+                    }
                     $offsets[] = [
                         'x' => 0,
                         'y' => 0,
