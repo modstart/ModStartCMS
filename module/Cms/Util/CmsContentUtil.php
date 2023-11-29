@@ -225,6 +225,7 @@ class CmsContentUtil
             $f = CmsField::getByName($v['fieldType']);
             $recordData[$v['name']] = $f->unserializeValue($recordData[$v['name']], $recordData);
         }
+        $record['_url'] = UrlUtil::content($record);
         $record['_data'] = $recordData;
         if (!empty($record['cover'])) {
             $record['cover'] = AssetsUtil::fixFull($record['cover']);

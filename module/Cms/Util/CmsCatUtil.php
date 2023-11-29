@@ -11,25 +11,14 @@ use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TreeUtil;
 use Module\Cms\Type\CatUrlMode;
 
-/**
- * @Util CMS栏目操作
- */
 class CmsCatUtil
 {
-    /**
-     * @Util 清除缓存
-     */
     public static function clearCache()
     {
         Cache::forget('CmsCatAll');
         Cache::forget('CmsCatMap');
     }
 
-    /**
-     * @return array
-     *
-     * @Util 获取所有栏目
-     */
     public static function all()
     {
         return Cache::rememberForever('CmsCatAll', function () {
