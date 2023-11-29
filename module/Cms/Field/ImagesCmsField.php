@@ -30,6 +30,7 @@ class ImagesCmsField extends AbstractCmsField
 
     public function prepareInputOrFail($field, InputPackage $input)
     {
+        $this->prepareInputArrayAutoDetect($field, $input);
         return $input->getImagesPath($field['name']);
     }
 

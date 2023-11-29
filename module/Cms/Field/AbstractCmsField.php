@@ -37,6 +37,18 @@ abstract class AbstractCmsField
         return $input->getTrimString($field['name']);
     }
 
+    protected function prepareInputArrayAutoDetect($field, InputPackage $input)
+    {
+        $value = $input->get($field['name']);
+        if (is_string($value)) {
+            $value = @json_decode($value, true);
+            if (empty($value)) {
+                $value = [];
+            }
+            $input->set($field['name'], $value);
+        }
+    }
+
     /**
      * 用户输入字段检查
      * @param $field

@@ -36,6 +36,7 @@ class CheckboxCmsField extends AbstractCmsField
 
     public function prepareInputOrFail($field, InputPackage $input)
     {
+        $this->prepareInputArrayAutoDetect($field, $input);
         return $input->getArray($field['name']);
     }
 
