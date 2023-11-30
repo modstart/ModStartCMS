@@ -27,7 +27,7 @@ class MemberVipController extends ModuleBaseController
             $this->shareDialogPageViewFrame();
         }
         return $this->view($view, [
-            'memberVips' => MemberVipUtil::all(),
+            'memberVips' => MemberVipUtil::allVisible(),
             'memberVipRights' => MemberVipUtil::rights(),
         ]);
     }

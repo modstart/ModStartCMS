@@ -25,6 +25,15 @@ class MemberVipUtil
         return $vips;
     }
 
+    public static function allVisible()
+    {
+        $vips = array_filter(self::all(), function ($vip) {
+            return $vip['visible'];
+        });
+        $vips = array_values($vips);
+        return $vips;
+    }
+
     public static function all()
     {
         return CacheUtil::rememberForever('MemberVipList', function () {

@@ -427,16 +427,14 @@ class ModelUtil
     }
 
     /**
-     *
      * 关联表列出关联信息
      *
-     * @param $model : 表名称
-     * @param $sourceField : 外键列名
-     * @param $sourceValue : 外键值
-     * @param array $filter : 关联过滤条件
-     * @param array $extraFields : 额外返回字段
-     * @param string $idField : 关系表ID列名
-     *
+     * @param $model string 表名称
+     * @param $sourceField string 外键列名
+     * @param $sourceValue mixed 外键值
+     * @param $filter array 关联过滤条件
+     * @param $extraFields array 额外返回字段
+     * @param $idField string 关系表ID列名
      * @return array
      */
     public static function relationList($model, $sourceField, $sourceValue, $filter = [], $extraFields = [], $idField = 'id')
@@ -445,16 +443,27 @@ class ModelUtil
     }
 
     /**
-     *
+     * 关联表清除
+     * @param $model string 表名称
+     * @param $field string 外键列名
+     * @param $value mixed 外键值
+     * @return int
+     */
+    public static function relationClean($model, $field, $value)
+    {
+        return self::model($model)->where($field, $field)->delete();
+    }
+
+    /**
      * 关系表关联操作
      *
-     * @param $model : 表名称
-     * @param $sourceField : 外键列名
-     * @param $sourceValue : 外键值
-     * @param $targetField : 关联列名
-     * @param $targetValues : 关联列值
-     * @param array $filter : 关联过滤条件
-     * @param string $idField : 关系表ID列名
+     * @param $model string 表名称
+     * @param $sourceField string 外键列名
+     * @param $sourceValue mixed 外键值
+     * @param $targetField string 关联列名
+     * @param $targetValues array 关联列值
+     * @param $filter array 关联过滤条件
+     * @param $idField string 关系表ID列名
      *
      * @example
      *

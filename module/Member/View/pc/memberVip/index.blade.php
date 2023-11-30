@@ -112,7 +112,7 @@
                             <div class="vip-list-container">
                                 <div class="vip-list vip-bg tw-rounded">
                                     @foreach($memberVips as $memberVip)
-                                        @if(!$memberVip['isDefault'] && $memberVip['visible'])
+                                        @if(!$memberVip['isDefault'])
                                             <div class="item" data-vip-id="{{$memberVip['id']}}">
                                                 <div class="tw-text-xl tw-font-bold tw-py-4">
                                                     {{$memberVip['title']}}
@@ -212,7 +212,7 @@
                         @endif
                         <div class="tw-rounded vip-bg vip-content-list">
                             @foreach($memberVips as $memberVip)
-                                @if(!$memberVip['isDefault'] && $memberVip['visible'])
+                                @if(!$memberVip['isDefault'])
                                     <div class="item tw-hidden">
                                         <div class="tw-p-4 tw-text-lg vip-text">{{$memberVip['title']}}</div>
                                         <div class="tw-pb-4 tw-px-4 ">

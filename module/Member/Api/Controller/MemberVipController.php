@@ -36,7 +36,7 @@ class MemberVipController extends Controller implements MemberLoginCheck
 
     public function all()
     {
-        return Response::generateSuccessData(MemberVipUtil::all());
+        return Response::generateSuccessData(MemberVipUtil::allVisible());
     }
 
     public function buy()
