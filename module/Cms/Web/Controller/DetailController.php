@@ -17,6 +17,10 @@ class DetailController extends ModuleBaseController
         InputPackage::mergeToInput('id', $id);
         $viewData = Response::tryGetData($api->index());
         $view = $viewData['view'];
+        $record = $viewData['record'];
+        $viewData['pageTitle'] = ($record['seoTitle'] ? $record['seoTitle'] : $record['title']) . ' | ' . modstart_config('siteName');
+        $viewData['pageKeywords'] = $record['seoKeywords'] ? $record['seoKeywords'] : $record['title'];
+        $viewData['pageDescription'] = $record['seoDescription'] ? $record['seoDescription'] : $record['title'];
         return $this->view('cms.detail.' . CmsTemplateUtil::toBladeView($view), $viewData);
     }
 }

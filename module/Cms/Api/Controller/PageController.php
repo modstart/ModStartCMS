@@ -29,9 +29,6 @@ class PageController extends BaseCatController
         $viewData['record'] = isset($records[0]) ? $records[0] : null;
         $viewData['records'] = $records;
         $viewData['view'] = $view;
-        $viewData['pageTitle'] = ($cat['seoTitle'] ? $cat['seoTitle'] : $cat['title']) . ' | ' . modstart_config('siteName');
-        $viewData['pageKeywords'] = $cat['seoKeywords'] ? $cat['seoKeywords'] : $cat['title'];
-        $viewData['pageDescription'] = $cat['seoDescription'] ? $cat['seoDescription'] : $cat['title'];
         return Response::generateSuccessData($viewData);
     }
 }
