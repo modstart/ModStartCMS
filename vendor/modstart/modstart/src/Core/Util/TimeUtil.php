@@ -28,7 +28,16 @@ class TimeUtil
         if (null === $ts) {
             $ts = strtotime('2020-01-01 00:00:00');
         }
-        return date('H:i:s', $ts + $seconds);
+        $hour = intval($seconds / self::PERIOD_HOUR);
+        $minute = intval(($seconds % self::PERIOD_HOUR) / self::PERIOD_MINITE);
+        $second = intval($seconds % self::PERIOD_MINITE);
+        $pcs = [];
+        if ($hour) {
+            $pcs[] = sprintf('%02d', $hour);
+        }
+        $pcs[] = sprintf('%02d', $minute);
+        $pcs[] = sprintf('%02d', $second);
+        return implode(':', $pcs);
     }
 
     public static function yesterdayDate()

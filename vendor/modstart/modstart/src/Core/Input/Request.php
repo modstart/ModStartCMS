@@ -13,11 +13,13 @@ class Request
      * get path for request
      * @return string
      *
-     * @example visit http://www.example.com/url/path?foo=bar -> url/path
+     * @example
+     * http://www.example.com/url/path?foo=bar -> "url/path"
+     * http://www.example.com -> ""
      */
     public static function path()
     {
-        return \Illuminate\Support\Facades\Request::path();
+        return ltrim(\Illuminate\Support\Facades\Request::path(), '/');
     }
 
     /**

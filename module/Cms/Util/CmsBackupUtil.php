@@ -89,6 +89,7 @@ class CmsBackupUtil
                      'Banner' => ['banner'],
                      'Partner' => ['partner'],
                      'Nav' => ['nav'],
+                     'ContentBlock' => ['content_block'],
                  ] as $module => $moduleTables) {
             if (!modstart_module_enabled($module)) {
                 continue;
