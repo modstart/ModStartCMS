@@ -27,15 +27,23 @@ class ContentBlockController extends Controller
 
                 $builder->id('id', 'ID');
                 $builder->text('name', '标识')->required();
+                $builder->text('remark', '备注')->required();
                 $builder->radio('type', '类型')
                     ->optionType(ContentBlockType::class)
-                    ->defaultValue(ContentBlockType::IMAGE)
+                    ->defaultValue(ContentBlockType::BASIC)
                     ->required()
+                    ->when('=', ContentBlockType::BASIC, function ($builder) {
+                        /** @var HasFields $builder */
+                        $builder->text('title', '文字');
+                        $builder->textarea('summary', '描述');
+                        $builder->images('images', '图片');
+                        $builder->link('link', '链接');
+                        $builder->text('text1', '其他1');
+                        $builder->text('text2', '其他2');
+                    })
                     ->when('=', ContentBlockType::IMAGE, function ($builder) {
                         /** @var HasFields $builder */
-                        $builder->image('image', '封面');
-                        $builder->text('title', '标题');
-                        $builder->link('link', '链接');
+                        $builder->image('image', '图片');
                     })
                     ->when('=', ContentBlockType::HTML, function ($builder) {
                         /** @var HasFields $builder */

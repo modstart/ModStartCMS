@@ -14,7 +14,7 @@
         "Vendor:>=4.1.0"
     ],
     "suggest": [],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "modstartVersion": ">=3.7.0",
     "author": "ModStart",
     "description": "后台提供便捷的的内容块管理代码，方便前端调用展示",
