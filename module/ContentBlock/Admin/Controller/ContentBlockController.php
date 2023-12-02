@@ -7,6 +7,7 @@ namespace Module\ContentBlock\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
+use ModStart\Core\Util\ConvertUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Grid\GridFilter;
@@ -27,7 +28,7 @@ class ContentBlockController extends Controller
 
                 $builder->id('id', 'ID');
                 $builder->text('name', '标识')->required();
-                $builder->text('remark', '备注')->required();
+                $builder->switch('enable', '启用')->gridEditable(true)->defaultValue(true)->required();
                 $builder->radio('type', '类型')
                     ->optionType(ContentBlockType::class)
                     ->defaultValue(ContentBlockType::BASIC)
@@ -52,16 +53,17 @@ class ContentBlockController extends Controller
 
                 $builder->display('_content', '内容')
                     ->hookRendering(function (AbstractField $field, $item, $index) {
+                        $item->images = ConvertUtil::toArray($item->images);
                         return AutoRenderedFieldValue::makeView('module::ContentBlock.View.admin.content', [
                             'item' => $item
                         ]);
                     })
                     ->listable(true)->showable(false);
 
+                $builder->text('remark', '备注');
                 $builder->number('sort', '排序')->defaultValue(999)->help('数字越小越靠前')->required();
                 $builder->datetime('startTime', '开始时间')->help('留空表示不限制');
                 $builder->datetime('endTime', '结束时间')->help('留空表示不限制');
-                $builder->switch('enable', '启用')->defaultValue(true)->required();
 
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);
@@ -71,6 +73,8 @@ class ContentBlockController extends Controller
                 $filter->eq('type', '类型')->select(ContentBlockType::class);
                 $filter->eq('name', '标识');
             })
+            ->operateFixed('right')
+            ->canCopy(true)
             ->title('内容区块');
     }
 }
