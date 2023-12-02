@@ -142,6 +142,8 @@ var Editor = {
             'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol',
             'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols',
             // 'wechatcustomemotion',
+            '|',
+            'contentimport'
         ];
 
         if (window.__editorBasicToolBars) {

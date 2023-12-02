@@ -40,6 +40,7 @@ class MemberMoneyLogController extends Controller
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('memberUserId', '用户ID');
+                $filter->range('created_at', '创建时间');
             })
             ->title('用户钱包流水')->canAdd(false)->canEdit(false)->canDelete(false);
     }
