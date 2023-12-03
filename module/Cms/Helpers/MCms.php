@@ -376,20 +376,44 @@ class MCms
     }
 
     /**
-     * @deprecated delete after 20240529
+     * @Util 获取栏目内容列表
+     * @desc 根据栏目ID获取内容列表，不包含子栏目
+     * @param $catId int 栏目ID
+     * @param $limit int 最大返回数量
+     * @param $option array 其他选项
+     * @paramExample
+     * [Placeholder.CmsPageContentOption]
+     * @return array
+     * @returnExample
+     * [
+     *   [Placeholder.CmsContent|indent:2,trim],
+     *   ...
+     * ]
      */
-    public static function listContentByCat($catId, $page = 1, $pageSize = 10, $option = [])
+    public static function listContentByCat($catId, $limit = 999, $option = [])
     {
-        $paginateData = self::pageCat($catId, $page, $pageSize, $option);
+        $paginateData = self::pageContentByCat($catId, 1, $limit, $option);
         return $paginateData['records'];
     }
 
     /**
-     * @deprecated delete after 20240529
+     * @Util 获取栏目内容列表（根据URL）
+     * @desc 根据栏目ID获取内容列表，不包含子栏目
+     * @param $catId int 栏目ID
+     * @param $limit int 最大返回数量
+     * @param $option array 其他选项
+     * @paramExample
+     * [Placeholder.CmsPageContentOption]
+     * @return array
+     * @returnExample
+     * [
+     *   [Placeholder.CmsContent|indent:2,trim],
+     *   ...
+     * ]
      */
-    public static function listContentByCatUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
+    public static function listContentByCatUrl($catUrl, $limit = 999, $option = [])
     {
-        $paginateData = self::pageCatByUrl($catUrl, $page, $pageSize, $option);
+        $paginateData = self::pageContentByCatUrl($catUrl, 1, $limit, $option);
         return $paginateData['records'];
     }
 
