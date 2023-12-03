@@ -1,5 +1,5 @@
 <div class="tw-shadow tw-rounded tw-p-1" style="width:10rem;overflow:auto;">
-    <table class="ub-table border mini tw-table-fixed">
+    <table class="ub-table bord er mini tw-table-fixed">
         <tbody>
         @if($item->type===\Module\ContentBlock\Type\ContentBlockType::BASIC)
             @if(!empty($item->texts))
