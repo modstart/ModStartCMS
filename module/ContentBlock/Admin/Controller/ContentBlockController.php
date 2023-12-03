@@ -10,10 +10,12 @@ use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
+use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
 use Module\ContentBlock\Model\ContentBlock;
 use Module\ContentBlock\Type\ContentBlockType;
+use Module\ContentBlock\Util\ContentBlockUtil;
 
 class ContentBlockController extends Controller
 {
@@ -69,6 +71,9 @@ class ContentBlockController extends Controller
                 $filter->eq('id', L('ID'));
                 $filter->eq('type', '类型')->select(ContentBlockType::class);
                 $filter->eq('name', '标识');
+            })
+            ->hookChanged(function (Form $form) {
+                ContentBlockUtil::clearCache();
             })
             ->operateFixed('right')
             ->canCopy(true)

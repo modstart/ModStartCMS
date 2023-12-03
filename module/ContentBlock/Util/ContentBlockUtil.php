@@ -13,6 +13,16 @@ class ContentBlockUtil
 {
     const CACHE_KEY_PREFIX = 'ContentBlock:';
 
+    public static function clearCache()
+    {
+        $records = ContentBlock::all(['id', 'name']);
+        foreach ($records as $record) {
+            CacheUtil::forget(self::CACHE_KEY_PREFIX . 'Id:' . $record->id);
+            CacheUtil::forget(self::CACHE_KEY_PREFIX . 'Name:' . $record->name);
+            CacheUtil::forget(self::CACHE_KEY_PREFIX . 'Name:' . $record->name . ':All');
+        }
+    }
+
     private static function getBy($where)
     {
         $m = ContentBlock::where($where)
@@ -30,12 +40,12 @@ class ContentBlockUtil
             return null;
         }
         $m = $m->toArray();
-        ModelUtil::decodeRecordJson($m, ['images']);
+        ModelUtil::decodeRecordJson($m, ['basicImages', 'basicTexts']);
         if ($m['image']) {
             $m['image'] = AssetsUtil::fixFull($m['image']);
         }
-        if ($m['images']) {
-            $m['images'] = AssetsUtil::fixFull($m['images'], false);
+        if ($m['basicImages']) {
+            $m['basicImages'] = AssetsUtil::fixFull($m['basicImages'], false);
         }
         return $m;
     }
@@ -57,8 +67,9 @@ class ContentBlockUtil
         }
         $ms = $query->get()->toArray();
         AssetsUtil::recordsFixFullOrDefault($ms, ['image']);
+        ModelUtil::decodeRecordsJson($ms, ['basicImages', 'basicTexts']);
         foreach ($ms as $mIndex => $m) {
-            $ms[$mIndex]['images'] = AssetsUtil::fixFull($m['images'], false);
+            $ms[$mIndex]['basicImages'] = AssetsUtil::fixFull($m['basicImages'], false);
         }
         return $ms;
     }
@@ -107,10 +118,14 @@ class ContentBlockUtil
 
     public static function allCached($name, $limit = 0)
     {
-        return CacheUtil::remember(self::CACHE_KEY_PREFIX . "Name:" . $name . ':' . $limit,
+        $records = CacheUtil::remember(self::CACHE_KEY_PREFIX . "Name:" . $name . ':All',
             3600,
-            function () use ($name, $limit) {
-                return self::all($name, $limit);
+            function () use ($name) {
+                return self::all($name);
             });
+        if ($limit > 0) {
+            $records = array_slice($records, 0, $limit);
+        }
+        return $records;
     }
 }
