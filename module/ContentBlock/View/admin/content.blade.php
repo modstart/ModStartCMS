@@ -2,23 +2,21 @@
     <table class="ub-table border mini">
         <tbody>
         @if($item->type===\Module\ContentBlock\Type\ContentBlockType::BASIC)
-            @if(!empty($item->title))
+            @if(!empty($item->basicTexts))
                 <tr>
-                    <td>标题</td>
-                    <td>{{$item->title}}</td>
+                    <td>文字</td>
+                    <td>
+                        @foreach($item->basicTexts as $text)
+                            <div>{{$text}}</div>
+                        @endforeach
+                    </td>
                 </tr>
             @endif
-            @if(!empty($item->summary))
-                <tr>
-                    <td>描述</td>
-                    <td>{{$item->summary}}</td>
-                </tr>
-            @endif
-            @if(!empty($item->images))
+            @if(!empty($item->basicImages))
                 <tr>
                     <td>图片</td>
                     <td>
-                        @foreach($item->images as $image)
+                        @foreach($item->basicImages as $image)
                             <a href="javascript:;"
                                data-image-preview="{{\ModStart\Core\Assets\AssetsUtil::fix($image)}}">
                                 <img style="max-width:2rem;max-height:2rem;"
@@ -26,24 +24,6 @@
                             </a>
                         @endforeach
                     </td>
-                </tr>
-            @endif
-            @if(!empty($item->link))
-                <tr>
-                    <td>链接</td>
-                    <td>{{$item->link}}</td>
-                </tr>
-            @endif
-            @if(!empty($item->text1))
-                <tr>
-                    <td>链接</td>
-                    <td>{{$item->text1}}</td>
-                </tr>
-            @endif
-            @if(!empty($item->text2))
-                <tr>
-                    <td>链接</td>
-                    <td>{{$item->text2}}</td>
                 </tr>
             @endif
         @elseif($item->type===\Module\ContentBlock\Type\ContentBlockType::IMAGE)

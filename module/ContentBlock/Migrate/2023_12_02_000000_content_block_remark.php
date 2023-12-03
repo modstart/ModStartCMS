@@ -15,11 +15,9 @@ class ContentBlockRemark extends Migration
 
         Schema::table('content_block', function (Blueprint $table) {
 
-            $table->string('text1', 100)->nullable()->comment('');
-            $table->string('text2', 100)->nullable()->comment('');
-            $table->string('images', 1000)->nullable()->comment('');
-            $table->string('summary', 400)->nullable()->comment('');
             $table->string('remark', 100)->nullable()->comment('');
+            $table->text('basicTexts')->nullable()->comment('');
+            $table->text('basicImages')->nullable()->comment('');
 
         });
 

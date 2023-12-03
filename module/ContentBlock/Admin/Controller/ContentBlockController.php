@@ -28,6 +28,7 @@ class ContentBlockController extends Controller
 
                 $builder->id('id', 'ID');
                 $builder->text('name', '标识')->required();
+                $builder->text('remark', '备注');
                 $builder->switch('enable', '启用')->gridEditable(true)->defaultValue(true)->required();
                 $builder->radio('type', '类型')
                     ->optionType(ContentBlockType::class)
@@ -35,12 +36,8 @@ class ContentBlockController extends Controller
                     ->required()
                     ->when('=', ContentBlockType::BASIC, function ($builder) {
                         /** @var HasFields $builder */
-                        $builder->text('title', '文字');
-                        $builder->textarea('summary', '描述');
-                        $builder->images('images', '图片');
-                        $builder->link('link', '链接');
-                        $builder->text('text1', '其他1');
-                        $builder->text('text2', '其他2');
+                        $builder->values('basicTexts', '文字');
+                        $builder->images('basicImages', '图片');
                     })
                     ->when('=', ContentBlockType::IMAGE, function ($builder) {
                         /** @var HasFields $builder */
@@ -53,14 +50,14 @@ class ContentBlockController extends Controller
 
                 $builder->display('_content', '内容')
                     ->hookRendering(function (AbstractField $field, $item, $index) {
-                        $item->images = ConvertUtil::toArray($item->images);
+                        $item->basicTexts = ConvertUtil::toArray($item->basicTexts);
+                        $item->basicImages = ConvertUtil::toArray($item->basicImages);
                         return AutoRenderedFieldValue::makeView('module::ContentBlock.View.admin.content', [
                             'item' => $item
                         ]);
                     })
                     ->listable(true)->showable(false);
 
-                $builder->text('remark', '备注');
                 $builder->number('sort', '排序')->defaultValue(999)->help('数字越小越靠前')->required();
                 $builder->datetime('startTime', '开始时间')->help('留空表示不限制');
                 $builder->datetime('endTime', '结束时间')->help('留空表示不限制');
