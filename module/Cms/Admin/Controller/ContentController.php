@@ -203,6 +203,7 @@ class ContentController extends Controller
         $grid->canBatchDelete(true);
         $grid->batchOperatePrepend('<button class="btn" data-batch-dialog-operate="' . modstart_admin_url('cms/content/batch_move/' . $this->modelId) . '"><i class="iconfont icon-right"></i> 批量移动</button>');
         $grid->pageJumpEnable(true);
+        $grid->canCopy(true);
         if (Request::isPost()) {
             return $grid->request();
         }
@@ -222,6 +223,7 @@ class ContentController extends Controller
         $input = InputPackage::buildFromInput();
         $this->init($modelId);
         $id = CRUDUtil::id();
+        $copyId = CRUDUtil::copyId();
         $record = false;
         if ($id) {
             $record = ModelUtil::get($this->modelTable, $id);
@@ -242,6 +244,21 @@ class ContentController extends Controller
                 $form = Form::make('cms_content');
                 $form->radio('verifyStatus', '审核状态')->optionType(CmsContentVerifyStatus::class)->required()->defaultValue(CmsContentVerifyStatus::VERIFY_PASS);
                 return $form->editRequest($id);
+            }
+        } elseif ($copyId) {
+            $record = ModelUtil::get($this->modelTable, $copyId);
+            if ($record) {
+                $record['_tags'] = TagUtil::string2Array($record['tags']);
+                $recordData = ModelUtil::get($this->modelDataTable, $copyId);
+                if (!empty($recordData)) {
+                    foreach ($recordData as $k => $v) {
+                        if (in_array($k, ['id', 'created_at', 'updated_at'])) {
+                            continue;
+                        }
+                        $record[$k] = $v;
+                    }
+                }
+                $record['id'] = null;
             }
         }
         $form = Form::make(null);
@@ -360,7 +377,7 @@ class ContentController extends Controller
                     }
                 }
                 ModelUtil::transactionBegin();
-                if ($record) {
+                if (!empty($record['id'])) {
                     ModelUtil::update($this->modelTable, $record['id'], $recordValue);
                     $recordDataValue['updated_at'] = Carbon::now();
                     if (ModelUtil::update($this->modelDataTable, $record['id'], $recordDataValue) < 1) {
