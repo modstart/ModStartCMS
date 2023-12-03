@@ -2,21 +2,21 @@
     <table class="ub-table border mini">
         <tbody>
         @if($item->type===\Module\ContentBlock\Type\ContentBlockType::BASIC)
-            @if(!empty($item->basicTexts))
+            @if(!empty($item->texts))
                 <tr>
                     <td>文字</td>
                     <td>
-                        @foreach($item->basicTexts as $text)
+                        @foreach($item->texts as $text)
                             <div>{{$text}}</div>
                         @endforeach
                     </td>
                 </tr>
             @endif
-            @if(!empty($item->basicImages))
+            @if(!empty($item->images))
                 <tr>
                     <td>图片</td>
                     <td>
-                        @foreach($item->basicImages as $image)
+                        @foreach($item->images as $image)
                             <a href="javascript:;"
                                data-image-preview="{{\ModStart\Core\Assets\AssetsUtil::fix($image)}}">
                                 <img style="max-width:2rem;max-height:2rem;"

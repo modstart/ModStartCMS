@@ -38,8 +38,8 @@ class ContentBlockController extends Controller
                     ->required()
                     ->when('=', ContentBlockType::BASIC, function ($builder) {
                         /** @var HasFields $builder */
-                        $builder->values('basicTexts', '文字');
-                        $builder->images('basicImages', '图片');
+                        $builder->values('texts', '文字');
+                        $builder->images('images', '图片');
                     })
                     ->when('=', ContentBlockType::IMAGE, function ($builder) {
                         /** @var HasFields $builder */
@@ -52,8 +52,8 @@ class ContentBlockController extends Controller
 
                 $builder->display('_content', '内容')
                     ->hookRendering(function (AbstractField $field, $item, $index) {
-                        $item->basicTexts = ConvertUtil::toArray($item->basicTexts);
-                        $item->basicImages = ConvertUtil::toArray($item->basicImages);
+                        $item->texts = ConvertUtil::toArray($item->texts);
+                        $item->images = ConvertUtil::toArray($item->images);
                         return AutoRenderedFieldValue::makeView('module::ContentBlock.View.admin.content', [
                             'item' => $item
                         ]);

@@ -40,12 +40,12 @@ class ContentBlockUtil
             return null;
         }
         $m = $m->toArray();
-        ModelUtil::decodeRecordJson($m, ['basicImages', 'basicTexts']);
+        ModelUtil::decodeRecordJson($m, ['images', 'texts']);
         if ($m['image']) {
             $m['image'] = AssetsUtil::fixFull($m['image']);
         }
-        if ($m['basicImages']) {
-            $m['basicImages'] = AssetsUtil::fixFull($m['basicImages'], false);
+        if ($m['images']) {
+            $m['images'] = AssetsUtil::fixFull($m['images'], false);
         }
         return $m;
     }
@@ -67,9 +67,9 @@ class ContentBlockUtil
         }
         $ms = $query->get()->toArray();
         AssetsUtil::recordsFixFullOrDefault($ms, ['image']);
-        ModelUtil::decodeRecordsJson($ms, ['basicImages', 'basicTexts']);
+        ModelUtil::decodeRecordsJson($ms, ['images', 'texts']);
         foreach ($ms as $mIndex => $m) {
-            $ms[$mIndex]['basicImages'] = AssetsUtil::fixFull($m['basicImages'], false);
+            $ms[$mIndex]['images'] = AssetsUtil::fixFull($m['images'], false);
         }
         return $ms;
     }
