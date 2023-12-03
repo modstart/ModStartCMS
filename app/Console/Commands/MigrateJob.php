@@ -17,6 +17,7 @@ class MigrateJob extends Command
 
     public function handle()
     {
+        print_r(\MCms::listContentByCatUrl('product'));
     }
 
     private function storageTest()

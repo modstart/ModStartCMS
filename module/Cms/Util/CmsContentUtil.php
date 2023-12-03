@@ -72,6 +72,8 @@ class CmsContentUtil
                     'url' => UrlUtil::tag($o),
                 ];
             }, $paginateData['records'][$k]['_tags']);
+            $model = CmsModelUtil::get($record['modelId']);
+            $paginateData['records'][$k]['_data'] = CmsContentUtil::getModelData($model, $record['id']);
         }
         return $paginateData;
     }
