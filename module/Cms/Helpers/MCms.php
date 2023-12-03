@@ -379,7 +379,8 @@ class MCms
      * @Util 获取栏目内容列表
      * @desc 根据栏目ID获取内容列表，不包含子栏目
      * @param $catId int 栏目ID
-     * @param $limit int 最大返回数量
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
      * @param $option array 其他选项
      * @paramExample
      * [Placeholder.CmsPageContentOption]
@@ -390,17 +391,18 @@ class MCms
      *   ...
      * ]
      */
-    public static function listContentByCat($catId, $limit = 999, $option = [])
+    public static function listContentByCat($catId, $page = 1, $pageSize = 999, $option = [])
     {
-        $paginateData = self::pageContentByCat($catId, 1, $limit, $option);
+        $paginateData = self::pageContentByCat($catId, $page, $pageSize, $option);
         return $paginateData['records'];
     }
 
     /**
      * @Util 获取栏目内容列表（根据URL）
-     * @desc 根据栏目ID获取内容列表，不包含子栏目
-     * @param $catId int 栏目ID
-     * @param $limit int 最大返回数量
+     * @desc 根据栏目URL获取内容列表，不包含子栏目
+     * @param $catUrl string 栏目URL
+     * @param $page int 页码
+     * @param $pageSize int 分页大小
      * @param $option array 其他选项
      * @paramExample
      * [Placeholder.CmsPageContentOption]
@@ -411,9 +413,9 @@ class MCms
      *   ...
      * ]
      */
-    public static function listContentByCatUrl($catUrl, $limit = 999, $option = [])
+    public static function listContentByCatUrl($catUrl, $page = 1, $pageSize = 999, $option = [])
     {
-        $paginateData = self::pageContentByCatUrl($catUrl, 1, $limit, $option);
+        $paginateData = self::pageContentByCatUrl($catUrl, $page, $pageSize, $option);
         return $paginateData['records'];
     }
 
@@ -422,7 +424,7 @@ class MCms
      */
     public static function listCatByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
     {
-        return self::listContentByCatUrl($catUrl, $page, $pageSize, $option);
+        return self::pageContentByCatUrl($catUrl, $page, $pageSize, $option);
     }
 
     /**
@@ -430,7 +432,7 @@ class MCms
      */
     public static function paginateCatByUrl($catUrl, $page = 1, $pageSize = 10, $option = [])
     {
-        return self::listContentByCatUrl($catUrl, $page, $pageSize, $option);
+        return self::pageContentByCatUrl($catUrl, $page, $pageSize, $option);
     }
 
     /**
@@ -438,7 +440,7 @@ class MCms
      */
     public static function listCat($catId, $page = 1, $pageSize = 10, $option = [])
     {
-        return self::listContentByCat($catId, $page, $pageSize, $option);
+        return self::pageContentByCat($catId, $page, $pageSize, $option);
     }
 
     /**
@@ -446,7 +448,7 @@ class MCms
      */
     public static function paginateCat($catId, $page = 1, $pageSize = 10, $option = [])
     {
-        return self::listContentByCat($catId, $page, $pageSize, $option);
+        return self::pageContentByCat($catId, $page, $pageSize, $option);
     }
 
     /**
