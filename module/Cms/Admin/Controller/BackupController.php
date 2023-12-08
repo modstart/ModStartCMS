@@ -15,6 +15,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleManager;
+use Module\Cms\Util\CmsBackupUtil;
 
 class BackupController extends Controller
 {
@@ -51,8 +52,6 @@ class BackupController extends Controller
             FileUtil::write($savePath, SerializeUtil::jsonEncodePretty($backup));
             return Response::generateSuccess('备份成功');
         }
-        return view('module::Cms.View.admin.backup.index', [
-            'configs' => modstart_config()->all(),
-        ]);
+        return view('module::Cms.View.admin.backup.index');
     }
 }

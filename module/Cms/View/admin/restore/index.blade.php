@@ -19,8 +19,7 @@
             <table class="ub-table">
                 <thead>
                 <tr>
-                    <th class="ub-text-truncate">模块</th>
-                    <th>名称</th>
+                    <th class="ub-text-truncate">备份</th>
                     <th>
                         数据表
                         <a href="javascript:;" class="ub-text-muted"
@@ -54,8 +53,19 @@
                 @endif
                 @foreach($backups as $backup)
                     <tr>
-                        <td class="tw-font-mono ub-text-truncate">{{$backup['module']}}</td>
-                        <td class="tw-font-mono ub-text-truncate">{{$backup['filename']}}</td>
+                        <td class="tw-font-mono ub-text-truncate">
+                            <div class="ub-text-bold">
+                                <span>
+                                    {{$backup['moduleInfo']['title']}}
+                                </span>
+                                <span class="ub-text-sm">
+                                    {{$backup['module']}}
+                                </span>
+                            </div>
+                            <div>
+                                名称：{{$backup['filename']}}
+                            </div>
+                        </td>
                         <td class="tw-font-mono">
                             @foreach($backup['tables'] as $table)
                                 <span class="ub-tag tw-mb-1 ub-text-sm">{{$table}}</span>

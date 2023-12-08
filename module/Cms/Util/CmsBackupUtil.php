@@ -7,6 +7,7 @@ namespace Module\Cms\Util;
 use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Module\ModuleManager;
 use Module\Cms\Provider\Theme\CmsThemeProvider;
@@ -31,16 +32,20 @@ class CmsBackupUtil
                 if (empty($json['config'])) {
                     $json['config'] = [];
                 }
+                $moduleInfo = ModuleManager::getModuleBasic($theme->name());
                 $results[] = [
                     'module' => $theme->name(),
+                    'moduleInfo' => $moduleInfo,
                     'root' => 'module/' . $theme->name() . '/Backup',
                     'filename' => $file['filename'],
+                    'filemtime' => filemtime($file['pathname']),
                     'size' => $file['size'],
                     'tables' => array_keys($json['structure']),
                     'config' => $json['config'],
                 ];
             }
         }
+        $results = ArrayUtil::sortByKey($results, 'filemtime', 'desc');
         return $results;
     }
 
@@ -50,7 +55,7 @@ class CmsBackupUtil
         BizException::throwsIf('备份文件损坏', empty($backup['backup']));
         $tableBackupBatch = '_del_' . date('Ymd_His_');
         foreach ($backup['structure'] as $table => $structure) {
-            if (!self::isCmsTable($table)) {
+            if (!self::isCmsTable($table) && !self::isCmsBackupTable($table)) {
                 continue;
             }
             if (ModelManageUtil::hasTable($table)) {
@@ -60,7 +65,7 @@ class CmsBackupUtil
             ModelManageUtil::statement($structure);
         }
         foreach ($backup['backup'] as $table => $data) {
-            if (!self::isCmsTable($table)) {
+            if (!self::isCmsTable($table) && !self::isCmsBackupTable($table)) {
                 continue;
             }
             ModelUtil::insertAll($table, $data, false);
@@ -71,6 +76,65 @@ class CmsBackupUtil
                 $config->set($k, $v);
             }
         }
+    }
+
+    public static function mergeConfigTitle(&$configs)
+    {
+        $titleMap = [
+            '/^Cms_/' => 'CMS配置',
+            '/^CmsTheme.*?/' => '主题配置',
+        ];
+        foreach ($configs as $k => $v) {
+            foreach ($titleMap as $pattern => $title) {
+                if (preg_match($pattern, $v['key'])) {
+                    $configs[$k]['title'] = $title;
+                    break;
+                }
+            }
+        }
+    }
+
+    public static function mergeTableTitle(&$tables)
+    {
+        $titleMap = [
+            '/^banner$/' => '通用轮播',
+            '/^partner$/' => '友情链接',
+            '/^nav$/' => '通用导航',
+            '/^content_block$/' => '内容区块',
+            '/^cms_model$/' => 'CMS模型',
+            '/^cms_model_field$/' => 'CMS模型字段',
+            '/^cms_cat$/' => 'CMS栏目',
+            '/^cms_content$/' => 'CMS内容主表',
+            '/^cms_m_.*?$/' => 'CMS内容副表',
+        ];
+        foreach ($tables as $k => $v) {
+            foreach ($titleMap as $pattern => $title) {
+                if (preg_match($pattern, $v['name'])) {
+                    $tables[$k]['title'] = $title;
+                    break;
+                }
+            }
+        }
+    }
+
+    public static function listBackupConfigs()
+    {
+        $configs = modstart_config()->all();
+        $buildIns = [
+            '/^Cms_/',
+            '/^CmsTheme.*?/',
+        ];
+        $configs = array_filter($configs, function ($o) use ($buildIns) {
+            foreach ($buildIns as $pattern) {
+                if (preg_match($pattern, $o['key'])) {
+                    return true;
+                }
+            }
+            return false;
+        });
+        CmsBackupUtil::mergeConfigTitle($configs);
+        $configs = ArrayUtil::sortByKey($configs, 'key');
+        return array_values($configs);
     }
 
     public static function listBackupTables()
@@ -101,7 +165,20 @@ class CmsBackupUtil
                 ];
             }
         }
-        return $tables;
+        self::mergeTableTitle($tables);
+        $tables = ArrayUtil::sortByKey($tables, 'name');
+        return array_values($tables);
+    }
+
+    public static function isCmsBackupTable($table)
+    {
+        $tables = [
+            'banner',
+            'partner',
+            'nav',
+            'content_block',
+        ];
+        return in_array($table, $tables);
     }
 
     public static function isCmsTable($table)

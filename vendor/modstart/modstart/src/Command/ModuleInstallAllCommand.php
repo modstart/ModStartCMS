@@ -11,17 +11,20 @@ use ModStart\Module\ModuleManager;
 
 class ModuleInstallAllCommand extends Command
 {
-    protected $signature = 'modstart:module-install-all';
+    protected $signature = 'modstart:module-install-all {--link-asset}';
 
     public function handle()
     {
+        $linkAsset = $this->option('link-asset');
         $this->info("ModuleInstallAll\n");
         foreach (ModuleManager::listAllInstalledModulesInRequiredOrder() as $module) {
             if (!ModuleManager::isExists($module)) {
                 continue;
             }
             $this->warn(">>> Module $module Installing");
-            $ret = ModuleManager::install($module);
+            $ret = ModuleManager::install($module, false, [
+                'linkAsset' => $linkAsset,
+            ]);
             if (Response::isSuccess($ret)) {
                 $this->info($ret['data']['output']);
             } else {

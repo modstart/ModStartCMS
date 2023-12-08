@@ -42,7 +42,7 @@
 
     <div class="ub-container">
 
-        @if(\MCms::canVisitCat($cat))
+        @if(MCms::canVisitCat($cat))
             <div class="ub-article-a margin-bottom">
                 <div class="row">
                     <div class="col-md-4">
@@ -76,7 +76,7 @@
 
         <div class="row">
             <div class="col-md-9">
-                @if(!\MCms::canVisitCat($cat))
+                @if(!MCms::canVisitCat($cat))
                     <div class="ub-alert danger">
                         <i class="iconfont icon-warning"></i>
                         您没有权限访问该栏目内容

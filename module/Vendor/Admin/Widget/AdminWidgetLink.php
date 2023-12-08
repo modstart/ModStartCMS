@@ -4,6 +4,8 @@
 namespace Module\Vendor\Admin\Widget;
 
 
+use Module\Vendor\Type\AdminWidgetLinkType;
+
 class AdminWidgetLink
 {
     private static $list = [];
@@ -30,24 +32,34 @@ class AdminWidgetLink
                 $results[] = $item;
             }
         }
+        foreach ($results as $i => $v) {
+            if (!isset($v['type'])) {
+                $results[$i]['type'] = AdminWidgetLinkType::WEB;
+            }
+        }
         $resultMap = [];
         foreach ($results as $k => $v) {
-            if (isset($resultMap[$v['title']])) {
-                $resultMap[$v['title']]['list'] = array_merge($resultMap[$v['title']]['list'], $v['list']);
+            $key = $v['type'] . '-' . $v['title'];
+            if (isset($resultMap[$key])) {
+                $resultMap[$key]['list'] = array_merge($resultMap[$key]['list'], $v['list']);
             } else {
-                $resultMap[$v['title']] = $v;
+                $resultMap[$key] = $v;
             }
         }
         return array_values($resultMap);
     }
 
-    public static function build($groupName, $titleLinks)
+    public static function build($groupName, $titleLinks, $type = null)
     {
+        if (is_null($type)) {
+            $type = AdminWidgetLinkType::WEB;
+        }
         if (empty($titleLinks)) {
             return null;
         }
         return [
             'title' => $groupName,
+            'type' => $type,
             'list' => array_filter(array_map(function ($item) {
                 return $item ? [
                     'title' => $item[0],
@@ -55,5 +67,13 @@ class AdminWidgetLink
                 ] : null;
             }, $titleLinks))
         ];
+    }
+
+    public static function buildMobileWithPrefix($linkPrefix, $groupName, $titleLinks)
+    {
+        $titleLinks = array_map(function ($item) use ($linkPrefix) {
+            return [$item[0], $linkPrefix . $item[1]];
+        }, $titleLinks);
+        return self::build($groupName, $titleLinks, AdminWidgetLinkType::MOBILE);
     }
 }

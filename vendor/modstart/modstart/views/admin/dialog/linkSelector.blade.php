@@ -7,6 +7,7 @@
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
     <script>
         window.__data = {
+            types: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($types) !!},
             links: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($links) !!}
         };
     </script>

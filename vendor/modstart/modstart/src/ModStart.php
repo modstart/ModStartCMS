@@ -24,16 +24,25 @@ class ModStart
     public static $css = [];
     public static $js = [];
 
+    public static function cacheKey($key)
+    {
+        static $hash = null;
+        if (null === $hash) {
+            $hash = md5(__DIR__);
+        }
+        return join(':', [$key, $hash]);
+    }
+
     /**
      * 清除缓存
      */
     public static function clearCache()
     {
-        Cache::forget('ModStartServiceProviders');
-        Cache::forget('ModStartAdminRoutes');
-        Cache::forget('ModStartApiRoutes');
-        Cache::forget('ModStartOpenApiRoutes');
-        Cache::forget('ModStartWebRoutes');
+        Cache::forget(self::cacheKey('ModStartServiceProviders'));
+        Cache::forget(self::cacheKey('ModStartAdminRoutes'));
+        Cache::forget(self::cacheKey('ModStartApiRoutes'));
+        Cache::forget(self::cacheKey('ModStartOpenApiRoutes'));
+        Cache::forget(self::cacheKey('ModStartWebRoutes'));
         /**
          * 如果启用了Laravel优化，这些文件会缓存ServiceProvider
          * 会造成缓存清理不干净甚至服务崩溃的问题

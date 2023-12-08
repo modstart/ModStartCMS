@@ -40,7 +40,7 @@ class NavUtil
      * @param string $position
      * @return mixed
      */
-    public static function listByPosition($position = 'header')
+    public static function listByPosition($position = 'head')
     {
         $nodes = self::tree();
         return array_filter($nodes, function ($item) use ($position) {
@@ -55,14 +55,14 @@ class NavUtil
      * @param int $minutes
      * @return mixed
      */
-    public static function listByPositionWithCache($position = 'header', $minutes = 600)
+    public static function listByPositionWithCache($position = 'head', $minutes = 600)
     {
         return Cache::remember(self::CACHE_KEY_PREFIX . $position, $minutes, function () use ($position) {
             return self::listByPosition($position);
         });
     }
 
-    public static function hasData($position = 'header')
+    public static function hasData($position = 'head')
     {
         $values = self::listByPositionWithCache($position);
         return !empty($values);

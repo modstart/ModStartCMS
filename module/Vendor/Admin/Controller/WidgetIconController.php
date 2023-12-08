@@ -28,6 +28,7 @@ class WidgetIconController extends Controller
             }, $mat[1]);
         }
         $icons[] = [
+            'name' => 'iconfont',
             'title' => '内置图标',
             'list' => $list,
         ];
@@ -43,6 +44,7 @@ class WidgetIconController extends Controller
             }, $mat[1]);
         }
         $icons[] = [
+            'name' => 'font-awesome',
             'title' => 'Font Awesome',
             'list' => $list,
         ];

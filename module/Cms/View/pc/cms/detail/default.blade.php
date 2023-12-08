@@ -61,7 +61,7 @@
                                 @endif
                             </div>
                         </div>
-                        @if(!\MCms::canVisitCat($cat))
+                        @if(!MCms::canVisitCat($cat))
                             <div class="ub-alert danger">
                                 <i class="iconfont icon-warning"></i>
                                 您没有权限访问该栏目
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <div class="body ub-list-items">
-                        @foreach(\MCms::latestContentByCat($cat['id']) as $a)
+                        @foreach(MCms::latestContentByCat($cat['id']) as $a)
                             <a class="item-c" href="{{$a['_url']}}">{{$a['title']}}</a>
                         @endforeach
                     </div>

@@ -6,6 +6,7 @@ namespace ModStart\App\Web;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
 
 class ModStartWeb
@@ -27,9 +28,16 @@ class ModStartWeb
         if (config('env.APP_DEBUG')) {
             $routesFiles = self::listModuleRoutes();
         } else {
-            $routesFiles = Cache::rememberForever('ModStartWebRoutes', function () {
-                return self::listModuleRoutes();
-            });
+            /**
+             * @deprecated delete at 2024-06-08
+             */
+            if (method_exists(ModStart::class, 'cacheKey')) {
+                $routesFiles = Cache::rememberForever(ModStart::cacheKey('ModStartWebRoutes'), function () {
+                    return self::listModuleRoutes();
+                });
+            } else {
+                $routesFiles = self::listModuleRoutes();
+            }
         }
         foreach ($routesFiles as $module => $file) {
             Route::group([
@@ -37,7 +45,7 @@ class ModStartWeb
                 'middleware' => ['web.bootstrap'],
                 'namespace' => "\\Module\\$module\\Web\\Controller",
             ], function ($router) use ($file) {
-                if(file_exists($file)){
+                if (file_exists($file)) {
                     require $file;
                 }
             });

@@ -10,6 +10,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Module\ModuleManager;
 use Module\Vendor\Admin\Widget\AdminWidgetLink;
+use Module\Vendor\Type\AdminWidgetLinkType;
 
 class WidgetLinkController extends Controller
 {
@@ -17,26 +18,27 @@ class WidgetLinkController extends Controller
         '*' => '*',
     ];
 
-    private function build($groupName, $titleLinks)
-    {
-        if (empty($titleLinks)) {
-            return null;
-        }
-        return [
-            'title' => $groupName,
-            'list' => array_filter(array_map(function ($item) {
-                return $item ? [
-                    'title' => $item[0],
-                    'link' => $item[1],
-                ] : null;
-            }, $titleLinks))
-        ];
-    }
-
     public function select()
     {
+        $links = AdminWidgetLink::get();
+        $types = [];
+        foreach (AdminWidgetLinkType::getList() as $name => $title) {
+            $count = count(array_filter($links, function ($link) use ($name) {
+                return $link['type'] == $name;
+            }));
+            if ($count <= 0) {
+                continue;
+            }
+            $types[] = [
+                'name' => $name,
+                'title' => $title,
+                'count' => $count,
+                'icon' => AdminWidgetLinkType::icon($name),
+            ];
+        }
         return view('modstart::admin.dialog.linkSelector', [
-            'links' => AdminWidgetLink::get(),
+            'types' => $types,
+            'links' => $links,
         ]);
     }
 }

@@ -32,6 +32,17 @@
                                 <el-slider v-model="value['{{$f['name']}}']" size="mini"
                                            :min="{{$f['min']}}" :max="{{$f['max']}}" :step="{{$f['step']}}"
                                 ></el-slider>
+                            @elseif($f['type']=='link')
+                                <div class="tw-flex">
+                                    <div class="tw-flex-grow">
+                                        <el-input v-model="value['{{$f['name']}}']"
+                                                  placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
+                                                  size="mini"></el-input>
+                                    </div>
+                                    <div>
+                                        <el-button size="mini" @click="doSelectLink('{{$f['name']}}')">选择</el-button>
+                                    </div>
+                                </div>
                             @endif
                         </td>
                     </tr>
@@ -63,6 +74,16 @@
             computed:{
                 jsonValue:function(){
                     return JSON.stringify(this.value);
+                },
+                doSelectLink(index,name,param){
+                    window.__selectorDialog = new window.api.selectorDialog({
+                        server: {!! json_encode($linkServer) !!},
+                        callback: (items) => {
+                            if (items.length > 0) {
+                                this.value[index][name] = items[0].link;
+                            }
+                        }
+                    }).show();
                 }
             }
         });

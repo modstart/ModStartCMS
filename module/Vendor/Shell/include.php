@@ -35,17 +35,22 @@ function shell_echo_block($msg)
 
 function shell_echo_error($msg)
 {
-    echo "\033[31m>>>>> ERROR : $msg \033[0m\n";
+    echo "\033[31m> ERROR : $msg \033[0m\n";
 }
 
 function shell_echo_success($msg)
 {
-    echo "\033[32m>>>>> INFO  : $msg \033[0m\n";
+    echo "\033[32m> INFO  : $msg \033[0m\n";
 }
 
 function shell_echo_info($msg)
 {
-    echo "\033[36m>>>>> INFO  : $msg \033[0m\n";
+    echo "\033[36m> INFO  : $msg \033[0m\n";
+}
+
+function shell_echo($msg)
+{
+    echo "> " . $msg . "\n";
 }
 
 function shell_throws_if($msg, $boolean)

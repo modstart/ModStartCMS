@@ -29,11 +29,15 @@ class ComplexFieldsList extends AbstractField
                 // ['name' => 'xxx', 'title' => '数字', 'type' => 'number-text', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '图片', 'type' => 'image', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '多字符串值', 'type' => 'values', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '模块', 'type' => 'select', 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '单选', 'type' => 'select', 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '链接', 'type' => 'link', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '颜色', 'type' => 'color', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
             ],
             'valueItem' => new \stdClass(),
             'iconServer' => modstart_admin_url('widget/icon'),
-            'hasIcon' => false,
+            'iconGroups' => ['iconfont', 'font-awesome'],
+            'linkServer' => modstart_admin_url('widget/link_select'),
+            '_hasIcon' => false,
         ]);
     }
 
@@ -56,6 +60,23 @@ class ComplexFieldsList extends AbstractField
         return $this;
     }
 
+    /**
+     * 指定图标组
+     * @param $iconGroups array 图标组 iconfont font-awesome
+     * @return $this
+     */
+    public function iconGroups($iconGroups)
+    {
+        $this->addVariables(['iconGroups' => $iconGroups]);
+        return $this;
+    }
+
+    public function linkServer($server)
+    {
+        $this->addVariables(['linkServer' => $server]);
+        return $this;
+    }
+
     public function fields($value)
     {
         $this->addVariables(['fields' => $value]);
@@ -65,7 +86,7 @@ class ComplexFieldsList extends AbstractField
             BizException::throwsIf('ComplexFieldsList.字段名重复 - ' . $f['name'], isset($nameMap[$f['name']]));
             $nameMap[$f['name']] = true;
             if ($f['type'] == 'icon') {
-                $this->addVariables(['hasIcon' => true]);
+                $this->addVariables(['_hasIcon' => true]);
             }
         }
         return $this;

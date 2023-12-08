@@ -4,6 +4,7 @@ namespace Module\Vendor\Log;
 
 
 use Illuminate\Support\Facades\Log;
+use ModStart\Core\Util\SerializeUtil;
 
 class Logger
 {
@@ -49,7 +50,7 @@ class Logger
     private static function write($file, $type, $label, $msg)
     {
         if (!is_string($msg)) {
-            $msg = json_encode($msg, JSON_UNESCAPED_UNICODE);
+            $msg = SerializeUtil::jsonEncode($msg);
         }
         $string = "[" . sprintf('%05d', getmypid()) . "] " . date('Y-m-d H:i:s') . " - $label" . ($msg ? " - $msg" : '');
         $logPath = self::rotateLog($file, $type);

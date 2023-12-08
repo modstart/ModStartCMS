@@ -37,7 +37,7 @@
             <div class="tw-pb-8">
                 <div class="ub-list-items">
                     <div class="row">
-                        @foreach(\MCms::listContentByCatUrl('product',1,4,['where'=>['isRecommend'=>true]]) as $record)
+                        @foreach(MCms::listContentByCatUrl('product',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-3 col-6">
                                 <div class="item-p" data-scroll-animate="animated fadeInUp">
                                     <a class="image" href="{{$record['_url']}}" style="padding:0.25rem 0 0 0;">
@@ -60,7 +60,7 @@
             <div class="">
                 <div class="ub-list-items">
                     <div class="row">
-                        @foreach(\MCms::listContentByCatUrl('cases',1,4,['where'=>['isRecommend'=>true]]) as $record)
+                        @foreach(MCms::listContentByCatUrl('cases',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-3 col-6">
                                 <div class="item-p animated" data-scroll-animate="animated fadeInUp">
                                     <a class="image" href="{{$record['_url']}}">
@@ -82,7 +82,7 @@
             <div class="">
                 <div class="ub-list-items">
                     <div class="row">
-                        @foreach(\MCms::listContentByCatUrl('news',1,4,['where'=>['isRecommend'=>true]]) as $record)
+                        @foreach(MCms::listContentByCatUrl('news',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-6">
                                 <div class="item-k tw-bg-white margin-bottom" data-scroll-animate="animated fadeInUp">
                                     <a class="image" href="{{$record['_url']}}">

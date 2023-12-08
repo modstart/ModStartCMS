@@ -12,7 +12,7 @@
         "Vendor:>=3.0.0"
     ],
     "modstartVersion": ">=2.6.0",
-    "title": "通用导航配置",
+    "title": "通用导航",
     "version": "1.7.0",
     "author": "官方",
     "description": "提供多位置的导航配置工具",

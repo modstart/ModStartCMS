@@ -114,14 +114,19 @@ class ModuleManager
     /**
      * 模块安装
      *
-     * @param $module
+     * @param $module string
+     * @param $force bool
+     * @param $option array
      * @return array
      */
-    public static function install($module, $force = false)
+    public static function install($module, $force = false, $option = [])
     {
         $param = ['module' => $module];
         if ($force) {
             $param['--force'] = true;
+        }
+        if (!empty($option['linkAsset'])) {
+            $param['--link-asset'] = true;
         }
         return self::callCommand('modstart:module-install', $param);
     }

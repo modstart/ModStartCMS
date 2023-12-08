@@ -233,4 +233,8 @@ return [
     'Under Development' => '开发中',
     'Price' => '价格',
     '%s is default, please change it' => '%s 为默认值，请修改',
+    'Move Up' => '上移',
+    'Move Down' => '下移',
+    'Move Top' => '置顶',
+    'Move Bottom' => '置底',
 ];

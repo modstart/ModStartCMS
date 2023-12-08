@@ -13,7 +13,7 @@ use ModStart\Module\ModuleManager;
 
 class ModuleInstallCommand extends Command
 {
-    protected $signature = 'modstart:module-install {module} {--force}';
+    protected $signature = 'modstart:module-install {module} {--link-asset} {--force}';
 
     public function handle()
     {
@@ -121,6 +121,7 @@ class ModuleInstallCommand extends Command
     private function publishAsset($module)
     {
         $force = $this->option('force');
+        $linkAsset = $this->option('link-asset');
         $fs = $this->laravel['files'];
         $from = ModuleManager::path($module, 'Asset') . '/';
         if (!file_exists($from)) {
@@ -131,9 +132,20 @@ class ModuleInstallCommand extends Command
             $this->info("Module Asset Publish : Ignore");
             return;
         }
-        $fs->deleteDirectory($to);
-        $fs->copyDirectory($from, $to);
-        $this->info("Module Asset Publish : $from -> $to");
+        if (!file_exists(public_path('vendor'))) {
+            @mkdir(public_path('vendor'), 0755);
+        }
+        if ($linkAsset) {
+            $linkFromRelative = ModuleManager::relativePath($module, 'Asset');
+            $linkFrom = ModuleManager::path($module, 'Asset');
+            $linkToRelative = "vendor/$module";
+            $linkTo = public_path($linkToRelative);
+            FileUtil::link($linkFrom, $linkTo);
+        } else {
+            $fs->deleteDirectory($to);
+            $fs->copyDirectory($from, $to);
+            $this->info("Module Asset Publish : $from -> $to");
+        }
     }
 
 }

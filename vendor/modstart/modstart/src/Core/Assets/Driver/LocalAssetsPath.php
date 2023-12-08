@@ -2,8 +2,9 @@
 
 namespace ModStart\Core\Assets\Driver;
 
-use ModStart\Core\Assets\AssetsPath;
 use Illuminate\Support\Facades\Cache;
+use ModStart\Core\Assets\AssetsPath;
+use ModStart\Core\Util\PathUtil;
 
 class LocalAssetsPath implements AssetsPath
 {
@@ -11,6 +12,9 @@ class LocalAssetsPath implements AssetsPath
 
     public function getPathWithHash($file)
     {
+        if (PathUtil::isPublicNetPath($file)) {
+            return $file;
+        }
         $hash = Cache::get($flag = self::CACHE_PREFIX . $file, null);
         $joiner = (false === strpos($file, '?')) ? '?' : '&';
         if (null !== $hash) {
@@ -20,7 +24,7 @@ class LocalAssetsPath implements AssetsPath
         if ('&' == $joiner) {
             $localFile = substr($file, 0, strpos($file, '?'));
         }
-        if (file_exists($localFile)) {
+        if (@file_exists($localFile)) {
             $hash = '' . crc32(md5_file($localFile));
             Cache::put($flag, $hash, 0);
             return $file . $joiner . $hash;

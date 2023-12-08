@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class ModStart
+ * @method static string cacheKey($key)
  */
 class ModStart extends Facade
 {

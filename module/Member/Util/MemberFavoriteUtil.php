@@ -7,7 +7,7 @@ use ModStart\Core\Dao\ModelUtil;
 /**
  * Class MemberFavoriteUtil
  * @package Module\Member\Util
- * @deprecated
+ * @deprecated delete at 2024-06-07
  */
 class MemberFavoriteUtil
 {

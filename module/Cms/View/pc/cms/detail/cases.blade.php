@@ -41,7 +41,7 @@
     </div>
 
     <div class="ub-container margin-bottom">
-        @if(!\MCms::canVisitCat($cat))
+        @if(!MCms::canVisitCat($cat))
             <div class="ub-alert danger">
                 <i class="iconfont icon-warning"></i>
                 您没有权限访问该栏目内容
