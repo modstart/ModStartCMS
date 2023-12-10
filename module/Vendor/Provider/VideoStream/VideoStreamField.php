@@ -4,6 +4,7 @@
 namespace Module\Vendor\Provider\VideoStream;
 
 
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Support\Manager\FieldManager;
 
@@ -55,7 +56,7 @@ class VideoStreamField extends AbstractField
 
     public function serializeValue($value, $model)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE);
+        return SerializeUtil::jsonEncode($value, JSON_UNESCAPED_UNICODE);
     }
 
     public function prepareInput($value, $model)

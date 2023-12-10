@@ -13,6 +13,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 
@@ -116,7 +117,7 @@ abstract class AbstractCustomFieldManageController extends Controller
                     $data['maxLength'] = 1000;
                     break;
             }
-            $data['fieldData'] = json_encode($data['fieldData']);
+            $data['fieldData'] = SerializeUtil::jsonEncode($data['fieldData']);
             ModelUtil::transactionBegin();
             if ($id) {
                 ModelUtil::update($config['tableField'], $id, $data);

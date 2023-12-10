@@ -9,6 +9,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Provider\Auth\MemberAuthProvider;
@@ -83,7 +84,7 @@ class AuthController extends ModuleBaseController
             }
             if (!empty($redirectData['dialog'])) {
                 return Response::send(0, '', '',
-                    '[js]parent.location.href=' . json_encode($redirectData['redirect']) . ';');
+                    '[js]parent.location.href=' . SerializeUtil::jsonEncode($redirectData['redirect']) . ';');
             }
             return Response::send(0, '', '', $redirectData['redirect']);
         }
@@ -119,7 +120,7 @@ class AuthController extends ModuleBaseController
         }
         Session::put('ssoClientRedirect', $redirectData['redirect']);
         if (!empty($redirectData['dialog'])) {
-            return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($ret['data']['redirect']) . ';');
+            return Response::send(0, '', '', '[js]parent.location.href=' . SerializeUtil::jsonEncode($ret['data']['redirect']) . ';');
         }
         return Response::send(0, null, null, $ret['data']['redirect']);
     }
@@ -153,7 +154,7 @@ class AuthController extends ModuleBaseController
                 return Response::send(-1, $ret['msg']);
             }
             if (!empty($redirectData['dialog'])) {
-                return Response::send(0, '', '', '[js]parent.location.href=' . json_encode($redirectData['redirect']) . ';');
+                return Response::send(0, '', '', '[js]parent.location.href=' . SerializeUtil::jsonEncode($redirectData['redirect']) . ';');
             }
             return Response::send(0, null, null, $redirectData['redirect']);
         }

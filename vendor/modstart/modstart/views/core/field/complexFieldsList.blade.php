@@ -53,7 +53,7 @@
                                 <el-select v-model="value[vIndex]['{{$f['name']}}']"
                                            placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}">
                                     @foreach($f['option'] as $k=>$v)
-                                        <el-option :key="{{json_encode($k)}}" :label="{{json_encode($k)}}" :value="{{json_encode($k)}}"></el-option>
+                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
                                     @endforeach
                                 </el-select>
                             @elseif($f['type']=='link')
@@ -130,7 +130,7 @@
                 },
                 iconsFilter: function () {
                     return this.icons.filter((v) => {
-                        return {!! json_encode($iconGroups) !!}.includes(v.name);
+                        return {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($iconGroups) !!}.includes(v.name);
                     });
                 }
             },
@@ -145,7 +145,7 @@
                 },
                 doSelectLink(index,name,param){
                     window.__selectorDialog = new window.api.selectorDialog({
-                        server: {!! json_encode($linkServer) !!},
+                        server: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($linkServer) !!},
                         callback: (items) => {
                             if (items.length > 0) {
                                 this.value[index][name] = items[0].link;

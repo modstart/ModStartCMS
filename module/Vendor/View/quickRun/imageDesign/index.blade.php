@@ -3,8 +3,8 @@
     {!! \ModStart\Developer\LangUtil::langScriptPrepare([ "Select Local File" ]) !!};
     window.__selectorDialogServer = "{{$selectorDialogServer}}";
     window._data = {
-        variables: {!! json_encode($variables) !!},
-        imageConfig: {!! json_encode($imageConfig) !!}
+        variables: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($variables) !!},
+        imageConfig: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($imageConfig) !!}
     };
 </script>
 

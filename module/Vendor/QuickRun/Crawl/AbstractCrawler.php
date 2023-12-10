@@ -4,6 +4,8 @@
 namespace Module\Vendor\QuickRun\Crawl;
 
 
+use ModStart\Core\Util\SerializeUtil;
+
 abstract class AbstractCrawler
 {
     /**
@@ -67,7 +69,7 @@ abstract class AbstractCrawler
             if (is_string($data)) {
                 $str[] = $data;
             } else {
-                $str[] = json_encode($data, JSON_UNESCAPED_UNICODE);
+                $str[] = SerializeUtil::jsonEncode($data, JSON_UNESCAPED_UNICODE);
             }
         }
         echo join(' - ', $str) . "\n";
@@ -81,7 +83,7 @@ abstract class AbstractCrawler
         $str[] = '[' . $this->name() . ']';
         $str[] = $msg;
         if (null != $data) {
-            $str[] = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $str[] = SerializeUtil::jsonEncode($data, JSON_UNESCAPED_UNICODE);
         }
         echo join(' - ', $str) . "\n";
         // Log::error(join(' - ', $str));
@@ -111,13 +113,13 @@ abstract class AbstractCrawler
                     foreach ($job['param'] as $k => $v) {
                         if (is_string($v) || is_numeric($v)) {
                         } else {
-                            $v = json_encode($v, JSON_UNESCAPED_UNICODE);
+                            $v = SerializeUtil::jsonEncode($v, JSON_UNESCAPED_UNICODE);
                         }
                         $ids[] = "$k:$v";
                     }
                     $id = join(",", $ids);
                 } else {
-                    $id = json_encode($job['param'], JSON_UNESCAPED_UNICODE);
+                    $id = SerializeUtil::jsonEncode($job['param'], JSON_UNESCAPED_UNICODE);
                 }
             }
             try {

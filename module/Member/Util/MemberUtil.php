@@ -17,6 +17,7 @@ use ModStart\Core\Util\EncodeUtil;
 use ModStart\Core\Util\FormatUtil;
 use ModStart\Core\Util\LockUtil;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Data\DataManager;
 use ModStart\Data\Event\DataFileUploadedEvent;
@@ -831,7 +832,7 @@ class MemberUtil
             'username' => $memberUser['username'],
             'phone' => $memberUser['phone'],
             'email' => $memberUser['email'],
-            'content' => json_encode($content, JSON_UNESCAPED_UNICODE),
+            'content' => SerializeUtil::jsonEncode($content),
         ]);
         ModelUtil::update('member_user', $memberUserId, [
             'deleteAtTime' => 0,

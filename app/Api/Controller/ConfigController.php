@@ -49,7 +49,7 @@ class ConfigController extends BaseController
         $content = [];
         $content [] = "// This file is created by " . action('\\' . __CLASS__ . '@constant') . "\n";
         foreach ($constants as $name => $json) {
-            $content[] = "export const $name = " . json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . ";";
+            $content[] = "export const $name = " . \ModStart\Core\Util\SerializeUtil::jsonEncode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . ";";
         }
         return Response::raw(join("\n", $content), ['Content-Type' => 'text/plain']);
     }

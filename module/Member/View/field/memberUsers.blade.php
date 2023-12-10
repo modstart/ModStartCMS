@@ -1,4 +1,4 @@
-<input type="text" id="{{$param['name']}}Input" name="{{$param['name']}}" value='{{json_encode($memberUserIds)}}'/>
+<input type="text" id="{{$param['name']}}Input" name="{{$param['name']}}" value='{{\ModStart\Core\Util\SerializeUtil::jsonEncode($memberUserIds)}}'/>
 
 {!! \ModStart\ModStart::js('asset/vendor/tagify/jQuery.tagify.min.js') !!}
 {!! \ModStart\ModStart::css('asset/vendor/tagify/tagify.css') !!}
@@ -41,7 +41,7 @@
                         </div>`
                 }
             },
-            whitelist: {!! json_encode($memberUsers) !!},
+            whitelist: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($memberUsers) !!},
             originalInputValueFormat: function (valuesArr) {
                 var values = [];
                 for (var i = 0; i < valuesArr.length; i++) {

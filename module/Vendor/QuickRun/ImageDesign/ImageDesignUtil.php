@@ -10,6 +10,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Provider\FontProvider;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\QrcodeUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 class ImageDesignUtil
 {
@@ -63,7 +64,7 @@ class ImageDesignUtil
         foreach ($variables as $k => $v) {
             $configParam['${' . $k . '}'] = $v;
         }
-        $imageConfig = json_encode($imageConfig, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $imageConfig = SerializeUtil::jsonEncode($imageConfig, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $imageConfig = str_replace(array_keys($configParam), array_values($configParam), $imageConfig);
         $imageConfig = json_decode($imageConfig, true);
 

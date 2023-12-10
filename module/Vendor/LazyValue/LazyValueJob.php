@@ -4,6 +4,7 @@ namespace Module\Vendor\LazyValue;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Job\BaseJob;
+use ModStart\Core\Util\SerializeUtil;
 use Module\Vendor\Log\Logger;
 
 class LazyValueJob extends BaseJob
@@ -54,9 +55,9 @@ class LazyValueJob extends BaseJob
             throw new \Exception('LazyValueJob.Error : could not found processor ' . $this->key);
         }
         Logger::info('LazyValueJob', 'Result', $value);
-        ModelUtil::update('lazy_value', ['key' => $this->key, 'param' => json_encode($this->param)], [
+        ModelUtil::update('lazy_value', ['key' => $this->key, 'param' => SerializeUtil::jsonEncode($this->param)], [
             'expire' => time() + $this->cacheSeconds,
-            'value' => json_encode($value),
+            'value' => SerializeUtil::jsonEncode($value),
         ]);
         Logger::info('LazyValueJob', 'End');
     }

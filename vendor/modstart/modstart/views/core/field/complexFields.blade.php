@@ -77,7 +77,7 @@
                 },
                 doSelectLink(index,name,param){
                     window.__selectorDialog = new window.api.selectorDialog({
-                        server: {!! json_encode($linkServer) !!},
+                        server: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($linkServer) !!},
                         callback: (items) => {
                             if (items.length > 0) {
                                 this.value[index][name] = items[0].link;

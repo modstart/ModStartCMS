@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Detail\Detail;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
@@ -141,7 +142,7 @@ class CustomFieldUtil
                         $f = $grid->richHtml($field['name'], $field['title']);
                         break;
                     default:
-                        BizException::throws('未知字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
+                        BizException::throws('未知字段类型' . SerializeUtil::jsonEncode($field, JSON_UNESCAPED_UNICODE));
                 }
                 $f->placeholder($field['placeholder']);
                 if ($field['isRequired']) {
@@ -227,7 +228,7 @@ class CustomFieldUtil
                     $f = $form->richHtml($field['name'], $field['title']);
                     break;
                 default:
-                    BizException::throws('未知字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
+                    BizException::throws('未知字段类型' . SerializeUtil::jsonEncode($field, JSON_UNESCAPED_UNICODE));
             }
             $f->placeholder($field['placeholder']);
             if ($field['isRequired']) {
@@ -281,7 +282,7 @@ class CustomFieldUtil
                     $f = $detail->richHtml($field['name'], $field['title']);
                     break;
                 default:
-                    BizException::throws('未知字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
+                    BizException::throws('未知字段类型' . SerializeUtil::jsonEncode($field, JSON_UNESCAPED_UNICODE));
             }
             $f->placeholder($field['placeholder']);
             if ($field['isRequired']) {

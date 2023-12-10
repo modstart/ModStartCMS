@@ -16,6 +16,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\TagUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Field\AbstractField;
@@ -26,7 +27,6 @@ use ModStart\Grid\Displayer\ItemOperate;
 use ModStart\Grid\Grid;
 use ModStart\Grid\GridFilter;
 use ModStart\Layout\LayoutGrid;
-use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Widget\TextLink;
@@ -279,7 +279,7 @@ class ContentController extends Controller
                                 $cmsF = CmsField::getByNameOrFail($field['fieldType']);
                                 $f = $cmsF->renderForForm($form, $field);
                                 if (empty($f)) {
-                                    BizException::throws('未知的字段类型' . json_encode($field, JSON_UNESCAPED_UNICODE));
+                                    BizException::throws('未知的字段类型' . SerializeUtil::jsonEncode($field));
                                 }
                                 if ($field['isRequired']) {
                                     $f->required();

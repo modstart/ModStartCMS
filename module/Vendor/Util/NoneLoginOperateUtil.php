@@ -8,6 +8,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\SerializeUtil;
 
 class NoneLoginOperateUtil
 {
@@ -19,7 +20,7 @@ class NoneLoginOperateUtil
         $urlParam = [];
         $urlParam['timestamp'] = time();
         $urlParam['nonce'] = RandomUtil::string(10);
-        $urlParam['param'] = json_encode($param);
+        $urlParam['param'] = SerializeUtil::jsonEncode($param);
         $urlParam['sign'] = self::sign($url, $urlParam['nonce'], $urlParam['timestamp'], $urlParam['param']);
         return $domainUrl . modstart_web_url($url, $urlParam);
     }

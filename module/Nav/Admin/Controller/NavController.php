@@ -9,6 +9,7 @@ use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Type\TypeUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
@@ -44,7 +45,7 @@ class NavController extends Controller
                     }
                 }
             }
-            ModStart::script('window.__positionNavs=' . json_encode($positionNavs) . ';');
+            ModStart::script('window.__positionNavs=' . SerializeUtil::jsonEncode($positionNavs) . ';');
             ModStart::scriptFile('module/Nav/Admin/Controller/NavEdit.js');
         }
         $builder

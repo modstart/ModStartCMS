@@ -11,6 +11,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\VersionUtil;
 use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
@@ -242,7 +243,7 @@ class ModuleStoreUtil
         $zipper->extractTo($moduleDir);
         $zipper->close();
         BizException::throwsIf('解压失败', !file_exists($moduleDir . '/config.json'));
-        file_put_contents($moduleDir . '/license.json', json_encode([
+        file_put_contents($moduleDir . '/license.json', SerializeUtil::jsonEncode([
             'licenseKey' => $licenseKey,
         ]));
         self::cleanDownloadedPackage($package);

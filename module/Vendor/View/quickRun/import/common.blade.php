@@ -13,9 +13,9 @@
                 el: '#app',
                 data() {
                     return {
-                        headTitles: {!! json_encode($headTitles) !!},
-                        templateName: {!! json_encode($templateName) !!},
-                        templateData: {!! json_encode($templateData) !!},
+                        headTitles: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($headTitles) !!},
+                        templateName: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($templateName) !!},
+                        templateData: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($templateData) !!},
                         file: null,
                         uploadResult: [],
                     }

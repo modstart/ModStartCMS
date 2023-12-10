@@ -7,6 +7,7 @@ namespace Module\Cms\Field;
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 
@@ -36,7 +37,7 @@ class ImagesCmsField extends AbstractCmsField
 
     public function serializeValue($value, $data)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function unserializeValue($value, $data)

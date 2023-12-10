@@ -3,6 +3,7 @@
 namespace Module\AdminManager\Widget;
 
 use Illuminate\Support\Str;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Widget\AbstractWidget;
 use Module\AdminManager\Util\ModuleUtil;
 
@@ -13,7 +14,7 @@ class ServerInfoWidget extends AbstractWidget
     protected function variables()
     {
         $phpExtensions = get_loaded_extensions();
-        $modules = json_encode([
+        $modules = SerializeUtil::jsonEncode([
             'modules' => ModuleUtil::modules(),
         ]);
         if (function_exists('gzdeflate')) {

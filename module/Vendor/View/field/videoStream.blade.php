@@ -5,7 +5,7 @@
     </div>
     <div class="field">
         <div id="{{$id}}Selector">
-            <input type="hidden" name="{{$name}}" value="{{json_encode($value,JSON_UNESCAPED_UNICODE)}}"/>
+            <input type="hidden" name="{{$name}}" value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($value,JSON_UNESCAPED_UNICODE)}}"/>
             @if(!\Module\Vendor\Provider\VideoStream\VideoStreamProvider::first())
                 <span class="ub-text-warning">请先安装视频点播模块</span>
             @else

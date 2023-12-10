@@ -5,6 +5,7 @@ namespace Module\Vendor\Provider\Notifier;
 
 
 use Illuminate\Support\Facades\Log;
+use ModStart\Core\Util\SerializeUtil;
 
 class DefaultNotifierProvider extends AbstractNotifierProvider
 {
@@ -20,6 +21,6 @@ class DefaultNotifierProvider extends AbstractNotifierProvider
 
     public function notify($biz, $title, $content, $param = [])
     {
-        Log::info(sprintf('Vendor.DefaultNotifierProvider - %s - %s - %s', $biz, $title, json_encode($content, JSON_UNESCAPED_UNICODE)));
+        Log::info(sprintf('Vendor.DefaultNotifierProvider - %s - %s - %s', $biz, $title, SerializeUtil::jsonEncode($content, JSON_UNESCAPED_UNICODE)));
     }
 }

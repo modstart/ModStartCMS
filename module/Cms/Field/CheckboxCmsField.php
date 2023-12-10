@@ -7,6 +7,7 @@ namespace Module\Cms\Field;
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 
@@ -30,7 +31,6 @@ class CheckboxCmsField extends AbstractCmsField
         }, $data['fieldData']['options']));
         BizException::throwsIf('选项为空', empty($data['fieldData']['options']));
         BizException::throwsIf('字段长度错误', $data['maxLength'] < 1 || $data['maxLength'] > 65535);
-        $data['fieldData'] = json_encode($data['fieldData']);
         return $data;
     }
 
@@ -42,7 +42,7 @@ class CheckboxCmsField extends AbstractCmsField
 
     public function serializeValue($value, $data)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE);
+        return SerializeUtil::jsonEncode($value);
     }
 
     public function unserializeValue($value, $data)

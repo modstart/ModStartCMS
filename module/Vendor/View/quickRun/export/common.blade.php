@@ -15,7 +15,7 @@
                     return {
                         exportName: '{{$exportName}}',
                         format: 'xlsx',
-                        checkedHeadTitles: {!! json_encode(array_keys($headTitles)) !!}
+                        checkedHeadTitles: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(array_keys($headTitles)) !!}
                     }
                 },
                 computed:{
@@ -26,7 +26,7 @@
                 methods: {
                     onAllCheckChange(v){
                         if(v){
-                            this.checkedHeadTitles = {!! json_encode(array_keys($headTitles)) !!};
+                            this.checkedHeadTitles = {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(array_keys($headTitles)) !!};
                         }else{
                             this.checkedHeadTitles = [];
                         }

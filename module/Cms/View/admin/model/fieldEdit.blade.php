@@ -116,7 +116,7 @@
                 el: '#app',
                 data() {
                     return {
-                        ModelFieldType: {!! json_encode(\Module\Cms\Field\CmsField::allMap()) !!},
+                        ModelFieldType: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\Module\Cms\Field\CmsField::allMap()) !!},
                         data: Object.assign({
                             title: "",
                             name: "",
@@ -129,7 +129,7 @@
                             isList: true,
                             guestVisitVisible: false,
                             placeholder: ""
-                        }, {!! json_encode($record) !!}),
+                        }, {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($record) !!}),
                         nameReadOnly: false
                     }
                 },

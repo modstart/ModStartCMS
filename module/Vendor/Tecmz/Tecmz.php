@@ -5,6 +5,7 @@ namespace Module\Vendor\Tecmz;
 use Illuminate\Support\Facades\Log;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\SignUtil;
 
 class Tecmz
@@ -81,7 +82,7 @@ class Tecmz
         $url = self::$API_BASE . $gate;
         // print_r([$url, $param]);exit();
         if ($this->debug) {
-            Log::debug('TecmzApi -> ' . $url . ' -> ' . json_encode($param, JSON_UNESCAPED_UNICODE));
+            Log::debug('TecmzApi -> ' . $url . ' -> ' . SerializeUtil::jsonEncode($param, JSON_UNESCAPED_UNICODE));
         }
         return CurlUtil::postJSONBody($url, $param, [
             'timeout' => 60 * 10,
@@ -344,7 +345,7 @@ class Tecmz
             $post['imageUrl'] = $imageUrl;
         }
         $post['name'] = $name;
-        $post['param'] = json_encode($param, JSON_UNESCAPED_UNICODE);
+        $post['param'] = SerializeUtil::jsonEncode($param, JSON_UNESCAPED_UNICODE);
         $server = $ret['data']['server'];
         // echo "server:$server\n";
         // print_r([$post,$server]);exit();
@@ -430,12 +431,12 @@ class Tecmz
     private function callFileConvertQueue($type, $url, $name = null, $param = [])
     {
         if (is_array($url)) {
-            $url = json_encode($url, JSON_UNESCAPED_UNICODE);
+            $url = SerializeUtil::jsonEncode($url, JSON_UNESCAPED_UNICODE);
         }
         $post = [];
         $post['url'] = $url;
         $post['name'] = $name;
-        $post['param'] = json_encode($param, JSON_UNESCAPED_UNICODE);
+        $post['param'] = SerializeUtil::jsonEncode($param, JSON_UNESCAPED_UNICODE);
         return $this->request('/' . $type . '/queue', $post);
     }
 

@@ -11,9 +11,9 @@
     <script src="@asset('asset/vendor/element-ui/index.js')"></script>
     <script>
         window.__data = {
-            record: {!! json_encode($record) !!},
-            fieldNamePrefix: {!! json_encode($fieldNamePrefix) !!},
-            CustomFieldType:{!! json_encode(\ModStart\Core\Type\TypeUtil::dump(\Module\Vendor\QuickRun\CustomField\CustomFieldType::class)) !!}
+            record: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($record) !!},
+            fieldNamePrefix: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($fieldNamePrefix) !!},
+            CustomFieldType:{!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Core\Type\TypeUtil::dump(\Module\Vendor\QuickRun\CustomField\CustomFieldType::class)) !!}
         }
     </script>
     <script src="@asset('vendor/Vendor/entry/quickRunCustomFieldEdit.js')"></script>

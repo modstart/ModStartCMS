@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use ModStart\Core\Dao\ModelManageUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Util\SerializeUtil;
 use Module\Cms\Field\CmsField;
 use Module\Cms\Type\CmsMode;
 
@@ -100,7 +101,7 @@ class CmsModelUtil
                 $field['isList'] = false;
             }
             if (isset($field['fieldData'])) {
-                $field['fieldData'] = json_encode($field['fieldData']);
+                $field['fieldData'] = SerializeUtil::jsonEncode($field['fieldData']);
             }
             ModelUtil::insert('cms_model_field', $field);
             self::addField($model, $field);

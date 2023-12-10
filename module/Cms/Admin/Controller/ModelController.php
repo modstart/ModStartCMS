@@ -15,6 +15,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
@@ -89,16 +90,17 @@ class ModelController extends Controller
 
             $f = CmsField::getByNameOrFail($data['fieldType']);
             $data = $f->prepareDataOrFail($data);
-            $data['fieldData'] = json_encode($data['fieldData'], JSON_UNESCAPED_UNICODE);
+            $fieldData = $data['fieldData'];
+            $data['fieldData'] = SerializeUtil::jsonEncode($data['fieldData']);
             if ($id) {
                 ModelUtil::update('cms_model_field', $id, $data);
-                $data['fieldData'] = json_decode($data['fieldData'], true);
+                $data['fieldData'] = $fieldData;
                 CmsModelUtil::editField($model, $record, $data);
             } else {
                 $data['modelId'] = $model['id'];
                 $data['sort'] = ModelUtil::sortNext('cms_model_field', ['modelId' => $model['id']]);
                 $data = ModelUtil::insert('cms_model_field', $data);
-                $data['fieldData'] = json_decode($data['fieldData'], true);
+                $data['fieldData'] = $fieldData;
                 CmsModelUtil::addField($model, $data);
             }
             CmsModelUtil::clearCache();

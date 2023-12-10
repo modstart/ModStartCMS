@@ -5,6 +5,7 @@ namespace Module\Vendor\LazyValue;
 
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\SerializeUtil;
 use Module\Vendor\Util\CacheUtil;
 
 class LazyValueUtil
@@ -41,12 +42,12 @@ class LazyValueUtil
 
     public static function get($key, $param, $cacheSeconds, $expireLife = 86400)
     {
-        $where = ['key' => $key, 'param' => json_encode($param)];
+        $where = ['key' => $key, 'param' => SerializeUtil::jsonEncode($param)];
         $exists = ModelUtil::get('lazy_value', $where);
         if (empty($exists)) {
             ModelUtil::insert('lazy_value', [
                 'key' => $key,
-                'param' => json_encode($param),
+                'param' => SerializeUtil::jsonEncode($param),
                 'expire' => time() + $cacheSeconds,
                 'lifeExpire' => time() + $expireLife,
                 'cacheSeconds' => $cacheSeconds,

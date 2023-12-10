@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\SerializeUtil;
 use Module\Vendor\Provider\Captcha\AbstractCaptchaProvider;
 use Module\Vendor\Support\ResponseCodes;
 use Module\Vendor\Tecmz\TecmzUtil;
@@ -39,7 +40,7 @@ class TecmzCaptchaProvider extends AbstractCaptchaProvider
             return Response::generate(-1, '请进行安全验证');
         }
         $ret = TecmzUtil::instance('CaptchaTecmz_')->captchaValidate($captchaKey);
-        Log::info("TecmzCaptcha.Validate - " . json_encode($ret, JSON_UNESCAPED_UNICODE));
+        Log::info("TecmzCaptcha.Validate - " . SerializeUtil::jsonEncode($ret));
         if ($ret['code']) {
             return Response::generate(ResponseCodes::CAPTCHA_ERROR, '请重新进行安全验证');
         }
