@@ -74,6 +74,12 @@ class ModelUtil
      */
     public static function model($model)
     {
+        // Module\Xxx\Model\Xxx
+        if (preg_match('/\\\\Model\\\\(.*)$/', $model)) {
+            if (class_exists($model)) {
+                return new $model();
+            }
+        }
         $m = new DynamicModel();
         $m->setTable($model);
         return $m;

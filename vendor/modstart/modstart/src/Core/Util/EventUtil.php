@@ -23,4 +23,16 @@ class EventUtil
             Event::fire($event);
         }
     }
+
+    /**
+     * @Util 监听一个Laravel事件
+     * @param $eventClass string 事件类名
+     * @param $callback callable 回调函数
+     */
+    public static function listen($eventClass, $callback)
+    {
+        Event::listen($eventClass, function ($event) use ($callback) {
+            call_user_func($callback, $event);
+        });
+    }
 }

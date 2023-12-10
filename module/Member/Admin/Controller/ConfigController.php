@@ -10,7 +10,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
-use Module\Member\Model\MemberDataStatistic;
+use Module\Member\Util\MemberDataStatisticUtil;
 use Module\Member\Util\MemberParamUtil;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
@@ -182,7 +182,7 @@ class ConfigController extends Controller
         $memberUserId = $input->getInteger('memberUserId');
         $data = [];
         $data['sizeLimit'] = $input->getInteger('sizeLimit');
-        MemberDataStatistic::updateMemberUser($memberUserId, $data);
+        MemberDataStatisticUtil::updateMemberUser($memberUserId, $data);
         return Response::generateSuccess('保存成功');
     }
 

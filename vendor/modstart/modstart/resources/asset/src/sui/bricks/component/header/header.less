@@ -23,10 +23,6 @@
 
     }
 
-    &.bg-transparent {
-        background-color: transparent;
-    }
-
     &.transparent {
         background-color: transparent;
 
@@ -445,7 +441,7 @@
         }
 
         .menu {
-            a {
+            & > a, & > .item > a {
                 color: #FFF;
 
                 &:hover, &.active {
@@ -866,8 +862,28 @@
             top: 0px;
             box-shadow: @header-box-shadow;
 
-            &.bg-transparent {
+            &.transparent {
                 background-color: #FFF;
+
+                .nav {
+                    a, .nav-item {
+                        color: var(--color-text);
+
+                        &:hover, &.active {
+                            color: var(--color-primary);
+                        }
+                    }
+                }
+
+                .menu {
+                    & > a, & > .item > a {
+                        color: var(--color-text);
+
+                        &:hover, &.active {
+                            color: var(--color-primary);
+                        }
+                    }
+                }
             }
         }
     }
@@ -877,6 +893,20 @@
     .ub-header-b {
         text-align: left;
         height: 2.5rem;
+
+        &.transparent {
+            &.show {
+                .nav {
+                    a {
+                        color: var(--color-text);
+                    }
+                }
+            }
+
+            .nav-toggle {
+                color: #FFF;
+            }
+        }
 
         .logo {
             display: inline-block;

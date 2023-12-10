@@ -6,8 +6,8 @@ namespace Module\Member\Core;
 
 use ModStart\Core\Util\FileUtil;
 use ModStart\Form\Form;
-use Module\Member\Model\MemberDataStatistic;
 use Module\Member\Provider\MemberAdminShowPanel\AbstractMemberAdminShowPanelProvider;
+use Module\Member\Util\MemberDataStatisticUtil;
 
 class MemberDataStatisticAdminShowPanelProvider extends AbstractMemberAdminShowPanelProvider
 {
@@ -25,7 +25,7 @@ class MemberDataStatisticAdminShowPanelProvider extends AbstractMemberAdminShowP
 
     public function render($memberUser, $param = [])
     {
-        $record = MemberDataStatistic::getCreateMemberUser($memberUser['id']);
+        $record = MemberDataStatisticUtil::getCreateMemberUser($memberUser['id']);
         $form = Form::make('');
         $form->number('sizeLimit', '大小限制')->help('单位MB');
         $form->display('sizeUsed', '已使用大小')->addable(true);

@@ -4,12 +4,11 @@
 namespace Module\Member\Core;
 
 
-use Illuminate\Support\Facades\Log;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleManager;
-use Module\Member\Api\Controller\MemberVipController;
+use Module\Member\Events\MemberUserVipChangeEvent;
 use Module\Member\Util\MemberCreditUtil;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\MemberVipUtil;
@@ -37,6 +36,10 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
             return;
         }
         ModelUtil::update('member_vip_order', ['id' => $payBizId], ['status' => OrderStatus::COMPLETED]);
+        $memberUser = MemberUtil::get($order['memberUserId']);
+        if (empty($memberUser)) {
+            return;
+        }
         $update = [];
         $update['vipId'] = $order['vipId'];
         $update['vipExpire'] = $order['expire'];
@@ -46,6 +49,9 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
             if ($vipSet['creditPresentEnable']) {
                 MemberCreditUtil::change($order['memberUserId'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
             }
+        }
+        if ($update['vipId'] != $memberUser['vipId']) {
+            MemberUserVipChangeEvent::fire($order['memberUserId'], $memberUser['vipId'], $update['vipId']);
         }
     }
 

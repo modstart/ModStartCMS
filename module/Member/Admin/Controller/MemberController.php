@@ -36,6 +36,7 @@ use ModStart\Widget\TextDialogRequest;
 use Module\Member\Config\MemberAdminList;
 use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserRegisteredEvent;
+use Module\Member\Events\MemberUserVipChangeEvent;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Type\Gender;
 use Module\Member\Type\MemberStatus;
@@ -152,7 +153,7 @@ class MemberController extends Controller
             ->canShow(false)
             ->canDelete(true)
             ->canEdit(false)
-            ->canExport(ModuleManager::getModuleConfig('Member', 'exportEnable',false));
+            ->canExport(ModuleManager::getModuleConfig('Member', 'exportEnable', false));
     }
 
     public function selectRemote()
@@ -265,6 +266,9 @@ class MemberController extends Controller
             BizException::throwsIfResponseError($ret);
             if (isset($profile['vipExpire']) && TimeUtil::isDateEmpty($profile['vipExpire'])) {
                 $profile['vipExpire'] = null;
+            }
+            if ($memberUser['vipId'] != $profile['vipId']) {
+                MemberUserVipChangeEvent::fire($memberUser['id'], $memberUser['vipId'], $profile['vipId']);
             }
             MemberUtil::update($memberUser['id'], $profile);
             return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());

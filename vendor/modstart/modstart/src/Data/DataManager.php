@@ -281,6 +281,8 @@ class DataManager
         $fullPath = $path;
         if (!empty($data['domain'])) {
             $fullPath = $data['domain'] . $path;
+        } else {
+            $fullPath = self::fixFull($fullPath);
         }
         return Response::generateSuccessData([
             'data' => $data,
@@ -349,6 +351,8 @@ class DataManager
         $fullPath = $path;
         if (!empty($data['domain'])) {
             $fullPath = $data['domain'] . $path;
+        } else {
+            $fullPath = self::fixFull($fullPath);
         }
         return Response::generate(0, 'ok', [
             'data' => $data,
@@ -461,7 +465,6 @@ class DataManager
         return Response::generateError('parse error');
     }
 
-
     /**
      * 准备文件到本地可用
      * @param $path string 文件路径 /data/xxxxxxx.xxx data_temp/xxxxxx.xxx /data_temp/xxxxxxx.xxx http://www.example.com/data/xxxxx.xxx
@@ -569,6 +572,22 @@ class DataManager
         $option = self::prepareOption($option);
         $storage = self::storage($option);
         return AssetsUtil::fixFull($storage->getDriverFullPath($path), false);
+    }
+
+    public static function fixDataFull($data, $option = null)
+    {
+        $path = join('/', [
+            AbstractDataStorage::DATA,
+            $data['category'],
+            $data['path'],
+        ]);
+        $fullPath = $path;
+        if (!empty($data['domain'])) {
+            $fullPath = $data['domain'] . '/' . $path;
+        } else {
+            $fullPath = self::fixFull($fullPath);
+        }
+        return $fullPath;
     }
 
 }

@@ -114,10 +114,26 @@ var UploadButton = function (selector, option) {
         },
         finish: function () {
 
+        },
+        callbackQueued: function (file) {
+
+        },
+        callbackDequeued: function (file) {
+
+        },
+        callbackQueueSuccess: function (file, res) {
+
+        },
+        callbackQueueError: function (file, reason) {
+
+        },
+        callbackQueueProgress: function (file, percentage) {
+
         }
     }, option);
 
-    return $(selector).each(function () {
+    var uploaders = [];
+    $(selector).each(function () {
 
         var me = this;
         var $me = $(this);
@@ -150,6 +166,7 @@ var UploadButton = function (selector, option) {
         });
 
         uploader.on('fileQueued', function (file) {
+            opt.callbackQueued(file);
             if (!opt.showFileQueue) {
                 return;
             }
@@ -164,12 +181,14 @@ var UploadButton = function (selector, option) {
         });
 
         uploader.on('fileDequeued', function (file) {
+            opt.callbackDequeued(file);
             $('#' + file.id).fadeOut(function () {
                 $('#' + file.id).remove();
             });
         });
 
         uploader.on('uploadProgress', function (file, percentage) {
+            opt.callbackQueueProgress(file, percentage);
             var $li = $('#' + file.id);
             $li.find('.progress-bar').css('width', percentage * 100 + '%');
             if (!$li.find('.status .iconfont').is('.icon-refresh')) {
@@ -190,6 +209,7 @@ var UploadButton = function (selector, option) {
         });
 
         uploader.on('uploadSuccess', function (file, res) {
+            opt.callbackQueueSuccess(file, res);
             this.removeFile(file);
             var f = {
                 name: res.data.data.filename,
@@ -213,6 +233,7 @@ var UploadButton = function (selector, option) {
                 this.retry(file);
                 return;
             }
+            opt.callbackQueueError(file, typeOrMsg);
             this.removeFile(file);
             if (typeOrMsg) {
                 switch (typeOrMsg) {
@@ -240,7 +261,10 @@ var UploadButton = function (selector, option) {
             }
         });
 
+        uploaders.push(uploader);
     });
+
+    return uploaders;
 };
 
 if (!('api' in window)) {

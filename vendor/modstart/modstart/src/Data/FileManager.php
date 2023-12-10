@@ -7,6 +7,7 @@ namespace ModStart\Data;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
+use ModStart\Admin\Type\UploadType;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
@@ -108,7 +109,7 @@ class FileManager
         return Response::jsonSuccess();
     }
 
-    private static function saveToUser($data, $category, $categoryId, $uploadTable, $userId)
+    private static function saveToUser($data, $category, $categoryId, $uploadTable, $userId, $type = null)
     {
         if ($category === 'image') {
             if (empty($data['driver'])) {
@@ -119,12 +120,16 @@ class FileManager
                 );
             }
         }
-        ModelUtil::insert($uploadTable, [
+        $insert = [
             'userId' => $userId,
             'category' => $data['category'],
             'dataId' => $data['id'],
             'uploadCategoryId' => $categoryId,
-        ]);
+        ];
+        if (null !== $type) {
+            $insert['type'] = $type;
+        }
+        ModelUtil::insert($uploadTable, $insert);
         return Response::generateSuccessData(ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']));
     }
 
@@ -154,7 +159,11 @@ class FileManager
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
         }
-        $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId);
+        $type = null;
+        if (in_array($uploadTable, ['member_upload'])) {
+            $type = UploadType::USER;
+        }
+        $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId, $type);
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
@@ -198,6 +207,14 @@ class FileManager
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
         }
+        $type = null;
+        if (in_array($uploadTable, ['member_upload'])) {
+            $type = UploadType::SYSTEM;
+        }
+        $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId, $type);
+        if ($retSaveUser['code']) {
+            return Response::jsonError($ret['msg']);
+        }
         DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
         return Response::jsonSuccessData([
             'path' => $ret['data']['path'],
@@ -217,7 +234,11 @@ class FileManager
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
         }
-        $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId);
+        $type = null;
+        if (in_array($uploadTable, ['member_upload'])) {
+            $type = UploadType::USER;
+        }
+        $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId, $type);
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
@@ -241,7 +262,11 @@ class FileManager
             return Response::jsonError($ret['msg']);
         }
         $data = $ret['data']['data'];
-        $retSaveUser = self::saveToUser($data, $category, $categoryId, $uploadTable, $userId);
+        $type = null;
+        if (in_array($uploadTable, ['member_upload'])) {
+            $type = UploadType::USER;
+        }
+        $retSaveUser = self::saveToUser($data, $category, $categoryId, $uploadTable, $userId, $type);
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
@@ -275,6 +300,14 @@ class FileManager
             return Response::jsonError($ret['msg']);
         }
         $data = $ret['data']['data'];
+        $type = null;
+        if (in_array($uploadTable, ['member_upload'])) {
+            $type = UploadType::SYSTEM;
+        }
+        $retSaveUser = self::saveToUser($data, $category, $categoryId, $uploadTable, $userId, $type);
+        if ($retSaveUser['code']) {
+            return Response::jsonError($ret['msg']);
+        }
         DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
         return Response::jsonSuccessData([
             'data' => ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']),
@@ -315,7 +348,13 @@ class FileManager
         $categoryId = intval($categoryId);
         $option = [];
         $option['order'] = ['id', 'desc'];
-        $option['where'] = ['userId' => $userId, 'category' => $category];
+        $option['where'] = [
+            'userId' => $userId,
+            'category' => $category,
+        ];
+        if (in_array($uploadTable, ['member_upload'])) {
+            $option['where']['type'] = UploadType::USER;
+        }
         if ($categoryId > 0) {
             $uploadCategories = ModelUtil::all($uploadCategoryTable, ['userId' => $userId,]);
             $childIds = TreeUtil::nodesChildrenIds($uploadCategories, $categoryId);

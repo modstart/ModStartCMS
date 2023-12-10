@@ -10,6 +10,11 @@ class MemberDataStatistic extends Model
 {
     protected $table = 'member_data_statistic';
 
+    /**
+     * @param $id
+     * @return mixed
+     * @deprecated delete at 2024-06-10
+     */
     public static function getCreateMemberUser($id)
     {
         $first = self::where('id', $id)->first();
@@ -24,6 +29,11 @@ class MemberDataStatistic extends Model
         return $first->toArray();
     }
 
+    /**
+     * @param $id
+     * @param $data
+     * @deprecated delete at 2024-06-10
+     */
     public static function updateMemberUser($id, $data)
     {
         $m = self::where('id', $id)->first();
@@ -42,6 +52,11 @@ class MemberDataStatistic extends Model
         }
     }
 
+    /**
+     * @param $id
+     * @return int
+     * @deprecated delete at 2024-06-10
+     */
     public static function calcMemberUserUsedSize($id)
     {
         $total = MemberUpload::where(['userId' => $id])
@@ -50,6 +65,10 @@ class MemberDataStatistic extends Model
         return intval($total);
     }
 
+    /**
+     * @param $id
+     * @deprecated delete at 2024-06-10
+     */
     public static function updateMemberUserUsedSize($id)
     {
         $update = [

@@ -18,7 +18,6 @@ use Module\Member\Auth\MemberUser;
 use Module\Member\Config\MemberHomeIcon;
 use Module\Member\Config\MemberMenu;
 use Module\Member\Events\MemberUserRegisteredEvent;
-use Module\Member\Model\MemberDataStatistic;
 use Module\Member\Model\MemberUpload;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Provider\MemberDeleteScheduleProvider;
@@ -186,19 +185,18 @@ class ModuleServiceProvider extends ServiceProvider
             }
             if (class_exists(DataUploadedEvent::class)) {
                 DataUploadedEvent::listen('member_upload', function (DataUploadedEvent $e) {
-                    MemberDataStatistic::updateMemberUserUsedSize($e->userId);
+                    MemberDataStatisticUtil::updateMemberUserUsedSize($e->userId);
                 });
             }
-        }
-
-        if (class_exists(DataDeletedEvent::class)) {
-            DataDeletedEvent::listen(function (DataDeletedEvent $e) {
-                $record = MemberUpload::where(['dataId' => $e->data['id']])->first();
-                if ($record) {
-                    $record->delete();
-                    MemberDataStatistic::updateMemberUserUsedSize($record->userId);
-                }
-            });
+            if (class_exists(DataDeletedEvent::class)) {
+                DataDeletedEvent::listen(function (DataDeletedEvent $e) {
+                    $record = MemberUpload::where(['dataId' => $e->data['id']])->first();
+                    if ($record) {
+                        $record->delete();
+                        MemberDataStatisticUtil::updateMemberUserUsedSize($record->userId);
+                    }
+                });
+            }
         }
 
         Event::listen(MemberUserRegisteredEvent::class, function (MemberUserRegisteredEvent $e) {

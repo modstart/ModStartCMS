@@ -19,6 +19,7 @@
 @color-tertiary-dark: rgb(85, 91, 97);
 @color-tertiary-light: rgb(198, 202, 205);
 @color-text: #34495e;
+@color-text-reverse: #FFFFFF;
 @color-muted: #C4CFDB;
 @color-body-bg: #F4F6F8;
 @color-content-bg: #FFFFFF;
@@ -57,8 +58,9 @@
     // 输入框
     --color-input-placeholder: @color-muted;
     // 文字颜色
-    --color-muted: @color-muted;
     --color-text: var(--theme-color-text, @color-text);
+    --color-text-reverse: var(--theme-color-text-reverse, @color-text-reverse);
+    --color-muted: @color-muted;
     // 页面背景、内容背景、内容线条颜色、输入框背景
     --color-body-bg: var(--theme-color-body-bg, @color-body-bg);
     --color-content-bg: var(--theme-color-content-bg, @color-content-bg);
