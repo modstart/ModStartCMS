@@ -6,7 +6,8 @@
 ```mind
 功能特性
     区块类型
-        图片
+        通用（多图片、多文字）
+        单图
         富文本
     功能配置
         开始时间
@@ -16,7 +17,8 @@
 
 ## 区块类型
 
-- `image`: 图片
+- `basic`: 通用
+- `image`: 单图
 - `html`: 富文本
 
 ## 使用说明
@@ -24,20 +26,20 @@
 ### 获取一个区块内容
 
 ```php
-<?php $cb = \MContentBlock::getCached('标识'); ?>
-<p>类型：{{$cb['type']}}</p>
-<p>名称：{{$cb['name']}}</p>
-<p>标题：{{$cb['title']}}</p>
-<p>图片：{{$cb['image']}}</p>
-<p>链接：{{$cb['link']}}</p>
-<p>HTML：{{$cb['content']}}</p>
+@foreach([MContentBlock::getCached('标识')] as $cb)
+    <p>类型：{{$cb['type']}}</p>
+    <p>名称：{{$cb['name']}}</p>
+    <p>标题：{{$cb['title']}}</p>
+    <p>图片：{{$cb['image']}}</p>
+    <p>链接：{{$cb['link']}}</p>
+    <p>HTML：{{$cb['content']}}</p>
+@endforeach
 ```
 
 ### 获取多个区块内容
 
 ```php
-<?php $cbList = \MContentBlock::allCached('标识',5); ?>
-@foreach($cbLists as $cb)
+@foreach(MContentBlock::allCached('标识',5) as $cb)
     <p>类型：{{$cb['type']}}</p>
     <p>名称：{{$cb['name']}}</p>
     <p>标题：{{$cb['title']}}</p>

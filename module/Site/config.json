@@ -1,6 +1,6 @@
 {
     "name": "Site",
-    "title": "网站基础配置",
+    "title": "基本设置",
     "env": [
         "laravel5",
         "laravel9"
@@ -17,7 +17,7 @@
     "version": "1.7.0",
     "modstartVersion": ">=2.6.0",
     "author": "ModStart",
-    "description": "配置网站名称、关键词、描述、备案信息、主色调等配置",
+    "description": "配置网站名称、关键词、描述、备案信息、主题等配置",
     "config": {
     }
 }
