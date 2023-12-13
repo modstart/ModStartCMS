@@ -75,6 +75,22 @@ const Header = {
 
 const Dom = {
     /**
+     * @Util 获取页面选中的文本
+     * @method MS.dom.getSelectedText
+     * @return String 选中的文本
+     */
+    getSelectedText() {
+        var selectedText = '';
+        if (window.getSelection) {
+            // 支持现代浏览器
+            selectedText = window.getSelection().toString();
+        } else if (document.selection) {
+            // 兼容旧版本的 Internet Explorer
+            selectedText = document.selection.createRange().text;
+        }
+        return selectedText.toString();
+    },
+    /**
      * @Util 为textarea插入文本内容
      * @method MS.dom.insertText
      * @param ele Element|string textarea元素或者选择器
@@ -150,6 +166,7 @@ const MS = {
     date: DateUtil,
     image: ImageUtil,
     collection: Collection,
+    base: Base,
     api: {
         defaultCallback: Base.defaultFormCallback,
         post: Base.post,

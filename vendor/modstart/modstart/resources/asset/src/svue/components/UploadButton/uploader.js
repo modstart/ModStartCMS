@@ -28,56 +28,62 @@ WebUploader.Uploader.register({
     beforeSendFile: function (file) {
         var task = new $.Deferred();
         var me = this;
-        var input = {
-            'action': 'init',
-            'name': file.name,
-            'type': file.type,
-            'lastModifiedDate': file.lastModifiedDate.toString(),
-            'size': file.size,
-            'md5': null
-        };
-        (new WebUploader.Uploader())
-            .md5File(file)
-            .then(function (val) {
-                input.md5 = val;
-                file.fileMd5 = val;
-                var continueUpload = function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: me.options.server,
-                        headers: me.options.headers,
-                        data: JSON.stringify(input),
-                        contentType: "application/json",
-                        dataType: 'json',
-                    }).done(function (res) {
-                        if (res.code) {
-                            tipError(res.msg);
+        var wait = function () {
+            if (!file._widgetImageData) {
+                setTimeout(wait, 100);
+                return;
+            }
+            var input = {
+                'action': 'init',
+                'name': file.name,
+                'type': file.type,
+                'lastModifiedDate': file.lastModifiedDate.toString(),
+                'size': file.size,
+                'md5': null
+            };
+            (new WebUploader.Uploader())
+                .md5File(file)
+                .then(function (val) {
+                    input.md5 = val;
+                    file.fileMd5 = val;
+                    var continueUpload = function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: me.options.server,
+                            headers: me.options.headers,
+                            data: JSON.stringify(input),
+                            contentType: "application/json",
+                            dataType: 'json',
+                        }).done(function (res) {
+                            if (res.code) {
+                                tipError(res.msg);
+                                task.reject();
+                            } else {
+                                me.options.chunkUploaded = res.data.chunkUploaded;
+                                task.resolve();
+                            }
+                        }).fail(function (res) {
+                            tipError('上传出错');
                             task.reject();
-                        } else {
-                            me.options.chunkUploaded = res.data.chunkUploaded;
-                            task.resolve();
-                        }
-                    }).fail(function (res) {
-                        tipError('上传出错');
-                        task.reject();
-                    });
-                };
-                if (me.options.uploadBeforeCheck) {
-                    me.options.uploadBeforeCheck(input, file, function () {
+                        });
+                    };
+                    if (me.options.uploadBeforeCheck) {
+                        me.options.uploadBeforeCheck(input, file, function () {
+                            continueUpload();
+                        }, function (msg) {
+                            me.owner.cancelFile(file)
+                            task.reject(msg);
+                        })
+                    } else {
                         continueUpload();
-                    }, function (msg) {
-                        me.owner.cancelFile(file)
-                        task.reject(msg);
-                    })
-                } else {
-                    continueUpload();
-                }
-            })
-            .fail(function (error) {
-                tipError('上传出错:' + error)
-                task.reject()
-            });
-
+                    }
+                })
+                .fail(function (error) {
+                    tipError('上传出错:' + error)
+                    task.reject()
+                });
+        };
+        wait();
         return $.when(task);
     }
 });

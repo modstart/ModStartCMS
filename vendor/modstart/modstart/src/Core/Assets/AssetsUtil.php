@@ -5,6 +5,7 @@ namespace ModStart\Core\Assets;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Util\ShellUtil;
 
 class AssetsUtil
 {
@@ -101,9 +102,23 @@ class AssetsUtil
         if (Str::startsWith($path, '//')) {
             return $schema . ':' . $path;
         }
-        return $schema . '://' . Request::server('HTTP_HOST') . $path;
+        $host = $schema . '://' . Request::server('HTTP_HOST');
+        if (ShellUtil::isCli()) {
+            $host = config('env.APP_URL');
+            if (empty($host)) {
+                $host = modstart_config('siteUrl');
+            }
+        }
+        return rtrim($host, '/') . '/' . ltrim($path, '/');
     }
 
+    /**
+     * @param $path
+     * @param bool $hash
+     * @return mixed|string
+     * @throws BizException
+     * @deprecated delete at 2024-06-12
+     */
     public static function fixFullInJob($path, $hash = true)
     {
         if (empty($path)) {

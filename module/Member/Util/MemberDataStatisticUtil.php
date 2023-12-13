@@ -4,6 +4,7 @@
 namespace Module\Member\Util;
 
 
+use Illuminate\Database\Eloquent\Model;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Module\ModuleManager;
@@ -36,7 +37,7 @@ class MemberDataStatisticUtil
     {
         $first = MemberDataStatistic::where('id', $id)->first();
         if (empty($first)) {
-            $m = new self();
+            $m = new MemberDataStatistic();
             $m->id = $id;
             $m->sizeLimit = modstart_config('Member_DataStatisticDefaultLimit', 1024);
             $m->save();
@@ -51,7 +52,7 @@ class MemberDataStatisticUtil
         $m = MemberDataStatistic::where('id', $id)->first();
         $updateSize = false;
         if (empty($m)) {
-            $m = new self();
+            $m = new MemberDataStatistic();
             $m->id = $id;
             $updateSize = true;
         }

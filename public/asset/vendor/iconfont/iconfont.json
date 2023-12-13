@@ -169,7 +169,7 @@
     {
       "icon_id": "38457804",
       "name": "select-check",
-      "font_class": "select-check-copy",
+      "font_class": "select-check",
       "unicode": "ec46",
       "unicode_decimal": 60486
     },

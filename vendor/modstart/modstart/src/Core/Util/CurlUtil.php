@@ -343,9 +343,17 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
         }
         $temp = curl_exec($ch);
-        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
-        if (200 != $statusCode) {
+        if (!empty($option['returnRaw'])) {
+            return [
+                'httpCode' => $httpCode,
+                'contentType' => $contentType,
+                'body' => $temp,
+            ];
+        }
+        if (200 != $httpCode) {
             return null;
         }
         return $temp;
@@ -367,5 +375,10 @@ class CurlUtil
             $userAgent = implode('/', $appInfo) . ' ' . $userAgent;
         }
         return $userAgent;
+    }
+
+    public static function mockUserAgent()
+    {
+        return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36';
     }
 }

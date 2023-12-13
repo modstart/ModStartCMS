@@ -6,6 +6,7 @@ namespace ModStart\Data;
 
 use Illuminate\Support\Facades\Input;
 use ModStart\Admin\Auth\AdminPermission;
+use ModStart\Admin\Type\UploadType;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\InputPackage;
@@ -69,7 +70,7 @@ class UeditorManager
             "snapscreenUrlPrefix" => "",
             "snapscreenInsertAlign" => "none",
 
-            // [暂未开启] 抓取
+            // 抓取
             "catcherLocalDomain" => self::listCatcherIgnoreDomains(),
             "catcherActionName" => "catch",
             "catcherFieldName" => "source",
@@ -124,14 +125,18 @@ class UeditorManager
         return $config;
     }
 
-    private static function saveToUser($uploadTable, $userId, $data)
+    private static function saveToUser($uploadTable, $userId, $data, $type = null)
     {
-        ModelUtil::insert($uploadTable, [
+        $insert = [
             'category' => $data['category'],
             'dataId' => $data['id'],
             'uploadCategoryId' => 0,
             'userId' => $userId,
-        ]);
+        ];
+        if (!is_null($type)) {
+            $insert['type'] = $type;
+        }
+        ModelUtil::insert($uploadTable, $insert);
     }
 
     private static function resultError($result = null, $error = 'ERROR')
@@ -176,7 +181,11 @@ class UeditorManager
                 if ($ret['code']) {
                     return self::resultError($editorRet, $ret['msg']);
                 }
-                self::saveToUser($uploadTable, $userId, $ret['data']['data']);
+                $type = null;
+                if (in_array($uploadTable, ['member_upload'])) {
+                    $type = UploadType::USER;
+                }
+                self::saveToUser($uploadTable, $userId, $ret['data']['data'], $type);
                 $editorRet['url'] = $ret['data']['fullPath'];
                 DataUploadedEvent::fire($uploadTable, $userId, 'image', $ret['data']['data']['id']);
                 return Response::jsonRaw($editorRet);
@@ -202,34 +211,40 @@ class UeditorManager
                         }
                     }
                     if (!$ignoreCatch && preg_match('/^(http|ftp|https):\\/\\//i', $f)) {
-                        $ext = null;
-                        $urlInfo = parse_url($f);
-                        if (!empty($urlInfo['path'])) {
-                            $ext = FileUtil::extension($urlInfo['path']);
-                        }
-                        if (in_array('.' . $ext, $config ['catcherAllowFiles'])) {
-                            $imageContent = CurlUtil::getRaw($f);
-                            if ($imageContent) {
-                                $ret = DataManager::upload('image', L('Image') . '.' . $ext, $imageContent, $option);
+                        $imageRet = CurlUtil::getRaw($f, [], [
+                            'header' => [
+                                'referer' => $f,
+                                'user-agent' => CurlUtil::mockUserAgent(),
+                            ],
+                            'returnRaw' => true,
+                        ]);
+                        if ($imageRet['httpCode'] == 200) {
+                            $ext = FileUtil::mimeToExt($imageRet['contentType']);
+                            if ($ext && in_array('.' . $ext, $config['catcherAllowFiles'])) {
+                                $ret = DataManager::upload('image', L('Image') . '.' . $ext, $imageRet['body'], $option);
                                 if ($ret['code']) {
                                     $ret['state'] = $ret['msg'];
                                 } else {
-                                    self::saveToUser($uploadTable, $userId, $ret['data']['data']);
+                                    $type = null;
+                                    if (in_array($uploadTable, ['member_upload'])) {
+                                        $type = UploadType::USER;
+                                    }
+                                    self::saveToUser($uploadTable, $userId, $ret['data']['data'], $type);
                                     DataUploadedEvent::fire($uploadTable, $userId, 'image', $ret['data']['data']['id']);
                                     $saveList [] = [
                                         'state' => 'SUCCESS',
                                         'url' => $ret['data']['fullPath'],
-                                        'size' => strlen($imageContent),
+                                        'size' => strlen($imageRet['body']),
                                         'title' => '',
                                         'original' => '',
                                         'source' => htmlspecialchars($f)
                                     ];
                                 }
                             } else {
-                                $ret ['state'] = 'Get remote file error';
+                                $ret ['state'] = 'save remote file extension not permit';
                             }
                         } else {
-                            $ret ['state'] = 'File ext not allowed';
+                            $ret ['state'] = 'get remote file error';
                         }
                     } else {
                         $saveList [] = array(

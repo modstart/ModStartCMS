@@ -124,7 +124,7 @@ abstract class AbstractContentVerifyBiz
         $images = [];
         $text = $ret['text'];
         foreach ($ret['images'] as $image) {
-            $images[] = AssetsUtil::fixFullInJob($image);
+            $images[] = AssetsUtil::fixFull($image);
         }
         return [
             $text, $images

@@ -27,9 +27,9 @@ class EncodeUtil
         return join('_', $param);
     }
 
-    public static function expiredDataDecode($url, $key)
+    public static function expiredDataDecode($string, $key)
     {
-        $p = explode('_', $url);
+        $p = explode('_', $string);
         if (count($p) != 5) {
             return null;
         }
