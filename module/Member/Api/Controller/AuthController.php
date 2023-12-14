@@ -870,6 +870,7 @@ class AuthController extends ModuleBaseController
         if (modstart_config('Member_RegisterPhonePasswordEnable', false)) {
             $password = $input->getTrimString('password');
             BizException::throwsIfEmpty('请输入密码', $password);
+            BizException::throwsIfResponseError(MemberUtil::passwordStrengthCheck($password));
             $ignorePassword = false;
         }
 
@@ -1016,6 +1017,7 @@ class AuthController extends ModuleBaseController
         if ($password != $passwordRepeat) {
             return Response::generate(-1, '两次输入密码不一致');
         }
+        BizException::throwsIfResponseError(MemberUtil::passwordStrengthCheck($password));
 
         foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
             /** @var AbstractMemberRegisterProcessorProvider $provider */
@@ -1584,6 +1586,7 @@ class AuthController extends ModuleBaseController
         if ($password != $passwordRepeat) {
             return Response::generate(-1, '两次输入密码不一致');
         }
+        BizException::throwsIfResponseError(MemberUtil::passwordStrengthCheck($password));
         $memberUser = MemberUtil::get($retrieveMemberUserId);
         if (empty($memberUser)) {
             return Response::generate(-1, '用户不存在');

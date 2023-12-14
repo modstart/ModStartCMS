@@ -80,4 +80,54 @@ class ColorUtil
             ]));
 
     }
+
+    /**
+     * 将 #FFFFFFFF/#FFFFFF 转换为 rgba(255,255,255,1)
+     * @param $hexColor string 颜色值，RGBA
+     * @return string rgba(255,255,255,1)
+     */
+    public static function hexToRgba($hexColor)
+    {
+        $hexColor = strtoupper($hexColor);
+        if (preg_match('/^#([A-F0-9]{2})([A-F0-9]{2})([A-F0-9]{2})$/', $hexColor, $mat)) {
+            $r = hexdec($mat[1]);
+            $g = hexdec($mat[2]);
+            $b = hexdec($mat[3]);
+            return "rgba({$r},{$g},{$b},1)";
+        } else if (preg_match('/^#([A-F0-9]{2})([A-F0-9]{2})([A-F0-9]{2})([A-F0-9]{2})$/', $hexColor, $mat)) {
+            $r = hexdec($mat[1]);
+            $g = hexdec($mat[2]);
+            $b = hexdec($mat[3]);
+            $a = round(hexdec($mat[4]) / 255, 2);
+            return "rgba({$r},{$g},{$b},{$a})";
+        }
+        return "rgba(0,0,0,1)";
+    }
+
+    /**
+     * 将 #FFFFFFFF/#FFFFFF 转换为 [ 'r' => 255, 'g' => 255, 'b' => 255, 'a' => 1 ]
+     * @param $hexColor string 颜色值，RGBA
+     * @return array
+     */
+    public static function hexToRgbaArray($hexColor)
+    {
+        $hexColor = strtoupper($hexColor);
+        $result = [
+            'r' => 0,
+            'g' => 0,
+            'b' => 0,
+            'a' => 1,
+        ];
+        if (preg_match('/^#([A-F0-9]{2})([A-F0-9]{2})([A-F0-9]{2})$/', $hexColor, $mat)) {
+            $result['r'] = hexdec($mat[1]);
+            $result['g'] = hexdec($mat[2]);
+            $result['b'] = hexdec($mat[3]);
+        } else if (preg_match('/^#([A-F0-9]{2})([A-F0-9]{2})([A-F0-9]{2})([A-F0-9]{2})$/', $hexColor, $mat)) {
+            $result['r'] = hexdec($mat[1]);
+            $result['g'] = hexdec($mat[2]);
+            $result['b'] = hexdec($mat[3]);
+            $result['a'] = round(hexdec($mat[4]) / 255, 2);
+        }
+        return $result;
+    }
 }

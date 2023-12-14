@@ -200,12 +200,12 @@ class MemberVipUtil
     {
         $newVip = self::get($newVipId);
         $newDays = ($newVip ? $newVip['vipDays'] : 0);
-        $oldExpireTimestamp = (strtotime($oldExpire) > 0 ? strtotime($oldExpire) : 0);
         $timestamp = time();
+        $oldExpireTimestamp = max(strtotime($oldExpire), 0);
         if ($oldExpireTimestamp > time()) {
             $timestamp = $oldExpireTimestamp;
         }
-        return date('Y-m-d', $oldExpireTimestamp + $newDays * 24 * 3600);
+        return date('Y-m-d', $timestamp + $newDays * 24 * 3600);
     }
 
     /**

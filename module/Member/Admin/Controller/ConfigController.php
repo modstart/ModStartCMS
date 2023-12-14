@@ -10,6 +10,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
+use Module\Member\Type\MemberPasswordStrength;
 use Module\Member\Util\MemberDataStatisticUtil;
 use Module\Member\Util\MemberParamUtil;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
@@ -24,7 +25,7 @@ class ConfigController extends Controller
     public function setting(AdminConfigBuilder $builder)
     {
         $captchaType = array_merge(['' => '默认'], CaptchaProvider::nameTitleMap());
-        $builder->pageTitle('注册登录');
+        $builder->pageTitle('功能设置');
         $builder->layoutPanel('登录', function ($builder) use ($captchaType) {
             /** @var HasFields $builder */
             $builder->switch('loginCaptchaEnable', '启用登录验证码')
@@ -94,6 +95,7 @@ class ConfigController extends Controller
 
         });
         $builder->layoutPanel('找回密码', function ($builder) {
+            /** @var HasFields $builder */
             $builder->switch('retrieveDisable', '禁用找回密码')
                 ->when('!=', true, function ($builder) {
                     $builder->switch('retrievePhoneEnable', '启用手机找回密码');
@@ -101,6 +103,7 @@ class ConfigController extends Controller
                 });
         });
         $builder->layoutPanel('账号安全', function ($builder) {
+            /** @var HasFields $builder */
             $builder->switch('Member_ProfileEmailEnable', '开启邮箱绑定')->help('启用后用户中心增加邮箱绑定页面');
             $builder->switch('Member_ProfilePhoneEnable', '开启手机绑定')->help('启用后用户中心增加手机绑定页面');
             $builder->switch('Member_LoginRedirectCheckEnable', '登录后跳转安全验证')
@@ -110,6 +113,12 @@ class ConfigController extends Controller
                 });
             $builder->switch('Member_DeleteEnable', '启用自助注销账号')
                 ->help('开启后，用户中心可自主申请注销账号。用户注销账号后，用户名会重置为随机字符串，已绑定的手机、邮箱均会解绑');
+            $builder->radio('Member_PasswordStrength', '密码强度')
+                ->optionType(MemberPasswordStrength::class)
+                ->defaultValue(MemberPasswordStrength::NO_LIMIT);
+            $builder->number('Member_PasswordLengthMin', '密码最小长度')
+                ->defaultValue(0)
+                ->help('0表示不限制，推荐为8位以上');
 
         });
         if (ModuleManager::getModuleConfig('Member', 'dataStatisticEnable', false)) {

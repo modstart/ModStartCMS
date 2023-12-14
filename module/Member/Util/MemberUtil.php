@@ -24,6 +24,7 @@ use ModStart\Data\Event\DataFileUploadedEvent;
 use Module\Member\Events\MemberUserLoginAttemptEvent;
 use Module\Member\Events\MemberUserLoginFailedEvent;
 use Module\Member\Type\MemberMessageStatus;
+use Module\Member\Type\MemberPasswordStrength;
 use Module\Member\Type\MemberStatus;
 use Module\Vendor\Type\DeviceType;
 
@@ -435,8 +436,12 @@ class MemberUtil
             $username = null;
         }
         if (!$ignorePassword) {
-            if (empty($password) || strlen($password) < 6) {
+            if (empty($password)) {
                 return Response::generate(-3, '密码不合法');
+            }
+            $ret = self::passwordStrengthCheck($password);
+            if (Response::isError($ret)) {
+                return Response::generate(-1, $ret['msg']);
             }
         }
         $passwordSalt = Str::random(16);
@@ -533,15 +538,15 @@ class MemberUtil
      * 修改密码
      * 注意参数顺序!!!
      *
-     * @param $memberUserId
-     * @param $new
-     * @param $old
-     * @param bool $ignoreOld
+     * @param $memberUserId int 用户id
+     * @param $newPassword string 新密码
+     * @param $oldPassword string 旧密码
+     * @param $ignoreOldPassword bool 是否忽略旧密码
      * @return array
      */
-    public static function changePassword($memberUserId, $new, $old = null, $ignoreOld = false)
+    public static function changePassword($memberUserId, $newPassword, $oldPassword = null, $ignoreOldPassword = false)
     {
-        if (!$ignoreOld && empty($old)) {
+        if (!$ignoreOldPassword && empty($oldPassword)) {
             return Response::generate(-1, '旧密码不能为空');
         }
 
@@ -549,10 +554,14 @@ class MemberUtil
         if (empty($memberUser)) {
             return Response::generate(-1, "用户不存在");
         }
-        if (empty ($new)) {
+        if (empty ($newPassword)) {
             return Response::generate(-1, '新密码为空');
         }
-        if (!$ignoreOld && EncodeUtil::md5WithSalt($old, $memberUser['passwordSalt']) != $memberUser['password']) {
+        $ret = self::passwordStrengthCheck($newPassword);
+        if (Response::isError($ret)) {
+            return Response::generate(-1, $ret['msg']);
+        }
+        if (!$ignoreOldPassword && EncodeUtil::md5WithSalt($oldPassword, $memberUser['passwordSalt']) != $memberUser['password']) {
             return Response::generate(-1, '旧密码不正确');
         }
 
@@ -560,7 +569,7 @@ class MemberUtil
 
         ModelUtil::update('member_user', ['id' => $memberUser['id']], [
             'passwordSalt' => $passwordSalt,
-            'password' => EncodeUtil::md5WithSalt($new, $passwordSalt)
+            'password' => EncodeUtil::md5WithSalt($newPassword, $passwordSalt)
         ]);
 
         return Response::generate(0, 'ok');
@@ -857,6 +866,32 @@ class MemberUtil
             'ip' => StrUtil::mbLimit($ip, 20),
             'userAgent' => StrUtil::mbLimit(AgentUtil::getUserAgent(), 400),
         ]);
+    }
+
+    public static function passwordStrengthCheck($password)
+    {
+        $lengthMin = modstart_config('Member_PasswordLengthMin', 0);
+        if ($lengthMin > 0) {
+            if (strlen($password) < $lengthMin) {
+                return Response::generateError('密码长度不能小于' . $lengthMin . '位');
+            }
+        }
+        $strength = modstart_config('Member_PasswordStrength', MemberPasswordStrength::NO_LIMIT);
+        switch ($strength) {
+            case MemberPasswordStrength::NO_LIMIT:
+                break;
+            case MemberPasswordStrength::STRENGTH_2:
+                if (StrUtil::passwordStrength($password) < 2) {
+                    return Response::generateError('密码必须包含 大写/小写/数字/特殊字符 2种以上');
+                }
+                break;
+            case MemberPasswordStrength::STRENGTH_3:
+                if (StrUtil::passwordStrength($password) < 3) {
+                    return Response::generateError('密码必须包含 大写/小写/数字/特殊字符 3种以上');
+                }
+                break;
+        }
+        return Response::generateSuccess();
     }
 
 }

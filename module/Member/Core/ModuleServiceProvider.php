@@ -262,7 +262,7 @@ class ModuleServiceProvider extends ServiceProvider
                             'sort' => 999999,
                             'children' => [
                                 [
-                                    'title' => '注册登录',
+                                    'title' => '功能设置',
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@setting',
                                 ],
                                 [
