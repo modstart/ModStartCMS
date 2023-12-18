@@ -36,19 +36,25 @@ trait CanCascadeFields
     protected $cascadeGroups = [];
 
     /**
+     * @var array
+     */
+    protected $cascadeParam = [];
+
+    /**
      * @param $operator
      * @param $value
      * @param $closure \Closure function($builder) { }
      *
      * @return $this
      */
-    public function when($operator, $value, $closure = null)
+    public function when($operator, $value, $closure = null, $param = [])
     {
         if (func_num_args() == 2) {
             $closure = $value;
             $value = $operator;
             $operator = $this->getDefaultOperator();
         }
+        $this->cascadeParam = $param;
         $this->formatValues($operator, $value);
         $this->addDependents($operator, $value, $closure);
         return $this;
@@ -80,7 +86,18 @@ trait CanCascadeFields
         if (is_array($value)) {
             $value = array_map('strval', $value);
         } else {
-            $value = strval($value);
+            if (!empty($this->cascadeParam['type'])) {
+                switch ($this->cascadeParam['type']) {
+                    case 'boolean':
+                        $value = !!$value;
+                        break;
+                    default:
+                        $value = strval($value);
+                        break;
+                }
+            } else {
+                $value = strval($value);
+            }
         }
     }
 
@@ -118,9 +135,18 @@ trait CanCascadeFields
             return ArrayUtil::keepKeys($condition, ['operator', 'value', 'index']);
         })->toJson(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $whenHelps = SerializeUtil::jsonEncode($this->whenHelps);
+        $valueConverter = "function(v){ return v; }";
+        if (!empty($this->cascadeParam['type'])) {
+            switch ($this->cascadeParam['type']) {
+                case 'boolean':
+                    $valueConverter = "function(v){ return !!v; }";
+                    break;
+            }
+        }
         $id = $this->id();
         $script = <<<JS
 (function () {
+    var valueConverter = $valueConverter;
     var operatorTable = {
        'in': function(a, b) {
            b = JSON.parse(b); a = String(a);
@@ -140,7 +166,6 @@ trait CanCascadeFields
                return $(a).not(b).length === 0 && $(b).not(a).length === 0;
            }
            a = String(a); b = String(b);
-           // console.log('operatorTable',a,b);
            var ab = [a,b].sort().join('|');
            if(ab==='1|true'||ab==='0|false'){
                return true;
@@ -178,7 +203,7 @@ trait CanCascadeFields
    var cascadeGroups = $cascadeGroups;
    var whenHelps = $whenHelps;
    var cascadeChange = function(value){
-       // console.log('cascadeChange',value);
+       value = valueConverter(value);
        var f = $('#{$this->id()}');
        var helps = [];
        Object.keys(whenHelps).forEach(function(k){
@@ -200,7 +225,6 @@ trait CanCascadeFields
        cascadeGroups.forEach(function (group) {
            var groupDom = $('#{$this->id()}_group_' + group.index);
            var pass = compare(value, group.value, group.operator);
-           // console.log(value, group.operator, group.value, pass);
            if (pass) {
                groupDom.removeClass('cascade-group-hide');
                groupDom.find('input,textarea,select').prop('disabled',false);

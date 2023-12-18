@@ -8,7 +8,9 @@
     @endif
     @if(modstart_module_enabled('MemberOauth'))
         @foreach(\Module\Member\Config\MemberOauth::get() as $oauth)
-            <a class="{{modstart_baseurl_active('member_profile/oauth/'.$oauth->name())}}" href="{{modstart_web_url('member_profile/oauth/'.$oauth->name())}}">{{$oauth->title()}}</a>
+            @if($oauth->isSupport())
+                <a class="{{modstart_baseurl_active('member_profile/oauth/'.$oauth->name())}}" href="{{modstart_web_url('member_profile/oauth/'.$oauth->name())}}">{{$oauth->title()}}</a>
+            @endif
         @endforeach
     @endif
     @if(modstart_config('Member_DeleteEnable',false))

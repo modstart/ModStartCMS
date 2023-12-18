@@ -74,6 +74,9 @@ class ModelUtil
      */
     public static function model($model)
     {
+        if (is_object($model)) {
+            return $model;
+        }
         // Module\Xxx\Model\Xxx
         if (preg_match('/\\\\Model\\\\(.*)$/', $model)) {
             if (class_exists($model)) {

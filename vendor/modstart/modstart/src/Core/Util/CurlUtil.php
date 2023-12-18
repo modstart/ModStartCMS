@@ -347,9 +347,11 @@ class CurlUtil
         $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
         if (!empty($option['returnRaw'])) {
+            $ext = FileUtil::mimeToExt($contentType);
             return [
                 'httpCode' => $httpCode,
                 'contentType' => $contentType,
+                'ext' => $ext,
                 'body' => $temp,
             ];
         }

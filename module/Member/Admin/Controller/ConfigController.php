@@ -10,6 +10,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Form\Form;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
+use Module\Member\Config\MemberOauth;
 use Module\Member\Type\MemberPasswordStrength;
 use Module\Member\Util\MemberDataStatisticUtil;
 use Module\Member\Util\MemberParamUtil;
@@ -37,6 +38,9 @@ class ConfigController extends Controller
                 'default' => '用户名密码登录 /login',
                 'phone' => '短信验证登录 /login/phone',
             ];
+            if (modstart_module_enabled('MemberOauth')) {
+                $loginDefaultOptions['wechat'] = '微信授权登录 /login/wechat';
+            }
             if (modstart_config('ssoClientEnable', false)) {
                 $loginDefaultOptions['sso'] = 'SSO单点登录 /login/sso';
             }
@@ -81,15 +85,24 @@ class ConfigController extends Controller
                     $builder->switch('registerPhoneEnable', '普通注册时填写手机');
                 })
                 ->when('=', true, function ($builder) {
-                    if (modstart_module_enabled('MemberOauth')) {
+                    /** @var HasFields $builder */
+                    if (MemberOauth::hasItems()) {
                         $builder->switch('registerOauthEnable', '允许以授权方式注册');
                     }
                 })
                 ->help('禁用后，可通过后台增加账号');
 
-            if (modstart_module_enabled('MemberOauth')) {
-                $builder->switch('Member_OauthBindPhoneEnable', '授权登录需绑定手机');
-                $builder->switch('Member_OauthBindEmailEnable', '授权登录需绑定邮箱');
+            if (MemberOauth::hasItems()) {
+                $builder->switch('Member_OauthBindAuto', '授权登录自动绑定账号')
+                    ->when('=', false, function ($builder) {
+                        /** @var HasFields $builder */
+                        $builder->switch('Member_OauthBindPhoneEnable', '授权登录需绑定手机');
+                        $builder->switch('Member_OauthBindEmailEnable', '授权登录需绑定邮箱');
+                    }, [
+                        'type' => 'boolean',
+                    ])
+                    ->help('授权登录后需要用户二次确认绑定账号，开启后将自动绑定账号')
+                    ->defaultValue(false);
             }
             $builder->number('Member_UsernameMinLength', '用户名最小长度')->defaultValue(3);
 

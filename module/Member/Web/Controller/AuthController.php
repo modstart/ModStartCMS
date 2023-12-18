@@ -9,42 +9,12 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\AgentUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Provider\Auth\MemberAuthProvider;
 
-// =====================================================================================================================
-// ================================================== Routes ===========================================================
-// =====================================================================================================================
-//Route::match(['get', 'post'], 'login', 'AuthController@login');
-//Route::match(['get', 'post'], 'login/phone', 'AuthController@loginPhone');
-//Route::match(['get', 'post'], 'login/captcha', 'AuthController@loginCaptcha');
-//Route::match(['get', 'post'], 'logout', 'AuthController@logout');
-//Route::match(['get', 'post'], 'register', 'AuthController@register');
-//Route::match(['get', 'post'], 'register/captcha', 'AuthController@registerCaptcha');
-//Route::match(['get', 'post'], 'register/captcha_verify', 'AuthController@registerCaptchaVerify');
-//Route::match(['get', 'post'], 'register/phone_verify', 'AuthController@registerPhoneVerify');
-//Route::match(['get', 'post'], 'register/email_verify', 'AuthController@registerEmailVerify');
-//Route::match(['get', 'post'], 'retrieve', 'AuthController@retrieve');
-//Route::match(['get', 'post'], 'retrieve/email', 'AuthController@retrieveEmail');
-//Route::match(['get', 'post'], 'retrieve/email_verify', 'AuthController@retrieveEmailVerify');
-//Route::match(['get', 'post'], 'retrieve/phone', 'AuthController@retrievePhone');
-//Route::match(['get', 'post'], 'retrieve/phone_verify', 'AuthController@retrievePhoneVerify');
-//Route::match(['get', 'post'], 'retrieve/captcha', 'AuthController@retrieveCaptcha');
-//Route::match(['get', 'post'], 'retrieve/reset', 'AuthController@retrieveReset');
-
-//Route::match(['get', 'post'], 'oauth_login_{oauthType}', 'AuthController@oauthLogin');
-//Route::match(['get', 'post'], 'oauth_callback_{oauthType}', 'AuthController@oauthCallback');
-//Route::match(['get', 'post'], 'oauth_bind_{oauthType}', 'AuthController@oauthBind');
-//Route::match(['get', 'post'], 'oauth_proxy', 'AuthController@oauthProxy');
-
-//Route::get('sso/client', 'AuthController@ssoClient');
-//Route::get('sso/client_logout', 'AuthController@ssoClientLogout');
-//Route::get('sso/server', 'AuthController@ssoServer');
-//Route::get('sso/server_success', 'AuthController@ssoServerSuccess');
-//Route::get('sso/server_logout', 'AuthController@ssoServerLogout');
-// =====================================================================================================================
 class AuthController extends ModuleBaseController
 {
     /** @var \Module\Member\Api\Controller\AuthController */
@@ -93,6 +63,7 @@ class AuthController extends ModuleBaseController
         $forceRedirects = [
             'sso' => modstart_web_url('login/sso', $redirectData),
             'phone' => modstart_web_url('login/phone', $redirectData),
+            'wechat' => modstart_web_url('login/wechat', $redirectData),
             'other' => modstart_web_url('login/other', $redirectData),
         ];
         if (!$force && !empty($forceRedirects[$loginDefault])) {
@@ -123,6 +94,18 @@ class AuthController extends ModuleBaseController
             return Response::send(0, '', '', '[js]parent.location.href=' . SerializeUtil::jsonEncode($ret['data']['redirect']) . ';');
         }
         return Response::send(0, null, null, $ret['data']['redirect']);
+    }
+
+    public function loginWechat()
+    {
+        $input = InputPackage::buildFromInput();
+        $redirectData = $this->getRedirectData($input);
+        $this->api->checkRedirectSafety($redirectData['redirect']);
+        $oauthType = 'wechat';
+        if (AgentUtil::isMobile()) {
+            $oauthType = 'wechatmobile';
+        }
+        return Response::redirect(modstart_web_url('oauth_login_' . $oauthType, $redirectData));
     }
 
     public function loginOther()
@@ -416,11 +399,6 @@ class AuthController extends ModuleBaseController
             return Response::send(0, $ret['msg'], null, $redirect);
         }
         $oauthUserInfo = Session::get('oauthUserInfo', []);
-//        Session::put('oauthUserInfo', [
-//            'openid' => 'aaa',
-//            'username' => 'bbb',
-//            'avatar' => 'ccc',
-//        ]);
         $ret = $this->api->oauthTryLogin($oauthType);
         if ($ret['code']) {
             return Response::send(-1, $ret['msg']);

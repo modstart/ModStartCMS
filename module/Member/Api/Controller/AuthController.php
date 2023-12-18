@@ -12,7 +12,6 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\EventUtil;
-use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Misc\Captcha\CaptchaFacade;
 use ModStart\Module\ModuleBaseController;
@@ -31,24 +30,6 @@ use Module\Vendor\Job\MailSendJob;
 use Module\Vendor\Job\SmsSendJob;
 use Module\Vendor\Support\ResponseCodes;
 use Module\Vendor\Util\SessionUtil;
-
-/**
- * 相关配置开关
- *
- * - loginCaptchaEnable
- * - registerDisable
- * - registerEmailEnable
- * - registerPhoneEnable
- * - retrieveDisable
- * - retrievePhoneEnable
- * - retrieveEmailEnable
- * - ssoServerEnable
- * - ssoServerSecret
- * - ssoServerClientList
- * - ssoClientEnable
- * - ssoClientSecret
- * - ssoClientServer
- */
 
 /**
  * ############### 系列产品 SSO Client 登录流程 ###############
@@ -172,15 +153,56 @@ class AuthController extends ModuleBaseController
             'userInfo' => $oauthUserInfo,
         ]);
         BizException::throwsIfResponseError($ret);
+        // var_dump($ret);exit();
+        $resultData = [
+            'memberUserId' => 0,
+        ];
         if ($ret['data']['memberUserId'] > 0) {
+            // 自动登录
             Session::put('memberUserId', $ret['data']['memberUserId']);
             MemberUtil::fireLogin($ret['data']['memberUserId']);
             Session::forget('oauthUserInfo');
-            return Response::generateSuccessData(['memberUserId' => $ret['data']['memberUserId']]);
+            $resultData['memberUserId'] = $ret['data']['memberUserId'];
+            return Response::generateSuccessData($resultData);
         }
-        return Response::generate(0, null, [
-            'memberUserId' => 0,
-        ]);
+        if (modstart_config('Member_OauthBindAuto', false)) {
+            // 快速注册
+            /** 为了兼容统一登录，禁止使用手机号格式和邮箱格式  */
+            $username = null;
+            if (!empty($oauthUserInfo['username'])) {
+                $username = $oauthUserInfo['username'];
+            }
+            $ret = MemberUtil::registerUsernameQuick($username);
+            if ($ret['code']) {
+                return Response::generateError($ret['msg']);
+            }
+            $memberUserId = $ret['data']['id'];
+            $update = [];
+            $update['registerIp'] = StrUtil::mbLimit(Request::ip(), 20);
+            if (!empty($update)) {
+                MemberUtil::update($memberUserId, $update);
+            }
+            $ret = $oauth->processBindToUser([
+                'memberUserId' => $memberUserId,
+                'userInfo' => $oauthUserInfo,
+            ]);
+            BizException::throwsIfResponseError($ret);
+            if (!empty($oauthUserInfo['avatar'])) {
+                $avatarRet = CurlUtil::getRaw($oauthUserInfo['avatar'], [], [
+                    'returnRaw' => true,
+                ]);
+                if (200 == $avatarRet['httpCode']) {
+                    MemberUtil::setAvatar($memberUserId, $avatarRet['body'], $avatarRet['ext']);
+                }
+            }
+            EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
+            Session::put('memberUserId', $memberUserId);
+            MemberUtil::fireLogin($memberUserId);
+            Session::forget('oauthUserInfo');
+            $resultData['memberUserId'] = $memberUserId;
+            return Response::generateSuccessData($resultData);
+        }
+        return Response::generateSuccessData($resultData);
     }
 
     public function oauthBind($oauthType = null)
@@ -297,30 +319,15 @@ class AuthController extends ModuleBaseController
             'userInfo' => $oauthUserInfo,
         ]);
         BizException::throwsIfResponseError($ret);
-        EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
         if (!empty($oauthUserInfo['avatar'])) {
-            $avatarExt = FileUtil::extension($oauthUserInfo['avatar']);
-            $allowImageExts = ['jpg', 'jpeg', 'png', 'gif'];
-            if (!in_array($avatarExt, $allowImageExts)) {
-                Log::info('Member.Auth.OauthBind.AvatarExtError - ' . $avatarExt . ' - ' . $oauthUserInfo['avatar']);
-                $avatarExt = null;
-            }
-            $avatarRet = CurlUtil::get($oauthUserInfo['avatar'], [], [
-                'returnHeader' => true,
+            $avatarRet = CurlUtil::getRaw($oauthUserInfo['avatar'], [], [
+                'returnRaw' => true,
             ]);
-            if (!empty($avatarRet['body'])) {
-                if (empty($avatarExt) && !empty($ret['headerMap']['content-type'])) {
-                    $avatarExt = FileUtil::mimeToExt($ret['headerMap']['content-type']);
-                    if (!in_array($avatarExt, $allowImageExts)) {
-                        Log::info('Member.Auth.OauthBind.AvatarExtGuessError - ' . $avatarExt . ' - ' . $oauthUserInfo['avatar']);
-                        $avatarExt = null;
-                    }
-                }
-                if (!empty($avatarExt)) {
-                    MemberUtil::setAvatar($memberUserId, $avatarRet['body'], $avatarExt);
-                }
+            if (200 == $avatarRet['httpCode']) {
+                MemberUtil::setAvatar($memberUserId, $avatarRet['body'], $avatarRet['ext']);
             }
         }
+        EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
         Session::put('memberUserId', $memberUserId);
         MemberUtil::fireLogin($memberUserId);
         Session::forget('oauthUserInfo');
