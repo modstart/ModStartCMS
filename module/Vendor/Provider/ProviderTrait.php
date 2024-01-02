@@ -3,6 +3,8 @@
 
 namespace Module\Vendor\Provider;
 
+use Module\Vendor\Provider\Recommend\RecommendBiz;
+
 trait ProviderTrait
 {
     /**

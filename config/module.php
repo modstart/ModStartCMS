@@ -53,5 +53,11 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+        // 'Recommend' => [
+        //     'enable' => true,
+        // ],
+        // 'RecommendMysql' => [
+        //     'enable' => true,
+        // ],
     ],
 ];

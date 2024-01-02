@@ -10,7 +10,6 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
-use ModStart\Module\ModuleManager;
 use Module\Banner\Biz\BannerPositionBiz;
 use Module\Cms\Provider\CmsHomePageProvider;
 use Module\Cms\Provider\Theme\CmsThemeProvider;
@@ -21,6 +20,7 @@ use Module\TagManager\Biz\TagManagerBiz;
 use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
 use Module\Vendor\Admin\Widget\AdminWidgetLink;
 use Module\Vendor\Provider\HomePage\HomePageProvider;
+use Module\Vendor\Provider\Recommend\RecommendBiz;
 use Module\Vendor\Provider\SearchBox\QuickSearchBoxProvider;
 use Module\Vendor\Provider\SearchBox\SearchBoxProvider;
 use Module\Vendor\Provider\SiteUrl\SiteUrlBiz;
@@ -36,6 +36,9 @@ class ModuleServiceProvider extends ServiceProvider
     {
         if (method_exists(ModuleClassLoader::class, 'addClass')) {
             ModuleClassLoader::addClass('MCms', __DIR__ . '/../Helpers/MCms.php');
+        }
+        if (class_exists(RecommendBiz::class)) {
+            RecommendBiz::register(CmsRecommendBiz::class);
         }
         SearchBoxProvider::register(
             QuickSearchBoxProvider::make('cms', '内容', modstart_web_url('search'), 100)

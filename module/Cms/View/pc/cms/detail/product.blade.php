@@ -99,6 +99,33 @@
                     @endforeach
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="ub-panel">
+                    <div class="title">
+                        <div class="head">
+                            <i class="iconfont icon-magic-wand"></i>
+                            随机推荐
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="ub-list-items">
+                            <div class="row">
+                                @foreach(MCms::recommendContentByModel($model['id'],4) as $record)
+                                    <div class="col-md-3 col-6">
+                                        <div class="item-p">
+                                            <a class="image" href="{{$record['_url']}}" style="padding:0.25rem 0 0 0;">
+                                                <div class="cover contain ub-cover-1-1"
+                                                     style="width:90%;margin:0 auto;background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
+                                            </a>
+                                            <a class="title" href="{{$record['_url']}}">{{$record['title']}}</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

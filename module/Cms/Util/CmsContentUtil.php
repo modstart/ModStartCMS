@@ -113,6 +113,40 @@ class CmsContentUtil
         return $records;
     }
 
+    public static function allIds($contentIds)
+    {
+        if (empty($contentIds)) {
+            return [];
+        }
+        $records = ModelUtil::model('cms_content')
+            ->whereIn('id', $contentIds)
+            ->where([
+                'status' => CmsModelContentStatus::SHOW,
+                'verifyStatus' => CmsContentVerifyStatus::VERIFY_PASS,
+            ])
+            ->where('postTime', '<', date('Y-m-d H:i:s'))
+            ->orderBy('isTop', 'desc')
+            ->orderBy('postTime', 'desc')
+            ->get()->toArray();
+        foreach ($records as $k => $record) {
+            if (!empty($record['cover'])) {
+                $records[$k]['cover'] = AssetsUtil::fixFull($record['cover']);
+            }
+            $records[$k]['_url'] = UrlUtil::content($record);
+            $records[$k]['_day'] = Carbon::parse($record['postTime'])->toDateString();
+            $records[$k]['_tags'] = TagUtil::string2Array($record['tags']);
+            $records[$k]['_tagList'] = array_map(function ($o) {
+                return [
+                    'name' => $o,
+                    'url' => UrlUtil::tag($o),
+                ];
+            }, $records[$k]['_tags']);
+            $model = CmsModelUtil::get($record['modelId']);
+            $records[$k]['_data'] = CmsContentUtil::getModelData($model, $record['id']);
+        }
+        return $records;
+    }
+
     public static function paginateCatsWithData($cats, $page, $pageSize, $option = [])
     {
         $catIds = array_map(function ($o) {

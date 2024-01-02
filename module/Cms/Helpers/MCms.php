@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Module\Cms\Core\CmsRecommendBiz;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsMemberPermitUtil;
+use Module\Vendor\Provider\Recommend\RecommendProvider;
 
 /**
  * @Util CMS操作
@@ -614,6 +616,28 @@ class MCms
         $paginateData = CmsContentUtil::paginateCat($catId, 1, $limit, $option);
         $records = $paginateData['records'];
         return $records;
+    }
+
+    /**
+     * @Util 获取模型内容推荐列表（使用的是推荐服务）
+     * @param $modelId int 模型ID
+     * @param $limit int 数量
+     * @return array
+     * @returnExample
+     * [
+     *   [Placeholder.CmsContent|indent:2,trim],
+     *   ...
+     * ]
+     */
+    public static function recommendContentByModel($modelId, $limit = 10)
+    {
+        $contentIds = RecommendProvider::randomItemBizIds(
+            CmsRecommendBiz::NAME,
+            \Module\Member\Auth\MemberUser::id(),
+            $limit,
+            [$modelId]
+        );
+        return CmsContentUtil::allIds($contentIds);
     }
 
     /**

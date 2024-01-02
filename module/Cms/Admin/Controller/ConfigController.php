@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Form\Form;
 use Module\Cms\Type\ContentUrlMode;
+use Module\Vendor\Provider\Recommend\RecommendProvider;
 
 class ConfigController extends Controller
 {
@@ -36,6 +37,7 @@ class ConfigController extends Controller
                 'list' => '只显示一级',
             ])->defaultValue('list');
             $builder->switch('Cms_LikeAnonymityEnable', '匿名点赞')->defaultValue(false);
+            $builder->select('Cms_RecommendProvider', '内容推荐驱动')->options(RecommendProvider::allDefaultMap());
         });
 
         $builder->formClass('wide');

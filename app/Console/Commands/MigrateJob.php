@@ -5,11 +5,9 @@ namespace App\Console\Commands;
 
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
-use ModStart\Core\Dao\ModelUtil;
-use ModStart\Core\Util\FileUtil;
-use ModStart\Core\Util\HtmlUtil;
 use ModStart\Data\DataManager;
+use Module\Cms\Core\CmsRecommendBiz;
+use Module\Vendor\Provider\Recommend\RecommendProvider;
 
 class MigrateJob extends Command
 {
@@ -17,7 +15,10 @@ class MigrateJob extends Command
 
     public function handle()
     {
-        print_r(\MCms::listContentByCatUrl('product'));
+        print_r(
+            \MCms::recommendContentByModel(3, 3)
+        );
+        //print_r(\MCms::listContentByCatUrl('product'));
     }
 
     private function storageTest()
