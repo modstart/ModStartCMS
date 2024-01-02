@@ -42,11 +42,11 @@ $router->group([
     $router->match(['get', 'post'], 'oauth_login_{oauthType}', 'AuthController@oauthLogin');
     $router->match(['get', 'post'], 'oauth_callback_{oauthType}', 'AuthController@oauthCallback');
     $router->match(['get', 'post'], 'oauth_bind_{oauthType}', 'AuthController@oauthBind');
-    $router->match(['get', 'post'], 'oauth_proxy', 'AuthController@oauthProxy');
     $router->match(['get', 'post'], 'oauth_bind/captcha', 'AuthController@oauthBindCaptcha');
     $router->match(['get', 'post'], 'oauth_bind/captcha_verify', 'AuthController@oauthBindCaptchaVerify');
     $router->match(['get', 'post'], 'oauth_bind/email_verify', 'AuthController@oauthBindEmailVerify');
     $router->match(['get', 'post'], 'oauth_bind/phone_verify', 'AuthController@oauthBindPhoneVerify');
+    $router->match(['get', 'post'], 'oauth_back_and_close', 'AuthController@oauthBackAndClose');
 
     $router->match(['get', 'post'], 'member', 'MemberController@index');
 

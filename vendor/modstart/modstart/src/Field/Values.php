@@ -15,6 +15,7 @@ class Values extends AbstractField
     {
         $this->addVariables([
             'viewMode' => 'default',
+            'countFixed' => false,
         ]);
     }
 
@@ -26,6 +27,17 @@ class Values extends AbstractField
     public function viewMode($viewMode)
     {
         $this->addVariables(['viewMode' => $viewMode]);
+        return $this;
+    }
+
+    /**
+     * 是否固定显示数量
+     * @param $enable bool
+     * @return $this
+     */
+    public function countFixed($enable)
+    {
+        $this->addVariables(['countFixed' => $enable]);
         return $this;
     }
 

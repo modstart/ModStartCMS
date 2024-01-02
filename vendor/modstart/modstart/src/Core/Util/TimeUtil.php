@@ -291,4 +291,15 @@ class TimeUtil
     {
         return intval(microtime(true) * 1000);
     }
+
+    private static $monitor = [];
+
+    public static function monitorTick($name = 'Default')
+    {
+        if (!isset(self::$monitor[$name])) {
+            self::$monitor[$name] = self::millitime();
+        }
+        return self::millitime() - self::$monitor[$name];
+    }
+
 }

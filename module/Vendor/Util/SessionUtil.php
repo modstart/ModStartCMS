@@ -4,7 +4,6 @@
 namespace Module\Vendor\Util;
 
 use Illuminate\Support\Facades\Session;
-use Module\Vendor\Util\AtomicUtil;
 
 class SessionUtil
 {
@@ -21,5 +20,13 @@ class SessionUtil
     public static function atomicRemove($name)
     {
         AtomicUtil::remove("$name:" . Session::getId());
+    }
+
+    public static function startForWebFullUrl($redirect)
+    {
+        return modstart_web_full_url('session', [
+            'api_token' => Session::getId(),
+            'redirect' => $redirect,
+        ]);
     }
 }

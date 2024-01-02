@@ -72,7 +72,9 @@ export default {
                 return this.uploadConfig
             }
             if (!!this.$store) {
-                return this.$store.state.base.config.dataUpload
+                if (this.$store.state && this.$store.state.base && this.$store.state.base.config && this.$store.state.base.config.dataUpload) {
+                    return this.$store.state.base.config.dataUpload
+                }
             }
             if (!window.__dataConfigLoading || !window.__dataConfigLoading[this.category]) {
                 window.__dataConfigLoadingId = Object.assign({

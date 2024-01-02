@@ -4,7 +4,6 @@ namespace ModStart\Core\Util;
 
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Facades\Agent;
-use ModStart\Core\Exception\BizException;
 
 /**
  * @Util 客户端
@@ -17,7 +16,11 @@ class AgentUtil
      */
     public static function getUserAgent()
     {
-        return Request::header('User-Agent');
+        static $userAgent = null;
+        if (null === $userAgent) {
+            $userAgent = Request::header('User-Agent');
+        }
+        return $userAgent;
     }
 
     /**
@@ -40,14 +43,44 @@ class AgentUtil
     {
         static $isWechat = null;
         if (null === $isWechat) {
-            $userAgent = Request::header('User-Agent');
-            if (strpos($userAgent, 'MicroMessenger') !== false) {
+            $isWechat = false;
+            if (strpos(self::getUserAgent(), 'MicroMessenger') !== false) {
                 $isWechat = true;
-            } else {
-                $isWechat = false;
             }
         }
         return $isWechat;
+    }
+
+    /**
+     * @Util 判断是否是微信手机浏览器
+     * @return bool
+     */
+    public static function isWechatMobile()
+    {
+        return self::isWechat() && !self::isWechatPC();
+    }
+
+    /**
+     * @Util 判断是否是微信PC浏览器
+     * @return bool
+     */
+    public static function isWechatPC()
+    {
+        static $isWechatPC = null;
+        if (null === $isWechatPC) {
+            $isWechatPC = false;
+            if (self::isWechat()) {
+                $ua = self::getUserAgent();
+                if (
+                    strpos($ua, 'WindowsWechat') !== false
+                    ||
+                    strpos($ua, 'MacWechat') !== false
+                ) {
+                    $isWechatPC = true;
+                }
+            }
+        }
+        return $isWechatPC;
     }
 
     /**
@@ -56,7 +89,7 @@ class AgentUtil
      */
     public static function isMobile()
     {
-        return Agent::isPhone() || Agent::isTablet();
+        return Agent::isPhone() && !self::isWechatPC();
     }
 
     /**
@@ -65,7 +98,7 @@ class AgentUtil
      */
     public static function isPC()
     {
-        return !Agent::isPhone() && !Agent::isTablet();
+        return !self::isMobile();
     }
 
     private static $robots = [

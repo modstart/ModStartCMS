@@ -24,8 +24,13 @@ use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Oauth\AbstractOauth;
 use Module\Member\Provider\RegisterProcessor\AbstractMemberRegisterProcessorProvider;
 use Module\Member\Provider\RegisterProcessor\MemberRegisterProcessorProvider;
+use Module\Member\Type\MemberOauthCallbackMode;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\SecurityUtil;
+use Module\MemberOauth\Core\MemberOauthConstant;
+use Module\MemberOauth\Oauth\WechatMiniProgramOauth;
+use Module\MemberOauth\Oauth\WechatMobileOauth;
+use Module\MemberOauth\Oauth\WechatOauth;
 use Module\Vendor\Job\MailSendJob;
 use Module\Vendor\Job\SmsSendJob;
 use Module\Vendor\Support\ResponseCodes;
@@ -365,11 +370,37 @@ class AuthController extends ModuleBaseController
             return $ret;
         }
         $userInfo = $ret['data']['userInfo'];
+
+        /** @deprecated delete at 2024-06-29 */
         $view = $input->getBoolean('view', false);
         if ($view) {
             Session::put('oauthViewOpenId_' . $oauthType, $userInfo['openid']);
             return Response::generateSuccess();
         }
+        /** @deprecated delete at 2024-06-29 */
+
+        $callbackMode = $input->getType('callbackMode', MemberOauthCallbackMode::class);
+        if ($callbackMode) {
+            switch ($callbackMode) {
+                case MemberOauthCallbackMode::View:
+                    Session::put('oauthViewOpenId_' . $oauthType, $userInfo['openid']);
+                    return Response::generateSuccess();
+                case MemberOauthCallbackMode::AutoBind:
+                    BizException::throwsIf('未登录', MemberUser::isNotLogin());
+                    MemberUtil::putOauth(MemberUser::id(), $oauthType, $userInfo['openid']);
+                    switch ($oauthType) {
+                        case WechatMobileOauth::NAME:
+                        case WechatMiniProgramOauth::NAME:
+                        case WechatOauth::NAME:
+                            if (!empty($userInfo['unionid'])) {
+                                MemberUtil::putOauth(MemberUser::id(), MemberOauthConstant::WECHAT_UNION, $userInfo['unionid']);
+                            }
+                            break;
+                    }
+                    return Response::generateSuccess();
+            }
+        }
+
         Session::put('oauthUserInfo', $userInfo);
         return Response::generate(0, 'ok', [
             'user' => $userInfo,

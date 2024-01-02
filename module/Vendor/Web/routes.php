@@ -9,6 +9,8 @@ $router->match(['get', 'post'], 'install/lock', 'InstallController@lock');
 
 $router->match(['get'], 'captcha/image', 'CaptchaController@image');
 
+$router->match(['get'], 'session', 'SessionController@index');
+
 $router->match(['get'], 'placeholder/{width}x{height}', '\Module\Vendor\Web\Controller\PlaceholderController@index');
 
 $router->group([

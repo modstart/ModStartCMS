@@ -4,6 +4,7 @@
 namespace Module\Vendor\Provider\Notifier;
 
 
+use Module\Vendor\Util\CacheUtil;
 use Module\Vendor\Util\NoneLoginOperateUtil;
 
 class NotifierProvider
@@ -40,6 +41,25 @@ class NotifierProvider
         foreach (self::all() as $instance) {
             $instance->notify($biz, $title, $content, $param);
         }
+    }
+
+    /**
+     * 发送消息通知（指定时间间隔）
+     * @param $period int 时间间隔（秒）
+     * @param $biz string 业务标识
+     * @param $title string 标题
+     * @param $content array|string 内容
+     * @param $param array
+     */
+    public static function notifyPeriod($period, $biz, $title, $content, $param = [])
+    {
+        CacheUtil::remember("Notifier:NotifyPeriod:{$biz}:{$period}",
+            $period,
+            function () use ($biz, $title, $content, $param) {
+                self::notify($biz, $title, $content, $param);
+                return time();
+            }
+        );
     }
 
     public static function notifyNoneLoginOperateProcessUrl($biz, $title, $content, $processUrlPath, $param = [])

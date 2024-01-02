@@ -402,15 +402,32 @@ class Tecmz
      * OCR
      *
      * @param $format string
-     * @param $imageData string binary
+     * @param $imageData string 图片二进制数据
+     * @param $imageUrl string 图片链接
      * @return array|mixed
      */
-    public function ocr($format, $imageData)
+    public function ocr($format, $imageData, $imageUrl = null)
     {
         $post = [];
         $post['format'] = $format;
-        $post['imageData'] = base64_encode($imageData);
+        if (!empty($imageData)) {
+            $post['imageData'] = base64_encode($imageData);
+        }
+        $post['imageUrl'] = $imageUrl;
         return $this->request('/ocr', $post);
+    }
+
+    /**
+     * 地址智能解析
+     *
+     * @param $content string 地址内容
+     */
+    public function addressParse($content)
+    {
+        $post = [];
+        $post['content'] = $content;
+
+        return $this->request('/address_parse', $post);
     }
 
     /**

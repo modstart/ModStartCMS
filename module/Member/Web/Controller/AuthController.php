@@ -14,6 +14,12 @@ use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleBaseController;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Provider\Auth\MemberAuthProvider;
+use Module\Member\Type\MemberOauthCallbackMode;
+use Module\Member\Util\MemberUtil;
+use Module\MemberOauth\Core\MemberOauthConstant;
+use Module\MemberOauth\Oauth\WechatMiniProgramOauth;
+use Module\MemberOauth\Oauth\WechatMobileOauth;
+use Module\MemberOauth\Oauth\WechatOauth;
 
 class AuthController extends ModuleBaseController
 {
@@ -343,9 +349,17 @@ class AuthController extends ModuleBaseController
     public function oauthLogin($oauthType = null)
     {
         $input = InputPackage::buildFromInput();
+
+        /** @deprecated delete at 2024-06-29 */
         $view = $input->getBoolean('view', false);
         if ($view) {
             Session::put('oauthLoginView', true);
+        }
+        /** @deprecated delete at 2024-06-29 */
+
+        $callbackMode = $input->getType('callbackMode', MemberOauthCallbackMode::class);
+        if ($callbackMode) {
+            Session::put('oauthCallbackMode', $callbackMode);
         }
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         $this->api->checkRedirectSafety($redirect);
@@ -365,15 +379,50 @@ class AuthController extends ModuleBaseController
         if ($ret['code']) {
             return Response::sendFromGenerate($ret);
         }
-        $view = Session::get('oauthLoginView', false);
-        Session::forget('oauthLoginView');
+        $redirect = Session::get('oauthRedirect', modstart_web_url('member'));
+        $oauthUserInfo = Session::get('oauthUserInfo');
+
+        /** @deprecated delete at 2024-06-29 */
+        $view = Session::pull('oauthLoginView', false);
         if ($view) {
-            $redirect = Session::get('oauthRedirect', modstart_web_url('member'));
-            $oauthUserInfo = Session::get('oauthUserInfo');
             Session::put('oauthViewOpenId_' . $oauthType, $oauthUserInfo['openid']);
+            Session::forget('oauthUserInfo');
+            Session::forget('oauthRedirect');
             return Response::redirect($redirect);
         }
+        /** @deprecated delete at 2024-06-29 */
+
+        $callbackMode = Session::pull('oauthCallbackMode', null);
+        if ($callbackMode) {
+            switch ($callbackMode) {
+                case MemberOauthCallbackMode::View:
+                    Session::put('oauthViewOpenId_' . $oauthType, $oauthUserInfo['openid']);
+                    Session::forget('oauthUserInfo');
+                    Session::forget('oauthRedirect');
+                    return Response::redirect($redirect);
+                case MemberOauthCallbackMode::AutoBind:
+                    BizException::throwsIf('未登录', MemberUser::isNotLogin());
+                    MemberUtil::putOauth(MemberUser::id(), $oauthType, $oauthUserInfo['openid']);
+                    Session::forget('oauthUserInfo');
+                    Session::forget('oauthRedirect');
+                    switch ($oauthType) {
+                        case WechatMobileOauth::NAME:
+                        case WechatMiniProgramOauth::NAME:
+                        case WechatOauth::NAME:
+                            if (!empty($userInfo['unionid'])) {
+                                MemberUtil::putOauth(MemberUser::id(), MemberOauthConstant::WECHAT_UNION, $userInfo['unionid']);
+                            }
+                            break;
+                    }
+                    return Response::redirect($redirect);
+            }
+        }
         return Response::redirect(Request::domainUrl() . '/oauth_bind_' . $oauthType);
+    }
+
+    public function oauthBackAndClose()
+    {
+        return $this->view('oauthBackAndClose');
     }
 
     public function oauthBind($oauthType = null)

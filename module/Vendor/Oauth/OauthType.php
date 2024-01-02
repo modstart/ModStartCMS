@@ -5,7 +5,7 @@ namespace Module\Vendor\Oauth;
 /**
  * Class OauthType
  * @package Module\Vendor\Oauth
- * @deprecated
+ * @deprecated delete at 2024-06-30
  */
 class OauthType
 {

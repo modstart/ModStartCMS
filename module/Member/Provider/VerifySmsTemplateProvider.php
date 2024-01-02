@@ -8,9 +8,11 @@ use Module\Vendor\Provider\SmsTemplate\AbstractSmsTemplateProvider;
 
 class VerifySmsTemplateProvider extends AbstractSmsTemplateProvider
 {
+    const NAME = 'verify';
+
     public function name()
     {
-        return 'verify';
+        return self::NAME;
     }
 
     public function title()

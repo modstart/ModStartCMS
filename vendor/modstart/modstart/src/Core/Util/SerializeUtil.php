@@ -36,7 +36,7 @@ class SerializeUtil
 
     public static function jsonDecode($data)
     {
-        return json_decode($data, true);
+        return @json_decode($data, true);
     }
 
 }

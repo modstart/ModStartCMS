@@ -3,12 +3,8 @@
 
 namespace Module\Vendor\Util;
 
-use ModStart\Core\Type\TypeUtil;
-use ModStart\Core\Util\ConstantUtil;
 use ModStart\Core\Util\PlatformUtil;
 use ModStart\Core\Util\ReUtil;
-use ModStart\Core\Util\SerializeUtil;
-use Module\Vendor\Support\ResponseCodes;
 
 include_once __DIR__ . '/../Shell/include.php';
 
@@ -30,7 +26,11 @@ class UniappUtil
 
         shell_echo_block("检查环境");
         shell_throws_if("请进入 " . $dir . "目录再运行该脚本", getcwd() !== $dir);
-        shell_throws_if("系统只持支Linux和OSX", !PlatformUtil::isType([PlatformUtil::LINUX, PlatformUtil::OSX]));
+        shell_throws_if("系统只持支Linux和OSX", !PlatformUtil::isType([
+            PlatformUtil::LINUX,
+            PlatformUtil::OSX,
+            PlatformUtil::WINDOWS,
+        ]));
         shell_throws_if("请安装 nodejs，安装后自检 npm --version 输出正确", !shell_command_check('npm --version'));
         shell_throws_if("解析模块名称失败", empty($module));
         shell_echo_success('环境正常');

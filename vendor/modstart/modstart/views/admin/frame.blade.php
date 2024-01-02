@@ -10,6 +10,7 @@
 
 @section('headAppend')
     @parent
+    <meta name="robots" content="noindex" />
     <script>
         window.__msAdminRoot = "{{modstart_admin_url(null)}}";
         window.__selectorDialogServer = "{{modstart_admin_url('data/file_manager')}}";

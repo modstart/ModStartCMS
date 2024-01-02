@@ -1,4 +1,4 @@
-<div class="line" id="{{$id}}">
+<div class="line" data-field id="{{$id}}">
     <div class="label">
         &nbsp;
     </div>

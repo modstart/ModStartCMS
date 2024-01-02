@@ -305,7 +305,7 @@ class ModuleServiceProvider extends ServiceProvider
                                     ] : null,
                                 $vipEnable ?
                                     [
-                                        'title' => '用户-VIP订单',
+                                        'title' => '用户VIP订单',
                                         'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
                                     ] : null,
                             ],

@@ -1,4 +1,4 @@
-<div class="line">
+<div class="line" data-field id="{{$id}}">
     <div class="label">
         {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)
@@ -7,17 +7,21 @@
         {{$label}}
     </div>
     <div class="field">
-        <div id="{{$id}}Input" class="tw-border tw-border-gray-100 tw-border-solid tw-rounded">
+        <div id="{{$id}}Input" class="tw-rounded tw-bg-white ub-border">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             @if($viewMode=='mini')
                 <div class="tw-inline-block tw-w-32 tw-p-2" v-for="(valueItem,valueIndex) in value">
                     <el-input placeholder="请输入内容" size="mini" v-model="value[valueIndex]">
-                        <template slot="append">
-                            <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
-                        </template>
+                        @if(empty($countFixed))
+                            <template slot="append">
+                                <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
+                            </template>
+                        @endif
                     </el-input>
                 </div>
-                <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+                @if(empty($countFixed))
+                    <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+                @endif
             @else
                 <table class="ub-table tw-bg-white mini">
                     <body>
@@ -28,12 +32,16 @@
                         <td width="80" class="tw-text-right">
                             <a href="javascript:;" class="ub-text-primary" v-if="valueIndex>0" @click="doUp(value,valueIndex)"><i class="iconfont icon-direction-up"></i></a>
                             <a href="javascript:;" class="ub-text-primary" v-if="valueIndex<value.length-1" @click="doDown(value,valueIndex)"><i class="iconfont icon-direction-down"></i></a>
-                            <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
+                            @if(empty($countFixed))
+                                <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
+                            @endif
                         </td>
                     </tr>
                     </body>
                 </table>
-                <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+                @if(empty($countFixed))
+                    <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+                @endif
             @endif
         </div>
         @if(!empty($help))
@@ -48,8 +56,10 @@
     $(function () {
         var app = new Vue({
             el: '#{{$id}}Input',
-            data: {
-                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
+            data: function(){
+                return {
+                    value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
+                };
             },
             computed:{
                 jsonValue:function(){
@@ -58,8 +68,9 @@
             },
             methods:{
                 doUp:MS.collection.sort.up,
-                doDown:MS.collection.sort.down,
+                doDown:MS.collection.sort.down
             }
         });
+        $('#{{$id}}').data('app',app);
     });
 </script>

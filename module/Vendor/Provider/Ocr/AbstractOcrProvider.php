@@ -11,11 +11,11 @@ abstract class AbstractOcrProvider
     abstract public function title();
 
     /**
-     * @param $imageData string
-     * @param $format string
-     * @param array $param
+     * @param $imageUrl string 图片地址
+     * @param $format string 图片格式
+     * @param $param array 额外参数
      * @return array
      */
-    abstract public function getText($imageData, $format, $param = []);
+    abstract public function getText($imageUrl, $format, $param = []);
 
 }

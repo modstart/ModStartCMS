@@ -24,61 +24,61 @@ use ModStart\Support\Manager\FieldManager;
  * Class AbstractField
  * @package ModStart\Field
  *
- * @method AbstractField|mixed listable($value = null)
+ * @method $this listable($value = null)
  *
- * @method AbstractField|mixed addable($value = null)
+ * @method $this addable($value = null)
  *
- * @method AbstractField|mixed editable($value = null)
+ * @method $this editable($value = null)
  *
- * @method AbstractField|mixed formShowOnly($value = null)
+ * @method $this formShowOnly($value = null)
  *
- * @method AbstractField|mixed showable($value = null)
+ * @method $this showable($value = null)
  *
- * @method AbstractField|mixed sortable($value = null)
+ * @method $this sortable($value = null)
  *
- * @method AbstractField|mixed renderMode($value = null)
+ * @method $this renderMode($value = null)
  *
  * form模式：默认值
- * @method AbstractField|mixed defaultValue($value = null)
+ * @method $this defaultValue($value = null)
  *
  * form模式：提示文字
- * @method AbstractField|mixed placeholder($value = null)
+ * @method $this placeholder($value = null)
  *
  * form模式：只读
- * @method AbstractField|mixed readonly($value = null)
+ * @method $this readonly($value = null)
  *
  * form模式：帮助文字，样式
- * @method AbstractField|mixed help($value = null)
+ * @method $this help($value = null)
  *
  * grid|form|detail模式：字段提示
- * @method AbstractField|mixed tip($value = null)
+ * @method $this tip($value = null)
  *
  * form模式：字段样式，或直接作用到 input, textarea 等元素上
- * @method AbstractField|mixed styleFormField($value = null)
+ * @method $this styleFormField($value = null)
  *
  * grid模式：字段宽度
- * @method AbstractField|mixed width($value = null)
+ * @method $this width($value = null)
  *
- * @method AbstractField|mixed hookFormatValue($value = null)
- * @method AbstractField|mixed hookValueUnserialize($value = null)
+ * @method $this hookFormatValue($value = null)
+ * @method $this hookValueUnserialize($value = null)
  *
  * > $value = function ($value, AbstractField $field) { return $value; }
- * @method AbstractField|mixed hookValueSerialize($value = null)
+ * @method $this hookValueSerialize($value = null)
  *
  * > $value = function ($itemId, AbstractField $field) {  }
- * @method AbstractField|mixed hookValueSaved($value = null)
+ * @method $this hookValueSaved($value = null)
  *
  * grid|form|detail模式：渲染自定义回调
  * > $value = function(AbstractField $field, $item, $index){ return $item->title; }
- * @method AbstractField|mixed hookRendering($value = null)
+ * @method $this hookRendering($value = null)
  *
- * @method AbstractField|mixed isLayoutField($vlaue = null)
- * @method AbstractField|mixed isCustomField($vlaue = null)
- * @method AbstractField|mixed gridFixed($vlaue = null)
+ * @method $this isLayoutField($vlaue = null)
+ * @method $this isCustomField($vlaue = null)
+ * @method $this gridFixed($vlaue = null)
  * grid模式：是否启用快捷编辑
  * > $value = true
  * > $value = function(AbstractField $field, $item, $index){ return true; }
- * @method AbstractField|mixed gridEditable($vlaue = null)
+ * @method $this gridEditable($vlaue = null)
  *
  * >>>>>> 数据流转换流程 >>>>>>
  *
