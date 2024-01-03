@@ -30,15 +30,17 @@ use ModStart\Layout\LayoutGrid;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Manager\FieldManager;
 use ModStart\Widget\TextLink;
+use Module\Cms\Core\CmsRecommendBiz;
 use Module\Cms\Field\CmsField;
 use Module\Cms\Type\CmsContentVerifyStatus;
 use Module\Cms\Type\CmsMode;
 use Module\Cms\Type\CmsModelContentStatus;
+use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Cms\Util\CmsTemplateUtil;
 use Module\Member\Util\MemberFieldUtil;
-use Module\TagManager\Model\TagManager;
+use Module\TagManager\Util\TagManagerUtil;
 
 class ContentController extends Controller
 {
@@ -376,6 +378,13 @@ class ContentController extends Controller
                         $recordDataValue[$field['name']] = isset($data[$field['name']]) ? $data[$field['name']] : null;
                     }
                 }
+                $recommendTags = [];
+                if ($recordValue['catId']) {
+                    $cat = CmsCatUtil::get($recordValue['catId']);
+                    if ($cat) {
+                        $recommendTags[] = $cat['title'];
+                    }
+                }
                 ModelUtil::transactionBegin();
                 if (!empty($record['id'])) {
                     ModelUtil::update($this->modelTable, $record['id'], $recordValue);
@@ -386,16 +395,26 @@ class ContentController extends Controller
                         ]));
                     }
                     if (modstart_module_enabled('TagManager')) {
-                        TagManager::updateTags('cms', $record['_tags'], $recordValue['tags']);
+                        TagManagerUtil::updateTags('cms', $record['_tags'], $recordValue['tags']);
                     }
+                    CmsRecommendBiz::itemUpdate(
+                        $record['id'],
+                        $recordValue['modelId'],
+                        $recommendTags
+                    );
                 } else {
                     $recordValue['modelId'] = $this->model['id'];
                     $recordValue = ModelUtil::insert($this->modelTable, $recordValue);
                     $recordDataValue['id'] = $recordValue['id'];
                     ModelUtil::insert($this->modelDataTable, $recordDataValue);
                     if (modstart_module_enabled('TagManager')) {
-                        TagManager::putTags('cms', $recordValue['tags']);
+                        TagManagerUtil::putTags('cms', $recordValue['tags']);
                     }
+                    CmsRecommendBiz::itemUpdate(
+                        $recordValue['id'],
+                        $recordValue['modelId'],
+                        $recommendTags
+                    );
                 }
                 ModelUtil::transactionCommit();
                 return Response::redirect(CRUDUtil::jsDialogCloseAndParentGridRefresh());
@@ -417,8 +436,9 @@ class ContentController extends Controller
             ModelUtil::delete($this->modelTable, $record['id']);
             ModelUtil::delete($this->modelDataTable, $record['id']);
             if (modstart_module_enabled('TagManager')) {
-                TagManager::deleteTags('cms', $record['_tags']);
+                TagManagerUtil::deleteTags('cms', $record['_tags']);
             }
+            CmsRecommendBiz::itemDelete($record['id']);
             ModelUtil::transactionCommit();
         }
         return Response::redirect(CRUDUtil::jsGridRefresh());

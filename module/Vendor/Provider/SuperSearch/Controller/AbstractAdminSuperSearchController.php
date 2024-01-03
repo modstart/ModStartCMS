@@ -12,6 +12,9 @@ use ModStart\Core\Input\Response;
 use Module\Vendor\Provider\SuperSearch\AbstractSuperSearchProvider;
 use Module\Vendor\Provider\SuperSearch\SuperSearchBiz;
 
+/**
+ * @deprecated delete at 2024-07-02
+ */
 abstract class AbstractAdminSuperSearchController extends Controller
 {
     /**

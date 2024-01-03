@@ -10,6 +10,8 @@ abstract class AbstractSuperSearchBiz
 
     abstract public function title();
 
+    abstract public function providerName();
+
     abstract public function fields();
 
     public function syncBatch(AbstractSuperSearchProvider $provider, $nextId)

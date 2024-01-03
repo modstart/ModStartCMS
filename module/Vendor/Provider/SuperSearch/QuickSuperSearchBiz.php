@@ -15,6 +15,11 @@ class QuickSuperSearchBiz extends AbstractSuperSearchBiz
     protected $title;
     protected $field;
 
+    public function providerName()
+    {
+        return null;
+    }
+
     public static function make($name, $title, $field)
     {
         $biz = new static();

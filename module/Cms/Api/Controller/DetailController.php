@@ -16,7 +16,6 @@ use Module\Cms\Util\CmsContentUtil;
 use Module\Cms\Util\CmsMemberPermitUtil;
 use Module\Cms\Util\UrlUtil;
 use Module\Member\Auth\MemberUser;
-use Module\Vendor\Provider\Recommend\RecommendBiz;
 
 /**
  * @Api 通用CMS
@@ -73,7 +72,7 @@ class DetailController extends ModuleBaseController
             }
         }
         if (MemberUser::isLogin()) {
-            RecommendBiz::itemVisit(CmsRecommendBiz::NAME, $record['id'], MemberUser::id());
+            CmsRecommendBiz::itemFeedbackVisit($record['id'], MemberUser::id());
         }
         return Response::generateSuccessData($viewData);
     }
