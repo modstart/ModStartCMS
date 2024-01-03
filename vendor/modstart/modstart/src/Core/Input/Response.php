@@ -54,6 +54,19 @@ class Response
         return !self::isSuccess($result);
     }
 
+    /**
+     * 需要独立处理的返回结果，原始返回结果
+     * @param $result
+     * @return bool
+     */
+    public static function isRaw($result)
+    {
+        if ($result instanceof \Illuminate\Http\Response) {
+            return true;
+        }
+        return false;
+    }
+
     public static function generateRedirect($redirect)
     {
         return self::generate(-1, null, null, $redirect);

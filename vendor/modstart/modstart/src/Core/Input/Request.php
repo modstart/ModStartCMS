@@ -118,7 +118,8 @@ class Request
     }
 
     /**
-     * merge url queies with given array
+     * merge url queries with given array
+     * 根据给定的数组，合并url的query
      * @param array $pair
      * @return string
      */
@@ -128,6 +129,9 @@ class Request
         foreach ($pair as $k => $v) {
             $gets[$k] = $v;
         }
+
+        // sort by key, always sort by key to make sure the url is the same
+        ksort($gets);
 
         $urls = [];
         foreach ($gets as $k => $v) {

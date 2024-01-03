@@ -493,6 +493,9 @@ class Form implements Renderable
             ResultException::throwsIfFail($this->hookCall($this->hookSaving));
             $ret = call_user_func($callback, $this);
             if (null !== $ret) {
+                if(Response::isRaw($ret)){
+                    return $ret;
+                }
                 if (Response::isError($ret)) {
                     return Response::jsonFromGenerate($ret);
                 }
