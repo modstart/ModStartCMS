@@ -16,7 +16,7 @@
         <div class="box">
 
             <div class="nav">
-                <a href="{{$__msRoot}}login?redirect={{!empty($redirect)?urlencode($redirect):''}}" >登录</a>
+                <a href="{{$__msRoot}}login?redirect={{!empty($redirect)?urlencode($redirect):''}}">登录</a>
                 ·
                 <a href="javascript:;" class="active">找回密码</a>
             </div>
@@ -29,11 +29,15 @@
                         <div class="field">
                             <?php $found = false; ?>
                             @if(modstart_config('retrieveEmailEnable',false))
-                                <a class="btn btn-lg btn-block btn-lg btn-primary margin-bottom" href="{{$__msRoot}}retrieve/email?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i class="iconfont icon-email"></i> 通过邮箱找回</a>
+                                <a class="btn btn-round btn-lg btn-block btn-lg btn-primary margin-bottom"
+                                   href="{{$__msRoot}}retrieve/email?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i
+                                        class="iconfont icon-email"></i> 通过邮箱找回</a>
                                 <?php $found = true; ?>
                             @endif
                             @if(modstart_config('retrievePhoneEnable',false))
-                                <a class="btn btn-lg btn-block btn-lg btn-primary margin-bottom" href="{{$__msRoot}}retrieve/phone?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i class="iconfont icon-phone"></i> 通过手机找回</a>
+                                <a class="btn btn-round btn-lg btn-block btn-lg btn-primary margin-bottom"
+                                   href="{{$__msRoot}}retrieve/phone?redirect={{!empty($redirect)?urlencode($redirect):''}}"><i
+                                        class="iconfont icon-phone"></i> 通过手机找回</a>
                                 <?php $found = true; ?>
                             @endif
                             @if(!$found)
@@ -43,6 +47,20 @@
                     </div>
                 </form>
             </div>
+
+            @if(modstart_config('Member_AppealEnable',false))
+                <div class="ub-text-muted tw-py-4">
+                    <div class="margin-bottom">
+                        如果账号异常，请点击下面的链接申诉
+                    </div>
+                    <div>
+                        <a href="{{modstart_web_url('member/appeal')}}" target="_blank">
+                            {{modstart_config('Member_AppealTitle')}}
+                        </a>
+                    </div>
+                </div>
+            @endif
+
         </div>
 
     </div>

@@ -44,7 +44,7 @@
                     </div>
                     <div class="line">
                         <div class="field">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">完成设置</button>
+                            <button type="submit" class="btn btn-round btn-primary btn-lg btn-block">完成设置</button>
                         </div>
                     </div>
                     <input type="hidden" name="redirect" value="{{empty($redirect)?'':$redirect}}" />

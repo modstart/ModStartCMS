@@ -88,16 +88,16 @@
                                     <input type="text" class="form-lg" name="verify" placeholder="输入验证码" />
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-lg btn-block" type="button" data-phone-verify-generate>获取验证码</button>
-                                    <button class="btn btn-lg btn-block" type="button" data-phone-verify-countdown style="display:none;margin:0;"></button>
-                                    <button class="btn btn-lg btn-block" type="button" data-phone-verify-regenerate style="display:none;margin:0;">重新获取</button>
+                                    <button class="btn btn-round btn-lg btn-block" type="button" data-phone-verify-generate>获取验证码</button>
+                                    <button class="btn btn-round btn-lg btn-block" type="button" data-phone-verify-countdown style="display:none;margin:0;"></button>
+                                    <button class="btn btn-round btn-lg btn-block" type="button" data-phone-verify-regenerate style="display:none;margin:0;">重新获取</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="line">
                         <div class="field">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
+                            <button type="submit" class="btn btn-round btn-primary btn-lg btn-block">登录</button>
                             <input type="hidden" name="redirect" value="{{empty($redirect)?'':$redirect}}">
                             @if(modstart_config('Member_LoginPhoneAutoRegister', false))
                                 <div class="ub-text-muted">

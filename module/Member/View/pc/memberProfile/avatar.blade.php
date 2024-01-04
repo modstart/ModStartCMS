@@ -88,7 +88,7 @@
             </div>
         </div>
         <div data-box-tool class="margin-bottom">
-            <button type="button" class="btn btn-round" id="avatarImageUpload">
+            <button type="button" class="btn btn-round btn-round" id="avatarImageUpload">
                 <i class="iconfont icon-upload"></i>
                 选择图片
             </button>
@@ -97,21 +97,21 @@
             <img id="editingPreview" style="max-width:80%;max-height:300px;"/>
         </div>
         <div data-box-editing class="margin-bottom pb-page-hidden">
-            <a href="javascript:;" class="btn btn-round" id="avatarBack">
+            <a href="javascript:;" class="btn btn-round btn-round" id="avatarBack">
                 <i class="iconfont icon-direction-left"></i>
                 返回
             </a>
-            <a href="javascript:;" class="btn btn-round" id="avatarImageReupload">
+            <a href="javascript:;" class="btn btn-round btn-round" id="avatarImageReupload">
                 <i class="iconfont icon-upload"></i>
                 重新选择
             </a>
-            <a href="javascript:;" class="btn btn-round" id="avatarZoomOut">
+            <a href="javascript:;" class="btn btn-round btn-round" id="avatarZoomOut">
                 <i class="iconfont icon-zoom-out"></i>
             </a>
-            <a href="javascript:;" class="btn btn-round" id="avatarZoomIn">
+            <a href="javascript:;" class="btn btn-round btn-round" id="avatarZoomIn">
                 <i class="iconfont icon-zoom-in"></i>
             </a>
-            <a href="javascript:;" class="btn btn-round btn-primary" id="avatarSave">
+            <a href="javascript:;" class="btn btn-round btn-round btn-primary" id="avatarSave">
                 <i class="uk-icon-save"></i> 保存头像
             </a>
         </div>

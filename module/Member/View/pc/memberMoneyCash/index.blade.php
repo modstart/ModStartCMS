@@ -126,7 +126,7 @@
                         <div class="line">
                             <div class="label">&nbsp;</div>
                             <div class="field">
-                                <button class="btn btn-primary" type="submit">提交申请</button>
+                                <button class="btn btn-round btn-primary" type="submit">提交申请</button>
                             </div>
                         </div>
                     @endif

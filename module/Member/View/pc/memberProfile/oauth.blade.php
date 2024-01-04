@@ -15,7 +15,7 @@
                 @if($oauth->bindRender())
                     {!! $oauth->bindRender() !!}
                 @else
-                    <a class="btn btn-primary" rel="nofollow"
+                    <a class="btn btn-round btn-primary" rel="nofollow"
                        href="{{modstart_web_url('oauth_login_'.$oauth->name(),['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">立即绑定</a>
                 @endif
             </div>
@@ -35,7 +35,7 @@
                         <div class="tw-text-gray-600 tw-text-xs tw-mt-0.5">{{$oauthRecord['created_at']}}</div>
                     </div>
                     <div class="tw-text-red-600">
-                        <a href="javascript:;" class="btn btn-danger" data-confirm="确定解绑？" data-ajax-request-loading data-ajax-request="{{modstart_api_url('member_profile/oauth_unbind',['type'=>$oauth->name()])}}">解绑</a>
+                        <a href="javascript:;" class="btn btn-round btn-danger" data-confirm="确定解绑？" data-ajax-request-loading data-ajax-request="{{modstart_api_url('member_profile/oauth_unbind',['type'=>$oauth->name()])}}">解绑</a>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ $router->group([
 
     $router->match(['get', 'post'], 'member/agreement', 'PageController@agreement');
     $router->match(['get', 'post'], 'member/privacy', 'PageController@privacy');
+    $router->match(['get', 'post'], 'member/appeal', 'PageController@appeal');
 
     $router->match(['get', 'post'], 'login', 'AuthController@login');
     $router->match(['get', 'post'], 'login/captcha', 'AuthController@loginCaptcha');

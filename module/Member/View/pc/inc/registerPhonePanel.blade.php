@@ -28,11 +28,11 @@
                                 <input type="text" class="form-lg" name="phoneVerify" placeholder="输入验证码"/>
                             </div>
                             <div class="col-5">
-                                <button class="btn btn-lg btn-block" type="button" data-phone-verify-generate>获取验证码
+                                <button class="btn btn-round btn-lg btn-block" type="button" data-phone-verify-generate>获取验证码
                                 </button>
-                                <button class="btn btn-lg btn-block" type="button" data-phone-verify-countdown
+                                <button class="btn btn-round btn-lg btn-block" type="button" data-phone-verify-countdown
                                         style="display:none;margin:0;"></button>
-                                <button class="btn btn-lg btn-block" type="button" data-phone-verify-regenerate
+                                <button class="btn btn-round btn-lg btn-block" type="button" data-phone-verify-regenerate
                                         style="display:none;margin:0;">重新获取
                                 </button>
                             </div>
@@ -51,7 +51,7 @@
                 @endif
                 <div class="line">
                     <div class="field">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">注册并登录</button>
+                        <button type="submit" class="btn btn-round btn-primary btn-lg btn-block">注册并登录</button>
                     </div>
                 </div>
                 @if(modstart_config('Member_AgreementEnable',false)||modstart_config('Member_PrivacyEnable',false))

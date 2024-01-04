@@ -65,9 +65,9 @@
                                     <input type="text" class="form-lg" name="email" placeholder="输入邮箱" />
                                 </div>
                                 <div class="col-5">
-                                    <button class="btn btn-lg btn-block" type="button" data-email-verify-generate>获取验证码</button>
-                                    <button class="btn btn-lg btn-block" type="button" data-email-verify-countdown style="display:none;margin:0;"></button>
-                                    <button class="btn btn-lg btn-block" type="button" data-email-verify-regenerate style="display:none;margin:0;">重新获取</button>
+                                    <button class="btn btn-round btn-lg btn-block" type="button" data-email-verify-generate>获取验证码</button>
+                                    <button class="btn btn-round btn-lg btn-block" type="button" data-email-verify-countdown style="display:none;margin:0;"></button>
+                                    <button class="btn btn-round btn-lg btn-block" type="button" data-email-verify-regenerate style="display:none;margin:0;">重新获取</button>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="line">
                         <div class="field">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
+                            <button type="submit" class="btn btn-round btn-primary btn-lg btn-block">提交</button>
                         </div>
                     </div>
                     <input type="hidden" name="redirect" value="{{empty($redirect)?'':$redirect}}" />

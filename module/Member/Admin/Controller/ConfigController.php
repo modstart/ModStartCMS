@@ -168,6 +168,12 @@ class ConfigController extends Controller
                 $builder->text('Member_PrivacyTitle', '用户隐私协议标题')->help('默认为 用户隐私协议');
                 $builder->richHtml('Member_PrivacyContent', '用户隐私协议内容');
             });
+
+        $builder->switch('Member_AppealEnable', '账号申诉开启')
+            ->when('=', true, function ($builder) {
+                $builder->text('Member_AppealTitle', '账号申诉标题')->help('默认为 账号申诉');
+                $builder->richHtml('Member_AppealContent', '账号申诉内容');
+            });
         $builder->formClass('wide');
         return $builder->perform();
     }

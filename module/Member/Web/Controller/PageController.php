@@ -23,4 +23,12 @@ class PageController extends ModuleBaseController
             'pageContent' => modstart_config('Member_PrivacyContent'),
         ]);
     }
+
+    public function appeal()
+    {
+        return $this->view('member.page', [
+            'pageTitle' => modstart_config('Member_AppealTitle'),
+            'pageContent' => modstart_config('Member_AppealContent'),
+        ]);
+    }
 }

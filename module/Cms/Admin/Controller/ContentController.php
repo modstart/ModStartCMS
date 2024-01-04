@@ -399,7 +399,7 @@ class ContentController extends Controller
                     }
                     CmsRecommendBiz::itemUpdate(
                         $record['id'],
-                        $recordValue['modelId'],
+                        $record['modelId'],
                         $recommendTags
                     );
                 } else {

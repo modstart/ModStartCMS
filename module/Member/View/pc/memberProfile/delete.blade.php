@@ -42,7 +42,7 @@
                 <div class="line">
                     <div class="label">&nbsp;</div>
                     <div class="field">
-                        <a class="btn btn-danger" data-ajax-request-loading data-ajax-request="{{modstart_api_url('member_profile/delete_revert')}}">撤销注销账号申请</a>
+                        <a class="btn btn-round btn-danger" data-ajax-request-loading data-ajax-request="{{modstart_api_url('member_profile/delete_revert')}}">撤销注销账号申请</a>
                     </div>
                 </div>
             @else
@@ -61,7 +61,7 @@
                 <div class="line">
                     <div class="label">&nbsp;</div>
                     <div class="field">
-                        <button type="submit" class="btn btn-danger">申请注销账号</button>
+                        <button type="submit" class="btn btn-round btn-danger">申请注销账号</button>
                     </div>
                 </div>
             @endif

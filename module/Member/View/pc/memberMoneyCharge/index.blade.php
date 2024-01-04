@@ -70,7 +70,7 @@
                             <div class="label">&nbsp;</div>
                             <div class="field">
                                 <input type="hidden" name="recirect" {{modstart_web_url('member_money')}} />
-                                <button class="btn btn-primary" type="submit">提交支付</button>
+                                <button class="btn btn-round btn-primary" type="submit">提交支付</button>
                             </div>
                         </div>
                     </div>

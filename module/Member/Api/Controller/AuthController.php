@@ -303,11 +303,33 @@ class AuthController extends ModuleBaseController
             }
         }
 
-        $ret = MemberUtil::register($username, $phone, $email, null, true);
-        if ($ret['code']) {
-            return Response::generate(-1, $ret['msg']);
+        $memberExists = null;
+        if ($phone) {
+            $exists = MemberUtil::getByPhone($phone);
+            if ($exists) {
+                $memberExists = $exists;
+            }
         }
-        $memberUserId = $ret['data']['id'];
+        if ($email) {
+            $exists = MemberUtil::getByEmail($email);
+            if ($exists) {
+                if ($memberExists) {
+                    return Response::generate(-1, '手机号与邮箱分别绑定了不同的账户，请先解绑');
+                }
+                $memberExists = $exists;
+            }
+        }
+        // 已绑定的用户直接登录
+        if ($memberExists) {
+            $memberUserId = $memberExists['id'];
+        } else {
+            $ret = MemberUtil::register($username, $phone, $email, null, true);
+            if ($ret['code']) {
+                return Response::generate(-1, $ret['msg']);
+            }
+            $memberUserId = $ret['data']['id'];
+        }
+        // 更新绑定信息情况
         $update = [];
         if (modstart_config('Member_OauthBindPhoneEnable')) {
             $update['phoneVerified'] = true;
@@ -315,7 +337,9 @@ class AuthController extends ModuleBaseController
         if (modstart_config('Member_OauthBindEmailEnable')) {
             $update['emailVerified'] = true;
         }
-        $update['registerIp'] = StrUtil::mbLimit(Request::ip(), 20);
+        if (!$memberExists) {
+            $update['registerIp'] = StrUtil::mbLimit(Request::ip(), 20);
+        }
         if (!empty($update)) {
             MemberUtil::update($memberUserId, $update);
         }
@@ -324,15 +348,17 @@ class AuthController extends ModuleBaseController
             'userInfo' => $oauthUserInfo,
         ]);
         BizException::throwsIfResponseError($ret);
-        if (!empty($oauthUserInfo['avatar'])) {
-            $avatarRet = CurlUtil::getRaw($oauthUserInfo['avatar'], [], [
-                'returnRaw' => true,
-            ]);
-            if (200 == $avatarRet['httpCode']) {
-                MemberUtil::setAvatar($memberUserId, $avatarRet['body'], $avatarRet['ext']);
+        if (!$memberExists) {
+            if (!empty($oauthUserInfo['avatar'])) {
+                $avatarRet = CurlUtil::getRaw($oauthUserInfo['avatar'], [], [
+                    'returnRaw' => true,
+                ]);
+                if (200 == $avatarRet['httpCode']) {
+                    MemberUtil::setAvatar($memberUserId, $avatarRet['body'], $avatarRet['ext']);
+                }
             }
+            EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
         }
-        EventUtil::fire(new MemberUserRegisteredEvent($memberUserId));
         Session::put('memberUserId', $memberUserId);
         MemberUtil::fireLogin($memberUserId);
         Session::forget('oauthUserInfo');

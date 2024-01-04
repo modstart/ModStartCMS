@@ -43,7 +43,7 @@
                 <div class="line">
                     <div class="label">&nbsp;</div>
                     <div class="field">
-                        <button type="submit" class="btn btn-primary">提交</button>
+                        <button type="submit" class="btn btn-round btn-primary">提交</button>
                     </div>
                 </div>
             </form>

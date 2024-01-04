@@ -69,9 +69,9 @@
                                     <input class="form" type="text" name="captcha" />
                                 </div>
                                 <div class="col-4">
-                                    <button class="btn btn-default btn-block" type="button" data-verify-generate>获取验证码</button>
-                                    <button class="btn btn-default btn-block" type="button" data-verify-countdown style="display:none;margin:0;"></button>
-                                    <button class="btn btn-default btn-block" type="button" data-verify-regenerate style="display:none;margin:0;">重新获取</button>
+                                    <button class="btn btn-round btn-default btn-block" type="button" data-verify-generate>获取验证码</button>
+                                    <button class="btn btn-round btn-default btn-block" type="button" data-verify-countdown style="display:none;margin:0;"></button>
+                                    <button class="btn btn-round btn-default btn-block" type="button" data-verify-regenerate style="display:none;margin:0;">重新获取</button>
                                 </div>
                             </div>
                             <div class="help">
@@ -87,7 +87,7 @@
                     <div class="line">
                         <div class="label">&nbsp;</div>
                         <div class="field">
-                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="submit" class="btn btn-round btn-primary">提交</button>
                         </div>
                     </div>
                 </div>
@@ -116,9 +116,9 @@
                                 <input type="text" class="form" name="captcha" />
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-default btn-block" type="button" data-verify-generate>获取验证码</button>
-                                <button class="btn btn-default btn-block" type="button" data-verify-countdown style="display:none;margin:0;"></button>
-                                <button class="btn btn-default btn-block" type="button" data-verify-regenerate style="display:none;margin:0;">重新获取</button>
+                                <button class="btn btn-round btn-default btn-block" type="button" data-verify-generate>获取验证码</button>
+                                <button class="btn btn-round btn-default btn-block" type="button" data-verify-countdown style="display:none;margin:0;"></button>
+                                <button class="btn btn-round btn-default btn-block" type="button" data-verify-regenerate style="display:none;margin:0;">重新获取</button>
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                 <div class="line">
                     <div class="label">&nbsp;</div>
                     <div class="field">
-                        <button type="submit" class="btn btn-primary">提交</button>
+                        <button type="submit" class="btn btn-round btn-primary">提交</button>
                     </div>
                 </div>
             @endif
