@@ -63,7 +63,8 @@ class MemberUtil
             return;
         }
         if (empty($memberUser['nickname'])) {
-            $memberUser['nickname'] = $memberUser['username'];
+            // 这里暂时不设置，否则会出现前端无法判别是否有设置昵称的问题
+            // $memberUser['nickname'] = $memberUser['username'];
         }
         if (empty($memberUser['avatar'])) {
             $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.svg', false);
@@ -170,7 +171,17 @@ class MemberUtil
         return self::convertToBasic(self::listUsers($ids));
     }
 
+    /**
+     * @param $id
+     * @return mixed|string
+     * @deprecated delete at 2024-07-09
+     */
     public static function getViewName($id)
+    {
+        return self::viewName(self::get($id));
+    }
+
+    public static function viewNameById($id)
     {
         return self::viewName(self::get($id));
     }
@@ -178,7 +189,7 @@ class MemberUtil
     public static function viewName($memberUser)
     {
         if ($memberUser && is_numeric($memberUser)) {
-            return self::getViewName($memberUser);
+            return self::viewNameById($memberUser);
         }
         if (empty($memberUser)) {
             return '-';
@@ -381,22 +392,32 @@ class MemberUtil
     }
 
     /**
-     * 注册，email phone username 可以只选择一个为注册ID
+     * 用户注册
+     * email phone username param.nickname 可以只选择一个为注册ID
+     * username 和 nickname 的区别是一个可以作为登录名，一个不可以，原则上公开界面上优先显示 nickname，理论上 nickname 可以重复
      *
-     * @param string $username
-     * @param string $phone
-     * @param string $email
-     * @param string $password
-     * @param bool $ignorePassword
+     * @param $username string 用户名
+     * @param $phone string 手机号
+     * @param $email string 邮箱
+     * @param $password string 密码
+     * @param $ignorePassword bool 是否忽略密码
+     * @param $param array 参数
      * @return array ['code'=>'0','msg'=>'ok','data'=>'member_user array']
      */
-    public static function register($username = '', $phone = '', $email = '', $password = '', $ignorePassword = false)
+    public static function register($username = '', $phone = '', $email = '', $password = '', $ignorePassword = false, $param = [])
     {
+        $param = array_merge([
+            'nickname' => $username,
+        ], $param);
+        if (empty($param['nickname'])) {
+            $param['nickname'] = null;
+        }
+
         $email = trim($email);
         $phone = trim($phone);
         $username = trim($username);
 
-        if (!($email || $phone || $username)) {
+        if (!($email || $phone || $username || $param['nickname'])) {
             return Response::generate(-1, '所有注册字段均为空');
         }
 
@@ -450,6 +471,7 @@ class MemberUtil
             'username' => $username,
             'email' => $email,
             'phone' => $phone,
+            'nickname' => $param['nickname'],
             'password' => $ignorePassword ? null : EncodeUtil::md5WithSalt($password, $passwordSalt),
             'passwordSalt' => $ignorePassword ? null : $passwordSalt,
             'vipId' => MemberVipUtil::defaultVipId(),

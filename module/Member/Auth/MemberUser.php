@@ -81,7 +81,16 @@ class MemberUser
         return isset($user[$key]) ? $user[$key] : $default;
     }
 
+    /**
+     * @return mixed|string
+     * @deprecated delete at 2024-07-09
+     */
     public static function nickname()
+    {
+        return MemberUtil::viewName(self::user());
+    }
+
+    public static function viewName()
     {
         return MemberUtil::viewName(self::user());
     }

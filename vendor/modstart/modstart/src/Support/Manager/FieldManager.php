@@ -64,6 +64,7 @@ class FieldManager
             'manyRelation' => \ModStart\Field\ManyRelation::class,
             'markdown' => \ModStart\Field\Markdown::class,
             'number' => \ModStart\Field\Number::class,
+            'numberRange' => \ModStart\Field\NumberRange::class,
             'password' => \ModStart\Field\Password::class,
             'percent' => \ModStart\Field\Percent::class,
             'period' => \ModStart\Field\Period::class,

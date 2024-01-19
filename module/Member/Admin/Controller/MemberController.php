@@ -22,6 +22,7 @@ use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\TimeUtil;
+use ModStart\Detail\Detail;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Select;
@@ -32,6 +33,7 @@ use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
 use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Concern\HasFields;
+use ModStart\Widget\Box;
 use ModStart\Widget\TextDialogRequest;
 use Module\Member\Config\MemberAdminList;
 use Module\Member\Config\MemberOauth;
@@ -82,23 +84,47 @@ class MemberController extends Controller
                     });
                 $builder->text('email', '邮箱');
                 $builder->text('phone', '手机');
-                $builder->text('nickname', '昵称');
+                $builder->text('nickname', '昵称')->required()->ruleUnique('member_user')
+                    ->hookRendering(function (AbstractField $field, $item, $index) {
+                        switch ($field->renderMode()) {
+                            case FieldRenderMode::GRID:
+                            case FieldRenderMode::DETAIL:
+                                return AutoRenderedFieldValue::make(
+                                    TextDialogRequest::make(
+                                        'primary',
+                                        htmlspecialchars($item->username),
+                                        modstart_admin_url('member/show', ['_id' => $item->id])
+                                    )->width('90%')->height('90%')->render()
+                                );
+                                break;
+                        }
+                    });
                 if (MemberOauth::hasEnableItems()) {
                     $builder->display('_oauth', '授权')->hookRendering(function (AbstractField $field, $item, $index) {
                         $oauthList = [];
                         $oauthRecords = MemberUtil::listOauths($item->id);
                         foreach ($oauthRecords as $oauthRecord) {
                             $color = null;
+                            $icon = 'iconfont icon-dot';
                             $title = $oauthRecord['type'];
                             $oauth = MemberOauth::getByOauthKey($oauthRecord['type']);
                             if ($oauth) {
                                 $color = $oauth->color();
                                 $title = $oauth->title();
+                                if (method_exists($oauth, 'icon')) {
+                                    $icon = $oauth->icon();
+                                }
                             }
                             if (empty($color)) {
                                 $color = ColorUtil::pick($oauthRecord['type']);
                             }
-                            $oauthList[] = '<a style="color:' . $color . ';" href="javascript:;" data-tip-popover="' . $title . '"><i class="iconfont icon-dot"></i></a>';
+                            $oauthList[] = join('', [
+                                "<a style='color:{$color};'",
+                                "href='javascript:;'",
+                                "data-tip-popover='{$title}'",
+                                "data-dialog-request='" . modstart_admin_url('member/oauth', ['_id' => $item->id]) . "'",
+                                "><i class='{$icon}'></i></a>",
+                            ]);
                         }
                         return join('', $oauthList);
                     });
@@ -159,6 +185,33 @@ class MemberController extends Controller
     public function selectRemote()
     {
         return Select::optionRemoteHandleModel('member_user', 'id', 'username');
+    }
+
+    public function oauth(AdminDialogPage $page)
+    {
+        $memberUser = MemberUtil::get(CRUDUtil::id());
+        BizException::throwsIfEmpty('用户不存在', $memberUser);
+        $detail = Detail::make('');
+        $oauthRecords = MemberUtil::listOauths($memberUser['id']);
+        foreach ($oauthRecords as $oauthRecord) {
+            $color = null;
+            $icon = 'iconfont icon-dot';
+            $title = $oauthRecord['type'];
+            $oauth = MemberOauth::getByOauthKey($oauthRecord['type']);
+            if ($oauth) {
+                $color = $oauth->color();
+                $title = $oauth->title();
+                if (method_exists($oauth, 'icon')) {
+                    $icon = $oauth->icon();
+                }
+            }
+            if (empty($color)) {
+                $color = ColorUtil::pick($oauthRecord['type']);
+            }
+            $detail->html('_', $title)->html($oauthRecord['openId']);
+        }
+        return $page->pageTitle('授权登录信息')
+            ->body(Box::make($detail, '授权登录信息'));
     }
 
     public function add(AdminDialogPage $page)

@@ -7,6 +7,12 @@ use ModStart\Core\Job\BaseJob;
 use ModStart\Core\Util\SerializeUtil;
 use Module\Vendor\Log\Logger;
 
+
+/**
+ * Class LazyValueJob
+ * @package Module\Vendor\LazyValue
+ * @deprecated delete at 2024-07-16
+ */
 class LazyValueJob extends BaseJob
 {
     private $key;

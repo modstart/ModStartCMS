@@ -49,6 +49,7 @@ use ModStart\Field\Type\FieldRenderMode;
  * @method \ModStart\Field\ManyRelation         manyRelation($column, $label = '')
  * @method \ModStart\Field\Markdown             markdown($column, $label = '')
  * @method \ModStart\Field\Number               number($column, $label = '')
+ * @method \ModStart\Field\NumberRange          numberRange($column, $label = '')
  * @method \ModStart\Field\Password             password($column, $label = '')
  * @method \ModStart\Field\Percent              percent($column, $label = '')
  * @method \ModStart\Field\Period               period($column, $label = '')

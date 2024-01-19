@@ -16,6 +16,6 @@ abstract class AbstractOcrProvider
      * @param $param array 额外参数
      * @return array
      */
-    abstract public function getText($imageUrl, $format, $param = []);
+    abstract public function getText($imageUrl, $format = null, $param = []);
 
 }

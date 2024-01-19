@@ -53,6 +53,7 @@ $router->group([
     $router->match(['post'], 'member_profile/oauth_unbind', 'MemberProfileController@oauthUnbind');
     $router->match(['post'], 'member_profile/delete', 'MemberProfileController@delete');
     $router->match(['post'], 'member_profile/delete_revert', 'MemberProfileController@deleteRevert');
+    $router->match(['post'], 'member_profile/nickname', 'MemberProfileController@nickname');
 
     $router->match(['post'], 'member_message', 'MemberMessageController@paginate');
     $router->match(['post'], 'member_message/delete', 'MemberMessageController@delete');

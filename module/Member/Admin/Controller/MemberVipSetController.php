@@ -9,6 +9,7 @@ use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\RandomUtil;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
@@ -36,6 +37,7 @@ class MemberVipSetController extends Controller
                     $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级')->required();
                     $builder->image('icon', '图标');
                     $builder->currency('price', '价格')->required();
+                    $builder->currency('priceMarket', '划线价格')->required();
                     $builder->number('vipDays', '时间')->required()->help('单位为天，365表示1年');
                     $builder->text('desc', '简要说明')->required();
                     $builder->richHtml('content', '详细说明')->required();
@@ -74,7 +76,7 @@ class MemberVipSetController extends Controller
             ->defaultOrder(['sort', 'asc'])
             ->canSort(true)
             ->canShow(false)
-            ->title('用户VIP等级')
+            ->title('用户VIP')
             ->addDialogSize(['600px', '95%'])
             ->editDialogSize(['600px', '95%'])
             ->hookSaved(function (Form $form) {
@@ -86,8 +88,23 @@ class MemberVipSetController extends Controller
     {
         $builder->useDialog();
         $builder->pageTitle('功能设置');
-        // $builder->text('Member_VipTitle', 'VIP开通标题')->help('默认为 开通尊贵VIP 享受更多权益');
-        // $builder->text('Member_VipSubTitle', 'VIP开通副标题')->help('默认为 会员权益1 丨 会员权益2 丨 会员权益3 丨 会员权益4');
+        $builder->number('Member_VipCountDown', '倒计时长度')->unit('秒')->defaultValue(1800);
+        $openUserDefaults = [];
+        for ($i = 0; $i < 10; $i++) {
+            $openUserDefaults[] = [
+                'name' => RandomUtil::string(10),
+                'time' => '刚刚',
+                'title' => 'VIP黄金会员'
+            ];
+        }
+        $builder->complexFieldsList('Member_VipOpenUsers', '虚拟开通用户')
+            ->fields([
+                ['name' => 'name', 'title' => '用户', 'type' => 'text', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                ['name' => 'time', 'title' => '时间', 'type' => 'text', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                ['name' => 'title', 'title' => 'VIP标题', 'type' => 'text', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+            ])
+            ->help('当最近开通用户为空时，将显示虚拟开通用户')
+            ->defaultValue($openUserDefaults);
         $builder->richHtml('Member_VipContent', 'VIP开通说明')->help('默认为 VIP开通说明');
         $builder->formClass('wide');
         return $builder->perform();

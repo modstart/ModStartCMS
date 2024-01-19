@@ -278,7 +278,7 @@ class ModuleServiceProvider extends ServiceProvider
                                     'url' => '\Module\Member\Admin\Controller\ConfigController@money',
                                 ] : null,
                                 $vipEnable ? [
-                                    'title' => '用户VIP等级',
+                                    'title' => '用户VIP',
                                     'url' => '\Module\Member\Admin\Controller\MemberVipSetController@index',
                                 ] : null,
                                 $groupEnable ? [

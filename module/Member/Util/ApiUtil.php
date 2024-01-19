@@ -4,7 +4,10 @@
 namespace Module\Member\Util;
 
 
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Module\ModuleManager;
+use Module\Member\Auth\MemberUser;
+use Module\Member\Auth\MemberVip;
 
 class ApiUtil
 {
@@ -66,4 +69,44 @@ class ApiUtil
 
         return $data;
     }
+
+    public static function user()
+    {
+        $user = [
+            'id' => 0,
+            'avatar' => 'asset/image/avatar.svg',
+            'avatarMedium' => 'asset/image/avatar.svg',
+            'avatarBig' => 'asset/image/avatar.svg',
+            'nickname' => '',
+            'username' => '',
+            'viewName' => '游客',
+            'phone' => '',
+            'phoneVerified' => false,
+            'email' => '',
+            'emailVerified' => false,
+            'vip' => MemberVip::get(),
+            'vipExpire' => null,
+        ];
+        if (MemberUser::isLogin()) {
+            $memberUser = MemberUser::user();
+            $user['id'] = $memberUser['id'];
+            $user['avatar'] = $memberUser['avatar'] ? $memberUser['avatar'] : $user['avatar'];
+            $user['avatarMedium'] = $memberUser['avatarMedium'] ? $memberUser['avatarMedium'] : $user['avatarMedium'];
+            $user['avatarBig'] = $memberUser['avatarBig'] ? $memberUser['avatarBig'] : $user['avatarBig'];
+            $user['username'] = $memberUser['username'];
+            $user['nickname'] = $memberUser['nickname'];
+            $user['viewName'] = MemberUtil::viewName($memberUser);
+            $user['phone'] = $memberUser['phone'];
+            $user['phoneVerified'] = !!$memberUser['phoneVerified'];
+            $user['email'] = $memberUser['email'];
+            $user['emailVerified'] = !!$memberUser['emailVerified'];
+            $user['vip'] = MemberVip::get();
+            $user['vipExpire'] = $memberUser['vipExpire'];
+        }
+        foreach (['avatar', 'avatarMedium', 'avatarBig',] as $k) {
+            $user[$k] = AssetsUtil::fixFull($user[$k]);
+        }
+        return $user;
+    }
 }
+

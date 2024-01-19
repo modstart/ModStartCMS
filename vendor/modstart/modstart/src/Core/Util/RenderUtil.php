@@ -13,6 +13,11 @@ class RenderUtil
         return View::make($view, $data)->render();
     }
 
+    public static function viewExists($view)
+    {
+        return View::exists($view);
+    }
+
     public static function viewScript($view, $data = [])
     {
         $content = trim(self::view($view, $data));

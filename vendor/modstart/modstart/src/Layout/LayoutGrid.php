@@ -30,8 +30,8 @@ class LayoutGrid extends AbstractField
 
 
     /**
-     * @param $widths
-     * @param $closure
+     * @param $widths array|int
+     * @param $closure \Closure
      *
      * @example
      * $closure = function ($builder) { }

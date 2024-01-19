@@ -274,6 +274,21 @@ class MemberVipUtil
         });
     }
 
+    public static function openUsers()
+    {
+        $openUsersConfig = modstart_config('Member_VipOpenUsers', []);
+        $records = [];
+        foreach ($openUsersConfig as $u) {
+            $records[] = [
+                'name' => mb_substr($u['name'], 0, 2) . '******',
+                'time' => $u['time'],
+                'title' => $u['title'],
+            ];
+        }
+        return $records;
+    }
+
+
     public static function clearCache()
     {
         CacheUtil::forget('MemberVipList');

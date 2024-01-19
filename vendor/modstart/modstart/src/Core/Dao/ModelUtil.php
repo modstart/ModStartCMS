@@ -5,6 +5,8 @@ namespace ModStart\Core\Dao;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\PageHtmlUtil;
@@ -109,32 +111,81 @@ class ModelUtil
         return $m->toArray();
     }
 
+    private static function insertAllBuild($records, $updateTimestamp = true)
+    {
+        if ($updateTimestamp) {
+            foreach ($records as $i => $data) {
+                if (!isset($data['created_at'])) {
+                    $records[$i]['created_at'] = date('Y-m-d H:i:s');
+                }
+                if (!isset($data['updated_at'])) {
+                    $records[$i]['updated_at'] = date('Y-m-d H:i:s');
+                }
+            }
+        }
+        return $records;
+    }
+
     /**
-     * 插入多条数据
+     * @Util 插入多条数据
      * @param $model string 数据表
-     * @param $datas array 多条数据数组
+     * @param $records array 多条数据数组
      * @param $updateTimestamp bool 是否更新时间戳，默认为true
      * @example
      * ModelUtil::insertAll('user',[ ['username'=>'aaa','nickname'=>'bbb'], ['username'=>'ccc','nickname'=>'ddd'] ]);
-     *
-     * @Util
      */
     public static function insertAll($model, $records, $updateTimestamp = true)
     {
         if (empty($records)) {
             return;
         }
-        if ($updateTimestamp) {
-            foreach ($records as $i => $data) {
-                if (!isset($records[$i]['created_at'])) {
-                    $records[$i]['created_at'] = date('Y-m-d H:i:s');
-                }
-                if (!isset($records[$i]['updated_at'])) {
-                    $records[$i]['updated_at'] = date('Y-m-d H:i:s');
+        $records = self::insertAllBuild($records, $updateTimestamp);
+        $m = self::model($model);
+        DB::table($m->getTable())->insert($records);
+    }
+
+    /**
+     * 插入多条数据（如遇冲突后一条条处理）
+     * @param $model string 数据表
+     * @param $records array 多条数据数组
+     * @param $updateTimestamp bool 是否更新时间戳，默认为true
+     * @example
+     * ModelUtil::insertAll('user',[ ['username'=>'aaa','nickname'=>'bbb'], ['username'=>'ccc','nickname'=>'ddd'] ]);
+     */
+    public static function insertAllSafely($model, $records, $updateTimestamp = true)
+    {
+        if (empty($records)) {
+            return;
+        }
+        $records = self::insertAllBuild($records, $updateTimestamp);
+        $m = self::model($model);
+        $batchFailed = false;
+        try {
+            DB::table($m->getTable())->insert($records);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            if (Str::contains($message, 'Duplicate entry')) {
+                $batchFailed = true;
+            } else {
+                Log::info('ModelUtil.insertAllSafely.BatchError - ' . $e->getMessage() . ' - ' . $e->getTraceAsString());
+                throw $e;
+            }
+        }
+        if ($batchFailed) {
+            foreach ($records as $record) {
+                try {
+                    DB::table($m->getTable())->insert($record);
+                } catch (\Exception $e) {
+                    $message = $e->getMessage();
+                    if (Str::contains($message, 'Duplicate entry')) {
+                        continue;
+                    } else {
+                        Log::info('ModelUtil.insertAllSafely.OneError - ' . $e->getMessage() . ' - ' . $e->getTraceAsString());
+                        throw $e;
+                    }
                 }
             }
         }
-        DB::table($model)->insert($records);
     }
 
     /**

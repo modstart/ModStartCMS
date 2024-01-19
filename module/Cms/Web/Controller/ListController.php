@@ -4,6 +4,7 @@
 namespace Module\Cms\Web\Controller;
 
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Input\Request;
 use ModStart\Core\Util\PageHtmlUtil;
 use Module\Cms\Api\Controller\BaseCatController;
 use Module\Cms\Util\CmsContentUtil;
@@ -38,7 +39,7 @@ class ListController extends BaseCatController
         $viewData['pageSize'] = $pageSize;
         $viewData['records'] = $paginateData['records'];
         $viewData['total'] = $paginateData['total'];
-        $pageTemplate = '?page={page}';
+        $pageTemplate = '?' . Request::mergeQueries(['page' => ['{page}']]);
         if (!empty($cat['pageFullUrl'])) {
             $pageTemplate = modstart_web_url($cat['pageFullUrl']);
         }

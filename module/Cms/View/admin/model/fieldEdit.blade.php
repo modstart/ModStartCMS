@@ -72,7 +72,9 @@
                 </div>
                 <div class="line">
                     <div class="label">
-                        后台列表搜索
+                        列表搜索
+                        <i class="iconfont icon-warning"
+                           data-tip-popover="开启后后台列表页面可搜索该字段，前台可通过链接参数搜索该字段（前台需设置访客列表页面可见）。"></i>
                     </div>
                     <div class="field">
                         <el-switch v-model="data.isSearch"></el-switch>

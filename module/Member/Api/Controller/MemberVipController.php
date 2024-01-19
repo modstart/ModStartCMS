@@ -26,11 +26,11 @@ class MemberVipController extends Controller implements MemberLoginCheck
     public function info()
     {
         $data = [];
-        $data['title'] = modstart_config('Member_VipTitle');
-        $data['subTitle'] = modstart_config('Member_VipSubTitle');
         $data['content'] = modstart_config('Member_VipContent');
+        $data['countDown'] = modstart_config('Member_VipCountDown', 1800);
         $data['vips'] = MemberVipUtil::allVisible();
         $data['rights'] = MemberVipUtil::rights();
+        $data['openUsers'] = MemberVipUtil::openUsers();
         return Response::generateSuccessData($data);
     }
 

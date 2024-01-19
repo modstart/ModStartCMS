@@ -70,7 +70,11 @@ class SecureUtil
             $encryptedData = urldecode(openssl_decrypt($ciphertext, self::DEFAULT_CIPHER_ALGO, $key, OPENSSL_RAW_DATA, $iv));
             return $encryptedData;
         }
-        list($encryptedData, $iv) = explode('::', $data, 2);
+        $pcs = explode('::', $data, 2);
+        if (count($pcs) != 2) {
+            return null;
+        }
+        list($encryptedData, $iv) = $pcs;
         return openssl_decrypt($encryptedData, self::DEFAULT_CIPHER_ALGO, $encryptionKey, 0, $iv);
     }
 

@@ -29,6 +29,11 @@ abstract class AbstractOauth
         return $this->name();
     }
 
+    public function icon()
+    {
+        return 'iconfont icon-dot';
+    }
+
     public function oauthKey()
     {
         return $this->name();

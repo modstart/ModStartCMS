@@ -391,6 +391,11 @@ class InputPackage
                 return null;
             }
             $value = $this->data[$key];
+            // data:audio/x-wav;base64,
+            // data:image/png;base64,
+            if (preg_match('/^data:([a-z]+)\/([a-z\\-]+);base64,/', $value, $matches)) {
+                $value = substr($value, strlen($matches[0]));
+            }
             $value = @base64_decode($value);
             if (empty($value)) {
                 return $defaultValue;

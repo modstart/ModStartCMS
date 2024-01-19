@@ -2,5 +2,9 @@
     "DatabaseQueue.php": "vendor/laravel/framework/src/Illuminate/Queue/DatabaseQueue.php",
     "MySqlGrammar.php": "vendor/laravel/framework/src/Illuminate/Database/Schema/Grammars/MySqlGrammar.php",
     "jobs.stub": "vendor/laravel/framework/src/Illuminate/Queue/Console/stubs/jobs.stub",
-    "RedisQueue.php": "vendor/laravel/framework/src/Illuminate/Queue/RedisQueue.php"
+    "RedisQueue.php": "vendor/laravel/framework/src/Illuminate/Queue/RedisQueue.php",
+    "ListenCommand.php": "vendor/laravel/framework/src/Illuminate/Queue/Console/ListenCommand.php",
+    "WorkCommand.php": "vendor/laravel/framework/src/Illuminate/Queue/Console/WorkCommand.php",
+    "Listener.php": "vendor/laravel/framework/src/Illuminate/Queue/Listener.php",
+    "Worker.php": "vendor/laravel/framework/src/Illuminate/Queue/Worker.php"
 }

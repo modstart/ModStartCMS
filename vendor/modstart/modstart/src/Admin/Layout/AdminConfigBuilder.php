@@ -85,15 +85,19 @@ class AdminConfigBuilder implements Renderable
     }
 
     /**
-     * @param \stdClass|null|false $item null 表示使用默认的 modstart_config 配置获取，false 表示不使用任何内容初始化
-     * @param \Closure $callback = function (Form $form) { return Response::generateSuccess('ok'); }
+     * @param $item \stdClass|null|false 表示使用默认的 modstart_config 配置获取，false 表示不使用任何内容初始化
+     * @param $callback \Closure = function (Form $form) { return Response::generateSuccess('ok'); }
+     * @param $callbackPreCheck \Closure = function (Form $form) { BizException::throws('error') }
      * @return $this
      */
-    public function perform($item = null, $callback = null)
+    public function perform($item = null, $callback = null, $callbackPreCheck = null)
     {
         if (Request::isPost()) {
             AdminPermission::demoCheck();
-            return $this->form->formRequest(function (Form $form) use ($callback) {
+            return $this->form->formRequest(function (Form $form) use ($callback, $callbackPreCheck) {
+                if ($callbackPreCheck) {
+                    call_user_func($callbackPreCheck, $form);
+                }
                 if ($callback) {
                     $ret = call_user_func($callback, $form);
                     if (null !== $ret) {

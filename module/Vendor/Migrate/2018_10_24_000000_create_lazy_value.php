@@ -17,8 +17,8 @@ class CreateLazyValue extends Migration
             $table->increments('id');
             $table->timestamps();
 
-            $table->string('key', 50)->nullable()->comment('');
-            $table->string('param', 100)->nullable()->comment('');
+            $table->string('key', 50)->nullable()->comment('业务标识');
+            $table->string('param', 100)->nullable()->comment('参数JSON');
             $table->integer('expire')->nullable()->comment('');
             $table->integer('lifeExpire')->nullable()->comment('');
             $table->integer('cacheSeconds')->nullable()->comment('');

@@ -14,29 +14,47 @@ class FeUtil
 {
     public static function tools($dir)
     {
-        if (!preg_match('/module[\/\\\\](.*?)[\/\\\\]resources\\/(.*?)\\/?$/', $dir, $mat)) {
-            shell_echo_error('目录不正确');
-            exit(1);
+        $basePath = rtrim($dir, '/') . '/';
+        $jsonFilePath = $basePath . 'tools.config.json';
+        shell_throws_if('文件不存在 ' . $jsonFilePath, !file_exists($jsonFilePath));
+        $config = json_decode(file_get_contents($jsonFilePath), true);
+        $config = array_merge([
+
+            'module' => null,
+            'feModule' => null,
+
+            'constants' => [],
+            'constantsScript' => null,
+            'constantsAppend' => null,
+
+        ], $config);
+        if (empty($config['module'])) {
+            if (!preg_match('/module[\/\\\\](.*?)[\/\\\\]resources\\/(.*?)\\/?$/', $dir, $mat)) {
+                shell_echo_error('目录不正确');
+                exit(1);
+            }
+            $config['module'] = $mat[1];
+            $config['feModule'] = $mat[2];
         }
-        $module = $mat[1];
-        $feModule = $mat[2];
+        if (empty($config['constantsScript'])) {
+            $configDir = ($config['feModule'] === 'mobile' ? 'config' : 'lib');
+            $config['constantsScript'] = "{$basePath}src/{$configDir}/constant.js";
+        }
+
         shell_echo_block("Uniapp Tools");
         $argc = $GLOBALS['argc'];
         $argv = $GLOBALS['argv'];
         if ($argc < 2) {
             shell_echo_error('参数错误');
-            shell_echo('构建 constant.js → php tools.php DumpConstant');
+            shell_echo('php tools.php DumpConstant → 构建 constant.js');
             exit(1);
         }
-        $baseMobilePath = rtrim($dir, '/') . '/';
-        $jsonFilePath = $baseMobilePath . 'tools.config.json';
-        shell_throws_if('文件不存在 ' . $jsonFilePath, !file_exists($jsonFilePath));
-        $configJson = json_decode(file_get_contents($jsonFilePath), true);
+
         switch ($argv[1]) {
             case 'DumpConstant':
-                shell_throws_if('请配置 constants', empty($configJson['constants']));
+                shell_throws_if('请配置 constants', empty($config['constants']));
                 $constants = [];
-                foreach ($configJson['constants'] as $name) {
+                foreach ($config['constants'] as $name) {
                     switch ($name) {
                         case 'ResponseCodes':
                             $constants['ResponseCodes'] = ConstantUtil::dump(ResponseCodes::class);
@@ -54,10 +72,11 @@ class FeUtil
                 foreach ($constants as $name => $json) {
                     $content[] = "export const $name = " . SerializeUtil::jsonEncodePretty($json) . ";";
                 }
+                if (!empty($config['constantsAppend'])) {
+                    $content[] = $config['constantsAppend'];
+                }
                 $content = implode("\n\n", $content);
-                $configDir = ($feModule === 'mobile' ? 'config' : 'lib');
-                $constantJsPath = "{$baseMobilePath}src/{$configDir}/constant.js";
-                file_put_contents($constantJsPath, $content);
+                file_put_contents($config['constantsScript'], $content);
                 break;
             default:
                 shell_echo_error('不支持的命令 ' . $argv[1]);

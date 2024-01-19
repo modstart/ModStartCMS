@@ -8,6 +8,11 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\SerializeUtil;
 use Module\Vendor\Util\CacheUtil;
 
+/**
+ * Class LazyValueUtil
+ * @package Module\Vendor\LazyValue
+ * @deprecated delete at 2024-07-16
+ */
 class LazyValueUtil
 {
     public static function hash($key, $callback)

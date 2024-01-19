@@ -5,56 +5,26 @@
 @section('pageDescription')开通VIP会员@endsection
 
 {!! \ModStart\ModStart::css('vendor/Member/style/member.css') !!}
+{!! \ModStart\ModStart::css('asset/vendor/swiper/swiper.css') !!}
+{!! \ModStart\ModStart::js('asset/vendor/swiper/swiper.js') !!}
+
+@section('headAppend')
+    @parent
+    <style>
+        .vip-list .item .item-active-show{ display:none; }
+        .vip-list .item.active .item-active-show{ display:block; }
+    </style>
+@endsection
+
 @section('bodyAppend')
     @parent
     <script>
-        $(function () {
-            var $container = $('.vip-list-container');
-            var $items = $('.pb-member-vip .vip-list .item');
-            var $contents = $('.vip-content-list .item');
-            $items.on('click', function () {
-                var vipId = $(this).attr('data-vip-id');
-                var index = $items.index($(this));
-                $contents.hide().eq(index).show();
-                $('[data-vip-info]').find('[data-vip-value]').html('-')
-                $('[data-vip-info]').show();
-                $items.removeClass('active');
-                $(this).addClass('active');
-                $('[name=vipId]').val($(this).attr('data-vip-id'));
-                var $rights = $('[data-vip-right-list] [data-vip-right]');
-                $rights.hide().filter(function(i,o){
-                    return $(o).attr('data-vip-right').split(',').indexOf(vipId)>=0;
-                }).show();
-                @if(\Module\Member\Auth\MemberUser::isLogin())
-                    MS.api.post(window.__msRoot + 'api/member_vip/calc', {vipId: vipId}, function (res) {
-                        $('[data-vip-type]').html(res.data.type);
-                        $('[data-vip-price]').html(res.data.price);
-                        $('[data-vip-expire]').html(res.data.expire);
-                        $('[data-vip-info]').show();
-                        window.__refreshMemberVipPay && window.__refreshMemberVipPay();
-                    });
-                @endif
-            });
-            $container.find('.nav').on('click', function () {
-                var currentItemIndex = $items.index($items.filter('.active'));
-                if ($(this).hasClass('left')) {
-                    currentItemIndex--;
-                } else {
-                    currentItemIndex++;
-                }
-                currentItemIndex = Math.max(0, Math.min(currentItemIndex, $items.length - 1));
-                var $current = $items.eq(currentItemIndex).click();
-                try {
-                    $current.get(0).scrollIntoView({
-                        behavior: 'smooth', block: 'nearest', inline: 'start'
-                    });
-                } catch (e) {
-                }
-                return false;
-            });
-            $($items.get(0)).click();
-        });
+        window.__data = {
+            isLogin: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\Module\Member\Auth\MemberUser::isLogin()) !!},
+            countDownSeconds: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(modstart_config('Member_VipCountDown',1800)) !!},
+        };
     </script>
+    <script src="@asset('vendor/Member/script/memberVip.js')"></script>
 @endsection
 
 @section('bodyContent')
@@ -100,7 +70,7 @@
                             </div>
                         </div>
                         <div class="tw-text-right tw-flex-grow">
-                            &nbsp;
+
                         </div>
                     </div>
                 </div>
@@ -113,16 +83,27 @@
                                 <div class="vip-list vip-bg tw-rounded">
                                     @foreach($memberVips as $memberVip)
                                         @if(!$memberVip['isDefault'])
-                                            <div class="item" data-vip-id="{{$memberVip['id']}}">
-                                                <div class="tw-text-xl tw-font-bold tw-py-4">
+                                            <div class="item tw-relative" data-vip-id="{{$memberVip['id']}}">
+                                                <div class="tw-text-xl tw-font-bold margin-bottom tw-pt-2">
                                                     {{$memberVip['title']}}
                                                 </div>
-                                                <div class="tw-text-lg tw-font-bold tw-py-4">
-                                                    ￥{{$memberVip['price']}}
+                                                <div class="margin-bottom">
+                                                    <div class="tw-text-lg tw-font-bold">
+                                                        ￥{{$memberVip['price']}}
+                                                        <span class="ub-text-xs">元</span>
+                                                    </div>
+                                                    <div class="tw-line-through tw-text-gray-500 ub-text-sm">
+                                                        ￥{{$memberVip['priceMarket']}}
+                                                    </div>
                                                 </div>
                                                 <div>
                                                     {{$memberVip['desc']?$memberVip['desc']:'[会员简要说明]'}}
                                                 </div>
+                                                @if($memberVip['priceMarket']>$memberVip['price'])
+                                                    <div class="item-active-show tw-absolute tw-left-0 tw-top-0 tw-p-1 tw-text-sm tw-bg-red-500 tw-rounded-tl-lg tw-rounded-br-lg tw-text-white">
+                                                        限时立减 {{bcsub($memberVip['priceMarket'],$memberVip['price'],2)}}
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endif
                                     @endforeach
@@ -135,64 +116,87 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="ub-text-center tw-py-4 vip-bg tw-rounded margin-bottom">
-                            @if(\Module\Member\Auth\MemberUser::isLogin())
-                                <input type="hidden" name="vipId" value="0"/>
-                                <input type="hidden" name="redirect" value="{{\ModStart\Core\Input\Request::currentPageUrl()}}"/>
-                                @if(\Module\PayCenter\Util\PayUtil::preferShowQuick())
-                                    <div class="tw-px-3 tw-mx-auto tw-text-left" style="max-width:780px;">
-                                        <div class="pay-price tw-hidden margin-bottom tw-float-right tw-pt-2" data-vip-info>
+                        <input type="hidden" name="vipId" value="0"/>
+                        <input type="hidden" name="redirect" value="{{\ModStart\Core\Input\Request::currentPageUrl()}}"/>
+                        <div class="lg:tw-px-12 lg:tw-text-left tw-text-center tw-py-4 vip-bg tw-rounded margin-bottom tw-flex lg:tw-flex-row tw-flex-col tw-items-center">
+                            <div class="tw-flex-grow">
+                                @if(\Module\Member\Auth\MemberUser::isLogin())
+                                    @if(\Module\PayCenter\Util\PayUtil::preferShowQuick())
+                                        <div class="tw-text-left tw-mr-3">
+                                            <div class="pay-price tw-hidden margin-bottom tw-float-right tw-pt-2" data-vip-info>
+                                                <span class="ub-text-warning" data-vip-value data-vip-type>-</span>
+                                                需要支付
+                                                <span class="ub-text-warning">￥</span><span class="ub-text-warning" data-vip-value data-vip-price>-</span>
+                                                购买后 <span class="ub-text-warning" data-vip-value data-vip-expire>-</span> 过期
+                                            </div>
+                                            @include('module::PayCenter.View.inc.quick')
+                                        </div>
+                                        <script>
+                                            window.__refreshMemberVipPay = function () {
+                                                var vipId = parseInt($('[name="vipId"]').val());
+                                                if (vipId > 0) {
+                                                    window.__payCenterQuick.prepareLazy(
+                                                        '{{\Module\Member\Core\MemberVipPayCenterBiz::NAME}}',
+                                                        {money: $('[data-vip-price]').text()},
+                                                        {vipId: vipId}
+                                                    );
+                                                } else {
+                                                    window.__payCenterQuick.empty();
+                                                }
+                                            };
+                                            $(function () {
+                                                window.__refreshMemberVipPay();
+                                            });
+                                        </script>
+                                    @else
+                                        <div class="pay-price tw-hidden margin-bottom" data-vip-info>
                                             <span class="ub-text-warning" data-vip-value data-vip-type>-</span>
                                             需要支付
-                                            <span class="ub-text-warning">￥</span>
-                                            <span class="ub-text-warning" data-vip-value data-vip-price>-</span>
+                                            <span class="ub-text-warning">￥</span><span class="ub-text-warning" data-vip-value data-vip-price>-</span>
                                             购买后 <span class="ub-text-warning" data-vip-value data-vip-expire>-</span> 过期
                                         </div>
-                                        @include('module::PayCenter.View.inc.quick')
-                                    </div>
-                                    <script>
-                                        window.__refreshMemberVipPay = function () {
-                                            var vipId = parseInt($('[name="vipId"]').val());
-                                            if (vipId > 0) {
-                                                window.__payCenterQuick.prepareLazy(
-                                                    '{{\Module\Member\Core\MemberVipPayCenterBiz::NAME}}',
-                                                    {money: $('[data-vip-price]').text()},
-                                                    {vipId: vipId}
-                                                );
-                                            } else {
-                                                window.__payCenterQuick.empty();
-                                            }
-                                        };
-                                        $(function () {
-                                            window.__refreshMemberVipPay();
-                                        });
-                                    </script>
+                                        <div class="pay-submit margin-bottom">
+                                            <button type="submit" class="lg vip-button" data-pay-submit>
+                                                <i class="iconfont icon-cart"></i>
+                                                立即开通
+                                            </button>
+                                        </div>
+                                    @endif
                                 @else
-                                    <div class="pay-price tw-hidden margin-bottom" data-vip-info>
-                                        <span class="ub-text-warning" data-vip-value data-vip-type>-</span>
-                                        需要支付
-                                        <span class="ub-text-warning">￥</span>
-                                        <span class="ub-text-warning" data-vip-value data-vip-price>-</span>
-                                        购买后 <span class="ub-text-warning" data-vip-value data-vip-expire>-</span> 过期
-                                    </div>
-                                    <div class="pay-submit tw-pt-4">
-                                        <button type="submit" class="lg vip-button" data-pay-submit>
+                                    <div class="margin-bottom">
+                                        <a class="lg vip-button" href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
                                             <i class="iconfont icon-cart"></i>
-                                            立即开通
-                                        </button>
+                                            登录后开通
+                                        </a>
+                                    </div>
+                                    <div class="tw-text-lg vip-text tw-text-xl margin-bottom">
+                                        开通VIP会员，享受更多特权
                                     </div>
                                 @endif
-                            @else
-                                <div class="">
-                                    <a class="lg vip-button" href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
-                                        <i class="iconfont icon-cart"></i>
-                                        登录后开通
-                                    </a>
+                                <div class="margin-bottom ub-text-danger">
+                                    限时优惠剩余时间：<span data-count-down></span>
                                 </div>
-                            @endif
+                            </div>
+                            <div>
+                                <div class="tw-inline-block tw-py-1 tw-px-3">
+                                    <div data-vip-open-list class="swiper tw-overflow-hidden tw-h-48 tw-w-64 tw--mb-3" style="overflow:hidden;">
+                                        <div class="swiper-wrapper">
+                                            @foreach(modstart_config('Member_VipOpenUsers',[]) as $u)
+                                                <div class="swiper-slide">
+                                                    <div class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1">
+                                                        <div class="tw-w-20 tw-text-left">{{mb_substr($u['name'],0,2)}}******</div>
+                                                        <div class="tw-w-8 tw-text-yellow-400">{{$u['time']}}</div>
+                                                        <div class="tw-w-32 tw-text-right">购买了 {{$u['title']}}</div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         @if(!empty($memberVipRights))
-                            <div class="vip-bg tw-p-3 margin-bottom tw-rounded-lg" data-vip-right-list>
+                            <div class="vip-bg tw-py-3 tw-px-4 lg:tw-px-12 margin-bottom tw-rounded-lg" data-vip-right-list>
                                 <div class="row">
                                     @foreach($memberVipRights as $r)
                                         <div class="col-md-2 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
@@ -210,7 +214,7 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="tw-rounded vip-bg vip-content-list">
+                        <div class="tw-rounded lg:tw-px-8 vip-bg vip-content-list">
                             @foreach($memberVips as $memberVip)
                                 @if(!$memberVip['isDefault'])
                                     <div class="item tw-hidden">

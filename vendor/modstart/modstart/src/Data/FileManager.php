@@ -273,6 +273,7 @@ class FileManager
         DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
         return Response::jsonSuccessData([
             'data' => ArrayUtil::keepKeys($data, ['path', 'category', 'size', 'filename']),
+            'path' => $ret['data']['path'],
             'fullPath' => $ret['data']['fullPath'],
         ]);
     }

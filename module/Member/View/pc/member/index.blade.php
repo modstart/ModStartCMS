@@ -13,7 +13,7 @@
             </div>
             <div class="tw-flex-grow">
                 <div class="tw-font-bold tw-text-lg">
-                    {{\Module\Member\Auth\MemberUser::nickname()}}
+                    {{\Module\Member\Auth\MemberUser::viewName()}}
                     ，欢迎您！
                     @if(\ModStart\Module\ModuleManager::getModuleConfig('Member', 'vipEnable',false))
                         <a class="tw-my-1 tw-mr-1 ub-tag warning ub-cursor-pointer" href="{{modstart_web_url('member_vip')}}">

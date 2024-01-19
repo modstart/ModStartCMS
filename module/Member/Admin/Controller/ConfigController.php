@@ -105,6 +105,9 @@ class ConfigController extends Controller
                     ->defaultValue(false);
             }
             $builder->number('Member_UsernameMinLength', '用户名最小长度')->defaultValue(3);
+            $builder->text('Member_RegisterUsernameSuggest', '自动注册用户名前缀')
+                ->defaultValue('用户')
+                ->help('部分场景注册时可能无法获取到用户名，开启自动注册后将自动设置用户名前缀，用户名如遇冲突将会自动追加随机字符串');
 
         });
         $builder->layoutPanel('找回密码', function ($builder) {
