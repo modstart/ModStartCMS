@@ -45,6 +45,11 @@ class TimeUtil
         return date('Y-m-d', time() - self::PERIOD_DAY);
     }
 
+    public static function tomorrowDate()
+    {
+        return date('Y-m-d', time() + self::PERIOD_DAY);
+    }
+
     public static function yesterdayStart()
     {
         return date('Y-m-d 00:00:00', time() - self::PERIOD_DAY);

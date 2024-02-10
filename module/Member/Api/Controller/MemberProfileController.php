@@ -25,6 +25,7 @@ use Module\Vendor\Job\MailSendJob;
 use Module\Vendor\Job\SmsSendJob;
 use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class MemberProfileController
@@ -88,6 +89,20 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
             return Response::generate(-1, '头像内容为空');
         }
         switch ($input->getTrimString('type')) {
+            case 'file':
+                /** @var UploadedFile $avatarFile */
+                $avatarFile = Input::file('avatar');
+                BizException::throwsIfEmpty('头像文件为空', $avatarFile);
+                $ext = FileUtil::mimeToExt($avatarFile->getClientMimeType());
+                BizException::throwsIf('头像格式不合法', !in_array($ext, ['jpg', 'png', 'jpeg']));
+                $content = file_get_contents($avatarFile->getRealPath());
+                BizException::throwsIfEmpty('头像内容为空', $content);
+                $ret = MemberUtil::setAvatar(MemberUser::id(), $content, $ext);
+                if ($ret['code']) {
+                    return $ret;
+                }
+                EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'avatar'));
+                return Response::generate(0, '保存成功', null, '[reload]');
             case 'cropper':
                 $avatarType = null;
                 if (Str::startsWith($avatar, 'data:image/jpeg;base64,')) {

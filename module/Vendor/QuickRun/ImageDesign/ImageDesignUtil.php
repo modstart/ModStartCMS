@@ -8,6 +8,7 @@ use Intervention\Image\Facades\Image;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Provider\FontProvider;
+use ModStart\Core\Util\ColorUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\QrcodeUtil;
 use ModStart\Core\Util\SerializeUtil;
@@ -174,6 +175,19 @@ class ImageDesignUtil
                     $qrcode = QrcodeUtil::png($item['data']['text'], $item['data']['width']);
                     $qrcode = Image::make($qrcode);
                     $image->insert($qrcode, 'top-left', $item['x'], $item['y']);
+                    break;
+                case 'maskColor':
+                    $color = ColorUtil::hexToRgbaArray($item['data']['color']);
+                    $itemImagePath = FileUtil::savePathToLocalTemp($item['data']['image']);
+                    $im = imagecreatefrompng($itemImagePath);
+                    imagesavealpha($im, true);
+                    imagefilter($im, IMG_FILTER_COLORIZE, $color['r'], $color['g'], $color['b']);
+                    $tempImage = FileUtil::generateLocalTempPath('png');
+                    imagepng($im, $tempImage);
+                    imagedestroy($im);
+                    $itemImage = Image::make($tempImage);
+                    $image->insert($itemImage, 'top-left', $item['x'], $item['y']);
+                    FileUtil::savePathToLocalTemp($tempImage);
                     break;
             }
         }

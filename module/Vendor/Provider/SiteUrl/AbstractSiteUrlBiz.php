@@ -29,4 +29,9 @@ abstract class AbstractSiteUrlBiz
     //         'nextId'=>$batchRet['nextId'],
     //     ];
     // }
+
+    public static function update($url, $title = '', $param = [])
+    {
+        SiteUrlProvider::updateBiz(static::NAME, $url, $title, $param);
+    }
 }

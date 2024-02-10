@@ -10,6 +10,16 @@ use Module\Vendor\Util\NoneLoginOperateUtil;
 class NotifierProvider
 {
     /**
+     * @var array
+     */
+    private static $list = [];
+
+    public static function register($provider)
+    {
+        self::$list[] = $provider;
+    }
+
+    /**
      * @return AbstractNotifierProvider[]
      */
     public static function all()
@@ -25,6 +35,16 @@ class NotifierProvider
             $instances = array_map(function ($driver) {
                 return app($driver);
             }, array_unique($drivers));
+
+            foreach (self::$list as $k => $v) {
+                if ($v instanceof \Closure) {
+                    self::$list[$k] = call_user_func($v);
+                } else if (is_string($v)) {
+                    self::$list[$k] = app($v);
+                }
+            }
+            $instances = array_merge($instances, self::$list);
+
         }
         return $instances;
     }

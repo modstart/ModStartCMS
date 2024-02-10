@@ -40,7 +40,7 @@ class ScheduleRunAllCommand extends Command
             $start = TimeUtil::millitime();
             $command = "$php {$project['pathname']}/artisan schedule:run";
             Log::info("Vendor.ScheduleRunAllCommand.Run - {$command}");
-            $result = ShellUtil::run($command, false);
+            $result = ShellUtil::runInNewProcess($command, false);
             $result = str_replace([
                 "\r"
             ], "", $result);

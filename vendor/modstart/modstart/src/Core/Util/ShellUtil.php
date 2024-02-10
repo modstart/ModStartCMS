@@ -26,7 +26,7 @@ class ShellUtil
     }
 
     /**
-     * 运行命令
+     * 运行命令（该方法会共享当前进程的环境变量）
      * @param $command string 命令
      * @param $log bool 是否记录日志
      * @return string
@@ -37,6 +37,28 @@ class ShellUtil
             Log::info("ShellUtil.Run -> " . $command);
         }
         $ret = shell_exec($command);
+        $ret = @trim($ret);
+        if ($log) {
+            Log::info("ShellUtil.Result -> " . $ret);
+        }
+        return $ret;
+    }
+
+    /**
+     * 在新进程中运行命令
+     * @param $command string 命令
+     * @param $log bool 是否记录日志
+     * @return string
+     */
+    public static function runInNewProcess($command, $log = true)
+    {
+        if ($log) {
+            Log::info("ShellUtil.RunInNewProcess -> " . $command);
+        }
+        $process = new Process($command);
+        $process->start();
+        $process->wait();
+        $ret = $process->getOutput();
         $ret = @trim($ret);
         if ($log) {
             Log::info("ShellUtil.Result -> " . $ret);

@@ -21,6 +21,7 @@ use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Data\DataManager;
 use ModStart\Data\Event\DataFileUploadedEvent;
+use Module\Member\Events\MemberUserDeletedEvent;
 use Module\Member\Events\MemberUserLoginAttemptEvent;
 use Module\Member\Events\MemberUserLoginFailedEvent;
 use Module\Member\Type\MemberMessageStatus;
@@ -380,7 +381,10 @@ class MemberUtil
     public static function registerUsernameQuick($username)
     {
         $suggestionUsername = $username;
-        for ($i = 0; $i < 10; $i++) {
+        if ($suggestionUsername == modstart_config('Member_RegisterUsernameSuggest', '用户')) {
+            $suggestionUsername = $suggestionUsername . Str::random(6);
+        }
+        for ($i = 1; $i < 10; $i++) {
             $ret = self::register($suggestionUsername, '', '', '', true);
             if ($ret['code']) {
                 $suggestionUsername = $suggestionUsername . Str::random(1);
@@ -804,6 +808,11 @@ class MemberUtil
         LockUtil::release($lockKey);
     }
 
+    public static function forgetByMemberUserId($memberUserId)
+    {
+        ModelUtil::delete('member_oauth', ['memberUserId' => $memberUserId]);
+    }
+
     public static function forgetOauth($oauthType, $openId)
     {
         ModelUtil::delete('member_oauth', ['type' => $oauthType, 'openId' => $openId]);
@@ -872,7 +881,9 @@ class MemberUtil
             'phone' => null,
             'email' => null,
         ]);
+        self::forgetByMemberUserId($memberUserId);
         ModelUtil::transactionCommit();
+        MemberUserDeletedEvent::fire($memberUserId);
     }
 
     public static function fireLogin($memberUserId)

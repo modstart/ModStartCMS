@@ -6,12 +6,14 @@ namespace Module\Member\Api\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\EventUtil;
+use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Misc\Captcha\CaptchaFacade;
 use ModStart\Module\ModuleBaseController;
@@ -426,10 +428,13 @@ class AuthController extends ModuleBaseController
                     return Response::generateSuccess();
             }
         }
-
+        if (empty($userInfo['username'])) {
+            $userInfo['username'] = modstart_config('Member_RegisterUsernameSuggest', '用户') . RandomUtil::hexString(6);
+        }
         Session::put('oauthUserInfo', $userInfo);
         return Response::generate(0, 'ok', [
             'user' => $userInfo,
+            'avatarEmpty' => AssetsUtil::fixFull('asset/image/avatar.svg'),
         ]);
     }
 
@@ -456,7 +461,7 @@ class AuthController extends ModuleBaseController
         $ret = $oauth->processRedirect($param);
         BizException::throwsIfResponseError($ret);
         return Response::generate(0, 'ok', [
-            'redirect' => $ret['data']['redirect'],
+            'redirect' => isset($ret['data']['redirect']) ? $ret['data']['redirect'] : null,
         ]);
     }
 

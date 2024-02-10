@@ -175,7 +175,7 @@ class WorkCommand extends Command
 
             ['tries', null, InputOption::VALUE_OPTIONAL, 'Number of times to attempt a job before logging it failed', 0],
 
-            ['max-jobs', null, InputOption::VALUE_OPTIONAL, 'The maximum number of jobs to run', 0],
+            ['max-jobs', null, InputOption::VALUE_OPTIONAL, 'The maximum number of jobs to run', 100],
         ];
     }
 }

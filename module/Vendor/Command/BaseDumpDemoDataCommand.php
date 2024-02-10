@@ -44,6 +44,7 @@ abstract class BaseDumpDemoDataCommand extends Command
 
     protected function buildDump($data)
     {
+        $data['time'] = date('Y-m-d H:i:s');
         @mkdir(public_path('data_demo'));
         file_put_contents($file = public_path('data_demo/data.php'), '<' . '?php return ' . var_export($data, true) . ';');
         $this->info("dump success -> $file");
