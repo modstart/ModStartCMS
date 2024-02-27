@@ -64,6 +64,11 @@
                     extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.'.$category.'.extensions'))) !!},
                     sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.'.$category.'.maxSize')) !!},
                     chunkSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
+                    compress:{
+                        enable: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.compress',true)) !!},
+                        maxWidthOrHeight: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.compressMaxWidthOrHeight',4000)) !!},
+                        maxSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.compressMaxSize',4000)) !!}
+                    },
                     showFileQueue: true,
                     fileNumLimit: 1,
                     callback: function (file, me) {

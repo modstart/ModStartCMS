@@ -47,12 +47,17 @@
             render();
             return false;
         });
-        window.api.uploadButton('#{{$id}}Uploader', {
+        MS.uploadButton('#{{$id}}Uploader', {
             text: '<div style="width:100%;box-sizing:border-box;line-height:1.5rem;height:1.5rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.5rem;height:1.5rem;"></span> 上传</div>',
             server: "{{$server}}",
             extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.file.extensions'))) !!},
             sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.file.maxSize')) !!},
             chunkSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\ModStart\Core\Util\EnvUtil::env('uploadMaxSize')) !!},
+            compress:{
+                enable: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.compress',true)) !!},
+                maxWidthOrHeight: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.compressMaxWidthOrHeight',4000)) !!},
+                maxSize: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.compressMaxSize',10 * 1024 * 1024)) !!}
+            },
             callback: function (file, me) {
                 // console.log('file',file);
                 fileValue = file.path;

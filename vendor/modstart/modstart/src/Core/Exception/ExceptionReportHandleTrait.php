@@ -49,6 +49,12 @@ trait ExceptionReportHandleTrait
             }
             $error = [];
             $error['url'] = Request::url();
+            if (in_array($error['url'], [
+                'http://localhost',
+            ])) {
+                $error['url'] = base_path();
+                $error['host'] = gethostname();
+            }
             $error['file'] = $exception->getFile() . ':' . $exception->getLine();
             $error['message'] = $exception->getMessage();
             foreach ($error as &$v) {

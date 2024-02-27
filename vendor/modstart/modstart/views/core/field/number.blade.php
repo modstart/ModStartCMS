@@ -19,7 +19,9 @@
            @if(isset($max)&&null!==$max) max="{{$max}}" @endif
            @if(isset($step)&&null!==$step) step="{{$step}}" @endif
            value="{{null===$value?$defaultValue:$value}}" />
-        {{empty($unit)?'':$unit}}
+        @if(!empty($unit)&&(empty($unitPosition)||$unitPosition=='after'))
+            {{$unit}}
+        @endif
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif

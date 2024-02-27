@@ -82,4 +82,34 @@ class NumberUtil
 
         return $result;
     }
+
+    public static function discountDecimal($decimal, $discount)
+    {
+        if ($decimal < 0.01) {
+            return $decimal;
+        }
+        if ($discount >= 100 || $discount <= 0) {
+            return $decimal;
+        }
+        $decimal = bcdiv(bcmul($decimal, $discount), 100, 2);
+        if ($decimal < 0.01) {
+            $decimal = '0.01';
+        }
+        return $decimal;
+    }
+
+    public static function discountNumber($number, $discount)
+    {
+        if ($number < 1) {
+            return $number;
+        }
+        if ($discount >= 100 || $discount <= 0) {
+            return $number;
+        }
+        $number = intval($number * $discount / 100);
+        if ($number < 1) {
+            $number = 1;
+        }
+        return $number;
+    }
 }

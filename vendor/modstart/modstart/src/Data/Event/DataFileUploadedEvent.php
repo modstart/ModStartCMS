@@ -4,17 +4,34 @@
 namespace ModStart\Data\Event;
 
 
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EventUtil;
 
 /**
- * 用户上传完文件事件
+ * 文件上传完毕信息
  * Class DataFileUploadedEvent
  * @package ModStart\Data\Event
+ *
+ * 一些区别
+ * DataUploadedEvent 是文件上传完毕后的事件，包含上传的表、用户ID等信息等
+ * DataFileUploadedEvent 是文件上传完毕后的事件，只包含文件路径等纯物理文件信息
  */
 class DataFileUploadedEvent
 {
+    /**
+     * 图片压缩忽略
+     */
     const OPT_IMAGE_COMPRESS_IGNORE = 'imageCompressIgnore';
+    /**
+     * 图片水印忽略
+     */
     const OPT_IMAGE_WATERMARK_IGNORE = 'imageWatermarkIgnore';
+    /**
+     * 上传参数
+     * userType 用户类型 admin,member
+     * userId 用户ID
+     */
+    const OPT_PARAM = 'param';
 
     public $driver;
     public $category;
@@ -23,7 +40,7 @@ class DataFileUploadedEvent
 
     public static function fire($driver, $category, $path, $opt = [])
     {
-        $event = new DataFileUploadedEvent();
+        $event = new static();
         $event->driver = $driver;
         $event->category = $category;
         $event->path = $path;
@@ -33,10 +50,7 @@ class DataFileUploadedEvent
 
     public function getOpt($key, $defaultValue = null)
     {
-        if (isset($this->opt[$key])) {
-            return $this->opt[$key];
-        }
-        return $defaultValue;
+        return ArrayUtil::getByDotKey($this->opt, $key, $defaultValue);
     }
 
     private static $param = [];

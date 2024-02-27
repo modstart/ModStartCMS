@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "27298710",
+      "name": "douyin",
+      "font_class": "douyin",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "38459183",
       "name": "description",
       "font_class": "description",

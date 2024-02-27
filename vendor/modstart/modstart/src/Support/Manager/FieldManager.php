@@ -63,6 +63,7 @@ class FieldManager
             'link' => \ModStart\Field\Link::class,
             'manyRelation' => \ModStart\Field\ManyRelation::class,
             'markdown' => \ModStart\Field\Markdown::class,
+            'multiSelect' => \ModStart\Field\MultiSelect::class,
             'number' => \ModStart\Field\Number::class,
             'numberRange' => \ModStart\Field\NumberRange::class,
             'password' => \ModStart\Field\Password::class,

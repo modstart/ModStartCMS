@@ -9,7 +9,12 @@ return [
             'extensions' => [
                 'jpg', 'png', 'gif', 'jpeg', 'ico', 'webp'
             ],
+            // 是否上传前端压缩
             'compress' => true,
+            // 前端压缩图片时保持的最大宽度或高度
+            'compressMaxWidthOrHeight' => 4000,
+            // 前端压缩图片时尽量压缩到该大小以下
+            'compressMaxSize' => 10 * 1024 * 1024,
         ],
         'video' => [
             'maxSize' => 1024 * 1024 * 1024,

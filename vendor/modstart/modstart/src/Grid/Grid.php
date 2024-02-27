@@ -696,6 +696,7 @@ class Grid
             case 'hookChanged':
             case 'hookDeleted':
             case 'hookSaving':
+            case 'hookResponse':
             case 'formClass':
             case 'gridFilter':
             case 'sortAddPosition':

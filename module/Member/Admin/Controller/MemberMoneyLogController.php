@@ -7,6 +7,7 @@ namespace Module\Member\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Grid\GridFilter;
@@ -36,6 +37,15 @@ class MemberMoneyLogController extends Controller
                         );
                     });
                 $builder->text('remark', '备注');
+                $builder->display('meta', '其他信息')
+                    ->hookRendering(function (AbstractField $field, $item, $index) {
+                        $meta = SerializeUtil::jsonDecode($item->meta);
+                        $html = [];
+                        if (isset($meta['adminUserId'])) {
+                            $html[] = '<span class="ub-text-muted">操作管理员(ID=' . $meta['adminUserId'] . ')</span>';
+                        }
+                        return AutoRenderedFieldValue::make(join('', $html));
+                    });
                 $builder->display('created_at', L('Created At'));
             })
             ->gridFilter(function (GridFilter $filter) {

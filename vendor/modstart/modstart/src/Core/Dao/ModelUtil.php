@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\PageHtmlUtil;
 use ModStart\Core\Util\SerializeUtil;
 
@@ -450,10 +451,14 @@ class ModelUtil
         });
     }
 
-    public static function allIds($table, $where, $batch, $idKey = 'id')
+    public static function allIds($model, $where, $limit = -1, $idKey = 'id')
     {
-        $records = self::model($table)->where($where)->limit($batch)->get([$idKey]);
-        return ArrayUtil::fetchSpecifiedKeyToArray($records, $idKey);
+        $query = self::model($model)->where($where);
+        if ($limit > 0) {
+            $query = $query->limit($limit);
+        }
+        $records = $query->get([$idKey]);
+        return ArrayUtil::flatItemsByKey($records, $idKey);
     }
 
     public static function values($model, $field, $where = [], $order = null)

@@ -24,6 +24,10 @@ class Decimal extends AbstractField
             'max' => null,
             // stepping interval
             'step' => null,
+            // 单位
+            'unit' => null,
+            // 单位位置，before, after
+            'unitPosition' => null,
         ]);
     }
 
@@ -54,6 +58,13 @@ class Decimal extends AbstractField
     public function signShow($enable)
     {
         $this->setVariable('signShow', $enable);
+        return $this;
+    }
+
+    public function unit($unit, $position = 'after')
+    {
+        $this->setVariable('unit', $unit);
+        $this->setVariable('unitPosition', $position);
         return $this;
     }
 

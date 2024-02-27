@@ -11,6 +11,20 @@ class RedisUtil
         return !!config('env.REDIS_HOST');
     }
 
+    public static function isEnableSuccess()
+    {
+        if (!self::isEnable()) {
+            return false;
+        }
+        try {
+            $client = Redis::connection('default');
+            $client->ping();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     /**
      * @return \Predis\Client
      */

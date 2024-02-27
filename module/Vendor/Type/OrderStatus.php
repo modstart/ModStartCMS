@@ -14,7 +14,9 @@ class OrderStatus implements BaseType
 
     // 订单过期，支付成功的订单
     const CANCEL_PAID = 97;
+    // 订单过期，未支付的订单
     const CANCEL_EXPIRED = 98;
+    // 用户取消
     const CANCEL = 99;
 
     // const CANCEL_QUEUE = 100;

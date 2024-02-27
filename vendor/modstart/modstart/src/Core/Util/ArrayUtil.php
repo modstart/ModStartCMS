@@ -207,6 +207,24 @@ class ArrayUtil
         return $records[array_rand($records)];
     }
 
+    public static function randomN($records, $n)
+    {
+        if (empty($records)) {
+            return null;
+        }
+        if (count($records) <= $n) {
+            return $records;
+        }
+        $keys = array_rand($records, $n);
+        if (!is_array($keys)) {
+            $keys = [$keys];
+        }
+        $result = [];
+        foreach ($keys as $key) {
+            $result[] = $records[$key];
+        }
+        return $result;
+    }
 
     /**
      * trim所有数组中的元素
@@ -418,6 +436,25 @@ class ArrayUtil
         foreach ($update as $k => $v) {
             $original[$k] = $v;
         }
+    }
+
+    public static function getByDotKey($array, $key, $defaultValue = null)
+    {
+        if (empty($array)) {
+            return $defaultValue;
+        }
+        if (strpos($key, '.') === false) {
+            return isset($array[$key]) ? $array[$key] : $defaultValue;
+        }
+        $keys = explode('.', $key);
+        $value = $array;
+        foreach ($keys as $k) {
+            if (!isset($value[$k])) {
+                return $defaultValue;
+            }
+            $value = $value[$k];
+        }
+        return $value;
     }
 
 }

@@ -31,7 +31,17 @@ class MemberDataController extends Controller implements MemberLoginCheck
             $category,
             'member_upload',
             'member_upload_category',
-            MemberUser::id()
+            MemberUser::id(),
+            null,
+            null,
+            [
+                'eventOpt' => [
+                    'param' => [
+                        'userType' => 'member',
+                        'userId' => MemberUser::id(),
+                    ]
+                ]
+            ]
         );
     }
 }

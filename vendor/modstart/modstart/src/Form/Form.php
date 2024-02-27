@@ -89,6 +89,10 @@ use stdClass;
  * $value = function (Form $form) { RepositoryUtil::makeItems($form->item())->map(function ($item) { });}
  * @method  Form|mixed hookChanged($value = null)
  *
+ * Hook 响应
+ * $value = function (Form $form) { return Response::jsonSuccess('操作成功'); }
+ * @method  Form|mixed hookResponse($value = null)
+ *
  * @method  Form|mixed dataSubmitted($value = null)
  * @method  Form|mixed dataForming($value = null)
  * @method  Form|mixed dataAdding($value = null)
@@ -147,6 +151,7 @@ class Form implements Renderable
         'hookDeleting',
         'hookDeleted',
         'hookChanged',
+        'hookResponse',
         'dataSubmitted',
         'dataForming',
         'dataAdding',
@@ -223,6 +228,10 @@ class Form implements Renderable
      * @var Closure
      */
     private $hookChanged;
+    /**
+     * @var Closure
+     */
+    private $hookResponse;
     /**
      * @var array
      */
@@ -493,7 +502,7 @@ class Form implements Renderable
             ResultException::throwsIfFail($this->hookCall($this->hookSaving));
             $ret = call_user_func($callback, $this);
             if (null !== $ret) {
-                if(Response::isRaw($ret)){
+                if (Response::isRaw($ret)) {
                     return $ret;
                 }
                 if (Response::isError($ret)) {
@@ -508,7 +517,14 @@ class Form implements Renderable
             if (!empty($this->dataSubmitted['_redirect'])) {
                 return Response::json(0, null, null, $this->dataSubmitted['_redirect']);
             }
-            return Response::jsonSuccess(L('Save Success'));
+            $res = null;
+            if ($this->hookResponse()) {
+                $res = call_user_func($this->hookResponse(), $this);
+            }
+            if (empty($res)) {
+                return Response::jsonSuccess(L('Save Success'));
+            }
+            return $res;
         } catch (BizException $e) {
             return Response::jsonError($e->getMessage());
         } catch (ResultException $e) {
@@ -578,7 +594,14 @@ class Form implements Renderable
             if (!empty($this->dataSubmitted['_redirect'])) {
                 return Response::json(0, null, null, $this->dataSubmitted['_redirect']);
             }
-            return Response::jsonSuccess(L('Add Success'));
+            $res = null;
+            if ($this->hookResponse()) {
+                $res = call_user_func($this->hookResponse(), $this);
+            }
+            if (empty($res)) {
+                return Response::jsonSuccess(L('Add Success'));
+            }
+            return $res;
         } catch (BizException $e) {
             return $this->convertBizExceptionToResponse($e);
         } catch (ResultException $e) {
@@ -675,7 +698,14 @@ class Form implements Renderable
             if (!empty($this->dataSubmitted['_redirect'])) {
                 return Response::json(0, null, null, $this->dataSubmitted['_redirect']);
             }
-            return Response::jsonSuccess(L('Edit Success'));
+            $res = null;
+            if ($this->hookResponse()) {
+                $res = call_user_func($this->hookResponse(), $this);
+            }
+            if (empty($res)) {
+                return Response::jsonSuccess(L('Edit Success'));
+            }
+            return $res;
         } catch (BizException $e) {
             return $this->convertBizExceptionToResponse($e);
         } catch (ResultException $e) {
@@ -703,7 +733,14 @@ class Form implements Renderable
                 return $o->{$this->repository()->getKeyName()};
             })->toArray());
             $result = $this->repository->delete($this, $data);
-            return Response::jsonSuccess(L('Delete Success'));
+            $res = null;
+            if ($this->hookResponse()) {
+                $res = call_user_func($this->hookResponse(), $this);
+            }
+            if (empty($res)) {
+                return Response::jsonSuccess(L('Delete Success'));
+            }
+            return $res;
         } catch (BizException $e) {
             return Response::jsonError($e->getMessage());
         } catch (ResultException $e) {

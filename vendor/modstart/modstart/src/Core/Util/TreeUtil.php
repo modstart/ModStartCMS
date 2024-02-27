@@ -280,10 +280,10 @@ class TreeUtil
 
     /**
      * 获取所有节点的子节点ID
-     * @param $nodes
-     * @param $id
-     * @param string $idName
-     * @param string $pidName
+     * @param $nodes array 节点
+     * @param $id int ID
+     * @param $idName string ID字段名,默认为id
+     * @param $pidName string PID字段名,默认为pid
      * @return array
      */
     public static function nodesChildrenIds(&$nodes, $id, $idName = 'id', $pidName = 'pid')

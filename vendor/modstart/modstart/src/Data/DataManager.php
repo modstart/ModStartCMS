@@ -100,14 +100,15 @@ class DataManager
 
     /**
      * 文件上传
-     * @param $category
-     * @param $input
-     * @param array $extra
-     * @param null $option
+     * @param $category string 上传分类
+     * @param $input array 上传参数
+     * @param $extra array 附加参数
+     * @param $option null|array 上传驱动配置
+     * @param $param array 其他参数
      * @return array
      * @throws \Exception
      */
-    public static function uploadHandle($category, $input, $extra = [], $option = null)
+    public static function uploadHandle($category, $input, $extra = [], $option = null, $param = [])
     {
         if (null === $option) {
             $option = self::getConfigOption();
@@ -144,12 +145,14 @@ class DataManager
             return $storage->multiPartInit([
                 'category' => $category,
                 'file' => $file,
+                'param' => $param,
             ]);
         }
         return $storage->multiPartUpload([
             'category' => $category,
             'file' => $file,
             'input' => $input,
+            'param' => $param,
         ]);
     }
 

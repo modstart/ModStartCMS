@@ -27,7 +27,7 @@ class FileManager
 {
     public static $slowDebug = false;
 
-    public static function handleUpload($category, $option = null, $permitCheck = null)
+    public static function handleUpload($category, $option = null, $permitCheck = null, $param = [])
     {
         if (self::$slowDebug) {
             sleep(10);
@@ -41,12 +41,12 @@ class FileManager
             case 'init':
             case 'upload':
                 $func = "${action}Execute";
-                return self::$func($input, $category, null, null, 0, $option);
+                return self::$func($input, $category, null, null, 0, $option, $param);
         }
         return Response::jsonError('Unknown action');
     }
 
-    public static function handle($category, $uploadTable, $uploadCategoryTable, $userId, $option = null, $permitCheck = null)
+    public static function handle($category, $uploadTable, $uploadCategoryTable, $userId, $option = null, $permitCheck = null, $param = [])
     {
         if (self::$slowDebug) {
             sleep(10);
@@ -74,18 +74,18 @@ class FileManager
             case 'list':
             case 'category':
                 $func = "${action}Execute";
-                return self::$func($input, $category, $uploadTable, $uploadCategoryTable, $userId, $option);
+                return self::$func($input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param);
         }
         return Response::jsonError('Unknown action');
     }
 
-    private static function configExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function configExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         $data = DataManager::uploadConfig($category);
         return Response::generateSuccessData($data);
     }
 
-    private static function fileDeleteExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function fileDeleteExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         $ids = $input->getStringSeparatedArray('id');
         BizException::throwsIfEmpty('id empty', $ids);
@@ -100,7 +100,7 @@ class FileManager
         return Response::jsonSuccess();
     }
 
-    private static function fileEditExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function fileEditExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         $ids = $input->getStringSeparatedArray('id');
         $categoryId = $input->getInteger('categoryId');
@@ -136,7 +136,7 @@ class FileManager
     /**
      * 直接上传模式（不分片），用户文件管理中可见
      *
-     * @param InputPackage $input
+     * @param $input InputPackage
      * @param $category
      * @param $uploadTable
      * @param $uploadCategoryTable
@@ -145,7 +145,7 @@ class FileManager
      * @return mixed
      * @throws \Exception
      */
-    private static function uploadDirectExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function uploadDirectExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
         /** @var UploadedFile $file */
@@ -155,7 +155,7 @@ class FileManager
         }
         $filename = $file->getClientOriginalName();
         $content = file_get_contents($file->getRealPath());
-        $ret = DataManager::upload($category, $filename, $content, $option);
+        $ret = DataManager::upload($category, $filename, $content, $option, $param);
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
         }
@@ -193,7 +193,7 @@ class FileManager
      * @return mixed
      * @throws \Exception
      */
-    private static function uploadDirectRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function uploadDirectRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
         /** @var UploadedFile $file */
@@ -224,7 +224,7 @@ class FileManager
         ]);
     }
 
-    private static function uploadAndSaveBase64Execute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function uploadAndSaveBase64Execute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
         $input = InputPackage::buildFromInput();
@@ -251,7 +251,7 @@ class FileManager
         ]);
     }
 
-    private static function saveExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function saveExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
         $path = $input->getTrimString('path');
@@ -290,7 +290,7 @@ class FileManager
      * @return mixed
      * @throws BizException
      */
-    private static function saveRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function saveRawExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
         $path = $input->getTrimString('path');
@@ -316,19 +316,19 @@ class FileManager
         ]);
     }
 
-    private static function initExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function initExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
-        return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option);
+        return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option, $param);
     }
 
-    private static function uploadExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function uploadExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
-        return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option);
+        return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option, $param);
     }
 
-    private static function listExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function listExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         $page = $input->getPage();
         $pageSize = $input->getPageSize(null, null, null, 24);
@@ -385,7 +385,7 @@ class FileManager
         return Response::generateSuccessPaginateData($page, $pageSize, $records, $paginateData['total']);
     }
 
-    private static function categoryDeleteExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function categoryDeleteExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         $id = $input->getInteger('id');
         $category = ModelUtil::get($uploadCategoryTable, ['id' => $id, 'userId' => $userId,]);
@@ -429,7 +429,7 @@ class FileManager
         return Response::jsonSuccess();
     }
 
-    private static function categoryExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option)
+    private static function categoryExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         $uploadCategories = ModelUtil::all($uploadCategoryTable, ['userId' => $userId, 'category' => $category]);
         $categories = [];

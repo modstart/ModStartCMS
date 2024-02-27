@@ -17,7 +17,7 @@ window.UE = baidu.editor = {
     instants: {},
     I18N: {},
     _customizeUI: {},
-    version: "3.8.0",
+    version: "3.9.0-beta",
     constants: {
         STATEFUL: {
             DISABLED: -1,
@@ -7227,10 +7227,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         var textarea;
         textarea = editor.textarea;
         if (!textarea) {
-            textarea = form.getElementById("ueditor_textarea_" + editor.options.textarea);
+            textarea = domUtils.getElementsByTagName(form, "textarea", function (node) {
+                return node.id === 'ueditor_textarea_' + editor.options.textarea;
+            })[0];
         }
         if (!textarea) {
-            textarea = form.getElementsByName(editor.options.textarea)[0];
+            textarea = domUtils.getElementsByTagName(form, "textarea", function (node) {
+                return node.name === editor.options.textarea;
+            })[0];
         }
         if (!textarea) {
             form.appendChild(

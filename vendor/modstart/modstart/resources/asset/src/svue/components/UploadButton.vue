@@ -141,6 +141,11 @@ export default {
                 extensions: this.dataUploadConfig.category[this.category].extensions.join(','),
                 sizeLimit: this.dataUploadConfig.category[this.category].maxSize,
                 chunkSize: this.dataUploadConfig.chunkSize,
+                compress: {
+                    enable: this.dataUploadConfig.category.image.compress,
+                    maxWidthOrHeight: this.dataUploadConfig.category.image.maxWidthOrHeight,
+                    maxSize: this.dataUploadConfig.category.image.maxSize
+                },
                 uploadBeforeCheck: this.uploadBeforeCheck,
                 ready: (uploader) => {
                     $this.uploader = uploader

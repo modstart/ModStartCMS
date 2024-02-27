@@ -627,6 +627,10 @@ class MemberUtil
 
         $uploadParam = [
             'eventOpt' => [
+                'param' => [
+                    'userType' => 'member',
+                    'userId' => $userId
+                ],
                 DataFileUploadedEvent::OPT_IMAGE_COMPRESS_IGNORE => true,
                 DataFileUploadedEvent::OPT_IMAGE_WATERMARK_IGNORE => true,
             ]

@@ -97,7 +97,7 @@ class FileDataStorage extends AbstractDataStorage
                     return Response::generate(-1, 'MultiPartUpload combile file failed (' . $hashFileSize . ',' . $token['size'] . ') ShouldRetryUpload');
                 }
                 $this->move($hashFile, $token['fullPath']);
-                DataFileUploadedEvent::fire(null, $category, $token['fullPath']);
+                DataFileUploadedEvent::fire(null, $category, $token['fullPath'], isset($param['eventOpt']) ? $param['eventOpt'] : []);
                 $dataTemp = $this->repository->addTemp($category, $token['path'], $token['name'], $token['size'], empty($token['md5']) ? null : $token['md5']);
                 $data['data'] = $dataTemp;
                 $data['path'] = $token['fullPath'];

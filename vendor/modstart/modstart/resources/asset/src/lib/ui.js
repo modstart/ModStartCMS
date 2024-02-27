@@ -191,4 +191,65 @@ Ui.htmlNav = function (htmlContainer, navContainer, option) {
     }
 };
 
+Ui.elementMover = function (option) {
+    option = Object.assign({
+        moveElement: null,
+        startElement: null,
+        endElement: null,
+        duration: 800,
+        startDelay: 100,
+        endDelay: 300,
+        onEnd: function () {
+        }
+    }, option)
+    var runtime = {
+        moveElementWidth: 0,
+        moveElementHeight: 0,
+        startX: 0,
+        startY: 0,
+        endX: 0,
+        endY: 0,
+    }
+    var dom, domRect;
+    if (typeof option.moveElement === 'string') {
+        option.moveElement = document.querySelector(option.moveElement);
+    }
+    if ($(option.moveElement).data('isMoving')) {
+        return;
+    }
+    $(option.moveElement).data('isMoving', true);
+    domRect = option.moveElement.getBoundingClientRect();
+    runtime.moveElementWidth = domRect.width;
+    runtime.moveElementHeight = domRect.height;
+    if (typeof option.startElement === 'string') {
+        option.startElement = document.querySelector(option.startElement);
+    }
+    if (typeof option.endElement === 'string') {
+        option.endElement = document.querySelector(option.endElement);
+    }
+    domRect = option.startElement.getBoundingClientRect();
+    runtime.startX = domRect.left + domRect.width / 2 - runtime.moveElementWidth / 2;
+    runtime.startY = domRect.top + domRect.height / 2 - runtime.moveElementHeight / 2;
+    domRect = option.endElement.getBoundingClientRect();
+    runtime.endX = domRect.left + domRect.width / 2 - runtime.moveElementWidth / 2;
+    runtime.endY = domRect.top + domRect.height / 2 - runtime.moveElementHeight / 2;
+    var ele = option.moveElement;
+    var oldLeft = ele.style.left, oldTop = ele.style.top;
+    ele.style.left = runtime.startX + 'px';
+    ele.style.top = runtime.startY + 'px';
+    setTimeout(function () {
+        ele.style.transition = 'all ' + option.duration + 'ms';
+        ele.style.transitionTimingFunction = 'ease-in-out';
+        ele.style.transform = 'translate3d(' + (runtime.endX - runtime.startX) + 'px,' + (runtime.endY - runtime.startY) + 'px,0)';
+        setTimeout(function () {
+            ele.style.transition = '';
+            ele.style.transform = '';
+            ele.style.left = oldLeft;
+            ele.style.top = oldTop;
+            option.onEnd();
+            $(option.moveElement).data('isMoving', false);
+        }, option.duration + option.endDelay);
+    }, option.startDelay);
+};
+
 module.exports = Ui;

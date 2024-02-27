@@ -5,6 +5,7 @@ namespace Module\Member\Admin\Controller;
 
 
 use Illuminate\Routing\Controller;
+use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Core\Dao\ModelUtil;
@@ -32,7 +33,9 @@ class MemberCreditController extends Controller
             AdminPermission::demoCheck();
             $data = $form->dataForming();
             ModelUtil::transactionBegin();
-            MemberCreditUtil::change($memberUserId, $data['change'], $data['remark']);
+            MemberCreditUtil::change($memberUserId, $data['change'], $data['remark'], [
+                'adminUserId' => Admin::id(),
+            ]);
             ModelUtil::transactionCommit();
             return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());
         });

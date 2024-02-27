@@ -9,8 +9,18 @@
                 <div class="icon">
                     <i class="font iconfont icon-credit"></i>
                 </div>
-                <div class="number-value">{{\Module\Member\Util\MemberCreditUtil::getTotal(\Module\Member\Auth\MemberUser::id())}}</div>
-                <div class="number-title">我的{{\ModStart\Module\ModuleManager::getModuleConfig('Member', 'creditName', '积分')}}</div>
+                <div class="number-value">
+                    <?php $m = \Module\Member\Util\MemberCreditUtil::get($_memberUserId); ?>
+                    {{$m?$m['total']:0}}
+                </div>
+                <div class="number-title">
+                    我的{{\ModStart\Module\ModuleManager::getModuleConfig('Member', 'creditName', '积分')}}
+                    @if(!empty($m['freezeTotal']))
+                        <span class="ub-text-sm ub-text-muted">
+                            （冻结{{$m['freezeTotal']}}）
+                        </span>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

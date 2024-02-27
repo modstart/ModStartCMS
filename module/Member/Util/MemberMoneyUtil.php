@@ -5,6 +5,9 @@ namespace Module\Member\Util;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\IdUtil;
+use ModStart\Core\Util\SerializeUtil;
+use Module\Member\Model\MemberMoney;
+use Module\Member\Model\MemberMoneyLog;
 use Module\Member\Type\MemberMoneyCashStatus;
 use Module\Member\Type\MemberMoneyChargeStatus;
 
@@ -27,39 +30,53 @@ class MemberMoneyUtil
     }
 
     /**
-     * !! 这个方法应该在事务中调用
+     * 变更用户的余额
+     * !!! 这个方法应该在事务中调用 !!!
      *
-     * @param $memberUserId
-     * @param $change
-     * @param $remark
+     * @param $memberUserId int 用户ID
+     * @param $change float 变化值，正数为增加，负数为减少
+     * @param $remark string 备注
+     * @param $meta array|null 元数据
      * @throws \Exception
      */
-    public static function change($memberUserId, $change, $remark)
+    public static function change($memberUserId, $change, $remark, $meta = null)
     {
-        if (!$change) {
-            BizException::throws('Member.MoneyChangeUtil -> change empty');
-        }
-        $m = ModelUtil::getWithLock('member_money', ['memberUserId' => $memberUserId]);
+        BizException::throwsIf('MemberMoneyUtil.change.change=0', !$change);
+        $m = ModelUtil::getWithLock(MemberMoney::class, [
+            'memberUserId' => $memberUserId,
+        ]);
         if (empty($m)) {
-            $m = ModelUtil::insert('member_money', ['memberUserId' => $memberUserId, 'total' => 0,]);
+            $m = ModelUtil::insert(MemberMoney::class, [
+                'memberUserId' => $memberUserId, 'total' => 0,
+            ]);
         }
-        if ($change < 0 && $m['total'] + $change < 0) {
-            BizException::throws('Member.MoneyChangeUtil -> total change to empty');
+        $total = bcadd($m['total'], $change, 2);
+        BizException::throwsIf('MemberMoneyUtil.change.total<0', $change < 0 && $total < 0);
+        if ($meta && !is_string($meta)) {
+            $meta = SerializeUtil::jsonEncode($meta);
         }
-        ModelUtil::insert('member_money_log', ['memberUserId' => $memberUserId, 'change' => $change, 'remark' => $remark]);
-        ModelUtil::update('member_money', ['id' => $m['id']], ['total' => $m['total'] + $change]);
+        ModelUtil::insert(MemberMoneyLog::class, [
+            'memberUserId' => $memberUserId,
+            'change' => $change,
+            'remark' => $remark,
+            'meta' => $meta,
+        ]);
+        ModelUtil::update(MemberMoney::class, $m['id'], [
+            'total' => $total,
+        ]);
     }
 
     /**
-     * !! 这个方法应该在事务中调用
+     * 用户提现
+     * !!! 这个方法应该在事务中调用 !!!
      *
-     * @param $memberUserId
-     * @param $money
-     * @param $moneyAfterTax
-     * @param $type
-     * @param $realname
-     * @param $account
-     * @param string $remark
+     * @param $memberUserId int 用户ID
+     * @param $money float 提现金额
+     * @param $moneyAfterTax float 扣税后的金额
+     * @param $type string 提现方式
+     * @param $realname string 真实姓名
+     * @param $account string 账号
+     * @param string $remark 备注
      * @throws \Exception
      */
     public static function cash($memberUserId, $money, $moneyAfterTax, $type, $realname, $account, $remark = '余额提现')

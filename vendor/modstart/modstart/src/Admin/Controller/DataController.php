@@ -54,7 +54,15 @@ class DataController extends Controller
                             Response::quit(-1, 'Data Permit Denied');
                             break;
                     }
-                }
+                },
+                [
+                    'eventOpt' => [
+                        'param' => [
+                            'userType' => 'admin',
+                            'userId' => Admin::id(),
+                        ]
+                    ]
+                ]
             );
         }
         return view('modstart::admin.data.fileManager', [

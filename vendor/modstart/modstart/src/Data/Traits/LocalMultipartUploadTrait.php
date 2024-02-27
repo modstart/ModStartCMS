@@ -51,7 +51,7 @@ trait LocalMultipartUploadTrait
                 }
                 $this->saveLocalToRemote($hashFile, $token['fullPath']);
                 @unlink(public_path($hashFile));
-                DataFileUploadedEvent::fire($this->remoteType, $category, $token['fullPath']);
+                DataFileUploadedEvent::fire($this->remoteType, $category, $token['fullPath'], isset($param['eventOpt']) ? $param['eventOpt'] : []);
                 $dataTemp = $this->repository->addTemp($category, $token['path'], $token['name'], $token['size'], empty($token['md5']) ? null : $token['md5']);
                 $data['data'] = $dataTemp;
                 $data['path'] = $token['fullPath'];
