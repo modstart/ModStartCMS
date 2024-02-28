@@ -99,7 +99,7 @@ export const UploadButtonUploader = function (selector, option) {
         chunkSize: 5 * 1024 * 1024,
         uploadBeforeCheck: null,
         compress: {
-            enable: true,
+            enable: false,
             maxWidthOrHeight: 4000,
             maxSize: 10 * 1024 * 1024,
         },

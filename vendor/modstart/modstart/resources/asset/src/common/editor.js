@@ -197,7 +197,8 @@ var Editor = {
             'strikethrough',
             'insertcode',
             //'superscript', 'subscript',
-            // 'emotion','wechatcustomemotion'
+            // 'emotion','wechatcustomemotion',
+            'contentimport'
         ];
         if (window.__editorSimpleToolBars) {
             editorSimpleToolBars = window.__editorSimpleToolBars;

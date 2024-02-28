@@ -53,8 +53,8 @@ class UeditorManager
             "imageAllowFiles" => array_map(function ($v) {
                 return '.' . $v;
             }, $dataUploadConfig['image']['extensions']),
-            "imageCompressEnable" => true,
-            "imageCompressBorder" => 5000,
+            "imageCompressEnable" => config('data.upload.image.compress', true),
+            "imageCompressBorder" => config('data.upload.image.compressMaxWidthOrHeight', 4000),
             "imageInsertAlign" => "none",
             "imageUrlPrefix" => "",
 

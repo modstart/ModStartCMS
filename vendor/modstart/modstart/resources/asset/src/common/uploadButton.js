@@ -100,7 +100,7 @@ var UploadButton = function (selector, option) {
         fileNumLimit: 1000,
         uploadBeforeCheck: null,
         compress: {
-            enable: true,
+            enable: false,
             maxWidthOrHeight: 4000,
             maxSize: 10 * 1024 * 1024,
         },
