@@ -207,6 +207,18 @@ class ArrayUtil
         return $records[array_rand($records)];
     }
 
+    public static function randomWithPriority($records, $priorityKey = 'priority')
+    {
+        $values = [];
+        foreach ($records as $record) {
+            $priority = min($record[$priorityKey], 100);
+            for ($i = 0; $i < $priority; $i++) {
+                $values[] = $record;
+            }
+        }
+        return self::random($values);
+    }
+
     public static function randomN($records, $n)
     {
         if (empty($records)) {

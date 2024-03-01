@@ -87,7 +87,14 @@ let Dialog = {
             ms = 1000 * parseInt(msg.length / 5);
         }
         if (window.layer) {
-            layer.msg(msg, {shade: 0.3, time: ms, shadeClose: true, anim: -1}, cb);
+            layer.msg(msg, {
+                shade: 0.01,
+                time: ms,
+                shadeClose: true,
+                offset:'3rem',
+                anim: 'slideDown',
+                icon: 1,
+            }, cb);
         } else {
             let dialogIndex = (Dialog.dialogIndex++)
             let $dialog = $(createDialogHtml(dialogIndex,
@@ -111,7 +118,14 @@ let Dialog = {
             ms = 1000 * parseInt(msg.length / 5);
         }
         if (window.layer) {
-            layer.msg(msg, {shade: 0.3, time: ms, shadeClose: true, anim: 6}, cb);
+            layer.msg(msg, {
+                shade: 0.01,
+                time: ms,
+                shadeClose: true,
+                offset:'3rem',
+                anim: 'slideDown',
+                icon: 2,
+            }, cb);
         } else {
             Dialog.tipSuccess(msg, cb)
         }

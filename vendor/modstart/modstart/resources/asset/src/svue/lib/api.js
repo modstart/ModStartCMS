@@ -178,11 +178,49 @@ const post = (url, param, successCallback, failCallback) => {
         .catch(err => defaultErrorCatcher(err, failCB))
 }
 
+const eventSource = (url, param, successCallback, errorCallback, endCallback) => {
+    endCallback = endCallback || function () {
+    }
+    param = Object.keys(param).map(o => {
+        return encodeURIComponent(o) + '=' + encodeURIComponent(param[o])
+    }).join('&')
+    if (param) {
+        url += '?' + param
+    }
+    var es = new EventSource(url, {withCredentials: true});
+    es.onerror = function (event) {
+        errorCallback('ERROR:' + event)
+        es.close();
+    }
+    es.onmessage = function (event) {
+        const json = JSON.parse(event.data)
+        if (json && json.type) {
+            switch (json.type) {
+                case 'data':
+                    successCallback(json.data)
+                    break
+                case 'error':
+                    errorCallback(json.data)
+                    es.close()
+                    break
+                case 'end':
+                    endCallback()
+                    es.close()
+                    break
+            }
+        } else {
+            errorCallback("ERROR:" + JSON.stringify(json))
+            es.close()
+        }
+    }
+}
+
 const Api = {
     isInited,
     isRemoteInited,
     init,
     post,
+    eventSource,
     // postJson,
     // setApiBaseUrl,
     // getApiTokenKey,

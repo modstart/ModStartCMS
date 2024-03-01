@@ -217,6 +217,13 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
         }
 
+        if (!empty($option['writeFunctionCallback'])) {
+            curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl, $data) use (&$option) {
+                call_user_func_array($option['writeFunctionCallback'], [$data, []]);
+                return strlen($data);
+            });
+        }
+
         $output = curl_exec($ch);
         if (!empty($option['debugFile'])) {
             file_put_contents($option['debugFile'], "\n\n" . $output, FILE_APPEND);

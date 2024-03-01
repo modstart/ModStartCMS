@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\SerializeUtil;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Response
 {
@@ -347,5 +348,49 @@ class Response
             $response->headers->set($k, $v);
         }
         return $response;
+    }
+
+    public static function textEventStreamed($callback)
+    {
+        $response = new StreamedResponse();
+        $response->setCallback(function () use (&$callback) {
+            // {"type":"data","data":...}
+            // {"type":"error","data":...}
+            // {"type":"end"}
+            $sendCallback = function ($type, $data = null) {
+                $payload = [];
+                $payload['type'] = $type;
+                if (!is_null($data)) {
+                    $payload['data'] = $data;
+                }
+                echo "data: " . json_encode($payload) . "\n\n";
+                ob_flush();
+                flush();
+            };
+            $dataCallback = function ($data) use (&$sendCallback) {
+                call_user_func($sendCallback, 'data', $data);
+            };
+            $endCallBack = function () use (&$sendCallback) {
+                call_user_func($sendCallback, 'end');
+            };
+            $errorCallback = function ($msg) use (&$sendCallback) {
+                call_user_func($sendCallback, 'error', $msg);
+            };
+            try {
+                call_user_func_array($callback, [$sendCallback, [
+                    'dataCallback' => $dataCallback,
+                    'endCallBack' => $endCallBack,
+                    'errorCallback' => $errorCallback,
+                ]]);
+            } catch (BizException $e) {
+                call_user_func($errorCallback, $e->getMessage());
+            } catch (\Exception $e) {
+                throw $e;
+            }
+        });
+        $response->headers->set('Content-Type', 'text/event-stream');
+        $response->headers->set('X-Accel-Buffering', 'no');
+        $response->headers->set('Cache-Control', 'no-cache');
+        $response->send();
     }
 }

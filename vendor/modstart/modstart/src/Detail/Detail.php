@@ -191,6 +191,7 @@ class Detail implements Renderable
             case 'hookChanged':
             case 'hookDeleting':
             case 'hookDeleted':
+            case 'hookResponse':
             case 'hookItemOperateRendering':
             case 'addBlankPage':
             case 'editBlankPage':

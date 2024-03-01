@@ -50,9 +50,9 @@ class ApiUtil
                 'extensions' => $categoryInfo['extensions'],
             ];
             if ('image' == $category) {
-                $info['compress'] = $categoryInfo['compress'];
-                $info['compressMaxWidthOrHeight'] = $categoryInfo['compressMaxWidthOrHeight'];
-                $info['compressMaxSize'] = $categoryInfo['compressMaxSize'];
+                $info['compress'] = isset($categoryInfo['compress']) ? $categoryInfo['compress'] : true;
+                $info['compressMaxWidthOrHeight'] = isset($categoryInfo['compressMaxWidthOrHeight']) ? $categoryInfo['compressMaxWidthOrHeight'] : 4000;
+                $info['compressMaxSize'] = isset($categoryInfo['compressMaxSize']) ? $categoryInfo['compressMaxSize'] : 10 * 1024 * 1024;
             }
             $data['dataUpload']['category'][$category] = $info;
         }

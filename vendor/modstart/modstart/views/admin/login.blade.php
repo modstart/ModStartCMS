@@ -29,14 +29,15 @@
         <div class="login-box">
             <div class="info">
                 <div class="title">
-                    <i class="iconfont icon-ms"></i> {!! L('Admin Login') !!}
-                </div>
-                <div class="slogan">
+                    <i class="iconfont icon-ms"></i>
                     @if(modstart_config('adminLoginSlogan'))
                         {{ modstart_config('adminLoginSlogan') }}
                     @else
                         {{\ModStart\Core\Util\MetaUtil::get('APP_NAME')}}
                     @endif
+                </div>
+                <div class="slogan">
+                    {!! L('Admin Login') !!}
                 </div>
             </div>
             <div class="form">
