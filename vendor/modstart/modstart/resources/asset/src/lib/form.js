@@ -42,8 +42,7 @@ var winReload = function (w) {
 };
 
 var Form = {
-    defaultTimeout: 10 * 60 * 1000,
-    delaySubmit: function ($form, cb) {
+    defaultTimeout: 10 * 60 * 1000, delaySubmit: function ($form, cb) {
         var pass = true;
         $form.find('[data-form-process]').each(function (i, o) {
             if ($(o).attr('data-form-process') == 'processing') {
@@ -57,11 +56,9 @@ var Form = {
                 Form.delaySubmit($form, cb);
             }, 100);
         }
-    },
-    responseToRes: function (response) {
+    }, responseToRes: function (response) {
         var res = {
-            code: -999,
-            msg: "请求出现错误 T_T"
+            code: -999, msg: "请求出现错误 T_T"
         }
         // console.log('error', response);
         if ('timeout' === response.statusText) {
@@ -70,8 +67,7 @@ var Form = {
             res.msg = '请求出现错误(' + response.status + ' ' + response.statusText + ') T_T';
         }
         return res;
-    },
-    redirectProcess: function (redirect) {
+    }, redirectProcess: function (redirect) {
         if (!redirect) {
             return;
         }
@@ -86,11 +82,13 @@ var Form = {
         } else if (redirect.indexOf('[js]') === 0) {
             // console.log('eval', redirect.substr(4));
             eval(redirect.substr(4));
+        } else if (redirect.indexOf('[ijs]') === 0) {
+            // run js instant
+            eval(redirect.substr(5));
         } else {
             window.location.href = redirect;
         }
-    },
-    defaultCallback: function (res, callback, Dialog) {
+    }, defaultCallback: function (res, callback, Dialog) {
 
         Dialog = Dialog || null;
 
@@ -122,9 +120,16 @@ var Form = {
             if (msg) {
                 if (redirect) {
                     if (Dialog) {
-                        Dialog.alertSuccess(msg, function () {
-                            Form.redirectProcess(redirect);
-                        });
+                        if (redirect && redirect.indexOf('[ijs]') === 0) {
+                            Dialog.tipSuccess(msg);
+                            setTimeout(function () {
+                                Form.redirectProcess(redirect);
+                            }, Dialog.getMsgDuration(msg));
+                        } else {
+                            Dialog.alertSuccess(msg, function () {
+                                Form.redirectProcess(redirect);
+                            });
+                        }
                     } else {
                         alert(msg);
                         Form.redirectProcess(redirect);
@@ -157,9 +162,16 @@ var Form = {
             if (msg) {
                 if (redirect) {
                     if (Dialog) {
-                        Dialog.alertError(msg, function () {
-                            Form.redirectProcess(redirect);
-                        });
+                        if (redirect && redirect.indexOf('[ijs]') === 0) {
+                            Dialog.tipError(msg);
+                            setTimeout(function () {
+                                Form.redirectProcess(redirect);
+                            }, Dialog.getMsgDuration(msg));
+                        } else {
+                            Dialog.alertError(msg, function () {
+                                Form.redirectProcess(redirect);
+                            });
+                        }
                     } else {
                         alert(msg);
                         Form.redirectProcess(redirect);
@@ -198,8 +210,7 @@ var Form = {
             }
             errorFunc();
         }
-    },
-    // ajax表单初始化
+    }, // ajax表单初始化
     initAjax: function (form, Dialog) {
 
         Dialog = Dialog || null;
@@ -247,8 +258,7 @@ var Form = {
                     success: function (res) {
                         // console.log('success', res);
                         EventManager.fire('modstart:form.submitted', {
-                            $form: $form,
-                            res: res,
+                            $form: $form, res: res,
                         });
                         $form.data('submiting', null);
                         if (Dialog) {
@@ -259,8 +269,7 @@ var Form = {
                     error: function (res) {
                         res = Form.responseToRes(res);
                         EventManager.fire('modstart:form.submitted', {
-                            $form: $form,
-                            res: res,
+                            $form: $form, res: res,
                         });
                         $form.data('submiting', null);
                         if (Dialog) {
@@ -273,8 +282,7 @@ var Form = {
 
             return false;
         });
-    },
-    // 普通表单初始化
+    }, // 普通表单初始化
     initCommon: function (form, Dialog) {
         var $form = $(form);
         $form.on('submit', function () {

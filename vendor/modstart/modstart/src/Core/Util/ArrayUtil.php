@@ -193,7 +193,8 @@ class ArrayUtil
     }
 
     /**
-     * @param $records
+     * 随机获取一个元素
+     * @param $records array 二维数组
      * @return mixed|null
      */
     public static function random($records)
@@ -201,24 +202,40 @@ class ArrayUtil
         if (empty($records)) {
             return null;
         }
-        // if (count($records) == 1) {
-        //     return $records[0];
-        // }
         return $records[array_rand($records)];
     }
 
+    /**
+     * 根据优先级随机获取一个元素
+     * @param $records array 二维数组
+     * @param $priorityKey string 优先级字段
+     * @return mixed|null
+     */
     public static function randomWithPriority($records, $priorityKey = 'priority')
     {
-        $values = [];
-        foreach ($records as $record) {
-            $priority = min($record[$priorityKey], 100);
+        if (empty($records)) {
+            return null;
+        }
+        $recordKeys = [];
+        foreach ($records as $k => $v) {
+            $priority = min($v[$priorityKey], 100);
             for ($i = 0; $i < $priority; $i++) {
-                $values[] = $record;
+                $recordKeys[] = $k;
             }
         }
-        return self::random($values);
+        if (empty($recordKeys)) {
+            return null;
+        }
+        $recordKey = self::random($recordKeys);
+        return $records[$recordKey];
     }
 
+    /**
+     * 随机获取N个元素
+     * @param $records array 二维数组
+     * @param $n int 获取数量
+     * @return array|null
+     */
     public static function randomN($records, $n)
     {
         if (empty($records)) {

@@ -484,7 +484,7 @@ class DataManager
         $fileFullPath = $storage->getDriverFullPath($path);
         $localFile = FileUtil::savePathToLocalTemp($fileFullPath, '.' . FileUtil::extension($path));
         if (!file_exists($localFile)) {
-            return Response::generate(-1, L('Safe File Error') . ' - ' . $path);
+            return Response::generate(-1, L('Save File Error') . ' - ' . $path);
         }
         $base = public_path('');
         return Response::generate(0, null, [
@@ -513,7 +513,7 @@ class DataManager
         $fileFullPath = $storage->getDriverFullPathInternal($path);
         $localFile = FileUtil::savePathToLocalTemp($fileFullPath, '.' . FileUtil::extension($path));
         if (!file_exists($localFile)) {
-            return Response::generate(-1, L('Safe File Error') . ' - ' . $path);
+            return Response::generate(-1, L('Save File Error') . ' - ' . $path);
         }
         $base = public_path('');
         return Response::generate(0, null, [

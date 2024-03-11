@@ -55,7 +55,7 @@ class SecureUtil
      */
     public static function aesDecode($key, $data, $keyIsBase64 = false)
     {
-        BizException::throwsIfEmpty('SecureUtil.Key Empty', $key);
+        BizException::throwsIfEmpty('SecureUtil.Error KeyEmpty', $key);
         $encryptionKey = $key;
         if ($keyIsBase64) {
             $encryptionKey = base64_decode($encryptionKey);
@@ -91,6 +91,8 @@ class SecureUtil
 
     public static function encryptKey()
     {
-        return config('env.ENCRYPT_KEY');
+        $key = config('env.ENCRYPT_KEY');
+        BizException::throwsIfEmpty('SecureUtil.Error ENCRYPT_KEY KeyEmpty', $key);
+        return $key;
     }
 }

@@ -147,7 +147,7 @@ return [
     'Save' => '保存',
     'Save Success' => '保存成功',
     'Copy Success' => '复制成功',
-    'Safe File Error' => '保存文件失败',
+    'Save File Error' => '保存文件失败',
     'Copy Fail' => '复制失败',
     'Select Image' => '选择图片',
     'Select File' => '选择文件',

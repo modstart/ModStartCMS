@@ -24,6 +24,12 @@ class ModStart
     public static $css = [];
     public static $js = [];
 
+    /**
+     * 获取当前项目的缓存Key
+     * 多个项目代码共用一个缓存时，需要根据路径来区分不同的项目
+     * @param $key string 缓存键
+     * @return string
+     */
     public static function cacheKey($key)
     {
         static $hash = null;
@@ -43,6 +49,11 @@ class ModStart
         Cache::forget(self::cacheKey('ModStartApiRoutes'));
         Cache::forget(self::cacheKey('ModStartOpenApiRoutes'));
         Cache::forget(self::cacheKey('ModStartWebRoutes'));
+
+        if (method_exists(ModuleManager::class, 'clearCache')) {
+            ModuleManager::clearCache();
+        }
+
         /**
          * 如果启用了Laravel优化，这些文件会缓存ServiceProvider
          * 会造成缓存清理不干净甚至服务崩溃的问题

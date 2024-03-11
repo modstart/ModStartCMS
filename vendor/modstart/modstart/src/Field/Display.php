@@ -24,11 +24,15 @@ class Display extends AbstractField
     {
         $this->hookRendering(function (AbstractField $field, $item, $index) use ($linkTemplate, $openInBlank) {
             if (null !== $linkTemplate) {
-                $linkUrl = $linkTemplate;
-                if (preg_match_all('/\\{(.+?)\\}/', $linkUrl, $mat)) {
-                    foreach ($mat[1] as $i => $k) {
-                        $v = ModelUtil::traverse($item, $k);
-                        $linkUrl = str_replace($mat[0][$i], $v, $linkUrl);
+                if ($linkTemplate instanceof \Closure) {
+                    $linkUrl = call_user_func($linkTemplate, $item);
+                } else {
+                    $linkUrl = $linkTemplate;
+                    if (preg_match_all('/\\{(.+?)\\}/', $linkUrl, $mat)) {
+                        foreach ($mat[1] as $i => $k) {
+                            $v = ModelUtil::traverse($item, $k);
+                            $linkUrl = str_replace($mat[0][$i], $v, $linkUrl);
+                        }
                     }
                 }
                 $linkTitle = ModelUtil::traverse($item, $field->column());

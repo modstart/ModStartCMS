@@ -31,10 +31,12 @@ class AuthController extends Controller
         if (Admin::id()) {
             return Response::redirect($redirect);
         }
-        if (modstart_config('adminSSOClientEnable', false)) {
-            return Response::redirect(modstart_admin_url('sso/client', [
-                'redirect' => $redirect,
-            ]));
+        if (modstart_module_enabled('AdminSSOClient')) {
+            if (modstart_config('adminSSOClientEnable', false)) {
+                return Response::redirect(modstart_admin_url('sso/client', [
+                    'redirect' => $redirect,
+                ]));
+            }
         }
         /**
          * 获取人机检测Provider
@@ -76,7 +78,7 @@ class AuthController extends Controller
                     }
                 } else {
                     if (!CaptchaFacade::check($input->getTrimString('captcha'))) {
-                        return Response::json(-1, L('Captcha Incorrect'), null, "[js]$('[data-captcha]').click();");
+                        return Response::json(-1, L('Captcha Incorrect'), null, "[ijs]$('[data-captcha]').click();");
                     }
                 }
             }
@@ -90,7 +92,7 @@ class AuthController extends Controller
                         'IP' => Request::ip(),
                         L('Phone') => $phone,
                     ]);
-                    return Response::json(-1, L('登录失败'), null, "[js]$('[data-captcha]').click();");
+                    return Response::json(-1, L('登录失败'), null, "[ijs]$('[data-captcha]').click();");
                 }
             } else {
                 $ret = Admin::login($username, $password);
@@ -100,7 +102,7 @@ class AuthController extends Controller
                         L('Username') => $username,
                         L('Password') => '******',
                     ]);
-                    return Response::json(-1, L('Username / Password Incorrect'), null, "[js]$('[data-captcha]').click();");
+                    return Response::json(-1, L('Username / Password Incorrect'), null, "[ijs]$('[data-captcha]').click();");
                 }
             }
             $adminUser = $ret['data'];

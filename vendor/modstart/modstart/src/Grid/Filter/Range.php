@@ -8,12 +8,12 @@ class Range extends AbstractFilter
 {
     public function condition($searchInfo)
     {
-        if (isset($searchInfo['range']) && ($searchInfo['range']['min'] || $searchInfo['range']['max'])) {
+        if (!empty($searchInfo['range']) && (!empty($searchInfo['range']['min']) || !empty($searchInfo['range']['max']))) {
             $value = $searchInfo['range'];
-            if (!isset($value['min'])) {
+            if (empty($value['min'])) {
                 return $this->buildCondition($this->column, '<=', $value['max']);
             }
-            if (!isset($value['max'])) {
+            if (empty($value['max'])) {
                 return $this->buildCondition($this->column, '>=', $value['min']);
             }
             $this->query = 'whereBetween';

@@ -4,6 +4,7 @@
 namespace ModStart\Module;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
@@ -11,17 +12,27 @@ use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\VersionUtil;
+use ModStart\ModStart;
 
 class ModuleManager
 {
     /**
-     * 已安装模块配置保存KEY
+     * 用户已安装模块，仅存在于数据库配置的模块，不一定真实存在
      */
-    const MODULE_ENABLE_LIST = 'ModuleList';
+    const USER_INSTALLED_MODULES = 'UserInstalledModules';
+    /**
+     * 所有已安装模块，增加了模块是否真实存在的判断
+     */
+    const CACHE_KEY_ALL_INSTALLED_MODULES = 'AllInstalledModules';
     /**
      * 系统模块配置保存
      */
     const MODULE_SYSTEM_OVERWRITE_CONFIG = 'ModuleSystemOverwriteConfig';
+
+    public static function clearCache()
+    {
+        Cache::forget(ModStart::cacheKey(self::CACHE_KEY_ALL_INSTALLED_MODULES));
+    }
 
     /**
      * 获取模块的基本信息
@@ -340,7 +351,7 @@ class ModuleManager
     public static function listUserInstalledModules()
     {
         try {
-            return array_build(modstart_config()->getArray(self::MODULE_ENABLE_LIST), function ($k, $v) {
+            return array_build(modstart_config()->getArray(self::USER_INSTALLED_MODULES), function ($k, $v) {
                 $v['isSystem'] = false;
                 if (!isset($v['enable'])) {
                     $v['enable'] = false;
@@ -386,7 +397,16 @@ class ModuleManager
         if (null !== $modules) {
             return $modules;
         }
-        $modules = array_merge(self::listUserInstalledModules(), self::listSystemInstalledModules());
+        $modules = Cache::remember(ModStart::cacheKey(self::CACHE_KEY_ALL_INSTALLED_MODULES), 60, function () {
+            $modules = array_merge(self::listUserInstalledModules(), self::listSystemInstalledModules());
+            /**
+             * 过滤出真实可用的模块
+             */
+            $modules = array_filter($modules, function ($v, $k) {
+                return file_exists(self::path($k, 'config.json'));
+            }, ARRAY_FILTER_USE_BOTH);
+            return $modules;
+        });
         return $modules;
     }
 
@@ -403,7 +423,7 @@ class ModuleManager
         }, array_filter($modules, function ($m) {
             return empty($m['isSystem']);
         }));
-        modstart_config()->setArray(self::MODULE_ENABLE_LIST, $modules);
+        modstart_config()->setArray(self::USER_INSTALLED_MODULES, $modules);
     }
 
     /**
