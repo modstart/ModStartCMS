@@ -6,8 +6,8 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
+use ModStart\Admin\Widget\DashboardItem;
 use ModStart\Admin\Widget\DashboardItemA;
-use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ColorUtil;
 use ModStart\Data\Event\DataDeletedEvent;
 use ModStart\Data\Event\DataUploadedEvent;
@@ -28,6 +28,7 @@ use Module\Member\Util\MemberMessageUtil;
 use Module\Member\Util\MemberMoneyUtil;
 use Module\Member\Util\MemberParamUtil;
 use Module\Member\Util\MemberUtil;
+use Module\Member\Util\MemberVipUtil;
 use Module\PayCenter\Biz\PayCenterBiz;
 use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
 use Module\Vendor\Admin\Widget\AdminWidgetLink;
@@ -152,12 +153,32 @@ class ModuleServiceProvider extends ServiceProvider
         });
 
         AdminWidgetDashboard::registerIcon(function (Row $row) {
-            $row->column(3, DashboardItemA::makeIconNumberTitle(
-                'iconfont icon-user',
-                ModelUtil::count('member_user', ['isDeleted' => false]),
-                '用户管理',
-                modstart_admin_url('member'), ColorUtil::randomColor()
-            ));
+            if (class_exists(DashboardItem::class)) {
+                $row->flexColumn(DashboardItem::makeTitleDataList(
+                    'iconfont icon-user',
+                    '用户',
+                    [
+                        [
+                            'title' => '今日新增',
+                            'value' => \Module\Member\Model\MemberUser::where(['isDeleted' => false])
+                                ->where('created_at', '>=', date('Y-m-d 00:00:00'))->count(),
+                            'url' => modstart_admin_url('member'),
+                        ],
+                        [
+                            'title' => '总用户',
+                            'value' => \Module\Member\Model\MemberUser::where(['isDeleted' => false])->count(),
+                            'url' => modstart_admin_url('member')
+                        ],
+                    ]
+                ));
+            } else {
+                $row->column(3, DashboardItemA::makeIconNumberTitle(
+                    'iconfont icon-user',
+                    \Module\Member\Model\MemberUser::where(['isDeleted' => false])->count(),
+                    '用户管理',
+                    modstart_admin_url('member'), ColorUtil::randomColor()
+                ));
+            }
         });
 
         AdminWidgetLink::register(function () {
@@ -200,6 +221,15 @@ class ModuleServiceProvider extends ServiceProvider
         }
 
         Event::listen(MemberUserRegisteredEvent::class, function (MemberUserRegisteredEvent $e) {
+            // VIP赠送积分
+            if (ModuleManager::getModuleConfig('Member', 'creditEnable', false)) {
+                $memberUser = MemberUtil::getCached($e->memberUserId);
+                $vipSet = MemberVipUtil::get($memberUser['vipId']);
+                if ($vipSet['creditPresentEnable']) {
+                    MemberCreditUtil::change($memberUser['id'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
+                }
+            }
+            // 注册发送邮件
             $message = modstart_config('Member_Registered_Message', '');
             if ($message) {
                 $memberUser = MemberUtil::getCached($e->memberUserId);

@@ -19,7 +19,7 @@ class ModuleManager
     /**
      * 用户已安装模块，仅存在于数据库配置的模块，不一定真实存在
      */
-    const USER_INSTALLED_MODULES = 'UserInstalledModules';
+    const USER_INSTALLED_MODULES = 'ModuleList';
     /**
      * 所有已安装模块，增加了模块是否真实存在的判断
      */

@@ -1,6 +1,6 @@
 .ub-dashboard-item {
     .title-gray {
-        color: #c4cfdb;
+        color: var(--color-tertiary);
     }
 
     .value-primary {
@@ -16,14 +16,13 @@
     background: rgba(255, 255, 255, 1);
     border-radius: var(--size-radius, 0.25rem);
     padding: 0.5rem 1rem 0.5rem 3.5rem;
-    cursor: pointer;
     transition: all 200ms;
     box-shadow: 0px 4px 8px 2px rgba(132, 163, 246, 0.08);
     display: block;
     margin-bottom: 0.5rem;
 
     &:hover {
-        transform: translateY(-0.25rem);
+        box-shadow: 0px 4px 8px 2px rgba(132, 163, 246, 0.2);
     }
 
     .icon {
@@ -49,7 +48,7 @@
 
     .desc {
         padding: 0.25rem 0 0 0;
-        color: rgba(145, 145, 145, 1);
+        color: var(--color-tertiary);
         font-size: var(--font-size-small, 0.6rem);
         display: -webkit-box;
         -webkit-box-orient: vertical;

@@ -68,9 +68,9 @@ class ModelManageUtil
         return $tables;
     }
 
-    public static function hasTable($table)
+    public static function hasTable($table, $conn = 'mysql')
     {
-        return Schema::hasTable($table);
+        return Schema::connection($conn)->hasTable($table);
     }
 
     public static function dropTable($table)

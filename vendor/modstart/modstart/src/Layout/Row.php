@@ -12,6 +12,11 @@ class Row implements Buildable, Renderable
     protected $columns = [];
 
     /**
+     * @var Renderable[] flex columns
+     */
+    protected $flexColumns = [];
+
+    /**
      * row classes.
      *
      * @var array
@@ -49,6 +54,11 @@ class Row implements Buildable, Renderable
         $this->addColumn($column);
     }
 
+    public function flexColumn(Renderable $renderable)
+    {
+        $this->flexColumns[] = $renderable;
+    }
+
     /**
      * @param Column $column
      */
@@ -65,6 +75,15 @@ class Row implements Buildable, Renderable
         $this->startRow();
         foreach ($this->columns as $column) {
             $column->build();
+        }
+        if (!empty($this->flexColumns)) {
+            echo "<div class='col-12 col-flex-container'>";
+            foreach ($this->flexColumns as $column) {
+                echo "<div class='col-flex-item'>";
+                echo $column->render();
+                echo "</div>";
+            }
+            echo "</div>";
         }
         $this->endRow();
     }

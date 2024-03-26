@@ -324,6 +324,9 @@ class Response
         if (empty($filenameFallback)) {
             $filenameFallback = 'file.' . FileUtil::extension($filename);
         }
+        $fileNameInvalidChars = ['/'];
+        $filename = str_replace($fileNameInvalidChars, '_', $filename);
+        $filenameFallback = str_replace($fileNameInvalidChars, '_', $filenameFallback);
         $response = new \Illuminate\Http\Response($content);
         $disposition = $response->headers->makeDisposition(
             \Symfony\Component\HttpFoundation\ResponseHeaderBag::DISPOSITION_ATTACHMENT,

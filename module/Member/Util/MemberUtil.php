@@ -446,8 +446,9 @@ class MemberUtil
             if ($ret['code']) {
                 return $ret;
             }
-            if (strlen($username) < modstart_config('Member_UsernameMinLength', 3)) {
-                return Response::generate(-1, '用户名至少3个字符');
+            $minLength = modstart_config('Member_UsernameMinLength', 3);
+            if (strlen($username) < $minLength) {
+                return Response::generate(-1, '用户名至少' . $minLength . '个字符');
             }
             // 为了统一登录时区分邮箱
             if (Str::contains($username, '@')) {

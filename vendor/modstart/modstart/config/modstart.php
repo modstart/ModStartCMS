@@ -36,7 +36,7 @@ return [
         ],
         'versionCheckDisable' => env('ADMIN_VERSION_CHECK_DISABLE', false),
         'upgradeDisable' => env('ADMIN_UPGRADE_DISABLE', false),
-        'theme' => env('ADMIN_THEME', 'default'),
+        'theme' => env('ADMIN_THEME', 'light'),
         'tabsEnable' => env('ADMIN_TABS_ENABLE', true),
         /**
          * 后台请求忽略权限校验的 Controller 或 Action

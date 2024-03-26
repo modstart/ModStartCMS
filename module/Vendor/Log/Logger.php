@@ -47,7 +47,7 @@ class Logger
         return $path;
     }
 
-    private static function write($file, $type, $label, $msg)
+    public static function write($file, $type, $label, $msg)
     {
         if (!is_string($msg)) {
             $msg = SerializeUtil::jsonEncode($msg);
@@ -58,12 +58,26 @@ class Logger
         return $string;
     }
 
-    public static function info($file, $label, $msg = '')
+    /**
+     * 记录消息日志
+     * @param $file string 文件名
+     * @param $label string 标签
+     * @param $msg string|array|null 信息
+     * @return string 写入的日志
+     */
+    public static function info($file, $label, $msg = null)
     {
         return self::write($file, 'info', $label, $msg);
     }
 
-    public static function error($file, $label, $msg = '')
+    /**
+     * 记录错误日志
+     * @param $file string 文件名
+     * @param $label string 标签
+     * @param $msg string|array|null 信息
+     * @return string 写入的日志
+     */
+    public static function error($file, $label, $msg = null)
     {
         return self::write($file, 'error', $label, $msg);
     }
