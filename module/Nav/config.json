@@ -13,7 +13,7 @@
     ],
     "modstartVersion": ">=2.6.0",
     "title": "通用导航",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "author": "官方",
     "description": "提供多位置的导航配置工具",
     "config": {

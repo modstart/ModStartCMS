@@ -6,42 +6,54 @@ use ModStart\Data\FileManager;
 
 class EnvUtil
 {
+    public static function parseContent($content)
+    {
+        $all = [];
+        if (empty($content)) {
+            return $all;
+        }
+        foreach (explode("\n", $content) as $line) {
+            $line = trim($line);
+            if (empty($line)) {
+                continue;
+            }
+            if (substr($line, 0, 1) === '#') {
+                continue;
+            }
+            $pcs = explode('=', $line);
+            $k = trim($pcs[0]);
+            array_shift($pcs);
+            $v = trim(join('=', $pcs));
+            switch (strtolower($v)) {
+                case 'true':
+                case '(true)':
+                    $v = true;
+                    break;
+                case 'false':
+                case '(false)':
+                    $v = false;
+                    break;
+                case 'empty':
+                case '(empty)':
+                    $v = '';
+                    break;
+                case 'null':
+                case '(null)':
+                    $v = null;
+                    break;
+            }
+            $all[$k] = $v;
+        }
+        return $all;
+    }
+
     public static function parse($file)
     {
         $all = [];
-        if (file_exists($file)) {
-            foreach (explode("\n", file_get_contents($file)) as $line) {
-                if ($line = trim($line)) {
-                    if (substr($line, 0, 1) === '#') {
-                        continue;
-                    }
-                    $pcs = explode('=', $line);
-                    $k = trim($pcs[0]);
-                    array_shift($pcs);
-                    $v = trim(join('=', $pcs));
-                    switch (strtolower($v)) {
-                        case 'true':
-                        case '(true)':
-                            $v = true;
-                            break;
-                        case 'false':
-                        case '(false)':
-                            $v = false;
-                            break;
-                        case 'empty':
-                        case '(empty)':
-                            $v = '';
-                            break;
-                        case 'null':
-                        case '(null)':
-                            $v = null;
-                            break;
-                    }
-                    $all[$k] = $v;
-                }
-            }
+        if (!file_exists($file)) {
+            return $all;
         }
-        return $all;
+        return self::parseContent(file_get_contents($file));
     }
 
     public static function all($file = null)
