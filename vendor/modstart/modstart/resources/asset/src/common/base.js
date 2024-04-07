@@ -119,6 +119,73 @@ const Dom = {
     }
 }
 
+const Widget = {
+    init: function () {
+        $('[data-widget-request-submit]').on('click', function () {
+            MS.widget.requestFromSubmit(this);
+        });
+    },
+    requestInContainer: function (ele, option) {
+        if (ele && ele._isVue && ele.$root && ele.$root.$el) {
+            ele = ele.$root.$el
+        }
+        ele = $(ele)
+        var container = ele.closest('[data-widget-container]');
+        var data = {};
+        container.find('[data-widget-request-field]').each(function () {
+            data[$(this).attr('data-widget-request-field')] = $(this).val();
+        });
+        MS.widget.request(Object.assign({
+            id: container.attr('id'),
+            name: container.attr('data-name'),
+            scope: ele.attr('data-scope'),
+            data: data,
+        }, option));
+    },
+    request: function (option) {
+        option = Object.assign({
+            id: '',
+            name: '',
+            scope: '',
+            data: {},
+            success: function (res) {
+                if (res.data.script) {
+                    eval(res.data.script);
+                }
+            },
+            fail: function (res) {
+                MS.dialog.tipError(res.msg);
+            },
+            finish: function (res) {
+                //MS.dialog.loadingOff();
+            },
+            loading: function () {
+                //MS.dialog.loadingOn();
+            }
+        }, option);
+        //console.log(option);
+        var url = window.__msRoot;
+        switch (option.scope) {
+            case 'admin':
+                url = window.__msAdminRoot;
+                break;
+        }
+        url = url + 'widget/request'
+        option.loading();
+        MS.api.post(url, Object.assign(option.data, {
+            _id: option.id,
+            _name: option.name
+        }), function (res) {
+            option.finish();
+            if (res.code === 0) {
+                option.success(res);
+            } else {
+                option.fail(res);
+            }
+        });
+    }
+};
+
 const MS = {
     /**
      * @Util 准备完成后触发
@@ -166,6 +233,7 @@ const MS = {
     date: DateUtil,
     image: ImageUtil,
     collection: Collection,
+    widget: Widget,
     base: Base,
     api: {
         defaultCallback: Base.defaultFormCallback,
@@ -210,6 +278,7 @@ function init() {
             }
         }
     });
+    Widget.init();
 }
 
 window.api = window.api || {}

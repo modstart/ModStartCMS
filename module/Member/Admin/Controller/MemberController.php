@@ -4,6 +4,7 @@
 namespace Module\Member\Admin\Controller;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Session;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminConfigBuilder;
@@ -35,6 +36,7 @@ use ModStart\Repository\Filter\RepositoryFilter;
 use ModStart\Support\Concern\HasFields;
 use ModStart\Widget\Box;
 use ModStart\Widget\TextDialogRequest;
+use ModStart\Widget\TextLink;
 use Module\Member\Config\MemberAdminList;
 use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserRegisteredEvent;
@@ -172,14 +174,33 @@ class MemberController extends Controller
                         'primary',
                         '查看',
                         modstart_admin_url('member/show', ['_id' => $item->id])
-                    )->width('90%')->height('90%')->render()
+                    )->width('90%')->height('90%')
                 );
+                if (ModuleManager::getModuleConfig('Member', 'adminLoginEnable', false)) {
+                    $itemOperate->prepend(
+                        TextLink::make(
+                            'primary',
+                            '登录',
+                            modstart_admin_url('member/login', ['_id' => $item->id])
+                        )->attr('target="_blank"')
+                    );
+                }
             })
             ->title('用户管理')
             ->canShow(false)
             ->canDelete(true)
             ->canEdit(false)
             ->canExport(ModuleManager::getModuleConfig('Member', 'exportEnable', false));
+    }
+
+    public function login()
+    {
+        BizException::throwsIf('后台一键登录 未开启', !ModuleManager::getModuleConfig('Member', 'adminLoginEnable', false));
+        AdminPermission::demoCheck();
+        $record = MemberUtil::get(CRUDUtil::id());
+        BizException::throwsIfEmpty('用户不存在', $record);
+        Session::put('memberUserId', $record['id']);
+        return Response::redirect(modstart_web_url(''));
     }
 
     public function selectRemote()

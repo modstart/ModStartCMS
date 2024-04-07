@@ -24,6 +24,7 @@ use ModStart\Widget\Box;
  * @mixin Page
  * @mixin Form
  * @method $this disableBoxWrap($disable)
+ * @method $this hookFormWrap($callback)
  */
 class AdminConfigBuilder implements Renderable
 {
@@ -32,8 +33,10 @@ class AdminConfigBuilder implements Renderable
     /** @var Form */
     private $form;
     private $pagePrepend = [];
+    private $pageAppend = [];
     private $config = [
         'disableBoxWrap' => false,
+        'hookFormWrap' => null,
     ];
 
     public function __construct()
@@ -69,6 +72,11 @@ class AdminConfigBuilder implements Renderable
         array_unshift($this->pagePrepend, $widget);
     }
 
+    public function pageAppend($widget)
+    {
+        $this->pageAppend[] = $widget;
+    }
+
     public function render()
     {
         if (!empty($this->pagePrepend)) {
@@ -77,10 +85,17 @@ class AdminConfigBuilder implements Renderable
             }
         }
         $body = $this->form;
-        if (!$this->config['disableBoxWrap']) {
+        if ($this->config['hookFormWrap']) {
+            $body = call_user_func($this->config['hookFormWrap'], $body);
+        } else if (!$this->config['disableBoxWrap']) {
             $body = new Box($this->form, $this->page->pageTitle());
         }
         $this->page->body($body);
+        if (!empty($this->pageAppend)) {
+            foreach ($this->pageAppend as $item) {
+                $this->page->row($item);
+            }
+        }
         return $this->page->render();
     }
 
@@ -164,7 +179,7 @@ class AdminConfigBuilder implements Renderable
 
     public function __call($name, $arguments)
     {
-        if (isset($this->config[$name])) {
+        if (array_key_exists($name, $this->config)) {
             $this->config[$name] = $arguments[0];
             return $this;
         }

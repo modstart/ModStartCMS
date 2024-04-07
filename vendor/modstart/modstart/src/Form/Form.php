@@ -69,7 +69,7 @@ use stdClass;
  * $value = function (Form $form) { $form->item()->each(function ($item) { }); }
  * @method  Form|mixed hookSubmitted($value = null)
  *
- * Hook 数据正在保存
+ * Hook 数据正在保存，可使用 $form->dataSubmitted(); $form->dataAdding() ; $form->dataEditing(); $form->dataForming();
  * $value = function(Form $form){ return Response::generateError('error'); }
  * @method  Form|mixed hookSaving($value = null)
  *

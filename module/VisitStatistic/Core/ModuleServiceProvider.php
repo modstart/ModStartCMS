@@ -17,9 +17,9 @@ use ModStart\Core\Util\StrUtil;
 use ModStart\Widget\Box;
 use ModStart\Widget\Chart\Line;
 use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
-use Module\VisitStatistic\Model\VisitStatisticDailyReport;
 use Module\VisitStatistic\Model\VisitStatisticItem;
 use Module\VisitStatistic\Type\VisitStatisticDevice;
+use Module\VisitStatistic\Util\VisitStatisticUtil;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -69,7 +69,7 @@ class ModuleServiceProvider extends ServiceProvider
             });
 
             AdminWidgetDashboard::registerFoot(function (AdminPage $page) {
-                $data = VisitStatisticDailyReport::report();
+                $data = VisitStatisticUtil::report();
                 $line = Line::make()->xData($data['time'])
                     ->ySeries(0, $data['pv'], '访问量', ['lineColor' => '#4F7FF3'])
                     ->ySeries(1, $data['uv'], '访客数', ['lineColor' => '#6A46BD']);
@@ -80,14 +80,14 @@ class ModuleServiceProvider extends ServiceProvider
 
         AdminMenu::register(function () {
             return [
-                'title' => '内容管理',
-                'icon' => 'file',
+                'title' => '运营报表',
+                'icon' => 'chart',
                 'sort' => 150,
                 'children' => [
                     [
-                        'title' => '网站访问记录',
-                        'url' => '\Module\VisitStatistic\Admin\Controller\VisitStatisticItemController@index',
-                    ]
+                        'title' => '网站访问',
+                        'url' => '\Module\VisitStatistic\Admin\Controller\VisitStatisticReportController@index',
+                    ],
                 ]
             ];
         });

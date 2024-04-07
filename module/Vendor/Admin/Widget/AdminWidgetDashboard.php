@@ -62,7 +62,7 @@ class AdminWidgetDashboard
             }
         }
         if (!empty($verifyHtml)) {
-            $page->row(Box::make(join("", $verifyHtml), '<i class="iconfont icon-details"></i> 待审核'));
+            $page->row(Box::make(join("", $verifyHtml), '<i class="iconfont icon-details"></i> 待处理'));
         }
 
         foreach (self::$foot as $item) {

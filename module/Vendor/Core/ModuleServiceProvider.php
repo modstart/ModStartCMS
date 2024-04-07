@@ -4,6 +4,7 @@ namespace Module\Vendor\Core;
 
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
+use Module\Vendor\Command\CompressDirImage;
 use Module\Vendor\Command\ScheduleRunAllCommand;
 use Module\Vendor\Command\ScheduleRunnerCommand;
 use Module\Vendor\Provider\Schedule\ScheduleBiz;
@@ -22,6 +23,7 @@ class ModuleServiceProvider extends ServiceProvider
         $this->commands([
             ScheduleRunnerCommand::class,
             ScheduleRunAllCommand::class,
+            CompressDirImage::class,
         ]);
         if (class_exists(DataTempCleanScheduleBiz::class)) {
             ScheduleBiz::register(DataTempCleanScheduleBiz::class);

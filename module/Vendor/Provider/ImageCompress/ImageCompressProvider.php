@@ -27,6 +27,9 @@ class ImageCompressProvider
         return self::getByName($name);
     }
 
+    /**
+     * @return AbstractImageCompressProvider|null
+     */
     public static function first()
     {
         foreach (self::all() as $item) {

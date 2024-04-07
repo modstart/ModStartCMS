@@ -2,6 +2,8 @@
 
 namespace ModStart\Grid\Filter;
 
+use ModStart\Core\Dao\ModelUtil;
+
 /**
  * 多条件搜索
  *
@@ -25,7 +27,7 @@ class Likes extends AbstractFilter
                 if (empty($like)) {
                     continue;
                 }
-                $conditions[] = $this->buildCondition($this->column, 'like', "%${like}%");
+                $conditions[] = $this->buildCondition($this->column, 'like', "%" . ModelUtil::quoteLikeKeywords($like) . "%");
             }
             if (!empty($conditions)) {
                 return $conditions;

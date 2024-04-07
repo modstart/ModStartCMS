@@ -260,10 +260,6 @@ class ModuleServiceProvider extends ServiceProvider
                     'sort' => 100,
                     'children' => [
                         [
-                            'title' => '用户统计',
-                            'url' => '\Module\Member\Admin\Controller\MemberDashboardController@index',
-                        ],
-                        [
                             'title' => '用户管理',
                             'url' => '\Module\Member\Admin\Controller\MemberController@index',
                         ],
@@ -339,6 +335,17 @@ class ModuleServiceProvider extends ServiceProvider
                                         'url' => '\Module\Member\Admin\Controller\MemberVipOrderController@index',
                                     ] : null,
                             ],
+                        ],
+                    ]
+                ],
+                [
+                    'title' => '运营报表',
+                    'icon' => 'chart',
+                    'sort' => 150,
+                    'children' => [
+                        [
+                            'title' => '用户数据',
+                            'url' => '\Module\Member\Admin\Controller\MemberDashboardController@index',
                         ],
                     ]
                 ],

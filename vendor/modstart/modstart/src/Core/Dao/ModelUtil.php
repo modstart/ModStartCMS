@@ -1594,4 +1594,9 @@ class ModelUtil
         return $count;
     }
 
+    public static function quoteLikeKeywords($keywords)
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\\\', '\\%', '\\_'], $keywords);
+    }
+
 }

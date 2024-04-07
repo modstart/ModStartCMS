@@ -15,6 +15,7 @@ class IpUtil
     public static function match4($ip, $ipRange)
     {
         // 范围
+        $ipRange = str_replace('－', '-', $ipRange);
         if (strpos($ipRange, '-') !== false) {
             list($start, $end) = explode('-', $ipRange);
             return ip2long($ip) >= ip2long($start) && ip2long($ip) <= ip2long($end);

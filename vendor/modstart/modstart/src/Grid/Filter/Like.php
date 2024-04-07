@@ -2,6 +2,7 @@
 
 namespace ModStart\Grid\Filter;
 
+use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\StrUtil;
 
 class Like extends AbstractFilter
@@ -23,7 +24,7 @@ class Like extends AbstractFilter
                     $searchInfo['like']
                 ]);
             } else {
-                return $this->buildCondition($this->column, 'like', "%${searchInfo['like']}%");
+                return $this->buildCondition($this->column, 'like', "%" . ModelUtil::quoteLikeKeywords($searchInfo['like']) . "%");
             }
         }
         return null;

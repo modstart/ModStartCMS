@@ -58,6 +58,8 @@ class ModStartAdmin
             $router->match(['get', 'post'], 'data/file_manager/{category}', 'DataController@fileManager');
             $router->match(['get', 'post'], 'data/ueditor', 'DataController@ueditor');
 
+            $router->match(['get', 'post'], 'widget/request', 'WidgetController@request');
+
         });
 
     }
@@ -86,7 +88,7 @@ class ModStartAdmin
                 $routesFiles = Cache::rememberForever(ModStart::cacheKey('ModStartAdminRoutes'), function () {
                     return self::listModuleRoutes();
                 });
-            }else{
+            } else {
                 $routesFiles = self::listModuleRoutes();
             }
         }

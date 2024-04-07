@@ -99,6 +99,12 @@
                 "switch",
                 "启用存储限制"
             ]
+        ],
+        "adminLoginEnable": [
+            [
+                "switch",
+                "启用后台一键登录"
+            ]
         ]
     }
 }

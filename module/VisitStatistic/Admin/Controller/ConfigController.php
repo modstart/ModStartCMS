@@ -8,7 +8,7 @@ use ModStart\Admin\Layout\AdminConfigBuilder;
 class ConfigController extends Controller
 {
     public static $PermitMethodMap = [
-        'index' => '\\Module\\VisitStatistic\\Admin\\Controller\\VisitStatisticItemController@index'
+        'index' => '\\Module\\VisitStatistic\\Admin\\Controller\\VisitStatisticReportController@index'
     ];
 
     public function index(AdminConfigBuilder $builder)

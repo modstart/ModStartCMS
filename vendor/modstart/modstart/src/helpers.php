@@ -282,6 +282,8 @@ function modstart_config($key = null, $default = '', $useCache = true)
             return $lastValue;
         }
         if (is_null($key)) {
+            $lastKey = null;
+            $lastValue = null;
             return app('modstartConfig');
         }
         $lastKey = $key;

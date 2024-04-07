@@ -48,31 +48,27 @@ body {
                             & > .title {
                                 background: var(--color-primary-gradient-bg);
                                 color: #FFF;
-                                border-radius: 2rem;
-                                line-height: 1.6rem;
-                                margin: 0.35rem 0.5rem;
+                                border-radius: 0.5rem;
+                                line-height: 2rem;
+                                margin: 0.15rem 0.25rem;
                                 box-shadow: 0 0 0.25rem #CCC;
                                 text-shadow: 0 0 0.1rem #000;
                             }
                         }
                     }
 
-
                 }
 
-                & > .menu-item > .title {
+                & > .menu-item.active > .title {
                     padding-left: 0.5rem;
-                    margin-left: 0.5rem;
                 }
 
-                & > .menu-item > .children > .menu-item > .title {
-                    padding-left: 0.5rem;
-                    margin-left: 1.8rem;
+                & > .menu-item > .children > .menu-item.active > .title {
+                    padding-left: 1.55rem;
                 }
 
-                & > .menu-item > .children > .menu-item > .children > .menu-item > .title {
-                    padding-left: 0.5rem;
-                    margin-left: 2.2rem;
+                & > .menu-item > .children > .menu-item > .children > .menu-item.active > .title {
+                    padding-left: 2.1rem;
                 }
             }
         }
@@ -81,28 +77,39 @@ body {
             .top {
                 .menu {
                     a {
-                        border-radius: 1rem;
+                        border-radius: 0.25rem;
                         line-height: 1.6rem;
                         border-top: none;
-                        box-shadow: 0 0 1rem #EEE;
-                        margin-top: 0.25rem;
-                        background: #EEE;
+                        margin-top: .25rem;
+                        background: #FFF;
+                        border: 1px solid var(--color-body-line);
+                        font-weight: bold;
+                        margin-right: 0.2rem;
+
+                        &:first-child {
+                            margin-right: 0;
+                        }
 
                         .close {
                             color: #999;
                         }
 
                         &.active {
-                            background: var(--color-primary-gradient-bg);
-                            color: #FFFFFF;
-                            text-shadow: 0 0 0.1rem #000;
+                            color: var(--color-primary);
+                            background-color: var(--color-primary-light-bg);
 
                             &:before {
-                                background-color: #FFFFFF;
+                                background-color: var(--color-primary);
                             }
 
                             .close {
-                                color: #FFFFFF;
+                                color: var(--color-primary);
+
+                                &:hover {
+                                    background-color: #CCC;
+                                    border-radius: 50%;
+                                    color: red;
+                                }
                             }
                         }
                     }

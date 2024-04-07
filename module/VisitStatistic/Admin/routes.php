@@ -4,6 +4,8 @@
 
 $router->match(['get', 'post'], 'visit_statistic/config', 'ConfigController@index');
 
+$router->match(['get', 'post'], 'visit_statistic/report', 'VisitStatisticReportController@index');
+
 $router->match(['get', 'post'], 'visit_statistic/item', 'VisitStatisticItemController@index');
 $router->match(['get', 'post'], 'visit_statistic/item/add', 'VisitStatisticItemController@add');
 $router->match(['get', 'post'], 'visit_statistic/item/edit', 'VisitStatisticItemController@edit');

@@ -64,7 +64,7 @@ return [
     'System Upgrade' => '系统升级',
     'Module Manager' => '模块管理',
     'Module Store' => '模块市场',
-    'Admin Manage' => '后台权限',
+    'Admin Manage' => '后台管理',
     'Admin Log' => '管理日志',
     'Admin Role' => '管理角色',
     'Admin User' => '管理员',

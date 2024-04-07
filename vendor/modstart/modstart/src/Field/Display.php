@@ -24,7 +24,7 @@ class Display extends AbstractField
     {
         $this->hookRendering(function (AbstractField $field, $item, $index) use ($linkTemplate, $openInBlank) {
             if (null !== $linkTemplate) {
-                if ($linkTemplate instanceof \Closure) {
+                if ($linkTemplate instanceof \Closure || strpos($linkTemplate, '::') !== false) {
                     $linkUrl = call_user_func($linkTemplate, $item);
                 } else {
                     $linkUrl = $linkTemplate;

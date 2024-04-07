@@ -26,6 +26,7 @@ class CreateMemberLoginLog extends Migration
             $table->string('ipLocation', 100)->nullable()->comment('IP地址信息');
 
             $table->index(['memberUserId']);
+            $table->index(['created_at']);
 
         });
     }

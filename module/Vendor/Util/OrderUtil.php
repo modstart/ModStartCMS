@@ -10,6 +10,14 @@ use Module\Vendor\Type\OrderStatus;
 
 class OrderUtil
 {
+    /**
+     * 订单手动取消快捷方法
+     * @param $model string 模型类名
+     * @param $where array 查询条件
+     * @param $successCallback callable 成功回调
+     * @return void
+     * @throws BizException
+     */
     public static function cancelManual($model, $where, $successCallback = null)
     {
         ModelUtil::transactionBegin();
