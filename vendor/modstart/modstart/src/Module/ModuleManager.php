@@ -424,6 +424,7 @@ class ModuleManager
             return empty($m['isSystem']);
         }));
         modstart_config()->setArray(self::USER_INSTALLED_MODULES, $modules);
+        self::clearCache();
     }
 
     /**
@@ -528,6 +529,7 @@ class ModuleManager
         $current = modstart_config()->getArray(self::MODULE_SYSTEM_OVERWRITE_CONFIG);
         $current[$module] = $config;
         modstart_config()->setArray(self::MODULE_SYSTEM_OVERWRITE_CONFIG, $current);
+        self::clearCache();
     }
 
     /**
