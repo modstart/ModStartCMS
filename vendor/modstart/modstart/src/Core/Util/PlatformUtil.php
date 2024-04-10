@@ -49,4 +49,40 @@ class PlatformUtil
         }
         return self::UNKNOWN;
     }
+
+    private static function memoryInfo()
+    {
+        $info = [
+            'total' => 0,
+            'used' => 0,
+        ];
+        if (self::isLinux()) {
+            $memoryInfo = file_get_contents('/proc/meminfo');
+            foreach (explode("\n", $memoryInfo) as $line) {
+                if (preg_match('/MemTotal:\s+(\d+)\skB/', $line, $matches)) {
+                    $info['total'] = $matches[1] * 1024;
+                } else if (preg_match('/MemAvailable:\s+(\d+)\skB/', $line, $matches)) {
+                    $info['used'] = $info['total'] - $matches[1] * 1024;
+                }
+            }
+        } else if (self::isWindows()) {
+            // todo
+        } else if (self::isOsx()) {
+            // todo
+        }
+        return $info;
+    }
+
+    public static function memoryTotal()
+    {
+        $memoryInfo = self::memoryInfo();
+        return $memoryInfo['total'];
+    }
+
+    public static function memoryUsed()
+    {
+        $memoryInfo = self::memoryInfo();
+        return $memoryInfo['used'];
+    }
+
 }

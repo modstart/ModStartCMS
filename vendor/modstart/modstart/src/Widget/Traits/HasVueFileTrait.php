@@ -31,6 +31,11 @@ trait HasVueFileTrait
         }
 
         $vueScript = preg_replace('/export default/', 'let _widget = ', $vueScript) . ';';
+        $vueInitParam = new \stdClass();
+        if (method_exists($this, 'initParam')) {
+            $vueInitParam = call_user_func([$this, 'initParam']);
+        }
+
 
         if (method_exists($this, 'contentRenderBefore')) {
             call_user_func([$this, 'contentRenderBefore']);
@@ -42,10 +47,13 @@ trait HasVueFileTrait
         ]);
 
         ModStart::script(join('', [
+            "(function(){",
             "Vue.use(ELEMENT, {size: 'mini', zIndex: 3000});",
+            "let _widgetInitParam = " . json_encode($vueInitParam) . ';',
             $vueScript,
             "_widget.el = '#{$this->id}';",
             "new Vue(_widget);",
+            "})();",
         ]));
 
         return $vueTemplate;

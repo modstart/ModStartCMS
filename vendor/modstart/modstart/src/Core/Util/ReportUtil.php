@@ -1,13 +1,11 @@
 <?php
 
-namespace ModStart\Widget\Traits;
-
+namespace ModStart\Core\Util;
 
 use Illuminate\Support\Facades\DB;
 use ModStart\Core\Dao\ModelUtil;
-use ModStart\Core\Util\TimeUtil;
 
-trait DSTrait
+class ReportUtil
 {
     /**
      * @param $start
@@ -21,7 +19,7 @@ trait DSTrait
      *  ['title'=>'成功','table'=>'table2','where'=>[]],
      * ]
      */
-    protected function dsTableCountSeriesDaily($start, $end, $series = [])
+    public static function tableCountSeriesDaily($start, $end, $series = [])
     {
         $startTime = $start . ' 00:00:00';
         $endTime = $end . ' 23:59:59';
@@ -77,7 +75,7 @@ trait DSTrait
      *  ['title'=>'成功','table'=>'table2','field'=>'payFee','where'=>[]],
      * ]
      */
-    protected function dsTableSumSeriesDaily($start, $end, $series = [])
+    public static function tableSumSeriesDaily($start, $end, $series = [])
     {
         $startTime = $start . ' 00:00:00';
         $endTime = $end . ' 23:59:59';

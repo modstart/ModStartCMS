@@ -17,11 +17,29 @@ body {
     }
 
     .ub-panel-frame {
-        &.left-toggle .left:not(:hover) .menu .menu-item .title {
-            margin-left: inherit;
+        &.left-toggle {
+
+            .left:not(:hover) .menu {
+                & > .menu-item:not(:has(.children)) > .title {
+                    padding-left: 0;
+                }
+            }
+
+            @media (max-width: 800px) {
+                .left:not(:hover) .menu {
+                    & > .menu-item:not(:has(.children)) > .title {
+                        padding-left: 0.75rem;
+                    }
+
+                    & > .menu-item.active:not(:has(.children)) > .title {
+                        padding-left: 0.5rem;
+                    }
+                }
+            }
         }
 
         .left {
+
             .logo {
                 text-align: center;
                 color: #000;
@@ -50,24 +68,31 @@ body {
                                 color: #FFF;
                                 border-radius: 0.5rem;
                                 line-height: 2rem;
-                                margin: 0.15rem 0.25rem;
+                                margin-top: 0.15rem;
+                                margin-bottom: 0.15rem;
+                                //margin: 0.15rem 0.25rem;
                                 box-shadow: 0 0 0.25rem #CCC;
                                 text-shadow: 0 0 0.1rem #000;
                             }
                         }
                     }
-
                 }
 
-                & > .menu-item.active > .title {
+                & > .menu-item.active:not(:has(.children)) > .title {
+                    margin-left: 0.25rem;
+                    margin-right: 0.25rem;
                     padding-left: 0.5rem;
                 }
 
                 & > .menu-item > .children > .menu-item.active > .title {
+                    margin-left: 0.25rem;
+                    margin-right: 0.25rem;
                     padding-left: 1.55rem;
                 }
 
                 & > .menu-item > .children > .menu-item > .children > .menu-item.active > .title {
+                    margin-left: 0.25rem;
+                    margin-right: 0.25rem;
                     padding-left: 2.1rem;
                 }
             }

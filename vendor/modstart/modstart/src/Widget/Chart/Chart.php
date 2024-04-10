@@ -4,66 +4,17 @@
 namespace ModStart\Widget\Chart;
 
 
-use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Widget\AbstractWidget;
-use ModStart\Widget\Traits\DSTrait;
 
 class Chart extends AbstractWidget
 {
-    use DSTrait;
-
     /**
      * @var string
      */
     protected $view = 'modstart::widget.chart';
     protected $height = 300;
-    protected $option = [
-        'grid' => [
-            // 'top' => '20%',
-            'right' => '1%',
-            'left' => '1%',
-            'bottom' => '10%',
-            'containLabel' => true
-        ],
-        'toolbox' => [
-            'feature' => [
-                'dataView' => [
-                    'show' => true,
-                    'readOnly' => false,
-                ],
-                'restore' => [
-                    'show' => true,
-                ],
-                'saveAsImage' => [
-                    'show' => true,
-                ],
-            ],
-        ],
-        'tooltip' => [
-            'trigger' => 'axis',
-            'axisPointer' => [
-                'type' => 'shadow',
-                'snap' => true,
-                'crossStyle' => [
-                    'color' => '#999',
-                ],
-            ],
-        ],
-        'legend' => [
-            'data' => [],
-        ],
-        'xAxis' => [
-            'type' => 'category',
-            'data' => []
-        ],
-        'yAxis' => [
-            'type' => 'value',
-            'minInterval' => 1
-        ],
-        'series' => [
-
-        ]
-    ];
+    protected $option = [];
 
     /**
      * Chart constructor.
@@ -75,8 +26,13 @@ class Chart extends AbstractWidget
 
     protected function variables()
     {
+        $optionString = $this->option;
+        if (!is_string($optionString)) {
+            $optionString = json_encode($optionString);
+        }
         return [
             'option' => $this->option,
+            'optionString' => $optionString,
             'height' => $this->height,
         ];
     }
@@ -84,6 +40,15 @@ class Chart extends AbstractWidget
     public static function make()
     {
         return new static();
+    }
+
+    public function height($value = null)
+    {
+        if (is_null($value)) {
+            return $this->height;
+        }
+        $this->height = $value;
+        return $this;
     }
 
     public function option($value = null)
@@ -97,25 +62,7 @@ class Chart extends AbstractWidget
 
     public function optionSet($key, $value)
     {
-        $this->option[$key] = $value;
+        ArrayUtil::updateByDotKey($this->option, $key, $value);
         return $this;
-    }
-
-    public function random()
-    {
-        $this->option['xAxis']['data'] = RandomUtil::dateCollection();
-        $this->ySeries(0, RandomUtil::numberCollection());
-        return $this;
-    }
-
-    public function xData($value, $param = [])
-    {
-        $this->option['xAxis']['data'] = $value;
-        return $this;
-    }
-
-    public function yData($value, $name = '数量', $param = [])
-    {
-        return $this->ySeries(0, $value, $name, $param);
     }
 }

@@ -93,6 +93,14 @@
             overflow: auto;
             transition: all 0.2s linear;
 
+            &.moving {
+                cursor: grab;
+
+                * {
+                    cursor: grab;
+                }
+            }
+
             mark {
                 color: red;
                 background: none;
@@ -303,6 +311,14 @@
                 overflow-y: hidden;
                 overflow-x: auto;
                 white-space: nowrap;
+
+                &.moving {
+                    cursor: grab;
+
+                    * {
+                        cursor: grab;
+                    }
+                }
 
                 &::-webkit-scrollbar-track {
                     background: transparent;

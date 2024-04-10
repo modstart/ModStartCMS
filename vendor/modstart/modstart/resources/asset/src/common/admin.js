@@ -26,9 +26,11 @@ window._pageTabManager = {
                 return;
             }
             if (_rootWindow._pageTabManager.normalTabUrl(url) === normalUrl) {
+                //console.log('activeUrl', url)
                 $(o).parents('.children').prev().addClass('open');
                 $menu.find('.menu-item').removeClass('active');
                 $(o).closest('.menu-item').addClass('active');
+                $(o).parents('.menu-item').addClass('active');
                 try {
                     o.scrollIntoView({block: 'center', behavior: 'smooth'});
                 } catch (e) {
@@ -140,6 +142,48 @@ $(window).on('load', function () {
         $keywords.trigger('keyup');
     }
 
+
+    // 左侧菜单拖拽
+    // 让$adminTabMenu可以水平滚动
+    // console.log('page-tabs-enable')
+    var menuDragData = {
+        draging: false,
+        scrollTopStart: 0,
+        startX: 0,
+        startY: 0,
+        isDragged: false,
+    };
+    $menu.on('mousedown', function (e) {
+        menuDragData.draging = true;
+        menuDragData.scrollTopStart = $menu.scrollTop();
+        menuDragData.startX = e.pageX;
+        menuDragData.startY = e.pageY;
+        menuDragData.isDragged = false;
+    });
+    $menu.on('mousemove', function (e) {
+        if (!menuDragData.draging) {
+            return;
+        }
+        var offsetX = e.pageX - menuDragData.startX;
+        var offsetY = e.pageY - menuDragData.startY;
+        //console.log('mousemove', menuDragData.scrollTopStart, offsetX, offsetY, menuDragData.scrollTopStart - offsetY)
+        if (offsetX * offsetX + offsetY * offsetY > 10) {
+            menuDragData.isDragged = true;
+        }
+        $menu.scrollTop(menuDragData.scrollTopStart - offsetY);
+        $menu.addClass('moving');
+    })
+    $menu.on('mouseup', function (e) {
+        //console.log('mouseup', e.pageX, e.pageY)
+        menuDragData.draging = false;
+        $menu.removeClass('moving');
+    });
+    $menu.on('mouseleave', function (e) {
+        //console.log('mouseleave', e.pageX, e.pageY)
+        menuDragData.draging = false;
+        $menu.removeClass('moving');
+    });
+
     // 弹窗控制
     var $adminTabPage = $frame.find('#adminTabPage');
     var $adminTabMenu = $frame.find('#adminTabMenu');
@@ -172,12 +216,15 @@ $(window).on('load', function () {
                 dragData.isDragged = true;
             }
             $adminTabMenu.scrollLeft(dragData.scrollLeftStart - offsetX);
+            $adminTabMenu.addClass('moving');
         })
         $adminTabMenu.on('mouseup', function (e) {
             dragData.draging = false;
+            $adminTabMenu.removeClass('moving');
         });
         $adminTabMenu.on('mouseleave', function (e) {
             dragData.draging = false;
+            $adminTabMenu.removeClass('moving');
         });
 
         var tabManager = Object.assign(window._pageTabManager, {
@@ -242,8 +289,14 @@ $(window).on('load', function () {
                 let hasTab = (this.data.filter(o => o.active).length > 0)
                 $adminMainPage.toggleClass('hidden', hasTab);
                 $adminTabPage.toggleClass('hidden', !hasTab);
-                let $menuMain = $menu.find('.menu-item.page-main');
+                let $menuMain = $menu.find('.menu-item.page-main').last();
+                //console.log('updateMainPage', hasTab)
                 $menuMain.toggleClass('active', !hasTab);
+                if (!hasTab) {
+                    //console.log('updateMainPage2', hasTab)
+                    window.document.title = $.trim($menuMain.text());
+                    $menuMain.parents('.menu-item').addClass('active');
+                }
             },
             activeId: function () {
                 for (var i = 0; i < this.data.length; i++) {
@@ -297,13 +350,20 @@ $(window).on('load', function () {
                 for (var i = 0; i < this.data.length; i++) {
                     var active = (this.data[i].id == id)
                     if (this.data[i].active !== active) {
-                        if (active) {
-                            this.data[i].option.focus()
-                        } else {
+                        if (!active) {
                             this.data[i].option.blur()
+                            this.data[i].active = active;
                         }
                     }
-                    this.data[i].active = active;
+                }
+                for (var i = 0; i < this.data.length; i++) {
+                    var active = (this.data[i].id == id)
+                    if (this.data[i].active !== active) {
+                        if (active) {
+                            this.data[i].option.focus()
+                            this.data[i].active = active;
+                        }
+                    }
                 }
 
                 var $iframes = $adminTabPage.find('iframe:not(.hidden)');
@@ -356,10 +416,12 @@ $(window).on('load', function () {
             },
             updateTitle: function (id, title) {
                 $adminTabMenu.find('[data-tab-menu=' + id + ']').html(title + '<i class="close iconfont icon-close"></i>')
+                window.document.title = title
             },
         });
         $menu.find('a').on('click', function () {
-            var $this = $(this)
+            //console.log('click', this);
+            var $this = $(this);
             if ($this.is('[data-tab-menu-ignore]')) {
                 return;
             }
@@ -370,11 +432,15 @@ $(window).on('load', function () {
             let title = $.trim($this.text())
             tabManager.open(url, title, {
                 focus: function () {
+                    //console.log('focus', url, $this.parents('.menu-item'))
                     $this.closest('.ub-panel-frame').find('.menu-item').removeClass('active')
                     $this.parent().addClass('active')
+                    $this.parents('.menu-item').addClass('active');
+                    window.document.title = $.trim($this.text())
                 },
                 blur: function () {
-                    $this.parent().removeClass('active')
+                    //console.log('blur', url, $this.parent()[0])
+                    $this.parents('.menu-item').removeClass('active')
                 }
             })
             return false;

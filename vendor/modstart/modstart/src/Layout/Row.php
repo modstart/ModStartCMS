@@ -23,6 +23,12 @@ class Row implements Buildable, Renderable
      */
     protected $class = [];
 
+    public static function make($content)
+    {
+        $ins = new static($content);
+        return $ins;
+    }
+
     /**
      * Row constructor.
      *
@@ -47,7 +53,9 @@ class Row implements Buildable, Renderable
      */
     public function column($width, $content)
     {
-        $width = $width < 1 ? round(12 * $width) : $width;
+        if (is_float($width)) {
+            $width = $width < 1 ? round(12 * $width) : $width;
+        }
 
         $column = new Column($content, $width);
 

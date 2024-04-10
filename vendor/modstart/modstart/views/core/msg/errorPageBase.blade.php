@@ -4,6 +4,7 @@
         color: #999;
         padding: 0;
         margin: 0;
+        background: #FFF;
     }
     a {
         background: #4b4b62;

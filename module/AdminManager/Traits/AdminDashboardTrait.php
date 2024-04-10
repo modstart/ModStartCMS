@@ -16,12 +16,15 @@ use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
  */
 trait AdminDashboardTrait
 {
-    public function dashboard()
+    public function dashboard($callback = null)
     {
         /** @var AdminPage $page */
         $page = app(AdminPage::class);
         $page->pageTitle(L('Dashboard'));
         $page->row(new SecurityTooltipBox());
+        if ($callback) {
+            call_user_func($callback, $page);
+        }
         $page->append(new Row(function (Row $row) {
             AdminWidgetDashboard::callIcon($row);
         }));

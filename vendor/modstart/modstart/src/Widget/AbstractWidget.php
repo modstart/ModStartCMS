@@ -28,7 +28,6 @@ class AbstractWidget extends Fluent implements Renderable
         WidgetManager::uses(static::class);
     }
 
-
     protected function formatAttributes()
     {
         $html = [];

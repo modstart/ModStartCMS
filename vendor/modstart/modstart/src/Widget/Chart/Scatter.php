@@ -9,7 +9,7 @@ use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\ReportUtil;
 use ModStart\Core\Util\TimeUtil;
 
-class Bar extends Chart
+class Scatter extends Chart
 {
     protected $option = [
         'grid' => [
@@ -47,7 +47,7 @@ class Bar extends Chart
 
     public function random()
     {
-        $this->option['xAxis']['data'] = RandomUtil::dateCollection();
+        $this->xData(RandomUtil::dateCollection());
         $this->ySeries(0, RandomUtil::numberCollection());
         return $this;
     }
@@ -65,20 +65,20 @@ class Bar extends Chart
 
     public function ySeries($i, $value, $name = '数量', $param = [])
     {
-        if (!isset($param['barColor'])) {
-            $param['barColor'] = ColorUtil::pick('L-' . $i);
+        if (!isset($param['lineColor'])) {
+            $param['lineColor'] = ColorUtil::pick('L-' . $i);
         }
         $this->option['legend']['data'][$i] = $name;
         $this->option['series'][$i] = [
             'name' => $name,
             'data' => $value,
-            'type' => 'bar',
+            'type' => 'scatter',
             'smooth' => true,
             'itemStyle' => [
                 'normal' => [
-                    'color' => $param['barColor'],
-                    'barStyle' => [
-                        'color' => $param['barColor'],
+                    'color' => $param['lineColor'],
+                    'lineStyle' => [
+                        'color' => $param['lineColor'],
                     ]
                 ]
             ]
@@ -118,12 +118,12 @@ class Bar extends Chart
             $this->option['series'][] = [
                 'name' => $series[$index]['title'],
                 'data' => $value,
-                'type' => 'bar',
+                'type' => 'line',
                 'smooth' => true,
                 'itemStyle' => [
                     'normal' => [
                         'color' => $color,
-                        'barStyle' => [
+                        'lineStyle' => [
                             'color' => $color
                         ]
                     ]
@@ -165,12 +165,12 @@ class Bar extends Chart
             $this->option['series'][] = [
                 'name' => $series[$index]['title'],
                 'data' => $value,
-                'type' => 'bar',
+                'type' => 'line',
                 'smooth' => true,
                 'itemStyle' => [
                     'normal' => [
                         'color' => $color,
-                        'barStyle' => [
+                        'lineStyle' => [
                             'color' => $color
                         ]
                     ]

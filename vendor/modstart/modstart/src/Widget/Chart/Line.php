@@ -5,31 +5,19 @@ namespace ModStart\Widget\Chart;
 
 
 use ModStart\Core\Util\ColorUtil;
+use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\ReportUtil;
 use ModStart\Core\Util\TimeUtil;
 
 class Line extends Chart
 {
     protected $option = [
         'grid' => [
-            // 'top' => '20%',
-            'right' => '1%',
-            'left' => '1%',
-            'bottom' => '10%',
+            'top' => '20%',
+            'right' => '0',
+            'left' => '0',
+            'bottom' => '0',
             'containLabel' => true
-        ],
-        'toolbox' => [
-            'feature' => [
-                'dataView' => [
-                    'show' => true,
-                    'readOnly' => false,
-                ],
-                'restore' => [
-                    'show' => true,
-                ],
-                'saveAsImage' => [
-                    'show' => true,
-                ],
-            ],
         ],
         'tooltip' => [
             'trigger' => 'axis',
@@ -57,6 +45,24 @@ class Line extends Chart
         ]
     ];
 
+    public function random()
+    {
+        $this->xData(RandomUtil::dateCollection());
+        $this->ySeries(0, RandomUtil::numberCollection());
+        return $this;
+    }
+
+    public function xData($value, $param = [])
+    {
+        $this->option['xAxis']['data'] = $value;
+        return $this;
+    }
+
+    public function yData($value, $name = '数量', $param = [])
+    {
+        return $this->ySeries(0, $value, $name, $param);
+    }
+
     public function ySeries($i, $value, $name = '数量', $param = [])
     {
         if (!isset($param['lineColor'])) {
@@ -80,6 +86,12 @@ class Line extends Chart
         return $this;
     }
 
+    /**
+     * @param $series
+     * @param $limit
+     * @return $this
+     * @deprecated
+     */
     public function tableDailyCountLatest($series = [], $limit = 15)
     {
         $end = date('Y-m-d');
@@ -89,9 +101,16 @@ class Line extends Chart
         return $this->tableDailyCount($start, $end, $series);
     }
 
+    /**
+     * @param $start
+     * @param $end
+     * @param $series
+     * @return $this
+     * @deprecated
+     */
     public function tableDailyCount($start, $end, $series = [])
     {
-        $data = $this->dsTableCountSeriesDaily($start, $end, $series);
+        $data = ReportUtil::tableCountSeriesDaily($start, $end, $series);
         $this->xData($data['time']);
         $this->option['series'] = [];
         foreach ($data['values'] as $index => $value) {
@@ -114,6 +133,12 @@ class Line extends Chart
         return $this;
     }
 
+    /**
+     * @param $series
+     * @param $limit
+     * @return $this
+     * @deprecated
+     */
     public function tableDailySumLatest($series = [], $limit = 15)
     {
         $end = date('Y-m-d');
@@ -123,9 +148,16 @@ class Line extends Chart
         return $this->tableDailySum($start, $end, $series);
     }
 
+    /**
+     * @param $start
+     * @param $end
+     * @param $series
+     * @return $this
+     * @deprecated
+     */
     public function tableDailySum($start, $end, $series = [])
     {
-        $data = $this->dsTableSumSeriesDaily($start, $end, $series);
+        $data = ReportUtil::tableSumSeriesDaily($start, $end, $series);
         $this->xData($data['time']);
         $this->option['series'] = [];
         foreach ($data['values'] as $index => $value) {

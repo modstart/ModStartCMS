@@ -24,21 +24,21 @@ class ModuleServiceProvider extends ServiceProvider
                     'sort' => 500,
                     'children' => [
                         [
-                            'title' => L('Admin Role'),
-                            'url' => '\ModStart\Admin\Controller\AdminRoleController@index',
-                        ],
-                        [
-                            'title' => L('Admin Role Manage'),
-                            'rule' => 'AdminRoleManage',
-                            'hide' => true,
-                        ],
-                        [
                             'title' => L('Admin User'),
                             'url' => '\ModStart\Admin\Controller\AdminUserController@index',
                         ],
                         [
                             'title' => L('Admin User Manage'),
                             'rule' => 'AdminUserManage',
+                            'hide' => true,
+                        ],
+                        [
+                            'title' => L('Admin Role'),
+                            'url' => '\ModStart\Admin\Controller\AdminRoleController@index',
+                        ],
+                        [
+                            'title' => L('Admin Role Manage'),
+                            'rule' => 'AdminRoleManage',
                             'hide' => true,
                         ],
                         [

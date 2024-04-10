@@ -51,12 +51,14 @@
                     <div class="menu-item @if(!empty($_v1['_active'])) page-main active @endif">
                         @if(empty($_v1['children']))
                             <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v1['url'])}}" class="title"
+                               draggable="false"
                                data-keywords-item data-keywords-filter>
                                 {!! empty($_v1['icon'])?'<i class="icon iconfont icon-list"></i>':$_v1['icon'] !!}
                                 <span class="text">{{$_v1['title']}}</span>
                             </a>
                         @else
                             <a href="javascript:;" class="title @if(!empty($_v1['_active'])) open @endif"
+                               draggable="false"
                                data-keywords-item data-keywords-filter data-menu-title onclick="$(this).toggleClass('open')">
                                 <i class="arrow"></i>
                                 {!! empty($_v1['icon'])?'<i class="icon iconfont icon-list"></i>':$_v1['icon'] !!}
@@ -67,11 +69,13 @@
                                     <div class="menu-item @if(!empty($_v2['_active'])) page-main active @endif">
                                         @if(empty($_v2['children']))
                                             <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v2['url'])}}"
+                                               draggable="false"
                                                class="title" data-keywords-item data-keywords-filter>
                                                 <span class="text">{{$_v2['title']}}</span>
                                             </a>
                                         @else
                                             <a href="javascript:;" data-keywords-item data-keywords-filter data-menu-title
+                                               draggable="false"
                                                class="title @if(!empty($_v2['_active'])) open @endif"
                                                onclick="$(this).toggleClass('open')">
                                                 <i class="arrow"></i>
@@ -81,6 +85,7 @@
                                                 @foreach($_v2['children'] as $_v3)
                                                     <div class="menu-item @if(!empty($_v3['_active'])) page-main active @endif">
                                                         <a href="{{\ModStart\Admin\Auth\AdminPermission::urlToLink($_v3['url'])}}"
+                                                           draggable="false"
                                                            class="title" data-keywords-filter>
                                                             <span class="text">{{$_v3['title']}}</span>
                                                         </a>

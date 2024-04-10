@@ -486,4 +486,22 @@ class ArrayUtil
         return $value;
     }
 
+    public static function updateByDotKey(&$array, $key, $value)
+    {
+        if (strpos($key, '.') === false) {
+            $array[$key] = $value;
+            return;
+        }
+        $keys = explode('.', $key);
+        $lastKey = array_pop($keys);
+        $value = &$array;
+        foreach ($keys as $k) {
+            if (!isset($value[$k])) {
+                $value[$k] = [];
+            }
+            $value = &$value[$k];
+        }
+        $value[$lastKey] = $value;
+    }
+
 }

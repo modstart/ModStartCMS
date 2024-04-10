@@ -9,7 +9,7 @@
     background-color: #FFF;
 }
 
-.el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover{
+.el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
     color: #c0c4cc;
     background-color: #fff;
     border-color: #ebeef5;
@@ -164,8 +164,8 @@
 
     &.el-dropdown-menu--small {
         .el-dropdown-menu__item {
-          padding: 2px 8px;
-          line-height: 26px;
+            padding: 2px 8px;
+            line-height: 26px;
 
             &:hover {
                 color: var(--color-primary);
@@ -197,6 +197,12 @@
         padding: inherit;
         background: transparent;
         font-size: 12px;
+    }
+
+    .el-input {
+        .el-input__inner {
+            background-color: #FFF;
+        }
     }
 }
 
@@ -496,6 +502,6 @@ input:-webkit-autofill {
     }
 }
 
-.el-input-number__decrease:hover:not(.is-disabled)~.el-input .el-input__inner:not(.is-disabled), .el-input-number__increase:hover:not(.is-disabled)~.el-input .el-input__inner:not(.is-disabled){
-    border-color:#DDD;
+.el-input-number__decrease:hover:not(.is-disabled) ~ .el-input .el-input__inner:not(.is-disabled), .el-input-number__increase:hover:not(.is-disabled) ~ .el-input .el-input__inner:not(.is-disabled) {
+    border-color: #DDD;
 }
