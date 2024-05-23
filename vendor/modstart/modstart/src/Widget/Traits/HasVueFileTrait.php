@@ -15,6 +15,7 @@ trait HasVueFileTrait
 
         $vueTemplate = '<div class="ub-alert danger">Vue file not found: ' . $filePath . '</div>';
         $vueScript = 'export default {}';
+        $vueStyle = '';
 
         if (file_exists($filePath)) {
             $content = file_get_contents($filePath);
@@ -28,6 +29,7 @@ trait HasVueFileTrait
             } else {
                 $vueTemplate = $template;
             }
+            $vueStyle = trim(ReUtil::group1('/<style>([\s\S]+)<\/style>/', $content));
         }
 
         $vueScript = preg_replace('/export default/', 'let _widget = ', $vueScript) . ';';
@@ -55,6 +57,10 @@ trait HasVueFileTrait
             "new Vue(_widget);",
             "})();",
         ]));
+
+        if (!empty($vueStyle)) {
+            ModStart::style($vueStyle);
+        }
 
         return $vueTemplate;
     }

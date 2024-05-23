@@ -238,13 +238,8 @@ class InputPackage
     public function getStringSeperatedIntegerArray($key, $defaultValue = [], $separated = ',')
     {
         $values = $this->getStringSeparatedArray($key, $defaultValue, $separated);
-        return array_values(array_filter($values, function ($v) {
-            $v = intval($v);
-            if (empty($v)) {
-                return null;
-            }
-            return $v;
-        }));
+        $values = array_map('intval', $values);
+        return array_values(array_filter($values));
     }
 
     public function getStringSeparatedArray($key, $defaultValue = [], $separated = ',')

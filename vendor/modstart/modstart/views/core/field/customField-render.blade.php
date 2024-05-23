@@ -1,4 +1,4 @@
-<div class="line">
+<div class="line" data-field="{{$name}}">
     <div class="label">
         {{$field['title']}}
     </div>

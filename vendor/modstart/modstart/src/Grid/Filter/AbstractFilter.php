@@ -3,7 +3,6 @@
 namespace ModStart\Grid\Filter;
 
 use Illuminate\Support\Facades\View;
-use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\IdUtil;
 use ModStart\Grid\Filter;
 use ModStart\Grid\Filter\Field\Text;
@@ -71,6 +70,11 @@ abstract class AbstractFilter
      * @var bool
      */
     private $autoHide = false;
+    /**
+     * 是否前台隐藏，通常用于接口自动传递
+     * @var bool
+     */
+    private $hidden = false;
 
     /**
      * AbstractFilter constructor.
@@ -150,6 +154,20 @@ abstract class AbstractFilter
     }
 
     /**
+     * 是否前台隐藏
+     * @param $value
+     * @return $this|bool
+     */
+    public function hidden($value = null)
+    {
+        if (null === $value) {
+            return $this->hidden;
+        }
+        $this->hidden = $value;
+        return $this;
+    }
+
+    /**
      * 筛选字段
      *
      * @return string
@@ -219,10 +237,14 @@ abstract class AbstractFilter
                 return $ret;
             }
         }
-        $class = explode('\\', get_called_class());
-        $fieldClass = explode('\\', get_class($this->field));
-        $view = 'modstart::core.grid.filter.'
-            . lcfirst(end($class)) . '-' . lcfirst(end($fieldClass));
+        if ($this->hidden) {
+            $view = 'modstart::core.grid.filter.hidden';
+        } else {
+            $class = explode('\\', get_called_class());
+            $fieldClass = explode('\\', get_class($this->field));
+            $view = 'modstart::core.grid.filter.'
+                . lcfirst(end($class)) . '-' . lcfirst(end($fieldClass));
+        }
         return View::make($view, $this->variables())->render();
     }
 

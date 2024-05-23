@@ -109,7 +109,9 @@ Ui._htmlNav = {
 Ui.htmlNav = function (htmlContainer, navContainer, option) {
 
     option = Object.assign({
+        // 点击菜单滚动页面时偏移量
         scrollToOffset: -80,
+        // 菜单位置顶部偏移量，通常是内容container的top值
         positionOffset: 70,
         width: '12rem',
         open: function () {
@@ -135,22 +137,24 @@ Ui.htmlNav = function (htmlContainer, navContainer, option) {
         });
     });
 
-    var tree = [];
-    tree.push('<div class="ub-menu-tree-simple page tw-absolute tw-top-0 tw-right-0" style="width:' + option.width + ';">');
-    tree.push('<div class="item-container">');
-    for (var h of headings) {
-        tree.push('<div class="item level-' + (h.level - lavelMin + 1) + '">');
-        tree.push('<a href="javascript:;" data-index="' + h.index + '">' + MS.util.specialchars(h.text) + '</a>');
+    if (headings.length > 0) {
+        var tree = [];
+        tree.push('<div class="ub-menu-tree-simple page tw-absolute tw-top-0 tw-right-0" style="width:' + option.width + ';">');
+        tree.push('<div class="item-container">');
+        for (var h of headings) {
+            tree.push('<div class="item level-' + (h.level - lavelMin + 1) + '">');
+            tree.push('<a href="javascript:;" data-index="' + h.index + '">' + MS.util.specialchars(h.text) + '</a>');
+            tree.push('</div>');
+        }
         tree.push('</div>');
-    }
-    tree.push('</div>');
-    tree.push('<div class="tool">');
-    tree.push('<a href="javascript:;" class="tool-close"><i class="iconfont icon-angle-up"></i></a>');
-    tree.push('<a href="javascript:;" class="tool-open"><i class="iconfont icon-angle-down"></i></a>');
-    tree.push('</div>');
-    tree.push('</div>');
+        tree.push('<div class="tool">');
+        tree.push('<a href="javascript:;" class="tool-close"><i class="iconfont icon-angle-up"></i></a>');
+        tree.push('<a href="javascript:;" class="tool-open"><i class="iconfont icon-angle-down"></i></a>');
+        tree.push('</div>');
+        tree.push('</div>');
 
-    $(navContainer).html(tree.join(''));
+        $(navContainer).html(tree.join(''));
+    }
 
     Ui._htmlNav.headings = headings;
 

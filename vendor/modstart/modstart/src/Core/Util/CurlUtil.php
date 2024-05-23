@@ -292,7 +292,9 @@ class CurlUtil
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, $option['timeout']);
-        curl_setopt($ch, CURLOPT_REFERER, $url);
+        if (!empty($option['referer'])) {
+            curl_setopt($ch, CURLOPT_REFERER, $option['referer']);
+        }
         if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
             curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         }
@@ -335,7 +337,9 @@ class CurlUtil
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, $option['timeout']);
-        curl_setopt($ch, CURLOPT_REFERER, $url);
+        if (!empty($option['referer'])) {
+            curl_setopt($ch, CURLOPT_REFERER, $option['referer']);
+        }
         if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
             curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         }

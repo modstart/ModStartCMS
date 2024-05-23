@@ -306,9 +306,8 @@ class MemberUtil
         return Response::generateSuccessData($memberUser);
     }
 
-    public static function autoSetUsernameNickname($memberUserId, $suggestName)
+    public static function autoSetUsernameNickname($memberUserId, $suggestName, $randomLength = 6)
     {
-        $randomLength = 6;
         if (preg_match('/\\{.*\\}/', $suggestName)) {
             $memberUser = self::get($memberUserId);
             $map = [
@@ -347,8 +346,11 @@ class MemberUtil
         }
         for ($i = 0; $i < 20; $i++) {
             $found = ModelUtil::model('member_user')
-                ->where(['username' => $suggestName])
-                ->orWhere(['nickname' => $suggestName])
+                ->where('id', '<>', $memberUserId)
+                ->where(function ($query) use ($suggestName) {
+                    $query->where('username', $suggestName)
+                        ->orWhere('nickname', $suggestName);
+                })
                 ->first();
             if (empty($found)) {
                 break;

@@ -143,7 +143,7 @@ class MemberController extends Controller
                 $vipEnable = ModuleManager::getModuleConfig('Member', 'vipEnable', false);
                 if ($vipEnable) {
                     $builder->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
-                    $builder->date('vipExpire', 'VIP过期');
+                    $builder->datetime('vipExpire', 'VIP过期');
                 }
                 $builder->display('registerIp', '注册IP');
                 $builder->display('created_at', '注册时间');
@@ -252,7 +252,7 @@ class MemberController extends Controller
             }
             if (ModuleManager::getModuleConfig('Member', 'vipEnable', false)) {
                 $form->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
-                $form->date('vipExpire', 'VIP过期');
+                $form->datetime('vipExpire', 'VIP过期');
             }
         });
         $form->showSubmit(false)->showReset(false);
@@ -271,7 +271,7 @@ class MemberController extends Controller
             $ret = MemberUtil::register($username, $phone, $email, $data['password']);
             BizException::throwsIfResponseError($ret);
             if (!empty($profile)) {
-                if (isset($profile['vipExpire']) && TimeUtil::isDateEmpty($profile['vipExpire'])) {
+                if (isset($profile['vipExpire']) && TimeUtil::isDatetimeEmpty($profile['vipExpire'])) {
                     $profile['vipExpire'] = null;
                 }
                 MemberUtil::update($ret['data']['id'], $profile);
@@ -317,7 +317,7 @@ class MemberController extends Controller
             }
             if (ModuleManager::getModuleConfig('Member', 'vipEnable', false)) {
                 $form->radio('vipId', 'VIP')->options(MemberVipUtil::mapTitle())->required();
-                $form->date('vipExpire', 'VIP过期')->help('VIP过期留空表示永久');
+                $form->datetime('vipExpire', 'VIP过期')->help('VIP过期留空表示永久');
             }
         });
         $form->item($memberUser)->fillFields();
@@ -338,7 +338,7 @@ class MemberController extends Controller
             ]);
             $ret = MemberUtil::updateBasicWithUniqueCheck($memberUser['id'], $basic);
             BizException::throwsIfResponseError($ret);
-            if (isset($profile['vipExpire']) && TimeUtil::isDateEmpty($profile['vipExpire'])) {
+            if (isset($profile['vipExpire']) && TimeUtil::isDatetimeEmpty($profile['vipExpire'])) {
                 $profile['vipExpire'] = null;
             }
             if ($memberUser['vipId'] != $profile['vipId']) {

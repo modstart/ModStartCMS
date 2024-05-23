@@ -21,6 +21,17 @@ class MemberUser
         return Session::get('_memberUser', null);
     }
 
+    public static function update($memberUser)
+    {
+        if (!empty($memberUser)) {
+            Session::put('_memberUser', $memberUser);
+            Session::put('memberUserId', $memberUser['id']);
+        } else {
+            Session::forget('_memberUser');
+            Session::forget('memberUserId');
+        }
+    }
+
     public static function isMine($memberUserId)
     {
         return self::id() > 0 && self::id() == $memberUserId;

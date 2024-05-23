@@ -76,6 +76,7 @@ return [
     'Operate Forbidden For Demo Account' => '演示账号禁止操作',
     'Last Login Ip' => '上次登录IP',
     'Last Login Time' => '上次登录时间',
+    'Time' => '时间',
     'Roles' => '角色',
     'Keep Old Password If Empty' => '留空保留旧密码',
     'Admin Founder Delete Forbidden' => '创建者不能删除',

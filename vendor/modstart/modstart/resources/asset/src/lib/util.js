@@ -1,4 +1,7 @@
 const md5 = require('md5');
+const sprintf = require('sprintf-js').sprintf;
+const base64 = require('js-base64');
+
 var Util = {};
 
 /**
@@ -480,5 +483,16 @@ Util.browser = {
         return false
     }
 }
+
+Util.sprintf = sprintf;
+
+Util.base64 = {
+    encode: function (data) {
+        return base64.Base64.encode(data)
+    },
+    decode: function (data) {
+        return base64.Base64.decode(data)
+    }
+};
 
 module.exports = Util;

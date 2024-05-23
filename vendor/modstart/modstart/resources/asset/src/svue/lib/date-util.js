@@ -86,6 +86,15 @@ export const DateUtil = {
      * @Util 格式化为时间
      * @method MS.date.formatTime
      * @param d Date 日期
+     * @return String 格式化后的时间，格式 HH:mm:ss
+     */
+    formatTime(d) {
+        return DateUtil.format(d, DateUtil.FORMAT_TIME)
+    },
+    /**
+     * @Util 格式化为时间
+     * @method MS.date.formatTime
+     * @param d Date 日期
      * @return String 格式化后的时间，格式 YYYY-MM-DD HH:mm:ss
      */
     formatDatetime(d) {

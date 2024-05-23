@@ -370,6 +370,10 @@ class FileManager
         ModelUtil::join($paginateData['records'], 'dataId', '_data', 'data', 'id');
         $records = [];
         foreach ($paginateData['records'] as $record) {
+            if (empty($record['_data'])) {
+                ModelUtil::delete($uploadTable, ['id' => $record['id']]);
+                continue;
+            }
             $item = [];
             $item['id'] = $record['id'];
             $item['path'] = config('data.baseUrl', '/') . AbstractDataStorage::DATA . '/' . $record['_data']['category'] . '/' . $record['_data']['path'];

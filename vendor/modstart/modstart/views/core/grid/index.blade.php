@@ -37,12 +37,12 @@
             @endif
         @endforeach
         <div class="field">
-            @if(!count($filters))
+            @if(!$hasVisibleFilters)
                 <button class="btn" data-search-button>
                     <i class="iconfont icon-refresh"></i> {{L('Refresh')}}
                 </button>
             @endif
-            @if(count($filters)>0)
+            @if($hasVisibleFilters)
                 <button class="btn btn-primary" data-search-button>
                     <i class="iconfont icon-search"></i> {{L('Search')}}
                 </button>

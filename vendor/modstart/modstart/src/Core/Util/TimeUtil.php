@@ -394,4 +394,51 @@ class TimeUtil
         ];
     }
 
+    /**
+     * 将日期时间范围限定在一定范围内
+     * @param $start string 开始日期时间
+     * @param $end string 结束日期时间
+     * @param $option array 选项
+     * @return array
+     */
+    public static function limitDatetimeRange($start, $end, $option = [])
+    {
+        $option = array_merge([
+            // 默认开始日期，默认为一天前
+            'startDefault' => date('Y-m-d H:i:s', strtotime('-1 day')),
+            // 开始日期最小值，默认为一年前
+            'startMin' => strtotime(date('Y-m-d H:i:s', strtotime('-1 year'))),
+            // 默认结束之，默认为当天时间
+            'endDefault' => date('Y-m-d H:i:s'),
+            // 结束日期最大值，默认为当前时间
+            'endMax' => strtotime(date('Y-m-d H:i:s')),
+            // 日期范围跨度最大值，默认为30天
+            'periodMax' => 24 * 3600 * 30,
+        ], $option);
+        if (self::isDatetimeEmpty($start)) {
+            $start = $option['startDefault'];
+        }
+        if (self::isDatetimeEmpty($end)) {
+            $end = $option['endDefault'];
+        }
+        $startTs = strtotime($start);
+        $endTs = strtotime($end);
+        if ($endTs < $startTs) {
+            $endTs = $startTs;
+        }
+        if ($startTs < $option['startMin']) {
+            $startTs = $option['startMin'];
+        }
+        if ($endTs > $option['endMax']) {
+            $endTs = $option['endMax'];
+        }
+        if ($endTs - $startTs > $option['periodMax']) {
+            $endTs = $startTs + $option['periodMax'];
+        }
+        return [
+            date('Y-m-d H:i:s', $startTs),
+            date('Y-m-d H:i:s', $endTs),
+        ];
+    }
+
 }

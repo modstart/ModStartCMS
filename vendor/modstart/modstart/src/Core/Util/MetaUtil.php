@@ -9,7 +9,9 @@ use ModStart\Core\Exception\BizException;
 class MetaUtil
 {
     private static $supportKeys = [
+        'APP',
         'APP_NAME',
+        'VERSION',
     ];
 
     public static function get($key)
@@ -35,8 +37,18 @@ class MetaUtil
                 } else if (defined('\App\Constant\AppConstant::APP')) {
                     return \App\Constant\AppConstant::APP;
                 }
-                return 'UnknownAppName';
+                return 'Unknown';
+            case 'APP':
+                if (defined('\App\Constant\AppConstant::APP')) {
+                    return \App\Constant\AppConstant::APP;
+                }
+                return 'Unknown';
+            case 'VERSION':
+                if (defined('\App\Constant\AppConstant::VERSION')) {
+                    return \App\Constant\AppConstant::VERSION;
+                }
+                return '0.0.0';
         }
-        return '-';
+        return null;
     }
 }

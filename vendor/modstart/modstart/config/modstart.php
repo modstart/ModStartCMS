@@ -22,6 +22,12 @@ return [
     'xForwardedHostVisitRedirect' => true,
 
     'admin' => [
+
+        /**
+         * 后台自定义标题
+         */
+        'title' => null,
+
         'disabled' => env('ADMIN_DISABLED', false),
         /**
          * 后台管理路径

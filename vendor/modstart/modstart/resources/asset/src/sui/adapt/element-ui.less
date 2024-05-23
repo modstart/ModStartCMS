@@ -206,9 +206,9 @@
     }
 }
 
-.el-date-editor--datetimerange.el-input__inner {
-    width: 100%;
-}
+//.el-date-editor--datetimerange.el-input__inner {
+//    width: 100%;
+//}
 
 .el-image__error {
     font-size: var(--font-size) -small;
@@ -392,46 +392,119 @@
     padding: 5px;
 }
 
-.el-date-picker {
-    width: 230px;
+.el-date-editor {
+    &.el-input {
+        &.el-date-editor--date {
+            width: 7rem;
+        }
 
-    .el-picker-panel__content {
-        width: 220px;
+        &.el-date-editor--datetime {
+            width: 10rem;
+        }
+
+        .el-input__inner {
+            text-align: center;
+        }
+    }
+
+    &.el-range-editor {
+        padding-right: 0;
+
+        &.el-date-editor--datetimerange {
+            width: 16rem;
+        }
+
+        &.el-date-editor--daterange {
+            width: 11rem;
+        }
+
+        .el-range-input {
+            flex-grow: 1;
+        }
+
+        .el-input__icon, .el-range-separator {
+            width: auto;
+        }
+
+        .el-range__close-icon {
+            display: none;
+        }
     }
 }
 
-.el-date-range-picker {
-    width: 450px;
+.el-picker-panel {
+
+    .el-picker-panel__body {
+        .el-picker-panel__content {
+            padding: 8px;
+
+            .el-date-range-picker__header div {
+                font-size: var(--font-size);
+            }
+        }
+    }
+
+    &.el-date-picker {
+        width: 222px;
+
+        .el-picker-panel__content {
+            margin: 5px;
+            width: 210px;
+        }
+
+        .el-date-picker__time-header {
+            .el-input__inner {
+                height: 24px;
+                line-height: 24px;
+                font-size: var(--font-size-small);
+                text-align: center;
+            }
+        }
+
+        .el-date-picker__header {
+            margin: 5px;
+
+            .el-date-picker__header-label, .el-picker-panel__icon-btn {
+                font-size: var(--font-size-small);
+            }
+        }
+    }
+
+    &.el-date-range-picker {
+        width: 502px;
+
+        &.has-sidebar {
+            width: 592px;
+        }
+
+        .el-picker-panel__body {
+            min-width: 500px;
+            width: 500px;
+        }
+
+        .el-date-range-picker__time-header {
+            .el-input__inner {
+                height: 24px;
+                line-height: 24px;
+                font-size: var(--font-size-small);
+                text-align: center;
+            }
+        }
+
+        .el-picker-panel [slot=sidebar] + .el-picker-panel__body, .el-picker-panel__sidebar + .el-picker-panel__body {
+            margin-left: 90px;
+        }
+
+        .el-picker-panel__sidebar {
+            width: 90px;
+
+            .el-picker-panel__shortcut {
+                font-size: var(--font-size-small);
+            }
+        }
+    }
 }
 
-.el-date-range-picker .el-picker-panel__body {
-    min-width: 440px;
-    width: 440px;
-}
-
-.el-date-picker__time-header {
-    padding: 5px 0;
-}
-
-.el-date-picker__header {
-    margin: 5px;
-}
-
-.el-picker-panel__content {
-    margin: 5px;
-}
-
-.el-date-picker__header-label, .el-date-range-picker__header div {
-    font-size: var(--font-size);
-}
-
-.el-date-table td, .el-date-table td div {
-    height: 20px;
-}
-
-.el-date-range-picker__content {
-    padding: 5px;
-}
 
 .el-radio-group {
     label {
@@ -446,6 +519,14 @@
 
 .el-dropdown {
     font-size: var(--font-size);
+
+    .el-button-group {
+        .el-button--default {
+            &:hover, &:focus {
+                border-color: #dcdfe6;
+            }
+        }
+    }
 }
 
 input:-webkit-autofill {
@@ -489,6 +570,14 @@ input:-webkit-autofill {
 
 .el-avatar {
     vertical-align: middle;
+}
+
+.el-cascader {
+    .el-input__inner {
+        &:read-only {
+            background-color: var(--color-input-light-bg);
+        }
+    }
 }
 
 .el-cascader-panel {

@@ -2,6 +2,7 @@
 
 namespace Module\AdminManager\Widget;
 
+use App\Constant\AppConstant;
 use Illuminate\Support\Str;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Widget\AbstractWidget;

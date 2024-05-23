@@ -1,6 +1,6 @@
 @if(is_array($value))
-    <div class="tw-bg-gray-100 tw-p-1 tw-rounded">
-        <table class="ub-table mini" style="width:{{$width-40}}px;white-space:normal;word-break:break-all;">
+    <div class="">
+        <table class="ub-table mini border" style="width:{{$width-40}}px;white-space:normal;word-break:break-all;">
             @foreach($value as $k=>$v)
                 <tr>
                     <td width="50">{{$k}}</td>

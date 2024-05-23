@@ -86,7 +86,7 @@
         </div>
         <script type="text/javascript">
             // 请勿删除，用于获取最新的安全通告（比如框架、模块有重大缺陷的应急通知等）
-            $('body').append('<script src="https://modstart.com/api/modstart/notice?modules={{urlencode($modules)}}"><' + '/script>');
+            $('body').append('<script src="https://modstart.com/api/modstart/notice?modules={{urlencode($modules)}}&t={{date('YmdH')}}"><' + '/script>');
             $(function(){
                 var $serverTime = $('[data-server-time]');
                 var timeDiff = {{time()*1000}} - (new Date()).getTime()

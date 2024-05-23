@@ -13,10 +13,13 @@ class EventUtil
 {
     /**
      * @Util 触发一个Laravel事件，兼容了不同版本
-     * @param $event object
+     * @param $event object|string
      */
     public static function fire($event)
     {
+        if (is_string($event)) {
+            $event = new $event();
+        }
         if (PHP_VERSION_ID >= 80000) {
             Event::dispatch($event);
         } else {

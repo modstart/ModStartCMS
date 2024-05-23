@@ -56,6 +56,7 @@ class ApiUtil
         $data['Member_VipEnable'] = ModuleManager::getModuleConfig('Member', 'vipEnable', false);
 
         // 资产
+        $data['Member_CreditName'] = ModuleManager::getModuleConfig('Member', 'creditName', '积分');
         $data['Member_MoneyEnable'] = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
         $data['Member_MoneyChargeEnable'] = modstart_config('Member_MoneyChargeEnable', false);
         $data['Member_MoneyCashEnable'] = modstart_config('Member_MoneyCashEnable', false);

@@ -132,6 +132,16 @@ class GridFilter
         return $this->filters;
     }
 
+    public function hasVisibleFilters()
+    {
+        foreach ($this->filters as $filter) {
+            if (!$filter->hidden()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function hasAutoHideFilters()
     {
         foreach ($this->filters as $filter) {
@@ -141,6 +151,7 @@ class GridFilter
         }
         return false;
     }
+
 
     public function getConditions()
     {

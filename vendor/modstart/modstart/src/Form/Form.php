@@ -551,7 +551,7 @@ class Form implements Renderable
         }
         $this->build();
         if ($isCopy) {
-            $this->fillFields();
+            $this->fillAddableFields();
         }
         return $this;
     }
@@ -621,7 +621,7 @@ class Form implements Renderable
             $this->item($this->repository()->editing($this));
             BizException::throwsIfEmpty(L('Record Not Exists'), $this->item);
             $this->build();
-            $this->fillFields();
+            $this->fillEditableFields();
             return $this;
         } catch (BizException $e) {
             return Response::sendError($e->getMessage());

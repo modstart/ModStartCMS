@@ -3,6 +3,7 @@
 
 namespace ModStart\Repository;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class RepositoryUtil
@@ -21,6 +22,14 @@ class RepositoryUtil
     public static function itemFromArray($item)
     {
         return (object)$item;
+    }
+
+    public static function itemToArray($item)
+    {
+        if ($item instanceof Model) {
+            return $item->toArray();
+        }
+        return (array)$item;
     }
 
     public static function makeItem($initValue = [])

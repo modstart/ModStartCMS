@@ -1,8 +1,8 @@
 {
     "name": "Member",
     "title": "通用用户系统",
-    "version": "4.1.0",
-    "modstartVersion": ">=3.7.0",
+    "version": "4.3.0",
+    "modstartVersion": ">=3.9.0",
     "author": "官方",
     "description": "提供基础的用户管理服务",
     "env": [

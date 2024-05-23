@@ -81,6 +81,8 @@ use ModStart\Support\Manager\FieldManager;
  *
  * $value = function(Grid $grid, $items){ return $items; }
  * @method Grid|mixed hookPrepareItems($value = null)
+ * @value = function(Grid $grid, $items){ return 'html string'; }
+ * @method Grid|mixed hookSimpleRecordsRendering($value = null)
  *
  */
 class Grid
@@ -147,6 +149,7 @@ class Grid
         'batchOperatePrepend',
         'gridOperateAppend',
         'hookPrepareItems',
+        'hookSimpleRecordsRendering',
         'gridRowCols',
         'defaultPageSize',
         'pageSizes',
@@ -211,6 +214,8 @@ class Grid
     private $pageJumpEnable = false;
     /** @var Closure 渲染前置处理Items */
     private $hookPrepareItems = null;
+    /** @var Closure 简单模式下自定义渲染列表HTML */
+    private $hookSimpleRecordsRendering = null;
     /** @var array 渲染在Table顶部的区域 */
     private $gridTableTops = [];
     /** @var Closure 请求处理额外脚本 */
@@ -282,15 +287,20 @@ class Grid
 
     /**
      * @param $htmlHookRending
+     * @param $hookSimpleRecordsRendering \Closure|null 整个列表渲染回调函数
      * @return $this
      *
-     * $value = function(AbstractField $field, $item, $index){ return $item->title; }
+     * $htmlHookRending = function(AbstractField $field, $item, $index){ return $item->title; }
+     * $recordsHtmlHookRending = function($items){ return '<div>records html</div>'; }
      */
-    public function useSimple($htmlHookRending)
+    public function useSimple($htmlHookRending, $hookSimpleRecordsRendering = null)
     {
         $this->view = 'modstart::core.grid.simple';
         $this->disableItemOperate();
-        $this->display('html', 'html')->hookRendering($htmlHookRending);
+        if ($htmlHookRending) {
+            $this->display('html', 'html')->hookRendering($htmlHookRending);
+        }
+        $this->hookSimpleRecordsRendering = $hookSimpleRecordsRendering;
         return $this;
     }
 
@@ -490,6 +500,7 @@ class Grid
             'order' => $input->getArray($this->model->getOrderName()),
             'orderDefault' => $this->defaultOrder,
         ]);
+        $raw = [];
         $treeAncestors = [];
         if ($this->engine === GridEngine::TREE_MASS) {
             $pid = $input->get('_pid', $this->treeRootPid);
@@ -515,6 +526,8 @@ class Grid
             $treeSortName = $this->repository()->getTreeSortColumn();
             // return [$items, $treeIdName, $treePidName, $treeSortName];
             $items = TreeUtil::itemsMergeLevel($items, $treeIdName, $treePidName, $treeSortName);
+            // return [$items, $treeIdName, $treePidName, $treeSortName];
+            $raw['records'] = [];
         }
         $paginator = $this->model->paginator();
         if ($this->hookPrepareItems) {
@@ -534,7 +547,14 @@ class Grid
                 BizException::throws('Grid item support Model|stdClass only');
             }
             $record = [];
+            $recordRaw = [];
             $record['_id'] = '' . $item->{$this->repository()->getKeyName()};
+            $recordRaw['_id'] = $record['_id'];
+            if ($this->engine == GridEngine::TREE) {
+                $recordRaw[$treeIdName] = $item->{$treeIdName};
+                $recordRaw[$treePidName] = $item->{$treePidName};
+                $recordRaw[$treeSortName] = $item->{$treeSortName};
+            }
             foreach ($this->listableFields() as $field) {
                 /** @var AbstractField $field */
                 if ($field->isLayoutField()) {
@@ -572,6 +592,9 @@ class Grid
                     }
                     // echo $field->column() . ' - ' . json_encode($value) . "\n";
                 }
+                if (!in_array($field->column(), ['_operate'])) {
+                    $recordRaw[$field->column()] = $value;
+                }
                 $field->setValue($value);
                 // echo $field->column() . ' ' . json_encode($value) . "\n";
                 $field->item($item);
@@ -595,6 +618,9 @@ class Grid
                             . $record[$field->column()];
                     }
                 }
+            }
+            if ($this->engine == GridEngine::TREE) {
+                $raw['records'][] = $recordRaw;
             }
             // var_dump($record);
             $records[] = $record;
@@ -626,15 +652,21 @@ class Grid
         if (!is_null($this->gridRequestScript)) {
             $script = call_user_func($this->gridRequestScript, $this);
         }
-        return Response::jsonSuccessData([
+        $data = [
             'head' => $head,
             'page' => $paginator ? $paginator->currentPage() : 1,
             'pageSize' => $paginator ? $paginator->perPage() : count($records),
             'total' => $paginator ? $paginator->total() : count($records),
             'records' => $records,
             'addition' => $addition,
+            'raw' => $raw,
             'script' => $script,
-        ]);
+        ];
+        $recordsHtml = null;
+        if ($this->hookSimpleRecordsRendering) {
+            $data['recordsHtml'] = call_user_func($this->hookSimpleRecordsRendering, $this, $items);
+        }
+        return Response::generateSuccessData($data);
     }
 
     public function render()
@@ -644,6 +676,7 @@ class Grid
             'id' => $this->id,
             'filters' => $this->gridFilter->filters(),
             'hasAutoHideFilters' => $this->gridFilter->hasAutoHideFilters(),
+            'hasVisibleFilters' => $this->gridFilter->hasVisibleFilters(),
             'grid' => $this,
             'scopes' => $this->scopeFilters,
             'gridTableTops' => $this->gridTableTops,

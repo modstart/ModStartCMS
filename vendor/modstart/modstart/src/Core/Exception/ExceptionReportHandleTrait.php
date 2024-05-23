@@ -48,15 +48,19 @@ trait ExceptionReportHandleTrait
                 return;
             }
             $error = [];
-            $error['url'] = Request::url();
-            if (in_array($error['url'], [
+            $error['URL'] = Request::url();
+            if (in_array($error['URL'], [
                 'http://localhost',
             ])) {
-                $error['url'] = base_path();
-                $error['host'] = gethostname();
+                $error['URL'] = base_path();
+                $error['HOST'] = gethostname();
             }
-            $error['file'] = $exception->getFile() . ':' . $exception->getLine();
-            $error['message'] = $exception->getMessage();
+            $error['METHOD'] = 'GET';
+            if (\ModStart\Core\Input\Request::isPost()) {
+                $error['METHOD'] = 'POST';
+            }
+            $error['FILE'] = $exception->getFile() . ':' . $exception->getLine();
+            $error['MESSAGE'] = $exception->getMessage();
             foreach ($error as &$v) {
                 $v = str_replace(base_path(), '', $v);
             }

@@ -167,21 +167,25 @@ var GridManager = function (opt) {
                     listerData = data;
                     recordIdsChecked = [];
                     renderPaginate();
-                    var html = [];
-                    if (option.gridRowCols) {
-                        html.push('<div class="row">');
-                        for (var i = 0; i < data.records.length; i++) {
-                            html.push('<div class="col-md-' + option.gridRowCols[0] + ' col-' + option.gridRowCols[1] + '" data-index="' + i + '">' + data.records[i].html + '</div>');
-                        }
-                        html.push('</div>');
+                    if (data.recordsHtml) {
+                        $grid.find('[data-table]').html(data.recordsHtml);
                     } else {
-                        for (var i = 0; i < data.records.length; i++) {
-                            html.push('<div data-index="' + i + '">' + data.records[i].html + '</div>');
+                        var html = [];
+                        if (option.gridRowCols) {
+                            html.push('<div class="row">');
+                            for (var i = 0; i < data.records.length; i++) {
+                                html.push('<div class="col-md-' + option.gridRowCols[0] + ' col-' + option.gridRowCols[1] + '" data-index="' + i + '">' + data.records[i].html + '</div>');
+                            }
+                            html.push('</div>');
+                        } else {
+                            for (var i = 0; i < data.records.length; i++) {
+                                html.push('<div data-index="' + i + '">' + data.records[i].html + '</div>');
+                            }
                         }
-                    }
-                    $grid.find('[data-table]').html(html.join(''));
-                    if (!data.records.length) {
-                        $grid.find('[data-table]').html(emptyHtml);
+                        $grid.find('[data-table]').html(html.join(''));
+                        if (!data.records.length) {
+                            $grid.find('[data-table]').html(emptyHtml);
+                        }
                     }
                 }
             });
@@ -194,7 +198,7 @@ var GridManager = function (opt) {
                 page: false,
                 skin: 'line',
                 text: {
-                    none: '<div class="ub-text-muted tw-py-4"><i class="iconfont icon-refresh tw-animate-spin tw-inline-block" style="font-size:2rem;"></i><br />'
+                    none: '<div class="ub-text-muted tw-py-10"><i class="iconfont icon-refresh tw-animate-spin tw-inline-block" style="font-size:2rem;"></i><br />'
                         + option.lang.loading + '</div>'
                 },
                 escape: false,
@@ -275,7 +279,7 @@ var GridManager = function (opt) {
                         $grid.find('[data-addition]').html(data.addition || '');
                         layui.table.reload(option.id + 'Table', {
                             text: {
-                                none: '<div class="ub-text-muted"><i class="iconfont icon-empty-box" style="font-size:2rem;"></i><br />' + option.lang.noRecords + '</div>'
+                                none: '<div class="ub-text-muted tw-py-10"><i class="iconfont icon-empty-box" style="font-size:2rem;"></i><br />' + option.lang.noRecords + '</div>'
                             },
                             cols: [data.head],
                             data: data.records,
@@ -338,6 +342,7 @@ var GridManager = function (opt) {
                     },
                     end: function () {
                         lister.refresh();
+                        $grid.trigger('modstart:add.end');
                     }
                 });
             });
@@ -367,6 +372,7 @@ var GridManager = function (opt) {
                 },
                 end: function () {
                     lister.refresh();
+                    $grid.trigger('modstart:edit.end');
                 }
             });
         }
@@ -398,6 +404,7 @@ var GridManager = function (opt) {
                         }
                     });
                     lister.refresh();
+                    $grid.trigger('modstart:edit.end');
                 });
             });
             $grid.on('grid-item-cell-change', function (e, data) {
@@ -412,9 +419,10 @@ var GridManager = function (opt) {
                     window.api.dialog.loadingOff();
                     window.api.base.defaultFormCallback(res, {
                         success: function (res) {
+                            lister.refresh();
+                            $grid.trigger('modstart:edit.end');
                         }
                     });
-                    lister.refresh();
                 });
             });
         }
@@ -428,6 +436,7 @@ var GridManager = function (opt) {
                     window.api.base.defaultFormCallback(res, {
                         success: function (res) {
                             lister.refresh();
+                            $grid.trigger('modstart:delete.end');
                         }
                     });
                 })
@@ -509,6 +518,7 @@ var GridManager = function (opt) {
                         window.api.base.defaultFormCallback(res, {
                             success: function (res) {
                                 lister.refresh();
+                                $grid.trigger('modstart:delete.end');
                             }
                         });
                     })
@@ -530,6 +540,7 @@ var GridManager = function (opt) {
                     window.api.base.defaultFormCallback(res, {
                         success: function (res) {
                             lister.refresh();
+                            $grid.trigger('modstart:sort.end');
                         }
                     });
                 })
@@ -557,6 +568,7 @@ var GridManager = function (opt) {
                     area: processArea(option.importDialogSize),
                     content: lister.realtime.url.import,
                     success: function (layerDom, index) {
+                        $grid.trigger('modstart:import.end');
                     },
                     end: function () {
                     }
@@ -578,6 +590,7 @@ var GridManager = function (opt) {
                     window.api.base.defaultFormCallback(res, {
                         success: function (res) {
                             lister.refresh();
+                            $grid.trigger('modstart:batch.end');
                         }
                     });
                 });
@@ -616,6 +629,7 @@ var GridManager = function (opt) {
             }
         };
         window.__grids.instances[option.id] = {
+            $grid: $grid,
             $lister: $lister,
             lister: lister,
             getCheckedIds: getCheckedIds,

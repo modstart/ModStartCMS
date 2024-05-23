@@ -40,7 +40,8 @@
         <a href="javascript:;" class="left-menu-shrink"></a>
         <div class="left">
             <a class="logo" href="{{modstart_admin_url()}}">
-                {!! modstart_admin_config('title','<i class="icon iconfont icon-ms tw-transform  tw-scale-150 tw-mr-2"></i> <span class="text">'.L('Admin Panel').'</span>') !!}
+                <?php $t = config('modstart.admin.title'); ?>
+                {!! $t?$t:'<i class="icon iconfont icon-ms tw-transform  tw-scale-150 tw-mr-2"></i> <span class="text">'.L('Admin Panel').'</span>' !!}
             </a>
             <div class="menu">
                 <div class="menu-search-container">

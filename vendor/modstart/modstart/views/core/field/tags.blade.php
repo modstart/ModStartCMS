@@ -12,7 +12,7 @@ if(null===$value){
     }
 }
 ?>
-<div class="line" data-field id="{{$id}}">
+<div class="line" data-field="{{$name}}" id="{{$id}}">
     <div class="label">
         {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)

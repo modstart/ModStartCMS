@@ -19,10 +19,10 @@
                 <el-button v-if="smallWindow" @click="menuShow=!menuShow">
                     <i class="iconfont icon-list"></i>
                 </el-button>
-                <el-button :type="tab==='list'?'primary':''" @click="tab='list'">
+                <el-button :type="tab==='list'?'primary':'default'" @click="tab='list'">
                     <i class="iconfont icon-category"></i> {{ L('File Gallery') }}
                 </el-button>
-                <el-button :type="tab==='input'?'primary':''" @click="tab='input'">
+                <el-button :type="tab==='input'?'primary':'default'" @click="tab='input'">
                     <i class="iconfont icon-edit"></i> {{ L('Custom Link') }}
                 </el-button>
             </div>

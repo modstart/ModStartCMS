@@ -4,7 +4,9 @@ namespace ModStart\Layout;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Input\Request;
+use ModStart\Core\Util\CRUDUtil;
 use ModStart\Form\Form;
 use ModStart\Grid\Grid;
 
@@ -168,6 +170,34 @@ class Page implements Renderable
     {
         if (Request::isPost()) {
             return $form->formRequest($callback, $data);
+        }
+        return $this;
+    }
+
+    /**
+     * @param $form Form
+     * @return $this
+     */
+    public function handleAddEdit($form, $param = [])
+    {
+        $param = array_merge([
+            'pageTitleAdd' => L('Add'),
+            'pageTitleEdit' => L('Edit'),
+        ], $param);
+        $id = CRUDUtil::id();
+        if ($id) {
+            if (Request::isPost()) {
+                return $form->editRequest($id);
+            }
+            $this->body($form->edit($id));
+            $this->pageTitle($param['pageTitleEdit']);
+        } else {
+            if (Request::isPost()) {
+                AdminPermission::demoCheck();
+                return $form->addRequest();
+            }
+            $this->body($form->add());
+            $this->pageTitle($param['pageTitleAdd']);
         }
         return $this;
     }

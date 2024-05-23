@@ -1,4 +1,4 @@
-<div class="line">
+<div class="line" data-field="{{$name}}">
     <div class="label">
         {!! (!empty($rules) && in_array('required',$rules))?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)

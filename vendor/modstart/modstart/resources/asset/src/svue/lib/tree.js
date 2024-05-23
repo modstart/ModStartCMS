@@ -1,23 +1,26 @@
 const Tree = {
     /**
-     * 过滤出所有祖先节点树链路
+     * 过滤出所有祖先节点树链路（会修改原树）
      * @param tree
      * @param value
      * @param valueKey
      * @param childKey
      * @returns {null}
      */
-    filterAncestors: function (tree, value, valueKey, childKey) {
-        valueKey = valueKey || 'id'
+    filterAncestors: function (tree, id, idKey, childKey) {
+        idKey = idKey || 'id'
         childKey = childKey || '_child'
         let result = null;
         tree.forEach(o => {
             let children
-            if (o[valueKey] === value) {
+            if (o[idKey] === id) {
                 result = o
+                if (result[childKey]) {
+                    delete result[childKey]
+                }
                 return result
             }
-            if (o[childKey] && (children = Tree.filterAncestors(o[childKey], value, valueKey, childKey))) {
+            if (o[childKey] && (children = Tree.filterAncestors(o[childKey], id, idKey, childKey))) {
                 let oo = {}
                 oo[childKey] = children
                 result = Object.assign({}, o, oo)
@@ -28,16 +31,18 @@ const Tree = {
     },
     /**
      * 根据ID查找所有祖先节点
-     * @param tree
-     * @param value
-     * @param valueKey
-     * @param childKey
+     * @param tree 树
+     * @param value ID
+     * @param idKey ID字段
+     * @param childKey 子节点字段
      * @returns {*[]}
      */
-    listAncestors: function (tree, value, valueKey, childKey) {
-        valueKey = valueKey || 'id'
+    listAncestors: function (tree, id, idKey, childKey) {
+        tree = JSON.parse(JSON.stringify(tree))
+        idKey = idKey || 'id'
         childKey = childKey || '_child'
-        let parents = Tree.filterAncestors(tree, value, valueKey, childKey)
+        let parents = Tree.filterAncestors(tree, id, idKey, childKey)
+        //console.log('parents', id, JSON.stringify(parents, null, 2));
         if (null === parents) {
             return []
         }
@@ -50,6 +55,11 @@ const Tree = {
         } while (node)
         return list
     },
+    listAncestorsIds: function (tree, id, idKey, childKey) {
+        idKey = idKey || 'id'
+        childKey = childKey || '_child'
+        return Tree.listAncestors(tree, id, idKey, childKey).map(o => o[idKey])
+    },
     /**
      * 查找所有子节点ID（包括自己）
      * @param nodes
@@ -59,6 +69,8 @@ const Tree = {
      * @returns {*[]}
      */
     findChildrenIdsIncludeSelf: function (nodes, id, idKey, pidKey) {
+        idKey = idKey || 'id'
+        pidKey = pidKey || 'pid'
         return [id].concat(Tree.findChildren(nodes, id, idKey, pidKey).map(o => o[idKey]))
     },
     /**
@@ -70,6 +82,8 @@ const Tree = {
      * @returns {*[]}
      */
     findChildrenIds: function (nodes, id, idKey, pidKey) {
+        idKey = idKey || 'id'
+        pidKey = pidKey || 'pid'
         return Tree.findChildren(nodes, id, idKey, pidKey).map(o => o[idKey])
     },
     /**
@@ -81,6 +95,8 @@ const Tree = {
      * @returns {*[]}
      */
     findChildren: function (nodes, id, idKey, pidKey) {
+        idKey = idKey || 'id'
+        pidKey = pidKey || 'pid'
         let children = []
         for (let node of nodes) {
             if (node[pidKey] === id) {
@@ -99,6 +115,8 @@ const Tree = {
      * @returns {*[]}
      */
     findAncestors: function (nodes, id, idKey, pidKey) {
+        idKey = idKey || 'id'
+        pidKey = pidKey || 'pid'
         let ancestors = []
         for (let node of nodes) {
             if (node[idKey] === id) {
@@ -121,16 +139,16 @@ const Tree = {
      * @returns {*[]}
      */
     sort: function (nodes, id, idKey, pidKey, sortKey) {
-        id = id || ''
+        id = id || 0
         idKey = idKey || 'id'
         pidKey = pidKey || 'pid'
         sortKey = sortKey || 'sort'
         nodes.forEach(o => {
             if (!o[idKey]) {
-                o[idKey] = ''
+                o[idKey] = 0
             }
             if (!o[pidKey]) {
-                o[pidKey] = ''
+                o[pidKey] = 0
             }
         })
         nodes = nodes.sort((a, b) => {
@@ -161,6 +179,30 @@ const Tree = {
         return result
     },
     /**
+     * 根据level限制树的层级，返回新树
+     * @param tree
+     * @param maxLevel
+     */
+    treeLevelLimit: function (tree, maxLevel) {
+        if (maxLevel <= 0) {
+            return []
+        }
+        let newTree = []
+        for (let node of tree) {
+            let newNode = Object.assign({}, node)
+            let nodeChild = newNode._child
+            delete newNode._child
+            if (nodeChild) {
+                let child = Tree.treeLevelLimit(node._child, maxLevel - 1);
+                if (child.length > 0) {
+                    newNode._child = child
+                }
+            }
+            newTree.push(newNode)
+        }
+        return newTree
+    },
+    /**
      * nodes -> tree
      *
      * @param nodes
@@ -172,16 +214,18 @@ const Tree = {
      * @returns {*|Array}
      */
     tree: function (nodes, id, idKey, pidKey, sortKey, childrenKey) {
-        id = id || ''
+        if (typeof id === 'undefined') {
+            id = ''
+        }
         idKey = idKey || 'id'
         pidKey = pidKey || 'pid'
         sortKey = sortKey || 'sort'
         childrenKey = childrenKey || '_child'
         nodes.map(o => {
-            if (!o[idKey]) {
+            if (!(idKey in o)) {
                 o[idKey] = ''
             }
-            if (!o[pidKey]) {
+            if (!(pidKey in o)) {
                 o[pidKey] = ''
             }
         })

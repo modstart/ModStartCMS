@@ -237,13 +237,13 @@ class MemberVipUtil
 
         if ($oldVipId == $newVipId) {
             $type = '续费会员';
-            $expire = date('Y-m-d', max($oldVipExpireTimestamp, time()) + $newVip['vipDays'] * 24 * 3600);
+            $expire = date('Y-m-d H:i:s', max($oldVipExpireTimestamp, time()) + $newVip['vipDays'] * 24 * 3600);
             $price = $newVip['price'];
         } else {
             if ($oldVipExpireTimestamp > 0) {
                 $type = '变更会员';
                 $expireTimestamp = max(time() + $newVip['vipDays'] * 24 * 3600, $oldVipExpireTimestamp);
-                $expire = date('Y-m-d', $expireTimestamp);
+                $expire = date('Y-m-d H:i:s', $expireTimestamp);
                 $price = $newVip['price'] * (($expireTimestamp - time()) / (24 * 3600)) / $newVip['vipDays'];
                 // 老会员折算
                 $oldLeftDays = max(0, intval(($oldVipExpireTimestamp - time()) / (24 * 3600)));
@@ -252,7 +252,7 @@ class MemberVipUtil
                 $price = max(bcsub($price, $oldPriceValue, 2), 0.01);
             } else {
                 $type = '新开会员';
-                $expire = date('Y-m-d', time() + $newVip['vipDays'] * 24 * 3600);
+                $expire = date('Y-m-d H:i:s', time() + $newVip['vipDays'] * 24 * 3600);
                 $price = $newVip['price'];
             }
         }

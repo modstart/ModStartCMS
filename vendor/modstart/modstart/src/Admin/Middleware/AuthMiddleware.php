@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\App\Core\AccessGate;
-use ModStart\App\Core\CurrentApp;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 
@@ -144,6 +143,14 @@ class AuthMiddleware
              */
             if (isset($rules[$urlControllerMethod])) {
                 if (empty($rules[$urlControllerMethod]['auth'])) {
+                    if ($urlControllerMethod == '\App\Admin\Controller\IndexController@index') {
+                        // 如果是首页，尝试跳转到第一个有权限的页面
+                        foreach ($rules as $_ => $ruleInfo) {
+                            if (!empty($ruleInfo['auth'])) {
+                                return Response::redirect(action($ruleInfo['url']));
+                            }
+                        }
+                    }
                     return Response::send(-1, L('No Permission'));
                 }
             } else {

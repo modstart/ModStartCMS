@@ -274,7 +274,7 @@ class AuthController extends ModuleBaseController
         }
         if (modstart_config('Member_OauthBindPhoneEnable')) {
             if (empty($phone)) {
-                return Response::generate(-1, '请输入手机');
+                return Response::generate(-1, '手机号为空或格式不正确');
             }
             $phoneVerifyCheck = Session::get('oauthBindPhoneVerify');
             if ($phoneVerify != $phoneVerifyCheck) {
@@ -381,7 +381,7 @@ class AuthController extends ModuleBaseController
             $code = $input->getTrimString('auth_code');
         }
         if (empty($code)) {
-            return Response::generate(-1, '登录失败(code为空)', null, '/');
+            return Response::generate(-1, '登录失败(code为空)');
         }
         /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::getOrFail($oauthType);
@@ -774,7 +774,7 @@ class AuthController extends ModuleBaseController
         $phone = $input->getPhone('phone');
         $verify = $input->getTrimString('verify');
         if (empty($phone)) {
-            return Response::generate(-1, '手机为空或不正确');
+            return Response::generate(-1, '手机号为空或格式不正确');
         }
         if (empty($verify)) {
             return Response::generate(-1, '验证码不能为空');

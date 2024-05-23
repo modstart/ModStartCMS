@@ -112,6 +112,26 @@ trait HasFields
     }
 
     /**
+     * 填充所有可编辑字段
+     */
+    public function fillEditableFields()
+    {
+        $this->editableFields(true)->each(function (AbstractField $field) {
+            $field->fill($this->item);
+        });
+    }
+
+    /**
+     * 填充所有可增加字段
+     */
+    public function fillAddableFields()
+    {
+        $this->addableFields(true)->each(function (AbstractField $field) {
+            $field->fill($this->item);
+        });
+    }
+
+    /**
      * 增加一个字段
      * @param AbstractField $field
      * @return $this

@@ -96,7 +96,11 @@ trait CanCascadeFields
                         break;
                 }
             } else {
-                $value = strval($value);
+                if (true === $value || false === $value) {
+                    $value = !!$value;
+                } else {
+                    $value = strval($value);
+                }
             }
         }
     }
@@ -243,6 +247,12 @@ JS;
     protected function getFieldNormalizedScript()
     {
         if ($this->context instanceof Form) {
+            $basicJs = <<<JS
+$('#{$this->id()}').on('reset', function (e) {
+    cascadeChange(null);
+});
+JS;
+
             switch (get_class($this)) {
                 case Select::class:
                 case Type::class:
@@ -253,6 +263,7 @@ $('#{$this->id()} select').on('change', function (e) {
 JS;
                 case Radio::class:
                     return <<<JS
+{$basicJs}
 $('#{$this->id()}').on('click', function (e) {
     cascadeChange($('#{$this->id()} [type=radio]:checked').val());
 }).trigger('click');

@@ -136,6 +136,7 @@ class ImageUtil
             'processed' => false,
             'success' => false,
             'message' => '',
+            'content' => null,
         ];
 
         $img = Image::make($image);
@@ -201,12 +202,13 @@ class ImageUtil
                 $changed = true;
                 break;
         }
-        if ($option['return']) {
-            $result = $img->response('png');
-            $img->destroy();
-            return $result;
-        }
         $data['processed'] = true;
+        if ($option['return']) {
+            $data['content'] = $img->response('png');
+            $img->destroy();
+            $data['success'] = true;
+            return Response::generateSuccessData($data);
+        }
         if ($changed) {
             $data['success'] = true;
             $img->save($image);

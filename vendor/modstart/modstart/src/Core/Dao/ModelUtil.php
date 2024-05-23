@@ -112,6 +112,19 @@ class ModelUtil
         return $m->toArray();
     }
 
+    public static function insertIgnoreUnique($model, $data)
+    {
+        try {
+            self::insert($model, $data);
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            if (Str::contains($msg, 'Duplicate entry')) {
+                return;
+            }
+            throw $e;
+        }
+    }
+
     private static function insertAllBuild($records, $updateTimestamp = true)
     {
         if ($updateTimestamp) {
@@ -1524,8 +1537,10 @@ class ModelUtil
 
         if (($model instanceof \stdClass) && isset($model->{$key})) {
             return $model->{$key};
-        } else if (isset($model[$key])) {
+        } else if (is_array($model) && isset($model[$key])) {
             return $model[$key];
+        } else if (($model instanceof Model) && array_key_exists($key, $model->getAttributes())) {
+            return $model->$key;
         }
 
         foreach (explode('.', $key) as $segment) {
@@ -1597,6 +1612,17 @@ class ModelUtil
     public static function quoteLikeKeywords($keywords)
     {
         return str_replace(['\\', '%', '_'], ['\\\\\\', '\\%', '\\_'], $keywords);
+    }
+
+    public static function hasAtttibute($item, $key)
+    {
+        if ($item instanceof Model) {
+            $attributes = $item->getAttributes();
+            return array_key_exists($key, $attributes);
+        } else if ($item instanceof \stdClass) {
+            return property_exists($item, $key);
+        }
+        return false;
     }
 
 }

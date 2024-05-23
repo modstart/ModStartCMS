@@ -152,12 +152,32 @@ class RandomUtil
         return rand(0, 99) < $value;
     }
 
+    public static function datetimeCollection($length = 100, $interval = 60)
+    {
+        $list = [];
+        $t = time();
+        $count = 0;
+        for ($i = $t - $length * TimeUtil::MINUTE_PERIOD_DAY; ; $i += $interval) {
+            $list[] = date('Y-m-d H:i:s', $i);
+            $count++;
+            if ($count >= 100) {
+                break;
+            }
+        }
+        return $list;
+    }
+
     public static function dateCollection($length = 10)
     {
         $list = [];
         $t = time();
+        $count = 0;
         for ($i = $t - $length * TimeUtil::MINUTE_PERIOD_DAY; $i < $t; $i += TimeUtil::MINUTE_PERIOD_DAY) {
             $list[] = date('Y-m-d', $i);
+            $count++;
+            if ($count >= 100) {
+                break;
+            }
         }
         return $list;
     }
@@ -167,6 +187,15 @@ class RandomUtil
         $list = [];
         for ($i = 0; $i < $length; $i++) {
             $list[] = rand($min, $max);
+        }
+        return $list;
+    }
+
+    public static function floatCollection($length = 10, $min = 0, $max = 1)
+    {
+        $list = [];
+        for ($i = 0; $i < $length; $i++) {
+            $list[] = rand($min * 100, $max * 100) / 100;
         }
         return $list;
     }

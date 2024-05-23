@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11891801",
+      "name": "calendar",
+      "font_class": "calendar",
+      "unicode": "e670",
+      "unicode_decimal": 58992
+    },
+    {
+      "icon_id": "22336134",
+      "name": "mute",
+      "font_class": "mute",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "8092167",
+      "name": "eye-close",
+      "font_class": "eye-close",
+      "unicode": "e8ff",
+      "unicode_decimal": 59647
+    },
+    {
       "icon_id": "27298710",
       "name": "douyin",
       "font_class": "douyin",

@@ -42,6 +42,17 @@ class Response
         return isset($ret['data']) ? $ret['data'] : null;
     }
 
+    public static function onSuccess($result, $successCallback, $errorCallback = null)
+    {
+        if (self::isSuccess($result)) {
+            call_user_func($successCallback, $result);
+        } else {
+            if ($errorCallback) {
+                call_user_func($errorCallback, $result);
+            }
+        }
+    }
+
     public static function isSuccess($result)
     {
         if ($result instanceof JsonResponse) {

@@ -28,12 +28,12 @@ abstract class AbstractScheduleBiz
 
     protected function cronEvery10Minute()
     {
-        return '*/10 * * * * *';
+        return '*/10 * * * *';
     }
 
     protected function cronEvery30Minute()
     {
-        return '0,30 * * * * *';
+        return '0,30 * * * *';
     }
 
     /**
@@ -42,7 +42,7 @@ abstract class AbstractScheduleBiz
      */
     protected function cronEveryDayHour24($hour)
     {
-        return "0 $hour * * * *";
+        return "0 $hour * * *";
     }
 
     /**
@@ -52,16 +52,16 @@ abstract class AbstractScheduleBiz
      */
     protected function cronEveryDayHour24Minute($hour, $minute)
     {
-        return "$minute $hour * * * *";
+        return "$minute $hour * * *";
     }
 
     protected function cronEveryHour()
     {
-        return '0 * * * * *';
+        return '0 * * * *';
     }
 
     protected function cronEveryDay()
     {
-        return '0 0 * * * *';
+        return '0 0 * * *';
     }
 }

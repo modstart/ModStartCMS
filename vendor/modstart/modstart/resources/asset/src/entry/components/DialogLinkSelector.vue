@@ -42,7 +42,7 @@ export default {
     name: "DialogLinkSelector",
     data() {
         return {
-            type: 'web',
+            type: window.__data.types[0]['name'],
             types: window.__data.types,
             links: window.__data.links,
             linkTitle: null,
