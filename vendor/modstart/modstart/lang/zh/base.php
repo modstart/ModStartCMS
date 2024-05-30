@@ -30,6 +30,7 @@ return [
     'Security Warning' => '安全警告',
     'System in debug mode ( APP_DEBUG=true ), error messages may expose sensitive data.' => '系统为调试模式 ( APP_DEBUG=true )，错误信息可能暴露敏感信息。',
     'install.php script not deleted, may expose sensitive data' => 'install.php 安装向导文件未删除，可能暴露敏感信息',
+    'Your password is weak, please change your password.' => '您的正在使用弱密码，请及时修改密码。',
     'Visit Home' => '访问首页',
     'Home' => '首页',
     'Admin Login' => '管理登录',

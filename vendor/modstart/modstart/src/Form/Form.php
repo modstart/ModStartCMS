@@ -277,14 +277,22 @@ class Form implements Renderable
 
     public static function make($model = null, \Closure $builder = null)
     {
-        if (
-            is_object($model)
-            ||
-            (class_exists($model) && is_subclass_of($model, Model::class))
-        ) {
-            return new Form($model, $builder);
+        if ($model && is_object($model)) {
+            return new static($model, $builder);
         }
-        return new Form(DynamicModel::make($model), $builder);
+        if (class_exists($model)) {
+            if (
+                is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)
+                ||
+                is_subclass_of($model, Repository::class)
+            ) {
+                return new static($model, $builder);
+            }
+        }
+        $grid = new static(DynamicModel::make($model), $builder);
+        $grid->isDynamicModel = true;
+        $grid->dynamicModelTableName = $model;
+        return $grid;
     }
 
     public function asTree($keyName = 'id', $pidColumn = 'pid', $sortColumn = 'sort', $titleColumn = 'title')

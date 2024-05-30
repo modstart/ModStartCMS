@@ -36,6 +36,7 @@ use ModStart\Field\Type\FieldRenderMode;
  * @method \ModStart\Field\FileTemp             fileTemp($column, $label = '')
  * @method \ModStart\Field\Files                files($column, $label = '')
  * @method \ModStart\Field\Html                 html($column, $label = '')
+ * @method \ModStart\Field\Hidden               hidden($column, $label = '')
  * @method \ModStart\Field\Id                   id($column, $label = '')
  * @method \ModStart\Field\Image                image($column, $label = '')
  * @method \ModStart\Field\Images               images($column, $label = '')

@@ -279,7 +279,7 @@ class TreeUtil
     }
 
     /**
-     * 获取所有节点的子节点ID
+     * 获取节点的所有子节点ID
      * @param $nodes array 节点
      * @param $id int ID
      * @param $idName string ID字段名,默认为id

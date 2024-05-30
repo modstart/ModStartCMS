@@ -173,6 +173,18 @@ class AuthController extends ModuleBaseController
             return Response::generateSuccessData($resultData);
         }
         if (modstart_config('Member_OauthBindAuto', false)) {
+            // 已登录直接绑定
+            if (MemberUser::isLogin()) {
+                $memberUserId = MemberUser::id();
+                $ret = $oauth->processBindToUser([
+                    'memberUserId' => $memberUserId,
+                    'userInfo' => $oauthUserInfo,
+                ]);
+                BizException::throwsIfResponseError($ret);
+                Session::forget('oauthUserInfo');
+                $resultData['memberUserId'] = $memberUserId;
+                return Response::generateSuccessData($resultData);
+            }
             // 快速注册
             /** 为了兼容统一登录，禁止使用手机号格式和邮箱格式  */
             $username = null;

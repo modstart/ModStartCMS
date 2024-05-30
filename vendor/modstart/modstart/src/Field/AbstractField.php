@@ -678,7 +678,7 @@ class AbstractField implements Renderable
                     }
                     if (ModelUtil::hasAtttibute($item, $column)) {
                         if (is_array($item->{$column})) {
-                            return join(', ', $item->{$column});
+                            return htmlspecialchars(join(', ', $item->{$column}));
                         }
                     }
                     if (str_contains($column, '.')) {

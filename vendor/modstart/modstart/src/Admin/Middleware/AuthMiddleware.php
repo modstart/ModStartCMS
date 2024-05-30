@@ -147,7 +147,12 @@ class AuthMiddleware
                         // 如果是首页，尝试跳转到第一个有权限的页面
                         foreach ($rules as $_ => $ruleInfo) {
                             if (!empty($ruleInfo['auth'])) {
-                                return Response::redirect(action($ruleInfo['url']));
+                                // 如果是 URL，直接跳转，如果是 Controller@method，尝试调用
+                                $url = $ruleInfo['url'];
+                                if (AdminPermission::isUrlAction($ruleInfo['url'])) {
+                                    $url = action($ruleInfo['url']);
+                                }
+                                return Response::redirect($url);
                             }
                         }
                     }

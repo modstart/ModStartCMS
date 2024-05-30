@@ -13,7 +13,6 @@ use ModStart\Detail\Type\DetailEngine;
 use ModStart\Field\AbstractField;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Concern\HasCascadeFields;
-use ModStart\Form\Form;
 use ModStart\Repository\Filter\HasRepositoryFilter;
 use ModStart\Repository\Filter\HasScopeFilter;
 use ModStart\Repository\Repository;
@@ -96,14 +95,22 @@ class Detail implements Renderable
 
     public static function make($model, \Closure $builder = null)
     {
-        if (
-            is_object($model)
-            ||
-            (class_exists($model) && is_subclass_of($model, Model::class))
-        ) {
-            return new Detail($model, $builder);
+        if ($model && is_object($model)) {
+            return new static($model, $builder);
         }
-        return new Detail(DynamicModel::make($model), $builder);
+        if (class_exists($model)) {
+            if (
+                is_subclass_of($model, \Illuminate\Database\Eloquent\Model::class)
+                ||
+                is_subclass_of($model, Repository::class)
+            ) {
+                return new static($model, $builder);
+            }
+        }
+        $grid = new static(DynamicModel::make($model), $builder);
+        $grid->isDynamicModel = true;
+        $grid->dynamicModelTableName = $model;
+        return $grid;
     }
 
     public function asTree($keyName = 'id', $pidColumn = 'pid', $sortColumn = 'sort', $titleColumn = 'title')

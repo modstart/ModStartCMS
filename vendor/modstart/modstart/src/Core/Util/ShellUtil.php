@@ -66,6 +66,30 @@ class ShellUtil
         return $ret;
     }
 
+    public static function runWithTimeout($command, $timeout = 60, $log = true)
+    {
+        if ($log) {
+            Log::info("ShellUtil.Run -> " . $command);
+        }
+        $process = new Process($command);
+        $process->setTimeout($timeout);
+        try {
+            $process->start();
+            $process->wait();
+            $ret = $process->getOutput();
+            $ret = @trim($ret);
+            if ($log) {
+                Log::info("ShellUtil.Result -> " . $ret);
+            }
+            return $ret;
+        } catch (\Exception $e) {
+            if ($log) {
+                Log::error("ShellUtil.Error -> " . $e->getMessage());
+            }
+            return "ERROR:" . $e->getMessage();
+        }
+    }
+
     /**
      * @param $commandFilter
      * @return array|string|null

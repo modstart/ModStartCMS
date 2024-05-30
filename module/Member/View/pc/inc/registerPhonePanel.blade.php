@@ -45,7 +45,7 @@
                 @if(modstart_config('Member_RegisterPhonePasswordEnable',false))
                     <div class="line">
                         <div class="field">
-                            <input type="text" class="form-lg" name="password" placeholder="设置登录密码"/>
+                            <input type="password" class="form-lg" name="password" placeholder="设置登录密码"/>
                         </div>
                     </div>
                 @endif

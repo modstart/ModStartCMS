@@ -47,7 +47,9 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
         if (ModuleManager::getModuleConfig('Member', 'creditEnable', false)) {
             $vipSet = MemberVipUtil::get($order['vipId']);
             if ($vipSet['creditPresentEnable']) {
-                MemberCreditUtil::change($order['memberUserId'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
+                if ($vipSet['creditPresentValue'] > 0) {
+                    MemberCreditUtil::change($order['memberUserId'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
+                }
             }
         }
         if ($update['vipId'] != $memberUser['vipId']) {

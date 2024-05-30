@@ -24,6 +24,11 @@ class Nav extends AbstractWidget
     protected $classList = '';
 
     /**
+     * @var string
+     */
+    protected $attributes = '';
+
+    /**
      * Box constructor.
      *
      * @param array $navs
@@ -35,7 +40,7 @@ class Nav extends AbstractWidget
         $this->classList = $classList;
     }
 
-    public static function make($navs, $classList = '')
+    public static function make($navs = [], $classList = '')
     {
         return new static($navs, $classList);
     }
@@ -49,6 +54,36 @@ class Nav extends AbstractWidget
     public function classList($classList)
     {
         $this->classList = $classList;
+        return $this;
+    }
+
+    public function attributes($attributes)
+    {
+        $this->attributes = $attributes;
+        return $this;
+    }
+
+    public function append($title, $url, $active = false)
+    {
+        $this->navs[] = [
+            'title' => $title,
+            'url' => $url,
+            'active' => $active,
+        ];
+        return $this;
+    }
+
+    public function appendDialog($title, $url, $active = false, $width = null, $height = null)
+    {
+        $this->navs[] = [
+            'title' => $title,
+            'dialog' => [
+                'url' => $url,
+                'width' => $width,
+                'height' => $height,
+            ],
+            'active' => $active,
+        ];
         return $this;
     }
 

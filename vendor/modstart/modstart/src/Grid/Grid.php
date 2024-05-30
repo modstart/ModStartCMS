@@ -268,7 +268,7 @@ class Grid
     public static function make($model, \Closure $builder = null)
     {
         if ($model && is_object($model)) {
-            return new Grid($model, $builder);
+            return new static($model, $builder);
         }
         if (class_exists($model)) {
             if (
@@ -276,10 +276,10 @@ class Grid
                 ||
                 is_subclass_of($model, Repository::class)
             ) {
-                return new Grid($model, $builder);
+                return new static($model, $builder);
             }
         }
-        $grid = new Grid(DynamicModel::make($model), $builder);
+        $grid = new static(DynamicModel::make($model), $builder);
         $grid->isDynamicModel = true;
         $grid->dynamicModelTableName = $model;
         return $grid;

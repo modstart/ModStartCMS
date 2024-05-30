@@ -38,7 +38,7 @@
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
             {{L('Security Warning')}}: {{L('Your password is weak, please change your password.')}}
-            <a href="{{action('\ModStart\Admin\Controller\AdminUserController@changePassword')}}">{{L('Process Now')}}</a>
+            <a href="{{action('\ModStart\Admin\Controller\ProfileController@changePassword')}}">{{L('Process Now')}}</a>
         </div>
     @endif
     @if(config('env.APP_KEY')=='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')

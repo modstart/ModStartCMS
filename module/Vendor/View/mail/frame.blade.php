@@ -32,7 +32,8 @@
             @show
         </div>
         <div id="foot">
-            {{modstart_config('siteName')}} &copy; {{modstart_config('siteDomain')}}
+            {{modstart_config('siteName')}}
+            {!! modstart_config('siteDomain','')?'&copy;'.modstart_config('siteDomain',''):'' !!}
         </div>
     @show
 </div>

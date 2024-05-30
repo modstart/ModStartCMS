@@ -3,6 +3,7 @@
 namespace Module\VisitStatistic\Util;
 
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\LockUtil;
 use ModStart\Core\Util\TimeUtil;
 use Module\VisitStatistic\Model\VisitStatisticDailyReport;
 use Module\VisitStatistic\Model\VisitStatisticItem;
@@ -36,7 +37,14 @@ class VisitStatisticUtil
                 if ($t <= $today) {
                     $recordMap[$day] = self::calcReport($day);
                     if ($t < $today) {
-                        ModelUtil::insert('visit_statistic_daily_report', $recordMap[$day]);
+                        $where = ['day' => $day];
+                        $lockKey = 'VisitStatistic:DailyReport:' . $day;
+                        if (LockUtil::acquire($lockKey)) {
+                            if (!ModelUtil::exists(VisitStatisticDailyReport::class, $where)) {
+                                ModelUtil::insert(VisitStatisticDailyReport::class, $recordMap[$day]);
+                            }
+                            LockUtil::release($lockKey);
+                        }
                     }
                 } else {
                     $recordMap[$day] = [

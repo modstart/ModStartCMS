@@ -9,6 +9,7 @@ export const ListerMixin = {
             listLoading: false,
             listActionName: '',
             listActionStatus: {},
+            selectRecords: [],
             selectIds: [],
             list: {
                 page: 1,
@@ -136,6 +137,7 @@ export const ListerMixin = {
             console.error('should implements doList')
         },
         onSelectionChange(rows) {
+            this.selectRecords = rows
             this.selectIds = rows.map(o => o.id)
         },
         doSelectionCancel() {

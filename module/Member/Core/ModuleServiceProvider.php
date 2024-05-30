@@ -226,7 +226,9 @@ class ModuleServiceProvider extends ServiceProvider
                 $memberUser = MemberUtil::getCached($e->memberUserId);
                 $vipSet = MemberVipUtil::get($memberUser['vipId']);
                 if ($vipSet['creditPresentEnable']) {
-                    MemberCreditUtil::change($memberUser['id'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
+                    if ($vipSet['creditPresentValue']) {
+                        MemberCreditUtil::change($memberUser['id'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
+                    }
                 }
             }
             // 注册发送邮件

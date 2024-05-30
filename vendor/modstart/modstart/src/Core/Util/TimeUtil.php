@@ -339,12 +339,19 @@ class TimeUtil
 
     private static $monitor = [];
 
-    public static function monitorTick($name = 'Default')
+    public static function monitorTick($name = null, $clean = false)
     {
+        if (is_null($name)) {
+            $name = 'Default';
+        }
         if (!isset(self::$monitor[$name])) {
             self::$monitor[$name] = self::millitime();
         }
-        return self::millitime() - self::$monitor[$name];
+        $start = self::$monitor[$name];
+        if ($clean) {
+            unset(self::$monitor[$name]);
+        }
+        return self::millitime() - $start;
     }
 
     /**

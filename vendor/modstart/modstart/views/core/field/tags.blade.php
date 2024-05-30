@@ -40,6 +40,7 @@ if(null===$value){
         var $field = $('#{{$id}}');
         var $tag = $('#{{$id}}Tags').tagify({
             whitelist : {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(array_values($tags)) !!},
+            enforceWhitelist: false,
             dropdown: {
                 maxItems: 20,
                 classname: "tagify-dropdown-list",

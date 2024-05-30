@@ -389,7 +389,7 @@ class ModelUtil
 
     public static function exists($model, $where)
     {
-        return !!self::get($model, $where);
+        return self::count($model, $where) > 0;
     }
 
     public static function batch($model, $nextId, $batchSize = 1000, $where = [], $fields = ['*'], $idName = 'id', $idSort = 'asc')
@@ -1618,7 +1618,8 @@ class ModelUtil
     {
         if ($item instanceof Model) {
             $attributes = $item->getAttributes();
-            return array_key_exists($key, $attributes);
+            return array_key_exists($key, $attributes)
+                || method_exists($item, $key);
         } else if ($item instanceof \stdClass) {
             return property_exists($item, $key);
         }

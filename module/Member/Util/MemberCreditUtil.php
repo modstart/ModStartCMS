@@ -49,7 +49,7 @@ class MemberCreditUtil
      */
     public static function change($memberUserId, $change, $remark, $meta = null)
     {
-        BizException::throwsIf('MemberCreditUtil.change.change=0', !$change);
+        BizException::throwsIf('Member.Credit.change=0', !$change);
         $m = ModelUtil::getWithLock(MemberCredit::class, [
             'memberUserId' => $memberUserId
         ]);
@@ -60,7 +60,7 @@ class MemberCreditUtil
                 'freezeTotal' => 0,
             ]);
         }
-        BizException::throwsIf('MemberCreditUtil.change.total<0', $change < 0 && $m['total'] + $change < 0);
+        BizException::throwsIf('Member.Credit.total<0', $change < 0 && $m['total'] + $change < 0);
         if ($meta && !is_string($meta)) {
             $meta = SerializeUtil::jsonEncode($meta);
         }
