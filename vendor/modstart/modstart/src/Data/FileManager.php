@@ -7,6 +7,7 @@ namespace ModStart\Data;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
+use ModStart\Admin\Model\AdminUpload;
 use ModStart\Admin\Type\UploadType;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
@@ -160,7 +161,7 @@ class FileManager
             return Response::jsonError($ret['msg']);
         }
         $type = null;
-        if (in_array($uploadTable, ['member_upload'])) {
+        if (!in_array($uploadTable, ['admin_upload', AdminUpload::class])) {
             $type = UploadType::USER;
         }
         $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId, $type);
@@ -208,7 +209,7 @@ class FileManager
             return Response::jsonError($ret['msg']);
         }
         $type = null;
-        if (in_array($uploadTable, ['member_upload'])) {
+        if (!in_array($uploadTable, ['admin_upload', AdminUpload::class])) {
             $type = UploadType::SYSTEM;
         }
         $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId, $type);
@@ -235,7 +236,7 @@ class FileManager
             return Response::jsonError($ret['msg']);
         }
         $type = null;
-        if (in_array($uploadTable, ['member_upload'])) {
+        if (!in_array($uploadTable, ['admin_upload', AdminUpload::class])) {
             $type = UploadType::USER;
         }
         $retSaveUser = self::saveToUser($ret['data']['data'], $category, -1, $uploadTable, $userId, $type);
@@ -263,7 +264,7 @@ class FileManager
         }
         $data = $ret['data']['data'];
         $type = null;
-        if (in_array($uploadTable, ['member_upload'])) {
+        if (!in_array($uploadTable, ['admin_upload', AdminUpload::class])) {
             $type = UploadType::USER;
         }
         $retSaveUser = self::saveToUser($data, $category, $categoryId, $uploadTable, $userId, $type);
@@ -302,7 +303,7 @@ class FileManager
         }
         $data = $ret['data']['data'];
         $type = null;
-        if (in_array($uploadTable, ['member_upload'])) {
+        if (!in_array($uploadTable, ['admin_upload', AdminUpload::class])) {
             $type = UploadType::SYSTEM;
         }
         $retSaveUser = self::saveToUser($data, $category, $categoryId, $uploadTable, $userId, $type);
@@ -353,7 +354,7 @@ class FileManager
             'userId' => $userId,
             'category' => $category,
         ];
-        if (in_array($uploadTable, ['member_upload'])) {
+        if (!in_array($uploadTable, ['admin_upload', AdminUpload::class])) {
             $option['where']['type'] = UploadType::USER;
         }
         if ($categoryId > 0) {

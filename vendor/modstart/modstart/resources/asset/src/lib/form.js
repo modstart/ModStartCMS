@@ -100,7 +100,7 @@ var Form = {
         callback = callback || {};
 
         if (typeof res !== 'object') {
-            alert("ErrorResponse:" + res);
+            res = {code: -999, msg: res};
             return;
         }
 

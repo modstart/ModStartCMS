@@ -330,6 +330,50 @@ class Response
         }
     }
 
+    public static function downloadFile($filename, $filepath, $headers = [], $filenameFallback = null, $param = [])
+    {
+        $param = array_merge([
+            'deleteAfterSent' => false,
+        ], $param);
+        $response = new StreamedResponse();
+        $fileSize = filesize($filepath);
+        $response->setCallback(function () use ($filepath, $fileSize, $param) {
+            ob_get_clean();
+            $sentBytes = 0;
+            $f = fopen($filepath, 'rb');
+            while (!feof($f) && $sentBytes < $fileSize) {
+                $bytesToRead = 1024 * 1024;
+                if ($sentBytes + $bytesToRead >= $fileSize) {
+                    $bytesToRead = $fileSize - $sentBytes;
+                }
+                $data = fread($f, $bytesToRead);
+                echo $data;
+                flush();
+                $sentBytes += $bytesToRead;
+            }
+            fclose($fileStream);
+            if ($param['deleteAfterSent']) {
+                unlink($filepath);
+            }
+        });
+        $disposition = $response->headers->makeDisposition(
+            \Symfony\Component\HttpFoundation\ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $filename,
+            $filenameFallback
+        );
+        $response->headers->set('Content-Length', $fileSize);
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('X-Accel-Buffering', 'no');
+        $response->headers->set('Cache-Control', 'no-cache');
+        if (!isset($headers['Content-Type'])) {
+            $response->headers->set('Content-Type', 'application/octet-stream');
+        }
+        foreach ($headers as $k => $v) {
+            $response->headers->set($k, $v);
+        }
+        $response->send();
+    }
+
     public static function download($filename, $content, $headers = [], $filenameFallback = null)
     {
         if (empty($filenameFallback)) {

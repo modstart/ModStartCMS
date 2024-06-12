@@ -44,6 +44,7 @@ return [
         'upgradeDisable' => env('ADMIN_UPGRADE_DISABLE', false),
         'theme' => env('ADMIN_THEME', 'light'),
         'tabsEnable' => env('ADMIN_TABS_ENABLE', true),
+        'styles' => [],
         /**
          * 后台请求忽略权限校验的 Controller 或 Action
          * 例如：['\App\Admin\Controller\AuthController@login', '\App\Admin\Controller\AuthController']

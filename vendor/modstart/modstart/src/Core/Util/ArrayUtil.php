@@ -316,6 +316,50 @@ class ArrayUtil
         return $records;
     }
 
+    /**
+     * 根据多个key排序
+     *
+     * @param $records array
+     * @param $keys array
+     * @return array
+     * @example
+     * $keyOrder = [
+     * ['key' => 'type', 'sort' => 'asc', 'valueOrder' => ['dir']],
+     * ['key' => 'name', 'sort' => 'asc'],
+     * ]
+     */
+    public static function sortByKeys($records, $keysOrder = [])
+    {
+        usort($records, function ($o1, $o2) use ($keysOrder) {
+            foreach ($keysOrder as $order) {
+                $orderKey = $order['key'];
+                $orderSort = $order['sort'];
+                if ($o1[$orderKey] == $o2[$orderKey]) {
+                    continue;
+                }
+                $orderValueOrder = isset($order['valueOrder']) ? $order['valueOrder'] : null;
+                $v1 = $o1[$orderKey];
+                $v2 = $o2[$orderKey];
+                if (!is_null($orderValueOrder)) {
+                    $v1 = array_search($v1, $orderValueOrder);
+                    $v2 = array_search($v2, $orderValueOrder);
+                    if ($v1 === false && $v2 === false) {
+                        $v1 = $o1[$orderKey];
+                        $v2 = $o2[$orderKey];
+                    } else if ($v1 === false) {
+                        $v1 = $v2 + 1;
+                    } else {
+                        $v2 = $v1 + 1;
+                    }
+                }
+                $ret = $v1 > $v2 ? 1 : -1;
+                return $orderSort == 'asc' ? $ret : -$ret;
+            }
+            return 0;
+        });
+        return $records;
+    }
+
     public static function sortNumber($records)
     {
         sort($records, SORT_NUMERIC);
@@ -502,6 +546,20 @@ class ArrayUtil
             $value = &$value[$k];
         }
         $value[$lastKey] = $value;
+    }
+
+    public static function shuffleAssoc($list)
+    {
+        if (!is_array($list)) {
+            return $list;
+        }
+        $keys = array_keys($list);
+        shuffle($keys);
+        $random = array();
+        foreach ($keys as $key) {
+            $random[$key] = $list[$key];
+        }
+        return $random;
     }
 
 }

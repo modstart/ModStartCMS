@@ -159,7 +159,13 @@ class AdminPermission
             }
             if (isset($item['icon'])) {
                 if (preg_match('/^[a-zA-Z0-9\\-]+$/', $item['icon'])) {
+                    // build icon
                     $item['icon'] = "<i class='icon iconfont icon-$item[icon]'></i>";
+                } else if (preg_match('/^[a-zA-Z0-9\\- ]+$/', $item['icon'])) {
+                    // custom icon class
+                    $item['icon'] = "<i class='icon $item[icon]'></i>";
+                } else {
+                    // custom icon dom
                 }
             }
             if (!isset($flatten[$k])) $flatten[$k] = $item;

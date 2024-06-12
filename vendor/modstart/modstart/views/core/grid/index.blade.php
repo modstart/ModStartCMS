@@ -15,11 +15,11 @@
         @if($canAdd)
             @if($addBlankPage)
                 <a href="{{$urlAdd}}" class="btn btn-primary" data-tab-open data-refresh-grid-on-close>
-                    <i class="iconfont icon-plus"></i> {{L('Add')}}
+                    <i class="iconfont icon-plus"></i> {{$titleAdd?$titleAdd:L('Add')}}
                 </a>
             @else
                 <a href="javascript:;" class="btn btn-primary" data-add-button>
-                    <i class="iconfont icon-plus"></i> {{L('Add')}}
+                    <i class="iconfont icon-plus"></i> {{$titleAdd?$titleAdd:L('Add')}}
                 </a>
             @endif
         @endif

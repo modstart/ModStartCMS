@@ -18,6 +18,7 @@ use Module\Cms\Type\CmsMode;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Cms\Util\CmsTemplateUtil;
+use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class CatController extends Controller
 {
@@ -60,6 +61,7 @@ class CatController extends Controller
                 });
                 $modelField->when('in', $modelModeMap[CmsMode::FORM], function ($builder) {
                     $builder->select('formTemplate', '表单模板')->options(CmsTemplateUtil::allFormTemplateMap())->required()->listable(false);
+                    $builder->select('captchaProvider', '表单提交验证码')->options(CaptchaProvider::nameTitleMapWithNone());
                 });
                 $builder->text('subTitle', '子标题')->required()->listable(false);
                 $builder->switch('enable', '启用')->optionsYesNo()->required()->listable(true)->gridEditable(true);

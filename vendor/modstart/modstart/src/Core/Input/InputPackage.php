@@ -242,6 +242,11 @@ class InputPackage
         return array_values(array_filter($values));
     }
 
+    public function getLineSeparatedArray($key, $defaultValue = [])
+    {
+        return $this->getStringSeparatedArray($key, $defaultValue, "\n");
+    }
+
     public function getStringSeparatedArray($key, $defaultValue = [], $separated = ',')
     {
         $value = $this->getTrimString($key);

@@ -27,6 +27,8 @@ use ModStart\Support\Manager\FieldManager;
  *
  * @method  Detail|mixed engine($value = null)
  * @method  Detail|mixed title($value = null)
+ * @method  Detail|mixed view($value = null)
+ * @method  Detail|mixed viewData($value = null)
  * @method  Detail|mixed formClass($value = null)
  * @method  Detail|array|integer|string itemId($value = null)
  * @method  Detail|Model|\stdClass item($value = null)
@@ -53,8 +55,14 @@ class Detail implements Renderable
      * @var string
      */
     private $view = 'modstart::core.detail.index';
+    /**
+     * @var array
+     */
+    private $viewData = [];
 
     private $fluentAttributes = [
+        'view',
+        'viewData',
         'engine',
         'title',
         'itemId',
@@ -165,7 +173,7 @@ class Detail implements Renderable
     {
         $data = [];
         $data['fields'] = $this->showableFields();
-        $data = array_merge($this->fluentAttributeVariables(), $data);
+        $data = array_merge($this->fluentAttributeVariables(), $data, $this->viewData);
         return view($this->view, $data)->render();
     }
 

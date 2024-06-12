@@ -30,6 +30,21 @@ class ButtonAjaxRequest extends AbstractWidget
         ];
     }
 
+    /**
+     * @param $type string
+     * @param $text string
+     * @param $url string
+     * @return ButtonDialogRequest
+     */
+    public static function make(...$arguments)
+    {
+        $ins = new static();
+        $ins->type($arguments[0]);
+        $ins->text($arguments[1]);
+        $ins->url($arguments[2]);
+        return $ins;
+    }
+
     public static function __callStatic($name, $arguments)
     {
         $methods = ['muted', 'warning', 'danger', 'success', 'primary'];

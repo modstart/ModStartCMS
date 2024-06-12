@@ -187,7 +187,12 @@ var GridManager = function (opt) {
                             $grid.find('[data-table]').html(emptyHtml);
                         }
                     }
-                }
+                },
+                error: function (msg) {
+                    var $emptyHtml = $(emptyHtml);
+                    $emptyHtml.find('.text').text(msg);
+                    $grid.find('[data-table]').html($emptyHtml[0].outerHTML);
+                },
             });
 
         } else {
@@ -304,7 +309,17 @@ var GridManager = function (opt) {
                         if (data.script) {
                             eval(data.script);
                         }
-                    }
+                    },
+                    error: function (msg) {
+                        layui.table.reload(option.id + 'Table', {
+                            text: {
+                                none: '<div class="ub-text-muted tw-py-10"><i class="iconfont icon-warning" style="font-size:2rem;"></i><br />' + MS.util.specialchars(msg) + '</div>'
+                            },
+                            cols: [],
+                            data: [],
+                            limit: 0,
+                        });
+                    },
                 });
         }
 

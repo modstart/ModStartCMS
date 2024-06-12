@@ -39,4 +39,12 @@ class SerializeUtil
         return @json_decode($data, true);
     }
 
+    public static function objectArray($array)
+    {
+        if (empty($array)) {
+            return new \stdClass();
+        }
+        return $array;
+    }
+
 }

@@ -4,6 +4,8 @@
 namespace ModStart\Field;
 
 
+use ModStart\Core\Util\CodeUtil;
+
 class Code extends AbstractField
 {
     protected function setup()
@@ -44,4 +46,11 @@ class Code extends AbstractField
         $this->addVariables(['language' => $value]);
         return $this;
     }
+
+    public function prepareInput($value, $dataSubmitted)
+    {
+        return CodeUtil::cleanCr($value);
+    }
+
+
 }

@@ -63,6 +63,16 @@
                             <textarea class="form" style="height:3rem;" name="content"></textarea>
                         </div>
                     </div>
+                    @if(!empty($cat['captchaProvider']))
+                        <div class="line">
+                            <div class="label">&nbsp;</div>
+                            <div class="field">
+                                <div class="tw-w-96">
+                                    {!! \Module\Vendor\Provider\Captcha\CaptchaProvider::get($cat['captchaProvider'])->render() !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="line">
                         <div class="label">&nbsp;</div>
                         <div class="field">

@@ -34,6 +34,16 @@ class CRUDUtil
         return $id;
     }
 
+    public static function stringId()
+    {
+        $input = InputPackage::buildFromInput();
+        $id = $input->getTrimString('_id');
+        if (!$id) {
+            $id = $input->getTrimString('id');
+        }
+        return $id;
+    }
+
     public static function ids()
     {
         $input = InputPackage::buildFromInput();
@@ -47,6 +57,23 @@ class CRUDUtil
         $ids = [];
         foreach (explode(',', $id) as $i) {
             $ids[] = intval($i);
+        }
+        return $ids;
+    }
+
+    public static function stringIds()
+    {
+        $input = InputPackage::buildFromInput();
+        $id = $input->getTrimString('_id');
+        if (!$id) {
+            $id = $input->getTrimString('id');
+            if (empty($id)) {
+                $id = $input->getTrimString('ids');
+            }
+        }
+        $ids = [];
+        foreach (explode(',', $id) as $i) {
+            $ids[] = $i;
         }
         return $ids;
     }
@@ -96,24 +123,24 @@ class CRUDUtil
         }
     }
 
-    public static function jsGridRefresh($index = 0)
+    public static function jsGridRefresh($index = 0, $flag = 'js')
     {
-        return "[js]window.__grids.get($index).lister.refresh();";
+        return "[${flag}]window.__grids.get($index).lister.refresh();";
     }
 
-    public static function jsDialogCloseAndParentGridRefresh($index = 0)
+    public static function jsDialogCloseAndParentGridRefresh($index = 0, $flag = 'js')
     {
-        return "[js]parent.__grids.get($index).lister.refresh();__dialogClose();";
+        return "[${flag}]parent.__grids.get($index).lister.refresh();__dialogClose();";
     }
 
-    public static function jsDialogClose()
+    public static function jsDialogClose($flag = 'js')
     {
-        return "[js]__dialogClose();";
+        return "[${flag}]__dialogClose();";
     }
 
-    public static function jsDialogCloseAndParentRefresh()
+    public static function jsDialogCloseAndParentRefresh($flag = 'js')
     {
-        return "[js]parent.location.reload();";
+        return "[${flag}]parent.location.reload();";
     }
 
     public static function adminRedirectOrTabClose($url)

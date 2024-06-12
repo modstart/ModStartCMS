@@ -44,6 +44,19 @@ class ShellUtil
         return $ret;
     }
 
+    public static function runExec($command, &$exitCode, $log = true)
+    {
+        if ($log) {
+            Log::info("ShellUtil.Run -> " . $command);
+        }
+        exec($command, $output, $exitCode);
+        $output = @trim(join("\n", $output));
+        if ($log) {
+            Log::info("ShellUtil.Result -> " . $output);
+        }
+        return $output;
+    }
+
     /**
      * 在新进程中运行命令
      * @param $command string 命令

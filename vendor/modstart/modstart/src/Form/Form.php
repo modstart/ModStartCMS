@@ -49,6 +49,8 @@ use stdClass;
  * @method  Form|mixed title($value = null)
  * @method  Form|mixed showSubmit($value = null)
  * @method  Form|mixed showReset($value = null)
+ * @method  Form|mixed view($value = null)
+ * @method  Form|mixed viewData($value = null)
  *
  * 当前数据ID
  * > add模式：为空
@@ -135,8 +137,14 @@ class Form implements Renderable
      * @var string
      */
     private $view = 'modstart::core.form.index';
+    /**
+     * @var array
+     */
+    protected $viewData = [];
 
     protected $fluentAttributes = [
+        'view',
+        'viewData',
         'engine',
         'builder',
         'mode',
@@ -798,7 +806,7 @@ class Form implements Renderable
             default:
                 return Response::sendError('Form.render mode error : ' . $this->mode);
         }
-        $data = array_merge($this->fluentAttributeVariables(), $data);
+        $data = array_merge($this->fluentAttributeVariables(), $data, $this->viewData);
         return view($this->view, $data)->render();
     }
 

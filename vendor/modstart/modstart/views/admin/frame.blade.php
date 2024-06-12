@@ -15,6 +15,11 @@
         window.__msAdminRoot = "{{modstart_admin_url(null)}}";
         window.__selectorDialogServer = "{{modstart_admin_url('data/file_manager')}}";
     </script>
+    @if(!empty(config('modstart.admin.styles',[])))
+        @foreach(config('modstart.admin.styles',[]) as $s)
+            <link rel="stylesheet" href="{{\ModStart\Core\Assets\AssetsUtil::fix($s)}}" />
+        @endforeach
+    @endif
     @if(\ModStart\Admin\Auth\Admin::isLogin())
         {!! \ModStart\Core\Hook\ModStartHook::fireInView('AdminPageHeadAppend'); !!}
     @endif
@@ -112,11 +117,7 @@
                 </a>
                 <div class="menu" id="adminTabMenu">
                     @section('adminPageMenu')
-                        <a href="javascript:;" data-tab-menu-main class="active" draggable="false">
-                            @section('pageTitle')
-                                {{empty($pageTitle)?'':$pageTitle}}
-                            @show
-                        </a>
+                        <a href="javascript:;" data-tab-menu-main class="active" draggable="false">@section('pageTitle'){{empty($pageTitle)?'':$pageTitle}}@show</a>
                     @show
                 </div>
                 <a href="javascript:;" class="right-menu-trigger">

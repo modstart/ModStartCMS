@@ -14,10 +14,13 @@ class IpUtil
      */
     public static function match4($ip, $ipRange)
     {
+        $ip = trim($ip);
         // 范围
         $ipRange = str_replace('－', '-', $ipRange);
         if (strpos($ipRange, '-') !== false) {
             list($start, $end) = explode('-', $ipRange);
+            $start = trim($start);
+            $end = trim($end);
             return ip2long($ip) >= ip2long($start) && ip2long($ip) <= ip2long($end);
         }
         // 掩码，单个

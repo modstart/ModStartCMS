@@ -27,7 +27,7 @@ class TempFileCleanScheduleBiz extends AbstractScheduleBiz
             //TODO
             // $command = 'forfiles /P ' . ShellUtil::pathQuote($tempPath) . ' /M * /D -7 /C "cmd /c if @isdir==TRUE (rmdir /s /q @path) else (del /q @path)"';
         } else {
-            $command = 'find "' . $tempPath . '" -mtime +7 -maxdepth 1 -exec rm -rfv {} \\;';
+            $command = 'find "' . $tempPath . '" -maxdepth 1 -mtime +1 -exec rm -rfv {} \\; > /dev/null 2>&1 &';
         }
         if (!empty($command)) {
             ShellUtil::run($command);

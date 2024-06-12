@@ -34,8 +34,8 @@ class DataTempCleanScheduleBiz extends AbstractScheduleBiz
             try {
                 DataManager::deleteDataTempByPath($path);
             } catch (\Exception $e) {
-                print_r($e->getMessage());
-                exit('asdf');
+                Log::info('Vendor.DataTempCleanScheduleBiz.DeleteFail - ' . $path . ' - ' . $e->getMessage());
+                continue;
             }
             Log::info('Vendor.DataTempCleanScheduleBiz - ' . $path . ' deleted');
         }

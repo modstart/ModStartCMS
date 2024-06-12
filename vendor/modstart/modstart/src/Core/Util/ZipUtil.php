@@ -92,18 +92,13 @@ class ZipUtil
 
     public static function fileTree($path, $option = [])
     {
-        if (!isset($option['ignoreSystem'])) {
-            $option['ignoreSystem'] = true;
-        }
-        if (!isset($option['ignoreHidden'])) {
-            $option['ignoreHidden'] = true;
-        }
-        if (!isset($option['maxDepth'])) {
-            $option['maxDepth'] = 0;
-        }
-        if (!isset($option['detectRoot'])) {
-            $option['detectRoot'] = false;
-        }
+        $option = array_merge([
+            'ignoreSystem' => true,
+            'ignoreHidden' => true,
+            'maxDepth' => 0,
+            'detectRoot' => false,
+            'maxCount' => 0,
+        ], $option);
         $zipper = new Zipper();
         $zipper->make($path);
         $files = [];
@@ -114,6 +109,11 @@ class ZipUtil
             ];
         });
         $zipper->close();
+        if ($option['maxCount'] > 0) {
+            if (count($files) > $option['maxCount']) {
+                $files = array_slice($files, 0, $option['maxCount']);
+            }
+        }
         $files = ArrayUtil::sortByKey($files, 'path');
         $tree = self::fileTreeBuild($files);
         if ($option['ignoreSystem']) {

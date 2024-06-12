@@ -5,6 +5,7 @@ namespace Module\Vendor\Util;
 
 use ModStart\Core\Type\TypeUtil;
 use ModStart\Core\Util\ConstantUtil;
+use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\SerializeUtil;
 use Module\Vendor\Support\ResponseCodes;
 
@@ -76,7 +77,8 @@ class FeUtil
                     $content[] = $config['constantsAppend'];
                 }
                 $content = implode("\n\n", $content);
-                file_put_contents($config['constantsScript'], $content);
+                FileUtil::write($config['constantsScript'], $content);
+                shell_echo_info("导出完成 {$config['constantsScript']}");
                 break;
             default:
                 shell_echo_error('不支持的命令 ' . $argv[1]);

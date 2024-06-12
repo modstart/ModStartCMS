@@ -5,7 +5,6 @@ namespace ModStart\Grid\Displayer;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\View;
 use ModStart\Field\AbstractField;
 use ModStart\Widget\TextAction;
 use ModStart\Widget\TextLink;
@@ -135,6 +134,9 @@ class ItemOperate extends AbstractDisplayer
             $this->operates[] = TextAction::muted(L('Copy'), 'data-add-button data-add-copy-button');
         }
         $this->operates = array_merge($this->operates, $this->appendOperates);
+        if (empty($this->operates)) {
+            $this->operates[] = '<span class="ub-text-muted">-</span>';
+        }
         return join('', $this->operates);
     }
 

@@ -92,7 +92,7 @@ class AuthController extends Controller
                         'IP' => Request::ip(),
                         L('Phone') => $phone,
                     ]);
-                    return Response::json(-1, L('登录失败'), null, "[ijs]$('[data-captcha]').click();");
+                    return Response::json(-1, L('Login Error'), null, "[ijs]$('[data-captcha]').click();");
                 }
             } else {
                 $ret = Admin::login($username, $password);

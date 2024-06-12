@@ -148,4 +148,12 @@ class CodeUtil
         $tidy->cleanRepair();
         return (string)$tidy;
     }
+
+    public static function cleanCr($content)
+    {
+        if (empty($content)) {
+            return $content;
+        }
+        return str_replace("\r", "", $content);
+    }
 }

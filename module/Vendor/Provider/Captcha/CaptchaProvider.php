@@ -50,6 +50,16 @@ class CaptchaProvider
         });
     }
 
+    public static function nameTitleMapWithNone()
+    {
+        $value = [];
+        $value[''] = L('Empty');
+        foreach (self::nameTitleMap() as $k => $v) {
+            $value[$k] = $v;
+        }
+        return $value;
+    }
+
     /**
      * @param $name
      * @return AbstractCaptchaProvider

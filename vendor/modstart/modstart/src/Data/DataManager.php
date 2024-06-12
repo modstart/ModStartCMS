@@ -118,7 +118,7 @@ class DataManager
         $action = empty($input['action']) ? '' : $input['action'];
         $file = [];
         foreach (['name', 'type', 'lastModifiedDate', 'size'] as $k) {
-            if (empty($input[$k])) {
+            if (!isset($input[$k])) {
                 return Response::generate(-1, $k . ' empty');
             }
             $file[$k] = $input[$k] . '';
@@ -136,7 +136,9 @@ class DataManager
         }
         $extension = FileUtil::extension($file['name']);
         if (!in_array($extension, $config['extensions'])) {
-            return Response::generate(-4, L('File extension %s not permit', $extension));
+            if ($config['extensions'][0] != '*') {
+                return Response::generate(-4, L('File extension %s not permit', $extension));
+            }
         }
         if ($file['size'] > $config['maxSize']) {
             return Response::generate(-5, L('File Size Limit %s', FileUtil::formatByte($config['maxSize'])));

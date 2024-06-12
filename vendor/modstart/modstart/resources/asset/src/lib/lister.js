@@ -43,6 +43,9 @@ let Lister = function (container, option) {
         },
         render: function (data) {
 
+        },
+        error: function (msg) {
+
         }
     }, option);
 
@@ -175,8 +178,11 @@ let Lister = function (container, option) {
                 Form.defaultCallback(res, {
                     success: function (res) {
                         opt.render(res.data);
+                    },
+                    error: function (res) {
+                        opt.error(res.msg);
                     }
-                });
+                }, Dialog);
             })
             .fail(function (res) {
                 try {
@@ -184,7 +190,11 @@ let Lister = function (container, option) {
                         Dialog.loadingOff();
                     }
                     opt.customLoading(false)
-                    Form.defaultCallback(res);
+                    Form.defaultCallback(res, {
+                        error: function (res) {
+                            opt.error(res.msg);
+                        }
+                    }, Dialog);
                 } catch (e) {
                 }
             });

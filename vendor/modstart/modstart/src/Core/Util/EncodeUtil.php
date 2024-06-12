@@ -6,13 +6,16 @@ use Illuminate\Support\Str;
 
 class EncodeUtil
 {
-    public static function expiredDataForever($string, $key)
+    public static function expiredDataForever($string, $key = null)
     {
         return self::expiredData($string, $key, 0);
     }
 
-    public static function expiredData($string, $key, $expireSeconds = 3600)
+    public static function expiredData($string, $key = null, $expireSeconds = 3600)
     {
+        if (is_null($key)) {
+            $key = SecureUtil::encryptKey();
+        }
         $stringHex = bin2hex($string);
         $nonce = strtolower(Str::random(6));
         $timestampHex = dechex(time());
@@ -27,11 +30,14 @@ class EncodeUtil
         return join('_', $param);
     }
 
-    public static function expiredDataDecode($string, $key)
+    public static function expiredDataDecode($string, $key = null)
     {
         $p = explode('_', $string);
         if (count($p) != 5) {
             return null;
+        }
+        if (is_null($key)) {
+            $key = SecureUtil::encryptKey();
         }
         $stringHex = $p[0];
         $nonce = $p[1];
