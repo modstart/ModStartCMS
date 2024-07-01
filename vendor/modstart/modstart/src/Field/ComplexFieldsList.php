@@ -22,6 +22,7 @@ class ComplexFieldsList extends AbstractField
     {
         $this->addVariables([
             'fields' => [
+                // ['name' => 'xxx', 'title' => '文本（只读）', 'type' => 'display', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', 'tip'=>'', ],
@@ -38,6 +39,8 @@ class ComplexFieldsList extends AbstractField
             'iconGroups' => ['iconfont', 'font-awesome'],
             'linkServer' => modstart_admin_url('widget/link_select'),
             '_hasIcon' => false,
+            'itemActions' => ['sort', 'copy', 'delete', 'add'],
+            'itemCanAdd' => true,
         ]);
     }
 
@@ -57,6 +60,18 @@ class ComplexFieldsList extends AbstractField
     public function iconServer($server)
     {
         $this->addVariables(['iconServer' => $server]);
+        return $this;
+    }
+
+    public function itemActions($value)
+    {
+        $this->addVariables(['itemActions' => $value]);
+        return $this;
+    }
+
+    public function itemCanAdd($value)
+    {
+        $this->addVariables(['itemCanAdd' => $value]);
         return $this;
     }
 

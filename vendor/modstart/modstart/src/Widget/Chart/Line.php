@@ -74,6 +74,9 @@ class Line extends Chart
             'data' => $value,
             'type' => 'line',
             'smooth' => true,
+            'areaStyle' => [
+                'opacity' => 0.1,
+            ],
             'itemStyle' => [
                 'normal' => [
                     'color' => $param['lineColor'],
@@ -120,6 +123,9 @@ class Line extends Chart
                 'data' => $value,
                 'type' => 'line',
                 'smooth' => true,
+                'areaStyle' => [
+                    'opacity' => 0.1,
+                ],
                 'itemStyle' => [
                     'normal' => [
                         'color' => $color,
@@ -167,6 +173,9 @@ class Line extends Chart
                 'data' => $value,
                 'type' => 'line',
                 'smooth' => true,
+                'areaStyle' => [
+                    'opacity' => 0.1,
+                ],
                 'itemStyle' => [
                     'normal' => [
                         'color' => $color,

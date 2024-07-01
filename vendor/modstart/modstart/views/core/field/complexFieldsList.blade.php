@@ -1,8 +1,8 @@
-<div class="line" data-field="{{$name}}">
+<div class="line">
     <div class="label">
         {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)
-            <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i
+            <a class="ub-text-tertiary" href="javascript:;" data-tip-popover="{{$tip}}"><i
                     class="iconfont icon-warning"></i></a>
         @endif
         {{$label}}
@@ -17,18 +17,22 @@
                         <th>
                             {{empty($f['title'])?$f['name']:$f['title']}}
                             @if(!empty($f['tip']))
-                                <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$f['tip']}}"><i class="iconfont icon-warning"></i></a>
+                                <a class="ub-text-tertiary" href="javascript:;" data-tip-popover="{{$f['tip']}}"><i class="iconfont icon-warning"></i></a>
                             @endif
                         </th>
                     @endforeach
-                    <td width="120">&nbsp;</td>
+                    @if(!empty($itemActions))
+                        <th width="120">&nbsp;</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(v,vIndex) in value">
                     @foreach($fields as $f)
                         <td>
-                            @if($f['type']=='switch')
+                            @if($f['type']=='display')
+                                {!! "{"."{ value[vIndex]['".$f['name']."'] }"."}" !!}
+                            @elseif($f['type']=='switch')
                                 <el-switch v-model="value[vIndex]['{{$f['name']}}']"></el-switch>
                             @elseif($f['type']=='text')
                                 <el-input v-model="value[vIndex]['{{$f['name']}}']"
@@ -72,32 +76,42 @@
                             @endif
                         </td>
                     @endforeach
-                    <td>
-                        <a class="ub-lister-action ub-text-muted" href="javascript:;" data-tip-popover="{{L('Delete')}}" @click="value.splice(vIndex,1)">
-                            <i class="iconfont icon-trash"></i>
-                        </a>
-                        <a class="ub-lister-action ub-text-muted" href="javascript:;" data-tip-popover="{{L('Copy')}}" @click="doValueCopy(v)">
-                            <i class="iconfont icon-copy"></i>
-                        </a>
-                        <a class="ub-lister-action ub-text-muted" href="javascript:;" data-tip-popover="{{L('Move Up')}}" @click="doUp(value,vIndex)">
-                            <i class="iconfont icon-direction-up"></i>
-                        </a>
-                        <a class="ub-lister-action ub-text-muted" href="javascript:;" data-tip-popover="{{L('Move Down')}}" @click="doDown(value,vIndex)">
-                            <i class="iconfont icon-direction-down"></i>
-                        </a>
-                    </td>
+                    @if(!empty($itemActions))
+                        <td>
+                            @if(in_array('delete',$itemActions))
+                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('Delete')}}" @click="value.splice(vIndex,1)">
+                                    <i class="iconfont icon-trash"></i>
+                                </a>
+                            @endif
+                            @if(in_array('copy',$itemActions))
+                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('Copy')}}" @click="doValueCopy(v)">
+                                    <i class="iconfont icon-copy"></i>
+                                </a>
+                            @endif
+                            @if(in_array('sort',$itemActions))
+                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('Move Up')}}" @click="doUp(value,vIndex)">
+                                    <i class="iconfont icon-direction-up"></i>
+                                </a>
+                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('Move Down')}}" @click="doDown(value,vIndex)">
+                                    <i class="iconfont icon-direction-down"></i>
+                                </a>
+                            @endif
+                        </td>
+                    @endif
                 </tr>
                 </tbody>
-                <tbody>
-                <tr>
-                    <td colspan="{{count($fields)+1}}">
-                        <a href="javascript:;" class="ub-text-muted" @click="doValueAdd">
-                            <i class="iconfont icon-plus"></i>
-                            {{L('Add')}}
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
+                @if($itemCanAdd)
+                    <tbody>
+                    <tr>
+                        <td colspan="{{count($fields)+((empty($itemActions)?0:1))}}">
+                            <a href="javascript:;" class="ub-text-tertiary" @click="doValueAdd">
+                                <i class="iconfont icon-plus"></i>
+                                {{L('Add')}}
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                @endif
             </table>
         </div>
         @if(!empty($help))

@@ -562,4 +562,21 @@ class ArrayUtil
         return $random;
     }
 
+    /**
+     * @Util 获取数据中的第一个非空值
+     * @param $default mixed 默认值
+     * @param ...$value mixed 可选值
+     * @return mixed
+     */
+    public static function firstValidValue($default, ...$value)
+    {
+        foreach ($value as $v) {
+            $v = ValueUtil::value($v);
+            if (!empty($v)) {
+                return $v;
+            }
+        }
+        return $default;
+    }
+
 }

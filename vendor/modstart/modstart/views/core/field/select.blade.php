@@ -1,4 +1,4 @@
-<div class="line" data-field="{{$name}}" id="{{$id}}">
+<div class="line" data-field id="{{$id}}">
     <div class="label">
         {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)
@@ -11,14 +11,9 @@
             <input type="hidden" name="{{$name}}" value="{{null===$value?$defaultValue:$value}}" />
         @endif
         <div class="layui-form tw-inline-block" lay-filter="{{$name}}">
-            <select class="form" name="{{$name}}"
-                    @if($selectSearch) lay-search @elseif($selectRemote) @else lay-ignore @endif
-                    @if($selectRemote) lay-remote="{{$selectRemote}}" lay-init-value="{{null===$value?$defaultValue:$value}}" @endif
-                    @if($readonly) disabled @endif
-                    @if(!empty($onValueChangeJsFunction))
-                        onchange="window.{{$id}}_change(this);"
-                    @endif
-            >
+            <select class="form" id="{{$id}}Select" name="{{$name}}"
+                    @if($selectSearch) lay-search @else lay-ignore @endif
+                    @if($readonly) disabled @endif>
                 @foreach($options as $k=>$v)
                     @if(isset($v['label']))
                         <option value="{{$k}}" @if((null===$value&&$k==$defaultValue)||(null!==$value&&$k==$value)) selected @endif @if(isset($v['title'])) title="{{$v['title']}}" @endif>{{$v['label']}}</option>
@@ -36,10 +31,52 @@
 <script>
     layui.use('form', function(){
         layui.form.render('select','{{$name}}');
+        var firstOnChangeFired = false,
+            firstRemoteLoad = true,
+            $field = $('#{{$id}}'),
+            $select = $field.find('select');
+        @if(!empty($optionRemote))
+            $field.on('remote-load',function(event, data){
+                loadOptionRemote(data);
+            });
+            function loadOptionRemote(data){
+                data = data || {};
+                let initValue = $select.val();
+                if('value' in data){
+                    initValue = data.value;
+                }else if( firstRemoteLoad ){
+                    firstRemoteLoad = false;
+                    initValue = {!! json_encode(null===$value?$defaultValue:$value) !!};
+                }
+                let callback = data.callback || function(){};
+                delete data.callback;
+                @if(!empty($onRemoteLoadJsFunction))
+                    data = Object.assign(data,({!! $onRemoteLoadJsFunction !!})(initValue) || {} );
+                @endif
+                data = Object.assign({value:initValue},data);
+                MS.api.postSuccess('{{$optionRemote}}',data,function(res){
+                    var html = [];
+                    html.push('<option value="">{{L('Please Select')}}</option>');
+                    res.data.records.forEach(function(item){
+                        var current = ( item.value+''===initValue+'' );
+                        html.push('<option value="'+item.value+'" '+(current?'selected':'')+'>'+MS.util.specialchars(item.label)+'</option>');
+                    });
+                    $select.html(html.join(''));
+                    if(!firstOnChangeFired || $select.val()!==initValue){
+                        firstOnChangeFired = true;
+                        $select.trigger('change');
+                    }
+                    callback();
+                });
+            };
+        @endif
+        $select.on('change',function(){
+             @if(!empty($onValueChangeJsFunction))
+                ({!! $onValueChangeJsFunction !!})( $select.val() );
+            @endif
+        });
+        @if(!empty($optionRemote) && $optionRemoteAutoInit)
+            loadOptionRemote();
+        @endif
     });
-    @if(!empty($onValueChangeJsFunction))
-        window.{{$id}}_change = function(o){
-            ({!! $onValueChangeJsFunction !!})(o.options[o.selectedIndex].value);
-        };
-    @endif
 </script>

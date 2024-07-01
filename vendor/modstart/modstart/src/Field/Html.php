@@ -57,7 +57,7 @@ class Html extends AbstractField
         }
         $rules = $this->rules();
         $requiredRuleHtml = in_array('required', $rules) ? '<span class="ub-text-danger ub-text-bold">*</span>' : '';
-        $label = $this->label ? $this->label . ':' : '';
+        $label = $this->label;
         return <<<EOT
 <div class="line" data-field="{$this->column}" id="{$this->id}">
     <div class="label">

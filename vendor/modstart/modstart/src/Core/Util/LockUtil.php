@@ -28,7 +28,7 @@ class LockUtil
      * 请求一个锁
      * @param $name string 锁的名字
      * @param $timeout int 超时时间，单位秒
-     * @return bool
+     * @return bool 是否成功
      */
     public static function acquire($name, $timeout = 60)
     {

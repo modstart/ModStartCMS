@@ -6,11 +6,6 @@
         {{$label}}
     </div>
     <div class="field">
-        @if(!empty($value))
-            <pre style="margin:0;line-height:1rem;overflow:auto;">{{\ModStart\Core\Util\SerializeUtil::jsonEncode($value)}}</pre>
-        @else
-            <span class="ub-text-muted">-</span>
-        @endif
-
+        @include('modstart::core.field.json-preview')
     </div>
 </div>

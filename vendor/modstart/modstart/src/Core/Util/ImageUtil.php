@@ -121,8 +121,13 @@ class ImageUtil
             'imageSize' => 20,                                  // 图片大小
             'imageOpacity' => 40,                               // 图片透明度
         ], $option);
+        $extensionPermit = [
+            'jpg', 'jpeg', 'png', 'gif',
+        ];
         try {
-            BizException::throwsIf('Image not exists', !file_exists($image));
+            BizException::throwsIf('image not exists', !file_exists($image));
+            $imageExt = FileUtil::extension($image);
+            BizException::throwsIf('image type not support', !in_array($imageExt, $extensionPermit));
             BizException::throwsIf('watermark type error', !in_array($type, ['image', 'text']));
             BizException::throwsIf('watermark content empty', empty($content));
             BizException::throwsIf('watermark text color error', !preg_match('/^#[0-9a-fA-F]{6}$/', $option['textColor']));

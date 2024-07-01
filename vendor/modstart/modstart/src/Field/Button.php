@@ -14,7 +14,14 @@ class Button extends AbstractField
         $this->addVariables([
             'type' => 'button',
             'style' => 'default',
+            'onClickJsFunction' => '',
         ]);
+    }
+
+    public function onClickJsFunction($value)
+    {
+        $this->addVariables(['onClickJsFunction' => $value]);
+        return $this;
     }
 
     public function type($value)

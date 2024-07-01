@@ -16,7 +16,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="tw-flex ub-border-bottom tw-p-2">
                     <div class="tw-w-24 tw-flex-shrink-0 tw-font-bold">MSCore</div>
-                    <div class="tw-flex-grow">V{{\ModStart\ModStart::$version}} ( With <b>{{strtoupper(\ModStart\Module\ModuleManager::getEnv())}}</b> )</div>
+                    <div class="tw-flex-grow">V{{\ModStart\ModStart::$version}} ( With <b>{{strtoupper(ModStart\ModStart::env())}}</b> )</div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">

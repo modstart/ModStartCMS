@@ -112,6 +112,15 @@ class ModelUtil
         return $m->toArray();
     }
 
+    public static function insertIfNotExists($model, $where, $data = [])
+    {
+        if (ModelUtil::exists($model, $where)) {
+            return false;
+        }
+        ModelUtil::insert($model, array_merge($where, $data));
+        return true;
+    }
+
     public static function insertIgnoreUnique($model, $data)
     {
         try {

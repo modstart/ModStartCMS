@@ -29,6 +29,14 @@
                         </a>
                     </div>
                 @endif
+                @if(null!==$defaultValue)
+                    <div class="ub-file-selector__action">
+                        <a href="javascript:;" class="btn" data-reset-default>
+                            <i class="iconfont icon-undo"></i>
+                            {{L('Reset Default')}}
+                        </a>
+                    </div>
+                @endif
             </div>
 
         </div>
@@ -57,6 +65,11 @@
                 $selector.on('click', '[data-close]', function () {
                     setValue('');
                 });
+                @if(null!==$defaultValue)
+                    $selector.on('click','[data-reset-default]',function(){
+                        setValue({!! json_encode($defaultValue) !!});
+                    });
+                @endif
                 setValue($input.val());
                 MS.uploadButton('#{{$id}}Uploader', {
                     text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',

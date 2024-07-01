@@ -58,12 +58,18 @@ export default {
                     "data": this.pv,
                     "type": "line",
                     "smooth": true,
+                    "areaStyle": {
+                        opacity: 0.1
+                    },
                     "itemStyle": {"normal": {"color": "#4F7FF3", "lineStyle": {"color": "#4F7FF3"}}}
                 }, {
                     "name": "访客数",
                     "data": this.uv,
                     "type": "line",
                     "smooth": true,
+                    "areaStyle": {
+                        opacity: 0.1
+                    },
                     "itemStyle": {"normal": {"color": "#6A46BD", "lineStyle": {"color": "#6A46BD"}}}
                 }]
             });

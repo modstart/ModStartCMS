@@ -415,6 +415,30 @@ class DataManager
     }
 
     /**
+     * 根据路径查找数据
+     *
+     * @param $path
+     * @param null $option
+     * @throws \Exception
+     */
+    public static function getByPath($path, $option = null)
+    {
+        if (null === $option) {
+            $option = self::getConfigOption();
+        }
+        $option = self::prepareOption($option);
+        $storage = self::storage($option);
+        $data = $storage->repository()->getDataByPath($path);
+        if (empty($data)) {
+            return Response::generateError('Data Not Found');
+        }
+        $path = AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
+        return Response::generateSuccessData([
+            'path' => $path,
+        ]);
+    }
+
+    /**
      * 根据路径删除DataTemp
      *
      * @param $tempDataPath

@@ -73,10 +73,14 @@
                         MS.dialog.loadingOff();
                         MS.api.defaultCallback(res,{
                             success:function(res){
+                                let records = res.data;
+                                if('records' in records){
+                                    records = records.records;
+                                }
                                 if(isAppend){
-                                    me.records = me.records.concat(res.data);
+                                    me.records = me.records.concat(records);
                                 }else{
-                                    me.records = res.data;
+                                    me.records = records;
                                 }
                             }
                         })

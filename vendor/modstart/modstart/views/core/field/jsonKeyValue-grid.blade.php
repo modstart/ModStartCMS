@@ -3,8 +3,14 @@
         <table class="ub-table mini border" style="width:{{$width-40}}px;white-space:normal;word-break:break-all;">
             @foreach($value as $k=>$v)
                 <tr>
-                    <td width="50">{{$k}}</td>
-                    <td>{{$v}}</td>
+                    <td width="50" class="ub-text-truncate">{{$k}}</td>
+                    <td>
+                        @if(is_array($v))
+                            {{\ModStart\Core\Util\SerializeUtil::jsonEncode($v)}}
+                        @else
+                            {{$v}}
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </table>

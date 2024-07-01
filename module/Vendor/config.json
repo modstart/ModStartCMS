@@ -4,7 +4,7 @@
     "version": "4.4.0",
     "author": "官方",
     "description": "提供基础功能",
-    "modstartVersion": ">=3.3.0",
+    "modstartVersion": ">=3.9.0",
     "env": [
         "laravel5",
         "laravel9"
@@ -15,5 +15,5 @@
     "tags": [
         "基础组件"
     ],
-    "config": []
+    "config": {}
 }

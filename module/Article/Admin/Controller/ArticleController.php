@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Field\AbstractField;
+use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
@@ -33,15 +34,18 @@ class ArticleController extends Controller
                         switch ($field->renderMode()) {
                             case FieldRenderMode::GRID:
                             case FieldRenderMode::DETAIL:
-                                return TextLink::primary(
-                                    htmlspecialchars($item->title),
-                                    ArticleUtil::url($item->toArray()),
-                                    'target="_blank"'
+                                return AutoRenderedFieldValue::make(
+                                    TextLink::primary(
+                                        htmlspecialchars($item->title),
+                                        ArticleUtil::url($item->toArray()),
+                                        'target="_blank"'
+                                    )
                                 );
                         }
                     });
+                $url = modstart_web_url('article/别名');
                 $builder->text('alias', '别名')
-                    ->help('默认留空，可通过链接 /article/别名 访问，不能为纯数字');
+                    ->help("默认留空，可通过链接 <code>$url</code> 访问，不能为纯数字");
                 $builder->richHtml('content', '内容')->listable(false);
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);

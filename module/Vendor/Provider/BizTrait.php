@@ -34,6 +34,18 @@ trait BizTrait
         return self::$list;
     }
 
+    public static function listAllEnabled()
+    {
+        $records = [];
+        foreach (static::listAll() as $bizer) {
+            if (!$bizer->enable()) {
+                continue;
+            }
+            $records[] = $bizer;
+        }
+        return $records;
+    }
+
     public static function getByName($name)
     {
         foreach (self::listAll() as $item) {

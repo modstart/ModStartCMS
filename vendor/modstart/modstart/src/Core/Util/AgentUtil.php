@@ -103,7 +103,7 @@ class AgentUtil
 
     private static $robots = [
 
-        '/googlebot/i' => 'Google',
+        '/(googlebot|googleother)/i' => 'Google',
         '/baiduspider/i' => 'Baidu',
         '/360spider/i' => '360',
         '/sogou/i' => 'Sogou',
@@ -117,7 +117,7 @@ class AgentUtil
         '/detector/i' => 'Other',
 
         // 其他一些库
-        '/(curl|python|java|node-fetch|http-client|msray-plus|guzzlehttp|wget|okhttp|scrapy|https?:\\/\\/)/i' => 'Other',
+        '/(curl|python|java|node-fetch|http-client|msray-plus|guzzlehttp|wget|okhttp|scrapy|panelstart|node-superagent|go-camo|https?:\\/\\/)/i' => 'Other',
 
         // 其他一些爬虫
         '/(ows.eu|researchscan|github|LogStatistic|Dataprovider|facebook|YandexImages|Iframely|panscient|netcraft|yahoo|censys|Turnitin)/i' => 'Other',
@@ -139,6 +139,30 @@ class AgentUtil
             }
         }
         return null;
+    }
+
+    /**
+     * @param $name string safari
+     * @param $version string >=17.0, <=17.0
+     * @return bool
+     */
+    public static function isBrowser($name, $version = null)
+    {
+        $ua = self::getUserAgent();
+        switch ($name) {
+            case 'safari':
+                if (strpos($ua, 'Safari') !== false) {
+                    if (is_null($version)) {
+                        return true;
+                    }
+                    if (preg_match('/Version\/(.*?)\\s/', $ua, $matches)) {
+                        $currentVersion = $matches[1];
+                        return VersionUtil::match($currentVersion, $version);
+                    }
+                }
+                break;
+        }
+        return false;
     }
 
 }

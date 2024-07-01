@@ -12,11 +12,6 @@
 
 @section('bodyAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageBodyAppend'); !!}
-@endsection
-
-@section('bodyAppend')
-    @parent
     {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}
     {{\ModStart\ModStart::js('vendor/Member/entry/register.js')}}
     <script>
@@ -47,6 +42,7 @@
             },window.api.dialog);
         });
     </script>
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageBodyAppend'); !!}
 @endsection
 
 @section('bodyContent')

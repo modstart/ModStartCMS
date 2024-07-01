@@ -642,9 +642,9 @@ class ModuleManager
     /**
      * 动态调用模块ModuleServiceProvider的方法
      *
-     * @param $module
-     * @param $method
-     * @param array $args
+     * @param $module string module name
+     * @param $method string method name
+     * @param $args array arguments
      */
     public static function callHook($module, $method, $args = [])
     {
@@ -658,15 +658,26 @@ class ModuleManager
     }
 
     /**
-     * 获取
-     * @return string
+     * @deprecated use ModStart::env()
+     * delete at 2025-06-19
      */
     public static function getEnv()
     {
-        if (PHP_VERSION_ID >= 80000) {
-            return 'laravel9';
+        return ModStart::env();
+    }
+
+    /**
+     * 将配置转换为json
+     * @param $config array
+     * @return string
+     */
+    public static function configToJson($config)
+    {
+        if (empty($config['config'])) {
+            $config['config'] = new \stdClass();
         }
-        return 'laravel5';
+        $json = SerializeUtil::jsonEncodePretty($config);
+        return $json;
     }
 
 }

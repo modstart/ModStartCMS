@@ -19,8 +19,10 @@ class Select extends AbstractField
         $this->addVariables([
             'options' => [],
             'onValueChangeJsFunction' => '',
+            'onRemoteLoadJsFunction' => '',
             'selectSearch' => false,
-            'selectRemote' => null,
+            'optionRemote' => null,
+            'optionRemoteAutoInit' => true,
         ]);
     }
 
@@ -30,9 +32,12 @@ class Select extends AbstractField
         return $this;
     }
 
-    public function selectRemote($value)
+    public function optionRemote($value, $autoInit = true)
     {
-        $this->addVariables(['selectRemote' => $value]);
+        $this->addVariables([
+            'optionRemote' => $value,
+            'optionRemoteAutoInit' => $autoInit,
+        ]);
         return $this;
     }
 
@@ -56,6 +61,12 @@ class Select extends AbstractField
             return [$v[$idName], $v[$titleName]];
         });
         return $this->options($options);
+    }
+
+    public function onRemoteLoadJsFunction($jsFunction)
+    {
+        $this->addVariables(['onRemoteLoadJsFunction' => $jsFunction]);
+        return $this;
     }
 
     public function onValueChangeJsFunction($jsFunction)

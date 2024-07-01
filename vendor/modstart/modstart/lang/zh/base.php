@@ -240,4 +240,5 @@ return [
     'Move Down' => '下移',
     'Move Top' => '置顶',
     'Move Bottom' => '置底',
+    'Reset Default' => '恢复默认',
 ];

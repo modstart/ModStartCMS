@@ -24,6 +24,7 @@ use ModStart\Data\Event\DataFileUploadedEvent;
 use Module\Member\Events\MemberUserDeletedEvent;
 use Module\Member\Events\MemberUserLoginAttemptEvent;
 use Module\Member\Events\MemberUserLoginFailedEvent;
+use Module\Member\Model\MemberUser;
 use Module\Member\Type\MemberMessageStatus;
 use Module\Member\Type\MemberPasswordStrength;
 use Module\Member\Type\MemberStatus;
@@ -710,11 +711,12 @@ class MemberUtil
     {
         $keepFields = self::processBasicFields($keepFields);
         if (is_array($records)) {
-            ModelUtil::join($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
+            ModelUtil::join($records, $memberUserIdKey, $memberUserMergeKey, MemberUser::class, 'id');
             foreach ($records as $k => $v) {
                 if (empty($v[$memberUserMergeKey])) {
                     continue;
                 }
+                $viewName = self::viewName($v[$memberUserMergeKey]);
                 $memberUser = ArrayUtil::keepKeys($v[$memberUserMergeKey], $keepFields);
                 if (empty($memberUser['nickname'])) {
                     $memberUser['nickname'] = $memberUser['username'];
@@ -724,23 +726,24 @@ class MemberUtil
                 } else {
                     $memberUser['avatar'] = AssetsUtil::fixFull($memberUser['avatar']);
                 }
+                $memberUser['viewName'] = $viewName;
                 $records[$k][$memberUserMergeKey] = $memberUser;
             }
         } else {
-            ModelUtil::joinItems($records, $memberUserIdKey, $memberUserMergeKey, 'member_user', 'id');
+            ModelUtil::joinItems($records, $memberUserIdKey, $memberUserMergeKey, MemberUser::class, 'id');
             foreach ($records as $item) {
                 if (empty($item->{$memberUserMergeKey})) {
                     continue;
                 }
+                $viewName = self::viewName($item->{$memberUserMergeKey});
                 $memberUser = ArrayUtil::keepKeys($item->{$memberUserMergeKey}, $keepFields);
-                if (empty($memberUser['nickname'])) {
-                    $memberUser['nickname'] = $memberUser['username'];
-                }
+                $memberUser['nickname'] = $memberUser['username'];
                 if (empty($memberUser['avatar'])) {
                     $memberUser['avatar'] = AssetsUtil::fixFull('asset/image/avatar.svg');
                 } else {
                     $memberUser['avatar'] = AssetsUtil::fixFull($memberUser['avatar']);
                 }
+                $memberUser['viewName'] = $viewName;
                 $item->{$memberUserMergeKey} = $memberUser;
             }
         }

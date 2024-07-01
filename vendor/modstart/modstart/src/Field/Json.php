@@ -4,6 +4,8 @@
 namespace ModStart\Field;
 
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\SerializeUtil;
 
@@ -28,12 +30,16 @@ class Json extends AbstractField
         ]);
     }
 
+    /**
+     * set data model
+     * @param $value string api|default
+     * @return $this
+     */
     public function jsonMode($value)
     {
         $this->addVariables(['jsonMode' => $value]);
         return $this;
     }
-
 
     public function editorHeight($value)
     {
@@ -72,6 +78,12 @@ class Json extends AbstractField
         //     'enctype' => 'Json',
         //     'bodyParam' => [],
         //     'bodyRaw' => '{}'
+        //     'responseEnable'=> false,
+        //     'responseType'=>'json',
+        //     'responseJsonStatusPath'=>'code',
+        //     'responseJsonStatusValue'=>'0',
+        //     'responseJsonMsgPath'=>'msg',
+        //     'responseValuePath'=>'data.value',
         // ];
         BizException::throwsIf('url为空', empty($value['url']));
         BizException::throwsIf('method错误', empty($value['method']) || !in_array($value['method'], ['GET', 'POST', 'PUT', 'DELETE']));
@@ -125,7 +137,37 @@ class Json extends AbstractField
 
         $ret = CurlUtil::request($value['url'], $param, $option);
 
-        return $ret;
+        if (empty($value['responseEnable'])) {
+            return $ret;
+        }
 
+        if (200 != $ret['code']) {
+            return Response::generateError('请求失败', [
+                'raw' => $ret,
+            ]);
+        }
+
+        if ('json' == $value['responseType']) {
+            $json = @json_decode($ret, true);
+            if (empty($json)) {
+                return Response::generateError('返回数据格式错误', [
+                    'raw' => $ret
+                ]);
+            }
+            $status = ArrayUtil::getByDotKey($ret, $value['responseJsonStatusPath']);
+            if ($value['responseJsonStatusValue'] != $status) {
+                $msg = ArrayUtil::getByDotKey($ret, $value['responseJsonMsgPath']);
+                return Response::generateError($msg, [
+                    'raw' => $ret
+                ]);
+            }
+            $value = ArrayUtil::getByDotKey($ret, $value['responseValuePath']);
+            return Response::generateSuccess([
+                'value' => $value,
+            ]);
+        }
+        return Response::generateError('未知返回类型', [
+            'raw' => $ret
+        ]);
     }
 }

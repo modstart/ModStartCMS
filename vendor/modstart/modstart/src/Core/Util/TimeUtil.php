@@ -40,6 +40,12 @@ class TimeUtil
         return implode(':', $pcs);
     }
 
+    public static function yesterday()
+    {
+        return date('Y-m-d', time() - self::PERIOD_DAY);
+    }
+
+
     public static function yesterdayDate()
     {
         return date('Y-m-d', time() - self::PERIOD_DAY);
@@ -98,6 +104,11 @@ class TimeUtil
     public static function thisYearEnd()
     {
         return date('Y-m-d 23:59:59', strtotime('last day of December this year'));
+    }
+
+    public static function today()
+    {
+        return date('Y-m-d', time());
     }
 
     public static function todayStart()
