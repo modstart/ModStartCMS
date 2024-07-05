@@ -101,7 +101,7 @@
                         });
                     },
                     finish: function () {
-                    }
+                    },
                 });
                 @if($mode=='default')
                     $selector.on('click', '[data-gallery]', function () {

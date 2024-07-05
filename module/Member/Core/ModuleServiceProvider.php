@@ -35,6 +35,7 @@ use Module\Vendor\Admin\Widget\AdminWidgetLink;
 use Module\Vendor\Job\MailSendJob;
 use Module\Vendor\Provider\Schedule\ScheduleBiz;
 use Module\Vendor\Provider\SmsTemplate\SmsTemplateProvider;
+use Module\Voucher\Biz\VoucherBiz;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -195,6 +196,10 @@ class ModuleServiceProvider extends ServiceProvider
         if (modstart_module_enabled('PayCenter')) {
             PayCenterBiz::register(MemberMoneyChargePayCenterBiz::class);
             PayCenterBiz::register(MemberVipPayCenterBiz::class);
+        }
+
+        if (modstart_module_enabled('Voucher')) {
+            VoucherBiz::register(MemberVipVoucherBiz::class);
         }
 
         if (ModuleManager::getModuleConfig('Member', 'dataStatisticEnable', false)) {

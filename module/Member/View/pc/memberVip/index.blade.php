@@ -20,8 +20,7 @@
     @parent
     <script>
         window.__data = {
-            isLogin: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(\Module\Member\Auth\MemberUser::isLogin()) !!},
-            countDownSeconds: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(modstart_config('Member_VipCountDown',1800)) !!},
+            countDownSeconds: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(modstart_config('Member_VipCountDown',1800)) !!}
         };
     </script>
     <script src="@asset('vendor/Member/script/memberVip.js')"></script>
@@ -69,15 +68,15 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="tw-text-right tw-flex-grow">
-
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="body">
                 <div class="pb-member-vip">
                     <form action="{{$__msRoot}}api/member_vip/buy" method="post" data-ajax-form>
+                        <input type="hidden" name="redirect" value="{{\ModStart\Core\Input\Request::currentPageUrl()}}" />
+                        <input type="hidden" name="vipId" value="0" />
+                        <input type="hidden" name="voucherId" value="0" />
                         <div class="vip-list-container-box margin-bottom">
                             <div class="vip-list-container">
                                 <div class="vip-list vip-bg tw-rounded">
@@ -104,6 +103,22 @@
                                                         限时立减 {{bcsub($memberVip['priceMarket'],$memberVip['price'],2)}}
                                                     </div>
                                                 @endif
+                                                <div class="tw-mt-4">
+                                                    @if(\Module\Member\Auth\MemberUser::isLogin())
+                                                        <a href="javascript:;"
+                                                           onclick="__openVip({{$memberVip['id']}})"
+                                                           class="btn btn-block btn-lg btn-vip btn-round">
+                                                            <i class="iconfont icon-vip"></i>
+                                                            立即开通
+                                                        </a>
+                                                    @else
+                                                        <a class="btn btn-block btn-lg btn-vip btn-round"
+                                                           href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
+                                                            <i class="iconfont icon-vip"></i>
+                                                            登录后开通
+                                                        </a>
+                                                    @endif
+                                                </div>
                                             </div>
                                         @endif
                                     @endforeach
@@ -116,66 +131,27 @@
                                 </a>
                             </div>
                         </div>
-                        <input type="hidden" name="vipId" value="0"/>
-                        <input type="hidden" name="redirect" value="{{\ModStart\Core\Input\Request::currentPageUrl()}}"/>
                         <div class="lg:tw-px-12 lg:tw-text-left tw-text-center tw-py-4 vip-bg tw-rounded margin-bottom tw-flex lg:tw-flex-row tw-flex-col tw-items-center">
                             <div class="tw-flex-grow">
-                                @if(\Module\Member\Auth\MemberUser::isLogin())
-                                    @if(\Module\PayCenter\Util\PayUtil::preferShowQuick())
-                                        <div class="tw-text-left tw-mr-3">
-                                            <div class="pay-price tw-hidden margin-bottom tw-float-right tw-pt-2" data-vip-info>
-                                                <span class="ub-text-warning" data-vip-value data-vip-type>-</span>
-                                                需要支付
-                                                <span class="ub-text-warning">￥</span><span class="ub-text-warning" data-vip-value data-vip-price>-</span>
-                                                购买后 <span class="ub-text-warning" data-vip-value data-vip-expire>-</span> 过期
-                                            </div>
-                                            @include('module::PayCenter.View.inc.quick')
+                                @if(!empty($memberVipRights))
+                                    <div class="vip-bg tw-py-3 margin-bottom tw-rounded-lg" data-vip-right-list>
+                                        <div class="row">
+                                            @foreach($memberVipRights as $r)
+                                                <div class="col-md-4 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
+                                                    <div class="tw-flex tw-items-center ub-text-sm margin-bottom">
+                                                        <div class="tw-pr-2">
+                                                            <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full" src="{{$r['image']}}" />
+                                                        </div>
+                                                        <div>
+                                                            <div class="vip-text">{{$r['title']}}</div>
+                                                            <div class="ub-text-tertiary">{{$r['desc']}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <script>
-                                            window.__refreshMemberVipPay = function () {
-                                                var vipId = parseInt($('[name="vipId"]').val());
-                                                if (vipId > 0) {
-                                                    window.__payCenterQuick.prepareLazy(
-                                                        '{{\Module\Member\Core\MemberVipPayCenterBiz::NAME}}',
-                                                        {money: $('[data-vip-price]').text()},
-                                                        {vipId: vipId}
-                                                    );
-                                                } else {
-                                                    window.__payCenterQuick.empty();
-                                                }
-                                            };
-                                            $(function () {
-                                                window.__refreshMemberVipPay();
-                                            });
-                                        </script>
-                                    @else
-                                        <div class="pay-price tw-hidden margin-bottom" data-vip-info>
-                                            <span class="ub-text-warning" data-vip-value data-vip-type>-</span>
-                                            需要支付
-                                            <span class="ub-text-warning">￥</span><span class="ub-text-warning" data-vip-value data-vip-price>-</span>
-                                            购买后 <span class="ub-text-warning" data-vip-value data-vip-expire>-</span> 过期
-                                        </div>
-                                        <div class="pay-submit margin-bottom">
-                                            <button type="submit" class="lg vip-button" data-pay-submit>
-                                                <i class="iconfont icon-cart"></i>
-                                                立即开通
-                                            </button>
-                                        </div>
-                                    @endif
-                                @else
-                                    <div class="margin-bottom">
-                                        <a class="lg vip-button" href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
-                                            <i class="iconfont icon-cart"></i>
-                                            登录后开通
-                                        </a>
-                                    </div>
-                                    <div class="tw-text-lg vip-text tw-text-xl margin-bottom">
-                                        开通VIP会员，享受更多特权
                                     </div>
                                 @endif
-                                <div class="margin-bottom ub-text-danger">
-                                    限时优惠剩余时间：<span data-count-down></span>
-                                </div>
                             </div>
                             <div>
                                 <div class="tw-inline-block tw-py-1 tw-px-3">
@@ -195,25 +171,6 @@
                                 </div>
                             </div>
                         </div>
-                        @if(!empty($memberVipRights))
-                            <div class="vip-bg tw-py-3 tw-px-4 lg:tw-px-12 margin-bottom tw-rounded-lg" data-vip-right-list>
-                                <div class="row">
-                                    @foreach($memberVipRights as $r)
-                                        <div class="col-md-2 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
-                                            <div class="tw-flex tw-items-center ub-text-sm">
-                                                <div class="tw-pr-2">
-                                                    <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full" src="{{$r['image']}}" />
-                                                </div>
-                                                <div>
-                                                    <div class="vip-text">{{$r['title']}}</div>
-                                                    <div class="ub-text-muted">{{$r['desc']}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
                         <div class="tw-rounded lg:tw-px-8 vip-bg vip-content-list">
                             @foreach($memberVips as $memberVip)
                                 @if(!$memberVip['isDefault'])
@@ -253,5 +210,6 @@
 
     </div>
 
+    @include('module::Member.View.pc.memberVip.openDialog')
 
 @endsection

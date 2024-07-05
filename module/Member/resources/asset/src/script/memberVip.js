@@ -17,15 +17,6 @@ $(function () {
         $rights.hide().filter(function (i, o) {
             return $(o).attr('data-vip-right').split(',').indexOf(vipId) >= 0;
         }).show();
-        if (window.__data.isLogin) {
-            MS.api.post(window.__msRoot + 'api/member_vip/calc', {vipId: vipId}, function (res) {
-                $('[data-vip-type]').html(res.data.type);
-                $('[data-vip-price]').html(res.data.price);
-                $('[data-vip-expire]').html(res.data.expire);
-                $('[data-vip-info]').show();
-                window.__refreshMemberVipPay && window.__refreshMemberVipPay();
-            });
-        }
     });
     $container.find('.nav').on('click', function () {
         var currentItemIndex = $items.index($items.filter('.active'));

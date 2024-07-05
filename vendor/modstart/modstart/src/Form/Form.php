@@ -852,6 +852,8 @@ class Form implements Renderable
             case 'gridRequestScript':
             case 'useSimple':
             case 'gridRowCols':
+            case 'titleAdd':
+            case 'titleEdit':
                 return $this;
         }
         if ($this->isFluentAttribute($method)) {

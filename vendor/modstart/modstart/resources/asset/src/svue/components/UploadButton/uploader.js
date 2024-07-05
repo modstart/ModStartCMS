@@ -59,6 +59,7 @@ WebUploader.Uploader.register({
                                 tipError(res.msg);
                                 task.reject();
                             } else {
+                                file._initData = res.data
                                 me.options.chunkUploaded = res.data.chunkUploaded;
                                 task.resolve();
                             }
@@ -103,6 +104,7 @@ export const UploadButtonUploader = function (selector, option) {
             maxWidthOrHeight: 4000,
             maxSize: 10 * 1024 * 1024,
         },
+        customUpload: null,
         tipError: function (msg) {
             if (MS && MS.dialog) {
                 MS.dialog.tipError(msg)
@@ -155,6 +157,7 @@ export const UploadButtonUploader = function (selector, option) {
             duplicate: false,
             uploadBeforeCheck: opt.uploadBeforeCheck,
             compress: opt.compress,
+            customUpload: opt.customUpload,
         });
 
         uploader.on('fileQueued', function (file) {

@@ -38,8 +38,11 @@ use ModStart\Support\Manager\FieldManager;
  * @method Grid|mixed engine($value = null)
  * @method Grid|mixed title($value = null)
  * @method Grid|mixed titleAdd($value = null)
+ * @method Grid|mixed pageTitleAdd($value = null)
  * @method Grid|mixed titleEdit($value = null)
+ * @method Grid|mixed pageTitleEdit($value = null)
  * @method Grid|mixed titleShow($value = null)
+ * @method Grid|mixed pageTitleShow($value = null)
  * @method Grid|mixed titleExport($value = null)
  * @method Grid|mixed titleImport($value = null)
  * @method Grid|mixed canAdd($value = null)
@@ -113,8 +116,11 @@ class Grid
         'engine',
         'title',
         'titleAdd',
+        'pageTitleAdd',
         'titleEdit',
+        'pageTitleEdit',
         'titleShow',
+        'pageTitleShow',
         'titleImport',
         'canAdd',
         'canEdit',
@@ -165,8 +171,11 @@ class Grid
     private $engine = 'basic';
     private $title;
     private $titleAdd;
+    private $pageTitleAdd;
     private $titleEdit;
+    private $pageTitleEdit;
     private $titleShow;
+    private $pageTitleShow;
     private $titleImport;
     private $canAdd = true;
     private $canEdit = true;

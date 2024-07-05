@@ -7,8 +7,10 @@ namespace Module\Member\Core;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleManager;
 use Module\Member\Events\MemberUserVipChangeEvent;
+use Module\Member\Model\MemberVipOrder;
 use Module\Member\Util\MemberCreditUtil;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\MemberVipUtil;
@@ -72,16 +74,41 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
         $priceInfoRet = MemberVipUtil::calcPrice($memberUser['vipId'], $memberUser['vipExpire'], $vipId);
         BizException::throwsIf($priceInfoRet['msg'], $priceInfoRet['code'] > 0);
         $money = $priceInfoRet['data']['price'];
+        if (modstart_module_enabled('Voucher')) {
+            $voucherId = isset($quickOrder['param']['voucherId']) ? intval($quickOrder['param']['voucherId']) : 0;
+            if ($voucherId > 0) {
+                $bizer = MemberVipVoucherBiz::bizer();
+                $voucherItems = MemberVipVoucherBiz::listValidForMemberWithItemIds($memberUserId, [$voucherId]);
+                $voucherItems = $bizer->processFindUsableItems($memberUserId, $voucherItems);
+                $processResult = $bizer->processComputeItems($memberUserId, $voucherItems, [
+                    'price' => $money,
+                ]);
+                $money = $processResult['price'];
+            }
+        }
         // Log::info('MemberVipPayCenterBiz.createOrderForQuick - ' . json_encode([$quickOrder, $priceInfoRet], JSON_UNESCAPED_UNICODE));
         BizException::throwsIf('订单金额异常', $money < 0.01 || $money > 1000 * 10000);
-        $order = ModelUtil::insert('member_vip_order', [
+        $orderParam = [];
+        if (!empty($processResult['usedVoucherItems'])) {
+            $orderParam['voucherItemIds'] = array_column($processResult['usedVoucherItems'], 'id');
+        }
+        $order = ModelUtil::insert(MemberVipOrder::class, [
             'status' => OrderStatus::WAIT_PAY,
             'memberUserId' => $memberUserId,
             'vipId' => $memberVip['id'],
             'payFee' => $money,
             'expire' => $priceInfoRet['data']['expire'],
             'type' => $priceInfoRet['data']['type'],
+            'param' => SerializeUtil::jsonEncode($orderParam),
         ]);
+        if (!empty($processResult['usedVoucherItems'])) {
+            MemberVipVoucherBiz::bizer()->processUpdateUsedItemsInTransactionOrFail(
+                $memberUserId,
+                $processResult['usedVoucherItems'],
+                'MemberVipOrder',
+                $order['id']
+            );
+        }
         return Response::generateSuccessData([
             'bizId' => $order['id'],
             'feeTotal' => $money,

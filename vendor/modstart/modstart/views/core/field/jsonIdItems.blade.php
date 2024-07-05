@@ -7,9 +7,10 @@
         {{$label}}
     </div>
     <div class="field">
-        <div id="{{$id}}Input" class="tw-bg-white tw-rounded tw-p-4">
+        <div id="{{$id}}Input" class="tw-bg-white tw-rounded tw-p-4 ub-border">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             <el-table
+                    v-if="records.length>0"
                     :data="records" size="mini"
                     style="width:100%;margin:0;border-radius:3px;">
                 <el-table-column width="100" label="{{L('ID')}}">

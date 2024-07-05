@@ -53,6 +53,9 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+        // 'DataAliyunOssFe' => [
+        //     'enable' => true,
+        // ],
         // 'Recommend' => [
         //     'enable' => true,
         // ],

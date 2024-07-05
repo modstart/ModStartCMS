@@ -9,8 +9,11 @@ var GridManager = function (opt) {
         canMultiSelectItem: false,
         title: null,
         titleAdd: null,
+        pageTitleAdd: null,
         titleEdit: null,
+        pageTitleEdit: null,
         titleShow: null,
+        pageTitleShow: null,
         ttileImport: null,
         canAdd: false,
         canEdit: false,
@@ -352,7 +355,7 @@ var GridManager = function (opt) {
                 // console.log(addUrl);
                 lister.realtime.dialog.add = layer.open({
                     type: 2,
-                    title: option.titleAdd ? option.titleAdd : (option.title ? option.lang.add + option.title : option.lang.add),
+                    title: option.pageTitleAdd || option.titleAdd || (option.title ? option.lang.add + option.title : option.lang.add),
                     shadeClose: false,
                     shade: 0.5,
                     maxmin: false,
@@ -382,7 +385,7 @@ var GridManager = function (opt) {
             var id = getId($item);
             lister.realtime.dialog.edit = layer.open({
                 type: 2,
-                title: option.titleEdit ? option.titleEdit : (option.title ? option.lang.edit + option.title : option.lang.edit),
+                title: option.pageTitleEdit || option.titleEdit || (option.title ? option.lang.edit + option.title : option.lang.edit),
                 shadeClose: false,
                 shade: 0.5,
                 maxmin: false,
@@ -482,7 +485,7 @@ var GridManager = function (opt) {
             var id = getId($item);
             lister.realtime.dialog.show = layer.open({
                 type: 2,
-                title: option.titleShow ? option.titleShow : (option.title ? option.lang.show + option.title : option.lang.show),
+                title: option.pageTitleShow || option.titleShow || (option.title ? option.lang.show + option.title : option.lang.show),
                 shadeClose: false,
                 shade: 0.5,
                 maxmin: false,

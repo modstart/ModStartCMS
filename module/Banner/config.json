@@ -11,7 +11,7 @@
     "require": [
         "Vendor:>=3.0.0"
     ],
-    "modstartVersion": ">=2.6.0",
+    "modstartVersion": ">=3.9.0",
     "title": "通用轮播",
     "version": "1.8.0",
     "author": "官方",
