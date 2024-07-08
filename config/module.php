@@ -53,7 +53,7 @@ return [
         'Cms' => [
             'enable' => true,
         ],
-        'DataAliyunOssFe' => [
+        'CmsMemberPost' => [
             'enable' => true,
         ],
         // 'Recommend' => [
