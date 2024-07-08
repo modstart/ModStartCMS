@@ -48,7 +48,7 @@ class ModStartHook
      * @param null $extra
      * @return array|mixed
      */
-    public static function fire($name, &$param = null, $extra = null)
+    public static function fire($name, $param = null, $extra = null)
     {
         $results = [];
         foreach (static::get($name) as $key => $callable) {
@@ -64,7 +64,7 @@ class ModStartHook
      * @param null $extra
      * @return string
      */
-    public static function fireInView($name, &$param = null, $extra = null)
+    public static function fireInView($name, $param = null, $extra = null)
     {
         return join('', self::fire($name, $param, $extra));
     }

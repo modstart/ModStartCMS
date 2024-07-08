@@ -161,7 +161,8 @@ export default {
                 },
                 finish: function () {
                     $this.$emit('finish')
-                }
+                },
+                customUpload: window.__uploadCustomUpload || null
             };
             if (this.category === 'image') {
                 option.compress = {

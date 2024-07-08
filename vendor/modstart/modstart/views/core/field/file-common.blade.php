@@ -41,6 +41,7 @@
 
         </div>
 
+        {!! \ModStart\Core\Hook\ModStartHook::fireInView('UploadScript',['source'=>'uploadButton','server'=>$server]); !!}
         {!! \ModStart\ModStart::js('asset/common/uploadButton.js') !!}
         <script>
             $(function () {
@@ -102,6 +103,7 @@
                     },
                     finish: function () {
                     },
+                    customUpload: window.__uploadCustomUpload || null
                 });
                 @if($mode=='default')
                     $selector.on('click', '[data-gallery]', function () {

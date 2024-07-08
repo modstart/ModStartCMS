@@ -67,6 +67,8 @@ class FileManager
             case 'categoryDelete':
             case 'init':
             case 'upload':
+            case 'uploadEnd':
+                // upload for front end
             case 'save':
             case 'saveRaw':
             case 'fileEdit':
@@ -324,6 +326,12 @@ class FileManager
     }
 
     private static function uploadExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
+    {
+        DataUploadingEvent::fire($uploadTable, $userId, $category);
+        return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option, $param);
+    }
+
+    private static function uploadEndExecute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)
     {
         DataUploadingEvent::fire($uploadTable, $userId, $category);
         return DataManager::uploadHandle($category, Input::all(), ['userId' => $userId], $option, $param);

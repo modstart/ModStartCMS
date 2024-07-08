@@ -52,6 +52,7 @@
             }
         };
     </script>
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('UploadScript',['source'=>'fileManager','server'=>\ModStart\Core\Input\Request::currentPageUrlWithOutQueries()]); !!}
     <script src="@asset('asset/entry/dataFileManager.js')"></script>
 @endsection
 

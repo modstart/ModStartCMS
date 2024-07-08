@@ -19,12 +19,12 @@
             }
         </style>
     @endif
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('PageHeadAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('PageHeadAppend'); !!}
 @endsection
 
 @section('bodyAppend')
     @parent
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('PageBodyAppend',$this); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('PageBodyAppend'); !!}
 @endsection
 
 @section('body')

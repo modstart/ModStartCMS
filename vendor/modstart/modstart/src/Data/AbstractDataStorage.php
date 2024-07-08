@@ -5,6 +5,8 @@ namespace ModStart\Data;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use League\Flysystem\FilesystemInterface;
+use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
 use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\PathUtil;
@@ -67,7 +69,15 @@ abstract class AbstractDataStorage
 
     abstract public function multiPartInit($param);
 
-    abstract public function multiPartUpload($param);
+    public function multiPartUpload($param)
+    {
+        BizException::throws('Not Support');
+    }
+
+    public function multiPartUploadEnd($param)
+    {
+        BizException::throws('Not Support');
+    }
 
     public function updateDriverDomain($data)
     {

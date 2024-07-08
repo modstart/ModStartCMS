@@ -33,6 +33,7 @@ class DataController extends Controller
                             break;
                         case 'init':
                         case 'upload':
+                        case 'uploadEnd':
                         case 'save':
                         case 'saveRaw':
                         case 'uploadAndSaveBase64':
