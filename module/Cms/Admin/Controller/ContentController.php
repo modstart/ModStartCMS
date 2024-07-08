@@ -358,7 +358,7 @@ class ContentController extends Controller
                     'catId', 'title', 'alias', 'title', 'summary', 'cover', 'postTime',
                     'status', 'isRecommend', 'isTop', 'tags', 'author', 'source',
                     'seoTitle', 'seoDescription', 'seoKeywords',
-                    'detailTemplate',
+                    'detailTemplate', 'verifyStatus',
                 ]);
                 if (modstart_config('CmsUrlMix_Enable', false)) {
                     $recordValue['fullUrl'] = (empty($data['fullUrl']) ? null : $data['fullUrl']);

@@ -53,9 +53,9 @@ return [
         'Cms' => [
             'enable' => true,
         ],
-        'CmsMemberPost' => [
-            'enable' => true,
-        ],
+        // 'CmsMemberPost' => [
+        //     'enable' => true,
+        // ],
         // 'Recommend' => [
         //     'enable' => true,
         // ],
