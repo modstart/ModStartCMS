@@ -53,6 +53,9 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+        'DataQcloudCosFe' => [
+            'enable' => true,
+        ],
         // 'CmsMemberPost' => [
         //     'enable' => true,
         // ],

@@ -75,7 +75,7 @@
                     </a>
                 </td>
             </tr>
-            <tr>
+            <tr v-if="['POST'].includes(value.method)">
                 <td>请求类型</td>
                 <td>
                     <el-radio-group size="mini" v-model="value.enctype">
@@ -85,7 +85,7 @@
                     </el-radio-group>
                 </td>
             </tr>
-            <tr v-if="['FormData','UrlEncoded'].includes(value.enctype)">
+            <tr v-if="['POST'].includes(value.method) && ['FormData','UrlEncoded'].includes(value.enctype)">
                 <td>请求内容</td>
                 <td>
                     <el-table v-if="value.bodyParam.length>0" size="mini" :data="value.bodyParam" border>
@@ -114,7 +114,7 @@
                     </a>
                 </td>
             </tr>
-            <tr v-else>
+            <tr v-else-if="['POST'].includes(value.method)">
                 <td>
                     请求内容
                 </td>
@@ -143,7 +143,7 @@
                 </td>
             </tr>
             <tr v-if="value.responseEnable && value.responseType=='json'">
-                <td>状态值</td>
+                <td>正确状态值</td>
                 <td>
                     <el-input size="mini" v-model="value.responseJsonStatusValue" placeholder="请输入状态值"></el-input>
                 </td>

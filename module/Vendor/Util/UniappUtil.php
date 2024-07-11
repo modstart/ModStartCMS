@@ -3,6 +3,7 @@
 
 namespace Module\Vendor\Util;
 
+use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\PlatformUtil;
 use ModStart\Core\Util\ReUtil;
 
@@ -72,10 +73,20 @@ class UniappUtil
 
         shell_echo_block("更新模块静态资源");
         shell_ensure_dir(shell_module_path($module, 'Asset'));
-        shell_echo_info('清空目录');
-        passthru("rm -rfv " . shell_module_path($module, 'Asset/static/'));
+        $path = shell_module_path($module, 'Asset/static/');
+        shell_echo_info('清空目录 ' . $path);
+        FileUtil::rm($path);
         shell_echo_info('更新文件');
-        passthru("cp -av dist/build/h5/static " . shell_module_path($module, 'Asset/static/'));
+        $files = FileUtil::listAllFiles('dist/build/h5/static');
+        foreach ($files as $file) {
+            if (!$file['isFile']) {
+                continue;
+            }
+            $content = file_get_contents($file['pathname']);
+            $toPath = shell_module_path($module, 'Asset/static/' . $file['filename']);
+            FileUtil::write($toPath, $content);
+            shell_echo_info('复制 ' . $file['filename']);
+        }
         shell_echo_success('打包完成');
 
         shell_echo_block("温馨提示");

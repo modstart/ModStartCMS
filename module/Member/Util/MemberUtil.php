@@ -527,11 +527,12 @@ class MemberUtil
             return Response::generate(0, 'ok');
         }
 
-        $lang = array(
+        $lang = [
+            'nickname' => '昵称',
             'username' => '用户名',
             'email' => '邮箱',
             'phone' => '手机号'
-        );
+        ];
         if ($ignoreUserId == $memberUser['id']) {
             return Response::generate(0, 'ok');
         }

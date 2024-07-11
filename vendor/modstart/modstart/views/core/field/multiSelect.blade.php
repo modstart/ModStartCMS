@@ -12,9 +12,7 @@
         <div id="{{$id}}Input">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             <el-select v-model="value" size="mini" filterable multiple>
-                @foreach($options as $k=>$v)
-                    <el-option label="{{$v}}" value="{{$k}}"></el-option>
-                @endforeach
+                <el-option v-for="(o,oIndex) in options" :label="oIndex" :value="o"></el-option>
             </el-select>
         </div>
         @if(!empty($help))
@@ -33,7 +31,8 @@
             el: '#{{$id}}Input',
             data: function(){
                 return {
-                    value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
+                    options:{!! json_encode($options) !!},
+                    value: {!! json_encode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!}
                 };
             },
             computed:{

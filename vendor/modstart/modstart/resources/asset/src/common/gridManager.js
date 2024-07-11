@@ -643,7 +643,15 @@ var GridManager = function (opt) {
                 window.api.dialog.tipError(option.lang.pleaseSelectRecords);
                 return;
             }
-            MS.dialog.dialog(url + '?_id=' + ids.join(','));
+            var dialogOption = {};
+            var width = $(this).attr('data-dialog-width'), height = $(this).attr('data-dialog-height');
+            if (width) {
+                dialogOption.width = width
+            }
+            if (height) {
+                dialogOption.height = height
+            }
+            MS.dialog.dialog(url + '?_id=' + ids.join(','), dialogOption);
         });
         $lister.data('lister', lister);
         window.__grids = window.__grids || {

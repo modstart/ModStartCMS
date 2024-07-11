@@ -612,6 +612,8 @@ class FileUtil
      */
     public static function savePathToLocalTemp($path, $ext = null, $downloadStream = false)
     {
+        $checkPath = strtolower($path);
+        BizException::throwsIf('Invalid Path', StrUtil::startWith($checkPath, 'phar:/'));
         if (@file_exists($path)) {
             return realpath($path);
         }
