@@ -162,14 +162,17 @@ class CurlUtil
             $result['header'] = [];
             $result['headerMap'] = [];
         }
-        if ($option['method'] == 'get') {
-            if (!empty($param)) {
-                $split = '?';
-                if (Str::contains($url, '?')) {
-                    $split = '&';
+        if (!empty($option['query'])) {
+            $split = Str::contains($url, '?') ? '&' : '?';
+            $url = $url . $split . http_build_query($option['query']);
+        }
+        switch ($option['method']) {
+            case 'get':
+                if (!empty($param)) {
+                    $split = Str::contains($url, '?') ? '&' : '?';
+                    $url = $url . $split . http_build_query($param);
                 }
-                $url = $url . $split . http_build_query($param);
-            }
+                break;
         }
         $ch = curl_init($url);
 

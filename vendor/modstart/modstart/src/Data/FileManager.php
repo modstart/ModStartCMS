@@ -22,11 +22,51 @@ use ModStart\Core\Util\TreeUtil;
 use ModStart\Data\Event\DataUploadedEvent;
 use ModStart\Data\Event\DataUploadingEvent;
 use ModStart\Data\Support\FileManagerProvider;
+use ModStart\ModStart;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileManager
 {
     public static $slowDebug = false;
+
+    public static function prepareLang()
+    {
+        ModStart::lang([
+            "Add Category",
+            "Add Success",
+            "Category",
+            "Confirm",
+            "Confirm Delete ?",
+            "Copy Link",
+            "Custom Link",
+            "Delete",
+            "Delete Category",
+            "Delete Success",
+            "Edit",
+            "Edit Category",
+            "Edit File",
+            "Edit Success",
+            "File(s)",
+            "Filter",
+            "File Gallery",
+            "Loading",
+            "Local Upload",
+            "Name",
+            "No Records",
+            "Parent",
+            "Please Input",
+            "Please Select",
+            "Select %d item(s) at most",
+            "Select %d item(s) at least",
+            "Url",
+            "Select Local File",
+            "Copy Success",
+            "Copy Fail",
+            "Image Gallery",
+            "File Gallery",
+            "Copy Links",
+        ]);
+    }
 
     public static function handleUpload($category, $option = null, $permitCheck = null, $param = [])
     {

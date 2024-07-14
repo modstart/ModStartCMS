@@ -78,9 +78,7 @@
     </div>
     <div style="overflow:hidden;" data-table></div>
     @if($enablePagination)
-        @if($enablePagination)
-            <div class="page-container" id="{{$id}}Pager"></div>
-        @endif
+        <div class="page-container" id="{{$id}}Pager"></div>
     @endif
     <script type="text/html" id="{{$id}}EmptyHtml">
         <div class="ub-empty">

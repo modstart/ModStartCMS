@@ -1,6 +1,6 @@
 <div id="app" v-cloak></div>
 <script>
-    {!! \ModStart\Developer\LangUtil::langScriptPrepare([ "Select Local File" ]) !!};
+    {!! \ModStart\ModStart::lang([ "Select Local File" ]) !!};
     window.__selectorDialogServer = "{{$selectorDialogServer}}";
     window._data = {
         variables: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($variables) !!},

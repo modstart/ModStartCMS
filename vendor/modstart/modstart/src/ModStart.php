@@ -3,7 +3,6 @@
 namespace ModStart;
 
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use ModStart\Core\Exception\BizException;
@@ -23,6 +22,7 @@ class ModStart
     public static $style = [];
     public static $css = [];
     public static $js = [];
+    public static $lang = [];
 
     /**
      * 获取当前项目的缓存Key
@@ -184,6 +184,18 @@ class ModStart
         return view('modstart::part.js', ['js' => array_unique(static::$js)]);
     }
 
+    public static function lang($keys = null)
+    {
+        if (!is_null($keys)) {
+            self::$lang = array_merge(self::$lang, $keys);
+            return;
+        }
+        $lang = [];
+        foreach (self::$lang as $k => $v) {
+            $lang[$v] = L($v);
+        }
+        return view('modstart::part.lang', ['lang' => $lang]);
+    }
 
     /**
      * 获取当前运行环境

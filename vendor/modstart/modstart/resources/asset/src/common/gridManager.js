@@ -636,7 +636,7 @@ var GridManager = function (opt) {
                 callback();
             }
         });
-        $lister.find('[data-table]').on('click', '[data-batch-dialog-operate]', function () {
+        $lister.on('click', '[data-batch-dialog-operate]', function () {
             var ids = getCheckedIds();
             var url = $(this).attr('data-batch-dialog-operate');
             if (!ids.length) {

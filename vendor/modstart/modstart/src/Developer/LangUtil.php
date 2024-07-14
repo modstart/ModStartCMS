@@ -8,6 +8,9 @@ use ModStart\Core\Util\SerializeUtil;
 
 class LangUtil
 {
+    /**
+     * @deprecated delete at 2025-01-14
+     */
     public static function extractFileLangScripts($file)
     {
         $file = base_path($file);
@@ -24,11 +27,14 @@ class LangUtil
                 }
             }
             ksort($langs);
-            return "\n{!! \ModStart\Developer\LangUtil::langScriptPrepare(" . SerializeUtil::jsonEncodePretty(array_keys($langs)) . ") !!}";
+            return "\n{!! \ModStart\ModStart::lang(" . SerializeUtil::jsonEncodePretty(array_keys($langs)) . ") !!}";
         }
         return '';
     }
 
+    /**
+     * @deprecated delete at 2025-01-14
+     */
     public static function langScriptPrepare($langs)
     {
         $script = [];

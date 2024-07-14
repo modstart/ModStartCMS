@@ -99,12 +99,11 @@ class Json extends AbstractField
                 $option['header'][$v['key']] = $v['value'];
             }
         }
+        $option['query'] = [];
         if (!empty($value['query'])) {
-            $query = [];
             foreach ($value['query'] as $v) {
-                $query[$v['key']] = $v['value'];
+                $option['query'][$v['key']] = $v['value'];
             }
-            $param = $query;
         }
         switch ($option['method']) {
             case 'POST':

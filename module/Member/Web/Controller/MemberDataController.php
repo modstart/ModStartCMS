@@ -36,6 +36,7 @@ class MemberDataController extends Controller implements MemberLoginCheck
                 ]
             );
         }
+        FileManager::prepareLang();
         return view('module::Member.View.pc.memberData.fileManager', [
             'category' => $category,
             'pageTitle' => L('Select ' . ucfirst($category)),

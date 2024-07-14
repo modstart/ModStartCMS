@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="@asset('asset/theme/default/style.css')">
     {!! \ModStart\ModStart::css() !!}
     {!! \ModStart\ModStart::style() !!}
+    {!! \ModStart\ModStart::lang() !!}
     @section('headAppend')@show
 </head>
 <body @yield('bodyProperties','')>

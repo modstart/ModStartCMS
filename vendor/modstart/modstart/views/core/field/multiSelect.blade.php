@@ -12,7 +12,7 @@
         <div id="{{$id}}Input">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             <el-select v-model="value" size="mini" filterable multiple>
-                <el-option v-for="(o,oIndex) in options" :label="oIndex" :value="o"></el-option>
+                <el-option v-for="(o,oIndex) in options" :label="o" :value="oIndex"></el-option>
             </el-select>
         </div>
         @if(!empty($help))

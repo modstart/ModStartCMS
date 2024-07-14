@@ -81,8 +81,15 @@
     <div data-table class="table-container">
         <table class="table-container" id="{{$id}}Table" lay-filter="{{$id}}Table"></table>
     </div>
+    @if(!empty($footOperate))
+        <div data-foot-operate class="margin-top">
+            {!! $footOperate !!}
+        </div>
+    @endif
     @if($enablePagination)
-        <div class="page-container" id="{{$id}}Pager"></div>
+        <div>
+            <div class="page-container" id="{{$id}}Pager"></div>
+        </div>
     @endif
     <script type="text/html" id="{{$id}}TableHeadToolbar">
         <div class="layui-btn-container">

@@ -71,7 +71,7 @@ class ParamUtil
         $prefixRegex = preg_quote($option['prefix'], '/');
         $suffixRegex = preg_quote($option['suffix'], '/');
         if (in_array('md5', $option['functions'])) {
-            $text = preg_replace_callback('/' . $prefixRegex . 'md5\(\'([^\']+\')\)' . $suffixRegex . '/', function ($matches) {
+            $text = preg_replace_callback('/' . $prefixRegex . 'md5\(\'([^\']+)\'\)' . $suffixRegex . '/', function ($matches) {
                 return md5($matches[1]);
             }, $text);
         }
