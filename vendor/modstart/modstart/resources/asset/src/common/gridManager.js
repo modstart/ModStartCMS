@@ -452,10 +452,10 @@ var GridManager = function (opt) {
                     window.api.dialog.loadingOff();
                     window.api.base.defaultFormCallback(res, {
                         success: function (res) {
-                            lister.refresh();
-                            $grid.trigger('modstart:edit.end');
                         }
                     });
+                    lister.refresh();
+                    $grid.trigger('modstart:edit.end');
                 });
             });
         }

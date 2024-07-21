@@ -23,6 +23,8 @@ class BootstrapMiddleware
 
     public function handle(Request $request, \Closure $next)
     {
+        \ModStart\Core\Input\Request::treatAsAjax();
+
         if (method_exists(CurrentApp::class, 'set')) {
             CurrentApp::set(CurrentApp::API);
         }

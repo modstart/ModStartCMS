@@ -3,6 +3,7 @@
 namespace ModStart\Core\Util;
 
 use Illuminate\Support\Str;
+use ModStart\Core\Exception\BizException;
 
 class CurlUtil
 {
@@ -140,6 +141,7 @@ class CurlUtil
         $sendHeaders = [];
         if (!empty($option['header'])) {
             foreach ($option['header'] as $k => $v) {
+                BizException::throwsIf('CurlUtil.request - header key is numeric', is_numeric($k));
                 $sendHeaders[] = "$k:$v";
             }
         }
@@ -181,7 +183,6 @@ class CurlUtil
             $fp = fopen($option['debugFile'], 'w');
             curl_setopt($ch, CURLOPT_STDERR, $fp);
         }
-
 
         curl_setopt($ch, CURLOPT_HEADER, $returnHeader);
         if (!empty($sendHeaders)) {

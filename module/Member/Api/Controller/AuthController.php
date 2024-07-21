@@ -840,7 +840,7 @@ class AuthController extends ModuleBaseController
         Session::forget('loginPhone');
         Session::put('memberUserId', $memberUser['id']);
         MemberUtil::fireLogin($memberUser['id']);
-        EventUtil::fire(new MemberUserLoginedEvent($memberUser));
+        EventUtil::fire(new MemberUserLoginedEvent($memberUser['id']));
         return Response::generate(0, null);
     }
 
