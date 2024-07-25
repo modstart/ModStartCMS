@@ -513,6 +513,9 @@ class ArrayUtil
 
     public static function getByDotKey($array, $key, $defaultValue = null)
     {
+        if (empty($key)) {
+            return $defaultValue;
+        }
         if (empty($array)) {
             return $defaultValue;
         }

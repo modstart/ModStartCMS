@@ -4,26 +4,63 @@
 namespace Module\Vendor\Provider\RandomImage;
 
 
+use ModStart\Core\Assets\AssetsUtil;
+use ModStart\Core\Input\Response;
+use ModStart\Core\Util\SerializeUtil;
+use Module\Vendor\Provider\ProviderTrait;
+
+
+/**
+ * @method static AbstractRandomImageProvider first()
+ * @method static AbstractRandomImageProvider[] listAll()
+ */
 class RandomImageProvider
 {
-    /**
-     * @return AbstractRandomImageProvider
-     */
-    public static function get()
+    use ProviderTrait;
+
+    public static function getImage($provider, $biz, $type = 'background', $param = [])
     {
-        static $instance = null;
-        if (null === $instance) {
-            $driver = config('RandomImageProvider');
-            if (empty($driver)) {
-                $driver = DefaultRandomImageProvider::class;
-            }
-            $instance = app($driver);
+        $ret = null;
+        $error = null;
+        if ($provider) {
+            $ret = $provider->get($biz, $type, $param);
+        } else {
+            $error = 'NoProvider';
         }
-        return $instance;
+        if (Response::isSuccess($ret)) {
+            return $ret['data'];
+        }
+        if (isset($ret['msg'])) {
+            $error = $ret['msg'];
+        } else {
+            $error = 'ERROR:' . SerializeUtil::jsonEncode($ret);
+        }
+        return [
+            'url' => AssetsUtil::fixFull('asset/image/none.svg'),
+            'error' => $error,
+        ];
     }
 
-    public static function getImage($biz = '', $param = [])
+    public static function getProviderImage($name, $biz, $type = 'background', $param = [])
     {
-        return self::get()->get(array_merge(['biz' => $biz], $param));
+        $provider = self::getByName($name);
+        return self::getImage($provider, $biz, $type, $param);
     }
+
+    public static function getConfigProviderImage($configName, $biz, $type = 'background', $param = [])
+    {
+        $name = modstart_config($configName, '');
+        if ($name) {
+            $provider = self::getByName($name);
+        } else {
+            $provider = self::first();
+        }
+        return self::getImage($provider, $biz, $type, $param);
+    }
+
+    public static function getFirstImage($biz, $type = 'background', $param = [])
+    {
+        return self::getImage(self::first(), $biz, $type, $param);
+    }
+
 }

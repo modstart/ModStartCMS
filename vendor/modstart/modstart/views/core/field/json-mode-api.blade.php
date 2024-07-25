@@ -3,7 +3,7 @@
     <table class="ub-table border tw-bg-white">
         <tbody>
             <tr>
-                <td width="80">请求地址</td>
+                <td width="100">请求地址</td>
                 <td>
                     <el-input size="mini" v-model="value.url" placeholder="请输入请求地址"></el-input>
                 </td>
@@ -137,27 +137,37 @@
                 </td>
             </tr>
             <tr v-if="value.responseEnable && value.responseType=='json'">
+                <td>消息字段</td>
+                <td>
+                    <el-input size="mini" v-model="value.responseJsonMsgPath" placeholder="请输入消息字段"></el-input>
+                    <div class="ub-text-muted">
+                        当消息字段不为空时，会将消息字段的值显示给用户。
+                    </div>
+                </td>
+            </tr>
+            <tr v-if="value.responseEnable && value.responseType=='json'">
                 <td>状态字段</td>
                 <td>
                     <el-input size="mini" v-model="value.responseJsonStatusPath" placeholder="请输入状态字段"></el-input>
                 </td>
             </tr>
             <tr v-if="value.responseEnable && value.responseType=='json'">
-                <td>正确状态值</td>
+                <td>成功状态值</td>
                 <td>
                     <el-input size="mini" v-model="value.responseJsonStatusValue" placeholder="请输入状态值"></el-input>
-                </td>
-            </tr>
-            <tr v-if="value.responseEnable && value.responseType=='json'">
-                <td>消息字段</td>
-                <td>
-                    <el-input size="mini" v-model="value.responseJsonMsgPath" placeholder="请输入消息字段"></el-input>
+                    <div class="ub-text-muted">
+                        当状态字段的值等于成功状态值时，才会认为请求成功。
+                    </div>
                 </td>
             </tr>
             <tr v-if="value.responseEnable && value.responseType=='json'">
                 <td>结果字段</td>
                 <td>
                     <el-input size="mini" v-model="value.responseValuePath" placeholder="请输入数据字段"></el-input>
+                    <div class="ub-text-muted">
+                        当请求成功时，会返回该字段的值给调用方。<br />
+                        例：<code>data.value</code> 表示取 <code>{"code":0,"data":{"value":"xxx"}}</code> 中的 <code>xxx</code> 内容。
+                    </div>
                 </td>
             </tr>
         </tbody>

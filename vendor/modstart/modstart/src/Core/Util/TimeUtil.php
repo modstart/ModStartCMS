@@ -192,6 +192,9 @@ class TimeUtil
         if (null === $format) {
             $format = self::FORMAT_DATETIME;
         }
+        if (!is_numeric($timestamp)) {
+            $timestamp = strtotime($timestamp);
+        }
         return date($format, $timestamp);
     }
 

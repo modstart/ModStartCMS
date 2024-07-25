@@ -12,7 +12,7 @@ abstract class AbstractRecommendBiz
     abstract public function providerName();
 
     /**
-     * 批量彤彤股
+     * 批量同步
      * @param $nextId int 下一个ID
      * @param $param array 参数
      * @return array

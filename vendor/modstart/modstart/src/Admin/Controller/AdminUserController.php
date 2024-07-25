@@ -116,6 +116,12 @@ class AdminUserController extends Controller
                     $data = $form->dataAdding();
                     $data['passwordSalt'] = Str::random(16);
                     $data['password'] = Admin::passwordEncrypt($data['password'], $data['passwordSalt']);
+                    if (isset($data['phone']) && empty($data['phone'])) {
+                        $data['phone'] = null;
+                    }
+                    if (isset($data['email']) && empty($data['email'])) {
+                        $data['email'] = null;
+                    }
                     $form->dataAdding($data);
                 } else if ($form->isModeEdit()) {
                     $data = $form->dataEditing();
@@ -124,6 +130,12 @@ class AdminUserController extends Controller
                         $data['password'] = Admin::passwordEncrypt($data['password'], $data['passwordSalt']);
                     } else {
                         unset($data['password']);
+                    }
+                    if (isset($data['phone']) && empty($data['phone'])) {
+                        $data['phone'] = null;
+                    }
+                    if (isset($data['email']) && empty($data['email'])) {
+                        $data['email'] = null;
                     }
                     $form->dataEditing($data);
                 }
