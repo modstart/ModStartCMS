@@ -241,4 +241,5 @@ return [
     'Move Top' => '置顶',
     'Move Bottom' => '置底',
     'Reset Default' => '恢复默认',
+    'Detail' => '详情',
 ];

@@ -49,7 +49,7 @@ class ModuleServiceProvider extends ServiceProvider
         MemberMenu::register(function () {
             $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
             $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
-            $creditName = '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分');
+            $creditName = LM('Member', 'My') . ModuleManager::getModuleConfig('Member', 'creditName', LM('Member', 'Credit'));
             $addressEnable = ModuleManager::getModuleConfig('Member', 'addressEnable', false);
             return [
                 [
@@ -58,7 +58,7 @@ class ModuleServiceProvider extends ServiceProvider
                     'sort' => 900,
                     'children' => [
                         $moneyEnable ? [
-                            'title' => '我的钱包',
+                            'title' => LM('Member', 'MenuWallet'),
                             'url' => modstart_web_url('member_money'),
                         ] : null,
                         $creditEnable ? [
@@ -69,29 +69,29 @@ class ModuleServiceProvider extends ServiceProvider
                 ],
                 [
                     'icon' => 'user',
-                    'title' => '我的',
+                    'title' => LM('Member', 'My'),
                     'sort' => 1000,
                     'children' => [
                         $addressEnable ? [
-                            'title' => '我的地址',
+                            'title' => LM('Member', 'MenuAddress'),
                             'url' => modstart_web_url('member_address'),
                         ] : null,
                         [
                             'icon' => 'iconfont icon-comment',
-                            'title' => '我的消息',
+                            'title' => LM('Member', 'MenuMessage'),
                             'url' => modstart_web_url('member_message'),
                         ],
                         [
-                            'title' => '账号安全',
+                            'title' => LM('Member', 'MenuSecurity'),
                             'url' => modstart_web_url('member_profile/security'),
                         ],
                         [
-                            'title' => '账号资料',
+                            'title' => LM('Member', 'MenuAccount'),
                             'url' => modstart_web_url('member_profile/profile'),
                         ],
                         [
                             'sort' => 999999,
-                            'title' => '退出登录',
+                            'title' => LM('Member', 'MenuLogout'),
                             'url' => modstart_web_url('logout'),
                         ],
                     ]
@@ -105,16 +105,16 @@ class ModuleServiceProvider extends ServiceProvider
         MemberHomeIcon::register(function () {
             $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
             $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
-            $creditName = '我的' . ModuleManager::getModuleConfig('Member', 'creditName', '积分');
+            $creditName = LM('Member', 'My') . ModuleManager::getModuleConfig('Member', 'creditName', LM('Member', 'Credit'));
             return [
                 [
-                    'title' => '我的',
+                    'title' => LM('Member', 'My'),
                     'sort' => 1000,
                     'children' => [
                         $moneyEnable ? [
                             'icon' => 'iconfont icon-pay',
                             'value' => sprintf('￥%.2f', MemberMoneyUtil::getTotal(MemberUser::id())),
-                            'title' => '我的钱包',
+                            'title' => LM('Member', 'MenuWallet'),
                             'url' => modstart_web_url('member_money'),
                         ] : null,
                         $creditEnable ? [
@@ -125,27 +125,27 @@ class ModuleServiceProvider extends ServiceProvider
                         ] : null,
                         [
                             'icon' => 'iconfont icon-comment',
-                            'title' => '我的消息',
+                            'title' => LM('Member', 'MenuMessage'),
                             'url' => modstart_web_url('member_message'),
                         ],
                         [
                             'icon' => 'iconfont icon-card',
-                            'title' => '我的资料',
+                            'title' => LM('Member', 'MenuAccount'),
                             'url' => modstart_web_url('member_profile'),
                         ],
                         [
                             'icon' => 'iconfont icon-lock',
-                            'title' => '修改密码',
+                            'title' => LM('Member', 'ChangePassword'),
                             'url' => modstart_web_url('member_profile/password'),
                         ],
                         [
                             'icon' => 'iconfont icon-user',
-                            'title' => '修改头像',
+                            'title' => LM('Member', 'ChangeAvatar'),
                             'url' => modstart_web_url('member_profile/avatar'),
                         ],
                         [
                             'icon' => 'iconfont icon-lock',
-                            'title' => '退出登录',
+                            'title' => LM('Member', 'MenuLogout'),
                             'url' => modstart_web_url('logout'),
                         ],
                     ]

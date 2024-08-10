@@ -11,8 +11,15 @@
 @endif
         <div class="layui-form" lay-filter="{{$name}}">
             @foreach($options as $k=>$v)
-                <input type="checkbox" value="{{$k}}" name="{{$name}}[]" lay-skin="primary"
-                       @if((null!==$value&&!empty($value)&&in_array($k,$value))||(null===$value&&!empty($defaultValue)&&in_array($k,$defaultValue))) checked @endif title="{{$v}}">
+                <div class="tw-inline-block" @if($optionMinWidth) style="min-width:{{$optionMinWidth}};" @endif>
+                    @if(isset($v['label']))
+                        <input type="checkbox" value="{{$v['label']}}" name="{{$name}}[]" lay-skin="primary"
+                               @if((null!==$value&&!empty($value)&&in_array($v['label'],$value))||(null===$value&&!empty($defaultValue)&&in_array($v['label'],$defaultValue))) checked @endif title="{{$v['title']}}">
+                    @else
+                        <input type="checkbox" value="{{$k}}" name="{{$name}}[]" lay-skin="primary"
+                               @if((null!==$value&&!empty($value)&&in_array($k,$value))||(null===$value&&!empty($defaultValue)&&in_array($k,$defaultValue))) checked @endif title="{{$v}}">
+                    @endif
+                </div>
             @endforeach
         </div>
         @if(!empty($help))

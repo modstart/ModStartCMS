@@ -1,3 +1,4 @@
 {
-    "HasAttributes.php": "vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php"
+    "HasAttributes.php": "vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php",
+    "MySqlConnector.php": "vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php"
 }

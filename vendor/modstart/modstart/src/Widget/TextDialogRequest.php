@@ -52,7 +52,7 @@ class TextDialogRequest extends AbstractWidget
     /**
      * @param $type string
      * @param $text string
-     * @param $text url
+     * @param $url string
      * @return TextDialogRequest
      */
     public static function make(...$arguments)

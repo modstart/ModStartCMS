@@ -7,7 +7,7 @@
     </div>
     <div class="tw-flex tw-text-center tw-py-7">
         @foreach($value as $v)
-            <div class="tw-flex-grow">
+            <div class="tw-flex-grow tw-px-2">
                 <div class="tw-text-xl tw-pb-2">
                     @if(!empty($v['url']))
                         <a class="tw-text-black hover:tw-text-blue-400"

@@ -819,7 +819,7 @@ class MemberUtil
         LockUtil::release($lockKey);
     }
 
-    public static function forgetByMemberUserId($memberUserId)
+    public static function forgetOauthByMemberUserId($memberUserId)
     {
         ModelUtil::delete('member_oauth', ['memberUserId' => $memberUserId]);
     }
@@ -878,6 +878,7 @@ class MemberUtil
         $content['oauth'] = ArrayUtil::keepItemsKeys($oauths, [
             'type', 'openId', 'infoUsername', 'infoAvatar'
         ]);
+        $content['nickname'] = $memberUser['nickname'];
         ModelUtil::insert('member_deleted', [
             'id' => $memberUser['id'],
             'username' => $memberUser['username'],
@@ -889,10 +890,11 @@ class MemberUtil
             'deleteAtTime' => 0,
             'isDeleted' => true,
             'username' => null,
+            'nickname' => null,
             'phone' => null,
             'email' => null,
         ]);
-        self::forgetByMemberUserId($memberUserId);
+        self::forgetOauthByMemberUserId($memberUserId);
         ModelUtil::transactionCommit();
         MemberUserDeletedEvent::fire($memberUserId);
     }

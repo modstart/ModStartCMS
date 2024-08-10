@@ -504,19 +504,19 @@ class EloquentRepository extends Repository
             BizException::throws(L('Records Duplicated'));
         }
         $formatErrorTemplates = [
-            ['Data too long for column', '/Data too long for column \'(.*)\' at row/'],
-            ['Data truncated for column', '/Data truncated for column \'(.*)\' at row/'],
-            ['Incorrect integer value', '/ for column \'(.*)\' at row/'],
-            ['Incorrect decimal value', '/ for column \'(.*)\' at row/'],
-            ['Incorrect datetime value', '/ for column \'(.*)\' at row/'],
-            ['Incorrect time value', '/ for column \'(.*)\' at row/'],
-            ['Incorrect date value', '/ for column \'(.*)\' at row/'],
+            ['Data too long for column', '/Data too long for column \'(.*)\' at row/', 'FieldTooLong'],
+            ['Data truncated for column', '/Data truncated for column \'(.*)\' at row/', 'FieldTooLong'],
+            ['Incorrect integer value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
+            ['Incorrect decimal value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
+            ['Incorrect datetime value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
+            ['Incorrect time value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
+            ['Incorrect date value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
         ];
         foreach ($formatErrorTemplates as $f) {
             if (Str::contains($message, $f[0])) {
                 $column = ReUtil::group1($f[1], $message);
                 if (!empty($column)) {
-                    BizException::throws("FieldFormatError:$column");
+                    BizException::throws("{$f[2]}:$column");
                 }
                 throw $e;
             }

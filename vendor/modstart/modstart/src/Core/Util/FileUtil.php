@@ -681,9 +681,13 @@ class FileUtil
         if (!file_exists(public_path('temp'))) {
             @mkdir(public_path('temp'));
         }
+        $extWithDot = '';
+        if ($ext) {
+            $extWithDot = '.' . ltrim($ext, '.');
+        }
         if (empty($hash)) {
             for ($i = 0; $i < 10; $i++) {
-                $p = 'temp/' . RandomUtil::lowerString(32) . '.' . $ext;
+                $p = 'temp/' . RandomUtil::lowerString(32) . $extWithDot;
                 $tempPath = public_path($p);
                 if (!file_exists($tempPath)) {
                     return $realpath ? $tempPath : $p;
@@ -692,7 +696,7 @@ class FileUtil
             BizException::throws('FileUtil generateLocalTempPath error');
         }
         $securityKey = EnvUtil::securityKey();
-        $p = 'temp/' . md5($securityKey . ':' . $hash) . '.' . $ext;
+        $p = 'temp/' . md5($securityKey . ':' . $hash) . $extWithDot;
         return $realpath ? public_path($p) : $p;
     }
 

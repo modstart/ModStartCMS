@@ -6,6 +6,7 @@ namespace ModStart\Support\Concern;
 use Illuminate\Support\Collection;
 use ModStart\Field\AbstractField;
 use ModStart\Field\Type\FieldRenderMode;
+use ModStart\ModStart;
 
 /**
  * 字段管理能力
@@ -246,6 +247,11 @@ trait HasFields
      */
     public function getFieldByName($name)
     {
+        if ('laravel9' == ModStart::env()) {
+            return $this->fields->first(function (AbstractField $item, $k) use ($name) {
+                return $item->name() == $name;
+            });
+        }
         return $this->fields->first(function ($k, AbstractField $item) use ($name) {
             return $item->name() == $name;
         });
@@ -258,6 +264,11 @@ trait HasFields
      */
     public function getFieldByColumn($column)
     {
+        if ('laravel9' == ModStart::env()) {
+            return $this->fields->first(function (AbstractField $item, $k) use ($column) {
+                return $item->column() == $column;
+            });
+        }
         return $this->fields->first(function ($k, AbstractField $item) use ($column) {
             return $item->column() == $column;
         });

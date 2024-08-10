@@ -29,6 +29,7 @@ class Checkbox extends AbstractField
     {
         $this->addVariables([
             'options' => [],
+            'optionMinWidth' => '',
             'serializeType' => null,
         ]);
     }
@@ -45,6 +46,12 @@ class Checkbox extends AbstractField
         return $this;
     }
 
+    public function optionMinWidth($value)
+    {
+        $this->addVariables(['optionMinWidth' => $value]);
+        return $this;
+    }
+
     public function optionModel($table, $keyName = 'id', $labelName = 'name')
     {
         return $this->options(ModelUtil::valueMap($table, $keyName, $labelName));
@@ -53,6 +60,30 @@ class Checkbox extends AbstractField
     public function optionType($typeCls)
     {
         return $this->options($typeCls::getList());
+    }
+
+    public function optionItems($items, $idName = 'id', $titleName = 'title')
+    {
+        $options = [];
+        foreach ($items as $i => $item) {
+            $options[] = [
+                'label' => $item->{$titleName},
+                'title' => $item->{$titleName},
+            ];
+        }
+        return $this->options($options);
+    }
+
+    public function optionArray($items, $idName = 'id', $titleName = 'title')
+    {
+        $options = [];
+        foreach ($items as $i => $item) {
+            $options[] = [
+                'label' => $item[$idName],
+                'title' => $item[$titleName],
+            ];
+        }
+        return $this->options($options);
     }
 
     public function unserializeValue($value, AbstractField $field)

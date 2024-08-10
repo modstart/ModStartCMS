@@ -7,6 +7,7 @@ namespace Module\Member\Util;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Field\AutoRenderedFieldValue;
+use Module\Member\Model\MemberUser;
 
 class MemberCmsUtil
 {
@@ -20,7 +21,7 @@ class MemberCmsUtil
         if (!$memberUserId) {
             return AutoRenderedFieldValue::make('<span class="ub-text-muted">-</span>');
         }
-        $memberUser = ModelUtil::getWithCache('member_user', ['id' => $memberUserId]);
+        $memberUser = ModelUtil::getWithCache(MemberUser::class, ['id' => $memberUserId]);
         return self::show($memberUser, $field);
     }
 

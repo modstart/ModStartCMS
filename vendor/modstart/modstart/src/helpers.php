@@ -362,16 +362,22 @@ function L_locale_title($locale = null)
 function L_locale($locale = null)
 {
     static $useLocale = null;
+    $app = \ModStart\App\Core\CurrentApp::WEB;
+    $localeList = config('modstart.i18n.langs', []);
+    if (\ModStart\App\Core\CurrentApp::is(\ModStart\App\Core\CurrentApp::ADMIN)) {
+        $app = \ModStart\App\Core\CurrentApp::ADMIN;
+        $localeList = config('modstart.admin.i18n.langs', []);
+    }
     $changingLocale = null;
     if (null !== $locale) {
-        if (in_array($locale, ['en', 'zh'])) {
+        if (!isset($localeList[$locale])) {
             $changingLocale = $locale;
         }
     }
     if (null !== $changingLocale || null === $useLocale) {
         // routeLocale > sessionLocale > i18nLocale > locale > fallbackLocale
         $sessionLocaleKey = '_locale';
-        if (\ModStart\App\Core\CurrentApp::is(\ModStart\App\Core\CurrentApp::ADMIN)) {
+        if ($app == \ModStart\App\Core\CurrentApp::ADMIN) {
             $sessionLocaleKey = '_adminLocale';
         }
         $routeLocale = \Illuminate\Support\Facades\Request::route('locale');
@@ -434,7 +440,7 @@ function LM($module, $name, ...$params)
         }
     }
     if (isset($langs[$module][$name])) {
-        return $langs[$module][$name];
+        return L($langs[$module][$name], ...$params);
     }
     return L($name, ...$params);
 }
