@@ -17,4 +17,15 @@ class BannerPosition implements BaseType
             BannerPositionBiz::allMap()
         );
     }
+
+    public static function whenHelps()
+    {
+        $whenHelps = [];
+        foreach (BannerPositionBiz::listAll() as $bizer) {
+            if ($bizer->remark()) {
+                $whenHelps[$bizer->name()] = $bizer->remark();
+            }
+        }
+        return $whenHelps;
+    }
 }

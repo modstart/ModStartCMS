@@ -72,14 +72,16 @@
 ```php
 class XxxBannerPositionBiz extends \Module\Banner\Biz\AbstractBannerPositionBiz
 {
-    public function name()
-    {
+    public function name() {
         return 'Xxx';
     }
 
-    public function title()
-    {
+    public function title() {
         return '特定位置';
+    }
+    
+    public function remark() {
+        return '特定位置的轮播';
     }
 }
 ```

@@ -84,6 +84,8 @@ use ModStart\Support\Manager\FieldManager;
  * @method Grid|mixed gridToolbar($value = []),
  * @method Grid|mixed pageJumpEnable($enable = null),
  *
+ * $value = function(Grid $grid){  }
+ * @method Grid|mixed hookPreQuery($value = null)
  * $value = function(Grid $grid, $items){ return $items; }
  * @method Grid|mixed hookPrepareItems($value = null)
  * @value = function(Grid $grid, $items){ return 'html string'; }
@@ -158,6 +160,7 @@ class Grid
         'batchOperatePrepend',
         'footOperate',
         'gridOperateAppend',
+        'hookPreQuery',
         'hookPrepareItems',
         'hookSimpleRecordsRendering',
         'gridRowCols',
@@ -229,6 +232,8 @@ class Grid
     private $gridToolbar = [];
     /** @var bool page jump enable */
     private $pageJumpEnable = false;
+    /** @var Closure 数据查询前置处理 */
+    private $hookPreQuery = null;
     /** @var Closure 渲染前置处理Items */
     private $hookPrepareItems = null;
     /** @var Closure 简单模式下自定义渲染列表HTML */
@@ -401,6 +406,10 @@ class Grid
             ->showDialogSize(['600px', '90%']);
     }
 
+    public function model()
+    {
+        return $this->model;
+    }
 
     public function repository()
     {

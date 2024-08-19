@@ -26,6 +26,8 @@
                                 <el-input v-model="value['{{$f['name']}}']" size="mini"></el-input>
                             @elseif($f['type']=='icon')
                                 <icon-input v-model="value['{{$f['name']}}']" :icons="icons" :inline="true"></icon-input>
+                            @elseif($f['type']=='image')
+                                <image-selector v-model="value['{{$f['name']}}']"></image-selector>
                             @elseif($f['type']=='number')
                                 <el-input-number v-model="value['{{$f['name']}}']" size="mini"></el-input-number>
                             @elseif($f['type']=='slider')
@@ -58,6 +60,7 @@
 {{ \ModStart\ModStart::js('asset/vendor/vue.js') }}
 {{ \ModStart\ModStart::js('asset/vendor/element-ui/index.js') }}
 {{ \ModStart\ModStart::css('asset/vendor/element-ui/index.css') }}
+{{ \ModStart\ModStart::js('asset/entry/basic.js') }}
 <script>
     $(function () {
         var app = new Vue({

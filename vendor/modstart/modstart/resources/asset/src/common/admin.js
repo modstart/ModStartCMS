@@ -37,6 +37,19 @@ window._pageTabManager = {
                 }
             }
         });
+    },
+    blurUrl: function (url) {
+        var $menu = _rootWindow.$('.ub-panel-frame .left .menu');
+        var normalUrl = _rootWindow._pageTabManager.normalTabUrl(url);
+        $menu.find('a').each(function (i, o) {
+            var url = $(o).attr('href');
+            if (url === 'javascript:;') {
+                return;
+            }
+            if (_rootWindow._pageTabManager.normalTabUrl(url) === normalUrl) {
+                $(o).parents('.menu-item').removeClass('active');
+            }
+        });
     }
 };
 
@@ -478,6 +491,9 @@ $(window).on('load', function () {
             _rootWindow._pageTabManager.open(url, title, {
                 focus: function () {
                     tabManager.activeUrl(url);
+                },
+                blur: function () {
+                    tabManager.blurUrl(url);
                 }
             });
             return false;

@@ -212,6 +212,41 @@ class ModelUtil
     }
 
     /**
+     * 根据条件新增、更新或删除已有数据
+     * @param $model string 数据表
+     * @param $records array 多条数据数组
+     * @param $where array 条件数组
+     * @param $keyName string 主键名称，默认为id
+     * @return array
+     */
+    public static function insertOrUpdateOrDelete($model, $records, $where = [], $idName = 'id')
+    {
+        if (empty($records)) {
+            return $records;
+        }
+        $existIds = self::values($model, $idName, $where);
+        $newIds = array_filter(ArrayUtil::flatItemsByKey($records, $idName));
+        list($_, $deleteIds) = ArrayUtil::diff($existIds, $newIds);
+        if (!empty($deleteIds)) {
+            self::model($model)->where($where)->whereIn($idName, $deleteIds)->delete();
+        }
+        foreach ($records as $i => $record) {
+            foreach ($where as $k => $v) {
+                $records[$i][$k] = $v;
+            }
+        }
+        foreach ($records as $i => $record) {
+            if (empty($record[$idName])) {
+                unset($record[$idName]);
+                $records[$i][$idName] = self::model($model)->insertGetId($record);
+            } else {
+                self::model($model)->where($idName, $record[$idName])->update($record);
+            }
+        }
+        return $records;
+    }
+
+    /**
      * 删除记录
      * @param $model string 数据表
      * @param $where array|int 条件数组或数据ID

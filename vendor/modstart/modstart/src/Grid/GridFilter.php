@@ -218,7 +218,12 @@ class GridFilter
             $this->getConditions()
         );
         $this->model->clearQuery();
-        // print_r($conditions);
+        $grid = $this->model->grid();
+        $preQuery = $grid->hookPreQuery();
+        if ($preQuery) {
+            call_user_func($preQuery, $grid);
+        }
+        // print_r($conditions);exit();
         // print_r($this->model->getQueries()->toArray());exit();
         return $this->model->addConditions($conditions)->buildData();
     }

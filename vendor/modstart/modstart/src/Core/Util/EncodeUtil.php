@@ -82,4 +82,14 @@ class EncodeUtil
         return iconv($encoding, 'UTF-8', $content);
     }
 
+    public static function base64UrlSafeEncode($str)
+    {
+        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($str));
+    }
+
+    public static function base64UrlSafeDecode($str)
+    {
+        return base64_decode(str_replace(['-', '_'], ['+', '/'], $str));
+    }
+
 }

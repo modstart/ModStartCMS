@@ -53,6 +53,9 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+//        'DataQiniuKodoFe' => [
+//            'enable' => true,
+//        ],
         // 'CmsMemberPost' => [
         //     'enable' => true,
         // ],
