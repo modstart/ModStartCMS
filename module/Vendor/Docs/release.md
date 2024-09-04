@@ -1,4 +1,11 @@
-## 4.5.0
+## 4.6.0
+
+- 新增：EntryProcessor 功能逻辑
+- 优化：图片可视化设计增加图片占位符显示
+
+---
+
+## 4.5.0 RandomImageProvider 逻辑升级重构，支持更丰富的随机图片生成
 
 - 新增：RandomImageProvider 逻辑升级重构，支持更丰富的随机图片生成
 

@@ -21,7 +21,7 @@
                          :class="{debug:debug}"
                          :style="{width:data.width+'px',height:data.height+'px',transform:`scale(${scaleRatio})`}">
                         <div class="background"
-                             :style="{backgroundImage:'url('+data.backgroundImage+')',width:data.width+'px',height:data.height+'px'}"
+                             :style="{backgroundImage:'url('+data.backgroundImage+')',backgroundColor:data.backgroundColor||'transparent',width:data.width+'px',height:data.height+'px'}"
                         ></div>
                         <div class="blocks">
                             <template v-for="(b,bIndex) in data.blocks">
@@ -41,7 +41,16 @@
                                      class="block-item">
                                     <div class="block-item-body"
                                          :style="{width:b.data.width+'px',height:b.data.height+'px'}">
-                                        <img :src="b.data.image"
+                                        <div v-if="b.data.image.indexOf('$')===0"
+                                             :style="{width:b.data.width+'px',height:b.data.height+'px',opacity:b.data.opacity/100}"
+                                             class="tw-bg-gray-200 tw-text-xl tw-text-center tw-flex tw-items-center">
+                                            <div class="tw-flex-grow tw-text-center tw-text-gray-500">{{
+                                                    b.data.image
+                                                }}
+                                            </div>
+                                        </div>
+                                        <img v-else
+                                             :src="b.data.image"
                                              :style="{width:b.data.width+'px',height:b.data.height+'px',opacity:b.data.opacity/100}"
                                              class="image" draggable="false"/>
                                     </div>
@@ -83,6 +92,13 @@
                                             @update="onBackgroundUpdate"
                                             :image-dialog-url="$url.admin('data/file_manager')"
                             ></image-selector>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div class="label">背景颜色</div>
+                        <div class="field">
+                            <el-color-picker style="display:block;"
+                                             v-model="data.backgroundColor"></el-color-picker>
                         </div>
                     </div>
                     <div class="line">
@@ -185,12 +201,17 @@
                                                     <div class="pb-block-field">
                                                         <div class="title">图片</div>
                                                         <div class="content tw-pt-1">
-                                                            <image-selector v-model="b.data.image"
-                                                                            gallery-enable
-                                                                            upload-enable
-                                                                            @update="onImageUpdate(bIndex,$event)"
-                                                                            :image-dialog-url="$url.admin('data/file_manager')"
-                                                            ></image-selector>
+                                                            <div v-if="b.data.image.indexOf('$')===0">
+                                                                {{ b.data.image }}
+                                                            </div>
+                                                            <div v-else>
+                                                                <image-selector v-model="b.data.image"
+                                                                                gallery-enable
+                                                                                upload-enable
+                                                                                @update="onImageUpdate(bIndex,$event)"
+                                                                                :image-dialog-url="$url.admin('data/file_manager')"
+                                                                ></image-selector>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

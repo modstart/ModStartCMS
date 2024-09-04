@@ -9,5 +9,6 @@ $router->group([
 ], function () use ($router) {
 
     $router->match(['post'], 'captcha/image', 'CaptchaController@image');
+    $router->match(['post'], 'entry/biz', 'EntryController@biz');
 
 });

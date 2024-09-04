@@ -163,7 +163,7 @@ class ImageDesignUtil
                 case 'image':
                     $itemImagePath = FileUtil::savePathToLocalTemp($item['data']['image']);
                     $itemImage = Image::make($itemImagePath);
-                    if (!empty($item['data']['opacity'])) {
+                    if (!empty($item['data']['opacity']) && $item['data']['opacity'] < 100 && $item['data']['opacity'] > 0) {
                         $itemImage->opacity($item['data']['opacity']);
                     }
                     if (isset($item['data']['width']) && isset($item['data']['height'])) {

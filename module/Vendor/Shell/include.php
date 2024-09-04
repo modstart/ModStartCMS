@@ -1,8 +1,8 @@
 <?php
 
-include __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/PlatformUtil.php';
-include __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/ReUtil.php';
-include __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/FileUtil.php';
+include_once __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/PlatformUtil.php';
+include_once __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/ReUtil.php';
+include_once __DIR__ . '/../../../vendor/modstart/modstart/src/Core/Util/FileUtil.php';
 
 function shell_module_base()
 {

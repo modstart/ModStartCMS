@@ -17,7 +17,7 @@ window.UE = baidu.editor = {
     instants: {},
     I18N: {},
     _customizeUI: {},
-    version: "4.0.0",
+    version: "4.1.0-beta",
     constants: {
         STATEFUL: {
             DISABLED: -1,
@@ -30496,9 +30496,11 @@ UE.plugin.register("simpleupload", function () {
                         UE.dialog.removeLoadingPlaceholder(me, loadingId);
                         UE.dialog.tipError(me, resData.state);
                     }
+                    input.value = '';
                 }).catch(function (err) {
                     UE.dialog.removeLoadingPlaceholder(me, loadingId);
                     UE.dialog.tipError(me, err);
+                    input.value = '';
                 });
             };
             var file = input.files[0];
@@ -30512,11 +30514,11 @@ UE.plugin.register("simpleupload", function () {
                     maxWidthOrHeight: imageCompressBorder
                 }).then(function (compressedFile) {
                     if (me.options.debug) {
-                        console.log('SimpleUpload.CompressImage', (compressedFile.size / file.size * 100).toFixed(2) + '%');
+                        console.log('UEditorPlus.SimpleUpload.CompressImage', (compressedFile.size / file.size * 100).toFixed(2) + '%');
                     }
                     upload(compressedFile);
                 }).catch(function (err) {
-                    console.error('SimpleUpload.CompressImage.error', err);
+                    console.error('UEditorPlus.SimpleUpload.CompressImage.error', err);
                     upload(file);
                 });
             } else {
@@ -34737,18 +34739,18 @@ UE.ui = baidu.editor.ui = {};
 
     var dialogIframeUrlMap = {
         anchor: "~/dialogs/anchor/anchor.html?2f10d082",
-        insertimage: "~/dialogs/image/image.html?62e5392c",
+        insertimage: "~/dialogs/image/image.html?db2a2e4a",
         link: "~/dialogs/link/link.html?ccbfcf18",
         spechars: "~/dialogs/spechars/spechars.html?3bbeb696",
         searchreplace: "~/dialogs/searchreplace/searchreplace.html?2cb782d2",
-        insertvideo: "~/dialogs/video/video.html?1603eb78",
-        insertaudio: "~/dialogs/audio/audio.html?a2979235",
+        insertvideo: "~/dialogs/video/video.html?dd0b6e5f",
+        insertaudio: "~/dialogs/audio/audio.html?01dd1a2f",
         help: "~/dialogs/help/help.html?05c0c8bf",
         preview: "~/dialogs/preview/preview.html?5d9a0847",
         emotion: "~/dialogs/emotion/emotion.html?a7bc0989",
-        wordimage: "~/dialogs/wordimage/wordimage.html?e6ca77bb",
+        wordimage: "~/dialogs/wordimage/wordimage.html?b0484edb",
         formula: "~/dialogs/formula/formula.html?9a5a1511",
-        attachment: "~/dialogs/attachment/attachment.html?5cd272ea",
+        attachment: "~/dialogs/attachment/attachment.html?cc6fc932",
         insertframe: "~/dialogs/insertframe/insertframe.html?807119a5",
         edittip: "~/dialogs/table/edittip.html?fa0ea189",
         edittable: "~/dialogs/table/edittable.html?134e2f06",
@@ -36360,7 +36362,7 @@ UE.ui = baidu.editor.ui = {};
         editor.options.editor = editor;
         utils.loadFile(document, {
             href:
-                editor.options.themePath + editor.options.theme + "/css/ueditor.css?98125a73",
+                editor.options.themePath + editor.options.theme + "/css/ueditor.css?69e258a4",
             tag: "link",
             type: "text/css",
             rel: "stylesheet"

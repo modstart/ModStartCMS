@@ -1603,32 +1603,62 @@ class ModelUtil
      * @param $type
      * @param $column
      */
-    public static function queryRemoveCondition($query, $type, $column)
+    public static function queryRemoveCondition($query, $type, $column = null, $option = [])
     {
+        $option = array_merge($option, [
+            'cleanOrder' => true,
+        ]);
+
         $type = strtolower($type);
+        if (!is_callable($column)) {
+            $columnName = $column;
+            $column = function ($v) use ($columnName) {
+                return $v['column'] == $columnName;
+            };
+        }
+
         BizException::throwsIf('Unsupported type ' . $type, !in_array($type, ['basic', 'in']));
+
         $wheres = $query->getQuery()->wheres;
         $bindings = $query->getQuery()->getRawBindings();
         $bindingsWhere = $bindings['where'];
         $bindingIndex = 0;
-        $newWheres = $wheres;
-        $newBindingsWhere = $bindingsWhere;
-        // echo json_encode($newWheres, JSON_PRETTY_PRINT) . "\n";
-        // echo json_encode($newBindingsWhere, JSON_PRETTY_PRINT) . "\n";
-        foreach ($wheres as $i => $v) {
+        $wheresArray = [];
+        $bindingsWhereArray = [];
+        foreach ($wheres as $v) {
+            $wheresArray[] = $v;
             $bindingsCount = self::getBindingsCount([$v]);
-            if (strtolower($v['type']) == $type && $v['column'] == $column) {
-                array_splice($newWheres, $i, 1);
-                array_splice($newBindingsWhere, $bindingIndex, $bindingsCount);
-                break;
+            if ($bindingsCount > 0) {
+                $bindingsWhereArray[] = array_slice($bindingsWhere, 0, $bindingsCount);
+            } else {
+                $bindingsWhereArray[] = [];
             }
-            $bindingIndex += $bindingsCount;
         }
-        // echo json_encode($newWheres, JSON_PRETTY_PRINT) . "\n";
-        // echo json_encode($newBindingsWhere, JSON_PRETTY_PRINT) . "\n";
+
+        //echo '$type - ' . $type . PHP_EOL . PHP_EOL;
+        //echo '$column - ' . json_encode($column) . PHP_EOL . PHP_EOL;
+        //echo '$wheresArray - ' . json_encode($wheresArray, JSON_PRETTY_PRINT) . PHP_EOL . PHP_EOL;
+        //echo '$bindingsWhereArray - ' . json_encode($bindingsWhereArray, JSON_PRETTY_PRINT) . PHP_EOL . PHP_EOL;
+
+        $newWheres = [];
+        $newBindingsWhere = [];
+        foreach ($wheresArray as $i => $v) {
+            if (strtolower($v['type']) == $type && call_user_func($column, $v)) {
+                continue;
+            }
+            $newWheres[] = $v;
+            $newBindingsWhere = array_merge($newBindingsWhere, $bindingsWhereArray[$i]);
+        }
+        //echo '$newWheres - ' . json_encode($newWheres, JSON_PRETTY_PRINT) . PHP_EOL . PHP_EOL;
+        //echo '$newBindingsWhere - ' . json_encode($newBindingsWhere, JSON_PRETTY_PRINT) . PHP_EOL . PHP_EOL;
+        //exit();
         $query->getQuery()->wheres = $newWheres;
         $query->getQuery()->setBindings($newBindingsWhere);
-        // exit();
+
+        if (!empty($option['cleanOrder'])) {
+            $query->getQuery()->orders = null;
+        }
+
         return $query;
     }
 

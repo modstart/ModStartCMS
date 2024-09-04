@@ -6,6 +6,9 @@ namespace Module\Vendor\Util;
 
 use Illuminate\Support\Facades\Session;
 
+/**
+ * @deprecated delete at 2025-03-23
+ */
 class MobileUtil
 {
     public static function putEntryData($key, $value)

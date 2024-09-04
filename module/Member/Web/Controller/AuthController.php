@@ -4,6 +4,7 @@
 namespace Module\Member\Web\Controller;
 
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -349,6 +350,11 @@ class AuthController extends ModuleBaseController
     public function oauthLogin($oauthType = null)
     {
         $input = InputPackage::buildFromInput();
+
+        $refer = Request::headerReferer();
+        if (empty($refer)) {
+            
+        }
 
         /** @deprecated delete at 2024-06-29 */
         $view = $input->getBoolean('view', false);

@@ -167,17 +167,19 @@ class CustomField extends AbstractField
     {
         self::buildFieldsData($keyRecord, $prefix, $fieldCount);
         $pairs = [];
-        foreach ($keyRecord['_' . $prefix] as $f) {
-            if (empty($f)) {
-                continue;
+        if (!empty($keyRecord['_' . $prefix])) {
+            foreach ($keyRecord['_' . $prefix] as $f) {
+                if (empty($f)) {
+                    continue;
+                }
+                $value = self::prepareDetail($f, $valueRecord[$f['_name']]);
+                $pairs[] = [
+                    'name' => $f['_name'],
+                    'value' => $value,
+                    'field' => $f,
+                    'record' => $valueRecord,
+                ];
             }
-            $value = self::prepareDetail($f, $valueRecord[$f['_name']]);
-            $pairs[] = [
-                'name' => $f['_name'],
-                'value' => $value,
-                'field' => $f,
-                'record' => $valueRecord,
-            ];
         }
         return $pairs;
     }
