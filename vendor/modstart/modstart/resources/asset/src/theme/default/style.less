@@ -83,6 +83,7 @@ body, html {
 .ub-upload-button {
     overflow: hidden;
     position: relative;
+    height:1.6rem;
 
     &.flat {
         margin: 0 auto;
@@ -127,6 +128,10 @@ body, html {
             & > li {
                 margin-bottom: 0.5rem;
                 padding: 0.25rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
 
                 .progress-box {
                     height: auto;

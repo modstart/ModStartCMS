@@ -242,4 +242,5 @@ return [
     'Move Bottom' => '置底',
     'Reset Default' => '恢复默认',
     'Detail' => '详情',
+    'CompressingImage' => '压缩图片中',
 ];

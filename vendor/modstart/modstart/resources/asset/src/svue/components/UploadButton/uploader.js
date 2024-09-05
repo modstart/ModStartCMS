@@ -91,7 +91,7 @@ WebUploader.Uploader.register({
 
 export const UploadButtonUploader = function (selector, option) {
     var opt = $.extend({
-        text: '上传文件',
+        text: 'Upload',
         swf: '/Uploader.swf',
         server: '/path/to/server',
         sizeLimit: 2 * 1024 * 1024,
@@ -175,6 +175,23 @@ export const UploadButtonUploader = function (selector, option) {
             $('#' + file.id).fadeOut(function () {
                 $('#' + file.id).remove();
             });
+        });
+
+        uploader.on('fileProcessStart', function (type, file) {
+            var $li = $('#' + file.id);
+            if (!$li.find('.status .iconfont').is('.icon-clues')) {
+                $li.find('.status').html('<i class="iconfont icon-clues tw-cursor-pointer tw-animate-spin tw-inline-block"></i>');
+            }
+            if ('imageCompress' === type) {
+                $li.attr('title', window.lang && lang['CompressingImage'] || 'CompressingImage');
+            }
+        });
+
+        uploader.on('fileProcessEnd', function (type, file) {
+            var $li = $('#' + file.id);
+            if ('imageCompress' === type) {
+                $li.attr('title', '');
+            }
         });
 
         uploader.on('uploadProgress', function (file, percentage) {

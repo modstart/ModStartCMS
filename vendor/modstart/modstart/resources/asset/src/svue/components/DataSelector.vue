@@ -488,7 +488,6 @@ export default {
                 page: page,
                 categoryId: this.currentCategoryId
             }, res => {
-                this.tab = 'list'
                 let records = res.data.records
                 records.map(o => {
                     o.checked = false

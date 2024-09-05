@@ -197,6 +197,25 @@ var UploadButton = function (selector, option) {
             });
         });
 
+        uploader.on('fileProcessStart', function (type, file) {
+            var $li = $('#' + file.id);
+            if (!$li.find('.status .iconfont').is('.icon-clues')) {
+                $li.find('.status').html('<i class="iconfont icon-clues tw-cursor-pointer tw-animate-spin tw-inline-block"></i>');
+            }
+            if ('imageCompress' === type) {
+                $li.attr('title', window.lang && lang['CompressingImage'] || 'CompressingImage');
+                $li.addClass('tw-animate-pulse');
+            }
+        });
+
+        uploader.on('fileProcessEnd', function (type, file) {
+            var $li = $('#' + file.id);
+            if ('imageCompress' === type) {
+                $li.attr('title', '');
+                $li.removeClass('tw-animate-pulse');
+            }
+        });
+
         uploader.on('uploadProgress', function (file, percentage) {
             opt.callbackQueueProgress(file, percentage);
             var $li = $('#' + file.id);
@@ -228,7 +247,6 @@ var UploadButton = function (selector, option) {
                 fullPath: res.data.fullPath,
                 file: file,
             };
-            console.log('xxxx', res, f);
             $('#' + file.id).fadeOut(function () {
                 $('#' + file.id).remove();
             });

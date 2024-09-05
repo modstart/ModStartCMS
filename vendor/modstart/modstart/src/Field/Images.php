@@ -6,6 +6,7 @@ namespace ModStart\Field;
 
 use ModStart\Core\Util\ConvertUtil;
 use ModStart\Core\Util\SerializeUtil;
+use ModStart\ModStart;
 
 class Images extends AbstractField
 {
@@ -13,6 +14,7 @@ class Images extends AbstractField
 
     protected function setup()
     {
+        ModStart::lang(['CompressingImage']);
         $this->addVariables([
             'server' => modstart_admin_url('data/file_manager/image'),
         ]);

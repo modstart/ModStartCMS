@@ -4,6 +4,8 @@
 namespace ModStart\Field;
 
 
+use ModStart\ModStart;
+
 class Image extends AbstractField
 {
     const MODE_DEFAULT = 'default';
@@ -13,6 +15,7 @@ class Image extends AbstractField
 
     protected function setup()
     {
+        ModStart::lang(['CompressingImage']);
         $this->addVariables([
             'category' => 'image',
             'mode' => self::MODE_DEFAULT,

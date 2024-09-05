@@ -65,6 +65,7 @@ class FileManager
             "Image Gallery",
             "File Gallery",
             "Copy Links",
+            "CompressingImage",
         ]);
     }
 

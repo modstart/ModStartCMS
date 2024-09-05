@@ -126,6 +126,13 @@ class Request
     public static function mergeQueries($pair = [])
     {
         $gets = (!empty($_GET) && is_array($_GET)) ? $_GET : [];
+        if (!empty($gets)) {
+            foreach ($gets as $k => $v) {
+                if (strpos($k, 'amp;') !== false) {
+                    unset($gets[$k]);
+                }
+            }
+        }
         foreach ($pair as $k => $v) {
             $gets[$k] = $v;
         }
