@@ -76,7 +76,7 @@ return [
     ],
 
     'openApi' => [
-        'prefix' => trim(env('API_PATH', 'open_api'), '/'),
+        'prefix' => trim(env('OPEN_API_PATH', 'open_api'), '/'),
         'directory' => app_path('OpenApi'),
     ],
 
