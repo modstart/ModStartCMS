@@ -1,6 +1,7 @@
 const md5 = require('md5');
 const sprintf = require('sprintf-js').sprintf;
 const base64 = require('js-base64');
+const CryptoJS = require("crypto-js");
 
 var Util = {};
 
@@ -183,8 +184,7 @@ Util.fullscreen = {
                 callback && callback();
             }, 1000);
         }
-    },
-    /**
+    }, /**
      * @Util 退出全屏
      * @method MS.util.fullscreen.exit
      * @param callback function 回调函数
@@ -211,8 +211,7 @@ Util.fullscreen = {
                 callback && callback();
             }, 1000);
         }
-    },
-    /**
+    }, /**
      * @Util 判断是否全屏
      * @method MS.util.fullscreen.isFullScreen
      * @return boolean 是否全屏
@@ -228,8 +227,7 @@ Util.fullscreen = {
             return document.msFullscreenElement;
         }
         return false;
-    },
-    /**
+    }, /**
      * @Util 切换全屏
      * @method MS.util.fullscreen.trigger
      * @param callback function 回调函数
@@ -353,13 +351,9 @@ Util.md5 = function (data) {
  * 框架消息通讯
  */
 Util.iframeMessage = {
-    queue: [],
-    serve: {},
-    win: {
-        recv: null,
-        send: null,
-    },
-    mount: function (recvWin, sendWin) {
+    queue: [], serve: {}, win: {
+        recv: null, send: null,
+    }, mount: function (recvWin, sendWin) {
         if (MS.util.iframeMessage.win.recv !== recvWin) {
             recvWin.addEventListener('message', function (e) {
                 if (!e.data || !e.data.group || !e.data.id) {
@@ -378,17 +372,14 @@ Util.iframeMessage = {
                 var data = e.data
                 MS.util.iframeMessage.serve[data.group](data.action, data.data, function (result) {
                     MS.util.iframeMessage.safeSend({
-                        id: data.id,
-                        group: data.group,
-                        data: result,
+                        id: data.id, group: data.group, data: result,
                     })
                 });
             }, false)
         }
         MS.util.iframeMessage.win.recv = recvWin
         MS.util.iframeMessage.win.send = sendWin
-    },
-    safeSend(data) {
+    }, safeSend(data) {
         if (!MS.util.iframeMessage.win.send) {
             setTimeout(function () {
                 MS.util.iframeMessage.safeSend(data)
@@ -396,11 +387,9 @@ Util.iframeMessage = {
             return
         }
         MS.util.iframeMessage.win.send.postMessage(data, '*')
-    },
-    server: function (group, callback) {
+    }, server: function (group, callback) {
         MS.util.iframeMessage.serve[group] = callback
-    },
-    rpc: function (group, action, data, cb) {
+    }, rpc: function (group, action, data, cb) {
         cb = cb || null
         var payload = {
             id: window.MS.util.randomString(10),
@@ -461,8 +450,7 @@ Util.browser = {
         if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
             return "IE"
         }
-    },
-    /**
+    }, /**
      * @Util 判断浏览器类型
      * @method MS.util.browser.is
      * @param type string|array 浏览器类型
@@ -489,10 +477,19 @@ Util.sprintf = sprintf;
 Util.base64 = {
     encode: function (data) {
         return base64.Base64.encode(data)
-    },
-    decode: function (data) {
+    }, decode: function (data) {
         return base64.Base64.decode(data)
     }
 };
+
+Util.encrypt = {
+    aesEncode: function (key, data) {
+        return CryptoJS.AES.encrypt(data, key).toString();
+    },
+    aesDecode: function (key, data) {
+        return CryptoJS.AES.decrypt(data, key).toString(CryptoJS.enc.Utf8);
+    },
+    all: CryptoJS
+}
 
 module.exports = Util;

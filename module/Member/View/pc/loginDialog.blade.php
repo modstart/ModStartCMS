@@ -32,14 +32,19 @@
                 </div>
                 <div class="ub-form flat">
                     <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
+                        @if(modstart_config('Member_LoginInfoEncrypt',false))
+                            <input type="hidden" data-encrypt-data name="ek" value="{{\ModStart\Core\Util\RandomUtil::string(8)}}" />
+                        @endif
                         <div class="line">
                             <div class="field">
-                                <input type="text" class="form-lg" name="username" placeholder="输入用户" />
+                                <input type="text" class="form-lg" name="username" placeholder="输入用户"
+                                       @if(modstart_config('Member_LoginInfoEncrypt',false)) data-encrypt-field="username" @endif />
                             </div>
                         </div>
                         <div class="line">
                             <div class="field">
-                                <input type="password" class="form-lg" name="password" placeholder="输入密码" />
+                                <input type="password" class="form-lg" name="password" placeholder="输入密码"
+                                       @if(modstart_config('Member_LoginInfoEncrypt',false)) data-encrypt-field="password" @endif />
                             </div>
                         </div>
                         @if(modstart_config('loginCaptchaEnable',false))

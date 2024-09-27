@@ -386,10 +386,8 @@ function L_locale($locale = null)
         $locale = config('app.locale');
         $fallbackLocale = config('app.fallback_locale');
         if (!\ModStart\App\Core\CurrentApp::is(\ModStart\App\Core\CurrentApp::ADMIN)
-            &&
-            ModuleManager::isModuleInstalled('I18n')) {
+            && ModuleManager::isModuleInstalled('I18n')) {
             $i18nLocale = \Module\I18n\Util\LangUtil::getDefault('shortName');
-            $langTrans = \Module\I18n\Util\LangTransUtil::map();
         }
         $currentLocale = $changingLocale;
         if (empty($currentLocale)) {
@@ -413,6 +411,14 @@ function L_locale($locale = null)
     return $useLocale;
 }
 
+function L_format($name, $params)
+{
+    if (empty($params)) {
+        return $name;
+    }
+    return sprintf($name, ...$params);
+}
+
 /**
  * @Util 多语言（模块）
  * @param $module string 模块名称
@@ -427,22 +433,32 @@ function L_locale($locale = null)
  */
 function LM($module, $name, ...$params)
 {
-    static $trackMissing = null;
     $useLocale = L_locale();
-    if (null === $trackMissing) {
-        $trackMissing = config('modstart.trackMissingLang', false);
+    if (empty($useLocale)) {
+        return $name;
     }
     static $langs = [];
     if (!isset($langs[$module])) {
         $langs[$module] = [];
-        if ($useLocale && file_exists($file = ModuleManager::path($module, "Lang/$useLocale.php"))) {
-            $langs[$module] = (require $file);
+        $langFile = ModuleManager::path($module, "Lang/$useLocale.php");
+        if (file_exists($langFile)) {
+            $langs[$module] = (require $langFile);
         }
     }
     if (isset($langs[$module][$name])) {
-        return L($langs[$module][$name], ...$params);
+        return L_format($langs[$module][$name], $params);
     }
-    return L($name, ...$params);
+    static $trackMissing = null;
+    if (null === $trackMissing) {
+        $trackMissing = config('modstart.trackMissingLang', false);
+    }
+    if ($trackMissing) {
+        $langs[$module][$name] = $name;
+        ksort($langs[$module]);
+        $langFile = ModuleManager::path($module, "Lang/$useLocale.php");
+        file_put_contents($langFile, \ModStart\Core\Util\CodeUtil::phpVarExportReturnFile($langs[$module]));
+    }
+    return L_format($name, $params);
 }
 
 /**
@@ -459,67 +475,62 @@ function LM($module, $name, ...$params)
  */
 function L($name, ...$params)
 {
-    static $trackMissing = null;
-    static $trackMissingData = null;
     $useLocale = L_locale();
-    if (null === $trackMissing) {
-        $trackMissing = config('modstart.trackMissingLang', false);
-    }
     if (empty($useLocale)) {
         return $name;
     }
-    if ($trackMissing && null === $trackMissingData) {
-        $trackMissingData = [];
-        if (file_exists($file = storage_path('cache/lang_missing.php'))) {
-            $trackMissingData = (require $file);
+    static $lang = null;
+    if (null === $lang) {
+        $lang = [];
+        $langFile = base_path("vendor/modstart/modstart/lang/" . $useLocale . "/base.php");
+        if (file_exists($langFile)) {
+            $lang = (require $langFile);
         }
-        register_shutdown_function(function () use (&$trackMissingData, $file) {
-            ksort($trackMissingData);
-            file_put_contents($file, '<?ph' . 'p return ' . var_export($trackMissingData, true) . ';');
-        });
-    }
-    if ($useLocale && isset($langTrans[$useLocale][$name])) {
-        if ($trackMissing && isset($trackMissingData[$name])) {
-            unset($trackMissingData[$name]);
+        $langFile = base_path('resources/lang/' . $useLocale . '/base.php');
+        if (file_exists($langFile)) {
+            $langLocal = (require $langFile);
+            $lang = array_merge($lang, $langLocal);
         }
-        if (!empty($params)) {
-            return call_user_func_array('sprintf', array_merge([$langTrans[$useLocale][$name]], $params));
-        }
-        return $langTrans[$useLocale][$name];
-    }
-    $ids = [
-        'base.' . $name,
-        'modstart::base.' . $name,
-    ];
-    $nameRaw = $name;
-    if (preg_match('/^[a-z0-9]+\.(.+)$/i', $name, $mat)) {
-        array_unshift($ids, $name);
-        $nameRaw = $mat[1];
-    }
-    $env = ModStart::env();
-    foreach ($ids as $id) {
-        if ($env == 'laravel9') {
-            $trans = trans($id, [], $useLocale);
-        } else {
-            $trans = trans($id, [], 'messages', $useLocale);
-        }
-        if ($trans !== $id) {
-            if ($trackMissing && isset($trackMissingData[$nameRaw])) {
-                unset($trackMissingData[$nameRaw]);
+        $validationLang = base_path("vendor/modstart/modstart/lang/" . $useLocale . "/validation.php");
+        if (file_exists($validationLang)) {
+            $validationLang = (require $validationLang);
+            foreach ($validationLang as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $kk => $vv) {
+                        $lang['validation.' . $k . '.' . $kk] = $vv;
+                    }
+                } else {
+                    $lang['validation.' . $k] = $v;
+                }
             }
-            if (!empty($params)) {
-                return call_user_func_array('sprintf', array_merge([$trans], $params));
-            }
-            return $trans;
         }
+        if (ModuleManager::isModuleInstalled('I18n')) {
+            $langTrans = \Module\I18n\Util\LangTransUtil::map();
+            if (isset($langTrans[$useLocale])) {
+                $lang = array_merge($lang, $langTrans[$useLocale]);
+            }
+        }
+    }
+    if (isset($lang[$name])) {
+        return L_format($lang[$name], $params);
+    }
+    static $trackMissing = null;
+    if (null === $trackMissing) {
+        $trackMissing = config('modstart.trackMissingLang', false);
     }
     if ($trackMissing) {
-        $trackMissingData[$nameRaw] = $nameRaw;
+        $lang[$name] = $name;
+        $langFile = base_path('resources/lang/' . $useLocale . '/base.php');
+        if (file_exists($langFile)) {
+            $langFileData = (require $langFile);
+        } else {
+            $langFileData = [];
+        }
+        $langFileData[$name] = $name;
+        ksort($langFileData);
+        file_put_contents($langFile, \ModStart\Core\Util\CodeUtil::phpVarExportReturnFile($langFileData));
     }
-    if (!empty($params)) {
-        return call_user_func_array('sprintf', array_merge([$name], $params));
-    }
-    return $nameRaw;
+    return L_format($name, $params);
 }
 
 if (!function_exists('array_build')) {

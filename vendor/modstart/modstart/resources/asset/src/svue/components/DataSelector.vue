@@ -330,7 +330,7 @@ export default {
             return data.name.indexOf(value) !== -1
         },
         isImage(file) {
-            return ['jpg', 'png', 'gif', 'jpeg', 'webp'].includes(file.type)
+            return ['jpg', 'png', 'gif', 'jpeg', 'webp', 'svg'].includes(file.type)
         },
         show() {
             this.visible = true

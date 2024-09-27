@@ -25,6 +25,7 @@ class ComplexFieldsList extends AbstractField
                 // ['name' => 'xxx', 'title' => '文本（只读）', 'type' => 'display', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '文本', 'type' => 'textarea', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '数字', 'type' => 'number-text', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],

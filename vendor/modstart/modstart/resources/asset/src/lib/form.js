@@ -56,8 +56,7 @@ var Form = {
                 Form.delaySubmit($form, cb);
             }, 100);
         }
-    },
-    responseToRes: function (response) {
+    }, responseToRes: function (response) {
         var res = {
             code: -999, msg: "请求出现错误 T_T"
         }
@@ -68,8 +67,7 @@ var Form = {
             res.msg = '请求出现错误(' + response.status + ' ' + response.statusText + ') T_T';
         }
         return res;
-    },
-    redirectProcess: function (redirect) {
+    }, redirectProcess: function (redirect) {
         if (!redirect) {
             return;
         }
@@ -92,8 +90,7 @@ var Form = {
         } else {
             window.location.href = redirect;
         }
-    },
-    defaultCallback: function (res, callback, Dialog) {
+    }, defaultCallback: function (res, callback, Dialog) {
 
         Dialog = Dialog || null;
 
@@ -125,11 +122,7 @@ var Form = {
             if (msg) {
                 if (redirect) {
                     if (Dialog) {
-                        if (redirect && (
-                            redirect.indexOf('[ijs]') === 0
-                            ||
-                            redirect.indexOf('[iurl]') === 0
-                        )) {
+                        if (redirect && (redirect.indexOf('[ijs]') === 0 || redirect.indexOf('[iurl]') === 0)) {
                             Dialog.tipSuccess(msg);
                             setTimeout(function () {
                                 Form.redirectProcess(redirect);
@@ -258,6 +251,16 @@ var Form = {
             // console.log('form', method, action);
             Form.delaySubmit($form, function () {
                 var data = $this.serializeArray();
+                var encryptDataKey = $form.find('[data-encrypt-data]').val()
+                if (encryptDataKey) {
+                    for (var i = 0; i < data.length; i++) {
+                        var name = data[i].name;
+                        var value = data[i].value;
+                        if ($form.find('[data-encrypt-field="' + name + '"]').length > 0) {
+                            data[i].value = 'E.A:' + Util.encrypt.aesEncode(encryptDataKey, value);
+                        }
+                    }
+                }
                 $.ajax({
                     type: method,
                     url: action,

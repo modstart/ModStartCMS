@@ -936,11 +936,7 @@
             }
 
             .nav {
-                z-index: 1001;
-                //left: 0;
-                //transition: left 0.3s;
                 transform: translateX(100%);
-                transition: transform 0.3s;
                 position: fixed;
             }
 
@@ -1010,6 +1006,9 @@
             z-index: 100;
             overflow-y: auto;
             padding-right: 0.5rem;
+            transition: transform 0.3s;
+            transform: translateX(0);
+            z-index: 1001;
 
             .search {
                 display: block;

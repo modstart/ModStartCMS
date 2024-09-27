@@ -135,7 +135,8 @@ class ConfigController extends Controller
             $builder->number('Member_PasswordLengthMin', '密码最小长度')
                 ->defaultValue(0)
                 ->help('0表示不限制，推荐为8位以上');
-
+            $builder->switch('Member_LoginInfoEncrypt', '登录信息加密')
+                ->help('开启后，登录信息请求时将会加密传输');
         });
         if (ModuleManager::getModuleConfig('Member', 'dataStatisticEnable', false)) {
             $builder->layoutPanel('存储上传', function ($builder) {

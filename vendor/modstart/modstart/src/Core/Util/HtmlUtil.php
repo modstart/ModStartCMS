@@ -46,14 +46,24 @@ class HtmlUtil
         }
     }
 
-    public static function extractTextAndImages($content)
+    public static function extractTextAndImages($content, $option = [])
     {
+        $option = array_merge([
+            // 是否将换行转换为空格
+            'textBreakToSpace' => false,
+        ], $option);
+
         $summary = [
             'text' => '',
             'images' => []
         ];
 
         $text = preg_replace('/<[^>]+>/', '', $content);
+        // 替换多余的空行
+        $text = preg_replace('/\n\s*\n/', "\n", $text);
+        if ($option['textBreakToSpace']) {
+            $text = str_replace("\n", ' ', $text);
+        }
         $summary['text'] = $text;
 
         preg_match_all('/<img.*?src="(.*?)".*?>/i', $content, $mat);

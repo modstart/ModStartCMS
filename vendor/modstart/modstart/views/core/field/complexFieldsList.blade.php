@@ -38,6 +38,11 @@
                                 <el-input v-model="value[vIndex]['{{$f['name']}}']"
                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
                                           size="mini"></el-input>
+                            @elseif($f['type']=='textarea')
+                                <el-input v-model="value[vIndex]['{{$f['name']}}']"
+                                          placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
+                                          type="textarea"
+                                          size="mini"></el-input>
                             @elseif($f['type']=='icon')
                                 <icon-input v-model="value[vIndex]['{{$f['name']}}']" :icons="iconsFilter"
                                             :inline="true"></icon-input>

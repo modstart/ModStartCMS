@@ -58,6 +58,14 @@ class ImageDesignUtil
         return count($pcs);
     }
 
+    public static function configSaveCheck($imageConfig)
+    {
+        BizException::throwsIfEmpty('imageConfig 为空', $imageConfig);
+        BizException::throwsIfEmpty('宽度为空', $imageConfig['width']);
+        BizException::throwsIfEmpty('高度为空', $imageConfig['height']);
+        BizException::throwsIf('背景图和背景色同时为空', empty($imageConfig['backgroundImage']) && empty($imageConfig['backgroundColor']));
+    }
+
     public static function render($imageConfig, $variables = [])
     {
         BizException::throwsIfEmpty('imageConfig 为空', $imageConfig);
@@ -163,11 +171,11 @@ class ImageDesignUtil
                 case 'image':
                     $itemImagePath = FileUtil::savePathToLocalTemp($item['data']['image']);
                     $itemImage = Image::make($itemImagePath);
-                    if (!empty($item['data']['opacity']) && $item['data']['opacity'] < 100 && $item['data']['opacity'] > 0) {
-                        $itemImage->opacity($item['data']['opacity']);
-                    }
                     if (isset($item['data']['width']) && isset($item['data']['height'])) {
                         $itemImage->resize($item['data']['width'], $item['data']['height']);
+                    }
+                    if (!empty($item['data']['opacity']) && $item['data']['opacity'] < 100 && $item['data']['opacity'] > 0) {
+                        $itemImage->opacity($item['data']['opacity']);
                     }
                     $image->insert($itemImage, 'top-left', $item['x'], $item['y']);
                     break;

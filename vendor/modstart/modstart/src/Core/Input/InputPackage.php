@@ -5,6 +5,7 @@ namespace ModStart\Core\Input;
 use Illuminate\Support\Facades\Input;
 use ModStart\Core\Util\FormatUtil;
 use ModStart\Core\Util\HtmlUtil;
+use ModStart\Core\Util\SecureUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Core\Util\TagUtil;
 use ModStart\Core\Util\TimeUtil;
@@ -202,6 +203,23 @@ class InputPackage
             return false;
         }
         return $defaultValue;
+    }
+
+    public function getTrimStringWithAutoDecrypt($key, $defaultValue = '', $ek = 'ek')
+    {
+        $value = $this->getTrimString($key, $defaultValue);
+        if (empty($value)) {
+            return $value;
+        }
+        $ek = $this->getTrimString($ek);
+        if (empty($ek)) {
+            return $value;
+        }
+        // E.A:U2FsdGVkX1/6sq9eCD+17/jl2XQEQr9nWLBNtCLpUVI=
+        if (preg_match('/^E\.A:(.+)$/', $value, $mat)) {
+            $value = SecureUtil::aesDecode($ek, $mat[1], true);
+        }
+        return $value;
     }
 
     public function getTrimString($key, $defaultValue = '')

@@ -14,6 +14,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\EventUtil;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Core\Util\SecureUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Misc\Captcha\CaptchaFacade;
 use ModStart\Module\ModuleBaseController;
@@ -712,8 +713,8 @@ class AuthController extends ModuleBaseController
     {
         $input = InputPackage::buildFromInput();
 
-        $username = $input->getTrimString('username');
-        $password = $input->getTrimString('password');
+        $username = $input->getTrimStringWithAutoDecrypt('username');
+        $password = $input->getTrimStringWithAutoDecrypt('password');
         if (empty($username)) {
             return Response::generate(-1, '请输入用户');
         }
