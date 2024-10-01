@@ -5,9 +5,9 @@ namespace Module\Vendor\Tecmz;
 
 class TecmzUtil
 {
-    public static function url()
+    public static function url($module = null)
     {
-        return 'https://api.tecmz.com';
+        return 'https://api.tecmz.com' . ($module ? '/m/' . $module : '');
     }
 
     /**

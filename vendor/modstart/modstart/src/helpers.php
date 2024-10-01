@@ -361,35 +361,66 @@ function L_locale_title($locale = null)
 
 function L_locale($locale = null)
 {
-    static $useLocale = null;
+    static $useLocales = [
+        'Admin' => null,
+        'Web' => null,
+    ];
+
     $app = \ModStart\App\Core\CurrentApp::WEB;
     $localeList = config('modstart.i18n.langs', []);
     if (\ModStart\App\Core\CurrentApp::is(\ModStart\App\Core\CurrentApp::ADMIN)) {
         $app = \ModStart\App\Core\CurrentApp::ADMIN;
         $localeList = config('modstart.admin.i18n.langs', []);
     }
-    $changingLocale = null;
+
+    if (!array_key_exists($app, $useLocales)) {
+        return 'zh';
+    }
+
+    $forceLocale = null;
     if (null !== $locale) {
         if (!isset($localeList[$locale])) {
-            $changingLocale = $locale;
+            $forceLocale = $locale;
         }
     }
-    if (null !== $changingLocale || null === $useLocale) {
-        // routeLocale > sessionLocale > i18nLocale > locale > fallbackLocale
+
+    if (null !== $forceLocale || null === $useLocales[$app]) {
+
+        // forceLocale > routeLocale > sessionLocale > i18nLocale > locale > fallbackLocale
+
+        $routeLocale = null;
+        if ($app == \ModStart\App\Core\CurrentApp::WEB) {
+            $routeLocale = \Illuminate\Support\Facades\Request::route('locale');
+        }
+
         $sessionLocaleKey = '_locale';
         if ($app == \ModStart\App\Core\CurrentApp::ADMIN) {
             $sessionLocaleKey = '_adminLocale';
         }
-        $routeLocale = \Illuminate\Support\Facades\Request::route('locale');
         $sessionLocale = \Illuminate\Support\Facades\Session::get($sessionLocaleKey, null);
+
         $i18nLocale = null;
-        $locale = config('app.locale');
-        $fallbackLocale = config('app.fallback_locale');
         if (!\ModStart\App\Core\CurrentApp::is(\ModStart\App\Core\CurrentApp::ADMIN)
             && ModuleManager::isModuleInstalled('I18n')) {
             $i18nLocale = \Module\I18n\Util\LangUtil::getDefault('shortName');
         }
-        $currentLocale = $changingLocale;
+
+        $locale = config('app.locale');
+
+        $fallbackLocale = config('app.fallback_locale');
+
+        //if (!empty($_GET['_DEBUG']) && !$routeLocale) {
+        //    \Illuminate\Support\Facades\Log::info('$forceLocale - ' . json_encode([
+        //            $app,
+        //            $routeLocale,
+        //            $sessionLocale,
+        //            $locale,
+        //            $fallbackLocale,
+        //            debug_backtrace(),
+        //        ]));
+        //}
+
+        $currentLocale = $forceLocale;
         if (empty($currentLocale)) {
             $currentLocale = $routeLocale;
         }
@@ -406,9 +437,9 @@ function L_locale($locale = null)
             $currentLocale = $fallbackLocale;
         }
         \Illuminate\Support\Facades\Session::put($sessionLocaleKey, $currentLocale);
-        $useLocale = $currentLocale;
+        $useLocales[$app] = $currentLocale;
     }
-    return $useLocale;
+    return $useLocales[$app];
 }
 
 function L_format($name, $params)

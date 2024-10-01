@@ -24,6 +24,6 @@ trait SecurityTrait
                 ]));
             exit();
         }
-        Session::set('Vendor_SecuritySecondVerifyTime', time() + 3600);
+        Session::put('Vendor_SecuritySecondVerifyTime', time() + 3600);
     }
 }

@@ -34,7 +34,7 @@ class SecurityController extends Controller
                 $password = $data['password'];
                 $passwordCorrectMd5 = modstart_config('Vendor_SecuritySecondVerifyPassword');
                 BizException::throwsIf('密码不正确', md5($password) != $passwordCorrectMd5);
-                Session::set('Vendor_SecuritySecondVerifyTime', time() + 3600);
+                Session::put('Vendor_SecuritySecondVerifyTime', time() + 3600);
                 return Response::send(0, null, null, $redirect);
             });
     }

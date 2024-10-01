@@ -11,8 +11,13 @@
 @section('headAppend')
     @parent
     <style>
-        .vip-list .item .item-active-show{ display:none; }
-        .vip-list .item.active .item-active-show{ display:block; }
+        .vip-list .item .item-active-show {
+            display: none;
+        }
+
+        .vip-list .item.active .item-active-show {
+            display: block;
+        }
     </style>
 @endsection
 
@@ -42,17 +47,13 @@
                         </div>
                         <div class="tw-mt-1">
                             @if(empty($_memberUser))
-                                <a href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}"
+                                <a href="{{modstart_web_url('login',['dialog'=>1,'redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}"
                                    class="vip-button">
                                     注册/登录
                                 </a>
                             @else
-                                <a href="{{modstart_web_url('member')}}"
-                                   class="vip-button">
-                                    用户中心
-                                </a>
                                 @if(!empty(\Module\Member\Auth\MemberVip::get()))
-                                    <div class="tw-inline-block tw-ml-3">
+                                    <div class="tw-inline-block">
                                         您当前是
                                         <span class="vip-text ub-text-bold">
                                         {{\Module\Member\Auth\MemberVip::get('title')}}
@@ -67,7 +68,12 @@
                         </div>
                     </div>
                     <div class="tw-text-right tw-flex-grow">
-                        &nbsp;
+                        @if(\Module\Member\Auth\MemberUser::isLogin())
+                            <a href="{{modstart_web_url('member')}}"
+                               class="vip-button tw-mr-3">
+                                用户中心
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -75,15 +81,16 @@
         <div class="body">
             <div class="pb-member-vip">
                 <form action="{{$__msRoot}}api/member_vip/buy" method="post" data-ajax-form>
-                    <input type="hidden" name="redirect" value="{{\ModStart\Core\Input\Request::currentPageUrl()}}" />
-                    <input type="hidden" name="vipId" value="0" />
-                    <input type="hidden" name="voucherId" value="0" />
+                    <input type="hidden" name="redirect" value="{{\ModStart\Core\Input\Request::currentPageUrl()}}"/>
+                    <input type="hidden" name="vipId" value="0"/>
+                    <input type="hidden" name="voucherId" value="0"/>
                     <div class="vip-list-container-box margin-bottom">
                         <div class="vip-list-container">
                             <div class="vip-list vip-bg tw-rounded">
                                 @foreach($memberVips as $memberVip)
                                     @if(!$memberVip['isDefault'])
-                                        <div class="item tw-relative" data-vip-id="{{$memberVip['id']}}" style="padding:1rem 5px;">
+                                        <div class="item tw-relative" data-vip-id="{{$memberVip['id']}}"
+                                             style="padding:1rem 5px;">
                                             <div class="tw-text-xl tw-font-bold margin-bottom tw-pt-2">
                                                 {{$memberVip['title']}}
                                             </div>
@@ -100,7 +107,8 @@
                                                 {{$memberVip['desc']?$memberVip['desc']:'[会员简要说明]'}}
                                             </div>
                                             @if($memberVip['priceMarket']>$memberVip['price'])
-                                                <div class="item-active-show tw-absolute tw-left-0 tw-top-0 tw-p-1 tw-text-sm tw-bg-red-500 tw-rounded-tl-lg tw-rounded-br-lg tw-text-white">
+                                                <div
+                                                    class="item-active-show tw-absolute tw-left-0 tw-top-0 tw-p-1 tw-text-sm tw-bg-red-500 tw-rounded-tl-lg tw-rounded-br-lg tw-text-white">
                                                     限时立减 {{bcsub($memberVip['priceMarket'],$memberVip['price'],2)}}
                                                 </div>
                                             @endif
@@ -115,7 +123,7 @@
                                                 @else
                                                     <a class="btn btn-block btn-lg btn-vip btn-round"
                                                        target="_parent"
-                                                       href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
+                                                       href="{{modstart_web_url('login',['dialog'=>1,'redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
                                                         <i class="iconfont icon-vip"></i>
                                                         登录后开通
                                                     </a>
@@ -133,16 +141,19 @@
                             </a>
                         </div>
                     </div>
-                    <div class="lg:tw-px-12 lg:tw-text-left tw-text-center tw-py-4 vip-bg tw-rounded margin-bottom tw-flex lg:tw-flex-row tw-flex-col tw-items-center">
+                    <div
+                        class="lg:tw-px-12 lg:tw-text-left tw-text-center tw-py-4 vip-bg tw-rounded margin-bottom tw-flex lg:tw-flex-row tw-flex-col tw-items-center">
                         <div class="tw-flex-grow">
                             @if(!empty($memberVipRights))
                                 <div class="vip-bg tw-py-3 margin-bottom tw-rounded-lg" data-vip-right-list>
                                     <div class="row">
                                         @foreach($memberVipRights as $r)
-                                            <div class="col-md-4 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
+                                            <div class="col-md-4 col-6" style="display:none;"
+                                                 data-vip-right="{{join(',',$r['vipIds'])}}">
                                                 <div class="tw-flex tw-items-center ub-text-sm margin-bottom">
                                                     <div class="tw-pr-2">
-                                                        <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full" src="{{$r['image']}}" />
+                                                        <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full"
+                                                             src="{{$r['image']}}"/>
                                                     </div>
                                                     <div>
                                                         <div class="vip-text">{{$r['title']}}</div>
@@ -157,12 +168,16 @@
                         </div>
                         <div>
                             <div class="tw-inline-block tw-py-1 tw-px-3">
-                                <div data-vip-open-list class="swiper tw-overflow-hidden tw-h-48 tw-w-64 tw--mb-3" style="overflow:hidden;">
+                                <div data-vip-open-list class="swiper tw-overflow-hidden tw-h-48 tw-w-64 tw--mb-3"
+                                     style="overflow:hidden;">
                                     <div class="swiper-wrapper">
                                         @foreach(modstart_config('Member_VipOpenUsers',[]) as $u)
                                             <div class="swiper-slide">
-                                                <div class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1">
-                                                    <div class="tw-w-20 tw-text-left">{{mb_substr($u['name'],0,2)}}******</div>
+                                                <div
+                                                    class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1">
+                                                    <div class="tw-w-20 tw-text-left">{{mb_substr($u['name'],0,2)}}
+                                                        ******
+                                                    </div>
                                                     <div class="tw-w-8 tw-text-yellow-400">{{$u['time']}}</div>
                                                     <div class="tw-w-32 tw-text-right">购买了 {{$u['title']}}</div>
                                                 </div>
