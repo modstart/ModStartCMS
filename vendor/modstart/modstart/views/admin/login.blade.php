@@ -70,7 +70,7 @@
                                         <input type="text" name="captcha" value="" autocomplete="off" placeholder="{{ L('Please Input') }}"/>
                                     </div>
                                     <div class="col-6">
-                                        <img data-captcha style="height:40px;width:100%;border:1px solid #CCC;border-radius:3px;" data-uk-tooltip title="{{ L('Click To Refresh') }}" src="{{action('\ModStart\Admin\Controller\AuthController@loginCaptcha')}}?{{time()}}" onclick="this.src='{{action('\ModStart\Admin\Controller\AuthController@loginCaptcha')}}?'+Math.random();" />
+                                        <img data-captcha style="height:40px;width:100%;border:1px solid #CCC;border-radius:3px;" data-uk-tooltip title="{{ L('Click To Refresh') }}" src="{{modstart_admin_url('login/captcha')}}?{{time()}}" onclick="this.src='{{modstart_admin_url('login/captcha')}}?'+Math.random();" />
                                     </div>
                                 </div>
                             </div>

@@ -487,7 +487,7 @@ function LM($module, $name, ...$params)
         $langs[$module][$name] = $name;
         ksort($langs[$module]);
         $langFile = ModuleManager::path($module, "Lang/$useLocale.php");
-        file_put_contents($langFile, \ModStart\Core\Util\CodeUtil::phpVarExportReturnFile($langs[$module]));
+        \ModStart\Core\Util\FileUtil::write($langFile, \ModStart\Core\Util\CodeUtil::phpVarExportReturnFile($langs[$module]));
     }
     return L_format($name, $params);
 }

@@ -137,7 +137,7 @@
                     @if(\ModStart\Admin\Auth\AdminPermission::permit('SystemManage'))
                         <div class="menu-item">
                             <a class="title" href="javascript:;" data-ajax-request-loading
-                               data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@clearCache')}}">
+                               data-ajax-request="{{modstart_admin_url('system/clear_cache')}}">
                                 <i class="iconfont icon-magic-wand" data-tip-popover="{{L('Clear Cache')}}"></i>
                             </a>
                         </div>
@@ -149,7 +149,7 @@
                             <div class="dropdown">
                                 @if(\ModStart\Admin\Auth\AdminPermission::permit('SystemManage'))
                                     <a class="dropdown-item" href="javascript:;" data-ajax-request-loading
-                                       data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@clearCache')}}">{{L('Clear Cache')}}</a>
+                                       data-ajax-request="{{modstart_admin_url('system/clear_cache')}}">{{L('Clear Cache')}}</a>
                                 @endif
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                             @if(\ModStart\Admin\Auth\AdminPermission::permit('\ModStart\Admin\Controller\ProfileController@changePassword'))
                                 <a class="dropdown-item"
                                    data-tab-open
-                                   href="{{action('\ModStart\Admin\Controller\ProfileController@changePassword')}}">{{L('Change Password')}}</a>
+                                   href="{{modstart_admin_url('profile/change_password')}}">{{L('Change Password')}}</a>
                             @endif
                             <a class="dropdown-item" href="javascript:;" data-confirm="{{L('Confirm Logout ?')}}"
                                data-href="{{modstart_admin_url('logout')}}">{{L('Logout')}}</a>

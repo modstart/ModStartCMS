@@ -123,6 +123,15 @@ class RandomUtil
         return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
     }
 
+    public static function withIn($chars, $length)
+    {
+        $result = [];
+        for ($i = 0; $i < $length; $i++) {
+            $result[] = $chars[rand(0, strlen($chars) - 1)];
+        }
+        return join('', $result);
+    }
+
     /**
      * @Util 随机UUID
      * @return string UUID

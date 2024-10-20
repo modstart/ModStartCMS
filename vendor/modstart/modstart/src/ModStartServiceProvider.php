@@ -30,6 +30,7 @@ use ModStart\Module\ModuleManager;
 class ModStartServiceProvider extends ServiceProvider
 {
     protected $commands = [
+        \ModStart\Command\InitCommand::class,
         \ModStart\Command\ModuleListCommand::class,
         \ModStart\Command\ModuleInstallCommand::class,
         \ModStart\Command\ModuleUninstallCommand::class,

@@ -36,57 +36,60 @@
 
     <div class="ub-container margin-bottom">
         <div class="ub-content-bg tw-p-3 tw-rounded-lg">
-            <form action="?" method="post" data-ajax-form>
-                <div class="ub-form">
-                    @if(!empty($cat['_model']['_customFields']))
-                        @foreach($cat['_model']['_customFields'] as $customField)
-                            <div class="line">
-                                <div class="label">
-                                    @if($customField['isRequired'])
-                                        <span>*</span>
-                                    @endif
-                                    {{$customField['title']}}：
+            @if(!MCms::canVisitCat($cat))
+                <div class="ub-alert danger margin-bottom-remove">
+                    <i class="iconfont icon-warning tw-text-xl"></i>
+                    您没有权限访问该栏目
+                </div>
+            @else
+                <form action="?" method="post" data-ajax-form>
+                    <div class="ub-form">
+                        @if(!empty($cat['_model']['_customFields']))
+                            @foreach($cat['_model']['_customFields'] as $customField)
+                                <div class="line">
+                                    <div class="label">
+                                        @if($customField['isRequired'])
+                                            <span>*</span>
+                                        @endif
+                                        {{$customField['title']}}：
+                                    </div>
+                                    <div class="field">
+                                        <?php $f = \Module\Cms\Field\CmsField::getByNameOrFail($customField['fieldType']); ?>
+                                        {!! $f->renderForUserInput($customField) !!}
+                                    </div>
                                 </div>
+                            @endforeach
+                        @endif
+                        <div class="line">
+                            <div class="label">
+                                <span>*</span>
+                                内容：
+                            </div>
+                            <div class="field">
+                                <textarea class="form" style="height:3rem;" name="content"></textarea>
+                            </div>
+                        </div>
+                        @if(!empty($cat['captchaProvider']))
+                            <div class="line">
+                                <div class="label">&nbsp;</div>
                                 <div class="field">
-                                    <?php $f = \Module\Cms\Field\CmsField::getByNameOrFail($customField['fieldType']); ?>
-                                    {!! $f->renderForUserInput($customField) !!}
+                                    <div class="tw-w-96">
+                                        {!! \Module\Vendor\Provider\Captcha\CaptchaProvider::get($cat['captchaProvider'])->render() !!}
+                                    </div>
                                 </div>
                             </div>
-                        @endforeach
-                    @endif
-                    <div class="line">
-                        <div class="label">
-                            <span>*</span>
-                            内容：
-                        </div>
-                        <div class="field">
-                            <textarea class="form" style="height:3rem;" name="content"></textarea>
-                        </div>
-                    </div>
-                    @if(!empty($cat['captchaProvider']))
+                        @endif
                         <div class="line">
                             <div class="label">&nbsp;</div>
                             <div class="field">
-                                <div class="tw-w-96">
-                                    {!! \Module\Vendor\Provider\Captcha\CaptchaProvider::get($cat['captchaProvider'])->render() !!}
-                                </div>
+                                <button type="submit" class="btn btn-primary">提交</button>
                             </div>
                         </div>
-                    @endif
-                    <div class="line">
-                        <div class="label">&nbsp;</div>
-                        <div class="field">
-                            <button type="submit" class="btn btn-primary">提交</button>
-                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            @endif
         </div>
     </div>
 
 @endsection
-
-
-
-
 

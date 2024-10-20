@@ -17,7 +17,7 @@ class VisitStatisticItemController extends Controller
     use HasAdminQuickCRUD;
 
     public static $PermitMethodMap = [
-        'index' => '\\Module\\VisitStatistic\\Admin\\Controller\\VisitStatisticReportController@index'
+        '*' => '\\Module\\VisitStatistic\\Admin\\Controller\\VisitStatisticReportController@index'
     ];
 
     public function __construct()

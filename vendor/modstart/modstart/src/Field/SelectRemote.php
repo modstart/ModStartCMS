@@ -26,6 +26,13 @@ class SelectRemote extends AbstractField
         return $this;
     }
 
+    /**
+     * 动态显示模型数据
+     * @param $table string 模型表名
+     * @param $valueKey string 模型主键，默认为id
+     * @param $labelKey string 模型显示字段，默认为title
+     * @return $this
+     */
     public function viewWithModel($table, $valueKey = 'id', $labelKey = 'title')
     {
         $this->hookRendering(function (AbstractField $field, $item, $index) use ($table, $valueKey, $labelKey) {
@@ -43,6 +50,13 @@ class SelectRemote extends AbstractField
         return $this;
     }
 
+    /**
+     * @param $table string 模型表名
+     * @param $valueKey string 模型主键，默认为id
+     * @param $labelKey string 模型显示字段，默认为title
+     * @param $param array 查询参数
+     * @return array
+     */
     public static function handleModel($table, $valueKey = 'id', $labelKey = 'title', $param = [])
     {
         if (!isset($param['sort'])) {

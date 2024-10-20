@@ -403,6 +403,32 @@ class TreeUtil
     }
 
     /**
+     * 获取树的所有子节点
+     * @param $tree
+     * @param $id
+     * @param $pk_name
+     * @param $pid_name
+     * @param $children
+     * @return array|mixed
+     */
+    public static function treeChildren(&$tree, $id, $pk_name = 'id', $pid_name = 'pid')
+    {
+        foreach ($tree as $item) {
+            if ($item[$pk_name] == $id) {
+                return isset($item[self::$CHILD_KEY]) ? $item[self::$CHILD_KEY] : [];
+            } else {
+                if (!empty($item[self::$CHILD_KEY])) {
+                    $children = self::treeChildren($item[self::$CHILD_KEY], $id, $pk_name, $pid_name);
+                    if (!is_null($children)) {
+                        return $children;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * 根据id计算节点的所有上级
      * @param $nodes
      * @param $id

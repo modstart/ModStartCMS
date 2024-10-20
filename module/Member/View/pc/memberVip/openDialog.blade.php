@@ -14,6 +14,10 @@
         }
         $('[data-open-dialog]').addClass('ub-open');
     };
+    window.__closeVip = function(){
+        $('[data-open-dialog]').removeClass('ub-open');
+        window.__payCenterQuick.close();
+    };
     window.__refreshMemberVipPay = function (vipId) {
         window.__payCenterQuick.empty();
         window.__payCenterQuick.registerUnsupported(function (type) {
@@ -45,7 +49,7 @@
     <div class="ub-modal-dialog tw-top-10"
          style="background-image: linear-gradient(180deg, #ffe1b2, #fff9ed);">
         <a href="javascript:" class="ub-modal-close"
-           onclick="$(this).closest('.ub-modal').removeClass('ub-open');">
+           onclick="window.__closeVip();">
             <i class="icon-close iconfont tw-text-lx tw-text-yellow-800"></i>
         </a>
         <div class="ub-modal-body">
