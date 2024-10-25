@@ -17,6 +17,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Type\SortDirection;
 use ModStart\Core\Util\CRUDUtil;
+use ModStart\Core\Util\ExceptionUtil;
 use ModStart\Core\Util\IdUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Detail\Detail;
@@ -545,6 +546,8 @@ class Form implements Renderable
             return Response::jsonError($e->getMessage());
         } catch (ResultException $e) {
             return Response::jsonError($e->getMessage());
+        } catch (\Exception $e) {
+            ExceptionUtil::throwExcpectException($e);
         }
     }
 

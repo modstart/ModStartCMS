@@ -445,8 +445,9 @@ class AbstractField implements Renderable
 
     /**
      * 数据反序列化
-     * @param $value
-     * @param $model
+     * 数据从存储系统（如数据库）读取出来，会调用此方法转换为字段 $value 值
+     * @param mixed $value 字段值
+     * @param AbstractField $field 字段对象
      * @return mixed
      */
     public function unserializeValue($value, AbstractField $field)
@@ -455,9 +456,10 @@ class AbstractField implements Renderable
     }
 
     /**
-     * 值序列化
-     * @param $value
-     * @param $model
+     * 字段值序列化
+     * 数据提交到存储系统（如数据库）时，会调用此方法转换为存储值
+     * @param mixed $value 字段值
+     * @param mixed $model 当前记录
      * @return mixed
      */
     public function serializeValue($value, $model)
@@ -466,9 +468,10 @@ class AbstractField implements Renderable
     }
 
     /**
-     * 转换从view到提交值
-     * @param mixed $value
-     * @param array $dataSubmitted
+     * 字段输入获取准备
+     * 数据从用户输入获后需要进行的处理，如转换、验证等，如果异常可以直接抛出 BizException 异常
+     * @param mixed $value 字段值
+     * @param array $dataSubmitted 用户提交的所有数据
      * @return mixed
      */
     public function prepareInput($value, $dataSubmitted)

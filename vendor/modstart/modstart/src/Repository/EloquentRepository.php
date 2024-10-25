@@ -17,6 +17,7 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Exception\ResultException;
 use ModStart\Core\Type\SortAddPosition;
 use ModStart\Core\Type\SortDirection;
+use ModStart\Core\Util\ExceptionUtil;
 use ModStart\Core\Util\ReUtil;
 use ModStart\Core\Util\TreeUtil;
 use ModStart\Detail\Detail;
@@ -487,41 +488,9 @@ class EloquentRepository extends Repository
                 ResultException::throwsIfFail($form->hookCall($form->hookChanged()));
             });
         } catch (\Exception $e) {
-            $this->throwDatabaseException($e);
+            ExceptionUtil::throwExcpectException($e);
         }
         return $model->getKey();
-    }
-
-    /**
-     * 统一处理数据库异常
-     * @param \Exception $e
-     * @throws BizException
-     */
-    private function throwDatabaseException(\Exception $e)
-    {
-        $message = $e->getMessage();
-        if (Str::contains($message, 'Duplicate entry')) {
-            BizException::throws(L('Records Duplicated'));
-        }
-        $formatErrorTemplates = [
-            ['Data too long for column', '/Data too long for column \'(.*)\' at row/', 'FieldTooLong'],
-            ['Data truncated for column', '/Data truncated for column \'(.*)\' at row/', 'FieldTooLong'],
-            ['Incorrect integer value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
-            ['Incorrect decimal value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
-            ['Incorrect datetime value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
-            ['Incorrect time value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
-            ['Incorrect date value', '/ for column \'(.*)\' at row/', 'FieldFormatError'],
-        ];
-        foreach ($formatErrorTemplates as $f) {
-            if (Str::contains($message, $f[0])) {
-                $column = ReUtil::group1($f[1], $message);
-                if (!empty($column)) {
-                    BizException::throws("{$f[2]}:$column");
-                }
-                throw $e;
-            }
-        }
-        throw $e;
     }
 
     /**
@@ -567,7 +536,7 @@ class EloquentRepository extends Repository
                 ResultException::throwsIfFail($form->hookCall($form->hookChanged()));
             });
         } catch (\Exception $e) {
-            $this->throwDatabaseException($e);
+            ExceptionUtil::throwExcpectException($e);
         }
         return $result;
     }
