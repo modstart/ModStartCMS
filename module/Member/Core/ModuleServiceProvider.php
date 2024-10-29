@@ -9,6 +9,7 @@ use ModStart\Admin\Config\AdminMenu;
 use ModStart\Admin\Widget\DashboardItem;
 use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\Core\Util\ColorUtil;
+use ModStart\Core\Util\StrUtil;
 use ModStart\Data\Event\DataDeletedEvent;
 use ModStart\Data\Event\DataUploadedEvent;
 use ModStart\Data\Event\DataUploadingEvent;
@@ -33,6 +34,7 @@ use Module\PayCenter\Biz\PayCenterBiz;
 use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
 use Module\Vendor\Admin\Widget\AdminWidgetLink;
 use Module\Vendor\Job\MailSendJob;
+use Module\Vendor\Provider\LBS\IpProvider;
 use Module\Vendor\Provider\Schedule\ScheduleBiz;
 use Module\Vendor\Provider\SmsTemplate\SmsTemplateProvider;
 use Module\Voucher\Biz\VoucherBiz;
@@ -226,9 +228,9 @@ class ModuleServiceProvider extends ServiceProvider
         }
 
         Event::listen(MemberUserRegisteredEvent::class, function (MemberUserRegisteredEvent $e) {
+            $memberUser = MemberUtil::getCached($e->memberUserId);
             // VIP赠送积分
             if (ModuleManager::getModuleConfig('Member', 'creditEnable', false)) {
-                $memberUser = MemberUtil::getCached($e->memberUserId);
                 $vipSet = MemberVipUtil::get($memberUser['vipId']);
                 if ($vipSet['creditPresentEnable']) {
                     if ($vipSet['creditPresentValue']) {
@@ -239,18 +241,31 @@ class ModuleServiceProvider extends ServiceProvider
             // 注册发送邮件
             $message = modstart_config('Member_Registered_Message', '');
             if ($message) {
-                $memberUser = MemberUtil::getCached($e->memberUserId);
                 $message = MemberParamUtil::replaceParam($message, $memberUser);
                 MemberMessageUtil::send($e->memberUserId, MemberParamUtil::replaceParam($message, $memberUser));
             }
             $emailContent = modstart_config('Member_Registered_Email', '');
             $emailTitle = modstart_config('Member_Registered_EmailTitle', '');
             if ($emailTitle && $emailContent) {
-                $memberUser = MemberUtil::getCached($e->memberUserId);
                 if (!empty($memberUser['email'])) {
                     $emailTitle = MemberParamUtil::replaceParam($emailTitle, $memberUser);
                     $emailContent = MemberParamUtil::replaceParam($emailContent, $memberUser);
                     MailSendJob::createHtml($memberUser['email'], $emailTitle, $emailContent);
+                }
+            }
+            // 注册信息更新
+            $registerIpNameRes = IpProvider::firstResponse($memberUser['registerIp']);
+            if (!empty($registerIpNameRes)) {
+                $name = join('', array_filter([
+                    $registerIpNameRes->country,
+                    $registerIpNameRes->province,
+                    $registerIpNameRes->city,
+                    $registerIpNameRes->district,
+                ]));
+                if (!empty($name)) {
+                    MemberUtil::update($memberUser['id'], [
+                        'registerIpName' => StrUtil::mbLimit($name, 30),
+                    ]);
                 }
             }
         });
