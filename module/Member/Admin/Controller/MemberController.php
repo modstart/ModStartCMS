@@ -117,11 +117,19 @@ class MemberController extends Controller
                                     $icon = $oauth->icon();
                                 }
                             }
+                            switch ($title) {
+                                case 'wechatunion':
+                                    $icon = 'iconfont icon-wechat';
+                                    $title = '微信联合ID';
+                                    $color = '#565b56';
+                                    break;
+                            }
                             if (empty($color)) {
                                 $color = ColorUtil::pick($oauthRecord['type']);
                             }
                             $oauthList[] = join('', [
                                 "<a style='color:{$color};'",
+                                "class='tw-bg-gray-100 tw-inline-block tw-leading-6 tw-rounded-full tw-shadow tw-text-center tw-w-6 tw-mr-1'",
                                 "href='javascript:;'",
                                 "data-tip-popover='{$title}'",
                                 "data-dialog-request='" . modstart_admin_url('member/oauth', ['_id' => $item->id]) . "'",

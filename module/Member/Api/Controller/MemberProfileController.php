@@ -23,7 +23,6 @@ use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberUtil;
 use Module\Vendor\Job\MailSendJob;
 use Module\Vendor\Job\SmsSendJob;
-use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Support\ResponseCodes;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

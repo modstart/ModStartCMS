@@ -81,6 +81,7 @@ return [
     "Examples" => "例子",
     "Expand All" => "展开全部",
     "Export" => "导出",
+    "ExportFilter" => "导出当前筛选结果筛选",
     "Field %s Format Error" => "字段%s格式不正确",
     "Field %s Too Long" => "字段%s长度太长",
     "Field Type" => "字段类型",

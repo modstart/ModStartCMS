@@ -46,6 +46,14 @@ trait BizTrait
         return $records;
     }
 
+    public static function isEmpty()
+    {
+        foreach (self::listAll() as $item) {
+            return false;
+        }
+        return true;
+    }
+
     public static function first()
     {
         foreach (self::listAll() as $item) {

@@ -3,6 +3,28 @@ import {Message} from 'element-ui'
 
 let apiRequest = null, apiStore = null
 
+let Dialog = {
+    tipError(msg) {
+        Message({
+            message: msg,
+            type: 'error',
+            duration: 5 * 1000
+        })
+    },
+    tipSuccess(msg) {
+        Message({
+            message: msg,
+            type: 'success',
+            duration: 5 * 1000
+        })
+    }
+}
+
+if (window.MS && window.MS.dialog) {
+    Dialog.tipSuccess = window.MS.dialog.tipSuccess
+    Dialog.tipError = window.MS.dialog.tipError
+}
+
 const isInited = () => {
     return apiStore && apiStore.state.api.baseUrl
 }
@@ -84,41 +106,27 @@ const processResponse = (res, failCB, successCB) => {
         if (!processed) {
             // 只有返回 true 表示已经处理了响应
             if (true !== failCB(res)) {
-                Message({
-                    message: res.msg,
-                    type: 'error',
-                    duration: 5 * 1000
-                })
+                Dialog.tipError(res.msg)
             }
         }
     } else {
         // 只有返回 true 表示需要处理响应
         if (true === successCB(res)) {
-            Message({
-                message: res.msg,
-                type: 'success',
-                duration: 5 * 1000
-            })
+            Dialog.tipSuccess(res.msg)
         }
     }
 }
 
 const defaultFailCallback = function (res) {
-    Message({
-        message: res.msg,
-        type: 'error',
-        duration: 5 * 1000
-    })
+    if (res.msg) {
+        Dialog.tipError(res.msg)
+    }
     return true
 }
 
 const defaultSuccessCallback = function (res) {
     if (res.msg) {
-        Message({
-            message: res.msg,
-            type: 'success',
-            duration: 5 * 1000
-        })
+        Dialog.tipSuccess(res.msg)
     }
 }
 

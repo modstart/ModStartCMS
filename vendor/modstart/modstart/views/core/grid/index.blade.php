@@ -51,7 +51,7 @@
                 </button>
             @endif
             @if($canExport)
-                <button class="btn" data-export-button>
+                <button class="btn" data-export-button data-tip-popover="{{L('ExportFilter')}}">
                     <i class="iconfont icon-download"></i> {{L('Export')}}
                 </button>
             @endif

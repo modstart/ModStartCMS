@@ -6,11 +6,11 @@
 
 @section('headAppend')
     @parent
+    <link rel="canonical" href="{{modstart_web_url('register/register')}}"/>
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberRegisterPageHeadAppend'); !!}
 @endsection
 
 @section('bodyAppend')
-    @parent
     {{\ModStart\ModStart::js('asset/common/commonVerify.js')}}
     {{\ModStart\ModStart::js('vendor/Member/entry/register.js')}}
     <script>

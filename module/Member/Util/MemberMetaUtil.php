@@ -6,6 +6,7 @@ namespace Module\Member\Util;
 
 use Carbon\Carbon;
 use ModStart\Core\Dao\ModelUtil;
+use Module\Member\Model\MemberMeta;
 
 class MemberMetaUtil
 {
@@ -16,16 +17,16 @@ class MemberMetaUtil
             'name' => $name,
         ];
         if (is_null($value)) {
-            ModelUtil::delete('member_meta', $where);
+            ModelUtil::delete(MemberMeta::class, $where);
         } else {
-            if (ModelUtil::update('member_meta', $where, [
+            if (ModelUtil::update(MemberMeta::class, $where, [
                     'value' => $value,
                     'updated_at' => Carbon::now()
                 ]) <= 0) {
                 ModelUtil::transactionBegin();
-                $one = ModelUtil::getWithLock('member_meta', $where);
+                $one = ModelUtil::getWithLock(MemberMeta::class, $where);
                 if (empty($one)) {
-                    ModelUtil::insert('member_meta', array_merge($where, [
+                    ModelUtil::insert(MemberMeta::class, array_merge($where, [
                         'value' => $value,
                     ]));
                 }
@@ -40,7 +41,7 @@ class MemberMetaUtil
             'memberUserId' => $memberUserId,
             'name' => $name,
         ];
-        $meta = ModelUtil::get('member_meta', $where);
+        $meta = ModelUtil::get(MemberMeta::class, $where);
         if ($meta) {
             return $meta['value'];
         }

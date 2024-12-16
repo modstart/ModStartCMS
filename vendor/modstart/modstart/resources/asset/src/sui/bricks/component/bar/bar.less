@@ -9,6 +9,56 @@
     border-radius: 0.5rem;
     box-shadow: 0 0 1rem #ddd;
 
+    &.close {
+        right: 0px;
+        bottom: 1rem;
+
+        .items {
+            display: none;
+        }
+
+        .item-top {
+            display: none;
+        }
+
+        .bar-page-close {
+            display: none;
+        }
+
+        .bar-page-show {
+            display: block;
+        }
+    }
+
+    .bar-page-show {
+        border: 1px solid var(--color-primary);
+        background-color: var(--color-content-bg);
+        color: var(--color-primary);
+        width: 24px;
+        border-radius: 5px 0 0 5px;
+        line-height: 18px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 12px;
+        display: none;
+    }
+
+    .bar-page-close {
+        border: 1px solid var(--color-primary);
+        background-color: transparent;
+        position: absolute;
+        color: var(--color-primary);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        line-height: 22px;
+        font-size: 16px;
+        text-align: center;
+        right: 22px;
+        bottom: -29px;
+        cursor: pointer;
+        display: block;
+    }
 
     .items {
         .item {
@@ -181,6 +231,14 @@ html.body-scroll-far {
     .ub-bar-page {
         bottom: 2rem;
         width: 2rem;
+
+        &.close {
+            width: auto;
+        }
+
+        .bar-page-close {
+            right: 9px;
+        }
 
         .items {
             .item {

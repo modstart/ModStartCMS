@@ -120,7 +120,7 @@ class AgentUtil
         '/(curl|python|java|node-fetch|http-client|msray-plus|guzzlehttp|wget|okhttp|scrapy|panelstart|node-superagent|go-camo|cpp-httplib|axios|https?:\\/\\/)/i' => 'Other',
         '/^(node)$/i' => 'Other',
         // 其他一些爬虫
-        '/(ows.eu|researchscan|github|LogStatistic|Dataprovider|facebook|YandexImages|Iframely|panscient|netcraft|yahoo|censys|Turnitin)/i' => 'Other',
+        '/(ows.eu|researchscan|github|LogStatistic|Dataprovider|facebook|YandexImages|Iframely|panscient|netcraft|yahoo|censys|Turnitin|Dormouse|Langchain)/i' => 'Other',
     ];
 
     /**

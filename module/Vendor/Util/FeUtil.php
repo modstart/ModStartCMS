@@ -15,10 +15,17 @@ class FeUtil
 {
     public static function tools($dir)
     {
+        $argc = $GLOBALS['argc'];
+        $argv = $GLOBALS['argv'];
         $basePath = rtrim($dir, '/') . '/';
-        $jsonFilePath = $basePath . 'tools.config.json';
-        shell_throws_if('文件不存在 ' . $jsonFilePath, !file_exists($jsonFilePath));
-        $config = json_decode(file_get_contents($jsonFilePath), true);
+        $config = [];
+        switch ($argv[1]) {
+            case 'DumpConstant':
+                $jsonFilePath = $basePath . 'tools.config.json';
+                shell_throws_if('文件不存在 ' . $jsonFilePath, !file_exists($jsonFilePath));
+                $config = json_decode(file_get_contents($jsonFilePath), true);
+                break;
+        }
         $config = array_merge([
 
             'module' => null,
@@ -43,15 +50,28 @@ class FeUtil
         }
 
         shell_echo_block("Uniapp Tools");
-        $argc = $GLOBALS['argc'];
-        $argv = $GLOBALS['argv'];
         if ($argc < 2) {
             shell_echo_error('参数错误');
             shell_echo('php tools.php DumpConstant → 构建 constant.js');
+            shell_echo('php tools.php SyncAsset → 同步公共静态资源');
             exit(1);
         }
 
         switch ($argv[1]) {
+            case 'SyncAsset':
+                shell_echo_info("同步开始");
+                $toBase = $basePath . 'src/static/image/';
+                $files = FileUtil::listAllFiles($basePath . 'src/brick/image');
+                foreach ($files as $file) {
+                    if (!$file['isFile']) {
+                        continue;
+                    }
+                    $to = $toBase . $file['filename'];
+                    FileUtil::copy($file['pathname'], $to);
+                    shell_echo_info("同步 {$file['pathname']}");
+                }
+                shell_echo_info("同步结束");
+                break;
             case 'DumpConstant':
                 shell_throws_if('请配置 constants', empty($config['constants']));
                 $constants = [];

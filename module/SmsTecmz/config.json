@@ -4,7 +4,7 @@
     "require": [
         "Vendor:>=1.6.0"
     ],
-    "version": "1.3.0",
+    "version": "1.4.0",
     "author": "ModStart",
     "description": "魔众API短信发送配置",
     "env": [
@@ -18,8 +18,7 @@
         "云短信",
         "魔众API"
     ],
-    "providers": [
-    ],
-    "config": {
-    }
+    "providers": [],
+    "config": {},
+    "modstartVersion": ">=4.0.0"
 }

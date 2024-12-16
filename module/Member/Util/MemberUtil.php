@@ -145,12 +145,12 @@ class MemberUtil
     public static function convertOneToBasic($memberUser)
     {
         return [
-            'id' => $memberUser['id'],
-            'username' => $memberUser['username'],
-            'nickname' => empty($memberUser['nickname']) ? $memberUser['username'] : $memberUser['nickname'],
-            'created_at' => $memberUser['created_at'],
+            'id' => $memberUser ? $memberUser['id'] : 0,
+            'username' => $memberUser ? $memberUser['username'] : null,
+            'nickname' => $memberUser ? (empty($memberUser['nickname']) ? $memberUser['username'] : $memberUser['nickname']) : null,
+            'created_at' => $memberUser ? $memberUser['created_at'] : null,
             'signature' => isset($memberUser['signature']) ? $memberUser['signature'] : null,
-            'avatar' => AssetsUtil::fixFullOrDefault($memberUser['avatar'], 'asset/image/avatar.svg'),
+            'avatar' => AssetsUtil::fixFullOrDefault($memberUser ? $memberUser['avatar'] : null, 'asset/image/avatar.svg'),
         ];
     }
 

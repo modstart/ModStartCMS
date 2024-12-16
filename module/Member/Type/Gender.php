@@ -19,4 +19,26 @@ class Gender implements BaseType
         ];
     }
 
+    public static function labelToValue($label)
+    {
+        switch ($label) {
+            case 'male':
+                return self::MALE;
+            case 'female':
+                return self::FEMALE;
+        }
+        return null;
+    }
+
+    public static function valueToLabel($value)
+    {
+        switch ($value) {
+            case self::MALE:
+                return 'male';
+            case self::FEMALE:
+                return 'female';
+        }
+        return null;
+    }
+
 }

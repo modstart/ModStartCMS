@@ -6,6 +6,7 @@
 
 @section('headAppend')
     @parent
+    <link rel="canonical" href="{{modstart_web_url('register/login')}}"/>
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberLoginPageHeadAppend'); !!}
 @endsection
 
@@ -14,6 +15,7 @@
 @endsection
 
 {!! \ModStart\ModStart::style('html,body{background:var(--color-content-bg);}') !!}
+
 @section('body')
 
     <div class="ub-account pb-member-login-account">

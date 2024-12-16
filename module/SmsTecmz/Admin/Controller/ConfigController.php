@@ -5,14 +5,17 @@ namespace Module\SmsTecmz\Admin\Controller;
 use Illuminate\Routing\Controller;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use Module\Vendor\Provider\SmsTemplate\SmsTemplateProvider;
-use Module\Vendor\Sms\SmsUtil;
 use Module\Vendor\Tecmz\TecmzUtil;
+use Module\Vendor\Util\QueueUtil;
 
 class ConfigController extends Controller
 {
     public function setting(AdminConfigBuilder $builder)
     {
         $builder->pageTitle('魔众短信');
+        if (class_exists(QueueUtil::class) && QueueUtil::isAsync()) {
+            $builder->html('')->html(QueueUtil::queueRestartTip());
+        }
         $builder->switch('SmsTecmz_Enable', '开启短信发送')->help('<div>访问 <a href="' . TecmzUtil::url() . '" target="_blank">' . TecmzUtil::url() . '</a> 申请</div>');
         $builder->text('SmsTecmz_AppId', 'AppId');
         $builder->text('SmsTecmz_AppSecret', 'AppSecret');

@@ -47,6 +47,12 @@
                 </div>
             </div>
             <div class="body">
+                @if($total<=0)
+                    <div class="ub-alert warning">
+                        <i class="iconfont icon-warning"></i>
+                        当前筛选条件没有筛选到可导出的数据，请关闭当前页面重新筛选。
+                    </div>
+                @endif
                 <div class="ub-form">
                     <div class="line">
                         <div class="label">&nbsp;</div>

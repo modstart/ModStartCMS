@@ -2,7 +2,7 @@
     "name": "Member",
     "title": "用户系统",
     "version": "4.5.0",
-    "modstartVersion": ">=3.9.0",
+    "modstartVersion": ">=4.0.0",
     "author": "官方",
     "description": "提供基础的用户注册、登录服务",
     "env": [

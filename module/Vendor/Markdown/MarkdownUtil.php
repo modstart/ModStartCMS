@@ -9,7 +9,7 @@ class MarkdownUtil
     public static function convertToHtml($markdown)
     {
         if (PHP_VERSION_ID >= 80000) {
-            return Str::of($markdown)->markdown();
+            return strval(Str::of($markdown)->markdown());
         }
         $converter = new MarkConverter([
             'renderer' => [
