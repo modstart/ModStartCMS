@@ -31,4 +31,12 @@ class PageController extends ModuleBaseController
             'pageContent' => modstart_config('Member_AppealContent'),
         ]);
     }
+
+    public function vip()
+    {
+        return $this->view('member.page', [
+            'pageTitle' => modstart_config('Member_VipTitle', '会员协议'),
+            'pageContent' => modstart_config('Member_VipContent'),
+        ]);
+    }
 }

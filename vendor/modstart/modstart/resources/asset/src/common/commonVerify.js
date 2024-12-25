@@ -1,4 +1,5 @@
 var $ = require('jquery');
+const {CountUp} = require("@ModStartAsset/vendor/countUp");
 
 var CommonVerify = function (option) {
 
@@ -87,9 +88,19 @@ var CommonVerify = function (option) {
         return false;
     };
 
-    $(opt.selectorGenerate).on('click', checkAndGenerate);
-    $(opt.selectorRegenerate).on('click', checkAndGenerate);
+    this.init = function () {
+        $(opt.selectorGenerate).on('click', checkAndGenerate);
+        $(opt.selectorRegenerate).on('click', checkAndGenerate);
+    };
+
+    this.destory = function () {
+        $(opt.selectorGenerate).off('click', checkAndGenerate);
+        $(opt.selectorRegenerate).off('click', checkAndGenerate);
+    }
+
+    this.init()
 
 };
 
 window.api.commonVerify = CommonVerify;
+window.MS.commonVerify = CommonVerify;

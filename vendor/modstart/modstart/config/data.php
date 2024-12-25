@@ -39,6 +39,7 @@ return [
                 'ai', 'psd', 'dwg',
                 'css', 'html',
                 'ttf',
+                'log',
             ]
         ],
         'document' => [

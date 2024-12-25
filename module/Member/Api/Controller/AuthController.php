@@ -225,12 +225,26 @@ class AuthController extends ModuleBaseController
         return Response::generateSuccessData($resultData);
     }
 
+    public function oauthBindInfo()
+    {
+        $oauthUserInfo = Session::get('oauthUserInfo', []);
+        //$oauthUserInfo = [
+        //    'openid' => 'mock',
+        //    'username' => 'test-username',
+        //    'avatar' => 'avatar',
+        //];
+        return Response::generateSuccessData([
+            'oauthUserInfo' => $oauthUserInfo,
+        ]);
+    }
+
     public function oauthBind($oauthType = null)
     {
         $input = InputPackage::buildFromInput();
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         $oauthType = $input->getTrimString('type', $oauthType);
         $oauthUserInfo = Session::get('oauthUserInfo', []);
+
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');
         }

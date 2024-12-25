@@ -105,6 +105,7 @@ class MemberVipSetController extends Controller
             ])
             ->help('当最近开通用户为空时，将显示虚拟开通用户')
             ->defaultValue($openUserDefaults);
+        $builder->text('Member_VipTitle', 'VIP开通协议标题')->help('默认为 会员协议');
         $builder->richHtml('Member_VipContent', 'VIP开通说明')->help('默认为 VIP开通说明');
         $builder->formClass('wide');
         return $builder->perform();

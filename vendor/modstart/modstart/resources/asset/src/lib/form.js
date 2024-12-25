@@ -250,7 +250,15 @@ var Form = {
             var $this = $(this);
             // console.log('form', method, action);
             Form.delaySubmit($form, function () {
-                var data = $this.serializeArray();
+
+                var data
+                var isFormData = false
+                if ('multipart/form-data' === $this.attr('enctype')) {
+                    data = new FormData($this.get(0));
+                    isFormData = true
+                } else {
+                    data = $this.serializeArray();
+                }
                 var encryptDataKey = $form.find('[data-encrypt-data]').val()
                 if (encryptDataKey) {
                     for (var i = 0; i < data.length; i++) {
@@ -264,7 +272,9 @@ var Form = {
                 $.ajax({
                     type: method,
                     url: action,
-                    dataType: "json",
+                    dataType: isFormData ? undefined : "json",
+                    contentType: isFormData ? false : undefined,
+                    processData: isFormData ? false : undefined,
                     timeout: Form.defaultTimeout,
                     data: data,
                     success: function (res) {

@@ -72,6 +72,10 @@ use Module\Vendor\Provider\Recommend\RecommendProvider;
  * $option = [ 'whereOperate'=>[ 'title', 'like', '%关键词%' ] ];
  * // 副表关联搜索（关联副表 cms_m_xxx，同时搜索副表字段 title = 标题 的记录）
  * $option = [ 'fieldFilterTable'=>'cms_m_xxx', 'fieldFilter'=>[ [ 'condition'=>'is', 'field'=>'title', 'value'=>'标题' ] ] ];
+ * // 排序（单个字段排序）
+ * $option = [ 'order'=>['id','desc'] ]
+ * // 排序（多个字段排序）
+ * $option = [ 'order'=>[ ['id','desc'], ['title','desc'] ] ]
  */
 class MCms
 {

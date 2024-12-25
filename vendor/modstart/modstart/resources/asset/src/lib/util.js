@@ -477,8 +477,12 @@ Util.sprintf = sprintf;
 Util.base64 = {
     encode: function (data) {
         return base64.Base64.encode(data)
-    }, decode: function (data) {
+    },
+    decode: function (data) {
         return base64.Base64.decode(data)
+    },
+    fromUint8Array: function (data) {
+        return base64.Base64.fromUint8Array(data)
     }
 };
 

@@ -92,7 +92,7 @@ class ConfigController extends Controller
                 })
                 ->help('禁用后，可通过后台增加账号');
 
-            if (MemberOauth::hasItems()) {
+            if (MemberOauth::hasItems() || modstart_module_enabled('MemberWechatMpLogin')) {
                 $builder->switch('Member_OauthBindAuto', '授权登录自动绑定账号')
                     ->when('=', false, function ($builder) {
                         /** @var HasFields $builder */

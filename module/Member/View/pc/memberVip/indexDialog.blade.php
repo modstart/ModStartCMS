@@ -145,12 +145,12 @@
                         class="lg:tw-px-12 lg:tw-text-left tw-text-center tw-py-4 vip-bg tw-rounded margin-bottom tw-flex lg:tw-flex-row tw-flex-col tw-items-center">
                         <div class="tw-flex-grow">
                             @if(!empty($memberVipRights))
-                                <div class="vip-bg tw-py-3 margin-bottom tw-rounded-lg" data-vip-right-list>
+                                <div class="vip-bg tw-rounded-lg" data-vip-right-list>
                                     <div class="row">
                                         @foreach($memberVipRights as $r)
                                             <div class="col-md-4 col-6" style="display:none;"
                                                  data-vip-right="{{join(',',$r['vipIds'])}}">
-                                                <div class="tw-flex tw-items-center ub-text-sm margin-bottom">
+                                                <div class="tw-flex tw-py-2 tw-items-center ub-text-sm margin-bottom">
                                                     <div class="tw-pr-2">
                                                         <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full"
                                                              src="{{$r['image']}}"/>
@@ -203,20 +203,6 @@
                         @endforeach
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="ub-panel margin-top" style="border-radius:0px;">
-        <div class="head">
-            <div class="title">
-                <i class="iconfont icon-description ub-color-vip"></i>
-                VIP开通说明
-            </div>
-        </div>
-        <div class="body">
-            <div class="ub-html lg">
-                {!! modstart_config('Member_VipContent','VIP开通说明') !!}
             </div>
         </div>
     </div>

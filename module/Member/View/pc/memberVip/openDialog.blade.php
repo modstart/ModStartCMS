@@ -84,13 +84,16 @@
                     @if(modstart_config('Member_AgreementEnable',false))
                         <a href="{{modstart_web_url('member/agreement')}}"
                            class="ub-text-tertiary"
-                           target="_blank">{{modstart_config('Member_AgreementTitle','用户使用协议')}}</a>
+                           target="_blank">《{{modstart_config('Member_AgreementTitle','用户使用协议')}}》</a>
                     @endif
                     @if(modstart_config('Member_PrivacyEnable',false))
                         <a href="{{modstart_web_url('member/privacy')}}"
                            class="ub-text-tertiary"
-                           target="_blank">{{modstart_config('Member_PrivacyTitle','用户隐私协议')}}</a>
+                           target="_blank">《{{modstart_config('Member_PrivacyTitle','用户隐私协议')}}》</a>
                     @endif
+                    <a href="{{modstart_web_url('member/vip')}}"
+                       class="ub-text-tertiary"
+                       target="_blank">《{{modstart_config('Member_VipTitle','会员协议')}}》</a>
                 </div>
             </div>
         </div>
