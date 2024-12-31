@@ -51,10 +51,16 @@ class ScheduleProvider
 
     public static function callByName($name)
     {
+        $processed = false;
         foreach (ScheduleBiz::all() as $provider) {
             if ($provider->name() == $name) {
                 call_user_func([$provider, 'run']);
+                $processed = true;
+                break;
             }
+        }
+        if (!$processed) {
+            echo "ScheduleProvider.callByName - $name not found\n";
         }
     }
 

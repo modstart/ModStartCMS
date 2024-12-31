@@ -135,6 +135,7 @@ export default {
                 text = '<span class="tw-px-4 tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg tw-py-10" style="display:block;"><i class="iconfont icon-upload" style="font-size:2rem;"></i><br /> ' + uploadText + '</span>'
             }
             const $this = this
+            window.__uploadCustomUpload = window.__uploadCustomUpload || {};
             let option = {
                 text,
                 server: this.apiUrl,
@@ -162,7 +163,7 @@ export default {
                 finish: function () {
                     $this.$emit('finish')
                 },
-                customUpload: window.__uploadCustomUpload || null
+                customUpload: window.__uploadCustomUpload[this.category] || null
             };
             if (this.category === 'image') {
                 option.compress = {

@@ -38,8 +38,17 @@ class ScheduleRunAllCommand extends Command
             });
         foreach ($projects as $project) {
             $start = TimeUtil::millitime();
-            $command = "$php {$project['pathname']}/artisan schedule:run";
-            Log::info("Vendor.ScheduleRunAllCommand.Run - {$command}");
+            if (ModStart::env() === 'laravel9') {
+                $command = [
+                    $php,
+                    $project['pathname'] . '/artisan',
+                    'schedule:run'
+                ];
+                Log::info("Vendor.ScheduleRunAllCommand.Run - " . join(' ', $command));
+            } else {
+                $command = "$php {$project['pathname']}/artisan schedule:run";
+                Log::info("Vendor.ScheduleRunAllCommand.Run - {$command}");
+            }
             $result = ShellUtil::runInNewProcess($command, false);
             $result = str_replace([
                 "\r"

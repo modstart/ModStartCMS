@@ -219,6 +219,7 @@ var UploadButton = function (selector, option) {
         uploader.on('uploadProgress', function (file, percentage) {
             opt.callbackQueueProgress(file, percentage);
             var $li = $('#' + file.id);
+            $li.attr('data-tip-popover', Math.floor(percentage * 100) + '%');
             $li.find('.progress-bar').css('width', percentage * 100 + '%');
             if (!$li.find('.status .iconfont').is('.icon-refresh')) {
                 $li.find('.status').html('<i class="iconfont icon-refresh tw-animate-spin tw-inline-block"></i>');

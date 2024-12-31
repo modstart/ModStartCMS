@@ -41,10 +41,11 @@
 
         </div>
 
-        {!! \ModStart\Core\Hook\ModStartHook::fireInView('UploadScript',['source'=>'uploadButton','server'=>$server]); !!}
+        {!! \ModStart\Core\Hook\ModStartHook::fireInView('UploadScript',['source'=>'uploadButton','server'=>$server,'id'=>$id]); !!}
         {!! \ModStart\ModStart::js('asset/common/uploadButton.js') !!}
         <script>
             $(function () {
+                window.__uploadCustomUpload = window.__uploadCustomUpload || {}
                 var $field = $('#{{$id}}');
                 var $input = $field.find('[name="{{$name}}"]');
                 var $selector = $('#{{$name}}Selector');
@@ -103,7 +104,7 @@
                     },
                     finish: function () {
                     },
-                    customUpload: window.__uploadCustomUpload || null
+                    customUpload: window.__uploadCustomUpload['{{$id}}'] || null
                 });
                 @if($mode=='default')
                     $selector.on('click', '[data-gallery]', function () {

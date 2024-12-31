@@ -53,17 +53,5 @@ return [
         'Cms' => [
             'enable' => true,
         ],
-//        'DataQiniuKodoFe' => [
-//            'enable' => true,
-//        ],
-        // 'CmsMemberPost' => [
-        //     'enable' => true,
-        // ],
-        // 'Recommend' => [
-        //     'enable' => true,
-        // ],
-        // 'RecommendMysql' => [
-        //     'enable' => true,
-        // ],
     ],
 ];
