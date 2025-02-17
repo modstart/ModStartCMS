@@ -11,7 +11,9 @@ use ModStart\Core\Util\SerializeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Grid\GridFilter;
+use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
+use Module\Member\Model\MemberCreditLog;
 use Module\Member\Util\MemberCmsUtil;
 
 class MemberCreditLogController extends Controller
@@ -20,15 +22,16 @@ class MemberCreditLogController extends Controller
 
     protected function crud(AdminCRUDBuilder $builder)
     {
+        $creditName = ModuleManager::getModuleConfig('Member', 'creditName', '积分');
         $builder
-            ->init('member_credit_log')
-            ->field(function ($builder) {
+            ->init(MemberCreditLog::class)
+            ->field(function ($builder) use ($creditName) {
                 /** @var HasFields $builder */
                 $builder->id('id', 'ID');
                 $builder->display('memberUserId', '用户')->hookRendering(function (AbstractField $field, $item, $index) {
                     return MemberCmsUtil::showFromId($item->memberUserId);
                 });
-                $builder->display('change', '积分')
+                $builder->display('change', $creditName)
                     ->hookRendering(function (AbstractField $field, $item, $index) {
                         return AutoRenderedFieldValue::make(
                             $item->change > 0 ?
@@ -54,7 +57,7 @@ class MemberCreditLogController extends Controller
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('memberUserId', '用户ID');
             })
-            ->title('用户积分流水')->canAdd(false)->canEdit(false)->canDelete(false);
+            ->title('用户' . $creditName . '流水')->canAdd(false)->canEdit(false)->canDelete(false);
     }
 
 }

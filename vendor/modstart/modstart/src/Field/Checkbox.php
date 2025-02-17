@@ -67,7 +67,7 @@ class Checkbox extends AbstractField
         $options = [];
         foreach ($items as $i => $item) {
             $options[] = [
-                'label' => $item->{$titleName},
+                'label' => $item->{$idName},
                 'title' => $item->{$titleName},
             ];
         }

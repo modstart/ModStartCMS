@@ -16,6 +16,12 @@ class LazyValueJob extends BaseJob
     public $key;
     public $param;
 
+    public static function create($key, $param)
+    {
+        $job = new static($key, $param);
+        app('Illuminate\Contracts\Bus\Dispatcher')->dispatch($job);
+    }
+
     public function handle()
     {
         if (null === $this->param) {

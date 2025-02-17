@@ -52,6 +52,7 @@ $router->group([
     $router->match(['post'], 'member_profile/phone', 'MemberProfileController@phone');
     $router->match(['post'], 'member_profile/phone_verify', 'MemberProfileController@phoneVerify');
     $router->match(['post'], 'member_profile/oauth_unbind', 'MemberProfileController@oauthUnbind');
+    $router->match(['post'], 'member_profile/delete_info', 'MemberProfileController@deleteInfo');
     $router->match(['post'], 'member_profile/delete', 'MemberProfileController@delete');
     $router->match(['post'], 'member_profile/delete_revert', 'MemberProfileController@deleteRevert');
     $router->match(['post'], 'member_profile/nickname', 'MemberProfileController@nickname');

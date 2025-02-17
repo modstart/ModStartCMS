@@ -53,6 +53,9 @@ class DataManager
         static $option = null;
         if (null === $option) {
             $option ['driver'] = modstart_config('DataStorageDefaultDriver', '');
+            if (empty($option['driver'])) {
+                $option ['driver'] = DataStorageProvider::defaultEnabledDriver();
+            }
             if (empty($option ['driver'])) {
                 $option ['driver'] = app()->config->get('DataStorageDriver');
             }
@@ -66,7 +69,7 @@ class DataManager
         return $option;
     }
 
-    private static function prepareOption($option = null)
+    public static function prepareOption($option = null)
     {
         if (null === $option) {
             $option = self::getConfigOption();

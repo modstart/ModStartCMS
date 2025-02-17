@@ -352,6 +352,21 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return Response::generate(0, '解绑成功', null, '[reload]');
     }
 
+    public function deleteInfo()
+    {
+        if (!modstart_config('Member_DeleteEnable', false)) {
+            return Response::generateError('注销账号功能未开启');
+        }
+        $memberUser = MemberUser::get();
+        $data = [];
+        $data['deleteAtTime'] = null;
+        if ($memberUser['deleteAtTime'] > 0) {
+            $data['deleteAtTime'] = date('Y-m-d H:i:s', $memberUser['deleteAtTime']);
+        }
+        $data['registerTime'] = $memberUser['created_at'];
+        return Response::generateSuccessData($data);
+    }
+
     /**
      * @Api 账号注销申请
      * @ApiBodyParam agree string 同意协议选项，固定yes

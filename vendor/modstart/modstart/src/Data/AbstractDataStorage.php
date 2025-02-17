@@ -154,9 +154,9 @@ abstract class AbstractDataStorage
         $configParam = [];
         $configParam['uploadMaxSize'] = EnvUtil::env('uploadMaxSize');
         $hash = md5(serialize($file) . ':' . serialize($configParam));
-        $hashFile = self::DATA_CHUNK . '/token/' . $hash . '.php';
+        $hashFile = self::DATA_CHUNK . '/token/' . $hash . '.json';
         if (file_exists($hashFile)) {
-            $file = (include $hashFile);
+            $file = json_decode(file_get_contents($hashFile), true);
         } else {
             $file['chunkUploaded'] = 0;
             $file['hash'] = $hash;
@@ -171,15 +171,15 @@ abstract class AbstractDataStorage
     protected function uploadChunkTokenAndDeleteToken($token)
     {
         $hash = $token['hash'];
-        $hashFile = self::DATA_CHUNK . '/token/' . $hash . '.php';
+        $hashFile = self::DATA_CHUNK . '/token/' . $hash . '.json';
         $this->localStorage->delete($hashFile);
     }
 
     protected function uploadChunkTokenAndUpdateToken($token)
     {
         $hash = $token['hash'];
-        $hashFile = self::DATA_CHUNK . '/token/' . $hash . '.php';
-        $this->localStorage->put($hashFile, '<' . '?php return ' . var_export($token, true) . ';');
+        $hashFile = self::DATA_CHUNK . '/token/' . $hash . '.json';
+        $this->localStorage->put($hashFile, json_encode($token));
     }
 
 }

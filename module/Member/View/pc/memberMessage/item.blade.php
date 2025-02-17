@@ -1,4 +1,4 @@
-<div class="tw-py-2 tw-relative tw-items-center hover:tw-bg-gray-50 tw-rounded"
+<div class="tw-p-2 tw-relative tw-items-center hover:tw-bg-gray-50 tw-rounded"
     data-message-id="{{$item->id}}">
     <div class="tw-flex">
         <div class="tw-w-20 tw-relative tw-flex-shrink-0">

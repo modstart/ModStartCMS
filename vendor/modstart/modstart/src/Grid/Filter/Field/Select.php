@@ -50,6 +50,15 @@ class Select extends AbstractFilterField
         return $this;
     }
 
+    /**
+     * use remote api to load options
+     * @param $value
+     * @return $this|mixed|null
+     * @example
+     *
+     * action function should use the following code to return options:
+     * return Select::optionRemoteHandleModel(Xxx::class, 'id', 'title')
+     */
     public function selectRemote($value = null)
     {
         if (null === $value) {

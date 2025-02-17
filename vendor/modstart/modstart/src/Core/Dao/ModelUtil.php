@@ -12,6 +12,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\PageHtmlUtil;
 use ModStart\Core\Util\SerializeUtil;
+use ModStart\Repository\EmptyItem;
 
 /**
  * @Util 数据库
@@ -1690,7 +1691,7 @@ class ModelUtil
 
     public static function hasAtttibute($item, $key)
     {
-        if ($item instanceof Model) {
+        if ($item instanceof Model || $item instanceof EmptyItem) {
             $attributes = $item->getAttributes();
             return array_key_exists($key, $attributes)
                 || method_exists($item, $key);

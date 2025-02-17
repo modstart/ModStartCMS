@@ -51,6 +51,7 @@ class ApiUtil
         // 账号安全
         $data['Member_ProfileEmailEnable'] = $config->getBoolean('Member_ProfileEmailEnable', false);
         $data['Member_ProfilePhoneEnable'] = $config->getBoolean('Member_ProfilePhoneEnable', false);
+        $data['Member_DeleteEnable'] = $config->getBoolean('Member_DeleteEnable', false);
 
         // VIP
         $data['Member_VipEnable'] = ModuleManager::getModuleConfig('Member', 'vipEnable', false);

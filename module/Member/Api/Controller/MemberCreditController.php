@@ -15,8 +15,10 @@ class MemberCreditController extends ModuleBaseController implements MemberLogin
 {
     public function get()
     {
+        $credit = MemberCreditUtil::get(MemberUser::id());
         return Response::generateSuccessData([
-            'total' => MemberCreditUtil::getTotal(MemberUser::id())
+            'total' => $credit ? $credit['total'] : 0,
+            'freezeTotal' => $credit ? $credit['freezeTotal'] : 0,
         ]);
     }
 

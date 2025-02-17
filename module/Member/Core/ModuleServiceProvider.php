@@ -51,7 +51,7 @@ class ModuleServiceProvider extends ServiceProvider
         MemberMenu::register(function () {
             $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);
             $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
-            $creditName = LM('Member', 'My') . ModuleManager::getModuleConfig('Member', 'creditName', LM('Member', 'Credit'));
+            $creditName = LM('Member', 'My') . ModuleManager::getModuleConfig('Member', 'creditName', LM('Member', '积分'));
             $addressEnable = ModuleManager::getModuleConfig('Member', 'addressEnable', false);
             return [
                 [
@@ -275,6 +275,7 @@ class ModuleServiceProvider extends ServiceProvider
             $creditEnable = ModuleManager::getModuleConfig('Member', 'creditEnable', false);
             $vipEnable = ModuleManager::getModuleConfig('Member', 'vipEnable', false);
             $groupEnable = ModuleManager::getModuleConfig('Member', 'groupEnable', false);
+            $creditName = ModuleManager::getModuleConfig('Member', 'creditName', '积分');
             return [
                 [
                     'title' => '用户中心',
@@ -300,7 +301,7 @@ class ModuleServiceProvider extends ServiceProvider
                                     ] : null,
                                 $creditEnable ?
                                     [
-                                        'title' => '用户积分流水',
+                                        'title' => '用户' . $creditName . '流水',
                                         'url' => '\Module\Member\Admin\Controller\MemberCreditLogController@index',
                                     ] : null,
                             ]

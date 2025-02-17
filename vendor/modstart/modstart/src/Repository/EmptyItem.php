@@ -26,4 +26,9 @@ class EmptyItem extends \stdClass
     {
         $this->attributes[$name] = $value;
     }
+
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
 }

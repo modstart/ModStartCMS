@@ -244,6 +244,9 @@ class AuthController extends ModuleBaseController
         $redirect = $input->getTrimString('redirect', modstart_web_url('member'));
         $oauthType = $input->getTrimString('type', $oauthType);
         $oauthUserInfo = Session::get('oauthUserInfo', []);
+        if (empty($oauthType)) {
+            return Response::generate(-1, '授权类型为空');
+        }
 
         if (empty($oauthUserInfo)) {
             return Response::generate(-1, '用户授权数据为空');

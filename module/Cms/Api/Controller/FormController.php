@@ -11,6 +11,7 @@ use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
 use Module\Cms\Field\CmsField;
 use Module\Cms\Util\CmsContentUtil;
+use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 /**
  * @Api 通用CMS
@@ -42,6 +43,14 @@ class FormController extends BaseCatController
         $input = InputPackage::buildFromInput();
         $catId = $input->getTrimString('cat');
         $data = parent::setup($catId);
+        if (!empty($data['cat']['captchaProvider'])) {
+            $provider = CaptchaProvider::get($data['cat']['captchaProvider']);
+            BizException::throwsIfEmpty('验证码配置异常', $provider);
+            $ret = $provider->validate();
+            if (Response::isError($ret)) {
+                return $ret;
+            }
+        }
         $input = InputPackage::buildFromInput();
         $submitData = [];
         $submitData['content'] = $input->getRichContent('content');

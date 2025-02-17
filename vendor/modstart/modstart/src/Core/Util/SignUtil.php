@@ -26,7 +26,10 @@ class SignUtil
 
         $str = [];
         foreach ($params as $k => $v) {
-            $str [] = $k . '=' . $function($v);
+            if ($function) {
+                $v = $function($v);
+            }
+            $str [] = $k . '=' . $v;
         }
 
         $str[] = $appSecretName . '=' . $appSecret;

@@ -34,10 +34,10 @@ class MemberMoneyUtil
      * !!! 这个方法应该在事务中调用 !!!
      *
      * @param $memberUserId int 用户ID
-     * @param $change float 变化值，正数为增加，负数为减少
+     * @param $change string 变化值，正数为增加，负数为减少
      * @param $remark string 备注
      * @param $meta array|null 元数据
-     * @throws \Exception
+     * @throws BizException
      */
     public static function change($memberUserId, $change, $remark, $meta = null)
     {

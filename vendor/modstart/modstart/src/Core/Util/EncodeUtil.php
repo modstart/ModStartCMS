@@ -30,6 +30,11 @@ class EncodeUtil
         return join('_', $param);
     }
 
+    /**
+     * @param $string
+     * @param $key
+     * @return mixed
+     */
     public static function expiredDataDecode($string, $key = null)
     {
         $p = explode('_', $string);
