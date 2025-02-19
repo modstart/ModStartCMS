@@ -45,10 +45,15 @@ class MemberCreditUtil
      * @param $change int 变化值，正数为增加，负数为减少
      * @param $remark string 备注
      * @param $meta array|null 元数据
+     * @param $option array 属性
      * @throws \Exception
      */
-    public static function change($memberUserId, $change, $remark, $meta = null)
+    public static function change($memberUserId, $change, $remark, $meta = null, $option = [])
     {
+        $option = array_merge([
+            // 检查是否为负
+            'checkNegative' => true,
+        ], $option);
         BizException::throwsIf('Member.Credit.change=0', !$change);
         $m = ModelUtil::getWithLock(MemberCredit::class, [
             'memberUserId' => $memberUserId
@@ -60,7 +65,9 @@ class MemberCreditUtil
                 'freezeTotal' => 0,
             ]);
         }
-        BizException::throwsIf('Member.Credit.total<0', $change < 0 && $m['total'] + $change < 0);
+        if ($option['checkNegative']) {
+            BizException::throwsIf('Member.Credit.total<0', $change < 0 && $m['total'] + $change < 0);
+        }
         if ($meta && !is_string($meta)) {
             $meta = SerializeUtil::jsonEncode($meta);
         }
