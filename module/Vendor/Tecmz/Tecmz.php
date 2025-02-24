@@ -27,6 +27,11 @@ class Tecmz
         }
     }
 
+    public static function setApiBase($apiBase)
+    {
+        self::$API_BASE = $apiBase;
+    }
+
     /**
      * 校验签名
      *
@@ -959,5 +964,25 @@ class Tecmz
         return $this->callFileConvertQuery('doc_smart_preview', $jobId);
     }
 
+    public function callCloudModelAvailable($type)
+    {
+        return $this->request('/' . $type . '/available', [
+            //'type' => $type,
+        ]);
+    }
+
+    public function callCloudModelQueue($type, $modelConfig = [])
+    {
+        return $this->request('/' . $type . '/queue', [
+            'modelConfig' => SerializeUtil::jsonEncode($modelConfig),
+        ]);
+    }
+
+    public function callCloudModelQuery($type, $taskId)
+    {
+        return $this->request('/' . $type . '/query', [
+            'taskId' => $taskId,
+        ]);
+    }
 
 }

@@ -9,9 +9,13 @@ trait HasVueFileTrait
 {
     public function content()
     {
-        $reflector = new \ReflectionClass(get_class($this));
-        $filePath = $reflector->getFileName();
-        $filePath = preg_replace('/\.php$/', '.vue', $filePath);
+        if (method_exists($this, 'getVuePath')) {
+            $filePath = $this->getVuePath();
+        } else {
+            $reflector = new \ReflectionClass(get_class($this));
+            $filePath = $reflector->getFileName();
+            $filePath = preg_replace('/\.php$/', '.vue', $filePath);
+        }
 
         $vueTemplate = '<div class="ub-alert danger">Vue file not found: ' . $filePath . '</div>';
         $vueScript = 'export default {}';

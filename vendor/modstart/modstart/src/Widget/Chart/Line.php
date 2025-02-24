@@ -90,10 +90,79 @@ class Line extends Chart
     }
 
     /**
+     * @param $callback
+     * @param int $limit
+     * @return $this
+     * @example
+     * $callback = function ($start, $end, $param) {
+     *   return [
+     *     ['title' => '总数', 'x' => [1,2,3], 'y' => [4,5,6]],
+     *   ];
+     * }
+     */
+    public function tableDailyCustomLatest($callback, $limit = 15)
+    {
+        $end = date('Y-m-d');
+        $endTs = strtotime($end);
+        $startTs = $endTs - ($limit - 1) * TimeUtil::PERIOD_DAY;
+        $start = date('Y-m-d', $startTs);
+        return $this->tableDailyCustom($start, $end, $callback);
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @param $callback
+     * @return $this
+     * @example
+     *  $callback = function ($start, $end, $param) {
+     *    return [
+     *      ['title' => '总数', 'x' => [1,2,3], 'y' => [4,5,6]],
+     *    ];
+     *  }
+     */
+    public function tableDailyCustom($start, $end, $callback)
+    {
+        $param = [];
+        $data = call_user_func_array($callback, [$start, $end, $param]);
+        if (isset($data[0]['x'])) {
+            $this->xData($data[0]['x']);
+        } else {
+            $this->xData([]);
+        }
+        $this->option['series'] = [];
+        foreach ($data as $item) {
+            $color = isset($item['color']) ? $item['color'] : ColorUtil::randomColor();
+            $this->option['series'][] = [
+                'name' => $item['title'],
+                'data' => $item['y'],
+                'type' => 'line',
+                'smooth' => true,
+                'areaStyle' => [
+                    'opacity' => 0.1,
+                ],
+                'itemStyle' => [
+                    'normal' => [
+                        'color' => $color,
+                        'lineStyle' => [
+                            'color' => $color
+                        ]
+                    ]
+                ]
+            ];
+        }
+        return $this;
+    }
+
+    /**
      * @param $series
      * @param $limit
      * @return $this
-     * @deprecated
+     * @example
+     * $series = [
+     *    ['title' => '成功', 'table' => Xxx::class, 'where'=>['status'=>1]],
+     *    ['title' => '总数', 'table' => Xxx::class],
+     * ]
      */
     public function tableDailyCountLatest($series = [], $limit = 15)
     {
@@ -109,7 +178,11 @@ class Line extends Chart
      * @param $end
      * @param $series
      * @return $this
-     * @deprecated
+     * @example
+     *  $series = [
+     *     ['title' => '成功', 'table' => Xxx::class, 'where'=>['status'=>1]],
+     *     ['title' => '总数', 'table' => Xxx::class],
+     *  ]
      */
     public function tableDailyCount($start, $end, $series = [])
     {

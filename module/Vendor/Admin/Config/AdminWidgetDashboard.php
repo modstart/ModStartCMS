@@ -56,7 +56,7 @@ class AdminWidgetDashboard
     {
         $verifyHtml = [];
         foreach (ContentVerifyBiz::listAll() as $provider) {
-            if (AdminPermission::permit($provider->verifyRule())) {
+            if (!$provider->verifyRule() || AdminPermission::permit($provider->verifyRule())) {
                 $cnt = $provider->verifyCount();
                 if ($cnt > 0) {
                     $url = $provider->verifyUrl();

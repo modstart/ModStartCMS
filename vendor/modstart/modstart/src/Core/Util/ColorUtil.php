@@ -47,6 +47,23 @@ class ColorUtil
         return $color;
     }
 
+    public static function smart($string)
+    {
+        $perpers = [
+            '/success/i' => '#5cb85c',
+            '/info/i' => '#5bc0de',
+            '/warning/i' => '#f0ad4e',
+            '/danger/i' => '#d9534f',
+            '/error/i' => '#d9534f',
+        ];
+        foreach ($perpers as $perper => $color) {
+            if (preg_match($perper, $string)) {
+                return $color;
+            }
+        }
+        return self::pick($string);
+    }
+
     public static function pick($hashString)
     {
         $index = abs(crc32($hashString)) % count(self::$colors);
