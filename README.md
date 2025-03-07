@@ -33,6 +33,9 @@
   </a>
 </p>
 
+[![star](https://img.shields.io/github/stars/modstart/ModStartCMS.svg)](https://github.com/modstart/ModStartCMS)
+[![star](https://gitee.com/modstart/ModStartCMS/badge/star.svg)](https://gitee.com/modstart/ModStartCMS)
+[![star](https://gitcode.com/modstart-lib/ModStartCMS/star/badge.svg)](https://gitcode.com/modstart-lib/ModStartCMS)
 
 # 企业内容建站系统
 
