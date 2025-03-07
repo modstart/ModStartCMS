@@ -31,11 +31,17 @@
   <a href="https://github.com/modstart/ModStartCMS" target="_blank">
     <img alt="Laravel" src="https://img.shields.io/badge/JS-Vue/ElementUI-green">
   </a>
+  <br />
+  <a href="https://github.com/modstart/ModStartCMS" target="_blank">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/modstart/ModStartCMS?style=social">
+  </a>
+  <a href="https://gitee.com/modstart/ModStartCMS" target="_blank">
+    <img alt="Gitee stars" src="https://gitee.com/modstart/ModStartCMS/badge/star.svg">
+  </a>
+  <a href="https://gitcode.com/modstart-lib/ModStartCMS" target="_blank">
+    <img alt="GitCode stars" src="https://gitcode.com/modstart-lib/ModStartCMS/star/badge.svg">
+  </a>
 </p>
-
-[![star](https://img.shields.io/github/stars/modstart/ModStartCMS.svg)](https://github.com/modstart/ModStartCMS)
-[![star](https://gitee.com/modstart/ModStartCMS/badge/star.svg)](https://gitee.com/modstart/ModStartCMS)
-[![star](https://gitcode.com/modstart-lib/ModStartCMS/star/badge.svg)](https://gitcode.com/modstart-lib/ModStartCMS)
 
 # 企业内容建站系统
 
