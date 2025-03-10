@@ -985,4 +985,9 @@ class Tecmz
         ]);
     }
 
+    public function callCloudModelConfig($type, $name)
+    {
+        return $this->request('/' . $type . '/config/' . $name);
+    }
+
 }

@@ -27,6 +27,8 @@ class ComplexFields extends AbstractField
                 // ['name' => 'xxx', 'title' => '数字', 'type' => 'slider', 'defaultValue' => 0, 'min' => 1, 'max' => 5, 'step' => 1, 'tip'=>'xxx', ],
                 // ['name' => 'xxx', 'title' => '链接', 'type' => 'link', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
                 // ['name' => 'xxx', 'title' => '图片', 'type' => 'image', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '下拉', 'type' => 'select', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', 'option'=>[ 'a'=>'A', 'b'=>'B', ] ],
+                // ['name' => 'xxx', 'title' => '单选', 'type' => 'radio', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', 'option'=>[ 'a'=>'A', 'b'=>'B', ] ],
             ],
             'iconServer' => modstart_admin_url('widget/icon'),
             'linkServer' => modstart_admin_url('widget/link_select'),

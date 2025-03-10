@@ -452,6 +452,9 @@ class InputPackage
             if (preg_match('/^data_temp\\/([a-z_]+)\\/([a-zA-Z0-9]{32}\\.[a-z0-9]+)$/', $value, $mat)) {
                 return $value;
             }
+            if (preg_match('/[\\/]data_temp\\/([a-z_]+)\\/([a-zA-Z0-9]{32}\\.[a-z0-9]+)$/', $value, $mat)) {
+                return 'data_temp/' . $mat[1] . '/' . $mat[2];
+            }
         }
         return $defaultValue;
     }

@@ -116,6 +116,14 @@ class FileUtil
         return null;
     }
 
+    public static function textToFilename($text, $limit = 10)
+    {
+        // 只保留中文、英文、数字
+        $text = preg_replace('/[^\x{4e00}-\x{9fa5}A-Za-z0-9]/u', '', $text);
+        $text = mb_substr($text, 0, $limit);
+        return $text;
+    }
+
     /**
      * @param UploadedFile $file
      * @return string
@@ -642,6 +650,7 @@ class FileUtil
                 $f = @fopen($path, 'rb', false, self::fopenGetContext());
                 if ($f) {
                     file_put_contents($tempPath, $f);
+                    fclose($f);
                 }
             } else {
                 $content = CurlUtil::getRaw($path, [], [

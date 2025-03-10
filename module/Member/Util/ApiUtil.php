@@ -88,6 +88,7 @@ class ApiUtil
             'emailVerified' => false,
             'vip' => MemberVip::get(),
             'vipExpire' => null,
+            'passwordEmpty' => false,
         ];
         if (MemberUser::isLogin()) {
             $memberUser = MemberUser::user();
@@ -104,6 +105,7 @@ class ApiUtil
             $user['emailVerified'] = !!$memberUser['emailVerified'];
             $user['vip'] = MemberVip::get();
             $user['vipExpire'] = $memberUser['vipExpire'];
+            $user['passwordEmpty'] = empty($memberUser['password']);
         }
         foreach (['avatar', 'avatarMedium', 'avatarBig',] as $k) {
             $user[$k] = AssetsUtil::fixFull($user[$k]);

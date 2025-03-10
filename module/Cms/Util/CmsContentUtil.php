@@ -23,6 +23,7 @@ class CmsContentUtil
         $data = ArrayUtil::keepKeys($data, [
             'catId', 'title', 'alias', 'summary', 'cover', 'postTime',
             'status', 'isRecommend', 'isTop', 'tags', 'author', 'source',
+            'detailTemplate', 'seoTitle', 'seoKeywords', 'seoDescription', 'viewCount',
         ]);
         $data['modelId'] = $model['id'];
         $table = "cms_m_" . $model['name'];

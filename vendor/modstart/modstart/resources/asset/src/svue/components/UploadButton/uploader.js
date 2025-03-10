@@ -195,7 +195,7 @@ export const UploadButtonUploader = function (selector, option) {
         });
 
         uploader.on('uploadProgress', function (file, percentage) {
-            var $li = $('#' + file.id); 
+            var $li = $('#' + file.id);
             $li.attr('data-tip-popover', Math.floor(percentage * 100) + '%');
             $li.find('.progress-bar').css('width', percentage * 100 + '%');
             if (!$li.find('.status .iconfont').is('.icon-refresh')) {
@@ -216,7 +216,9 @@ export const UploadButtonUploader = function (selector, option) {
             var f = {
                 name: res.data.data.filename,
                 size: res.data.data.size,
-                path: res.data.path
+                path: res.data.path,
+                fullPath: res.data.preview,
+                file: file,
             };
             $('#' + file.id).fadeOut(function () {
                 $('#' + file.id).remove();

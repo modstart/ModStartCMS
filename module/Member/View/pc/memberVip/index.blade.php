@@ -192,10 +192,6 @@
 
         <div class="tw-h-3"></div>
 
-        @if(modstart_module_enabled('MemberOrderCard'))
-            @include('module::MemberOrderCard.View.inc.memberOrderCard.form')
-        @endif
-
     </div>
 
     @include('module::Member.View.pc.memberVip.openDialog')

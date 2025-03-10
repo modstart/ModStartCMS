@@ -4,16 +4,23 @@
 namespace ModStart\Data;
 
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
+use ModStart\Admin\Model\Data;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\EnvUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\LogUtil;
+use ModStart\Core\Util\PathUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Data\Event\DataDeletedEvent;
 use ModStart\Data\Event\DataFileUploadedEvent;
 use ModStart\Data\Storage\FileDataStorage;
+use ModStart\Data\Support\DummyUploadedFile;
 
 /**
  * Class DataManager
@@ -113,6 +120,19 @@ class DataManager
      */
     public static function uploadHandle($category, $input, $extra = [], $option = null, $param = [])
     {
+        if (!empty($input['fileBase64'])) {
+            $binary = @base64_decode($input['fileBase64']);
+            if (empty($binary)) {
+                return Response::generate(-1, 'fileBase64 decode fail');
+            }
+            unset($input['fileBase64']);
+            $input['file'] = DummyUploadedFile::create($binary);
+            InputPackage::mergeToInput('fileBase64', null);
+            //LogUtil::info('DataManager.uploadHandle.fileBase64', [
+            //    'chunkSize' => strlen($binary),
+            //    'input' => $input,
+            //]);
+        }
         if (null === $option) {
             $option = self::getConfigOption();
         }
@@ -158,7 +178,13 @@ class DataManager
             return $storage->multiPartInit($callParam);
         }
         $callParam['input'] = $input;
-        return $storage->multiPartUpload($callParam);
+        $ret = $storage->multiPartUpload($callParam);
+        if (!empty($ret['data']['finished'])) {
+            if (Input::get('fullPath', false)) {
+                $ret['data']['preview'] = PathUtil::fixFull($ret['data']['preview']);
+            }
+        }
+        return $ret;
     }
 
     /**
@@ -223,6 +249,36 @@ class DataManager
             'path' => $path,
             'fullPath' => $fullPath,
         ]);
+    }
+
+    /**
+     * 上传文件内容
+     * @param string $category
+     * @param string $url
+     * @param array|null $option
+     * @param array $param
+     * @return array [
+     *     'data' => [
+     *         'id'=>1,
+     *     ],
+     *     'path' => 'data/image/xxxx.jpg',
+     *     'fullPath' => '/data/image/xxx.jpg',
+     * ]
+     */
+    public static function uploadFromUrl($category, $url, $option = null, $param = [])
+    {
+        $ext = PathUtil::getExtention($url, 'bin');
+        $filename = PathUtil::getFilename($url);
+        $localPath = FileUtil::savePathToLocalTemp($url, $ext, true);
+        if (empty($localPath)) {
+            return Response::generate(-1, 'Download file fail');
+        }
+        $ret = DataManager::upload($category, $filename, file_get_contents($localPath), $option, $param);
+        if (Response::isError($ret)) {
+            return $ret;
+        }
+        FileUtil::safeCleanLocalTemp($localPath);
+        return $ret;
     }
 
     /**
@@ -301,8 +357,8 @@ class DataManager
 
     /**
      * 根据TempData完整路径存储
-     * @param $dataTempFullPath
-     * @param null $option
+     * @param $dataTempFullPath string
+     * @param $option null
      * @return array
      * @throws \Exception
      */
@@ -394,9 +450,13 @@ class DataManager
     /**
      * 根据路径删除
      *
-     * @param $path
-     * @param null $option
+     * @param $path string
+     * @param $option
      * @throws \Exception
+     * @example path
+     * /data/image/2025/03/03/6207_ohau_8710.wav
+     * http://example.com/data/image/2025/03/03/6207_ohau_8710.wav
+     * http://example.com/data/image/2025/03/03/6207_ohau_8710.wav?foo=bar
      */
     public static function deleteByPath($path, $option = null)
     {
@@ -438,6 +498,27 @@ class DataManager
         $path = AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
         return Response::generateSuccessData([
             'path' => $path,
+            'data' => $data,
+            'fullPath' => self::fixDataFull($data),
+        ]);
+    }
+
+    public static function getById($id, $option = null)
+    {
+        if (null === $option) {
+            $option = self::getConfigOption();
+        }
+        $option = self::prepareOption($option);
+        $storage = self::storage($option);
+        $data = $storage->repository()->getDataById($id);
+        if (empty($data)) {
+            return Response::generateError('Data Not Found');
+        }
+        $path = AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
+        return Response::generateSuccessData([
+            'path' => $path,
+            'data' => $data,
+            'fullPath' => self::fixDataFull($data),
         ]);
     }
 
@@ -620,6 +701,41 @@ class DataManager
             $fullPath = self::fixFull($fullPath);
         }
         return $fullPath;
+    }
+
+    public static function mergeData(&$list, $key = 'dataId', $mergeDataKey = '_data')
+    {
+        if (empty($list)) {
+            return;
+        }
+        $dataIds = ArrayUtil::flatItemsByKey($list, $key);
+        if (empty($dataIds)) {
+            return;
+        }
+        $data = Data::whereIn('id', $dataIds)->get()->toArray();
+        $dataMap = ArrayUtil::mapItemsByKey($data, 'id');
+        foreach ($list as &$item) {
+            $dataId = $item[$key];
+            if (isset($dataMap[$dataId])) {
+                $item[$mergeDataKey] = $dataMap[$dataId];
+            } else {
+                $item[$mergeDataKey] = null;
+            }
+        }
+    }
+
+    public static function mergeDataUrl(&$list, $key = 'dataId', $mergeDataKey = '_dataUrl')
+    {
+        if (empty($list)) {
+            return;
+        }
+        self::mergeData($list, $key, $mergeDataKey);
+        foreach ($list as &$item) {
+            if (empty($item[$mergeDataKey])) {
+                continue;
+            }
+            $item[$mergeDataKey] = self::fixDataFull($item[$mergeDataKey]);
+        }
     }
 
 }

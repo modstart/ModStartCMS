@@ -66,6 +66,9 @@
         "vuex": "^3.6.2",
         "webix-routie": "^0.4.0",
         "xlsx": "^0.16.9",
-        "crypto-js": "^4.2.0"
+        "crypto-js": "^4.2.0",
+        "dayjs": "^1.11.12",
+        "wavesurfer.js": "^7.8.6",
+        "xgplayer": "^3.0.20"
     }
 }

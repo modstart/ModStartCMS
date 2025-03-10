@@ -100,9 +100,7 @@ class FileManager
         }
         switch ($action) {
             case 'config':
-                // upload and save to user space
             case 'uploadDirect':
-                // update and not save to user space
             case 'uploadDirectRaw':
             case 'categoryEdit':
             case 'categoryDelete':
@@ -259,13 +257,18 @@ class FileManager
         if ($retSaveUser['code']) {
             return Response::jsonError($ret['msg']);
         }
-        DataUploadedEvent::fire($uploadTable, $userId, $category, $ret['data']['data']['id']);
-        return Response::jsonSuccessData([
+        $data = [
+            'id' => $ret['data']['data']['id'],
             'path' => $ret['data']['path'],
             'fullPath' => $ret['data']['fullPath'],
             'filename' => $ret['data']['data']['filename'],
             'data' => $ret['data']['data'],
-        ]);
+        ];
+        if (Input::get('fullPath', false)) {
+            $data['fullPath'] = PathUtil::fixFull($data['fullPath']);
+        }
+        DataUploadedEvent::fire($uploadTable, $userId, $category, $data['id']);
+        return Response::jsonSuccessData($data);
     }
 
     private static function uploadAndSaveBase64Execute(InputPackage $input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param)

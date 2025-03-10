@@ -665,6 +665,7 @@ export default {
     right: 0;
     height: auto !important;
     bottom: 0;
+    border-radius: 0px;
 
     .el-dialog__header {
         display: none;

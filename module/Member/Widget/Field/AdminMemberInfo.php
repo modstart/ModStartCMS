@@ -4,6 +4,8 @@
 namespace Module\Member\Widget\Field;
 
 
+use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\ArrayUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Field\Text;
 use ModStart\Field\Type\FieldRenderMode;
@@ -61,7 +63,8 @@ class AdminMemberInfo extends Text
     {
         $this->hookRendering(function (AbstractField $field, $item, $index) {
             $column = $field->column();
-            return MemberCmsUtil::showFromId($item->{$column}, $this->getVariable('memberFieldName'));
+            $value = ArrayUtil::getByDotKey($item->toArray(), $column);
+            return MemberCmsUtil::showFromId($value, $this->getVariable('memberFieldName'));
         });
     }
 }

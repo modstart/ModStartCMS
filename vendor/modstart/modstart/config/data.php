@@ -25,7 +25,7 @@ return [
         'audio' => [
             'maxSize' => 1024 * 1024 * 1024,
             'extensions' => [
-                'mp3'
+                'mp3', 'wav',
             ]
         ],
         'file' => [

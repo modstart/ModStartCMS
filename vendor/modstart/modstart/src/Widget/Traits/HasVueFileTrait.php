@@ -42,15 +42,22 @@ trait HasVueFileTrait
             $vueInitParam = call_user_func([$this, 'initParam']);
         }
 
+        $setting = [
+            'importVueBase' => true,
+        ];
+        if (property_exists($this, '_setting')) {
+            $setting = array_merge($setting, $this->_setting);
+        }
+        if ($setting['importVueBase']) {
+            ModStart::js([
+                'asset/vendor/vue.js',
+                'asset/vendor/element-ui/index.js',
+            ]);
+        }
 
         if (method_exists($this, 'contentRenderBefore')) {
             call_user_func([$this, 'contentRenderBefore']);
         }
-
-        ModStart::js([
-            'asset/vendor/vue.js',
-            'asset/vendor/element-ui/index.js',
-        ]);
 
         ModStart::script(join('', [
             "(function(){",

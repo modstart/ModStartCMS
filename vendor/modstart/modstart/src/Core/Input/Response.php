@@ -415,6 +415,7 @@ class Response
 
     public static function textEventStreamed($callback)
     {
+        set_time_limit(0);
         $response = new StreamedResponse();
         $response->setCallback(function () use (&$callback) {
             // {"type":"data","data":...}

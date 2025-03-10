@@ -1,3 +1,26 @@
+export const VModelMixin = {
+    model: {
+        prop: 'value',
+        event: 'update:modelValue',
+    },
+    props: {
+        value: {
+            type: [String, Number, Boolean, Object, Array],
+            default: null,
+        },
+    },
+    computed: {
+        modelValue: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                this.$emit('update:modelValue', val);
+            },
+        },
+    },
+}
+
 export const SelectorRecordsMixin = {
     data() {
         return {

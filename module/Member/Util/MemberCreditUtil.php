@@ -12,6 +12,13 @@ use Module\Member\Type\MemberCreditFreezeStatus;
 
 class MemberCreditUtil
 {
+    public static function checkOrFail($memberUserId)
+    {
+        if (self::getTotal($memberUserId) < 1) {
+            BizException::throws(modstart_module_config('Member', 'creditName') . '不足');
+        }
+    }
+
     public static function paginateLog($memberUserId, $page, $pageSize, $option = [])
     {
         $option['where']['memberUserId'] = $memberUserId;

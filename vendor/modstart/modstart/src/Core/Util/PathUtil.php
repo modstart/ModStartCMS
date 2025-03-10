@@ -80,6 +80,9 @@ class PathUtil
 
     /**
      * 将外网地址转换为内网地址
+     * 在使用第三方存储时，程序拉取外网地址会造成流量浪费，使用此功能可将外网地址映射为内网地址，节省流量
+     * 比如将外网地址 http://cdn.example.com/abc.jpg 映射为内网地址 http://cdn.oss-cn-shanghai.aliyuncs.com/abc.jpg
+     * 这样程序处理时会自动使用内网地址，而不会造成流量浪费
      * @param $path string
      * @return string
      */
@@ -99,5 +102,27 @@ class PathUtil
             $path = str_replace($urlPair['public'], $urlPair['internal'], $path);
         }
         return $path;
+    }
+
+    public static function getExtention($url, $default = null)
+    {
+        $info = parse_url($url);
+        if (empty($info['path'])) {
+            return null;
+        }
+        $path = $info['path'];
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        return $ext ? $ext : $default;
+    }
+
+    public static function getFilename($url)
+    {
+        $info = parse_url($url);
+        if (empty($info['path'])) {
+            return null;
+        }
+        $path = $info['path'];
+        $filename = pathinfo($path, PATHINFO_BASENAME);
+        return $filename;
     }
 }

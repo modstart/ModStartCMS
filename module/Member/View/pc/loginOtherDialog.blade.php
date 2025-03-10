@@ -11,7 +11,6 @@
 @endsection
 
 @section('bodyAppend')
-    @parent
     {!! \ModStart\Core\Hook\ModStartHook::fireInView('MemberLoginPageBodyAppend'); !!}
 @endsection
 
