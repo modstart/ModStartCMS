@@ -510,4 +510,26 @@ $(window).on('load', function () {
         return false;
     });
 
+    // 事件
+    window.addEventListener('message', function (e) {
+        const data = e.data;
+        if (!data.type) {
+            return
+        }
+        if (data.type !== 'FeedbackTicket:log' && data.type !== 'FeedbackTicket:env') {
+            return
+        }
+        const sendMsg = function (type, data) {
+            const iframe = $('iframe')[0]
+            iframe.contentWindow.postMessage({type: type, data: data}, '*');
+        }
+        MS.api.post(window.__msAdminRoot + 'collect', {data: JSON.stringify(data)}, function (res) {
+            MS.api.defaultCallback(res, {
+                success: function (res) {
+                    sendMsg(data.type, res.data)
+                }
+            })
+        });
+    });
+
 });

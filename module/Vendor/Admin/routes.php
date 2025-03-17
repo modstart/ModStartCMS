@@ -6,3 +6,5 @@ $router->match(['get', 'post'], 'widget/link_select', 'WidgetLinkController@sele
 
 $router->match(['get', 'post'], 'security/second_verify', 'SecurityController@secondVerify');
 
+$router->match(['post'], 'collect', 'CollectController@index');
+

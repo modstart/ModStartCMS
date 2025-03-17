@@ -39,4 +39,24 @@ class CurrentApp implements BaseType
         return self::get() == $app;
     }
 
+    public static function isAdmin()
+    {
+        return self::is(self::ADMIN);
+    }
+
+    public static function isWeb()
+    {
+        return self::is(self::WEB);
+    }
+
+    public static function isOpenApi()
+    {
+        return self::is(self::OPEN_API);
+    }
+
+    public static function isApi()
+    {
+        return self::is(self::API);
+    }
+
 }

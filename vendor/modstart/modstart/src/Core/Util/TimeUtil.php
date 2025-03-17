@@ -13,14 +13,18 @@ class TimeUtil
     const PERIOD_WEEK = 24 * 3600 * 7;
     const PERIOD_DAY = 24 * 3600;
     const PERIOD_HOUR = 3600;
+    /** @deprecated  */
     const PERIOD_MINITE = 60;
+    const PERIOD_MINUTE = 60;
 
     const MINUTE_PERIOD_YEAR = 24 * 60 * 365;
     const MINUTE_PERIOD_MONTH = 24 * 60 * 30;
     const MINUTE_PERIOD_WEEK = 24 * 60 * 7;
     const MINUTE_PERIOD_DAY = 24 * 60;
     const MINUTE_PERIOD_HOUR = 60;
+    /** @deprecated  */
     const MINUTE_PERIOD_MINITE = 1;
+    const MINUTE_PERIOD_MINUTE = 1;
 
     public static function formatTimeLength($seconds)
     {
@@ -29,8 +33,8 @@ class TimeUtil
             $ts = strtotime('2020-01-01 00:00:00');
         }
         $hour = intval($seconds / self::PERIOD_HOUR);
-        $minute = intval(($seconds % self::PERIOD_HOUR) / self::PERIOD_MINITE);
-        $second = intval($seconds % self::PERIOD_MINITE);
+        $minute = intval(($seconds % self::PERIOD_HOUR) / self::PERIOD_MINUTE);
+        $second = intval($seconds % self::PERIOD_MINUTE);
         $pcs = [];
         if ($hour) {
             $pcs[] = sprintf('%02d', $hour);
@@ -148,10 +152,10 @@ class TimeUtil
             $pcs[] = $v . $langMap[$lang]['h'];
             $timeSeconds %= self::PERIOD_HOUR;
         }
-        if ($timeSeconds >= self::PERIOD_MINITE) {
-            $v = intval($timeSeconds / self::PERIOD_MINITE);
+        if ($timeSeconds >= self::PERIOD_MINUTE) {
+            $v = intval($timeSeconds / self::PERIOD_MINUTE);
             $pcs[] = $v . $langMap[$lang]['m'];
-            $timeSeconds %= self::PERIOD_MINITE;
+            $timeSeconds %= self::PERIOD_MINUTE;
         }
         if ($timeSeconds > 0) {
             $pcs[] = $timeSeconds . $langMap[$lang]['s'];

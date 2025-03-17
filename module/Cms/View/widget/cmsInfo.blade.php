@@ -15,6 +15,14 @@
             @if(!config('modstart.admin.versionCheckDisable',false))
                 <div data-admin-version></div>
             @endif
+            <div>
+                使用遇到问题请
+                <a href="javascript:;" data-dialog-title="工单反馈" data-dialog-height="95%" data-dialog-request="https://modstart.com/feedback_ticket">
+                    <i class="iconfont icon-description"></i>
+                    提交工单
+                </a>
+                反馈给我们
+            </div>
         </div>
         <script type="text/javascript">
             // 最新版本检测

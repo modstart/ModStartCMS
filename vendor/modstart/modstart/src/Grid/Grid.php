@@ -84,7 +84,7 @@ use ModStart\Support\Manager\FieldManager;
  * @method Grid|mixed gridToolbar($value = []),
  * @method Grid|mixed pageJumpEnable($enable = null),
  *
- * $value = function(Grid $grid){  }
+ * $value = function(Grid $grid){  $grid->model()->xxxx();  }
  * @method Grid|mixed hookPreQuery($value = null)
  * $value = function(Grid $grid, $items){ return $items; }
  * @method Grid|mixed hookPrepareItems($value = null)

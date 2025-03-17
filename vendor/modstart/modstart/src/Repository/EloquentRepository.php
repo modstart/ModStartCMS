@@ -293,41 +293,9 @@ class EloquentRepository extends Repository
             if (empty($column) || empty($type)) {
                 continue;
             }
-            if (Str::contains($column, '.')) {
-                exit('Under Dev');
-                // $this->setRelationSort($model, $column, $type);
-            } else {
-                $model->addQuery('orderBy', [$column, $type]);
-            }
+            $model->addQuery('orderBy', [$column, $type]);
         }
     }
-
-    /**
-     * 设置关联数据排序.
-     *
-     * @param Model $model
-     * @param string $column
-     * @param string $type
-     *
-     * @return void
-     */
-//    protected function setRelationSort(Grid\Model $model, $column, $type)
-//    {
-//        list($relationName, $relationColumn) = explode('.', $column);
-//
-//        if ($model->getQueries()->contains(function ($query) use ($relationName) {
-//            return $query['method'] == 'with' && in_array($relationName, $query['arguments']);
-//        })) {
-//            $model->addQuery('select', [$this->getTableColumns()]);
-//
-//            $model->resetOrderBy();
-//
-//            $model->addQuery('orderBy', [
-//                $relationColumn,
-//                $type,
-//            ]);
-//        }
-//    }
 
     /**
      * 设置分页参数.

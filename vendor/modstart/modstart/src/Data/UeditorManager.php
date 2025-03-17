@@ -7,6 +7,7 @@ namespace ModStart\Data;
 use Illuminate\Support\Facades\Input;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Type\UploadType;
+use ModStart\App\Core\CurrentApp;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\InputPackage;
@@ -46,6 +47,7 @@ class UeditorManager
     {
         $dataUploadConfig = config('data.upload', []);
         $config = [
+
             // 上传图片配置项
             "imageActionName" => "image",
             "imageFieldName" => "file",
@@ -120,8 +122,37 @@ class UeditorManager
                 "imageUrlTemplate" => modstart_config('UEditor_FormulaImageUrlTemplate', 'https://r.latexeasy.com/image.svg?{}'),
                 'editorMode' => modstart_config('UEditor_FormulaEditorMode', 'live'),
                 'editorLiveServer' => modstart_config('UEditor_FormulaEditorLiveServer', 'https://latexeasy.com'),
-            ]
+            ],
+
+            'toolbarShows' => [],
+            'shortcutMenuShows' => [],
+
         ];
+
+        // AI功能
+        if (modstart_module_enabled('AigcBase')) {
+            if (CurrentApp::isAdmin()) {
+                if (modstart_config('AigcBase_AdminRichEditorEnable', false)) {
+                    $config['toolbarShows']['ai'] = true;
+                    $config['shortcutMenuShows']['ai'] = true;
+                    $config['ai'] = [
+                        'driver' => 'ModStart',
+                        'driverConfig' => [
+                            'url' => modstart_admin_url('aigc/chat/ueditor'),
+                            'key' => '',
+                        ],
+                    ];
+                }
+            }
+        }
+
+        if (empty($config['toolbarShows'])) {
+            $config['toolbarShows'] = new \stdClass();
+        }
+        if (empty($config['shortcutMenuShows'])) {
+            $config['shortcutMenuShows'] = new \stdClass();
+        }
+
         return $config;
     }
 

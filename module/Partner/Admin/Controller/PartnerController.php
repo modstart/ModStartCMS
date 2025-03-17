@@ -53,7 +53,7 @@ class PartnerController extends Controller
     public function config(AdminConfigBuilder $builder)
     {
         $builder->useDialog();
-        $builder->pageTitle('友情链接设置');
+        $builder->pageTitle('功能设置');
         $builder->text('Partner_Title', '友情链接标题')->defaultValue('合伙伙伴');
         $builder->switch('Partner_LinkDisable', '友情链接不跳转');
         $builder->formClass('wide');

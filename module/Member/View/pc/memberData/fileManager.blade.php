@@ -15,7 +15,7 @@
             }
         };
     </script>
-    {!! \ModStart\Core\Hook\ModStartHook::fireInView('UploadScript',['source'=>'fileManager','server'=>\ModStart\Core\Input\Request::currentPageUrlWithOutQueries()]); !!}
+    {!! \ModStart\Core\Hook\ModStartHook::fireInView('UploadScript',['source'=>'fileManager','server'=>\ModStart\Core\Input\Request::currentPageUrlWithOutQueries(),'id'=>$category,]); !!}
     <script src="@asset('asset/entry/dataFileManager.js')"></script>
 @endsection
 
