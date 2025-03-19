@@ -1,0 +1,100 @@
+{
+  "id": "4845055",
+  "name": "Aigc",
+  "font_family": "iconfont-ai",
+  "css_prefix_text": "icon-ai-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "663540",
+      "name": "sound",
+      "font_class": "sound",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "6694596",
+      "name": "主持人",
+      "font_class": "sound-prompt",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "10564327",
+      "name": "mic-on",
+      "font_class": "mic",
+      "unicode": "e713",
+      "unicode_decimal": 59155
+    },
+    {
+      "icon_id": "27965361",
+      "name": "声音合成",
+      "font_class": "sound-generate",
+      "unicode": "e696",
+      "unicode_decimal": 59030
+    },
+    {
+      "icon_id": "33736128",
+      "name": "覆盖全行业精美视频模板",
+      "font_class": "video-template",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "36209394",
+      "name": "video generation",
+      "font_class": "video",
+      "unicode": "e888",
+      "unicode_decimal": 59528
+    },
+    {
+      "icon_id": "40219183",
+      "name": "工具_音色",
+      "font_class": "speaker",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "41390030",
+      "name": "声音克隆",
+      "font_class": "sound-clone",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "42048056",
+      "name": "数字人",
+      "font_class": "human",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "33519",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
+      "icon_id": "5701367",
+      "name": "my",
+      "font_class": "my",
+      "unicode": "e941",
+      "unicode_decimal": 59713
+    },
+    {
+      "icon_id": "14996395",
+      "name": "chat",
+      "font_class": "chat",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "29779411",
+      "name": "magic",
+      "font_class": "magic",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

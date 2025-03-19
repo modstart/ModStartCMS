@@ -1,0 +1,26 @@
+{
+    "name": "AigcBase",
+    "title": "AI平台对接",
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "types": [
+        "PC",
+        "Mobile"
+    ],
+    "tags": [],
+    "require": [
+        "Vendor:>=4.1.0"
+    ],
+    "suggest": [
+        "AigcChatOpenAi",
+        "AigcChatZhipuAi"
+    ],
+    "version": "1.3.0",
+    "modstartVersion": ">=4.1.0",
+    "author": "ModStart",
+    "description": "提供AI基础框架包，支持各种模型接入",
+    "providers": [],
+    "config": {}
+}

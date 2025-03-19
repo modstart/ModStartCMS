@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "iconfont-ai"; /* Project id 4845055 */
+  src: url('iconfont.woff2?t=1741155667151') format('woff2'),
+       url('iconfont.woff?t=1741155667151') format('woff'),
+       url('iconfont.ttf?t=1741155667151') format('truetype');
+}
+
+.iconfont-ai {
+  font-family: "iconfont-ai" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ai-sound:before {
+  content: "\e62a";
+}
+
+.icon-ai-sound-prompt:before {
+  content: "\e659";
+}
+
+.icon-ai-mic:before {
+  content: "\e713";
+}
+
+.icon-ai-sound-generate:before {
+  content: "\e696";
+}
+
+.icon-ai-video-template:before {
+  content: "\e65e";
+}
+
+.icon-ai-video:before {
+  content: "\e888";
+}
+
+.icon-ai-speaker:before {
+  content: "\e60d";
+}
+
+.icon-ai-sound-clone:before {
+  content: "\e628";
+}
+
+.icon-ai-human:before {
+  content: "\e618";
+}
+
+.icon-ai-home:before {
+  content: "\e6bb";
+}
+
+.icon-ai-my:before {
+  content: "\e941";
+}
+
+.icon-ai-chat:before {
+  content: "\e612";
+}
+
+.icon-ai-magic:before {
+  content: "\e600";
+}
+

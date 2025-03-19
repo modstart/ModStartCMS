@@ -11,9 +11,11 @@ use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminDialogPage;
 use ModStart\Core\Dao\DynamicModel;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\FileUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Form\Form;
 use ModStart\ModStart;
@@ -67,7 +69,13 @@ class SystemController extends Controller
                 AdminPermission::demoCheck();
                 $content = file_get_contents(base_path('.env'));
                 $content = preg_replace('/APP_DEBUG\\s*=\\s*true/', 'APP_DEBUG=false', $content);
-                file_put_contents(base_path('.env'), $content);
+                try {
+                    file_put_contents(base_path('.env'), $content);
+                } catch (\Exception $e) {
+                    BizException::throwsIfMessageMatch($e, [
+                        'Permission denied' => L('FileWriteNoPermission')
+                    ]);
+                }
                 return Response::json(0, L('Operate Success'), null, '[reload]');
             case 'adminPath':
                 $form = new Form(DynamicModel::class);

@@ -3,6 +3,8 @@
 namespace ModStart\Core\Exception;
 
 
+use ModStart\Core\Input\Response;
+
 class BizException extends \Exception
 {
     public $param = [];
@@ -109,20 +111,27 @@ class BizException extends \Exception
      */
     public static function throwsIfMessageMatch($error, $messagePatterns, $messagePrefix = '', $isRegex = false)
     {
-        if ($error instanceof \Exception) {
-            $error = $error->getMessage();
+        $msg = $error;
+        if ($msg instanceof \Exception) {
+            $msg = $msg->getMessage();
         }
         foreach ($messagePatterns as $pattern => $message) {
             if ($isRegex) {
-                if (preg_match($pattern, $error)) {
+                if (preg_match($pattern, $msg)) {
                     BizException::throws($messagePrefix . $message);
                 }
             } else {
-                if (strpos($error, $pattern) !== false) {
+                if (strpos($msg, $pattern) !== false) {
                     BizException::throws($messagePrefix . $message);
                 }
             }
         }
+        throw $error;
+    }
+
+    public function toResponse()
+    {
+        return Response::generateError($this->getMessage());
     }
 
 }

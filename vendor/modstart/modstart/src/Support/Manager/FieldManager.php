@@ -75,6 +75,7 @@ class FieldManager
             'richHtml' => \ModStart\Field\RichHtml::class,
             'select' => \ModStart\Field\Select::class,
             'selectRemote' => \ModStart\Field\SelectRemote::class,
+            'transfer' => \ModStart\Field\Transfer::class,
             'switch' => \ModStart\Field\SwitchField::class,
             'tags' => \ModStart\Field\Tags::class,
             'text' => \ModStart\Field\Text::class,

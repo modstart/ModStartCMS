@@ -63,7 +63,7 @@ class AdminMemberInfo extends Text
     {
         $this->hookRendering(function (AbstractField $field, $item, $index) {
             $column = $field->column();
-            $value = ArrayUtil::getByDotKey($item->toArray(), $column);
+            $value = ArrayUtil::getByDotKey(ModelUtil::toArray($item), $column);
             return MemberCmsUtil::showFromId($value, $this->getVariable('memberFieldName'));
         });
     }

@@ -146,6 +146,7 @@ return [
     "NextPage" => "下一页",
     "No" => "否",
     "No Permission" => "没有权限",
+    "FileWriteNoPermission" => "文件没有写入权限",
     "No Records" => "没有记录",
     "None" => "空",
     "Not Installed" => "未安装",

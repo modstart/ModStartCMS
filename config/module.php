@@ -53,5 +53,8 @@ return [
         'Cms' => [
             'enable' => true,
         ],
+        'AigcBase' => [
+            'enable' => true,
+        ],
     ],
 ];

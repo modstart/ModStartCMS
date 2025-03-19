@@ -67,6 +67,7 @@ use ModStart\ModStart;
  * @method \ModStart\Field\Textarea             textarea($column, $label = '')
  * @method \ModStart\Field\Text                 text($column, $label = '')
  * @method \ModStart\Field\Time                 time($column, $label = '')
+ * @method \ModStart\Field\Transfer             transfer($column, $label = '')
  * @method \ModStart\Field\Tree                 tree($column, $label = '')
  * @method \ModStart\Field\Type                 type($column, $label = '')
  * @method \ModStart\Field\Values               values($column, $label = '')

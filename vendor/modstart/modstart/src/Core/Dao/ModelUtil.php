@@ -1701,4 +1701,15 @@ class ModelUtil
         return false;
     }
 
+    public static function toArray($item)
+    {
+        if ($item instanceof Model) {
+            return $item->toArray();
+        } else if ($item instanceof \stdClass) {
+            return (array)$item;
+        } else {
+            return $item;
+        }
+    }
+
 }
