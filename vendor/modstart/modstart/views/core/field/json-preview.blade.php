@@ -6,7 +6,7 @@
         </div>
     @else
         <pre
-            style="margin:0;line-height:1rem;overflow:auto;">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty($value)}}</pre>
+            style="margin:0;line-height:1rem;overflow:auto; @if(!empty($showMaxHeight)) max-height:{{$showMaxHeight}}; @endif" class="tw-bg-white ub-scroll-bar-mini">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty($value)}}</pre>
     @endif
 @else
     <span class="ub-text-muted">-</span>

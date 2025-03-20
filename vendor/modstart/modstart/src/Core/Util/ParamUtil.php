@@ -67,6 +67,11 @@ class ParamUtil
             return $option['prefix'] . $key . $option['suffix'];
         }, array_keys($param));
         $replace = array_values($param);
+        foreach ($replace as $k => $v) {
+            if (is_array($v)) {
+                $replace[$k] = join(',', $v);
+            }
+        }
         $text = str_replace($search, $replace, $text);
         $prefixRegex = preg_quote($option['prefix'], '/');
         $suffixRegex = preg_quote($option['suffix'], '/');

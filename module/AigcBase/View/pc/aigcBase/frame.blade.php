@@ -85,7 +85,7 @@
         <div data-profile-box class="ub-content-box ub-border tw-hidden tw-absolute tw-left-3 tw-bottom-8 tw-w-48 tw-shadow-lg">
             <div class="row">
                 <div class="col-6">
-                    <a href="{{modstart_web_url('member')}}"
+                    <a href="javascript:;" data-dialog-title="个人中心" data-dialog-request="{{modstart_web_url('member',['dialog'=>1])}}"
                        class="ub-block tw-text-gray-600 hover:tw-bg-gray-50 tw-rounded-lg tw-py-2 tw-text-center margin-bottom">
                         <div class="tw-w-8 tw-h-8 tw-bg-gray-100 tw-rounded-full tw-mx-auto">
                             <i class="iconfont icon-user tw-w-5" style="font-size:1rem;"></i>

@@ -3,6 +3,8 @@
 namespace Module\Vendor\Admin\Controller;
 
 use Illuminate\Routing\Controller;
+use ModStart\Admin\Auth\Admin;
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\FileUtil;
@@ -45,52 +47,54 @@ class CollectController extends Controller
                 $startTimeTs = strtotime($startTime);
                 $endTimeTs = strtotime($endTime);
                 $logsList = [];
-                $files = FileUtil::listFiles(storage_path('logs'), '*.log');
-                foreach ($files as $f) {
-                    $fName = $f['filename'];
-                    $f = fopen($f['pathname'], 'r');
-                    $lines = [];
-                    while (!feof($f)) {
-                        $line = fgets($f);
-                        // [2024-10-25 09:03:09] product.ERROR:
-                        // [01158] 2024-11-14 10:00:58
-                        if (
-                            !preg_match('/^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] /', $line)
-                            &&
-                            !preg_match('/^\[\d{5}\] \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} /', $line)
-                        ) {
-                            $lines[] = $line;
-                            continue;
-                        }
-                        if (empty($lines)) {
-                            $lines[] = $line;
-                            continue;
-                        }
-                        $lineText = trim(join('', $lines));
-                        $lines = [$line];
-                        $lineTime = $this->getLogTimestamp($lineText);
-                        if ($lineTime > 0) {
-                            if ($lineTime > $endTimeTs) {
-                                break;
-                            }
-                            if ($lineTime < $startTimeTs) {
+                if (!AdminPermission::isDemo()) {
+                    $files = FileUtil::listFiles(storage_path('logs'), '*.log');
+                    foreach ($files as $f) {
+                        $fName = $f['filename'];
+                        $f = fopen($f['pathname'], 'r');
+                        $lines = [];
+                        while (!feof($f)) {
+                            $line = fgets($f);
+                            // [2024-10-25 09:03:09] product.ERROR:
+                            // [01158] 2024-11-14 10:00:58
+                            if (
+                                !preg_match('/^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] /', $line)
+                                &&
+                                !preg_match('/^\[\d{5}\] \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} /', $line)
+                            ) {
+                                $lines[] = $line;
                                 continue;
                             }
-                        }
-                        if ($fName) {
-                            $logsList[] = "\n============== " . $fName . " ==============";
-                            $fName = '';
-                        }
-                        $logsList[] = $lineText;
-                    }
-                    if (!empty($lines)) {
-                        $lineText = trim(join('', $lines));
-                        $lineTime = $this->getLogTimestamp($lineText);
-                        if ($lineTime < 0 || ($lineTime >= $startTimeTs && $lineTime <= $endTimeTs)) {
+                            if (empty($lines)) {
+                                $lines[] = $line;
+                                continue;
+                            }
+                            $lineText = trim(join('', $lines));
+                            $lines = [$line];
+                            $lineTime = $this->getLogTimestamp($lineText);
+                            if ($lineTime > 0) {
+                                if ($lineTime > $endTimeTs) {
+                                    break;
+                                }
+                                if ($lineTime < $startTimeTs) {
+                                    continue;
+                                }
+                            }
                             if ($fName) {
                                 $logsList[] = "\n============== " . $fName . " ==============";
+                                $fName = '';
                             }
                             $logsList[] = $lineText;
+                        }
+                        if (!empty($lines)) {
+                            $lineText = trim(join('', $lines));
+                            $lineTime = $this->getLogTimestamp($lineText);
+                            if ($lineTime < 0 || ($lineTime >= $startTimeTs && $lineTime <= $endTimeTs)) {
+                                if ($fName) {
+                                    $logsList[] = "\n============== " . $fName . " ==============";
+                                }
+                                $logsList[] = $lineText;
+                            }
                         }
                     }
                 }

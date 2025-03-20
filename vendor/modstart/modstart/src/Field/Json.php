@@ -27,6 +27,7 @@ class Json extends AbstractField
             'editorHeight' => '200px',
             // api | default
             'jsonMode' => 'default',
+            'showMaxHeight' => '200px',
         ]);
     }
 
@@ -44,6 +45,15 @@ class Json extends AbstractField
     public function editorHeight($value)
     {
         $this->addVariables(['editorHeight' => $value]);
+        return $this;
+    }
+
+    public function showMaxHeight($value)
+    {
+        if (is_numeric($value)) {
+            $value = $value . 'px';
+        }
+        $this->addVariables(['showMaxHeight' => $value]);
         return $this;
     }
 

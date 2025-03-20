@@ -3,9 +3,8 @@
 namespace Module\AigcBase\Util;
 
 use ModStart\Core\Dao\ModelUtil;
-use ModStart\Core\Input\Response;
-use Module\Member\Auth\MemberUser;
 use Module\Member\Util\MemberCreditUtil;
+use Module\MemberQuota\Util\MemberQuotaUtil;
 
 class AigcCreditUtil
 {
@@ -24,7 +23,7 @@ class AigcCreditUtil
         return $amount * $cost;
     }
 
-    public static function calcText($configKeyPrefix, $content)
+    public static function calcContentLength($configKeyPrefix, $content)
     {
         return self::calc($configKeyPrefix, mb_strlen($content));
     }
@@ -38,10 +37,21 @@ class AigcCreditUtil
         ModelUtil::transactionCommit();
     }
 
-    public static function changeByContent($configKeyPrefix, $userId, $content, $remark)
+    public static function changeByContentLength($memberUserId, $configKeyPrefix, $content, $remark)
     {
-        $amount = self::calcText($configKeyPrefix, $content);
-        self::change($userId, -$amount, $remark);
+        $amount = self::calcContentLength($configKeyPrefix, $content);
+        self::change($memberUserId, -$amount, $remark);
+    }
+
+    public static function checkQuotaCreditOrFail($memberUserId, $quotaBiz, $quotaValue = 1, $creditValue = 1)
+    {
+        $pass = false;
+        if (modstart_module_enabled('MemberQuota')) {
+            $pass = MemberQuotaUtil::check($memberUserId, $quotaBiz, $quotaValue);
+        }
+        if (!$pass) {
+            MemberCreditUtil::checkOrFail($memberUserId, $creditValue);
+        }
     }
 
 }

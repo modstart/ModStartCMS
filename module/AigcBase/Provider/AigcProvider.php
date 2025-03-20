@@ -25,7 +25,9 @@ class AigcProvider
     public static function getByFullName($providerModel)
     {
         list($providerName, $modelName) = self::parseProviderModel($providerModel);
-        return self::getByName($providerName);
+        $provider = self::getByName($providerName);
+        $provider->defaultModel = $modelName;
+        return $provider;
     }
 
     public static function parseProviderModel($providerModel)

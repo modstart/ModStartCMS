@@ -4,6 +4,7 @@
 namespace Module\Member\Web\Controller;
 
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 use ModStart\Admin\Widget\DashboardItemA;
 use ModStart\App\Web\Layout\WebPage;
@@ -32,7 +33,12 @@ class MemberController extends MemberFrameController implements MemberLoginCheck
 
     public function index(WebPage $page)
     {
-        list($view, $viewFrame) = $this->viewPaths('member.index');
+        $viewBase = 'member.index';
+        if (Input::get('dialog', 0)) {
+            $viewBase = 'member.dialog';
+            $this->shareDialogPageViewFrame();
+        }
+        list($view, $viewFrame) = $this->viewPaths($viewBase);
         $page->view($view);
         foreach (MemberHomePanel::get() as $panel) {
             $page->append(new Row(function (Row $row) use ($panel) {
@@ -45,7 +51,7 @@ class MemberController extends MemberFrameController implements MemberLoginCheck
             $page->append(Box::make(new Row(function (Row $row) use ($group) {
                 foreach ($group['children'] as $child) {
                     $value = isset($child['value']) ? $child['value'] : null;
-                    $row->column(['md' => 2, '' => 4], DashboardItemA::makeIconTitleValueLink($child['icon'], $child['title'], $value, $child['url']));
+                    $row->column(['md' => 2, '' => 3], DashboardItemA::makeIconTitleValueLink($child['icon'], $child['title'], $value, $child['url']));
                 }
             }), $group['title']));
         }

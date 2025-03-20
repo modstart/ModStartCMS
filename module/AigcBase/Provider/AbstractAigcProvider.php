@@ -11,6 +11,8 @@ use Module\AigcBase\Util\AigcKeyPoolUtil;
 
 abstract class AbstractAigcProvider
 {
+    public $defaultModel;
+
     abstract public function name();
 
     abstract public function title();
@@ -86,8 +88,12 @@ abstract class AbstractAigcProvider
         return $result;
     }
 
-    protected function keyPoolGetOrFail($model)
+    protected function keyPoolGetOrFail($model = null)
     {
+        if (null === $model) {
+            $model = $this->defaultModel;
+        }
+        BizException::throwsIfEmpty('AI模型没有选择', $model);
         $keyPool = AigcKeyPoolUtil::randomByType(static::NAME, $model);
         BizException::throwsIfEmpty('AI没有配置(name=' . static::NAME . ',model=' . $model . ')', $keyPool);
         return $keyPool;

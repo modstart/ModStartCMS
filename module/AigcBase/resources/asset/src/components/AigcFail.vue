@@ -1,6 +1,12 @@
 <script>
 export default {
-    name: "AigcEmpty",
+    name: "AigcFail",
+    props: {
+        text: {
+            type: String,
+            default: '失败了'
+        }
+    },
 }
 </script>
 
@@ -8,10 +14,10 @@ export default {
     <div>
         <div class="ub-empty">
             <div class="icon">
-                <i class="iconfont icon-empty-box"></i>
+                <i class="iconfont icon-warning ub-text-danger"></i>
             </div>
             <div class="text">
-                暂无数据
+                {{ text }}
             </div>
         </div>
     </div>
