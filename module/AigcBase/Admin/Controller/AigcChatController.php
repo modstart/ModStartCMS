@@ -32,7 +32,7 @@ class AigcChatController extends Controller
                 if (!$driver) {
                     BizException::throws('机器人没有配置，请在 后台→系统设置→AI平台对接→功能设置 中配置');
                 }
-                $provider = AigcChatProvider::getByName($driver);
+                $provider = AigcChatProvider::getByFullName($driver);
                 if (empty($provider)) {
                     BizException::throws('机器人没有配置');
                 } else {

@@ -56,5 +56,8 @@ return [
         'AigcBase' => [
             'enable' => true,
         ],
+        //'AigcChatTecmz' => [
+        //    'enable' => true,
+        //],
     ],
 ];

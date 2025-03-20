@@ -105,7 +105,7 @@ class AigcKeyPoolController extends Controller
         $builder->useDialog();
         $builder->pageTitle('功能设置');
         $builder->switch('AigcBase_AdminRichEditorEnable', '后台富文本编辑器AI功能')->defaultValue(false);
-        $builder->select('AigcBase_AdminRichEditorDriver', '后台富文本编辑器AI驱动')->options(AigcChatProvider::allDefaultMap());
+        $builder->select('AigcBase_AdminRichEditorDriver', '后台富文本编辑器AI驱动')->options(AigcChatProvider::modelMap());
         $builder->formClass('wide-lg');
         $builder->disableBoxWrap(true);
         return $builder->perform();

@@ -168,6 +168,12 @@ var Editor = {
             pasteplain: false,
             autoHeightEnabled: true,
             focus: false,
+            toolbarShows: {
+                ai: false,
+            },
+            shortcutMenuShows: {
+                ai: false,
+            }
         }, EditorUploadConfig, editorOption, getEditorExtraConfig());
 
         var ueditor = UE.getEditor(id, editorOpt);

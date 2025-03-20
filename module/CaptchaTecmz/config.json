@@ -21,8 +21,7 @@
     "version": "1.4.0",
     "author": "ModStart",
     "description": "提供魔众智能验证码验证服务",
-    "providers": [
-    ],
-    "config": {
-    }
+    "providers": [],
+    "config": {},
+    "modstartVersion": ">=4.1.0"
 }
