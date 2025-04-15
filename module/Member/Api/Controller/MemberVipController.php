@@ -54,6 +54,9 @@ class MemberVipController extends Controller implements MemberLoginCheck
         if (empty($memberVip)) {
             return Response::generateError('请选择会员类型');
         }
+        if ($memberVip['isDefault']) {
+            return Response::generateError('默认会员类型不能购买');
+        }
         $priceInfoRet = $this->processCalc();
         if ($priceInfoRet['code']) {
             return Response::generateError($priceInfoRet['msg']);

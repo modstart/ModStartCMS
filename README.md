@@ -311,10 +311,26 @@ AdminMenu::register(function () {
 
 ## ✉️ 使用交流
 
-### QQ交流群
+> 添加好友请备注 ModStartCMS
 
-<img width="400" src="https://modstart.com/contact/ContactQQGroup" />
+<table width="100%">
+    <thead>
+        <tr>
+            <th width="50%">微信交流群</th>
+            <th>QQ交流群</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <img style="width:100%;"
+                     src="https://modstart.com/contact/ContactQQGroup" />
+            </td>
+            <td>
+                <img style="width:100%;" 
+                     src="https://modstart.com/contact/ContactWechatGroup" />
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-### 微信交流群
-
-<img width="400" src="https://modstart.com/contact/ContactWechatGroup" />

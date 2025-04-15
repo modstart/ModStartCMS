@@ -46,7 +46,7 @@ abstract class AbstractAigcChatProvider extends AbstractAigcProvider
 
     protected function chatResponse($sessionId, $content, $option)
     {
-        if (!$option['markdown']) {
+        if (empty($option['markdown'])) {
             $content = MarkdownUtil::convertToHtml($content);
         }
         return Response::generateSuccessData([

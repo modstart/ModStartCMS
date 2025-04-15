@@ -8,6 +8,7 @@ use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleManager;
+use Module\Member\Auth\MemberUser;
 use Module\Member\Events\MemberUserVipChangeEvent;
 use Module\Vendor\Util\CacheUtil;
 
@@ -294,5 +295,109 @@ class MemberVipUtil
         CacheUtil::forget('MemberVipList');
         CacheUtil::forget('MemberVipMap');
         CacheUtil::forget('MemberVipRights');
+    }
+
+    public static function accessCheck($recordId, $dailyStoreModel, $option = [])
+    {
+        $option = array_merge([
+            'memberUserId' => null,
+            'checkerBefore' => null,
+        ], $option);
+        if (null === $option['memberUserId']) {
+            $option['memberUserId'] = MemberUser::id();
+        }
+        if ($option['checkerBefore']) {
+            if (call_user_func_array($option['checkerBefore'], [$option['memberUserId'], $recordId])) {
+                return true;
+            }
+        }
+        $where = [
+            'memberUserId' => $option['memberUserId'],
+            'recordId' => $recordId,
+        ];
+        if (ModelUtil::exists($dailyStoreModel, $where)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function accessQuotaConsume($recordId, $vipSetKeyPrefix, $dailyStoreModel, $option = [])
+    {
+        $option = array_merge([
+            'memberUserId' => null,
+            'vipSet' => null,
+            'dailyCheck' => true,
+            'monthlyCheck' => true,
+            'yearlyCheck' => true,
+            'checkerBefore' => null,
+        ], $option);
+        if (null === $option['memberUserId']) {
+            $option['memberUserId'] = MemberUser::id();
+        }
+        $where = [
+            'memberUserId' => $option['memberUserId'],
+            'recordId' => $recordId,
+        ];
+        if ($option['checkerBefore']) {
+            if (call_user_func_array($option['checkerBefore'], [$option['memberUserId'], $recordId])) {
+                return Response::generateSuccess();
+            }
+        }
+        if (ModelUtil::exists($dailyStoreModel, $where)) {
+            return Response::generateSuccess();
+        }
+        if (null === $option['vipSet']) {
+            $option['vipSet'] = self::getMemberVipByIdCached($option['memberUserId']);
+        }
+        if ($option['yearlyCheck']) {
+            if (!array_key_exists($vipSetKeyPrefix . 'Yearly', $option['vipSet'])) {
+                return Response::generate(-1, '年度额度不足:-1');
+            }
+            if ($option['vipSet'][$vipSetKeyPrefix . 'Yearly']) {
+                $yearlyCount = ModelUtil::model($dailyStoreModel)
+                    ->where('memberUserId', $option['memberUserId'])
+                    ->where('day', '>=', date('Y-01-01'))
+                    ->where('day', '<=', date('Y-12-31'))
+                    ->count();
+                if ($yearlyCount >= $option['vipSet'][$vipSetKeyPrefix . 'Yearly']) {
+                    return Response::generate(-1, '年度额度不足');
+                }
+            }
+        }
+        if ($option['monthlyCheck']) {
+            if (!array_key_exists($vipSetKeyPrefix . 'Monthly', $option['vipSet'])) {
+                return Response::generate(-1, '月度额度不足:-1');
+            }
+            if ($option['vipSet'][$vipSetKeyPrefix . 'Monthly']) {
+                $monthlyCount = ModelUtil::model($dailyStoreModel)
+                    ->where('memberUserId', $option['memberUserId'])
+                    ->where('day', '>=', date('Y-m-01'))
+                    ->where('day', '<=', date('Y-m-t'))
+                    ->count();
+                if ($monthlyCount >= $option['vipSet'][$vipSetKeyPrefix . 'Monthly']) {
+                    return Response::generate(-1, '月度额度不足');
+                }
+            }
+        }
+        if ($option['dailyCheck']) {
+            if (!array_key_exists($vipSetKeyPrefix . 'Daily', $option['vipSet'])) {
+                return Response::generate(-1, '日度额度不足:-1');
+            }
+            if ($option['vipSet'][$vipSetKeyPrefix . 'Daily']) {
+                $dailyCount = ModelUtil::model($dailyStoreModel)
+                    ->where('memberUserId', $option['memberUserId'])
+                    ->where('day', date('Y-m-d'))
+                    ->count();
+                if ($dailyCount >= $option['vipSet'][$vipSetKeyPrefix . 'Daily']) {
+                    return Response::generate(-1, '日度额度不足');
+                }
+            }
+        }
+        ModelUtil::insert($dailyStoreModel, [
+            'memberUserId' => $option['memberUserId'],
+            'recordId' => $recordId,
+            'day' => date('Y-m-d'),
+        ]);
+        return Response::generate(0, 'ok');
     }
 }

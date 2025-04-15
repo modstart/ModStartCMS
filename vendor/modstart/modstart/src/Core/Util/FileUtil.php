@@ -677,6 +677,20 @@ class FileUtil
     }
 
     /**
+     * 保存本地临时路径
+     * @param $content string 文件内容
+     * @param $ext string 文件后缀
+     * @return string 返回本地临时路径
+     * @throws BizException
+     */
+    public static function saveContentToLocalTempPath($content, $ext = 'tmp')
+    {
+        $p = self::generateLocalTempPath($ext);
+        file_put_contents($p, $content);
+        return $p;
+    }
+
+    /**
      * 产生一个本地临时路径
      *
      * @param $ext string 文件后缀

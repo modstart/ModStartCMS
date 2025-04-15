@@ -29,9 +29,15 @@ use Module\Member\Type\MemberMessageStatus;
 use Module\Member\Type\MemberPasswordStrength;
 use Module\Member\Type\MemberStatus;
 use Module\Vendor\Type\DeviceType;
+use Module\Vendor\Util\CacheUtil;
 
 class MemberUtil
 {
+    public static function clearCache($memberUserId)
+    {
+        CacheUtil::forget('MemberUser:' . $memberUserId);
+    }
+
     /**
      * @return mixed
      * @since 1.5.0
@@ -45,12 +51,12 @@ class MemberUtil
 
     public static function get($id)
     {
-        return ModelUtil::get('member_user', ['id' => $id]);
+        return ModelUtil::get(MemberUser::class, ['id' => $id]);
     }
 
     public static function getCached($id)
     {
-        return Cache::remember('MemberUser:' . $id, 60, function () use ($id) {
+        return CacheUtil::remember('MemberUser:' . $id, 3600, function () use ($id) {
             return self::get($id);
         });
     }

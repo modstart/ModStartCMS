@@ -134,6 +134,9 @@
                             </div>
                         </div>
                     @endif
+                    @foreach(\Module\Member\Provider\RegisterProcessor\MemberRegisterProcessorProvider::listAll() as $provider)
+                        {!! $provider->render() !!}
+                    @endforeach
                     <div class="line">
                         <div class="field">
                             <button type="submit" class="btn btn-round btn-primary btn-lg btn-block">绑定登录</button>

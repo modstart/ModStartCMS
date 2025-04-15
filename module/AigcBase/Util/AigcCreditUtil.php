@@ -13,9 +13,7 @@ class AigcCreditUtil
         $unit = modstart_config($configKeyPrefix . 'Unit', 1);
         $cost = modstart_config($configKeyPrefix . 'Cost', 1);
         if (is_callable($countCalculator)) {
-            $count = call_user_func_array($countCalculator, [
-                $unit
-            ]);
+            $count = call_user_func_array($countCalculator, []);
         } else {
             $count = $countCalculator;
         }

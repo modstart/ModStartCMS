@@ -259,6 +259,27 @@ const MS = {
             return sprintf.call(null, ...arguments)
         }
         return sprintf.call(null, ...arguments)
+    },
+    ai: {
+        chat: function (scope, prompt) {
+            var url
+            switch (scope) {
+                case 'admin':
+                    url = window.__msAdminRoot + 'aigc/chat_quick'
+                    break
+                default:
+                    throw 'scope not support'
+            }
+            return new Promise((resolve, reject) => {
+                MS.api.post(url, {prompt: prompt}, function (res) {
+                    if (res.code === 0) {
+                        resolve(res.data.content)
+                    } else {
+                        reject(res.msg)
+                    }
+                })
+            })
+        }
     }
 }
 

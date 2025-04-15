@@ -9,12 +9,14 @@ use ModStart\Admin\Concern\HasAdminQuickCRUD;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Input\Response;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
 use ModStart\Support\Concern\HasFields;
 use Module\Member\Biz\Vip\MemberVipBiz;
+use Module\Member\Model\MemberVipSet;
 use Module\Member\Util\MemberVipUtil;
 
 class MemberVipSetController extends Controller
@@ -24,13 +26,13 @@ class MemberVipSetController extends Controller
     protected function crud(AdminCRUDBuilder $builder)
     {
         $builder
-            ->init('member_vip_set')
+            ->init(MemberVipSet::class)
             ->field(function ($builder) {
                 /** @var HasFields $builder */
                 $builder->layoutPanel('基础信息', function ($builder) {
                     $builder->id('id', 'ID')->addable(true)->editable(true)
                         ->ruleUnique('member_vip_set')->required()
-                        ->defaultValue(ModelUtil::sortNext('member_vip_set', [], 'id'));
+                        ->defaultValue(ModelUtil::sortNext(MemberVipSet::class, [], 'id'));
                     $builder->text('title', '名称')->required()->ruleUnique('member_vip_set');
                     $builder->text('flag', '英文标识')->required()->ruleUnique('member_vip_set');
                     $builder->switch('visible', '可见')->gridEditable(true)->tip('开启后前台用户VIP开通页面可见');
@@ -58,6 +60,20 @@ class MemberVipSetController extends Controller
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->like('title', '名称');
+            })
+            ->hookSaving(function (Form $form) {
+                $dataSubmitted = $form->dataAdding();
+                if (!empty($dataSubmitted['isDefault'])) {
+                    ModelUtil::model(MemberVipSet::class)->where('id', '<>', $dataSubmitted['id'])->update(['isDefault' => false]);
+                } else {
+                    $defaultCount = ModelUtil::model(MemberVipSet::class)
+                        ->where('id', '<>', $dataSubmitted['id'])
+                        ->where('isDefault', true)->count();
+                    if ($defaultCount == 0) {
+                        return Response::generateError('请至少设置一个默认会员');
+                    }
+                }
+                return Response::generateSuccess();
             })
             ->gridOperateAppend(
                 '

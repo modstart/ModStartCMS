@@ -76,10 +76,17 @@
 {{ \ModStart\ModStart::js('asset/entry/basic.js') }}
 <script>
     $(function () {
+        <?php
+        $valueOld = ( null===$value?(null===$defaultValue?[]:$defaultValue):$value );
+        $newValue = [];
+        foreach($fields as $f){
+            $newValue[$f['name']] = isset($valueOld[$f['name']])?$valueOld[$f['name']]:null;
+        }
+        ?>
         var app = new Vue({
             el: '#{{$id}}Input',
             data: {
-                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value) !!},
+                value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($newValue) !!},
                 icons: []
             },
             mounted(){

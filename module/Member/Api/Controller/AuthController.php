@@ -355,6 +355,13 @@ class AuthController extends ModuleBaseController
         if ($memberExists) {
             $memberUserId = $memberExists['id'];
         } else {
+            foreach (MemberRegisterProcessorProvider::listAll() as $provider) {
+                /** @var AbstractMemberRegisterProcessorProvider $provider */
+                $ret = $provider->preCheck();
+                if (Response::isError($ret)) {
+                    return $ret;
+                }
+            }
             $ret = MemberUtil::register($username, $phone, $email, null, true);
             if ($ret['code']) {
                 return Response::generate(-1, $ret['msg']);

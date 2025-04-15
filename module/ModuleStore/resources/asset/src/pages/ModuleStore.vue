@@ -49,7 +49,7 @@
             </el-tabs>
             <a href="javascript:;" @click="search.tab='system'"
                class="ub-text-muted tw-leading-10 tw-px-3 tw-absolute tw-right-0 tw-top-0">
-                <i class="iconfont icon-cog"></i> 系统模块
+                <i class="iconfont icon-cog"></i> 内置模块
             </a>
             <div class="ub-padding">
                 <div class="tw-float-right">
@@ -120,11 +120,11 @@
                 </div>
                 <div class="text">暂无记录</div>
             </div>
-            <div class="ub-padding" v-if="filterModules.length>0">
+            <div class="margin-top tw-p-3" v-if="filterModules.length>0">
                 <div class="row">
                     <div v-for="(module,moduleIndex) in filterModules" class="col-md-4">
                         <div
-                            class="tw-bg-white tw-p-2 tw-rounded tw-mb-2 tw-border-gray-200 tw-border-solid tw-border tw-shadow">
+                            class="hover:tw-shadow-lg tw-bg-white tw-mb-2 tw-p-2 tw-rounded-lg tw-shadow ub-border">
                             <div style="padding-left:6rem;">
                                 <div class="tw-w-28 tw-float-left" style="margin-left:-6rem;">
                                     <a v-if="module.url"
@@ -253,28 +253,26 @@
                 </a>
             </div>
             <div v-if="!memberUser.id">
-                <div style="padding:0 1.5rem;">
-                    <div class="tw-py-2 tw-text-center tw-text-lg">
-                        请登录账号
+                <div style="padding:1.5rem;">
+                    <div class="margin-bottom tw-font-bold">
+                        <i class="iconfont icon-code-alt"></i>
+                        任意搭配市场的模块，让系统百变
                     </div>
                     <div class="ub-form vertical">
-                        <div class="line">
-                            <div class="label">用户名</div>
+                        <div class="line margin-bottom">
                             <div class="field">
                                 <input type="text" class="form" v-model="memberLoginInfo.username"
                                        @keyup="doSubmitCheck" placeholder="输入用户名"/>
                             </div>
                         </div>
-                        <div class="line">
-                            <div class="label">密码</div>
+                        <div class="line margin-bottom">
                             <div class="field">
                                 <input type="password" class="form" v-model="memberLoginInfo.password"
                                        @keyup="doSubmitCheck"
                                        placeholder="输入密码"/>
                             </div>
                         </div>
-                        <div class="line">
-                            <div class="label">验证码</div>
+                        <div class="line margin-bottom">
                             <div class="field">
                                 <div class="row no-gutters">
                                     <div class="col-8">
@@ -293,14 +291,15 @@
                             <div class="field">
                                 <el-checkbox v-model="memberLoginInfo.agree">
                                     同意
-                                    <a target="_blank" href="https://modstart.com/article/module_agreement">《使用协议》</a>
+                                    <a target="_blank"
+                                       href="https://modstart.com/article/module_agreement">《使用协议》</a>
                                     <a target="_blank" href="https://modstart.com/article/disclaimer">《免责声明》</a>
                                 </el-checkbox>
                             </div>
                         </div>
                         <div class="line">
                             <div class="field">
-                                <button type="submit" class="btn btn-primary btn-block" @click="doMemberLoginSubmit()">
+                                <button type="submit" class="btn btn-primary btn-block btn-round" @click="doMemberLoginSubmit()">
                                     登录
                                 </button>
                             </div>
@@ -618,8 +617,16 @@ export default {
                 this.$dialog.tipError('请先同意使用协议')
                 return
             }
+            const postData = {
+                username: this.memberLoginInfo.username,
+                password: this.memberLoginInfo.password,
+                captcha: this.memberLoginInfo.captcha,
+            }
+            postData.ek = MS.util.randomString(8)
+            postData.username = 'E.A:' + MS.util.encrypt.aesEncode(postData.ek, postData.username)
+            postData.password = 'E.A:' + MS.util.encrypt.aesEncode(postData.ek, postData.password)
             this.$dialog.loadingOn()
-            this.doStoreRequest('store/login', this.memberLoginInfo, res => {
+            this.doStoreRequest('store/login', postData, res => {
                 this.$dialog.loadingOff()
                 this.$dialog.tipSuccess('登录成功')
                 this.doLoadStoreMember()

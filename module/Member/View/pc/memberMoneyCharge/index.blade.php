@@ -23,42 +23,51 @@
                     请先安装 <a href="https://modstart.com/m/PayCenter" target="_blank">PayCenter</a> 模块
                 </div>
             @elseif(\Module\PayCenter\Util\PayUtil::preferShowQuick())
-                <div class="ub-form vertical">
-                    <div class="line">
-                        <div class="label">充值金额</div>
-                        <div class="field">
-                            <input class="form" type="number" step="any" value="100" name="money"/>
-                        </div>
-                    </div>
-                    <div class="line">
-                        <div class="label">扫码支付</div>
-                        <div class="field">
-                            @include('module::PayCenter.View.inc.quick')
-                            <script>
-                                $(function () {
-                                    var refresh = function () {
-                                        var money = parseFloat($('[name="money"]').val());
-                                        if (money >= 0.01 && money < 1000 * 10000) {
-                                            money = parseFloat(money).toFixed(2)
-                                            $('[name="money"]').val(money + '')
-                                            window.__payCenterQuick.prepareLazy(
-                                                '{{\Module\Member\Core\MemberMoneyChargePayCenterBiz::NAME}}',
-                                                {money: money},
-                                                {money: money}
-                                            );
-                                        } else {
-                                            window.__payCenterQuick.empty();
-                                        }
-                                    };
-                                    $('[name="money"]').on('keyup', refresh);
-                                    refresh();
-                                });
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            @else
                 <form action="{{modstart_api_url('member_money/charge/submit')}}" method="post" data-ajax-form>
+                    <div class="ub-form vertical">
+                        <div class="line">
+                            <div class="label">充值金额</div>
+                            <div class="field">
+                                <input class="form" type="number" step="any" value="100" name="money"/>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="label">扫码支付</div>
+                            <div class="field">
+                                @include('module::PayCenter.View.inc.quick')
+                                <script>
+                                    $(function () {
+                                        var refresh = function () {
+                                            window.__payCenterQuick.empty();
+                                            window.__payCenterQuick.registerUnsupported(function (type) {
+                                                $('[data-ajax-form]').submit();
+                                            });
+                                            var money = parseFloat($('[name="money"]').val());
+                                            if (money >= 0.01 && money < 1000 * 10000) {
+                                                money = parseFloat(money).toFixed(2)
+                                                $('[name="money"]').val(money + '')
+                                                window.__payCenterQuick.prepareLazy(
+                                                    '{{\Module\Member\Core\MemberMoneyChargePayCenterBiz::NAME}}',
+                                                    {money: money},
+                                                    {money: money}
+                                                );
+                                            }
+                                        };
+                                        var debounceRefresh = function(){
+                                            var timer;
+                                            return function(){
+                                                clearTimeout(timer);
+                                                timer = setTimeout(refresh, 500);
+                                            }
+                                        }();
+                                        $('[name="money"]').on('keyup', debounceRefresh);
+                                        debounceRefresh();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                @else
                     <div class="ub-form">
                         <div class="line">
                             <div class="label">充值金额</div>
@@ -74,8 +83,8 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            @endif
+               @endif
+            </form>
         </div>
     </div>
 

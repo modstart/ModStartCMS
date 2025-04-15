@@ -73,7 +73,7 @@ class SystemController extends Controller
                     file_put_contents(base_path('.env'), $content);
                 } catch (\Exception $e) {
                     BizException::throwsIfMessageMatch($e, [
-                        'Permission denied' => L('FileWriteNoPermission')
+                        'Permission denied' => L('FileWriteNoPermission') . '(.env)',
                     ]);
                 }
                 return Response::json(0, L('Operate Success'), null, '[reload]');

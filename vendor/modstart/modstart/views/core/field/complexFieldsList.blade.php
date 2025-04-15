@@ -62,7 +62,7 @@
                                 <el-select v-model="value[vIndex]['{{$f['name']}}']"
                                            placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}">
                                     @foreach($f['option'] as $k=>$v)
-                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
+                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($v)}}" :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
                                     @endforeach
                                 </el-select>
                             @elseif($f['type']=='link')

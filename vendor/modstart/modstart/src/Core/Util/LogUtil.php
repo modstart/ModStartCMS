@@ -29,4 +29,9 @@ class LogUtil
     {
         Log::error(self::buildString($label, $data));
     }
+
+    public static function echoInfo($label, $data = null)
+    {
+        echo self::buildString($label, $data) . PHP_EOL;
+    }
 }

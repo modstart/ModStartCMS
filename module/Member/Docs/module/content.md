@@ -19,6 +19,12 @@
         绑定邮箱
     授权登录
         开放式授权登录接口
+        微信公众号授权登录（MemberOauth）
+        QQ
+        支付宝
+        抖音
+        小程序扫码
+        微信关注登录扫码（MemberWechatMpLogin)
     钱包
         钱包充值
         钱包提现
@@ -26,6 +32,7 @@
     积分
         积分充值
         积分流程
+        名称自定义
     分组
         用户分组
     VIP
@@ -35,12 +42,7 @@
 
 ## 常见问题
 
-#### 如何保证用户登录后才可以访问方法？
-
-当前 `Controller` 实现 `Module\Member\Support\MemberLoginCheck` 接口，同时在 Route 中使用中间件 `WebAuthMiddleware`
-
 #### 如何获取到当前用户分组和VIP等级？
-
 
 通过以下方法获取到当前用户
 
