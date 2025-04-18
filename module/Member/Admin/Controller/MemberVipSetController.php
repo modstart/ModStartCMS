@@ -62,7 +62,11 @@ class MemberVipSetController extends Controller
                 $filter->like('title', '名称');
             })
             ->hookSaving(function (Form $form) {
-                $dataSubmitted = $form->dataAdding();
+                if ($form->isModeAdd()) {
+                    $dataSubmitted = $form->dataAdding();
+                } else {
+                    $dataSubmitted = $form->dataEditing();
+                }
                 if (!empty($dataSubmitted['isDefault'])) {
                     ModelUtil::model(MemberVipSet::class)->where('id', '<>', $dataSubmitted['id'])->update(['isDefault' => false]);
                 } else {

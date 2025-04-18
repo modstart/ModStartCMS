@@ -22,7 +22,7 @@ class HttpMonitor
             $eventName = 'Illuminate\\Foundation\\Http\\Events\\RequestHandled';
         }
         Event::listen($eventName, function ($eventOrRequest = null, $response = null) use ($eventName) {
-            if (!defined('LARAVEL_START')) {
+            if (!defined('LARAVEL_START') || defined('MODSTART_HTTP_MONITOR_IGNORE')) {
                 return;
             }
             /** @var Request $request */

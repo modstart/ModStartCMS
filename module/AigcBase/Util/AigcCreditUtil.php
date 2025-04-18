@@ -21,9 +21,24 @@ class AigcCreditUtil
         return $amount * $cost;
     }
 
-    public static function calcContentLength($configKeyPrefix, $content)
+    /**
+     * 计算长度，1个汉字2个字符，1个英文字母1个字符
+     * @param $text string
+     * @return int
+     */
+    public static function countChar($text)
     {
-        return self::calc($configKeyPrefix, mb_strlen($content));
+        // 1个汉字2个字符
+        $text = preg_replace('/[\x{4e00}-\x{9fa5}]/u', 'xx', $text);
+        // 1个英文字母1个字符
+        // ignore
+        $text = preg_replace('/[a-zA-Z]/u', 'x', $text);
+        return mb_strlen($text);
+    }
+
+    public static function calcContentCharLength($configKeyPrefix, $content)
+    {
+        return self::calc($configKeyPrefix, self::countChar($content));
     }
 
     public static function change($memberUserId, $change, $remark)
@@ -35,9 +50,9 @@ class AigcCreditUtil
         ModelUtil::transactionCommit();
     }
 
-    public static function changeByContentLength($memberUserId, $configKeyPrefix, $content, $remark)
+    public static function changeByContentCharLength($memberUserId, $configKeyPrefix, $content, $remark)
     {
-        $amount = self::calcContentLength($configKeyPrefix, $content);
+        $amount = self::calcContentCharLength($configKeyPrefix, $content);
         self::change($memberUserId, -$amount, $remark);
     }
 

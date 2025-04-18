@@ -323,12 +323,12 @@ AdminMenu::register(function () {
     <tbody>
         <tr>
             <td>
-                <img style="width:100%;"
-                     src="https://modstart.com/contact/ContactQQGroup" />
+                <img style="width:100%;" 
+                     src="https://modstart.com/code_dynamic/modstart_wx" />
             </td>
             <td>
-                <img style="width:100%;" 
-                     src="https://modstart.com/contact/ContactWechatGroup" />
+                <img style="width:100%;"
+                     src="https://modstart.com/code_dynamic/modstart_qq" />
             </td>
         </tr>
     </tbody>

@@ -254,10 +254,10 @@ class AuthController extends ModuleBaseController
         /** @var AbstractOauth $oauth */
         $oauth = MemberOauth::getOrFail($oauthType);
         //如果用户已经登录直接关联到当前用户
-        $loginedMemberUserId = Session::get('memberUserId', 0);
-        if ($loginedMemberUserId > 0) {
+        $currentMemberUserId = Session::get('memberUserId', 0);
+        if ($currentMemberUserId > 0) {
             $ret = $oauth->processBindToUser([
-                'memberUserId' => $loginedMemberUserId,
+                'memberUserId' => $currentMemberUserId,
                 'userInfo' => $oauthUserInfo,
             ]);
             BizException::throwsIfResponseError($ret);
@@ -345,7 +345,7 @@ class AuthController extends ModuleBaseController
         if ($email) {
             $exists = MemberUtil::getByEmail($email);
             if ($exists) {
-                if ($memberExists) {
+                if ($memberExists && $memberExists['id'] !== $exists['id']) {
                     return Response::generate(-1, '手机号与邮箱分别绑定了不同的账户，请先解绑');
                 }
                 $memberExists = $exists;
@@ -1351,10 +1351,11 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, '请进行安全验证');
         }
 
-        $memberUser = MemberUtil::getByEmail($email);
-        if (!empty($memberUser)) {
-            return Response::generate(-1, '邮箱已经被占用');
-        }
+        // 如果已经有注册过的账号，会绑定，这里校验去除
+        //$memberUser = MemberUtil::getByEmail($email);
+        //if (!empty($memberUser)) {
+        //    return Response::generate(-1, '邮箱已经被占用');
+        //}
 
         if (Session::get('oauthBindEmailVerifyTime') && $email == Session::get('oauthBindEmail')) {
             if (Session::get('oauthBindEmailVerifyTime') + 60 > time()) {
@@ -1398,10 +1399,11 @@ class AuthController extends ModuleBaseController
             return Response::generate(-1, '请进行安全验证');
         }
 
-        $memberUser = MemberUtil::getByPhone($phone);
-        if (!empty($memberUser)) {
-            return Response::generate(-1, '手机已经被占用');
-        }
+        // 如果已经有注册过的账号，会绑定，这里校验去除
+        //$memberUser = MemberUtil::getByPhone($phone);
+        //if (!empty($memberUser)) {
+        //    return Response::generate(-1, '手机已经被占用');
+        //}
 
         if (Session::get('oauthBindPhoneVerifyTime') && $phone == Session::get('oauthBindPhone')) {
             if (Session::get('oauthBindPhoneVerifyTime') + 60 > time()) {

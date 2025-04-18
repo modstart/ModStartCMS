@@ -971,10 +971,16 @@ class Tecmz
         ]);
     }
 
-    public function callCloudModelQueue($type, $modelConfig = [])
+    public function callCloudModelQueue($type, $modelConfig = [], $option = [])
     {
+        $option = array_merge([
+            'callback' => '',
+            'outId' => '',
+        ], $option);
         return $this->request('/' . $type . '/queue', [
             'modelConfig' => SerializeUtil::jsonEncode($modelConfig),
+            'callback' => $option['callback'],
+            'outId' => $option['outId'],
         ]);
     }
 
