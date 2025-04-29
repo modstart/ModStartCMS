@@ -28,7 +28,7 @@ class ModuleServiceProvider extends ServiceProvider
                             'title' => '接口设置',
                             'children' => [
                                 [
-                                    'title' => '魔众智能验证码',
+                                    'title' => '智能验证码',
                                     'url' => '\Module\CaptchaTecmz\Admin\Controller\ConfigController@setting',
                                 ],
                             ]

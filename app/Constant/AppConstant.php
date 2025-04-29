@@ -6,6 +6,6 @@ class AppConstant
 {
     const APP = 'cms';
     const APP_NAME = 'ModStartCMS';
-    const VERSION = '9.3.0';
+    const VERSION = '9.4.0';
 }
 

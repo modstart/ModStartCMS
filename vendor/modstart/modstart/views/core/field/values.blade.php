@@ -40,7 +40,7 @@
                     </body>
                 </table>
                 @if(empty($countFixed))
-                    <a href="javascript:;" class="ub-text-muted" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
+                    <a href="javascript:;" class="ub-text-muted tw-ml-1" @click="value.push('')"><i class="iconfont icon-plus"></i> {{L('Add')}}</a>
                 @endif
             @endif
         </div>

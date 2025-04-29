@@ -1,6 +1,6 @@
 {
     "name": "CaptchaTecmz",
-    "title": "魔众智能验证码",
+    "title": "智能验证码",
     "require": [
         "Vendor:>=1.1.0"
     ],
@@ -14,13 +14,11 @@
         "Admin"
     ],
     "tags": [
-        "人工智能",
-        "验证码",
-        "API驱动"
+        "安全"
     ],
-    "version": "1.4.0",
+    "version": "1.4.1",
     "author": "ModStart",
-    "description": "提供魔众智能验证码验证服务",
+    "description": "提供智能验证码验证服务",
     "providers": [],
     "config": {},
     "modstartVersion": ">=4.1.0"

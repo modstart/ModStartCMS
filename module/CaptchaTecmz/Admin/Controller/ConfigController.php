@@ -10,11 +10,11 @@ class ConfigController extends Controller
 {
     public function setting(AdminConfigBuilder $builder)
     {
-        $builder->pageTitle('魔众智能验证码');
-        $builder->display('CaptchaTecmz_Remark', '说明')->addable(true)
-            ->help('<div>访问 <a href="' . TecmzUtil::url() . '" target="_blank">' . TecmzUtil::url() . '</a> 申请</div>');
+        $builder->pageTitle('智能验证码');
         $builder->text('CaptchaTecmz_AppId', 'AppId');
         $builder->text('CaptchaTecmz_AppSecret', 'AppSecret');
+        $builder->display('_', '')->addable(true)
+            ->help('<div>访问 <a href="' . TecmzUtil::url('Captcha') . '" target="_blank">' . TecmzUtil::url('Captcha') . '</a> 申请</div>');
         return $builder->perform();
     }
 

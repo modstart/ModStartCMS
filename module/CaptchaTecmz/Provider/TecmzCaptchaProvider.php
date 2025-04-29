@@ -22,7 +22,7 @@ class TecmzCaptchaProvider extends AbstractCaptchaProvider
 
     public function title()
     {
-        return '魔众智能验证码';
+        return '智能验证码';
     }
 
     public function render()
