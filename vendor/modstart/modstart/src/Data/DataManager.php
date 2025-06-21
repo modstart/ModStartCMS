@@ -148,6 +148,9 @@ class DataManager
         }
         if (!empty($input['md5'])) {
             $file['md5'] = $input['md5'];
+            if (strlen($file['md5']) != 32 || !preg_match('/^[A-Za-z0-9]+$/', $file['md5'])) {
+                return Response::generate(-1, 'md5 invalid');
+            }
         }
         $file = array_merge($file, $extra);
         if (empty(self::$config[$category])) {
@@ -283,17 +286,22 @@ class DataManager
 
     /**
      * 上传文件内容
-     * @param string $category
+     * @param string $category 上传分类，image｜file｜video｜audio
      * @param string $filename 包含后缀名的文件
-     * @param string $content
-     * @param array|null $option
-     * @param array $param
+     * @param string $content 文件内容
+     * @param array $option 上传驱动配置
+     * @param array $param 其他参数
      * @return array [
+     *   'code' => 0,
+     *   'msg' => 'ok',
+     *   'data' => [
+     *     'uploadStatus' => 'success|exists',
      *     'data' => [
      *         'id'=>1,
      *     ],
      *     'path' => 'data/image/xxxx.jpg',
      *     'fullPath' => '/data/image/xxx.jpg',
+     *   ]
      * ]
      */
     public static function upload($category, $filename, $content, $option = null, $param = [])
@@ -304,11 +312,15 @@ class DataManager
         if (!isset($param['eventOpt'])) {
             $param['eventOpt'] = [];
         }
+        if (!isset($param['md5DuplicateIgnore'])) {
+            $param['md5DuplicateIgnore'] = false;
+        }
         $option = self::prepareOption($option);
         $storage = self::storage($option);
         if (empty(self::$config[$category])) {
             return Response::generate(-1, 'Unknown category : ' . $category);
         }
+
         $config = self::$config[$category];
         if (empty($filename)) {
             return Response::generate(-2, 'Filename empty');
@@ -327,6 +339,25 @@ class DataManager
         if ($size > $config['maxSize']) {
             return Response::generate(-5, L('File Size Limit %s', FileUtil::formatByte($config['maxSize'])));
         }
+
+        $md5 = md5($content);
+
+        if ($param['md5DuplicateIgnore']) {
+            $data = $storage->repository()->getDataBy([
+                'md5' => $md5,
+                'category' => $category,
+                'size' => $size,
+            ]);
+            if ($data) {
+                return Response::generateSuccessData([
+                    'uploadStatus' => 'exists',
+                    'data' => $data,
+                    'path' => config('data.baseUrl', '/') . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'],
+                    'fullPath' => self::fixDataFull($data, $option),
+                ]);
+            }
+        }
+
         $updateTimestamp = time();
         $retry = 0;
         do {
@@ -338,7 +369,6 @@ class DataManager
         }
         $storage->put($fullPath, $content);
         DataFileUploadedEvent::fire($storage->driverName(), $category, $fullPath, $param['eventOpt']);
-        $md5 = md5($content);
         $data = $storage->repository()->addData($category, $path, $filename, $size, $md5);
         $data = $storage->updateDriverDomain($data);
         $path = config('data.baseUrl', '/') . AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
@@ -349,6 +379,7 @@ class DataManager
             $fullPath = self::fixFull($fullPath);
         }
         return Response::generateSuccessData([
+            'uploadStatus' => 'success',
             'data' => $data,
             'path' => $path,
             'fullPath' => $fullPath,

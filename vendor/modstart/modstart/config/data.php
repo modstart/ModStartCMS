@@ -32,7 +32,7 @@ return [
             'maxSize' => 1024 * 1024 * 1024,
             'extensions' => [
                 'svg', 'png', 'jpg', 'jpeg', 'ico', 'webp',
-                'mp4', 'mp3',
+                'mp4', 'mp3', 'wav',
                 'pdf', 'txt', 'ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'csv',
                 'zip',
                 'epub',

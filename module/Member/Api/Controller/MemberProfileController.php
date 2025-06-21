@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Class MemberProfileController
  * @package Module\Member\Api\Controller
- * @Api 用户资料
+ * @Api 用户信息
  */
 class MemberProfileController extends ModuleBaseController implements MemberLoginCheck
 {

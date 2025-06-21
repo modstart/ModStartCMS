@@ -7,6 +7,7 @@ namespace Module\Member\Core;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Type\TypeUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleManager;
 use Module\Member\Events\MemberUserVipChangeEvent;
@@ -14,7 +15,10 @@ use Module\Member\Model\MemberVipOrder;
 use Module\Member\Util\MemberCreditUtil;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\MemberVipUtil;
+use Module\MemberInvoice\Biz\MemberInvoiceBiz;
 use Module\PayCenter\Biz\AbstractPayCenterBiz;
+use Module\PayCenter\Type\PayType;
+use Module\Vendor\Provider\Notifier\NotifierProvider;
 use Module\Vendor\Type\OrderStatus;
 
 class MemberVipPayCenterBiz extends AbstractPayCenterBiz
@@ -33,21 +37,21 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
 
     public function onPayed($payBizId, $payOrder, $param = [])
     {
-        $order = ModelUtil::get('member_vip_order', $payBizId);
+        $order = ModelUtil::get(MemberVipOrder::class, $payBizId);
         if (empty($order)) {
             return;
         }
-        ModelUtil::update('member_vip_order', ['id' => $payBizId], ['status' => OrderStatus::COMPLETED]);
+        ModelUtil::update(MemberVipOrder::class, ['id' => $payBizId], ['status' => OrderStatus::COMPLETED]);
         $memberUser = MemberUtil::get($order['memberUserId']);
         if (empty($memberUser)) {
             return;
         }
+        $vipSet = MemberVipUtil::get($order['vipId']);
         $update = [];
         $update['vipId'] = $order['vipId'];
         $update['vipExpire'] = $order['expire'];
         MemberUtil::update($order['memberUserId'], $update);
         if (ModuleManager::getModuleConfig('Member', 'creditEnable', false)) {
-            $vipSet = MemberVipUtil::get($order['vipId']);
             if ($vipSet['creditPresentEnable']) {
                 if ($vipSet['creditPresentValue'] > 0) {
                     MemberCreditUtil::change($order['memberUserId'], $vipSet['creditPresentValue'], '会员VIP赠送积分');
@@ -57,6 +61,29 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
         if ($update['vipId'] != $memberUser['vipId']) {
             MemberUserVipChangeEvent::fire($order['memberUserId'], $memberUser['vipId'], $update['vipId']);
         }
+
+        if (modstart_module_enabled('MemberInvoice')) {
+            MemberInvoiceBiz::checkAndAddInvoice(
+                $payOrder['payType'],
+                'Member_Vip',
+                $order['id'],
+                $order['memberUserId'],
+                $order['payFee'],
+                '用户VIP开通-' . $vipSet['title']
+            );
+        }
+
+        NotifierProvider::notify(
+            'Member_VipPayed',
+            '会员VIP已支付',
+            [
+                '用户ID' => $memberUser['id'],
+                '用户' => $memberUser['username'],
+                '订单金额' => $order['payFee'],
+                '支付方式' => TypeUtil::name(PayType::class, $payOrder['payType']),
+                '支付金额' => $payOrder['feeTotal'],
+            ]
+        );
     }
 
     public function createOrderForQuick($quickOrder, $param = [])

@@ -224,7 +224,7 @@ trait CanCascadeFields
        cascadeGroups.forEach(function (group) {
            var groupDom = $('#{$this->id()}_group_' + group.index);
            groupDom.addClass('cascade-group-hide');
-           groupDom.find('input,textarea,select').prop('disabled',true)
+           groupDom.find('input,textarea,select').prop('disabled',true);
        });
        cascadeGroups.forEach(function (group) {
            var groupDom = $('#{$this->id()}_group_' + group.index);

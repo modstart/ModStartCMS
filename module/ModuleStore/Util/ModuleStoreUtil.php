@@ -11,6 +11,7 @@ use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\FileUtil;
+use ModStart\Core\Util\LogUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Core\Util\VersionUtil;
 use ModStart\ModStart;
@@ -195,10 +196,20 @@ class ModuleStoreUtil
         $package = $ret['data']['package'];
         $packageMd5 = $ret['data']['packageMd5'];
         $licenseKey = $ret['data']['licenseKey'];
-        $data = CurlUtil::getRaw($package);
-        BizException::throwsIfEmpty('安装包获取失败', $data);
+        //LogUtil::info('ModuleStoreUtil.download', $ret);
+        $ret = CurlUtil::getRaw($package, [], [
+            'returnRaw' => true,
+        ]);
+        //LogUtil::info('ModuleStoreUtil.download', $ret);
+        if ($ret['httpCode'] != 200) {
+            $error = '安装包获取失败';
+            if (!empty($ret['error'])) {
+                $error .= '(' . $ret['error'] . ')';
+            }
+            BizException::throws($error);
+        }
         $zipTemp = FileUtil::generateLocalTempPath('zip');
-        file_put_contents($zipTemp, $data);
+        file_put_contents($zipTemp, $ret['body']);
         BizException::throwsIf('文件MD5校验失败', md5_file($zipTemp) != $packageMd5);
         return Response::generateSuccessData([
             'package' => $zipTemp,

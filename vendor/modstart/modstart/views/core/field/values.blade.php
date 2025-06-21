@@ -27,13 +27,17 @@
                     <body>
                     <tr v-for="(valueItem,valueIndex) in value">
                         <td>
-                            <input type="text" v-model="value[valueIndex]" />
+                            @if($viewMode=='textarea')
+                                <textarea v-model="value[valueIndex]"></textarea>
+                            @else
+                                <input type="text" v-model="value[valueIndex]" />
+                            @endif
                         </td>
-                        <td width="80" class="tw-text-right">
-                            <a href="javascript:;" class="ub-text-primary" v-if="valueIndex>0" @click="doUp(value,valueIndex)"><i class="iconfont icon-direction-up"></i></a>
-                            <a href="javascript:;" class="ub-text-primary" v-if="valueIndex<value.length-1" @click="doDown(value,valueIndex)"><i class="iconfont icon-direction-down"></i></a>
+                        <td width="100" class="tw-text-right">
+                            <a href="javascript:;" class="btn btn-sm" v-if="valueIndex>0" @click="doUp(value,valueIndex)"><i class="iconfont icon-direction-up"></i></a>
+                            <a href="javascript:;" class="btn btn-sm" v-if="valueIndex<value.length-1" @click="doDown(value,valueIndex)"><i class="iconfont icon-direction-down"></i></a>
                             @if(empty($countFixed))
-                                <a href="javascript:;" class="ub-text-danger" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
+                                <a href="javascript:;" class="btn btn-sm" @click="value.splice(valueIndex,1)"><i class="iconfont icon-trash"></i></a>
                             @endif
                         </td>
                     </tr>

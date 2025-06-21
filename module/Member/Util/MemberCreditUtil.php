@@ -19,7 +19,7 @@ class MemberCreditUtil
             $memberUserId = MemberUser::id();
         }
         if (self::getTotal($memberUserId) < $creditValue) {
-            BizException::throws(modstart_module_config('Member', 'creditName') . '不足');
+            BizException::throws(modstart_module_config('Member', 'creditName', '积分') . '不足');
         }
     }
 

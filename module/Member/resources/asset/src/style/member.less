@@ -45,13 +45,33 @@
         border-radius: 0.5rem;
 
         .pb-member-vip {
+            background: @memberVipBgColor;
+
+            .vip-group {
+                background: @memberVipBgColor;
+                padding-left: 0.5rem;
+
+                .vip-group-item {
+                    background: @memberVipBgColor;
+                    color: @memberVipTextColor;
+                    font-size: 1rem;
+                    display: inline-block;
+                    padding: 0.5rem 2rem;
+                    border-radius: 0.5rem 0.5rem 0 0;
+                    font-weight: bold;
+
+                    &.active {
+                        background: #FFF6EC;
+                    }
+                }
+            }
 
             .vip-list-container-box {
                 position: relative;
 
                 .vip-list-container {
                     overflow-x: auto;
-
+                    border-radius: 0.5rem;
 
                     .nav {
                         background: #fff;

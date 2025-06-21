@@ -10,6 +10,7 @@ use ModStart\Core\Input\Response;
 use ModStart\Module\ModuleManager;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Events\MemberUserVipChangeEvent;
+use Module\Member\Model\MemberVipSet;
 use Module\Vendor\Util\CacheUtil;
 
 class MemberVipUtil
@@ -27,6 +28,19 @@ class MemberVipUtil
         return $vips;
     }
 
+    public static function allVisibleGroupNames()
+    {
+        $vips = self::allVisible();
+        $groupNameMap = [];
+        foreach ($vips as $v) {
+            if ($v['isDefault']) {
+                continue;
+            }
+            $groupNameMap[$v['groupName']] = $v;
+        }
+        return array_keys($groupNameMap);
+    }
+
     public static function allVisible()
     {
         $vips = array_filter(self::all(), function ($vip) {
@@ -39,13 +53,19 @@ class MemberVipUtil
     public static function all()
     {
         return CacheUtil::rememberForever('MemberVipList', function () {
-            return ModelUtil::all('member_vip_set', [], ['*'], ['sort', 'asc']);
+            $records = ModelUtil::all(MemberVipSet::class, [], ['*'], ['sort', 'asc']);
+            foreach ($records as $k => $v) {
+                if (!$v['groupName']) {
+                    $records[$k]['groupName'] = 'VIP';
+                }
+            }
+            return $records;
         });
     }
 
     public static function update($id, $data)
     {
-        ModelUtil::update('member_vip_set', $id, $data);
+        ModelUtil::update(MemberVipSet::class, $id, $data);
         self::clearCache();
     }
 
@@ -53,7 +73,7 @@ class MemberVipUtil
     {
         return CacheUtil::rememberForever('MemberVipMap', function () {
             $map = [];
-            foreach (ModelUtil::all('member_vip_set', [], ['*'], ['sort', 'asc']) as $item) {
+            foreach (self::all() as $item) {
                 $map[intval($item['id'])] = $item;
             }
             return $map;
@@ -399,5 +419,42 @@ class MemberVipUtil
             'day' => date('Y-m-d'),
         ]);
         return Response::generate(0, 'ok');
+    }
+
+    public static function functions()
+    {
+        // 'memberVipFunctionVisible' => modstart_config('Member_VipFunctionVisible', []),
+        //            'memberVipFunctions' => modstart_config('Member_VipFunctions', []),
+        $functionVisible = modstart_config('Member_VipFunctionVisible', []);
+        if (empty($functionVisible)) {
+            return [];
+        }
+        $vipSets = [];
+        foreach (self::all() as $vipSet) {
+            if (in_array($vipSet['id'], $functionVisible)) {
+                $vipSets[] = $vipSet;
+            }
+        }
+        $functions = modstart_config('Member_VipFunctions', []);
+        $results = [];
+        $head = [];
+        $head[] = '功能';
+        foreach ($vipSets as $vipSet) {
+            $head[] = $vipSet['title'];
+        }
+        $results[] = $head;
+        foreach ($functions as $func) {
+            $line = [];
+            $line[] = $func['title'];
+            foreach ($vipSets as $vipSet) {
+                if (!isset($func['Vip' . $vipSet['id']])) {
+                    $line[] = '-';
+                } else {
+                    $line[] = $func['Vip' . $vipSet['id']];
+                }
+            }
+            $results[] = $line;
+        }
+        return $results;
     }
 }

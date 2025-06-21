@@ -20,12 +20,19 @@ use Module\Member\Util\MemberVipUtil;
 use Module\PayCenter\Support\PayCenterPerform;
 use Module\Vendor\Type\OrderStatus;
 
+/**
+ * @Api 用户信息
+ */
 class MemberVipController extends Controller implements MemberLoginCheck
 {
     public static $memberLoginCheckIgnores = [
         'info', 'calc',
     ];
 
+    /**
+     * @return array
+     * @Api 用户VIP-会员文案信息
+     */
     public function info()
     {
         $data = [];
@@ -35,14 +42,25 @@ class MemberVipController extends Controller implements MemberLoginCheck
         $data['vips'] = MemberVipUtil::allVisible();
         $data['rights'] = MemberVipUtil::rights();
         $data['openUsers'] = MemberVipUtil::openUsers();
+        $data['groupNames'] = MemberVipUtil::allVisibleGroupNames();
+        $data['vipFunctions'] = MemberVipUtil::functions();
         return Response::generateSuccessData($data);
     }
 
+    /**
+     * @return array
+     * @Api 用户VIP-所有可见VIP
+     */
     public function all()
     {
         return Response::generateSuccessData(MemberVipUtil::allVisible());
     }
 
+    /**
+     * @return array
+     * @Api 用户VIP-购买VIP
+     * @ApiBodyParam vipId int 会员ID
+     */
     public function buy()
     {
         $input = InputPackage::buildFromInput();
@@ -105,6 +123,11 @@ class MemberVipController extends Controller implements MemberLoginCheck
         );
     }
 
+    /**
+     * @return array
+     * @Api 用户VIP-计算价格
+     * @ApiBodyParam vipId int 会员ID
+     */
     public function calc()
     {
         $ret = $this->processCalc();

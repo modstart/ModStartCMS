@@ -17,7 +17,7 @@ use Module\Member\Util\MemberMoneyUtil;
 /**
  * Class MemberMoneyCashController
  * @package Module\Member\Api\Controller
- * @Api 会员资金
+ * @Api 用户信息
  */
 class MemberMoneyCashController extends Controller implements MemberLoginCheck
 {

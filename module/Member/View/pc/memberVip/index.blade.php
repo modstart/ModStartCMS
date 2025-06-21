@@ -73,16 +73,25 @@
             </div>
             <div class="body">
                 <div class="pb-member-vip">
+                    @if(count($memberVipGroupNames)>1)
+                        <div class="vip-group">
+                            @foreach($memberVipGroupNames as $mvIndex=>$mv)
+                                <a class="vip-group-item {{$mvIndex===0?'active':''}}" data-vip-group="{{$mv}}" href="javascript:;">
+                                    {{$mv}}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
                     <form action="{{$__msRoot}}api/member_vip/buy" method="post" data-ajax-form>
                         <input type="hidden" name="redirect" value="{{\ModStart\Core\Input\Request::currentPageUrl()}}" />
                         <input type="hidden" name="vipId" value="0" />
                         <input type="hidden" name="voucherId" value="0" />
                         <div class="vip-list-container-box margin-bottom">
                             <div class="vip-list-container">
-                                <div class="vip-list vip-bg tw-rounded">
+                                <div class="vip-list vip-bg tw-rounded-xl">
                                     @foreach($memberVips as $memberVip)
                                         @if(!$memberVip['isDefault'])
-                                            <div class="item tw-relative" data-vip-id="{{$memberVip['id']}}">
+                                            <div class="item tw-relative tw-invisible" data-vip-group="{{$memberVip['groupName']?$memberVip['groupName']:'VIP'}}" data-vip-id="{{$memberVip['id']}}">
                                                 <div class="tw-text-xl tw-font-bold margin-bottom tw-pt-2">
                                                     {{$memberVip['title']}}
                                                 </div>
@@ -131,10 +140,10 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="lg:tw-px-12 lg:tw-text-left tw-text-center tw-py-4 vip-bg tw-rounded margin-bottom tw-flex lg:tw-flex-row tw-flex-col tw-items-center">
-                            <div class="tw-flex-grow">
+                        <div class="lg:tw-px-12 lg:tw-text-left tw-text-center tw-py-4 vip-bg tw-rounded-xl margin-bottom tw-flex lg:tw-flex-row tw-flex-col tw-items-start">
+                            <div class="tw-flex-grow tw-w-full">
                                 @if(!empty($memberVipRights))
-                                    <div class="vip-bg tw-rounded-lg" data-vip-right-list>
+                                    <div class="vip-bg tw-rounded-lg lg:tw-mx-0 tw-mx-3 tw-text-left" data-vip-right-list>
                                         <div class="row">
                                             @foreach($memberVipRights as $r)
                                                 <div class="col-md-4 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
@@ -152,6 +161,32 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if(!empty($memberFunctions))
+                                    <div class="tw-mx-3 lg:tw-mx-0 tw-mb-3 tw-mt-3 tw-overflow-auto">
+                                        <table class="ub-table border tw-bg-white ub-text-truncate ub-text-center">
+                                            <thead>
+                                            <tr>
+                                                @foreach($memberFunctions[0] as $mf)
+                                                    <th>
+                                                        {{$mf}}
+                                                    </th>
+                                                @endforeach
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @for($i=1;$i<count($memberFunctions);$i++)
+                                                <tr>
+                                                    @foreach($memberFunctions[$i] as $mf)
+                                                        <td>
+                                                            {{$mf}}
+                                                        </td>
+                                                    @endforeach
+                                                </tr>
+                                            @endfor
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
                             </div>
                             <div>
                                 <div class="tw-inline-block tw-py-1 tw-px-3">
@@ -162,7 +197,7 @@
                                                     <div class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1">
                                                         <div class="tw-w-20 tw-text-left">{{mb_substr($u['name'],0,2)}}******</div>
                                                         <div class="tw-w-8 tw-text-yellow-400">{{$u['time']}}</div>
-                                                        <div class="tw-w-32 tw-text-right">购买了 {{$u['title']}}</div>
+                                                        <div class="tw-w-32 tw-text-right tw-truncate">购买了 {{$u['title']}}</div>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -171,7 +206,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tw-rounded lg:tw-px-8 vip-bg vip-content-list">
+                        <div class="tw-rounded-xl lg:tw-px-8 vip-bg vip-content-list">
                             @foreach($memberVips as $memberVip)
                                 @if(!$memberVip['isDefault'])
                                     <div class="item tw-hidden">

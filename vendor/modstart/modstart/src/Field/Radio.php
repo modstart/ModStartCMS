@@ -50,6 +50,17 @@ class Radio extends AbstractField
         return $this->options(ModelUtil::valueMap($table, $keyName, $labelName));
     }
 
+    public function autoCheckFirst()
+    {
+        $firstValue = null;
+        foreach ($this->getVariable('options', []) as $k => $v) {
+            $firstValue = $k;
+            break;
+        }
+        $this->defaultValue($firstValue);
+        return $this;
+    }
+
     public function render()
     {
         $this->addCascadeScript();

@@ -83,6 +83,11 @@ class DatabaseDataRepository extends AbstractDataRepository
         return null;
     }
 
+    public function getDataBy($where = [])
+    {
+        return ModelUtil::get(Data::class, $where);
+    }
+
     public function deleteDataById($id)
     {
         ModelUtil::delete(Data::class, ['id' => $id]);

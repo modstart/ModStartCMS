@@ -53,11 +53,11 @@ class AigcKeyPoolUtil
         return ArrayUtil::randomWithPriority($records);
     }
 
-    private static function markEnd($idOrKey, $success)
+    private static function markEnd($idOrKeyPool, $success)
     {
-        $id = $idOrKey;
+        $id = $idOrKeyPool;
         if (is_array($id)) {
-            $id = $idOrKey['id'];
+            $id = $idOrKeyPool['id'];
         }
         $update = [
             'callCount' => DB::raw('IFNULL(callCount,0)+1'),
@@ -71,14 +71,14 @@ class AigcKeyPoolUtil
         ModelUtil::update(AigcKeyPool::class, $id, $update);
     }
 
-    public static function markSuccess($key)
+    public static function markSuccess($keyPool)
     {
-        self::markEnd($key, true);
+        self::markEnd($keyPool, true);
     }
 
-    public static function markFail($key)
+    public static function markFail($keyPool)
     {
-        self::markEnd($key, false);
+        self::markEnd($keyPool, false);
     }
 
 }

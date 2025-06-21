@@ -74,10 +74,14 @@ abstract class AbstractAigcProvider
             'appSecret' => 'AppSecret',
             'key' => 'Key',
         ];
+        $models = $this->models();
         if (!empty($itemParam)) {
             foreach ($itemParam as $k => $v) {
                 if (isset($map[$k])) {
                     $k = $map[$k];
+                }
+                if (isset($models[$v])) {
+                    $v = $models[$v];
                 }
                 $result[] = [
                     'name' => $k,

@@ -21,7 +21,7 @@ class Values extends AbstractField
 
     /**
      * 设置内容填写模式，default=列表，mini=一行
-     * @param $viewMode string default|mini
+     * @param $viewMode string default|mini|textarea
      * @return $this
      */
     public function viewMode($viewMode)

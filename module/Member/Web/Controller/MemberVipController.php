@@ -26,10 +26,13 @@ class MemberVipController extends ModuleBaseController
             $view = 'memberVip.indexDialog';
             $this->shareDialogPageViewFrame();
         }
-        return $this->view($view, [
+        $viewData = [
+            'memberFunctions' => MemberVipUtil::functions(),
+            'memberVipGroupNames' => MemberVipUtil::allVisibleGroupNames(),
             'memberVips' => MemberVipUtil::allVisible(),
             'memberVipRights' => MemberVipUtil::rights(),
-        ]);
+        ];
+        return $this->view($view, $viewData);
     }
 
 }

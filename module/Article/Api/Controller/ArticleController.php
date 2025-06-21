@@ -11,7 +11,7 @@ use Module\Article\Util\ArticleUtil;
 /**
  * Class ArticleController
  * @package Module\Article\Api\Controller
- * @Api 通用文章
+ * @Api 物料
  */
 class ArticleController extends ModuleBaseController
 {

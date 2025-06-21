@@ -116,7 +116,7 @@ use Module\Vendor\Util\SessionUtil;
 /**
  * Class AuthController
  * @package Module\Member\Api\Controller
- * @Api 用户授权
+ * @Api 用户账号
  */
 class AuthController extends ModuleBaseController
 {
@@ -755,7 +755,7 @@ class AuthController extends ModuleBaseController
                 }
             } else {
                 if (!CaptchaFacade::check($input->getTrimString('captcha'))) {
-                    return Response::generate(ResponseCodes::CAPTCHA_ERROR, '登录失败:图片验证码错误', null, '[js]$(\'[data-captcha]\').click();');
+                    return Response::generate(ResponseCodes::CAPTCHA_ERROR, '登录失败:图片验证码错误', null, '[ijs]$(\'[data-captcha]\').click();');
                 }
             }
         }

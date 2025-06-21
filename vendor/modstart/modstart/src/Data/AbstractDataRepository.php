@@ -24,5 +24,7 @@ abstract class AbstractDataRepository
 
     abstract public function getDataByPath($path);
 
+    abstract public function getDataBy($where = []);
+
     abstract public function deleteDataById($id);
 }

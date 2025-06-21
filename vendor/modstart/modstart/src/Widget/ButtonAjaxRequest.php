@@ -31,9 +31,9 @@ class ButtonAjaxRequest extends AbstractWidget
     }
 
     /**
-     * @param $type string
-     * @param $text string
-     * @param $url string
+     * @param $type string muted|warning|danger|success|primary
+     * @param $text string 文字说明
+     * @param $url string 请求地址
      * @return ButtonDialogRequest
      */
     public static function make(...$arguments)

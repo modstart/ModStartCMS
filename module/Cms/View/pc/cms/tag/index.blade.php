@@ -6,7 +6,7 @@
 
 {!! \ModStart\ModStart::js('asset/vendor/jqueryMark.js') !!}
 {!! \ModStart\ModStart::style('[data-markjs]{color:red !important;background:transparent;}') !!}
-{!! \ModStart\ModStart::script("$('.ub-list-items .title,.ub-list-items .tag').mark(".\ModStart\Core\Util\SerializeUtil::jsonEncode($tag).",{});") !!}
+{!! \ModStart\ModStart::script("$('.ub-list-items .title,.ub-list-items .tag').mark(".json_encode(htmlspecialchars($tag)).",{});") !!}
 
 @section('bodyContent')
 

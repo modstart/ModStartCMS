@@ -30,11 +30,13 @@ class MemberVipSetController extends Controller
             ->field(function ($builder) {
                 /** @var HasFields $builder */
                 $builder->layoutPanel('基础信息', function ($builder) {
+                    /** @var HasFields $builder */
                     $builder->id('id', 'ID')->addable(true)->editable(true)
                         ->ruleUnique('member_vip_set')->required()
                         ->defaultValue(ModelUtil::sortNext(MemberVipSet::class, [], 'id'));
                     $builder->text('title', '名称')->required()->ruleUnique('member_vip_set');
                     $builder->text('flag', '英文标识')->required()->ruleUnique('member_vip_set');
+                    $builder->text('groupName', '分组')->help('如 VIP、SVIP 等，前台可按照分组显示');
                     $builder->switch('visible', '可见')->gridEditable(true)->tip('开启后前台用户VIP开通页面可见');
                     $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级')->required();
                     $builder->image('icon', '图标');
@@ -44,9 +46,9 @@ class MemberVipSetController extends Controller
                     $builder->text('desc', '简要说明')->required();
                     $builder->richHtml('content', '详细说明')->required();
                     if (ModuleManager::getModuleConfig('Member', 'creditEnable', false)) {
-                        $builder->switch('creditPresentEnable', '赠送积分')->when('=', true, function ($form) {
+                        $builder->switch('creditPresentEnable', '赠送' . modstart_module_config('Member', 'creditName', '积分'))->when('=', true, function ($form) {
                             /** @var Form $form */
-                            $form->number('creditPresentValue', '赠送积分数量');
+                            $form->number('creditPresentValue', '赠送' . modstart_module_config('Member', 'creditName', '积分') . '数量');
                         })->optionsYesNo()->listable(false);
                     }
                 });
@@ -66,6 +68,9 @@ class MemberVipSetController extends Controller
                     $dataSubmitted = $form->dataAdding();
                 } else {
                     $dataSubmitted = $form->dataEditing();
+                }
+                if (empty($dataSubmitted['id'])) {
+                    $dataSubmitted['id'] = 0;
                 }
                 if (!empty($dataSubmitted['isDefault'])) {
                     ModelUtil::model(MemberVipSet::class)->where('id', '<>', $dataSubmitted['id'])->update(['isDefault' => false]);
@@ -125,6 +130,26 @@ class MemberVipSetController extends Controller
             ])
             ->help('当最近开通用户为空时，将显示虚拟开通用户')
             ->defaultValue($openUserDefaults);
+
+        $builder->checkbox('Member_VipFunctionVisible', 'VIP对比功能可见')
+            ->options(MemberVipUtil::mapTitle());
+        $vipSets = MemberVipUtil::all();
+        $fields = [];
+        $fields[] = ['name' => 'title', 'title' => '名称', 'type' => 'text', 'defaultValue' => '功能', 'placeholder' => '', 'tip' => '',];
+        foreach ($vipSets as $vipSet) {
+            $fields[] = [
+                'name' => 'Vip' . $vipSet['id'],
+                'title' => $vipSet['title'],
+                'type' => 'text',
+                'defaultValue' => '✅',
+                'placeholder' => '',
+                'tip' => '',
+            ];
+        }
+        $builder->complexFieldsList('Member_VipFunctions', 'VIP功能对比')
+            ->fields($fields)
+            ->help('默认显示在前端界面');
+
         $builder->text('Member_VipTitle', 'VIP开通协议标题')->help('默认为 会员协议');
         $builder->richHtml('Member_VipContent', 'VIP开通说明')->help('默认为 VIP开通说明');
         $builder->formClass('wide');

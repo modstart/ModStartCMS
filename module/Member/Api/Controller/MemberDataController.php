@@ -4,16 +4,14 @@
 namespace Module\Member\Api\Controller;
 
 use Illuminate\Routing\Controller;
-use ModStart\Admin\Auth\Admin;
 use ModStart\Data\FileManager;
-use ModStart\Data\UeditorManager;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
 
 /**
  * Class MemberDataController
  * @package Module\Member\Api\Controller
- * @Api 用户文件
+ * @Api 用户信息
  */
 class MemberDataController extends Controller implements MemberLoginCheck
 {

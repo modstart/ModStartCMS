@@ -176,9 +176,9 @@ class DatabaseQueue extends Queue implements QueueContract
         }
 
         if ($job = $this->getNextAvailableJob($queue)) {
-            $this->markJobAsReserved($job->id);
+            //$this->markJobAsReserved($job->id);
 
-            $this->database->commit();
+            //$this->database->commit();
 
             return new DatabaseJob(
                 $this->container, $this, $job, $queue
@@ -248,16 +248,17 @@ class DatabaseQueue extends Queue implements QueueContract
         }
 
         $this->database->beginTransaction();
-        $job = $this->database->table($this->table)->lockForUpdate()->where('id', $job->id)->first();
+        $job = $this->database->table($this->table)->lockForUpdate()
+            ->where('id', $job->id)
+            ->where('reserved', 0)
+            ->first();
         if (empty($job)) {
             $this->database->commit();
             return null;
         }
-        if (0 == $job->reserved) {
-            return (object)$job;
-        }
+        $this->markJobAsReserved($job->id);
         $this->database->commit();
-        return null;
+        return (object)$job;
     }
 
     /**

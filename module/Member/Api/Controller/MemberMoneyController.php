@@ -13,7 +13,7 @@ use Module\Member\Util\MemberMoneyUtil;
 /**
  * Class MemberMoneyController
  * @package Module\Member\Api\Controller
- * @Api 会员资金
+ * @Api 用户信息
  */
 class MemberMoneyController extends ModuleBaseController implements MemberLoginCheck
 {

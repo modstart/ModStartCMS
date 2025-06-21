@@ -79,14 +79,10 @@ class AigcKeyPoolController extends Controller
                     ->hookRendering(function (AbstractField $field, $item, $index) {
                         $html = [];
                         $html[] = "<table class='ub-table mini border tw-bg-white'>";
-                        //$html[] = '<div>调用次数：' . ($item->callCount + 0) . '</div>';
-                        //$html[] = '<div>成功次数：' . ($item->successCount + 0) . '</div>';
-                        //$html[] = '<div>失败次数：' . ($item->failCount + 0) . '</div>';
-                        //$html[] = '<div>上次调用时间：' . ($item->lastCallTime ? $item->lastCallTime->format('Y-m-d H:i:s') : '-') . '</div>';
                         $html[] = '<tr><td>调用次数</td><td>' . ($item->callCount + 0) . '</td></tr>';
                         $html[] = '<tr><td>成功次数</td><td>' . ($item->successCount + 0) . '</td></tr>';
                         $html[] = '<tr><td>失败次数</td><td>' . ($item->failCount + 0) . '</td></tr>';
-                        $html[] = '<tr><td>上次调用时间</td><td>' . ($item->lastCallTime ? $item->lastCallTime->format('Y-m-d H:i:s') : '-') . '</td></tr>';
+                        $html[] = '<tr><td>上次调用时间</td><td>' . ($item->lastCallTime ? date('Y-m-d H:i:s', strtotime($item->lastCallTime)) : '-') . '</td></tr>';
                         $html[] = '</table>';
                         return AutoRenderedFieldValue::make(join('', $html));
                     })
@@ -141,6 +137,9 @@ class AigcKeyPoolController extends Controller
         $record = ModelUtil::get(AigcKeyPool::class, CRUDUtil::id());
         BizException::throwsIfEmpty('记录不存在', $record);
         ModelUtil::decodeRecordJson($record, ['param']);
+        if (empty($record['param']['model'])) {
+            $record['param']['model'] = 'default';
+        }
         $provider = AigcProvider::getByFullName($record['type'] . ':' . $record['param']['model']);
         BizException::throwsIfEmpty('模型驱动不存在', $provider);
         $ret = Response::generateError('暂不支持测试');

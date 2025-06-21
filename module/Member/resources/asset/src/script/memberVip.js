@@ -19,14 +19,15 @@ $(function () {
         }).show();
     });
     $container.find('.nav').on('click', function () {
-        var currentItemIndex = $items.index($items.filter('.active'));
+        var $visibleItems = $items.filter(':visible');
+        var currentItemIndex = $visibleItems.index($visibleItems.filter('.active'));
         if ($(this).hasClass('left')) {
             currentItemIndex--;
         } else {
             currentItemIndex++;
         }
-        currentItemIndex = Math.max(0, Math.min(currentItemIndex, $items.length - 1));
-        var $current = $items.eq(currentItemIndex).click();
+        currentItemIndex = Math.max(0, Math.min(currentItemIndex, $visibleItems.length - 1));
+        var $current = $visibleItems.eq(currentItemIndex).click();
         try {
             $current.get(0).scrollIntoView({
                 behavior: 'smooth', block: 'nearest', inline: 'start'
@@ -36,6 +37,27 @@ $(function () {
         return false;
     });
     $($items.get(0)).click();
+
+    // VIP 分组
+    var $groupItems = $('.pb-member-vip .vip-group .vip-group-item');
+    $groupItems.on('click', function () {
+        $groupItems.removeClass('active');
+        $(this).addClass('active');
+        var groupName = $(this).attr('data-vip-group');
+        $items.hide().filter(function (i, o) {
+            return $(o).attr('data-vip-group') === groupName;
+        }).show().get(0).click();
+        return false;
+    });
+    if ($groupItems.length) {
+        var $firstGroup = $groupItems.filter('.active').eq(0);
+        if ($firstGroup.length) {
+            $firstGroup.click();
+        } else {
+            $groupItems.eq(0).click();
+        }
+    }
+    $items.removeClass('tw-invisible')
 
     // 倒计时
     var end = new Date().getTime() + window.__data.countDownSeconds * 1000;

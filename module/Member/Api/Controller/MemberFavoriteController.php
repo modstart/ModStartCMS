@@ -15,14 +15,14 @@ use Module\Member\Util\MemberFavoriteUtil;
 /**
  * Class MemberFavoriteController
  * @package Module\Member\Api\Controller
- * @Api 用户收藏
+ * @Api 用户操作
  */
 class MemberFavoriteController extends Controller implements MemberLoginCheck
 {
     /**
      * @return array
      * @throws BizException
-     * @Api 收藏
+     * @Api 收藏提交
      * @ApiBodyParam category string 类别
      * @ApiBodyParam categoryId int 类别ID
      */
@@ -46,7 +46,7 @@ class MemberFavoriteController extends Controller implements MemberLoginCheck
     /**
      * @return array
      * @throws BizException
-     * @Api 取消收藏
+     * @Api 收藏取消
      * @ApiBodyParam category string 类别
      * @ApiBodyParam categoryId int 类别ID
      */

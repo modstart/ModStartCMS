@@ -12,7 +12,7 @@ use Module\Banner\Util\BannerUtil;
 /**
  * Class BannerController
  * @package Module\Banner\Api\Controller
- * @Api 通用轮播
+ * @Api 物料
  */
 class BannerController extends Controller
 {

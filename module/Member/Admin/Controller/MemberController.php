@@ -394,6 +394,7 @@ class MemberController extends Controller
         BizException::throwsIfEmpty('用户不存在', $memberUser);
         $builder->useDialog();
         $builder->pageTitle('重置密码');
+        $builder->disableBoxWrap(true);
         $builder->text('passwordNew', '新密码')->required()->defaultValue(RandomUtil::upperString(6));
         if (Request::isPost()) {
             return $builder->formRequest(function (Form $form) use ($memberUser) {
@@ -430,6 +431,7 @@ class MemberController extends Controller
     public function show()
     {
         $record = MemberUtil::get(CRUDUtil::id());
+        BizException::throwsIfEmpty('用户不存在', $record);
         $showPanelProviders = MemberAdminShowPanelProvider::listAll();
         return view('module::Member.View.admin.memberUser.show', [
             'record' => $record,
