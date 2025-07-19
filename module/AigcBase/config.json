@@ -6,10 +6,11 @@
         "laravel9"
     ],
     "types": [
-        "PC",
-        "Mobile"
+        "PC"
     ],
-    "tags": [],
+    "tags": [
+        "AI"
+    ],
     "require": [
         "Vendor:>=4.1.0"
     ],
@@ -31,10 +32,10 @@
         "AigcChatXunfei",
         "AigcChatZhipuAi"
     ],
-    "version": "1.4.3",
+    "version": "1.4.4",
     "modstartVersion": ">=4.1.0",
     "author": "ModStart",
     "description": "提供AI基础框架包，支持各种模型接入",
     "providers": [],
-    "config": {}
+    "config": []
 }

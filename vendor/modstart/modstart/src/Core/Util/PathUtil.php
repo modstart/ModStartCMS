@@ -125,4 +125,15 @@ class PathUtil
         $filename = pathinfo($path, PATHINFO_BASENAME);
         return $filename;
     }
+
+    public static function temp($ext, $prefix = 'temp')
+    {
+        return join('/',
+            [
+                $prefix,
+                date('Ymd/H/i'),
+                RandomUtil::lowerString(32) . '.' . $ext
+            ]
+        );
+    }
 }

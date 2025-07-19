@@ -17,6 +17,18 @@ if (!('MS' in window)) {
 }
 window.MS.clipboard = Clipboard
 window.MS.clip = {
+    copyRemote: function (url, param, cb, preProcessor) {
+        preProcessor = preProcessor || function (content) {
+            return content;
+        }
+        MS.api.post(url, param || {}, function (res) {
+            MS.api.defaultCallback(res, {
+                success: function (res) {
+                    MS.clip.copyText(preProcessor(res.data.content), cb)
+                }
+            })
+        })
+    },
     copyText: function (text, cb) {
         cb = cb || function () {
             MS.dialog.tipSuccess('复制成功')

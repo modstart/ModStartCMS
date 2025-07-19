@@ -12,7 +12,6 @@
         "Vendor:>=1.5.0"
     ],
     "tags": [
-        "网站配置"
     ],
     "version": "1.7.0",
     "modstartVersion": ">=2.6.0",

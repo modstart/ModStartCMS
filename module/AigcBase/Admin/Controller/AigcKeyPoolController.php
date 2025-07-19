@@ -150,6 +150,9 @@ class AigcKeyPoolController extends Controller
                 $ret = $chatProvider->chat('test', '你是什么模型，使用最简短的回答');
                 break;
         }
+        if (!empty($ret['data']['isError'])) {
+            return Response::generateError('模型测试失败');
+        }
         if (Response::isSuccess($ret)) {
             return Response::generateSuccess('测试成功');
         }

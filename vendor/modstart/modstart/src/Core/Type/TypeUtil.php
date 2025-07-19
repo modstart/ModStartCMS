@@ -81,7 +81,6 @@ class TypeUtil
             'wait_pay' => 'warning',
             'danger' => 'warning',
             'running' => 'warning',
-            'refund' => 'warning',
             'converting' => 'warning',
             'wait_process' => 'warning',
             'verifying' => 'warning',
@@ -93,6 +92,7 @@ class TypeUtil
             'wait_verify' => 'danger',
             'reject' => 'danger',
             'unread' => 'danger',
+            'refund' => 'danger',
 
             'wait' => 'muted',
             'canceled' => 'muted',

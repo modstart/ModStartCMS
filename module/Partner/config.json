@@ -6,17 +6,16 @@
         "laravel9"
     ],
     "types": [
-        "PC",
-        "Mobile"
+        "PC"
     ],
     "tags": [
-        "友情链接"
+        "内容"
     ],
     "require": [
         "Vendor:>=3.0.0"
     ],
-    "version": "1.7.0",
-    "modstartVersion": ">=3.0.0",
+    "version": "1.8.0",
+    "modstartVersion": ">=4.1.0",
     "author": "官方",
     "description": "提供友情链接基础管理功能",
     "config": {

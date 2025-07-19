@@ -126,4 +126,63 @@ abstract class AbstractRecommendBiz
     {
         self::itemFeedback($bizId, $userId, RecommendUserFeedbackType::VISIT, $param);
     }
+
+    public static function itemFeedbackLike($bizId, $userId, $param = [])
+    {
+        self::itemFeedback($bizId, $userId, RecommendUserFeedbackType::LIKE, $param);
+    }
+
+    public static function itemFeedbackDislike($bizId, $userId, $param = [])
+    {
+        self::itemFeedback($bizId, $userId, RecommendUserFeedbackType::DISLIKE, $param);
+    }
+
+    public static function randomItemsFromCallback($itemIdsToItemsCallback, $idKey = 'id', $userId = 0, $limit = 1, $sceneIds = [], $tags = [], $exceptBizIds = [], $param = [])
+    {
+        $itemIds = static::randomItemIds($userId, $limit, $sceneIds, $tags, $exceptBizIds, $param);
+        if (empty($itemIds)) {
+            return [];
+        }
+        $items = call_user_func_array($itemIdsToItemsCallback, [$itemIds]);
+        if (empty($items)) {
+            return [];
+        }
+        $validItemIds = [];
+        foreach ($items as $item) {
+            if (isset($item[$idKey]) && in_array($item[$idKey], $itemIds)) {
+                $validItemIds[] = $item[$idKey];
+            }
+        }
+        foreach ($itemIds as $itemId) {
+            if (!in_array($itemId, $validItemIds)) {
+                static::itemDelete($itemId, $param);
+            }
+        }
+        return $items;
+    }
+
+    public static function randomItemIds($userId, $limit = 1, $sceneIds = [], $tags = [], $exceptBizIds = [], $param = [])
+    {
+        $biz = RecommendBiz::getByName(static::NAME);
+        if (!$biz) {
+            return [];
+        }
+        $provider = RecommendProvider::getByName($biz->providerName());
+        if (!$provider) {
+            return [];
+        }
+        $ret = $provider->randomItem(
+            $biz->name(),
+            $userId,
+            $limit,
+            $sceneIds,
+            $tags,
+            $exceptBizIds,
+            $param
+        );
+        if (isset($ret['data']['bizIds'])) {
+            return $ret['data']['bizIds'];
+        }
+        return [];
+    }
 }

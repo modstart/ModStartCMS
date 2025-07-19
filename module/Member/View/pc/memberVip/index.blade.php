@@ -149,7 +149,7 @@
                                                 <div class="col-md-4 col-6" style="display:none;" data-vip-right="{{join(',',$r['vipIds'])}}">
                                                     <div class="tw-flex tw-py-2 tw-items-center ub-text-sm margin-bottom">
                                                         <div class="tw-pr-2">
-                                                            <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full" src="{{$r['image']}}" />
+                                                            <img alt="用户头像" class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full" src="{{$r['image']}}" />
                                                         </div>
                                                         <div>
                                                             <div class="vip-text">{{$r['title']}}</div>

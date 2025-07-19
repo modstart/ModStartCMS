@@ -152,9 +152,9 @@ class CRUDUtil
         return $redirect;
     }
 
-    public static function adminUrlWithTab($url, $query = [])
+    public static function adminUrlWithTab($url, $query = [], $forceTab = false)
     {
-        if (View::shared('_isTab')) {
+        if ($forceTab || View::shared('_isTab')) {
             $query['_is_tab'] = 1;
         }
         return modstart_admin_url($url, $query);

@@ -3,6 +3,12 @@
 
 namespace Module\Vendor\Provider\Recommend;
 
+use ModStart\Admin\Layout\AdminConfigBuilder;
+use ModStart\Support\Concern\HasFields;
+
+/**
+ * 推荐系统驱动
+ */
 abstract class AbstractRecommendProvider
 {
     abstract public function name();
@@ -106,5 +112,13 @@ abstract class AbstractRecommendProvider
      * }
      */
     abstract public function randomItem($biz, $userId, $limit = 1, $sceneIds = [], $tags = [], $exceptBizIds = [], $param = []);
+
+    /**
+     * 配置表单
+     * @param $builder HasFields|AdminConfigBuilder
+     * @param $param array
+     * @return void
+     */
+    abstract public function configForm($builder, $param = []);
 
 }

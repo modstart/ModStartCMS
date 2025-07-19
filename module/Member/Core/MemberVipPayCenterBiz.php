@@ -20,6 +20,7 @@ use Module\PayCenter\Biz\AbstractPayCenterBiz;
 use Module\PayCenter\Type\PayType;
 use Module\Vendor\Provider\Notifier\NotifierProvider;
 use Module\Vendor\Type\OrderStatus;
+use Module\Vendor\Util\OrderUtil;
 
 class MemberVipPayCenterBiz extends AbstractPayCenterBiz
 {
@@ -72,6 +73,14 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
                 '用户VIP开通-' . $vipSet['title']
             );
         }
+        if (modstart_module_enabled('MemberDistribution')) {
+            MemberVipMemberDistributionBiz::createAndLogError(
+                $order['memberUserId'],
+                $order['id'],
+                $order['payFee'],
+                '用户VIP开通-' . $vipSet['title']
+            );
+        }
 
         NotifierProvider::notify(
             'Member_VipPayed',
@@ -85,6 +94,16 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
             ]
         );
     }
+
+    public function onRefunded($payBizId, $payOrder, $param = [])
+    {
+        OrderUtil::refunded(MemberVipOrder::class, $payBizId, function ($order) use ($payBizId) {
+            if (modstart_module_enabled('MemberDistribution')) {
+                MemberVipMemberDistributionBiz::refundAndLogError($payBizId);
+            }
+        });
+    }
+
 
     public function createOrderForQuick($quickOrder, $param = [])
     {

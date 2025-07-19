@@ -41,8 +41,8 @@ trait CanCascadeFields
     protected $cascadeParam = [];
 
     /**
-     * @param $operator
-     * @param $value
+     * @param $operator string 比较符 =|in|notIn|includes|!=|>|<|>=|<=
+     * @param $value string|array 比较值
      * @param $closure \Closure function($builder) { }
      *
      * @return $this

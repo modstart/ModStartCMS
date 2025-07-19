@@ -30,6 +30,7 @@ use Module\Member\Util\MemberMoneyUtil;
 use Module\Member\Util\MemberParamUtil;
 use Module\Member\Util\MemberUtil;
 use Module\Member\Util\MemberVipUtil;
+use Module\MemberDistribution\Biz\MemberDistributionBiz;
 use Module\MemberInvoice\Biz\MemberInvoiceBiz;
 use Module\PayCenter\Biz\PayCenterBiz;
 use Module\Vendor\Admin\Widget\AdminWidgetDashboard;
@@ -378,6 +379,10 @@ class ModuleServiceProvider extends ServiceProvider
 
         if (modstart_module_enabled('MemberInvoice')) {
             MemberInvoiceBiz::registerQuick('Member_Vip', '用户VIP开通');
+        }
+
+        if (modstart_module_enabled('MemberDistribution')) {
+            MemberDistributionBiz::register(MemberVipMemberDistributionBiz::class);
         }
 
     }

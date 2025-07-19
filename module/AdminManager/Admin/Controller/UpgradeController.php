@@ -5,6 +5,7 @@ namespace Module\AdminManager\Admin\Controller;
 use App\Constant\AppConstant;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Session;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
@@ -65,10 +66,12 @@ class UpgradeController extends Controller
             BizException::throwsIfEmpty('toVersion为空', $toVersion);
             switch ($step) {
                 case 'upgradePackage':
-                    $package = $dataInput->getTrimString('package');
-                    $diffContentFile = $dataInput->getTrimString('diffContentFile');
+                    $package = Session::get('AdminManager.Upgrade.Package');
+                    $diffContentFile = Session::get('AdminManager.Upgrade.DiffContentFile');
                     BizException::throwsIfEmpty('package为空', $package);
                     BizException::throwsIfEmpty('diffContentFile为空', $diffContentFile);
+                    Session::forget('AdminManager.Upgrade.Package');
+                    Session::forget('AdminManager.Upgrade.DiffContentFile');
                     $ret = UpgradeUtil::upgradePackage($package, $diffContentFile);
                     BizException::throwsIfResponseError($ret);
                     return $this->doFinish([
@@ -77,6 +80,8 @@ class UpgradeController extends Controller
                 case 'downloadPackage':
                     $ret = UpgradeUtil::downloadPackage($token, AppConstant::APP, AppConstant::VERSION, $toVersion);
                     BizException::throwsIfResponseError($ret);
+                    Session::put('AdminManager.Upgrade.Package', $ret['data']['package']);
+                    Session::put('AdminManager.Upgrade.DiffContentFile', $ret['data']['diffContentFile']);
                     return $this->doNext('upgradePackage', [
                         '<span class="ub-text-success">获取安装包完成，大小 ' . FileUtil::formatByte($ret['data']['packageSize']) . '</span>',
                         '<span class="ub-text-white">开始解压升级装包...</span>'

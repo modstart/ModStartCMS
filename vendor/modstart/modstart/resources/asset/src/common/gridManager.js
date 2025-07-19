@@ -624,6 +624,7 @@ var GridManager = function (opt) {
                         success: function (res) {
                             lister.refresh();
                             $grid.trigger('modstart:batch.end');
+                            return true;
                         }
                     });
                 });

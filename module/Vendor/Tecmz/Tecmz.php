@@ -325,6 +325,21 @@ class Tecmz
     }
 
     /**
+     * 文档转图片结果登记
+     *
+     * @param $jobId int
+     * @param $status string success|fail
+     * @return array|mixed
+     */
+    public function docToImageResult($jobId, $status)
+    {
+        $post = [];
+        $post['jobId'] = $jobId;
+        $post['status'] = $status;
+        return $this->request('/doc_to_image/result', $post);
+    }
+
+    /**
      * 图片压缩
      *
      * @param $format string

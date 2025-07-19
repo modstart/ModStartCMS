@@ -51,6 +51,9 @@ class MemberOauth
                 } else if ($item instanceof \Closure) {
                     $item = call_user_func($item);
                 }
+                if (empty($item)) {
+                    continue;
+                }
                 $list = array_merge($list, $item);
             }
         }

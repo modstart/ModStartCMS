@@ -6,6 +6,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\IdUtil;
 use ModStart\Core\Util\SerializeUtil;
+use ModStart\Core\Util\StrUtil;
 use Module\Member\Model\MemberMoney;
 use Module\Member\Model\MemberMoneyLog;
 use Module\Member\Type\MemberMoneyCashStatus;
@@ -37,10 +38,15 @@ class MemberMoneyUtil
      * @param $change string 变化值，正数为增加，负数为减少
      * @param $remark string 备注
      * @param $meta array|null 元数据
+     * @param $option array 属性
      * @throws BizException
      */
-    public static function change($memberUserId, $change, $remark, $meta = null)
+    public static function change($memberUserId, $change, $remark, $meta = null, $option = [])
     {
+        $option = array_merge([
+            // 检查是否为负
+            'checkNegative' => true,
+        ], $option);
         BizException::throwsIf('MemberMoneyUtil.change.change=0', !$change);
         $m = ModelUtil::getWithLock(MemberMoney::class, [
             'memberUserId' => $memberUserId,
@@ -51,14 +57,16 @@ class MemberMoneyUtil
             ]);
         }
         $total = bcadd($m['total'], $change, 2);
-        BizException::throwsIf('MemberMoneyUtil.change.total<0', $change < 0 && $total < 0);
+        if ($option['checkNegative']) {
+            BizException::throwsIf('MemberMoneyUtil.change.total<0', $change < 0 && $total < 0);
+        }
         if ($meta && !is_string($meta)) {
             $meta = SerializeUtil::jsonEncode($meta);
         }
         ModelUtil::insert(MemberMoneyLog::class, [
             'memberUserId' => $memberUserId,
             'change' => $change,
-            'remark' => $remark,
+            'remark' => StrUtil::mbLimit($remark, 100, 'side'),
             'meta' => $meta,
         ]);
         ModelUtil::update(MemberMoney::class, $m['id'], [

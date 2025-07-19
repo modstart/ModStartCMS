@@ -15,7 +15,9 @@ $partners = \Module\Partner\Util\PartnerUtil::listByPositionWithCache($position)
                         @if($linkDisable)
                             @if(!empty($partner['logo']))
                                 <div class="image">
-                                    <div class="cover contain ub-cover-3-1" data-src="{{$partner['logo']}}"></div>
+                                    <div class="cover contain ub-cover-3-1"
+                                         title="{{$partner['title']}}"
+                                         data-src="{{$partner['logo']}}"></div>
                                 </div>
                             @else
                                 <div class="text">
@@ -27,7 +29,9 @@ $partners = \Module\Partner\Util\PartnerUtil::listByPositionWithCache($position)
                         @else
                             @if(!empty($partner['logo']))
                                 <a class="image" href="{{$partner['link']}}" target="_blank">
-                                    <div class="cover contain ub-cover-3-1" data-src="{{$partner['logo']}}"></div>
+                                    <div class="cover contain ub-cover-3-1"
+                                         title="{{$partner['title']}}"
+                                         data-src="{{$partner['logo']}}"></div>
                                 </a>
                             @else
                                 <a class="text" href="{{$partner['link']}}" target="_blank">

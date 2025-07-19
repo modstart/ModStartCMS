@@ -10,7 +10,7 @@
             @if($linkDisable)
                 <div class="hover:tw-shadow tw-rounded tw-px-1 tw-inline-block ub-text-default tw-h-10 tw-leading-10 tw-mr-2">
                     @if(!empty($r['logo']))
-                        <img class="tw-h-10" src="{{$r['logo']}}" />
+                        <img class="tw-h-10" alt="{{$r['title']}}" src="{{$r['logo']}}" />
                     @else
                         {{$r['title']}}
                     @endif
@@ -18,7 +18,7 @@
             @else
                 <a href="{{$r['link']}}" target="_blank" class="hover:tw-shadow tw-rounded tw-px-1 tw-inline-block ub-text-default tw-h-10 tw-leading-10 tw-mr-2">
                     @if(!empty($r['logo']))
-                        <img class="tw-h-10" data-src="{{$r['logo']}}" />
+                        <img class="tw-h-10" alt="{{$r['title']}}" data-src="{{$r['logo']}}" />
                     @else
                         {{$r['title']}}
                     @endif

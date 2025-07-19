@@ -13,7 +13,9 @@
                         @if(!empty($linkDisable))
                             @if(!empty($r['logo']))
                                 <div class="image">
-                                    <div class="cover contain ub-cover-3-1" data-src="{{$r['logo']}}"></div>
+                                    <div class="cover contain ub-cover-3-1"
+                                         title="{{$r['title']}}"
+                                         data-src="{{$r['logo']}}"></div>
                                 </div>
                             @else
                                 <div class="text">
@@ -25,7 +27,9 @@
                         @else
                             @if(!empty($r['logo']))
                                 <a class="image" href="{{$r['link']}}" target="_blank">
-                                    <div class="cover contain ub-cover-3-1" data-src="{{$r['logo']}}"></div>
+                                    <div class="cover contain ub-cover-3-1"
+                                         title="{{$r['title']}}"
+                                         data-src="{{$r['logo']}}"></div>
                                 </a>
                             @else
                                 <a class="text" href="{{$r['link']}}" target="_blank">

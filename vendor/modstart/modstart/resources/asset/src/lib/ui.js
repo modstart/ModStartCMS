@@ -113,6 +113,8 @@ Ui.htmlNav = function (htmlContainer, navContainer, option) {
         scrollToOffset: -80,
         // 菜单位置顶部偏移量，通常是内容container的top值
         positionOffset: 70,
+        // 为空时是否自动隐藏
+        hideWhenOnlyH1: true,
         width: '12rem',
         open: function () {
 
@@ -137,6 +139,12 @@ Ui.htmlNav = function (htmlContainer, navContainer, option) {
         });
     });
 
+    if (option.hideWhenOnlyH1) {
+        if (headings.length === 1 && headings[0].level === 1) {
+            headings = [];
+        }
+    }
+
     if (headings.length > 0) {
         var tree = [];
         tree.push('<div class="ub-menu-tree-simple page tw-absolute tw-top-0 tw-right-0" style="width:' + option.width + ';">');
@@ -153,7 +161,9 @@ Ui.htmlNav = function (htmlContainer, navContainer, option) {
         tree.push('</div>');
         tree.push('</div>');
 
-        $(navContainer).html(tree.join(''));
+        $(navContainer).html(tree.join('')).show()
+    } else {
+        $(navContainer).hide();
     }
 
     Ui._htmlNav.headings = headings;

@@ -180,8 +180,15 @@ class ImageDesignUtil
                     $image->insert($itemImage, 'top-left', $item['x'], $item['y']);
                     break;
                 case 'qrcode':
-                    $qrcode = QrcodeUtil::png($item['data']['text'], $item['data']['width']);
-                    $qrcode = Image::make($qrcode);
+                    if (preg_match('/^data:image\/[a-zA-Z]+;base64,/', $item['data']['text'])) {
+                        $imageData = preg_replace('/^data:image\/[a-zA-Z]+;base64,/', '', $item['data']['text']);
+                        $imageData = base64_decode($imageData);
+                        $qrcode = Image::make($imageData);
+                        $qrcode->resize($item['data']['width'], $item['data']['width']);
+                    } else {
+                        $qrcode = QrcodeUtil::png($item['data']['text'], $item['data']['width']);
+                        $qrcode = Image::make($qrcode);
+                    }
                     $image->insert($qrcode, 'top-left', $item['x'], $item['y']);
                     break;
                 case 'maskColor':

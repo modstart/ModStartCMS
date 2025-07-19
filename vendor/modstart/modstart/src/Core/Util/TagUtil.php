@@ -20,7 +20,7 @@ class TagUtil
         return self::array2String($results);
     }
 
-    public static function array2String(array $tags)
+    public static function array2String(array $tags, $mbLengthLimit = -1)
     {
         $filterTags = [];
         foreach ($tags as &$tag) {
@@ -30,7 +30,17 @@ class TagUtil
             }
             $filterTags[] = ':' . $tag . ':';
         }
-        return join('', array_unique($filterTags));
+        $filterTags = array_unique($filterTags);
+        if ($mbLengthLimit > 0) {
+            $str = '';
+            foreach ($filterTags as $tag) {
+                if (mb_strlen($str . $tag) > $mbLengthLimit) {
+                    return $str;
+                }
+                $str .= $tag;
+            }
+        }
+        return join('', $filterTags);
     }
 
     /**

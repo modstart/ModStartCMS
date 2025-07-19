@@ -25,6 +25,9 @@ class MemberHomeIcon
             if ($item instanceof \Closure) {
                 $item = call_user_func($item);
             }
+            if (empty($item)) {
+                continue;
+            }
             $menu = array_merge($menu, $item);
         }
         $menu = self::mergeMenu($menu);

@@ -127,11 +127,27 @@ class StrUtil
      * @Util 按照UTF8编码裁减字符串（汉字和英文都占1个宽度）
      * @param $text string 待裁剪字符串
      * @param $limit int 裁剪长度
+     * @param string $mode 裁剪模式，默认 left，left:左边裁剪，side:两边裁剪
      * @return string
      */
-    public static function mbLimit($text, $limit)
+    public static function mbLimit($text, $limit, $mode = 'left')
     {
-        return Str::limit($text, $limit, '');
+        if (empty($text)) {
+            return '';
+        }
+        if (mb_strlen($text, 'UTF-8') <= $limit) {
+            return $text;
+        }
+        $more = '...';
+        $moreLength = mb_strlen($more, 'UTF-8');
+        if ($mode === 'side') {
+            // 侧边裁剪
+            $right = floor(($limit - $moreLength) / 2);
+            $left = $limit - $right - $moreLength;
+            return mb_substr($text, 0, $left) . $more . mb_substr($text, -$right);
+        }
+        $left = $limit - $moreLength;
+        return mb_substr($text, 0, $left) . $more;
     }
 
     /**

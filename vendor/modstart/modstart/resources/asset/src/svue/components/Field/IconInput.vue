@@ -1,6 +1,10 @@
 <template>
     <div class="pb-icon-input">
-        <div>
+        <div v-if="mini">
+            <i class="pb-icon-input-preview" @click="dialogVisible=true"
+               :class="currentData?currentData:'iconfont icon-list'"></i>
+        </div>
+        <div v-else>
             <i class="pb-icon-input-preview" v-if="!!currentData" @click="dialogVisible=true" :class="currentData"></i>
             <el-input
                     style="width:15em;"
@@ -10,7 +14,7 @@
             </el-input>
             <el-button v-if="inline" @click="dialogVisible=true">选择</el-button>
         </div>
-        <div v-if="inline">
+        <div v-if="inline||mini">
             <el-dialog :visible.sync="dialogVisible" append-to-body width="80%">
                 <div slot="title">
                     选择图标
@@ -82,6 +86,10 @@
                 type: Boolean,
                 default: false,
             },
+            mini:{
+                type: Boolean,
+                default: false,
+            }
         },
         data() {
             return {

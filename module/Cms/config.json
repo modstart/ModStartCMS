@@ -1,6 +1,6 @@
 {
     "name": "Cms",
-    "title": "通用CMS",
+    "title": "CMS系统",
     "env": [
         "laravel5",
         "laravel9"
@@ -15,11 +15,9 @@
         "WordSpliter",
         "SiteMapManager"
     ],
-    "tags": [
-        "通用CMS"
-    ],
+    "tags": [],
     "version": "3.9.0",
-    "modstartVersion": ">=4.0.0",
+    "modstartVersion": ">=4.1.0",
     "author": "ModStart",
     "description": "提供通用的动态模型内容管理系统",
     "providers": [],

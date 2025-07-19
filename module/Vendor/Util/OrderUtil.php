@@ -85,4 +85,29 @@ class OrderUtil
             throw $e;
         }
     }
+
+    public static function refunded($model, $where, $successCallback, $checkStatusList = null)
+    {
+        if (null === $checkStatusList) {
+            $checkStatusList = [OrderStatus::COMPLETED];
+        }
+        ModelUtil::transactionBegin();
+        try {
+            $order = ModelUtil::getWithLock($model, $where);
+            BizException::throwsIfEmpty('订单不存在', $order);
+            BizException::throwsIf('订单状态异常', !in_array($order['status'], $checkStatusList));
+            $update = [
+                'status' => OrderStatus::REFUNDED,
+            ];
+            if (array_key_exists('refundTime', $order)) {
+                $update['refundTime'] = date('Y-m-d H:i:s');
+            }
+            ModelUtil::update($model, $order['id'], $update);
+            call_user_func_array($successCallback, [$order]);
+            ModelUtil::transactionCommit();
+        } catch (BizException $e) {
+            ModelUtil::transactionRollback();
+            throw $e;
+        }
+    }
 }

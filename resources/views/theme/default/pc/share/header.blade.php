@@ -27,7 +27,7 @@
         </div>
         <div class="logo">
             <a href="{{modstart_web_url('')}}">
-                <img src="{{\ModStart\Core\Assets\AssetsUtil::fix(modstart_config('siteLogo'))}}"/>
+                <img alt="{{modstart_config('siteName')}}" src="{{modstart_config_asset_url('siteLogo')}}"/>
             </a>
         </div>
         <div class="nav-mask" onclick="MS.header.hide()"></div>

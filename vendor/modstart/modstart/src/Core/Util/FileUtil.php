@@ -618,8 +618,12 @@ class FileUtil
      * @param $downloadStream boolean 是否使用流下载，默认为false
      * @return string|null 返回本地临时路径或本地文件绝对路径，注意使用 safeCleanLocalTemp 来清理文件，如果是本地其他路径可能会误删
      */
-    public static function savePathToLocalTemp($path, $ext = null, $downloadStream = false)
+    public static function savePathToLocalTemp($path, $ext = null, $downloadStream = false, $option = [])
     {
+        $option = array_merge([
+            'retryTimes' => 0,
+            'retryInterval' => 5,
+        ], $option);
         $checkPath = strtolower($path);
         BizException::throwsIf('Invalid Path', StrUtil::startWith($checkPath, 'phar:/'));
         if (@file_exists($path)) {
@@ -656,13 +660,9 @@ class FileUtil
                 $content = CurlUtil::getRaw($path, [], [
                     'timeout' => 60 * 10,
                 ]);
-                if (empty($content)) {
-                    return null;
+                if (!empty($content)) {
+                    file_put_contents($tempPath, $content);
                 }
-                file_put_contents($tempPath, $content);
-            }
-            if (!file_exists($tempPath)) {
-                return null;
             }
         } else {
             if (StrUtil::startWith($path, '/')) {
@@ -671,6 +671,18 @@ class FileUtil
             $tempPath = public_path($path);
         }
         if (!file_exists($tempPath)) {
+            if ($option['retryTimes'] > 0) {
+                LogUtil::info('FileUtil.savePathToLocalTemp.Retry', [
+                    'retryTimes' => $option['retryTimes'],
+                    'retryInterval' => $option['retryInterval'],
+                    'path' => $path,
+                ]);
+                $option['retryTimes']--;
+                if ($option['retryInterval'] > 0) {
+                    sleep($option['retryInterval']);
+                }
+                return self::savePathToLocalTemp($path, $ext, $downloadStream, $option);
+            }
             return null;
         }
         return $tempPath;

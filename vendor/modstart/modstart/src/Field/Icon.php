@@ -20,4 +20,14 @@ class Icon extends AbstractField
         $this->addVariables(['server' => $server]);
         return $this;
     }
+
+    public function scope($scope = ['base', 'fa'])
+    {
+        $this->addVariables([
+            'server' => modstart_admin_url('widget/icon', [
+                'scope' => join(',', $scope)
+            ]),
+        ]);
+        return $this;
+    }
 }

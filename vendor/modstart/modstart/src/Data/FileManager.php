@@ -540,4 +540,53 @@ class FileManager
         ]);
 
     }
+
+    public static function uploadToCategory($category,
+                                            $uploadTable, $uploadCategoryTable,
+                                            $uploadCategoryTitles = [],
+                                            $userId,
+                                            $filename, $content,
+                                            $option = null, $param = [])
+    {
+        $ret = DataManager::upload($category, $filename, $content, $option, $param);
+        if (Response::isError($ret)) {
+            return $ret;
+        }
+        $data = $ret['data']['data'];
+        $uploadCategory = null;
+        if (!empty($uploadCategoryTitles)) {
+            foreach ($uploadCategoryTitles as $title) {
+                $where = [
+                    'userId' => $userId,
+                    'category' => $category,
+                    'pid' => $uploadCategory ? $uploadCategory['id'] : 0,
+                    'title' => $title,
+                ];
+                $uploadCategory = ModelUtil::get($uploadCategoryTable, $where);
+                if (empty($uploadCategory)) {
+                    $where['sort'] = ModelUtil::sortNext($uploadCategoryTable, [
+                        'userId' => $userId,
+                        'category' => $category,
+                    ]);
+                    $uploadCategory = ModelUtil::insert($uploadCategoryTable, $where);
+                }
+            }
+        }
+        $insert = [
+            'userId' => $userId,
+            'category' => $category,
+            'dataId' => $data['id'],
+        ];
+        if (!ModelUtil::exists($uploadTable, $insert)) {
+            $insert['uploadCategoryId'] = $uploadCategory ? $uploadCategory['id'] : -1;
+            ModelUtil::insert($uploadTable, $insert);
+        }
+        return Response::generateSuccessData([
+            'uploadStatus' => $ret['data']['uploadStatus'],
+            'data' => $ret['data']['data'],
+            'path' => $ret['data']['path'],
+            'fullPath' => $ret['data']['fullPath'],
+            'category' => $uploadCategory,
+        ]);
+    }
 }

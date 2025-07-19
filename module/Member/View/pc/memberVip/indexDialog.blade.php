@@ -162,6 +162,7 @@
                                                 <div class="tw-flex tw-py-2 tw-items-center ub-text-sm margin-bottom">
                                                     <div class="tw-pr-2">
                                                         <img class="tw-w-8 tw-h-8 tw-object-cover tw-rounded-full"
+                                                             alt="用户头像"
                                                              src="{{$r['image']}}"/>
                                                     </div>
                                                     <div>

@@ -71,12 +71,12 @@ abstract class AbstractDataStorage
 
     public function multiPartUpload($param)
     {
-        BizException::throws('Not Support');
+        BizException::throws('AbstractDataStorage.multiPartUpload.NotSupport');
     }
 
     public function multiPartUploadEnd($param)
     {
-        BizException::throws('Not Support');
+        BizException::throws('AbstractDataStorage.multiPartUploadEnd.NotSupport');
     }
 
     public function updateDriverDomain($data)

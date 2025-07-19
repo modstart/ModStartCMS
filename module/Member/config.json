@@ -1,8 +1,8 @@
 {
     "name": "Member",
     "title": "用户系统",
-    "version": "4.10.2",
-    "modstartVersion": ">=4.1.0",
+    "version": "5.0.1",
+    "modstartVersion": ">=4.1.1",
     "author": "官方",
     "description": "提供基础的用户注册、登录服务",
     "env": [
@@ -10,15 +10,13 @@
         "laravel9"
     ],
     "types": [
-        "PC",
-        "Mobile",
-        "Admin"
+        "PC"
     ],
     "tags": [
         "用户"
     ],
     "require": [
-        "Vendor:>=1.9.0"
+        "Vendor:>=4.8.0"
     ],
     "suggest": [
         "MemberApi",

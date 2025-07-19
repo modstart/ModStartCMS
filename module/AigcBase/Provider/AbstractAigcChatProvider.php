@@ -8,7 +8,6 @@ use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\HtmlUtil;
 use Module\AigcBase\Type\AigcProviderType;
-use Module\AigcBase\Util\AigcKeyPoolUtil;
 use Module\Vendor\Markdown\MarkdownUtil;
 
 abstract class AbstractAigcChatProvider extends AbstractAigcProvider
@@ -60,6 +59,7 @@ abstract class AbstractAigcChatProvider extends AbstractAigcProvider
     protected function chatResponseError($sessionId, $option)
     {
         return Response::generateSuccessData([
+            'isError' => true,
             'msg' => [
                 'type' => 'text',
                 'content' => '机器人太忙啦，请稍后再试'

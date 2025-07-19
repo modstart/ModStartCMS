@@ -6,18 +6,19 @@
         "laravel9"
     ],
     "types": [
-        "PC",
-        "Mobile"
+        "Admin"
     ],
-    "tags": [],
+    "tags": [
+        "访问统计"
+    ],
     "require": [
         "Vendor:>=3.8.0"
     ],
     "suggest": [],
-    "version": "1.2.1",
+    "version": "1.2.2",
     "modstartVersion": ">=3.9.0",
     "author": "ModStart",
     "description": "提供内置的网站访问记录功能",
     "providers": [],
-    "config": {}
+    "config": []
 }

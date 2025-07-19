@@ -156,6 +156,9 @@ class MemberController extends Controller
                 $builder->display('registerIp', '注册IP');
                 $builder->display('registerIpName', '注册IP定位');
                 $builder->display('created_at', '注册时间');
+                if (modstart_module_enabled('MemberSecurityGuard')) {
+                    $builder->display('loginLockTime', '登录锁定时间');
+                }
                 $builder->canBatchSelect(true);
                 $builder->batchOperatePrepend('<button class="btn" data-batch-confirm="确认禁用 %d 个用户？" data-batch-operate="' . modstart_admin_url('member/status_forbidden') . '"><i class="iconfont icon-warning"></i> 禁用</button>');
             })
