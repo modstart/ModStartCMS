@@ -635,8 +635,7 @@ class MCms
      */
     public static function recommendContentByModel($modelId, $limit = 10)
     {
-        $contentIds = RecommendProvider::randomItemBizIds(
-            CmsRecommendBiz::NAME,
+        $contentIds = CmsRecommendBiz::randomItemIds(
             \Module\Member\Auth\MemberUser::id(),
             $limit,
             [$modelId]
