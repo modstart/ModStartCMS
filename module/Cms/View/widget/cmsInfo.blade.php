@@ -17,6 +17,7 @@
                     @if(!config('modstart.admin.versionCheckDisable',false))
                         <div data-admin-version class="tw-mb-2"></div>
                     @endif
+                    <div data-module-notice class="tw-hidden tw-mb-2"></div>
                 </div>
                 <script type="text/javascript">
                     // 最新版本检测

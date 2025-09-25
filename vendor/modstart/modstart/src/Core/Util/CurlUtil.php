@@ -74,6 +74,7 @@ class CurlUtil
     {
         $result = self::post($url, $param, $option);
         if (empty($result['body'])) {
+            LogUtil::info('CurlUtil.postJSON.Empty', $result);
             return self::JSONResult(-1, 'CurlUtil.postJSON result empty');
         }
         $result['body'] = self::removeStringBOF($result['body']);

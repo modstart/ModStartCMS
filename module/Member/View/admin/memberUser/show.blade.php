@@ -61,13 +61,13 @@
         @endif
         @if(\ModStart\Module\ModuleManager::getModuleConfig('Member','creditEnable',false))
             <div class="ub-pair">
-                <div class="name">积分</div>
+                <div class="name">{{modstart_module_config('Member', 'creditName', '积分')}}</div>
                 <div class="value">
                     <span class="tw-inline-block" style="min-width:4rem;">
                         {{\Module\Member\Util\MemberCreditUtil::getTotal($record['id'])}}
                     </span>
                     <a href="javascript:;" class="tw-ml-4" data-dialog-request="{{modstart_admin_url('member_credit/charge',['memberUserId'=>$record['id']])}}">
-                        [积分变更]
+                        [{{modstart_module_config('Member', 'creditName', '积分')}}变更]
                     </a>
                 </div>
             </div>

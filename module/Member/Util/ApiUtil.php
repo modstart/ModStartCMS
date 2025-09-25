@@ -82,6 +82,9 @@ class ApiUtil
             'nickname' => '',
             'username' => '',
             'viewName' => '游客',
+            'gender' => 0,
+            'realname' => '',
+            'signature' => '',
             'phone' => '',
             'phoneVerified' => false,
             'email' => '',
@@ -99,6 +102,9 @@ class ApiUtil
             $user['username'] = $memberUser['username'];
             $user['nickname'] = $memberUser['nickname'];
             $user['viewName'] = MemberUtil::viewName($memberUser);
+            $user['gender'] = $memberUser['gender'];
+            $user['realname'] = $memberUser['realname'];
+            $user['signature'] = $memberUser['signature'];
             $user['phone'] = $memberUser['phone'];
             $user['phoneVerified'] = !!$memberUser['phoneVerified'];
             $user['email'] = $memberUser['email'];

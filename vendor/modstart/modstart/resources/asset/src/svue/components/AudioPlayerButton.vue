@@ -21,6 +21,10 @@ export default {
         source: {
             type: String,
             default: ''
+        },
+        stopOthers: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -38,6 +42,14 @@ export default {
         },
         playing(value) {
             if (value) {
+                if(this.stopOthers) {
+                    const audios = document.querySelectorAll('audio');
+                    audios.forEach(audio => {
+                        if (audio !== this.audio) {
+                            audio.pause();
+                        }
+                    });
+                }
                 return this.audio.play();
             }
             this.audio.pause();

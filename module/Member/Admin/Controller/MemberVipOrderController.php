@@ -11,6 +11,7 @@ use ModStart\Core\Type\TypeUtil;
 use ModStart\Field\AbstractField;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
+use Module\Member\Model\MemberVipOrder;
 use Module\Member\Util\MemberCmsUtil;
 use Module\Member\Util\MemberVipUtil;
 use Module\Vendor\Type\OrderStatus;
@@ -22,10 +23,11 @@ class MemberVipOrderController extends Controller
     protected function crud(AdminCRUDBuilder $builder)
     {
         $builder
-            ->init('member_vip_order')
+            ->init(MemberVipOrder::with(['payOrder']))
             ->field(function ($builder) {
                 /** @var HasFields $builder */
-                $builder->display('id', '业务订单ID');
+                $builder->id('id', '业务订单ID');
+                $builder->display('payOrder.id', '结算ID');
                 $builder->datetime('created_at', '创建时间');
                 $builder->display('memberUserId', '用户')->hookRendering(function (AbstractField $field, $item, $index) {
                     return MemberCmsUtil::showFromId($item->memberUserId);

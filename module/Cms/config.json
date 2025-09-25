@@ -15,11 +15,17 @@
         "WordSpliter",
         "SiteMapManager"
     ],
-    "tags": [],
-    "version": "3.9.0",
-    "modstartVersion": ">=4.1.0",
+    "tags": [
+        "CMS",
+        "内容系统"
+    ],
+    "version": "4.0.0",
+    "modstartVersion": ">=4.1.2",
     "author": "ModStart",
     "description": "提供通用的动态模型内容管理系统",
     "providers": [],
-    "config": {}
+    "config": {},
+    "types": [
+        "PC"
+    ]
 }

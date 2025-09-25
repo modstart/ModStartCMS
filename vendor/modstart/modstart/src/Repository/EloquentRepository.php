@@ -289,11 +289,15 @@ class EloquentRepository extends Repository
         }
         $model->resetOrderBy();
         foreach ($order as $orderItem) {
-            list($column, $type) = $orderItem;
-            if (empty($column) || empty($type)) {
-                continue;
+            if(is_string($orderItem)){
+                $model->addQuery('orderByRaw', [DB::raw($orderItem)]);
+            }else{
+                list($column, $type) = $orderItem;
+                if (empty($column) || empty($type)) {
+                    continue;
+                }
+                $model->addQuery('orderBy', [$column, $type]);
             }
-            $model->addQuery('orderBy', [$column, $type]);
         }
     }
 

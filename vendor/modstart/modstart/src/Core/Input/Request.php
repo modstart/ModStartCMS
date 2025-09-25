@@ -119,11 +119,12 @@ class Request
 
     /**
      * merge url queries with given array
-     * 根据给定的数组，合并url的query
      * @param array $pair
+     * @param string $connector
+     * @param \Callback|null $filter
      * @return string
      */
-    public static function mergeQueries($pair = [])
+    public static function mergeQueries($pair = [], $connector = '', $filter = null)
     {
         $gets = (!empty($_GET) && is_array($_GET)) ? $_GET : [];
         if (!empty($gets)) {
@@ -139,6 +140,10 @@ class Request
 
         // sort by key, always sort by key to make sure the url is the same
         ksort($gets);
+
+        if ($filter) {
+            $gets = array_filter($gets, $filter, ARRAY_FILTER_USE_BOTH);
+        }
 
         $urls = [];
         foreach ($gets as $k => $v) {
@@ -159,8 +164,10 @@ class Request
             }
             $urls[] = urlencode($k) . '=' . $v;
         }
-
-        return join('&', $urls);
+        if (empty($urls)) {
+            return '';
+        }
+        return $connector . join('&', $urls);
     }
 
     /**

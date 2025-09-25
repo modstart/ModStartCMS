@@ -1,8 +1,8 @@
 {
     "name": "Member",
     "title": "用户系统",
-    "version": "5.0.1",
-    "modstartVersion": ">=4.1.1",
+    "version": "5.0.8",
+    "modstartVersion": ">=4.1.2",
     "author": "官方",
     "description": "提供基础的用户注册、登录服务",
     "env": [

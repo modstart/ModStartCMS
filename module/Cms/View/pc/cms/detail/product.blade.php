@@ -57,14 +57,14 @@
                             <div class="info">
                                 <div class="ub-pair">
                                     <div class="name">价格：</div>
-                                    <div class="value">{{empty($record['_data']['price'])?'暂无':$record['_data']['price']}}</div>
+                                    <div class="value">
+                                        <div class="tw-text-lg tw-text-red-500">
+                                            {{empty($record['_data']['price'])?'暂无':$record['_data']['price']}}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="ub-pair">
-                                    <div class="name">分类：</div>
-                                    <div class="value">{{empty($record['_data']['type'])?'暂无':$record['_data']['type']}}</div>
-                                </div>
-                                <div class="ub-pair">
-                                    <div class="name">说明：</div>
+                                    <div class="name">介绍：</div>
                                     <div class="value">{{empty($record['summary'])?'[摘要]':$record['summary']}}</div>
                                 </div>
                             </div>

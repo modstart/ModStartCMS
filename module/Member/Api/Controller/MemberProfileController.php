@@ -77,8 +77,8 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     /**
      * @Api 修改用户头像
-     * @ApiBodyParam avatar string required base64头像
-     * @ApiBodyParam type string required 类型，固定为 cropper
+     * @ApiBodyParam avatar string required base64头像 Example: data:image/jpeg;base64,xxx
+     * @ApiBodyParam type string required 类型，固定为 cropper Example: cropper
      */
     public function avatar()
     {
@@ -93,7 +93,7 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
                 $avatarFile = Input::file('avatar');
                 BizException::throwsIfEmpty('头像文件为空', $avatarFile);
                 $ext = FileUtil::mimeToExt($avatarFile->getClientMimeType());
-                BizException::throwsIf('头像格式不合法', !in_array($ext, ['jpg', 'png', 'jpeg']));
+                BizException::throwsIf('头像格式不合法', !in_array($ext, ['jpg', 'png', 'jpeg', 'svg']));
                 $content = file_get_contents($avatarFile->getRealPath());
                 BizException::throwsIfEmpty('头像内容为空', $content);
                 $ret = MemberUtil::setAvatar(MemberUser::id(), $content, $ext);
@@ -103,14 +103,11 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
                 EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'avatar'));
                 return Response::generate(0, '保存成功', null, '[reload]');
             case 'cropper':
-                $avatarType = null;
-                if (Str::startsWith($avatar, 'data:image/jpeg;base64,')) {
-                    $avatarType = 'jpg';
-                    $avatar = substr($avatar, strlen('data:image/jpeg;base64,'));
-                } else if (Str::startsWith($avatar, 'data:image/png;base64,')) {
-                    $avatarType = 'png';
-                    $avatar = substr($avatar, strlen('data:image/png;base64,'));
+                if (!preg_match('/^data:image\/(jpeg|png|svg);base64,(.+)$/', $avatar, $mat)) {
+                    return Response::generate(-1, '头像格式不合法');
                 }
+                $avatarType = $mat[1];
+                $avatar = $mat[2];
                 if (empty($avatarType)) {
                     return Response::generate(-1, '头像数据为空');
                 }

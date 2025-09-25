@@ -100,4 +100,13 @@ class ArrayPackage
         }
         return $value;
     }
+
+    public function nextDate($defaultValue = null)
+    {
+        $value = $this->next($defaultValue);
+        if (TimeUtil::isDateEmpty($value)) {
+            return $defaultValue;
+        }
+        return $value;
+    }
 }

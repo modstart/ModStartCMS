@@ -25,11 +25,11 @@ class MemberCreditController extends Controller
     {
         $memberUserId = InputPackage::buildFromInput()->getInteger('memberUserId');
         $form = Form::make('');
-        $form->display('_total', '总积分')->value(MemberCreditUtil::getTotal($memberUserId))->addable(true);
-        $form->number('change', '积分变更')->help('负数表示减少')->required();
+        $form->display('_total', '总' . modstart_module_config('Member', 'creditName', '积分'))->value(MemberCreditUtil::getTotal($memberUserId))->addable(true);
+        $form->number('change', modstart_module_config('Member', 'creditName', '积分') . '变更')->help('负数表示减少')->required();
         $form->text('remark', '说明')->defaultValue('系统变更')->required();
         $form->showSubmit(false)->showReset(false);
-        return $page->pageTitle('积分变更')->body($form)->handleForm($form, function (Form $form) use ($memberUserId) {
+        return $page->pageTitle(modstart_module_config('Member', 'creditName', '积分') . '变更')->body($form)->handleForm($form, function (Form $form) use ($memberUserId) {
             AdminPermission::demoCheck();
             $data = $form->dataForming();
             ModelUtil::transactionBegin();

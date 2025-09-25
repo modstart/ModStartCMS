@@ -1,11 +1,6 @@
 @if(\Module\Member\Config\MemberOauth::hasItems())
     <div class="oauth">
-        <div class="title">
-            <div class="line">
-                OR
-            </div>
-        </div>
-        <div class="body">
+        <div>
             @foreach(\Module\Member\Config\MemberOauth::get() as $oauth)
                 @if($oauth->isSupport())
                     {!! $oauth->render() !!}

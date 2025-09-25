@@ -33,11 +33,20 @@ var ExcelReader = function () {
                 }
                 workbook = XLSX.read(data, {type: 'string'});
             } else {
-                workbook = XLSX.read(data, {type: 'binary'});
+                workbook = XLSX.read(data, {
+                    type: 'binary',
+                });
             }
             var worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            var list = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-            list = list.map(line => line.map(o => o.toString()))
+            var list = XLSX.utils.sheet_to_json(worksheet, {
+                header: 1,
+            });
+
+            function parseCell(cell) {
+                return cell.toString();
+            }
+
+            list = list.map(line => line.map(parseCell))
             cb && cb(list);
         };
         if (isCSV || isTxt) {
@@ -71,6 +80,5 @@ var ExcelWriter = function () {
 };
 
 export {
-    ExcelReader,
-    ExcelWriter
+    ExcelReader, ExcelWriter
 }

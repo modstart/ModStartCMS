@@ -20,7 +20,8 @@ class ModuleUtil
             if (!$info) {
                 continue;
             }
-            $modules[] = "$m:$info[version]";
+            $isSystem = ModuleManager::isSystemModule($info['name']);
+            $modules[] = "$m:" . ($isSystem ? 'S' : 'U') . ":$info[version]";
         }
         return $modules;
     }

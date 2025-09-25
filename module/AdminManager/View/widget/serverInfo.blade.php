@@ -28,7 +28,10 @@
             <div class="col-lg-4 col-md-6">
                 <div class="tw-flex ub-border-bottom tw-p-2">
                     <div class="tw-w-24 tw-flex-shrink-0 tw-font-bold">PHP版本</div>
-                    <div class="tw-flex-grow">V{{PHP_VERSION}}</div>
+                    <div class="tw-flex-grow">
+                        V{{PHP_VERSION}}
+                        {{PHP_INT_SIZE == 8 ? '64' : '32'}}位
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">

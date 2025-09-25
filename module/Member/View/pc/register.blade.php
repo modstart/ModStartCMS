@@ -146,6 +146,15 @@
                 </form>
             </div>
 
+            @include('module::Member.View.pc.oauthButtons')
+
+            @if(!modstart_config('retrieveDisable',false))
+                <div class="retrieve">
+                    忘记密码?
+                    <a target="_parent" href="{{modstart_web_url('retrieve',['redirect'=>empty($redirect)?null:$redirect])}}">找回密码</a>
+                </div>
+            @endif
+
         </div>
 
     </div>

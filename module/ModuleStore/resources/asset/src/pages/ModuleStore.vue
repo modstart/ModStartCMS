@@ -299,7 +299,8 @@
                         </div>
                         <div class="line">
                             <div class="field">
-                                <button type="submit" class="btn btn-primary btn-block btn-round" @click="doMemberLoginSubmit()">
+                                <button type="submit" class="btn btn-primary btn-block btn-round"
+                                        @click="doMemberLoginSubmit()">
                                     登录
                                 </button>
                             </div>
@@ -419,7 +420,7 @@ export default {
         return {
             loading: true,
             search: {
-                tab: 'store',
+                tab: MS.url.getQuery('tab', 'store'),
                 priceType: 'all',
                 isRecommend: false,
                 categoryId: 0,

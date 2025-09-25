@@ -119,6 +119,7 @@
                                                         record: one
                                                     })
                                                 }
+                                                return true;
                                             }
                                         })
                                         cb({code: 0, msg: null})
@@ -228,7 +229,7 @@
                                 <span class="ub-text-warning" v-else-if="item.status==='duplicated'">重复</span>
                             </td>
                             <td>
-                                <div v-if="!!item.msg">@{{ item }}</div>
+                                <div v-if="!!item.msg">@{{ item.msg }}</div>
                                 <div v-else class="ub-text-muted">-</div>
                             </td>
                             <td>

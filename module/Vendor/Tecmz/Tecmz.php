@@ -85,7 +85,7 @@ class Tecmz
             $param['sign'] = SignUtil::common($param, $this->appSecret);
         }
         $url = self::$API_BASE . $gate;
-        // print_r([$url, $param]);exit();
+        //print_r([$url, $param]);exit();
         if ($this->debug) {
             Log::debug('TecmzApi -> ' . $url . ' -> ' . SerializeUtil::jsonEncode($param, JSON_UNESCAPED_UNICODE));
         }

@@ -77,6 +77,7 @@ class TypeUtil
             'payed' => 'success',
             'enable' => 'success',
             'pass' => 'success',
+            'paid' => 'success',
 
             'wait_pay' => 'warning',
             'danger' => 'warning',
@@ -86,6 +87,7 @@ class TypeUtil
             'verifying' => 'warning',
             'invalid' => 'warning',
             'sending' => 'warning',
+            'pending' => 'warning',
 
             'fail' => 'danger',
             'error' => 'danger',

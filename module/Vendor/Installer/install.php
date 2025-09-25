@@ -154,6 +154,7 @@ include __DIR__ . '/function.php';
                         <div style="margin:0 auto;">
                             <?php text_success('系统：' . PHP_OS); ?>
                             <?php php_version_ok() ? text_success('PHP版本 ' . PHP_VERSION) : text_error('PHP版本要求（'.php_version_requires().'） 当前为 ' . PHP_VERSION); ?>
+                            <?php PHP_INT_SIZE == 4 ? text_error('PHP编译版本32位，需要64位') : text_success('PHP编译版本满足要求（64位）'); ?>
                             <?php text_success('最大上传：' . FileUtil::formatByte(EnvUtil::env('uploadMaxSize'))); ?>
                             <?php function_exists('curl_init') ? text_success('PHP curl 扩展') : text_error('缺少 PHP curl 扩展'); ?>
                             <?php class_exists('ZipArchive') ? text_success('PHP zip 扩展') : text_error('缺少 PHP zip 扩展'); ?>

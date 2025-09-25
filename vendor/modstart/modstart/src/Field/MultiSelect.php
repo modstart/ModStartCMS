@@ -23,19 +23,21 @@ class MultiSelect extends AbstractField
      */
     const SERIALIZE_TYPE_COLON_SEPARATED = 1;
 
-    protected $value = [];
-
     protected function setup()
     {
         $this->addVariables([
-            'options' => [],
+            'optionValues' => [],
             'serializeType' => null,
         ]);
     }
 
     public function options($options)
     {
-        $this->addVariables(['options' => $options]);
+        $optionValues = [];
+        foreach ($options as $k => $v) {
+            $optionValues[] = ['value' => $k, 'label' => $v];
+        }
+        $this->addVariables(['optionValues' => $optionValues]);
         return $this;
     }
 

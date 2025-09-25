@@ -213,7 +213,9 @@ class MemberUtil
 
     public static function update($id, $data)
     {
-        return ModelUtil::update('member_user', ['id' => $id], $data);
+        $result = ModelUtil::update(MemberUser::class, ['id' => $id], $data);
+        self::clearCache($id);
+        return $result;
     }
 
     /**
@@ -614,15 +616,15 @@ class MemberUtil
 
     /**
      * 用户上传你图片
-     * @param $userId
-     * @param $avatarData
-     * @param string $avatarExt
+     * @param $userId int 用户ID
+     * @param $avatarData string 图片数据
+     * @param $avatarExt string 图片扩展名
      * @return array ['code'=>'0','msg'=>'ok']
      * @throws \Exception
      */
     public static function setAvatar($userId, $avatarData, $avatarExt = 'jpg')
     {
-        if (!in_array($avatarExt, ['jpg', 'jpeg', 'png', 'gif'])) {
+        if (!in_array($avatarExt, ['jpg', 'jpeg', 'png', 'gif', 'svg'])) {
             return Response::generate(-1, '图片格式不正确');
         }
         $memberUser = self::get($userId);
@@ -632,10 +634,6 @@ class MemberUtil
         if (empty($avatarData)) {
             return Response::generate(-1, '图片数据为空');
         }
-        $imageBig = (string)Image::make($avatarData)->resize(400, 400)->encode($avatarExt, 75);
-        $imageMedium = (string)Image::make($avatarData)->resize(200, 200)->encode($avatarExt, 75);
-        $image = (string)Image::make($avatarData)->resize(50, 50)->encode($avatarExt, 75);
-
         $uploadParam = [
             'eventOpt' => [
                 'param' => [
@@ -646,30 +644,43 @@ class MemberUtil
                 DataFileUploadedEvent::OPT_IMAGE_WATERMARK_IGNORE => true,
             ]
         ];
-        $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig, null, $uploadParam);
-        if ($retBig['code']) {
-            return Response::generate(-1, '头像存储失败（' . $retBig['msg'] . '）');
-        }
-        $retMedium = DataManager::upload('image', 'U' . $userId . '_AvatarMiddle.' . $avatarExt, $imageMedium, null, $uploadParam);
-        if ($retMedium['code']) {
-            DataManager::deleteById($retBig['data']['id']);
+        if ('svg' == $avatarExt) {
+            $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $avatarData, null, $uploadParam);
             if ($retBig['code']) {
-                return Response::generate(-1, '头像存储失败（' . $retMedium['msg'] . '）');
+                return Response::generate(-1, '头像存储失败（' . $retBig['msg'] . '）');
+            }
+            $retMedium = $retBig;
+            $ret = $retBig;
+        } else {
+            $imageBig = (string)Image::make($avatarData)->resize(400, 400)->encode($avatarExt, 75);
+            $imageMedium = (string)Image::make($avatarData)->resize(200, 200)->encode($avatarExt, 75);
+            $image = (string)Image::make($avatarData)->resize(50, 50)->encode($avatarExt, 75);
+            $retBig = DataManager::upload('image', 'U' . $userId . '_AvatarBig.' . $avatarExt, $imageBig, null, $uploadParam);
+            if ($retBig['code']) {
+                return Response::generate(-1, '头像存储失败（' . $retBig['msg'] . '）');
+            }
+            $retMedium = DataManager::upload('image', 'U' . $userId . '_AvatarMiddle.' . $avatarExt, $imageMedium, null, $uploadParam);
+            if ($retMedium['code']) {
+                DataManager::deleteById($retBig['data']['id']);
+                if ($retBig['code']) {
+                    return Response::generate(-1, '头像存储失败（' . $retMedium['msg'] . '）');
+                }
+            }
+            $ret = DataManager::upload('image', 'U_' . $userId . '_Avatar.' . $avatarExt, $image, null, $uploadParam);
+            if ($ret['code']) {
+                DataManager::deleteById($retBig['data']['id']);
+                DataManager::deleteById($retMedium['data']['id']);
+                if ($retBig['code']) {
+                    return Response::generate(-1, '头像存储失败（' . $ret['msg'] . '）');
+                }
             }
         }
-        $ret = DataManager::upload('image', 'U_' . $userId . '_Avatar.' . $avatarExt, $image, null, $uploadParam);
-        if ($ret['code']) {
-            DataManager::deleteById($retBig['data']['id']);
-            DataManager::deleteById($retMedium['data']['id']);
-            if ($retBig['code']) {
-                return Response::generate(-1, '头像存储失败（' . $ret['msg'] . '）');
-            }
-        }
-        self::update($memberUser['id'], [
+        $update = [
             'avatarBig' => $retBig['data']['fullPath'],
             'avatarMedium' => $retMedium['data']['fullPath'],
             'avatar' => $ret['data']['fullPath']
-        ]);
+        ];
+        self::update($memberUser['id'], $update);
         return Response::generateSuccess();
     }
 

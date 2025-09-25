@@ -41,6 +41,7 @@ use Module\Member\Config\MemberAdminList;
 use Module\Member\Config\MemberOauth;
 use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Events\MemberUserVipChangeEvent;
+use Module\Member\Model\MemberUser;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Type\Gender;
 use Module\Member\Type\MemberStatus;
@@ -58,7 +59,7 @@ class MemberController extends Controller
     {
 
         $builder
-            ->init('member_user')
+            ->init(MemberUser::class)
             ->field(function ($builder) {
                 /** @var HasFields $builder */
                 $builder->id('id', 'ID');

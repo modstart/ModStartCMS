@@ -745,7 +745,12 @@ class ModelUtil
      *  ['memberUserId' => 2, 'title'=>'test2' , '_member'=>['id'=>1, 'username'=>'test1'] ],
      * ];
      */
-    public static function join(&$records, $dataModelKey = 'userId', $dataMergedKey = '_user', $model = 'join_model', $modelPrimaryKey = 'id')
+    public static function join(&$records,
+                                $dataModelKey = 'userId',
+                                $dataMergedKey = '_user',
+                                $model = 'join_model',
+                                $modelPrimaryKey = 'id',
+                                $modelWhere = [])
     {
         if (empty($records)) {
             return;
@@ -755,7 +760,11 @@ class ModelUtil
             return $item[$dataModelKey];
         }, $records);
 
-        $joinData = self::model($model)->whereIn($modelPrimaryKey, $ids)->get()->toArray();
+        $query = self::model($model);
+        if (!empty($modelWhere)) {
+            $query = $query->where($modelWhere);
+        }
+        $joinData = $query->whereIn($modelPrimaryKey, $ids)->get()->toArray();
 
         $joinDataMap = array_build($joinData, function ($k, $v) use ($modelPrimaryKey) {
             return [$v[$modelPrimaryKey], $v];

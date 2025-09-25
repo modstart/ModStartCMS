@@ -211,6 +211,7 @@ class Grid
     private $addBlankPage = false;
     private $editBlankPage = false;
     private $enablePagination = true;
+    /** @var array|string */
     private $defaultOrder = [];
     private $treeMaxLevel = 0;
     private $treeRootPid = 0;
