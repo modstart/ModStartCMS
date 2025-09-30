@@ -62,6 +62,9 @@
                 {{modstart_config('siteBeianGonganText')}}
             </a>
         @endif
+        @if(modstart_config('Site_CopyrightOthers'))
+            {!! modstart_config('Site_CopyrightOthers') !!}
+        @endif
         &copy;{{modstart_config('siteDomain','[网站域名]')}}
     </div>
 </footer>
