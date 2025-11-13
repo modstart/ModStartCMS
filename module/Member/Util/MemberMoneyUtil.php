@@ -84,10 +84,18 @@ class MemberMoneyUtil
      * @param $type string 提现方式
      * @param $realname string 真实姓名
      * @param $account string 账号
-     * @param string $remark 备注
+     * @param $remark string 备注
+     * @param $param array 其他参数
      * @throws \Exception
      */
-    public static function cash($memberUserId, $money, $moneyAfterTax, $type, $realname, $account, $remark = '余额提现')
+    public static function cash($memberUserId,
+                                $money,
+                                $moneyAfterTax,
+                                $type,
+                                $realname,
+                                $account,
+                                $remark = '余额提现',
+                                $param = [])
     {
         self::change($memberUserId, -$money, '余额提现');
         ModelUtil::insert('member_money_cash', [
@@ -99,6 +107,7 @@ class MemberMoneyUtil
             'realname' => $realname,
             'account' => $account,
             'remark' => $remark,
+            'param' => SerializeUtil::jsonEncode($param),
         ]);
     }
 

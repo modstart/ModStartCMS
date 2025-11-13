@@ -29,6 +29,15 @@
                 $('[data-money]').html('<span class="ub-text-muted">正在计算...</span>');
                 timer = setTimeout(calc, 500);
             });
+            var showType = function () {
+                var type = $('[name="type"]').val();
+                $('[data-type]').addClass('tw-hidden');
+                $('[data-type="' + type + '"]').removeClass('tw-hidden');
+            };
+            $('[name="type"]').on('change', function () {
+                showType();
+            });
+            showType();
         });
     </script>
 @endsection
@@ -111,16 +120,46 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="line">
-                            <div class="label">提现账号姓名</div>
+                        <div class="line tw-hidden" data-type="{{\Module\Member\Type\MemberMoneyCashType::ALIPAY}}">
+                            <div class="label">姓名</div>
                             <div class="field">
                                 <input class="form" type="text" name="alipayRealname" placeholder="请填写真实姓名" />
                             </div>
                         </div>
-                        <div class="line">
-                            <div class="label">提现账号</div>
+                        <div class="line tw-hidden" data-type="{{\Module\Member\Type\MemberMoneyCashType::ALIPAY}}">
+                            <div class="label">支付宝账号</div>
                             <div class="field">
                                 <input class="form" type="text" name="alipayAccount" placeholder="请填写支付宝账号" />
+                            </div>
+                        </div>
+                        <div class="line tw-hidden" data-type="{{\Module\Member\Type\MemberMoneyCashType::WECHAT}}">
+                            <div class="label">姓名</div>
+                            <div class="field">
+                                <input class="form" type="text" name="wechatRealname" placeholder="请填写真实姓名" />
+                            </div>
+                        </div>
+                        <div class="line tw-hidden" data-type="{{\Module\Member\Type\MemberMoneyCashType::WECHAT}}">
+                            <div class="label">微信号</div>
+                            <div class="field">
+                                <input class="form" type="text" name="wechatAccount" placeholder="请填写微信号" />
+                            </div>
+                        </div>
+                        <div class="line tw-hidden" data-type="{{\Module\Member\Type\MemberMoneyCashType::BANK}}">
+                            <div class="label">姓名</div>
+                            <div class="field">
+                                <input class="form" type="text" name="bankRealname" placeholder="请填写真实姓名" />
+                            </div>
+                        </div>
+                        <div class="line tw-hidden" data-type="{{\Module\Member\Type\MemberMoneyCashType::BANK}}">
+                            <div class="label">银行账号</div>
+                            <div class="field">
+                                <input class="form" type="text" name="bankAccount" placeholder="请填写银行账号" />
+                            </div>
+                        </div>
+                        <div class="line tw-hidden" data-type="{{\Module\Member\Type\MemberMoneyCashType::BANK}}">
+                            <div class="label">开户行</div>
+                            <div class="field">
+                                <input class="form" type="text" name="bankName" placeholder="请填写开户行" />
                             </div>
                         </div>
                         <div class="line">

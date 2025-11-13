@@ -9,6 +9,10 @@ import {StrUtil} from './../lib/util';
 
 export default {
     name: 'RichEditor',
+    model: {
+        prop: 'data',
+        event: 'input'
+    },
     props: {
         data: {
             type: String,
@@ -54,6 +58,7 @@ export default {
                     this.ignoreChangedContent = null
                     return
                 }
+                // console.log('watch data', n)
                 this.setContent(n)
             },
             immediate: true,
@@ -80,6 +85,7 @@ export default {
                 zIndex: 10000,
             }, this.editorOption))
             this.setContent(this.data)
+            // console.log('editor initialized', this.data)
             this.editor.addListener('contentChange', () => {
                 // console.log('editor.contentChange', this.editor.getContent())
                 const content = this.editor.getContent()

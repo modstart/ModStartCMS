@@ -43,7 +43,7 @@ $(function(){
         tab.find('.ub-nav-tab-body').addClass('hidden').eq(index).removeClass('hidden');
     };
     active(0);
-    tab.on('click','a',function(){
+    tabAs.on('click',function(){
         active(tabAs.index(this));
     });
 });

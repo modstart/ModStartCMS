@@ -418,6 +418,7 @@
     height: 3rem;
     background-color: var(--color-content-bg);
     overflow: visible;
+    position: relative;
 
     &.fixed {
         position: fixed;
@@ -910,14 +911,16 @@
 
         .logo {
             display: inline-block;
-            margin-left: 2.5rem;
+            margin-left: 2rem;
 
             a {
                 height: 2.5rem;
                 line-height: 2.5rem;
+                display: inline-block;
 
                 img {
-                    height: 2.5rem;
+                    height: 2rem;
+                    display: inline-block;
                 }
             }
         }
@@ -957,11 +960,16 @@
             top: 0;
             padding: 0.25rem 0;
 
+            .item {
+                margin-left: 0;
+            }
+
             a {
                 display: inline-block;
                 padding: 0 0.3rem 0 0;
                 background: transparent;
                 line-height: 2rem;
+                margin-left: 0;
             }
         }
 

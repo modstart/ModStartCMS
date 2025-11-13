@@ -6,6 +6,8 @@ namespace ModStart\Field;
 
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\SerializeUtil;
+use ModStart\Field\Type\ComplexFieldsType;
+use ModStart\ModStart;
 
 /**
  * Json多组键值对字段
@@ -22,18 +24,22 @@ class ComplexFieldsList extends AbstractField
     {
         $this->addVariables([
             'fields' => [
-                // ['name' => 'xxx', 'title' => '文本（只读）', 'type' => 'display', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '开关', 'type' => 'switch', 'defaultValue' => false, 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '文本', 'type' => 'text', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '文本', 'type' => 'textarea', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '图标', 'type' => 'icon', 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '数字', 'type' => 'number', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '数字', 'type' => 'number-text', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '图片', 'type' => 'image', 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '多字符串值', 'type' => 'values', 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
-                // ['name' => 'xxx', 'title' => '单选', 'type' => 'select', 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
-                // ['name' => 'xxx', 'title' => '链接', 'type' => 'link', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
-                // ['name' => 'xxx', 'title' => '颜色', 'type' => 'color', 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // 同步修改 ComplexFields 中的注释
+                // ['name' => 'xxx', 'title' => '文本（只读）', 'type' => ComplexFieldsType::TYPE_DISPLAY, 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '开关', 'type' => ComplexFieldsType::TYPE_SWITCH, 'defaultValue' => false, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '单行文本', 'type' => ComplexFieldsType::TYPE_TEXT, 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '多行文本', 'type' => ComplexFieldsType::TYPE_TEXTAREA, 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '图标', 'type' => ComplexFieldsType::TYPE_ICON, 'defaultValue' => 'iconfont icon-home', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '图片', 'type' => ComplexFieldsType::TYPE_IMAGE, 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '多字符串值', 'type' => ComplexFieldsType::TYPE_VALUES, 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '数字', 'type' => ComplexFieldsType::TYPE_NUMBER, 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '数字', 'type' => ComplexFieldsType::TYPE_NUMBER_TEXT, 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '滑动数字', 'type' => ComplexFieldsType::TYPE_SLIDER, 'min' => 1, 'max' => 5, 'step' => 1, 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
+                // ['name' => 'xxx', 'title' => '链接', 'type' => ComplexFieldsType::TYPE_LINK, 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '单选', 'type' => ComplexFieldsType::TYPE_SELECT, 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '单选按钮', 'type' => ComplexFieldsType::TYPE_RADIO, 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '颜色', 'type' => ComplexFieldsType::TYPE_COLOR, 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '富文本', 'type' => ComplexFieldsType::TYPE_RICH_HTML, 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],
             ],
             'valueItem' => new \stdClass(),
             'iconServer' => modstart_admin_url('widget/icon'),
@@ -101,8 +107,10 @@ class ComplexFieldsList extends AbstractField
         foreach ($value as $f) {
             BizException::throwsIf('ComplexFieldsList.字段名重复 - ' . $f['name'], isset($nameMap[$f['name']]));
             $nameMap[$f['name']] = true;
-            if ($f['type'] == 'icon') {
+            if ($f['type'] == ComplexFieldsType::TYPE_ICON) {
                 $this->addVariables(['_hasIcon' => true]);
+            } else if ($f['type'] === ComplexFieldsType::TYPE_RICH_HTML) {
+                ModStart::js('asset/common/editor.js');
             }
         }
         return $this;

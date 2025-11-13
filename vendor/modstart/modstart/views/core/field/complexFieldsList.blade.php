@@ -54,17 +54,14 @@
                                 <el-input-number v-model="value[vIndex]['{{$f['name']}}']"
                                                  placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
                                                  size="mini"></el-input-number>
-                            @elseif($f['type']=='text-number')
+                            @elseif($f['type']=='numberText')
                                 <el-input v-model="value[vIndex]['{{$f['name']}}']"
                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
                                           size="mini"></el-input>
-                            @elseif($f['type']=='select')
-                                <el-select v-model="value[vIndex]['{{$f['name']}}']"
-                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}">
-                                    @foreach($f['option'] as $k=>$v)
-                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($v)}}" :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
-                                    @endforeach
-                                </el-select>
+                            @elseif($f['type']=='slider')
+                                <el-slider v-model="value[vIndex]['{{$f['name']}}']" size="mini"
+                                           :min="{{$f['min']}}" :max="{{$f['max']}}" :step="{{$f['step']}}"
+                                ></el-slider>
                             @elseif($f['type']=='link')
                                 <div class="tw-flex">
                                     <div class="tw-flex-grow">
@@ -76,8 +73,25 @@
                                         <el-button size="mini" @click="doSelectLink(vIndex,'{{$f['name']}}')">选择</el-button>
                                     </div>
                                 </div>
+                            @elseif($f['type']=='select')
+                                <el-select v-model="value[vIndex]['{{$f['name']}}']"
+                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}">
+                                    @foreach($f['option'] as $k=>$v)
+                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($v)}}" :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
+                                    @endforeach
+                                </el-select>
+                            @elseif($f['type']=='radio')
+                                <el-radio-group v-model="value[vIndex]['{{$f['name']}}']">
+                                    @foreach($f['option'] as $k=>$v)
+                                        <el-radio :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}">{{$v}}</el-radio>
+                                    @endforeach
+                                </el-radio-group>
                             @elseif($f['type']=='color')
                                 <el-color-picker v-model="value[vIndex]['{{$f['name']}}']"></el-color-picker>
+                            @elseif($f['type']=='richHtml')
+                                <rich-editor v-model="value[vIndex]['{{$f['name']}}']"
+                                             server="{{empty($f['server'])?modstart_admin_url('data/ueditor'):$server}}"
+                                ></rich-editor>
                             @endif
                         </td>
                     @endforeach

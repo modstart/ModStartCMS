@@ -55,12 +55,18 @@
                                 @if(!empty(\Module\Member\Auth\MemberVip::get()))
                                     <div class="tw-inline-block">
                                         您当前是
-                                        <span class="vip-text ub-text-bold">
-                                        {{\Module\Member\Auth\MemberVip::get('title')}}
-                                    </span>
+                                        <div class="tw-inline-block vip-text ub-text-bold">
+                                            {{\Module\Member\Auth\MemberVip::get('title')}}
+                                        </div>
                                         @if(!\Module\Member\Auth\MemberVip::isDefault())
-                                            ，
-                                            过期时间为：{{\Module\Member\Auth\MemberUser::get('vipExpire')}}
+                                            过期时间为
+                                            <div class="tw-inline-block vip-text ub-text-bold">
+                                                @if(\Module\Member\Auth\MemberUser::get('vipExpire'))
+                                                    {{\Module\Member\Auth\MemberUser::get('vipExpire')}}
+                                                @else
+                                                    永不过期
+                                                @endif
+                                            </div>
                                         @endif
                                     </div>
                                 @endif

@@ -54,7 +54,7 @@
         </a>
         <div class="ub-modal-body">
             <div class="tw-px-4 tw-pt-2">
-                <div class="margin-bottom tw-flex tw--mt-2 tw-text-xl tw-text-yellow-800">
+                <div class="margin-bottom tw-flex tw--mt-2 tw-text-xl tw-text-yellow-800 tw-pr-3">
                     <div class="tw-flex-grow">
                         开通VIP
                     </div>

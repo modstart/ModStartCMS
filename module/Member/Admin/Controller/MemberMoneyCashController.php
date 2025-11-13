@@ -43,6 +43,7 @@ class MemberMoneyCashController extends Controller
                 $builder->type('type', '账号类型')->type(MemberMoneyCashType::class);
                 $builder->text('realname', '姓名');
                 $builder->text('account', '账号');
+                $builder->jsonKeyValue('param', '参数');
                 $builder->display('created_at', L('Created At'));
             })
             ->gridFilter(function (GridFilter $filter) {

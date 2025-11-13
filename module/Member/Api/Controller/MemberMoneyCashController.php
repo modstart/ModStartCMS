@@ -6,6 +6,7 @@ namespace Module\Member\Api\Controller;
 
 use Illuminate\Routing\Controller;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Type\TypeUtil;
@@ -87,16 +88,31 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
             return Response::generate(-1, '提现金额至少为' . modstart_config('Member_MoneyCashMin', 100));
         }
         $type = $input->getType('type', MemberMoneyCashType::class);
+        $remark = '余额提现';
+        $realname = null;
+        $account = null;
+        $param = [];
         switch ($type) {
             case MemberMoneyCashType::ALIPAY:
-                $alipayRealname = $input->getTrimString('alipayRealname');
-                $alipayAccount = $input->getTrimString('alipayAccount');
-                if (empty($alipayRealname)) {
-                    return Response::generate(-1, '支付宝姓名不能为空');
-                }
-                if (empty($alipayAccount)) {
-                    return Response::generate(-1, '支付宝账号不能为空');
-                }
+                $realname = $input->getTrimString('alipayRealname');
+                $account = $input->getTrimString('alipayAccount');
+                BizException::throwsIfEmpty($realname, '支付宝姓名不能为空');
+                BizException::throwsIfEmpty($account, '支付宝账号不能为空');
+                break;
+            case MemberMoneyCashType::WECHAT:
+                $realname = $input->getTrimString('wechatRealname');
+                $account = $input->getTrimString('wechatAccount');
+                BizException::throwsIfEmpty($realname, '微信姓名不能为空');
+                BizException::throwsIfEmpty($account, '微信账号不能为空');
+                break;
+            case MemberMoneyCashType::BANK:
+                $realname = $input->getTrimString('bankRealname');
+                $account = $input->getTrimString('bankAccount');
+                $bankName = $input->getTrimString('bankName');
+                BizException::throwsIfEmpty($realname, '银行姓名不能为空');
+                BizException::throwsIfEmpty($account, '银行账号不能为空');
+                BizException::throwsIfEmpty($bankName, '银行名称不能为空');
+                $param['bankName'] = $bankName;
                 break;
             default:
                 return Response::generateError('支付类型错误');
@@ -110,7 +126,7 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
         $moneyAfterTax = bcdiv(bcmul($money, $rate, 2), 100, 2);
         try {
             ModelUtil::transactionBegin();
-            MemberMoneyUtil::cash(MemberUser::id(), $money, $moneyAfterTax, MemberMoneyCashType::ALIPAY, $alipayRealname, $alipayAccount);
+            MemberMoneyUtil::cash(MemberUser::id(), $money, $moneyAfterTax, $type, $realname, $account, $remark, $param);
             ModelUtil::transactionCommit();
         } catch (\Exception $e) {
             ModelUtil::transactionRollback();

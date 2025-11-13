@@ -12,7 +12,7 @@
        @if($styleFormField) style="{!! $styleFormField !!}" @endif
 />
 <div class="pb-code-editor">
-    <div id="{{$id}}Editor" style="width:100%;height:{{$editorHeight}};">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty(null===$value?(null===$defaultValue?new \stdClass():$defaultValue):$value)}}</div>
+    <div id="{{$id}}Editor" style="width:100%;height:{{empty($editorHeight)?'200px':$editorHeight}};">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty(null===$value?(null===$defaultValue?new \stdClass():$defaultValue):$value)}}</div>
 </div>
 <style>
     .pb-code-editor {

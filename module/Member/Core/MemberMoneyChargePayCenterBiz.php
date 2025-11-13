@@ -7,6 +7,7 @@ namespace Module\Member\Core;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\CRUDUtil;
 use Module\Member\Util\MemberMoneyUtil;
 use Module\Member\Util\MemberUtil;
 use Module\PayCenter\Biz\AbstractPayCenterBiz;
@@ -26,6 +27,11 @@ class MemberMoneyChargePayCenterBiz extends AbstractPayCenterBiz
     public function title()
     {
         return '用户钱包充值';
+    }
+
+    public function adminViewUrl($bizId)
+    {
+        return $this->adminViewUrlGridWithSearchId('member/money_charge_order', $bizId);
     }
 
     public function disabledPayTypes()

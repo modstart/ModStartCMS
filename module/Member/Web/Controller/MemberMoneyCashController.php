@@ -50,6 +50,7 @@ class MemberMoneyCashController extends MemberFrameController implements MemberL
         });
         $grid->disableCUD()->disableItemOperate();
         $grid->useSimple(function (AbstractField $field, $item, $index) {
+            $item->param = @json_decode($item->param, true);
             return AutoRenderedFieldValue::makeView('module::Member.View.pc.memberMoneyCash.logItem', [
                 'item' => $item,
             ]);

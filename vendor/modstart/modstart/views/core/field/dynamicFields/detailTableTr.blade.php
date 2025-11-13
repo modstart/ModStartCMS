@@ -9,7 +9,9 @@
                 @if($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_TEXT)
                     {{$valueObject[$f['name']]}}
                 @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_TEXTAREA)
-                    {{$valueObject[$f['name']]}}
+                    <div>
+                        {!! nl2br(htmlspecialchars($valueObject[$f['name']])) !!}
+                    </div>
                 @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_NUMBER)
                     {{$valueObject[$f['name']]}}
                 @elseif($f['type']==\ModStart\Field\Type\DynamicFieldsType::TYPE_SWITCH)

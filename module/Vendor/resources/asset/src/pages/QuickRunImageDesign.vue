@@ -27,9 +27,15 @@
                             <template v-for="(b,bIndex) in data.blocks">
                                 <div v-if="b.type==='text'"
                                      :data-index="bIndex"
-                                     :style="{left:b.x+'px',top:b.y+'px',fontSize:b.data.size+'px',fontWeight:b.data.bold?'bold':'normal',color:b.data.color}"
+                                     :style="{
+                                         left:b.x+'px',top:b.y+'px',
+                                         fontSize:b.data.size+'px',
+                                         fontWeight:b.data.bold?'bold':'normal',
+                                         color:b.data.color,
+                                         width:(b.data.width>0?b.data.width+'px':'auto'),
+                                     }"
                                      class="block-item">
-                                    <div class="block-item-body"
+                                    <div class="block-item-body text"
                                          :style="{margin:textAlignMarginMap[b.data.align],textAlign:b.data.align}"
                                          v-html="textToHtml(b.data.text)"
                                     >
@@ -190,6 +196,26 @@
                                                                 <el-radio-button label="center">中</el-radio-button>
                                                                 <el-radio-button label="right">右</el-radio-button>
                                                             </el-radio-group>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="pb-block-field">
+                                                        <div class="title">字体文件</div>
+                                                        <div class="content">
+                                                            <file-selector v-model="b.data.font"
+                                                                           gallery-enable
+                                                                           upload-enable
+                                                                           :file-dialog-url="$url.admin('data/file_manager')"
+                                                            ></file-selector>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="pb-block-field">
+                                                        <div class="title">宽度</div>
+                                                        <div class="content">
+                                                            <el-input-number v-model="b.data.width"></el-input-number>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -463,6 +489,8 @@ export default {
                     block.data.bold = false
                     block.data.size = 20
                     block.data.align = 'left'
+                    block.data.font = '';
+                    block.data.width = 0;
                     break
                 case 'image':
                     block.data.image = this.$url.web('placeholder/100x100')
@@ -516,6 +544,10 @@ export default {
 
                 .block-item-body {
                     white-space: nowrap;
+
+                    &.text {
+                        white-space: wrap;
+                    }
                 }
             }
         }

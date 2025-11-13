@@ -92,6 +92,10 @@ use stdClass;
  * $value = function (Form $form) { RepositoryUtil::makeItems($form->item())->map(function ($item) { });}
  * @method  Form|mixed hookChanged($value = null)
  *
+ * Hook 数据复制
+ * $value = function (Form $form) { $form->item()->hash = $form->item()->hash.'_copy'; }
+ * @method  Form|mixed hookCopying($value = null)
+ *
  * Hook 响应
  * $value = function (Form $form) { return Response::jsonSuccess('操作成功'); }
  * @method  Form|mixed hookResponse($value = null)
@@ -160,6 +164,7 @@ class Form implements Renderable
         'hookDeleting',
         'hookDeleted',
         'hookChanged',
+        'hookCopying',
         'hookResponse',
         'dataSubmitted',
         'dataForming',
@@ -237,6 +242,10 @@ class Form implements Renderable
      * @var Closure
      */
     private $hookChanged;
+    /**
+     * @var Closure
+     */
+    private $hookCopying;
     /**
      * @var Closure
      */
@@ -563,13 +572,15 @@ class Form implements Renderable
             $copyId = CRUDUtil::copyId();
             if ($copyId) {
                 $this->itemId($copyId);
-                $this->item($this->repository()->editing($this));
+                $item = $this->repository()->editing($this);
+                $this->item($item);
                 $this->itemId(0);
                 $isCopy = true;
             }
         }
         $this->build();
         if ($isCopy) {
+            ResultException::throwsIfFail($this->hookCall($this->hookCopying));
             $this->fillAddableFields();
         }
         return $this;

@@ -2,34 +2,50 @@
     <div class="label">
         {!! in_array('required',$rules)?'<span class="ub-text-danger ub-text-bold">*</span>':'' !!}
         @if($tip)
-            <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i class="iconfont icon-warning"></i></a>
+            <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$tip}}"><i
+                    class="iconfont icon-warning"></i></a>
         @endif
         {{$label}}
     </div>
     <div class="field">
         <div id="{{$id}}Input">
-            <input type="hidden" name="{{$name}}" :value="jsonValue" />
+            <input type="hidden" name="{{$name}}" :value="jsonValue"/>
             <table class="ub-table border tw-bg-white">
                 <tbody>
-                    @foreach($fields as $f)
+                @foreach($fields as $f)
                     <tr>
                         <td width="1%" class="ub-text-truncate">
                             {{empty($f['title'])?$f['name']:$f['title']}}
                             @if(!empty($f['tip']))
-                                <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$f['tip']}}"><i class="iconfont icon-warning"></i></a>
+                                <a class="ub-text-muted" href="javascript:;" data-tip-popover="{{$f['tip']}}"><i
+                                        class="iconfont icon-warning"></i></a>
                             @endif
                         </td>
                         <td>
-                            @if($f['type']=='switch')
+                            @if($f['type']=='display')
+                                {!! "{"."{ value['".$f['name']."'] }"."}" !!}
+                            @elseif($f['type']=='switch')
                                 <el-switch v-model="value['{{$f['name']}}']"></el-switch>
                             @elseif($f['type']=='text')
                                 <el-input v-model="value['{{$f['name']}}']" size="mini"></el-input>
+                            @elseif($f['type']=='textarea')
+                                <el-input v-model="value['{{$f['name']}}']"
+                                          placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
+                                          type="textarea"
+                                          size="mini"></el-input>
                             @elseif($f['type']=='icon')
-                                <icon-input v-model="value['{{$f['name']}}']" :icons="icons" :inline="true"></icon-input>
+                                <icon-input v-model="value['{{$f['name']}}']" :icons="icons"
+                                            :inline="true"></icon-input>
                             @elseif($f['type']=='image')
                                 <image-selector v-model="value['{{$f['name']}}']"></image-selector>
+                            @elseif($f['type']=='values')
+                                <values-editor v-model="value['{{$f['name']}}']"></values-editor>
                             @elseif($f['type']=='number')
                                 <el-input-number v-model="value['{{$f['name']}}']" size="mini"></el-input-number>
+                            @elseif($f['type']=='numberText')
+                                <el-input v-model="value['{{$f['name']}}']"
+                                          placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
+                                          size="mini"></el-input>
                             @elseif($f['type']=='slider')
                                 <el-slider v-model="value['{{$f['name']}}']" size="mini"
                                            :min="{{$f['min']}}" :max="{{$f['max']}}" :step="{{$f['step']}}"
@@ -49,19 +65,28 @@
                                 <el-select v-model="value['{{$f['name']}}']"
                                            placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}">
                                     @foreach($f['option'] as $k=>$v)
-                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}" :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($v)}}" :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
+                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"
+                                                   :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($v)}}"
+                                                   :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
                                     @endforeach
                                 </el-select>
                             @elseif($f['type']=='radio')
                                 <el-radio-group v-model="value['{{$f['name']}}']">
                                     @foreach($f['option'] as $k=>$v)
-                                        <el-radio :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}">{{$v}}</el-radio>
+                                        <el-radio
+                                            :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}">{{$v}}</el-radio>
                                     @endforeach
                                 </el-radio-group>
+                            @elseif($f['type']=='color')
+                                <el-color-picker v-model="value['{{$f['name']}}']" size="mini"></el-color-picker>
+                            @elseif($f['type']=='richHtml')
+                                <rich-editor v-model="value['{{$f['name']}}']"
+                                             server="{{empty($f['server'])?modstart_admin_url('data/ueditor'):$server}}"
+                                ></rich-editor>
                             @endif
                         </td>
                     </tr>
-                    @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -77,10 +102,10 @@
 <script>
     $(function () {
         <?php
-        $valueOld = ( null===$value?(null===$defaultValue?[]:$defaultValue):$value );
+        $valueOld = (null === $value ? (null === $defaultValue ? [] : $defaultValue) : $value);
         $newValue = [];
-        foreach($fields as $f){
-            $newValue[$f['name']] = isset($valueOld[$f['name']])?$valueOld[$f['name']]:null;
+        foreach ($fields as $f) {
+            $newValue[$f['name']] = isset($valueOld[$f['name']]) ? $valueOld[$f['name']] : null;
         }
         ?>
         var app = new Vue({
@@ -89,16 +114,16 @@
                 value: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($newValue) !!},
                 icons: []
             },
-            mounted(){
+            mounted() {
                 MS.api.post('{{$iconServer}}', {}, res => {
                     this.icons = res.data
                 })
             },
-            computed:{
-                jsonValue:function(){
+            computed: {
+                jsonValue: function () {
                     return JSON.stringify(this.value);
                 },
-                doSelectLink(index,name,param){
+                doSelectLink(index, name, param) {
                     window.__selectorDialog = new window.api.selectorDialog({
                         server: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($linkServer) !!},
                         callback: (items) => {

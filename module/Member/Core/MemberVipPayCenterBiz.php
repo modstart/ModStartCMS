@@ -8,6 +8,7 @@ use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Type\TypeUtil;
+use ModStart\Core\Util\CRUDUtil;
 use ModStart\Core\Util\SerializeUtil;
 use ModStart\Module\ModuleManager;
 use Module\Member\Events\MemberUserVipChangeEvent;
@@ -34,6 +35,11 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
     public function title()
     {
         return '会员VIP';
+    }
+
+    public function adminViewUrl($bizId)
+    {
+        return $this->adminViewUrlGridWithSearchId('member_vip_order', $bizId);
     }
 
     public function onPayed($payBizId, $payOrder, $param = [])
