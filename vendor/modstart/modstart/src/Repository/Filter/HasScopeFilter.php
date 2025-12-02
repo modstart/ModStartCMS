@@ -66,7 +66,7 @@ trait HasScopeFilter
     }
 
     /**
-     * 保存自动追加参数
+     * param will automatically added to model when create
      *
      * @param null $param
      * @return $this|array

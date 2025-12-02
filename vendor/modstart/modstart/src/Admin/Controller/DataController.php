@@ -9,14 +9,22 @@ use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
+use ModStart\Data\DataStorageType;
 use ModStart\Data\FileManager;
 use ModStart\Data\UeditorManager;
 
 class DataController extends Controller
 {
-    public function fileManager($category)
+    public function fileManager($category, $storageTypeConfig = null)
     {
         if (Request::isPost()) {
+            $option = [];
+            if ($storageTypeConfig) {
+                $storageType = modstart_config($storageTypeConfig, '');
+                if ($storageType) {
+                    $option['driver'] = DataStorageType::toDriverName($storageType);
+                }
+            }
             return FileManager::handle(
                 $category,
                 'admin_upload', 'admin_upload_category',

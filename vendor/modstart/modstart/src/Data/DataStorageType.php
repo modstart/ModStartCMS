@@ -30,4 +30,11 @@ class DataStorageType implements BaseType
         }
         return 'DataStorage_' . $name;
     }
+
+    public static function getListWihDefault()
+    {
+        return array_merge([
+            '' => '默认存储',
+        ], self::getList());
+    }
 }

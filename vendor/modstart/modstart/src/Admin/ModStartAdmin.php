@@ -55,7 +55,7 @@ class ModStartAdmin
             $router->match(['get'], 'admin_log/show', 'AdminLogController@show');
             $router->match(['post'], 'admin_log/delete', 'AdminLogController@delete');
 
-            $router->match(['get', 'post'], 'data/file_manager/{category}', 'DataController@fileManager');
+            $router->match(['get', 'post'], 'data/file_manager/{category}/{storageTypeConfig?}', 'DataController@fileManager');
             $router->match(['get', 'post'], 'data/ueditor', 'DataController@ueditor');
 
             $router->match(['get', 'post'], 'widget/request', 'WidgetController@request');

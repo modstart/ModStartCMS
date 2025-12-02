@@ -23,6 +23,10 @@ export default {
             type: String,
             default: 'file',
         },
+        dataStorageType:{
+            type: String,
+            default: null
+        },
         uploadConfig: {
             type: Object,
             default: null
@@ -98,7 +102,7 @@ export default {
             return this.dataConfigFromServer
         },
         apiUrl() {
-            const url = `${this.url}/${this.category}`
+            const url = `${this.url}/${this.category}${this.dataStorageType?'/'+this.dataStorageType:''}`
             return this.$api.url ? this.$api.url(url) : url
         }
     },

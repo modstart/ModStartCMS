@@ -185,6 +185,9 @@ class InputPackage
             $content = trim($this->data[$key]);
             $content = HtmlUtil::filter($content);
             $content = StrUtil::filterSpecialChars($content);
+            if ($content === '<p></p>') {
+                $content = '';
+            }
             return $content;
         }
         return $defaultValue;
@@ -639,7 +642,9 @@ class InputPackage
         }
         $values = [];
         foreach ($this->data[$key] as $item) {
-            $values[] = trim($item);
+            $item = @trim((string)$item);
+            $item = StrUtil::filterSpecialChars($item);
+            $values[] = $item;
         }
         return $values;
     }

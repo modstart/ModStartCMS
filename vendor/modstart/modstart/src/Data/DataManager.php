@@ -78,7 +78,7 @@ class DataManager
 
     public static function prepareOption($option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         if (null === self::$config) {
@@ -100,7 +100,7 @@ class DataManager
      */
     public static function storage($option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::prepareOption();
         }
         $hash = md5(SerializeUtil::jsonEncode($option));
@@ -133,7 +133,7 @@ class DataManager
             //    'input' => $input,
             //]);
         }
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -201,7 +201,7 @@ class DataManager
      */
     public static function uploadToTemp($category, $filename, $content, $option = null, $param = [])
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         if (!isset($param['eventOpt'])) {
@@ -306,7 +306,7 @@ class DataManager
      */
     public static function upload($category, $filename, $content, $option = null, $param = [])
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         if (!isset($param['eventOpt'])) {
@@ -395,7 +395,7 @@ class DataManager
      */
     public static function storeTempDataByPath($dataTempFullPath, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -416,7 +416,7 @@ class DataManager
      */
     public static function storeTempData($category, $dataTempPath, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -463,13 +463,20 @@ class DataManager
      */
     public static function deleteById($id, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
         $storage = self::storage($option);
         $data = $storage->repository()->getDataById($id);
-        if (empty($data)) return;
+        if (empty($data)) {
+            return;
+        }
+        if ($storage->driverName() != $data['driver']) {
+            $driver = DataStorageType::toDriverName($data['driver']);
+            $option = self::prepareOption(['driver' => $driver]);
+            $storage = self::storage($option);
+        }
         $file = AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
         if ($storage->has($file)) {
             $storage->softDelete($file);
@@ -482,16 +489,15 @@ class DataManager
      * 根据路径删除
      *
      * @param $path string
-     * @param $option
      * @throws \Exception
      * @example path
      * /data/image/2025/03/03/6207_ohau_8710.wav
      * http://example.com/data/image/2025/03/03/6207_ohau_8710.wav
      * http://example.com/data/image/2025/03/03/6207_ohau_8710.wav?foo=bar
      */
-    public static function deleteByPath($path, $option = null)
+    public static function deleteByPath($path)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -499,6 +505,11 @@ class DataManager
         $data = $storage->repository()->getDataByPath($path);
         if (empty($data)) {
             return;
+        }
+        if ($storage->driverName() != $data['driver']) {
+            $driver = DataStorageType::toDriverName($data['driver']);
+            $option = self::prepareOption(['driver' => $driver]);
+            $storage = self::storage($option);
         }
         $file = AbstractDataStorage::DATA . '/' . $data['category'] . '/' . $data['path'];
         if ($storage->has($file)) {
@@ -517,7 +528,7 @@ class DataManager
      */
     public static function getByPath($path, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -536,7 +547,7 @@ class DataManager
 
     public static function getById($id, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -562,7 +573,7 @@ class DataManager
      */
     public static function deleteDataTempByPath($tempDataPath, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -617,7 +628,7 @@ class DataManager
      */
     public static function preparePathForLocal($path, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -646,7 +657,7 @@ class DataManager
      */
     public static function preparePathInternalForLocal($path, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -666,7 +677,7 @@ class DataManager
 
     public static function getDataTempFileContent($tempDataPath, $option = null)
     {
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -694,7 +705,7 @@ class DataManager
         if (Str::startsWith($path, '/')) {
             $path = substr($path, 1);
         }
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);
@@ -710,7 +721,7 @@ class DataManager
         if (Str::startsWith($path, '/')) {
             $path = substr($path, 1);
         }
-        if (null === $option) {
+        if (empty($option)) {
             $option = self::getConfigOption();
         }
         $option = self::prepareOption($option);

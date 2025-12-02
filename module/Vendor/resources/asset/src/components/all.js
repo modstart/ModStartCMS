@@ -6,6 +6,7 @@ import FileSelector from "@ModStartAsset/svue/components/FileSelector.vue"
 import FilesSelector from "@ModStartAsset/svue/components/FilesSelector.vue"
 import CodeEditor from "@ModStartAsset/svue/components/CodeEditor.vue"
 import RichEditor from "./RichEditor"
+import RichViewEditor from "./RichViewEditor"
 import NameValueListEditor from "./NameValueListEditor"
 import SmartLink from "@ModStartAsset/svue/components/SmartLink"
 import SmartCaptcha from "@ModStartAsset/svue/components/SmartCaptcha"
@@ -71,6 +72,7 @@ export default (Vue) => {
     Vue.component("audio-selector", AudioSelector)
     Vue.component("code-editor", CodeEditor)
     Vue.component('rich-editor', RichEditor)
+    Vue.component('rich-view-editor', RichViewEditor)
     Vue.component('name-value-list-editor', NameValueListEditor)
     Vue.component("smart-link", SmartLink)
     Vue.component("smart-captcha", SmartCaptcha)

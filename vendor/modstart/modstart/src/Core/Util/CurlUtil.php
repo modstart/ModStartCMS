@@ -137,6 +137,9 @@ class CurlUtil
         return self::request($url, $param, $option);
     }
 
+    private static $requestEnd = null;
+    private static $requestParam = [];
+
     public static function request($url, $param, $option = [])
     {
         $sendHeaders = [];
@@ -238,8 +241,21 @@ class CurlUtil
                 return strlen($data);
             });
         }
-
+        if (self::$requestEnd === null) {
+            register_shutdown_function(function () {
+                if (!self::$requestEnd) {
+                    LogUtil::error('CurlUtil.request.timeout', static::$requestParam);
+                }
+            });
+        }
+        self::$requestEnd = false;
+        self::$requestParam = [
+            'url' => $url,
+            'param' => $param,
+            'option' => $option,
+        ];
         $output = curl_exec($ch);
+        self::$requestEnd = true;
         if (!empty($option['debugFile'])) {
             file_put_contents($option['debugFile'], "\n\n" . $output, FILE_APPEND);
         }

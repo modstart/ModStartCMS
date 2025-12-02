@@ -4,6 +4,7 @@
 namespace Module\Member\Api\Controller;
 
 use Illuminate\Routing\Controller;
+use ModStart\Data\DataStorageType;
 use ModStart\Data\FileManager;
 use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
@@ -23,14 +24,21 @@ class MemberDataController extends Controller implements MemberLoginCheck
      * @ApiBodyParam action string 动作，uploadDirect表示文件上传
      * @ApiBodyParam file File 文件对象
      */
-    public function fileManager($category)
+    public function fileManager($category, $storageTypeConfig = null)
     {
+        $option = [];
+        if ($storageTypeConfig) {
+            $storageType = modstart_config($storageTypeConfig, '');
+            if ($storageType) {
+                $option['driver'] = DataStorageType::toDriverName($storageType);
+            }
+        }
         return FileManager::handle(
             $category,
             'member_upload',
             'member_upload_category',
             MemberUser::id(),
-            null,
+            $option,
             null,
             [
                 'eventOpt' => [

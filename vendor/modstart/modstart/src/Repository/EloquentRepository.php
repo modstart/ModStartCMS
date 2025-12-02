@@ -289,9 +289,9 @@ class EloquentRepository extends Repository
         }
         $model->resetOrderBy();
         foreach ($order as $orderItem) {
-            if(is_string($orderItem)){
+            if (is_string($orderItem)) {
                 $model->addQuery('orderByRaw', [DB::raw($orderItem)]);
-            }else{
+            } else {
                 list($column, $type) = $orderItem;
                 if (empty($column) || empty($type)) {
                     continue;
@@ -708,6 +708,7 @@ class EloquentRepository extends Repository
         if ($this->relations) {
             $query->with($this->relations);
         }
+        $context->repositoryFilter()->executeQueries($query);
         $context->scopeExecuteQueries($query);
         /** @var Collection $collection */
         $collection = $query

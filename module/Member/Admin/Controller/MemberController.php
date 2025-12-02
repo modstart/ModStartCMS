@@ -161,7 +161,7 @@ class MemberController extends Controller
                     $builder->display('loginLockTime', '登录锁定时间');
                 }
                 $builder->canBatchSelect(true);
-                $builder->batchOperatePrepend('<button class="btn" data-batch-confirm="确认禁用 %d 个用户？" data-batch-operate="' . modstart_admin_url('member/status_forbidden') . '"><i class="iconfont icon-warning"></i> 禁用</button>');
+                $builder->batchOperatePrepend('<button class="btn" data-batch-confirm="确认禁用 %d 个用户？" data-batch-operate="' . modstart_admin_url('member/update_status', ['status' => MemberStatus::FORBIDDEN]) . '"><i class="iconfont icon-warning"></i> 禁用</button>');
             })
             ->repositoryFilter(function (RepositoryFilter $filter) {
                 $filter->where(['isDeleted' => false]);
@@ -296,7 +296,7 @@ class MemberController extends Controller
 
     public function edit(AdminDialogPage $page)
     {
-        $memberUser = ModelUtil::get('member_user', CRUDUtil::id());
+        $memberUser = ModelUtil::get(MemberUser::class, CRUDUtil::id());
         BizException::throwsIfEmpty('用户不存在', $memberUser);
         if (Request::isPost()) {
             AdminPermission::demoCheck();
@@ -351,11 +351,13 @@ class MemberController extends Controller
             ]);
             $ret = MemberUtil::updateBasicWithUniqueCheck($memberUser['id'], $basic);
             BizException::throwsIfResponseError($ret);
-            if (isset($profile['vipExpire']) && TimeUtil::isDatetimeEmpty($profile['vipExpire'])) {
-                $profile['vipExpire'] = null;
-            }
-            if ($memberUser['vipId'] != $profile['vipId']) {
-                MemberUserVipChangeEvent::fire($memberUser['id'], $memberUser['vipId'], $profile['vipId']);
+            if (ModuleManager::getModuleConfig('Member', 'vipEnable', false)) {
+                if (isset($profile['vipExpire']) && TimeUtil::isDatetimeEmpty($profile['vipExpire'])) {
+                    $profile['vipExpire'] = null;
+                }
+                if ($memberUser['vipId'] != $profile['vipId']) {
+                    MemberUserVipChangeEvent::fire($memberUser['id'], $memberUser['vipId'], $profile['vipId']);
+                }
             }
             MemberUtil::update($memberUser['id'], $profile);
             return Response::redirect(CRUDUtil::jsDialogCloseAndParentRefresh());
@@ -437,7 +439,7 @@ class MemberController extends Controller
         $record = MemberUtil::get(CRUDUtil::id());
         BizException::throwsIfEmpty('用户不存在', $record);
         $showPanelProviders = MemberAdminShowPanelProvider::listAll();
-        return view('module::Member.View.admin.memberUser.show', [
+        return view('module::Member.View.admin.member.show', [
             'record' => $record,
             'showPanelProviders' => $showPanelProviders,
         ]);
@@ -450,12 +452,18 @@ class MemberController extends Controller
         return Response::redirect(CRUDUtil::jsGridRefresh());
     }
 
-    public function statusForbidden()
+    public function updateStatus()
     {
         AdminPermission::demoCheck();
-        MemberUtil::updateStatus(CRUDUtil::ids(), MemberStatus::FORBIDDEN);
+        $input = InputPackage::buildFromInput();
+        $status = $input->getType('status', MemberStatus::class);
+        MemberUtil::updateStatus(CRUDUtil::ids(), $status);
+        if (str_contains(Request::headerReferer(), 'member/show')) {
+            return Response::redirect('[reload]');
+        }
         return Response::redirect(CRUDUtil::jsGridRefresh());
     }
+
 
     public function export(ExportHandle $handle)
     {

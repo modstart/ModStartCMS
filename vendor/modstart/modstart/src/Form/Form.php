@@ -629,7 +629,7 @@ class Form implements Renderable
                 $res = call_user_func($this->hookResponse(), $this);
             }
             if (empty($res)) {
-                return Response::jsonSuccess(L('Add Success'));
+                return Response::json(0, L('Add Success'), null, CRUDUtil::jsDialogClose('ijs'));
             }
             return $res;
         } catch (BizException $e) {
@@ -733,7 +733,7 @@ class Form implements Renderable
                 $res = call_user_func($this->hookResponse(), $this);
             }
             if (empty($res)) {
-                return Response::jsonSuccess(L('Edit Success'));
+                return Response::json(0, L('Edit Success'), null, CRUDUtil::jsDialogClose('ijs'));
             }
             return $res;
         } catch (BizException $e) {

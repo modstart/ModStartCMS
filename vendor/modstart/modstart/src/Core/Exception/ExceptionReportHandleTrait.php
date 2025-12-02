@@ -148,6 +148,13 @@ trait ExceptionReportHandleTrait
         } catch (\Exception $e) {
         }
 
+        $msg = $exception->getMessage();
+        $msgDetail = $exception->getTraceAsString();
+        //var_dump([
+        //    'env' => ModStart::env(),
+        //    'msg' => $msg,
+        //    'msgDetail' => $msgDetail,
+        //]);
         return null;
     }
 

@@ -5,6 +5,7 @@ namespace Module\Member\Web\Controller;
 
 use Illuminate\Routing\Controller;
 use ModStart\Core\Input\Request;
+use ModStart\Data\DataStorageType;
 use ModStart\Data\FileManager;
 use ModStart\Data\UeditorManager;
 use Module\Member\Auth\MemberUser;
@@ -16,15 +17,22 @@ class MemberDataController extends Controller implements MemberLoginCheck
         'ueditorGuest'
     ];
 
-    public function fileManager($category)
+    public function fileManager($category, $storageTypeConfig = null)
     {
         if (Request::isPost()) {
+            $option = [];
+            if ($storageTypeConfig) {
+                $storageType = modstart_config($storageTypeConfig, '');
+                if ($storageType) {
+                    $option['driver'] = DataStorageType::toDriverName($storageType);
+                }
+            }
             return FileManager::handle(
                 $category,
                 'member_upload',
                 'member_upload_category',
                 MemberUser::id(),
-                null,
+                $option,
                 null,
                 [
                     'eventOpt' => [

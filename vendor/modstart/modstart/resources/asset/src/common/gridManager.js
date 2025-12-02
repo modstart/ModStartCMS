@@ -367,11 +367,11 @@ var GridManager = function (opt) {
                         lister.realtime.dialog.addWindow.__dialogClose = function () {
                             layer.close(lister.realtime.dialog.add);
                         };
-                        lister.realtime.dialog.addWindow.addEventListener('modstart:form.submitted', function (e) {
-                            if (0 === e.detail.res.code) {
-                                layer.close(lister.realtime.dialog.add);
-                            }
-                        });
+                        // lister.realtime.dialog.addWindow.addEventListener('modstart:form.submitted', function (e) {
+                        //     if (0 === e.detail.res.code) {
+                        //         layer.close(lister.realtime.dialog.add);
+                        //     }
+                        // });
                     },
                     end: function () {
                         lister.refresh();
@@ -397,11 +397,11 @@ var GridManager = function (opt) {
                     lister.realtime.dialog.editWindow.__dialogClose = function () {
                         layer.close(lister.realtime.dialog.edit);
                     };
-                    lister.realtime.dialog.editWindow.addEventListener('modstart:form.submitted', function (e) {
-                        if (0 === e.detail.res.code) {
-                            layer.close(lister.realtime.dialog.edit);
-                        }
-                    });
+                    // lister.realtime.dialog.editWindow.addEventListener('modstart:form.submitted', function (e) {
+                    //     if (0 === e.detail.res.code) {
+                    //         layer.close(lister.realtime.dialog.edit);
+                    //     }
+                    // });
                 },
                 end: function () {
                     lister.refresh();

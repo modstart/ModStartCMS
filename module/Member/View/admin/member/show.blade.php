@@ -50,11 +50,12 @@
             <div class="ub-pair">
                 <div class="name">余额</div>
                 <div class="value">
-                    <span class="tw-inline-block" style="min-width:4rem;">
+                    <div class="tw-inline-block tw-w-20">
                         ￥{{\Module\Member\Util\MemberMoneyUtil::getTotal($record['id'])}}
-                    </span>
-                    <a href="javascript:;" class="tw-ml-4" data-dialog-request="{{modstart_admin_url('member_money/charge',['memberUserId'=>$record['id']])}}">
-                        [余额变更]
+                    </div>
+                    <a href="javascript:;" class="btn btn-sm btn-round" data-dialog-request="{{modstart_admin_url('member_money/charge',['memberUserId'=>$record['id']])}}">
+                        <i class="iconfont icon-edit"></i>
+                        余额变更
                     </a>
                 </div>
             </div>
@@ -63,15 +64,37 @@
             <div class="ub-pair">
                 <div class="name">{{modstart_module_config('Member', 'creditName', '积分')}}</div>
                 <div class="value">
-                    <span class="tw-inline-block" style="min-width:4rem;">
+                    <div class="tw-inline-block tw-w-20">
                         {{\Module\Member\Util\MemberCreditUtil::getTotal($record['id'])}}
-                    </span>
-                    <a href="javascript:;" class="tw-ml-4" data-dialog-request="{{modstart_admin_url('member_credit/charge',['memberUserId'=>$record['id']])}}">
-                        [{{modstart_module_config('Member', 'creditName', '积分')}}变更]
+                    </div>
+                    <a href="javascript:;" class="btn btn-sm btn-round" data-dialog-request="{{modstart_admin_url('member_credit/charge',['memberUserId'=>$record['id']])}}">
+                        {{modstart_module_config('Member', 'creditName', '积分')}}变更
                     </a>
                 </div>
             </div>
         @endif
+        <div class="ub-pair">
+            <div class="name">状态</div>
+            <div class="value">
+                @if($record['status']==\Module\Member\Type\MemberStatus::NORMAL)
+                    <span class="ub-text-success tw-inline-block" style="min-width:4rem;">
+                        {{\ModStart\Core\Type\TypeUtil::name(\Module\Member\Type\MemberStatus::class,$record['status'])}}
+                    </span>
+                    <a href="javascript:;" class="btn btn-sm btn-round" data-ajax-request="{{modstart_admin_url('member/update_status',['status'=>\Module\Member\Type\MemberStatus::FORBIDDEN,'_id'=>$record['id']])}}">
+                        <i class="iconfont icon-warning"></i>
+                        禁用
+                    </a>
+                @elseif($record['status']==\Module\Member\Type\MemberStatus::FORBIDDEN)
+                    <span class="ub-text-danger tw-inline-block" style="min-width:4rem;">
+                        {{\ModStart\Core\Type\TypeUtil::name(\Module\Member\Type\MemberStatus::class,$record['status'])}}
+                    </span>
+                    <a href="javascript:;" class="btn btn-sm btn-round" data-ajax-request="{{modstart_admin_url('member/update_status',['status'=>\Module\Member\Type\MemberStatus::NORMAL,'_id'=>$record['id']])}}">
+                        <i class="iconfont icon-check"></i>
+                        启用
+                    </a>
+                @endif
+            </div>
+        </div>
         <div class="tw-pt-4 tw-bg-white tw-rounded">
             <a href="javascript:;" class="btn"
                data-dialog-width="90%" data-dialog-height="90%"

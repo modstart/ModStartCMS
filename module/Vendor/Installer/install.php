@@ -197,6 +197,11 @@ include __DIR__ . '/function.php';
                     <div class="content-item-foot">
                         <?php if (error_counter(0) > 0) { ?>
                             <div class="ub-alert danger ub-text-center">请解决以上 <?php echo error_counter(0); ?> 个问题再进行安装</div>
+                            <script>
+                                $(function(){
+                                    switch_step('env');
+                                });
+                            </script>
                         <?php } else if (!env_writable()) { ?>
                             <div class="ub-alert danger ub-text-center">/.env文件不可写，请手动配置安装</div>
                         <?php } else { ?>

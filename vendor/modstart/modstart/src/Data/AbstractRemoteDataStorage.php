@@ -29,7 +29,7 @@ abstract class AbstractRemoteDataStorage extends AbstractDataStorage
     public function updateDriverDomain($data)
     {
         $update = [
-            'driver' => $this->remoteType,
+            'driver' => $this->driverName(),
             'domain' => $this->domain(),
         ];
         $this->repository->updateData($data['id'], $update);

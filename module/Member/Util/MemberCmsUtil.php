@@ -8,6 +8,7 @@ use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Field\AutoRenderedFieldValue;
 use Module\Member\Model\MemberUser;
+use Module\Member\Type\MemberStatus;
 
 class MemberCmsUtil
 {
@@ -52,10 +53,16 @@ class MemberCmsUtil
                     }
                 }
             }
+            $status = '';
+            if (!empty($memberUser['status'])) {
+                if ($memberUser['status'] == MemberStatus::FORBIDDEN) {
+                    $status = ' <span class="ub-text-danger" data-tip-popover="已禁用"><i class="iconfont icon-warning"></i></span>';
+                }
+            }
             return AutoRenderedFieldValue::make('<a href="javascript:;" class="ub-icon-text" data-dialog-request="'
                 . action('\\Module\\Member\\Admin\\Controller\\MemberController@show', ['_id' => $memberUser['id']]) . '">
             <img class="icon" src="' . AssetsUtil::fixOrDefault($memberUser['avatar'], 'asset/image/avatar.svg') . '" />
-            <span class="text">' . htmlspecialchars($text) . '</span></a>');
+            <span class="text">' . htmlspecialchars($text) . '</span>' . $status . '</a>');
         }
         return AutoRenderedFieldValue::make('');
     }

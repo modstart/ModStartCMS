@@ -362,7 +362,7 @@ class ModelManageUtil
     {
         $f = self::field($table, $field, $conn);
         if (empty($f)) {
-            return Response::generateError("字段不存在");
+            return Response::generateError("字段不存在 {$table}.{$field}");
         }
         // print_r($f);
         if ('TEXT' == $f['type']) {

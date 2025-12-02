@@ -74,7 +74,7 @@ $router->group([
     $router->match(['post'], 'member_address/edit', 'MemberAddressController@edit');
     $router->match(['post'], 'member_address/delete', 'MemberAddressController@delete');
 
-    $router->match(['post'], 'member_data/file_manager/{category}', 'MemberDataController@fileManager');
+    $router->match(['post'], 'member_data/file_manager/{category}/{storageTypeConfig?}', 'MemberDataController@fileManager');
 
     $router->match(['post'], 'member_money/get', 'MemberMoneyController@get');
     $router->match(['post'], 'member_money/log', 'MemberMoneyController@log');
