@@ -460,7 +460,9 @@ class EloquentRepository extends Repository
                 ResultException::throwsIfFail($form->hookCall($form->hookChanged()));
             });
         } catch (\Exception $e) {
-            ExceptionUtil::throwExcpectException($e);
+            ExceptionUtil::throwExcpectException($e, [
+                'fieldMap' => $form->getFieldColumnLabelMap(),
+            ]);
         }
         return $model->getKey();
     }
@@ -508,7 +510,9 @@ class EloquentRepository extends Repository
                 ResultException::throwsIfFail($form->hookCall($form->hookChanged()));
             });
         } catch (\Exception $e) {
-            ExceptionUtil::throwExcpectException($e);
+            ExceptionUtil::throwExcpectException($e, [
+                'fieldMap' => $form->getFieldColumnLabelMap(),
+            ]);
         }
         return $result;
     }

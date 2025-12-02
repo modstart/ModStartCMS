@@ -12,6 +12,7 @@ use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
 use ModStart\Widget\ButtonDialogRequest;
+use Module\Partner\Model\Partner;
 use Module\Partner\Type\PartnerPosition;
 use Module\Partner\Util\PartnerUtil;
 
@@ -22,7 +23,7 @@ class PartnerController extends Controller
     protected function crud(AdminCRUDBuilder $builder)
     {
         $builder
-            ->init('partner')
+            ->init(Partner::class)
             ->field(function ($builder) {
                 /** @var HasFields $builder */
                 $builder->id('id', 'ID');

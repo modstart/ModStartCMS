@@ -11,6 +11,7 @@ class ExceptionUtil
     {
         $option = array_merge([
             'mysql' => true,
+            'fieldMap' => [],
         ], $option);
         $message = $e->getMessage();
         if (!empty($option['mysql'])) {
@@ -34,6 +35,9 @@ class ExceptionUtil
                 if (Str::contains($message, $f[0])) {
                     $column = ReUtil::group1($f[1], $message);
                     if (!empty($column)) {
+                        if (!empty($option['fieldMap'][$column])) {
+                            $column = $option['fieldMap'][$column];
+                        }
                         $msg = $f[2];
                         if (isset($langTrans[$msg])) {
                             $msg = L($langTrans[$msg], $column);

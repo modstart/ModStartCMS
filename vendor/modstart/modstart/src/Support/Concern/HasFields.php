@@ -275,4 +275,13 @@ trait HasFields
         });
     }
 
+    public function getFieldColumnLabelMap()
+    {
+        $map = [];
+        $this->fields()->each(function (AbstractField $field) use (&$map) {
+            $map[$field->column()] = $field->label();
+        });
+        return $map;
+    }
+
 }
