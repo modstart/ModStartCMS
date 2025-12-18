@@ -258,5 +258,23 @@ class EncodeUtil
         return $outputPath;
     }
 
+    public static function compressEncode($data)
+    {
+        $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $data = gzcompress($data);
+        return base64_encode($data);
+    }
 
+    public static function compressDecode($data)
+    {
+        $data = @base64_decode($data);
+        if (empty($data)) {
+            return null;
+        }
+        $data = @gzuncompress($data);
+        if (empty($data)) {
+            return null;
+        }
+        return @json_decode($data, true);
+    }
 }

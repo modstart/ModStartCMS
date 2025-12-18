@@ -483,6 +483,9 @@ Util.base64 = {
     },
     fromUint8Array: function (data) {
         return base64.Base64.fromUint8Array(data)
+    },
+    toUint8Array: function (data) {
+        return base64.Base64.toUint8Array(data)
     }
 };
 
@@ -494,6 +497,28 @@ Util.encrypt = {
         return CryptoJS.AES.decrypt(data, key).toString(CryptoJS.enc.Utf8);
     },
     all: CryptoJS
+}
+
+Util.encode = {
+    compressEncode: function (data) {
+        if (!window.pako) {
+            throw 'place import asset/vendor/pako.js';
+        }
+        data = JSON.stringify(data);
+        data = window.pako.deflate(data);
+        return Util.base64.fromUint8Array(data);
+    },
+    compressDecode: function (data) {
+        if (!window.pako) {
+            throw 'place import asset/vendor/pako.js';
+        }
+        var arr = Util.base64.toUint8Array(data);
+        if (!arr || arr.length === 0) {
+            return null;
+        }
+        var str = window.pako.inflate(arr, {to: 'string'});
+        return JSON.parse(str);
+    }
 }
 
 module.exports = Util;

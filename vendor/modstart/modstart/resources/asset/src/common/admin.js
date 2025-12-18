@@ -535,12 +535,17 @@ $(window).on('load', function () {
     // 主要界面多个标签界面退出时提醒
     if (!$('html[data-page-is-tab]').length) {
         window.addEventListener('beforeunload', e => {
-            var tabCount = $adminTabMenu.find('[data-tab-menu]').length;
-            if (tabCount <= 0) {
-                return;
+            var needBlock = false;
+            if ($adminTabMenu.find('[data-tab-menu]').length > 0) {
+                needBlock = true;
             }
-            e.preventDefault();
-            e.returnValue = '';
+            if ($('.layui-layer-iframe').length > 0) {
+                needBlock = true;
+            }
+            if (needBlock) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
         });
     }
 

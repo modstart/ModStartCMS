@@ -1,7 +1,7 @@
 <?php
 /* @var \Illuminate\Routing\Router $router */
 $middlewares = [];
-if (class_exists(\Module\Member\Middleware\WebAuthMiddleware::class)) {
+if (file_exists(base_path('module/Member/Middleware/ApiAuthMiddleware.php'))) {
     $middlewares[] = \Module\Member\Middleware\WebAuthMiddleware::class;
 }
 $router->group([

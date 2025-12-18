@@ -135,6 +135,19 @@ class ModelUtil
         }
     }
 
+    private static function insertBuild($record, $updateTimestamp = true)
+    {
+        if ($updateTimestamp) {
+            if (!isset($record['created_at'])) {
+                $record['created_at'] = date('Y-m-d H:i:s');
+            }
+            if (!isset($record['updated_at'])) {
+                $record['updated_at'] = date('Y-m-d H:i:s');
+            }
+        }
+        return $record;
+    }
+
     private static function insertAllBuild($records, $updateTimestamp = true)
     {
         if ($updateTimestamp) {
@@ -237,10 +250,12 @@ class ModelUtil
             }
         }
         foreach ($records as $i => $record) {
+            $record = self::insertBuild($record);
             if (empty($record[$idName])) {
                 unset($record[$idName]);
                 $records[$i][$idName] = self::model($model)->insertGetId($record);
             } else {
+                unset($record['created_at']);
                 self::model($model)->where($idName, $record[$idName])->update($record);
             }
         }

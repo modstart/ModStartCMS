@@ -623,6 +623,10 @@ class FileUtil
         $option = array_merge([
             'retryTimes' => 0,
             'retryInterval' => 5,
+            'httpConvertPublicToInternal' => [
+                'logMatched' => false,
+                'logUnmatched' => false,
+            ],
         ], $option);
         $checkPath = strtolower($path);
         BizException::throwsIf('Invalid Path', StrUtil::startWith($checkPath, 'phar:/'));
@@ -649,7 +653,7 @@ class FileUtil
             if (!file_exists(public_path('temp'))) {
                 @mkdir(public_path('temp'));
             }
-            $path = PathUtil::convertPublicToInternal($path);
+            $path = PathUtil::convertPublicToInternal($path, $option['httpConvertPublicToInternal']);
             if ($downloadStream) {
                 $f = @fopen($path, 'rb', false, self::fopenGetContext());
                 if ($f) {
