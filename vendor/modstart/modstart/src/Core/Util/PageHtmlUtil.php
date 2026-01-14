@@ -165,4 +165,34 @@ class PageHtmlUtil
             '%s%' => join('', $html),
         ]);
     }
+
+    public static function renderSimple($currentPage, $hasMore, $url = '/url/for/path?page={page}', $template = null)
+    {
+        if (is_null($template)) {
+            $template = [
+                'warp' => '<div class="pages">%s%</div>',
+                'prev' => '<a class="page" href="%s%">' . L('PrevPage') . '</a>',
+                'next' => '<a class="page" href="%s%">' . L('NextPage') . '</a>',
+            ];
+        }
+
+        $html = [];
+
+        if ($currentPage > 1) {
+            $html[] = self::replace($template['prev'], [
+                '%s%' => self::buildPage($url, $currentPage - 1),
+                '%p%' => $currentPage - 1,
+            ]);
+        }
+
+        if ($hasMore) {
+            $html[] = self::replace($template['next'], [
+                '%s%' => self::buildPage($url, $currentPage + 1),
+            ]);
+        }
+
+        return self::replace($template['warp'], [
+            '%s%' => join('', $html),
+        ]);
+    }
 }

@@ -20,6 +20,7 @@ use ModStart\ModStart;
  * @method \ModStart\Field\Audio                audio($column, $label = '')
  * @method \ModStart\Field\Button               button($column, $label = '')
  * @method \ModStart\Field\Captcha              captcha($column, $label = '')
+ * @method \ModStart\Field\Cascader             cascader($column, $label = '')
  * @method \ModStart\Field\Checkbox             checkbox($column, $label = '')
  * @method \ModStart\Field\Code                 code($column, $label = '')
  * @method \ModStart\Field\Color                color($column, $label = '')

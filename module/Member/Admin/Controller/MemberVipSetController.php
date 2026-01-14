@@ -11,6 +11,8 @@ use ModStart\Admin\Layout\AdminCRUDBuilder;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\RandomUtil;
+use ModStart\Field\AbstractField;
+use ModStart\Field\AutoRenderedFieldValue;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Module\ModuleManager;
@@ -25,9 +27,10 @@ class MemberVipSetController extends Controller
 
     protected function crud(AdminCRUDBuilder $builder)
     {
+        $mode = $builder->mode();
         $builder
             ->init(MemberVipSet::class)
-            ->field(function ($builder) {
+            ->field(function ($builder) use ($mode) {
                 /** @var HasFields $builder */
                 $builder->layoutPanel('基础信息', function ($builder) {
                     /** @var HasFields $builder */
@@ -53,9 +56,19 @@ class MemberVipSetController extends Controller
                     }
                 });
                 foreach (MemberVipBiz::all() as $biz) {
-                    $builder->layoutPanel($biz->title(), function ($builder) use ($biz) {
-                        $biz->vipField($builder);
-                    });
+                    if (in_array($mode, [AdminCRUDBuilder::MODE_DETAIL, AdminCRUDBuilder::MODE_GRID])) {
+                        $builder->display('_' . $biz->name(), $biz->title())
+                            ->hookRendering(function (AbstractField $field, $item, $index) use ($biz) {
+                                $item = $item->toArray();
+                                $html = $biz->vipFieldShow($item);
+                                return AutoRenderedFieldValue::make($html);
+                            });
+                    } else {
+                        $builder->layoutPanel($biz->title(), function ($builder) use ($biz) {
+                            /** @var HasFields $builder */
+                            $biz->vipField($builder);
+                        });
+                    }
                 }
                 $builder->display('created_at', L('Created At'))->listable(false);
                 $builder->display('updated_at', L('Updated At'))->listable(false);

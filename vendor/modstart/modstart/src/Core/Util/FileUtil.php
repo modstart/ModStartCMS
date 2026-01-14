@@ -82,6 +82,8 @@ class FileUtil
         'xls' => 'application/vnd.ms-excel',
         'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'xml' => 'application/xml',
+        'yml' => 'application/x-yaml',
+        'yaml' => 'application/x-yaml',
         'xul' => 'application/vnd.mozilla.xul+xml',
         'zip' => 'application/zip',
         '3gp' => 'video/3gpp',

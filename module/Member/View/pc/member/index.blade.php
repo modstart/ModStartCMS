@@ -24,6 +24,11 @@
                             {{\Module\Member\Auth\MemberVip::get('title')}}
                         </a>
                     @endif
+                    @if(\ModStart\Module\ModuleManager::getModuleConfig('Member', 'groupEnable',false) && modstart_config('Member_GroupShowEnable',false))
+                        <a class="tw-my-1 tw-mr-1 ub-tag ub-cursor-pointer" href="{{modstart_web_url('member_vip')}}">
+                            {{\Module\Member\Auth\MemberGroup::get('title')}}
+                        </a>
+                    @endif
                     @if($_certType!==null)
                         @if($_certType==\Module\MemberCert\Type\CertType::INDIVIDUAL)
                             <a class="tw-my-1 tw-mr-1 ub-tag success ub-cursor-pointer" href="{{modstart_web_url('member_cert')}}">

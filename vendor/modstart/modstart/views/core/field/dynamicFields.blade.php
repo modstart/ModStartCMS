@@ -200,7 +200,7 @@
                     this.value.push({
                         name: '',
                         title: '',
-                        type: 'text',
+                        type: '{{$enabledFieldTypes?$enabledFieldTypes[0]:'text'}}',
                         data: {
                             options: [],
                             switch1: false,

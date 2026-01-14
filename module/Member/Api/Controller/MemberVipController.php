@@ -119,7 +119,7 @@ class MemberVipController extends Controller implements MemberLoginCheck
             MemberVipPayCenterBiz::NAME,
             $memberVipOrder['id'],
             $memberVipOrder['payFee'],
-            '购买会员'
+            '开通VIP'
         );
     }
 

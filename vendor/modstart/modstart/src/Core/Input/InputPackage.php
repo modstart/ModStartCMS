@@ -3,6 +3,7 @@
 namespace ModStart\Core\Input;
 
 use Illuminate\Support\Facades\Input;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Util\FormatUtil;
 use ModStart\Core\Util\HtmlUtil;
 use ModStart\Core\Util\SecureUtil;
@@ -153,6 +154,9 @@ class InputPackage
 
     public function getPage($key = 'page', $min = 1, $max = null)
     {
+        if (null === $key) {
+            $key = 'page';
+        }
         $page = $this->getInteger($key, 1);
         $page = max($page, $min);
         if (null === $max) {
@@ -382,9 +386,6 @@ class InputPackage
     public function getBase64Image($key, $defaultValue = null)
     {
         if (isset($this->data[$key])) {
-            if (empty($this->data[$key])) {
-                return null;
-            }
             $value = $this->data[$key];
             $prefixs = [
                 'data:image/png;base64,',
@@ -403,6 +404,36 @@ class InputPackage
             return $value;
         }
         return $defaultValue;
+    }
+
+    public function getBase64ImageWithType($key)
+    {
+        $ret = [
+            'data' => null,
+            'type' => null,
+        ];
+        if (isset($this->data[$key])) {
+            $value = $this->data[$key];
+            $prefixs = [
+                'data:image/png;base64,' => 'png',
+                'data:image/jpeg;base64,' => 'jpeg',
+                'data:image/jpg;base64,' => 'jpg',
+                'data:image/gif;base64,' => 'gif',
+            ];
+            foreach ($prefixs as $prefix => $format) {
+                if (0 === strpos($value, $prefix)) {
+                    $value = substr($value, strlen($prefix));
+                    $ret['type'] = $format;
+                    break;
+                }
+            }
+            $value = @base64_decode($value);
+            if (empty($value)) {
+                return $ret;
+            }
+            $ret['data'] = $value;
+        }
+        return $ret;
     }
 
     public function getBase64File($key, $defaultValue = null)
@@ -614,7 +645,7 @@ class InputPackage
         return $data;
     }
 
-    public function getType($key, $typeCls, $defaultValue = null)
+    public function getType($key, $typeCls, $defaultValue = null, $throwUnexpectedValue = false)
     {
         if (!isset($this->data[$key])) {
             return $defaultValue;
@@ -629,6 +660,7 @@ class InputPackage
                 return $k;
             }
         }
+        BizException::throwsIf('Unexpected value for ' . $key, $throwUnexpectedValue);
         return $defaultValue;
     }
 

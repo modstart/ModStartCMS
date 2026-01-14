@@ -10,7 +10,7 @@ class Eq extends AbstractFilter
     public function cascader($options)
     {
         $this->field = new Field\Cascader($this);
-        $this->field->options($options);
+        $this->field->nodes($options);
         return $this;
     }
 

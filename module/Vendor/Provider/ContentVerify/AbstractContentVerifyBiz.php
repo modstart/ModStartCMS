@@ -5,13 +5,18 @@ namespace Module\Vendor\Provider\ContentVerify;
 
 
 use Illuminate\Support\Str;
+use ModStart\Admin\Auth\Admin;
+use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Core\Assets\AssetsUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\HtmlUtil;
+use ModStart\Core\Util\RenderUtil;
 use ModStart\Form\Form;
 use Module\Vendor\Provider\CensorImage\CensorImageProvider;
 use Module\Vendor\Provider\CensorText\CensorTextProvider;
 use Module\Vendor\Provider\Notifier\NotifierProvider;
+use Module\Vendor\Util\NoneLoginOperateUtil;
 
 abstract class AbstractContentVerifyBiz
 {
@@ -37,6 +42,28 @@ abstract class AbstractContentVerifyBiz
     public function verifyAutoProcess($param)
     {
         return false;
+    }
+
+    /**
+     * @param $param array
+     * @return void
+     * @example
+     * $param = [ 'id' => $id, ...]
+     */
+    public function verifyPassProcess($param)
+    {
+        BizException::throws('AbstractContentVerifyBiz::verifyPassProcess 未实现');
+    }
+
+    /**
+     * @param $param array
+     * @return void
+     * @example
+     * $param = [ 'id' => $id, '_reason' => $reason, ...]
+     */
+    public function verifyRejectProcess($param)
+    {
+        BizException::throws('AbstractContentVerifyBiz::verifyRejectProcess 未实现');
     }
 
     /**
@@ -161,6 +188,44 @@ abstract class AbstractContentVerifyBiz
             }
         }
         return true;
+    }
+
+    public static function renderAdminAction($param = [])
+    {
+        if (!Admin::isLogin()) {
+            return '';
+        }
+        $bizer = ContentVerifyBiz::getByName(static::NAME);
+        if (null == $bizer) {
+            return '';
+        }
+        if (!AdminPermission::permit($bizer->verifyRule())) {
+            return '';
+        }
+        $passUrl = NoneLoginOperateUtil::generateUrl('content_verify/' . $bizer->name(), array_merge($param, [
+            '_action' => 'pass',
+        ]));
+        $rejectUrl = NoneLoginOperateUtil::generateUrl('content_verify/' . $bizer->name(), array_merge($param, [
+            '_action' => 'reject',
+        ]));
+        return RenderUtil::view('module::Vendor.View.provider.contentVerify.adminAction', [
+            'passUrl' => $passUrl,
+            'rejectUrl' => $rejectUrl,
+        ]);
+    }
+
+    public static function callVerifyPassProcess($param)
+    {
+        $bizer = ContentVerifyBiz::getByName($param['name']);
+        BizException::throwsIfEmpty('数据异常', $bizer);
+        $bizer->verifyPassProcess($param);
+    }
+
+    public static function callVerifyRejectProcess($param)
+    {
+        $bizer = ContentVerifyBiz::getByName($param['name']);
+        BizException::throwsIfEmpty('数据异常', $bizer);
+        $bizer->verifyRejectProcess($param);
     }
 
 }

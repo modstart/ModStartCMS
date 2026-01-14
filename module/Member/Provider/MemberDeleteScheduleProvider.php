@@ -4,7 +4,7 @@
 namespace Module\Member\Provider;
 
 
-use ModStart\Core\Dao\ModelUtil;
+use Module\Member\Model\MemberUser;
 use Module\Member\Util\MemberUtil;
 use Module\Vendor\Provider\Schedule\AbstractScheduleBiz;
 
@@ -12,7 +12,7 @@ class MemberDeleteScheduleProvider extends AbstractScheduleBiz
 {
     public function cron()
     {
-        return $this->cronEveryMinute();
+        return $this->cronEveryHour();
     }
 
     public function title()
@@ -22,8 +22,7 @@ class MemberDeleteScheduleProvider extends AbstractScheduleBiz
 
     public function run()
     {
-        $records = ModelUtil::model('member_user')
-            ->where('deleteAtTime', '>', 0)
+        $records = MemberUser::where('deleteAtTime', '>', 0)
             ->where('deleteAtTime', '<', time())
             ->where(['isDeleted' => false])
             ->get()->toArray();

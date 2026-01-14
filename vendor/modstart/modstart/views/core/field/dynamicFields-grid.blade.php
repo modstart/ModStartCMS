@@ -1,6 +1,6 @@
 @if(is_array($value))
     <div class="tw-bg-gray-50 tw-p-1 tw-rounded">
-        <table class="ub-table mini">
+        <table class="ub-table mini no-border">
             @foreach($value as $f)
                 <tr>
                     <td width="1%" class="ub-text-truncate">

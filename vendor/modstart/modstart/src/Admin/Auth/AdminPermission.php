@@ -529,8 +529,8 @@ class AdminPermission
         static $adminRules = null;
         static $adminUser = null;
         if (null === $adminRules) {
-            $adminRules = Session::get('_adminRules');
-            $adminUser = Session::get('_adminUser');
+            $adminRules = Session::get(Admin::ADMIN_RULES_SESSION_KEY);
+            $adminUser = Session::get(Admin::ADMIN_USER_SESSION_KEY);
         }
         /*
         if ($adminUser && $adminUser['id'] == AdminPermission::founderId()) {

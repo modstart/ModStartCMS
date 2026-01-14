@@ -150,6 +150,10 @@ class ConfigController extends Controller
                     });
             });
         }
+        $builder->layoutPanel('功能设置', function ($builder) {
+            /** @var HasFields $builder */
+            $builder->switch('Member_GroupShowEnable', '显示用户分组')->help('启用后用户中心显示用户分组信息');
+        });
         $builder->formClass('wide');
         $builder->contentFixedBottomContentSave();
         $builder->disableBoxWrap(true);

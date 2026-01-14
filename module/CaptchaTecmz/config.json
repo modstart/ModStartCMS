@@ -9,17 +9,15 @@
         "laravel9"
     ],
     "types": [
-        "PC",
-        "Mobile",
-        "Admin"
+        "Arch"
     ],
     "tags": [
         "安全"
     ],
-    "version": "1.4.1",
+    "version": "1.4.2",
     "author": "ModStart",
     "description": "提供智能验证码验证服务",
     "providers": [],
     "config": {},
-    "modstartVersion": ">=4.1.0"
+    "modstartVersion": ">=4.1.3"
 }

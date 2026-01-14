@@ -16,4 +16,9 @@ abstract class AbstractSearchBoxProvider
     {
         return 1000;
     }
+
+    public function placeholder()
+    {
+        return '关键词搜索';
+    }
 }

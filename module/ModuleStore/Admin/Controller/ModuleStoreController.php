@@ -34,26 +34,23 @@ class ModuleStoreController extends Controller
 
     private function moduleOperateCheck($module)
     {
-        BizException::throwsIf('当前环境禁止「模块管理」相关操作', config('env.MS_MODULE_STORE_DISABLE', false));
+        $disabled = config('env.MS_MODULE_STORE_DISABLE', false);
+
         $whitelist = config('env.MS_MODULE_WHITELIST', '');
-        if (empty($whitelist)) {
-            return;
-        }
-        $whitelist = array_map(function ($v) {
-            return trim($v);
-        }, explode(',', $whitelist));
-        $whitelist = array_filter($whitelist);
-        if (empty($whitelist)) {
-            return;
-        }
         $passed = false;
-        foreach ($whitelist as $item) {
-            if (ReUtil::isWildMatch($item, $module)) {
-                $passed = true;
-                break;
+        if (!empty($whitelist)) {
+            $whitelist = array_map(function ($v) {
+                return trim($v);
+            }, explode(',', $whitelist));
+            $whitelist = array_filter($whitelist);
+            foreach ($whitelist as $item) {
+                if (ReUtil::isWildMatch($item, $module)) {
+                    $passed = true;
+                    break;
+                }
             }
         }
-        BizException::throwsIf('只允许操作模块:' . join(',', $whitelist), !$passed);
+        BizException::throwsIf('当前环境禁止「模块管理」相关操作', $disabled && !$passed);
     }
 
     private function doFinish($msgs)

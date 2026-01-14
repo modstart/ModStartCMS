@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use ModStart\Admin\Event\AdminUserLoginAttemptEvent;
 use ModStart\Admin\Event\AdminUserLoginFailedEvent;
+use ModStart\Admin\Model\AdminUser;
 use ModStart\Admin\Type\AdminLogType;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Request;
@@ -20,6 +21,17 @@ use ModStart\Core\Util\StrUtil;
 class Admin
 {
     const ADMIN_USER_ID_SESSION_KEY = '_adminUserId';
+    const ADMIN_USER_SESSION_KEY = '_adminUser';
+    const ADMIN_RULES_SESSION_KEY = '_adminRules';
+    const ADMIN_HAS_RULES_SESSION_KEY = '_adminHasRules';
+
+    public static function clearSession()
+    {
+        Session::forget(self::ADMIN_USER_ID_SESSION_KEY);
+        Session::forget(self::ADMIN_USER_SESSION_KEY);
+        Session::forget(self::ADMIN_HAS_RULES_SESSION_KEY);
+        Session::forget(self::ADMIN_RULES_SESSION_KEY);
+    }
 
     public static function isLogin()
     {
@@ -44,12 +56,12 @@ class Admin
 
     public static function get($adminUserId)
     {
-        return ModelUtil::get('admin_user', ['id' => $adminUserId]);
+        return ModelUtil::get(AdminUser::class, ['id' => $adminUserId]);
     }
 
     public static function getByUsername($username)
     {
-        return ModelUtil::get('admin_user', ['username' => $username]);
+        return ModelUtil::get(AdminUser::class, ['username' => $username]);
     }
 
     public static function passwordEncrypt($password, $passwordSalt)
@@ -66,18 +78,18 @@ class Admin
             $data['passwordSalt'] = $passwordSalt;
             $data['password'] = self::passwordEncrypt($password, $passwordSalt);
         }
-        return ModelUtil::insert('admin_user', $data);
+        return ModelUtil::insert(AdminUser::class, $data);
     }
 
     public static function loginByPhone($phone)
     {
-        $adminUser = ModelUtil::get('admin_user', ['phone' => $phone]);
+        $adminUser = ModelUtil::get(AdminUser::class, ['phone' => $phone]);
         if (empty($adminUser)) {
             AdminUserLoginFailedEvent::fire(0, null, Request::ip(), AgentUtil::getUserAgent());
             return Response::generate(-1, L('User Not Exists'));
         }
         AdminUserLoginAttemptEvent::fire($adminUser['id'], Request::ip(), AgentUtil::getUserAgent());
-        ModelUtil::update('admin_user', $adminUser['id'], [
+        ModelUtil::update(AdminUser::class, $adminUser['id'], [
             'lastLoginIp' => StrUtil::mbLimit(Request::ip(), 20),
             'lastLoginTime' => Carbon::now(),
         ]);
@@ -86,7 +98,7 @@ class Admin
 
     public static function login($username, $password)
     {
-        $adminUser = ModelUtil::get('admin_user', ['username' => $username]);
+        $adminUser = ModelUtil::get(AdminUser::class, ['username' => $username]);
         if (empty($adminUser)) {
             AdminUserLoginFailedEvent::fire(0, $username, Request::ip(), AgentUtil::getUserAgent());
             return Response::generate(-1, L('User Not Exists'));
@@ -96,7 +108,7 @@ class Admin
             AdminUserLoginFailedEvent::fire($adminUser['id'], $username, Request::ip(), AgentUtil::getUserAgent());
             return Response::generate(-2, L('Password Incorrect'));
         }
-        ModelUtil::update('admin_user', $adminUser['id'], [
+        ModelUtil::update(AdminUser::class, $adminUser['id'], [
             'lastLoginIp' => StrUtil::mbLimit(Request::ip(), 20),
             'lastLoginTime' => Carbon::now(),
         ]);
@@ -105,12 +117,12 @@ class Admin
 
     public static function ruleChanged($adminUserId, $ruleChanged)
     {
-        ModelUtil::update('admin_user', ['id' => $adminUserId], ['ruleChanged' => boolval($ruleChanged)]);
+        ModelUtil::update(AdminUser::class, ['id' => $adminUserId], ['ruleChanged' => boolval($ruleChanged)]);
     }
 
     public static function listRolesByUserId($adminUserId)
     {
-        $adminUser = ModelUtil::get('admin_user', $adminUserId);
+        $adminUser = ModelUtil::get(AdminUser::class, $adminUserId);
         if (empty($adminUser)) {
             return Response::generate(-1, L('User Not Exists'));
         }
@@ -125,7 +137,7 @@ class Admin
 
     public static function changePassword($id, $old, $new, $ignoreOld = false)
     {
-        $adminUser = ModelUtil::get('admin_user', ['id' => $id]);
+        $adminUser = ModelUtil::get(AdminUser::class, ['id' => $id]);
         if (empty($adminUser)) {
             return Response::generate(-1, L('Admin user not exists'));
         }
@@ -139,7 +151,7 @@ class Admin
         $data['password'] = self::passwordEncrypt($new, $passwordSalt);
         $data['passwordSalt'] = $passwordSalt;
         $data['lastChangePwdTime'] = Carbon::now();
-        ModelUtil::update('admin_user', ['id' => $adminUser['id']], $data);
+        ModelUtil::update(AdminUser::class, ['id' => $adminUser['id']], $data);
         return Response::generate(0, 'ok');
     }
 

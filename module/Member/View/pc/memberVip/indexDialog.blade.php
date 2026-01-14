@@ -138,7 +138,7 @@
                                                 @else
                                                     <a class="btn btn-block btn-lg btn-vip btn-round"
                                                        target="_parent"
-                                                       href="{{modstart_web_url('login',['dialog'=>1,'redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
+                                                       href="{{modstart_web_url('login',['redirect'=>\ModStart\Core\Input\Request::currentPageUrl()])}}">
                                                         <i class="iconfont icon-vip"></i>
                                                         登录后开通
                                                     </a>

@@ -44,7 +44,7 @@ class HomePageProvider
         return self::$instances;
     }
 
-    public static function call($contextMethod, $defaultAction)
+    private static function getAction($defaultAction)
     {
         $controller = null;
         if (modstart_config('HomePage_Enable', false)) {
@@ -59,6 +59,12 @@ class HomePageProvider
             $controller = $defaultAction;
         }
         BizException::throwsIfEmpty('首页不存在', $controller);
+        return $controller;
+    }
+
+    public static function call($contextMethod, $defaultAction)
+    {
+        $controller = self::getAction($defaultAction);
         list($c, $a) = explode('@', $controller);
         list($contextC, $contextA) = explode('::', $contextMethod);
         if (!starts_with($contextC, '\\')) {

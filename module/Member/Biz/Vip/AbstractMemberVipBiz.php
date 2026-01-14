@@ -20,4 +20,9 @@ abstract class AbstractMemberVipBiz
 
     }
 
+    public function vipFieldShow($item)
+    {
+        return '<div class="ub-text-muted">没有内容</div>';
+    }
+
 }

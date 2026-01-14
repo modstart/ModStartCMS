@@ -3,6 +3,7 @@
 namespace Module\Vendor\Tecmz;
 
 use Illuminate\Support\Facades\Log;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\Response;
 use ModStart\Core\Util\CurlUtil;
 use ModStart\Core\Util\SerializeUtil;

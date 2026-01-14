@@ -3,6 +3,9 @@
 
 namespace Module\Vendor\Tecmz;
 
+use ModStart\Core\Exception\BizException;
+use ModStart\Core\Input\Response;
+
 class TecmzUtil
 {
     public static function url($module = null)
@@ -18,6 +21,33 @@ class TecmzUtil
     {
         $config = modstart_config();
         return Tecmz::instance($config->getWithEnv("${configPrefix}AppId"), $config->getWithEnv("${configPrefix}AppSecret"));
+    }
+
+
+    public static function callCloudModelSync($configPrefix, $type, $modelConfig = [], $option = [])
+    {
+        $api = TecmzUtil::instance($configPrefix);
+        $option = array_merge([
+            'timeout' => 60,
+        ], $option);
+        $timeout = 60;
+        $queueRet = $api->callCloudModelQueue($type, $modelConfig, $option);
+        BizException::throwsIfResponseError($queueRet);
+        $endTime = time() + $timeout;
+        sleep(3);
+        while (time() < $endTime) {
+            sleep(3);
+            $retQuery = $api->callCloudModelQuery($type, $queueRet['data']['taskId']);
+            BizException::throwsIfResponseError($retQuery);
+            if (in_array($retQuery['data']['status'], ['QUEUE', 'PROCESS'])) {
+                continue;
+            }
+            if (!in_array($retQuery['data']['status'], ['SUCCESS'])) {
+                BizException::throws($retQuery['data']['statusRemark']);
+            }
+            return Response::generateSuccessData($retQuery['data']['result']);
+        }
+        BizException::throws('请求超时');
     }
 
     public static function asr($type, $contentBin)

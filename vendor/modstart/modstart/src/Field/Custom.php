@@ -21,7 +21,16 @@ class Custom extends AbstractField
             'customRenderFormView' => '',
             'customRenderGridView' => '',
             'customRenderDetailView' => '',
+            'customVariables' => [],
         ]);
+    }
+
+    public function customVariables($value)
+    {
+        $this->addVariables([
+            'customVariables' => $value,
+        ]);
+        return $this;
     }
 
     public function customRenderView($view)
@@ -67,6 +76,7 @@ class Custom extends AbstractField
                 return null;
             }
             $variables = $this->variables();
+            $variables = array_merge($variables, $this->getVariable('customVariables', []));
             return AutoRenderedFieldValue::makeView($view, $variables);
         });
         return parent::renderView($field, $item, $index);

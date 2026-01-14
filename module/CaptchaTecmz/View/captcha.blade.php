@@ -2,7 +2,7 @@
     <input type="hidden" name="captchaKey"/>
     <div class="pb-captcha-box"></div>
 </div>
-<script src="https://api.tecmz.com/lib/captcha/base-1.0.0.js?20200410"></script>
+<script src="https://api-cdn.tecmz.com/lib/captcha/base-1.0.0.js?20200410"></script>
 <script>
     $(function () {
         window.tsCaptcha = window.TSCaptcha.init({

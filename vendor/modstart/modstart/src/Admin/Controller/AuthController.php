@@ -152,7 +152,7 @@ class AuthController extends Controller
     public function logout()
     {
         $adminUserId = Admin::id();
-        Session::forget(Admin::ADMIN_USER_ID_SESSION_KEY);
+        Admin::clearSession();
         AdminUserLogoutEvent::fire($adminUserId, Request::ip(), AgentUtil::getUserAgent());
         if (modstart_config('adminSSOClientEnable', false)) {
             $input = InputPackage::buildFromInput();

@@ -544,6 +544,7 @@ class Grid
             }
             $addition = view('modstart::core.grid.treeAncestor', [
                 'treeAncestors' => $treeAncestors,
+                'title' => $this->title,
                 'grid' => $this,
             ])->render();
         }
@@ -607,7 +608,8 @@ class Grid
                     if ($field->hookFormatValue()) {
                         $value = call_user_func($field->hookFormatValue(), $value, $field);
                     }
-                    $item->{$field->column()} = $value;
+                    // 变更 不应该修改原始数据
+                    //$item->{$field->column()} = $value;
                 } else {
                     $field->item($item);
                     if (str_contains($field->column(), '.')) {
@@ -631,6 +633,7 @@ class Grid
                 $field->item($item);
                 // return $this->repository()->getTreeTitleColumn();
                 // echo $field->column() . ' ' . json_encode($value) . "\n";
+                // echo $field->column() . ' ' . json_encode($item) . "\n";
                 $record[$field->column()] = $field->renderView($field, $item, $index);
                 // echo $field->column() . ' ' . json_encode($record[$field->column()]) . "\n";
                 if ($this->engine == GridEngine::TREE && $field->column() == $this->repository()->getTreeTitleColumn()) {

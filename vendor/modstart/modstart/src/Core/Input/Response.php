@@ -262,6 +262,15 @@ class Response
         }
     }
 
+    public static function page403()
+    {
+        if (Request::isAjax()) {
+            return self::json(-1, L('Forbidden'));
+        } else {
+            abort(403, L('Forbidden'));
+        }
+    }
+
     /**
      * 页面无权限
      * @param null $msg

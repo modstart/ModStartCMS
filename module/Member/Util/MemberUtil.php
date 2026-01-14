@@ -24,6 +24,7 @@ use ModStart\Data\Event\DataFileUploadedEvent;
 use Module\Member\Events\MemberUserDeletedEvent;
 use Module\Member\Events\MemberUserLoginAttemptEvent;
 use Module\Member\Events\MemberUserLoginFailedEvent;
+use Module\Member\Model\MemberOauth;
 use Module\Member\Model\MemberUser;
 use Module\Member\Type\MemberMessageStatus;
 use Module\Member\Type\MemberPasswordStrength;
@@ -774,7 +775,7 @@ class MemberUtil
 
     public static function getIdByOauth($oauthType, $openId)
     {
-        $m = ModelUtil::get('member_oauth', ['type' => $oauthType, 'openId' => $openId]);
+        $m = ModelUtil::get(MemberOauth::class, ['type' => $oauthType, 'openId' => $openId]);
         if (empty($m)) {
             return 0;
         }
@@ -794,7 +795,7 @@ class MemberUtil
     public static function getOauthOpenId($memberUserId, $oauthType)
     {
         $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];
-        $m = ModelUtil::get('member_oauth', $where);
+        $m = ModelUtil::get(MemberOauth::class, $where);
         if (empty($m)) {
             return null;
         }
@@ -810,40 +811,52 @@ class MemberUtil
     public static function getOauth($memberUserId, $oauthType)
     {
         $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];
-        return ModelUtil::get('member_oauth', $where);
+        return ModelUtil::get(MemberOauth::class, $where);
     }
 
     public static function listOauths($memberUserId)
     {
-        return ModelUtil::all('member_oauth', ['memberUserId' => $memberUserId], ['*'], ['type', 'asc']);
+        return ModelUtil::all(MemberOauth::class, ['memberUserId' => $memberUserId], ['*'], ['type', 'asc']);
     }
 
     public static function putOauth($memberUserId, $oauthType, $openId, $info = [])
     {
-        $where = ['memberUserId' => $memberUserId, 'type' => $oauthType];
+        $where = [
+            'memberUserId' => $memberUserId,
+            'type' => $oauthType,
+        ];
         $lockKey = "MemberOauth:$memberUserId";
         if (!LockUtil::acquire($lockKey)) {
             BizException::throws('正在处理中，请稍后再试');
         }
-        $m = ModelUtil::get('member_oauth', $where);
+        $userOauth = ModelUtil::get(MemberOauth::class, $where);
+        $oauthExists = ModelUtil::get(MemberOauth::class, [
+            'type' => $oauthType,
+            'openId' => $openId,
+        ]);
         $update = array_merge(['openId' => $openId], $info);
-        if (empty($m)) {
-            ModelUtil::delete('member_oauth', ['type' => $oauthType, 'openId' => $openId]);
-            ModelUtil::insert('member_oauth', array_merge($where, $update));
-        } else if ($m['openId'] != $openId) {
-            ModelUtil::update('member_oauth', $m['id'], $update);
+        if (empty($userOauth)) {
+            if ($oauthExists && $oauthExists['memberUserId'] != $memberUserId) {
+                ModelUtil::delete(MemberOauth::class, $oauthExists['id']);
+            }
+            ModelUtil::insert(MemberOauth::class, array_merge($where, $update));
+        } else if ($userOauth['openId'] != $openId) {
+            if ($oauthExists && $oauthExists['memberUserId'] != $memberUserId) {
+                ModelUtil::delete(MemberOauth::class, $oauthExists['id']);
+            }
+            ModelUtil::update(MemberOauth::class, $userOauth['id'], $update);
         }
         LockUtil::release($lockKey);
     }
 
     public static function forgetOauthByMemberUserId($memberUserId)
     {
-        ModelUtil::delete('member_oauth', ['memberUserId' => $memberUserId]);
+        ModelUtil::delete(MemberOauth::class, ['memberUserId' => $memberUserId]);
     }
 
     public static function forgetOauth($oauthType, $openId)
     {
-        ModelUtil::delete('member_oauth', ['type' => $oauthType, 'openId' => $openId]);
+        ModelUtil::delete(MemberOauth::class, ['type' => $oauthType, 'openId' => $openId]);
     }
 
     public static function updateNewMessageStatus($memberUserId)
@@ -889,7 +902,7 @@ class MemberUtil
         BizException::throwsIfEmpty('用户不存在', $memberUser);
         ModelUtil::transactionBegin();
         $content = [];
-        $oauths = ModelUtil::all('member_oauth', [
+        $oauths = ModelUtil::all(MemberOauth::class, [
             'memberUserId' => $memberUser['id'],
         ]);
         $content['oauth'] = ArrayUtil::keepItemsKeys($oauths, [

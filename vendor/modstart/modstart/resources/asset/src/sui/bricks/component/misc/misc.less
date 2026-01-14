@@ -14,6 +14,19 @@
         border-radius: 0.5rem;
         background-color: var(--scolor-scrollbar-thumb);
     }
+
+    &.auto {
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        &:hover {
+            scrollbar-width: thin;
+        }
+    }
 }
 
 .ub-loading {

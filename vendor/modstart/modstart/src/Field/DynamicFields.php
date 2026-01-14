@@ -5,6 +5,7 @@ namespace ModStart\Field;
 
 
 use Illuminate\Support\Facades\View;
+use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Util\RenderUtil;
@@ -53,6 +54,12 @@ class DynamicFields extends AbstractField
         return $value;
     }
 
+    /**
+     * @param string[] $enabledFieldTypes
+     * @return $this
+     * @example
+     * enable types @see \ModStart\Field\Type\DynamicFieldsType
+     */
     public function enabledFieldTypes($enabledFieldTypes)
     {
         $this->addVariables(['enabledFieldTypes' => $enabledFieldTypes]);
@@ -159,6 +166,12 @@ class DynamicFields extends AbstractField
         ]);
     }
 
+    /**
+     * @param array $fields 字段配置
+     * @param array $values 字段值列表
+     * @param $param
+     * @return array
+     */
     public static function fetchValueObject($fields, $values, $param = [])
     {
         $valueObject = [];
@@ -167,20 +180,28 @@ class DynamicFields extends AbstractField
                 $valueObject[$value['name']] = $value['value'];
             }
         }
+        $result = [];
         foreach ($fields as $f) {
             switch ($f['type']) {
                 case DynamicFieldsType::TYPE_CHECKBOX:
                 case DynamicFieldsType::TYPE_FILES:
                     if (isset($valueObject[$f['name']])) {
-                        $valueObject[$f['name']] = @json_decode($valueObject[$f['name']], true);
+                        $result[$f['name']] = @json_decode($valueObject[$f['name']], true);
                     }
                     if (empty($valueObject[$f['name']])) {
-                        $valueObject[$f['name']] = [];
+                        $result[$f['name']] = [];
+                    }
+                    break;
+                default:
+                    if (!isset($valueObject[$f['name']])) {
+                        $result[$f['name']] = null;
+                    } else {
+                        $result[$f['name']] = $valueObject[$f['name']];
                     }
                     break;
             }
         }
-        return $valueObject;
+        return $result;
     }
 
     public static function fetchedValueToString($field, $value, $param = [])
@@ -214,11 +235,23 @@ class DynamicFields extends AbstractField
 
     public static function renderAllDetailTable($fields, $valueObject, $param = [])
     {
+        $param = array_merge([
+            // file display type: url|name
+            'fileTitle' => 'url',
+            // files display type: url|name
+            'filesTitle' => 'url',
+        ], $param);
         return View::make('modstart::core.field.dynamicFields.detailTable', [
             'fields' => $fields,
             'valueObject' => $valueObject,
             'param' => $param,
         ])->render();
+    }
+
+    public static function renderAllDetailTableFromValues($fields,$values,$param = [])
+    {
+        $valueObject = self::fetchValueObject($fields, $values, $param);
+        return self::renderAllDetailTable($fields, $valueObject, $param);
     }
 
     public static function fetchInputOrFail($fields, InputPackage $input, $param = [])
@@ -254,5 +287,46 @@ class DynamicFields extends AbstractField
             }
         }
         return $data;
+    }
+
+    public static function save($model, $fields, $valueObject, $where = [], $param = [])
+    {
+        $records = ModelUtil::model($model)->where($where)->get()->toArray();
+        $fieldNames = [];
+        foreach ($fields as $f) {
+            $fieldNames[] = $f['name'];
+        }
+        // delete old
+        foreach ($records as $record) {
+            if (!in_array($record['name'], $fieldNames)) {
+                ModelUtil::delete($model, $record['id']);
+            }
+        }
+        // insert or update
+        foreach ($fields as $f) {
+            $update = [];
+            $update['name'] = $f['name'];
+            switch ($f['type']) {
+                case DynamicFieldsType::TYPE_CHECKBOX:
+                case DynamicFieldsType::TYPE_FILES:
+                    $update['value'] = SerializeUtil::jsonEncode(isset($valueObject[$f['name']]) ? $valueObject[$f['name']] : []);
+                    break;
+                default:
+                    $update['value'] = isset($valueObject[$f['name']]) ? $valueObject[$f['name']] : null;
+                    break;
+            }
+            $existingRecord = null;
+            foreach ($records as $record) {
+                if ($record['name'] == $f['name']) {
+                    $existingRecord = $record;
+                    break;
+                }
+            }
+            if (null === $existingRecord) {
+                ModelUtil::insert($model, array_merge($update, $where));
+            } else {
+                ModelUtil::update($model, $existingRecord['id'], $update);
+            }
+        }
     }
 }

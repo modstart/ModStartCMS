@@ -56,7 +56,7 @@ class AuthMiddleware
             $urlController = '\\' . $urlController;
         }
 
-        $adminUserId = intval(Session::get('_adminUserId', null));
+        $adminUserId = intval(Session::get(Admin::ADMIN_USER_ID_SESSION_KEY, null));
         $adminUser = null;
 
         /**
@@ -100,7 +100,7 @@ class AuthMiddleware
         $urlControllerMethod = $urlController . '@' . $urlMethod;
         if (!$this->isAuthIgnore($urlController, $urlMethod)) {
             if ($adminUserId && !$adminUser) {
-                Session::forget('_adminUserId');
+                Admin::clearSession();
                 return Response::redirect(modstart_admin_url('login', ['redirect' => Request::currentPageUrl()]));
             }
             if (empty($adminUser)) {
@@ -116,8 +116,8 @@ class AuthMiddleware
                     $rules[$k]['auth'] = true;
                 }
             } else {
-                $adminHasRules = Session::get('_adminHasRules', []);
-                if (true || (empty($adminHasRules) && $adminUser['id'] > 0) || $adminUser['ruleChanged']) {
+                $adminHasRules = Session::get(Admin::ADMIN_HAS_RULES_SESSION_KEY, []);
+                if ((empty($adminHasRules) && $adminUser['id'] > 0) || $adminUser['ruleChanged']) {
                     if ($adminUser['ruleChanged']) {
                         Admin::ruleChanged($adminUser['id'], false);
                     }
@@ -128,7 +128,7 @@ class AuthMiddleware
                             $adminHasRules[$rule['rule']] = true;
                         }
                     }
-                    Session::put('_adminHasRules', $adminHasRules);
+                    Session::put(Admin::ADMIN_HAS_RULES_SESSION_KEY, $adminHasRules);
                 }
                 foreach ($adminHasRules as $rule => $v) {
                     if (isset($rules[$rule])) {
@@ -136,7 +136,7 @@ class AuthMiddleware
                     }
                 }
             }
-            Session::put('_adminRules', $rules);
+            Session::put(Admin::ADMIN_RULES_SESSION_KEY, $rules);
 
             /**
              * 检查 action
@@ -220,8 +220,8 @@ class AuthMiddleware
             }
         }
 
-        Session::put('_adminUserId', $adminUserId);
-        Session::flash('_adminUser', $adminUser);
+        Session::put(Admin::ADMIN_USER_ID_SESSION_KEY, $adminUserId);
+        Session::flash(Admin::ADMIN_USER_SESSION_KEY, $adminUser);
 
         $isTab = @boolval(Input::get('_is_tab', false));
         $tabSectionName = 'bodyContent';

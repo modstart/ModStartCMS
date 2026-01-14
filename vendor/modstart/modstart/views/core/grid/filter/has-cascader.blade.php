@@ -46,16 +46,5 @@
             this.value = [];
             app.$data.nodes = nodes;
         });
-        @if(0)
-        $field.data('init', function (data) {
-            for (var i = 0; i < data.length; i++) {
-                for (var k in data[i]) {
-                    if (k === '{{$column}}' && ('has' in data[i][k])) {
-                        $('#{{$id}}_select').val(data[i][k].has);
-                    }
-                }
-            }
-        });
-        @endif
     });
 </script>

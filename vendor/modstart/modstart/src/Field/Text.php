@@ -15,6 +15,7 @@ class Text extends AbstractField
     {
         $this->addVariables([
             'autoTrim' => false,
+            'blankToNull' => false,
         ]);
     }
 
@@ -29,11 +30,25 @@ class Text extends AbstractField
         return $this;
     }
 
+    /**
+     * 保存时空字符串转为null
+     * @param $enable
+     * @return $this
+     */
+    public function blankToNull($enable = true)
+    {
+        $this->addVariables(['blankToNull' => $enable]);
+        return $this;
+    }
+
     public function prepareInput($value, $dataSubmitted)
     {
         if ($this->variables['autoTrim']) {
             $value = StrUtil::filterSpecialChars($value);
             $value = trim($value);
+        }
+        if ($this->variables['blankToNull'] && '' === $value) {
+            $value = null;
         }
         return $value;
     }

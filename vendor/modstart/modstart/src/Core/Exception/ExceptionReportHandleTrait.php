@@ -49,9 +49,7 @@ trait ExceptionReportHandleTrait
             }
             $error = [];
             $error['URL'] = Request::url();
-            if (in_array($error['URL'], [
-                'http://localhost',
-            ])) {
+            if (empty($error['URL']) || in_array($error['URL'], ['http://localhost',])) {
                 $error['URL'] = base_path();
                 $error['HOST'] = gethostname();
             }

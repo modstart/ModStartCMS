@@ -147,4 +147,15 @@ class ColorUtil
         }
         return $result;
     }
+
+    /**
+     * @param $hexColor
+     * @return void true=深色,false=浅色
+     */
+    public static function isDark($hexColor)
+    {
+        $rgba = self::hexToRgbaArray($hexColor);
+        $brightness = (($rgba['r'] * 299) + ($rgba['g'] * 587) + ($rgba['b'] * 114)) / 1000;
+        return $brightness < 128;
+    }
 }

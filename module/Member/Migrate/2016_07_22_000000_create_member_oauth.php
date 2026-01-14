@@ -21,7 +21,7 @@ class CreateMemberOauth extends Migration
             $table->string('openId', 150)->comment('OpenId')->nullable();
 
             $table->unique(['type', 'openId']);
-            $table->index(['memberUserId']);
+            $table->unique(['memberUserId', 'type']);
 
         });
     }

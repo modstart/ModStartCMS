@@ -120,14 +120,19 @@ const Tree = {
         let ancestors = []
         for (let node of nodes) {
             if (node[idKey] === id) {
-                ancestors.push(node)
-                if (node[pidKey] !== 0) {
-                    ancestors = ancestors.concat(Tree.findAncestors(nodes, node[pidKey], idKey, pidKey))
+                if (node[pidKey]) {
+                    ancestors = Tree.findAncestors(nodes, node[pidKey], idKey, pidKey)
                 }
+                ancestors.push(node)
                 break
             }
         }
-        return ancestors.reverse()
+        return ancestors
+    },
+    findAncestorIds: function (nodes, id, idKey, pidKey) {
+        idKey = idKey || 'id'
+        pidKey = pidKey || 'pid'
+        return Tree.findAncestors(nodes, id, idKey, pidKey).map(o => o[idKey])
     },
     /**
      * nodes sort
@@ -316,4 +321,5 @@ const Tree = {
 
 export {
     Tree
-}
+};
+

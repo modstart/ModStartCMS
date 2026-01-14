@@ -19,14 +19,6 @@ use ModStart\Repository\EmptyItem;
  */
 class ModelUtil
 {
-
-//    private static $timestampEnable = true;
-//
-//    public static function enableTimestamp($enable)
-//    {
-//        self::$timestampEnable = $enable;
-//    }
-
     /**
      * 判断是否为模型，约定：数据库使用下划线，模型使用驼峰
      * @param $tableOrModel string|Model
@@ -96,36 +88,36 @@ class ModelUtil
     /**
      * 插入数据
      * @param $model string 数据表
-     * @param $data array 数据数组
+     * @param $record array 数据数组
      * @return array 插入的数据记录
      * @example
      * ModelUtil::insert('user',['username'=>'aaa','nickname'=>'bbb']);
      *
      * @Util
      */
-    public static function insert($model, $data)
+    public static function insert($model, $record)
     {
         $m = self::model($model);
-        foreach ($data as $k => $v) {
+        foreach ($record as $k => $v) {
             $m->$k = $v;
         }
         $m->save();
         return $m->toArray();
     }
 
-    public static function insertIfNotExists($model, $where, $data = [])
+    public static function insertIfNotExists($model, $where, $record = [])
     {
         if (ModelUtil::exists($model, $where)) {
             return false;
         }
-        ModelUtil::insert($model, array_merge($where, $data));
+        ModelUtil::insert($model, array_merge($where, $record));
         return true;
     }
 
-    public static function insertIgnoreUnique($model, $data)
+    public static function insertIgnoreUnique($model, $record)
     {
         try {
-            self::insert($model, $data);
+            self::insert($model, $record);
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             if (Str::contains($msg, 'Duplicate entry')) {
@@ -151,11 +143,11 @@ class ModelUtil
     private static function insertAllBuild($records, $updateTimestamp = true)
     {
         if ($updateTimestamp) {
-            foreach ($records as $i => $data) {
-                if (!isset($data['created_at'])) {
+            foreach ($records as $i => $record) {
+                if (!isset($record['created_at'])) {
                     $records[$i]['created_at'] = date('Y-m-d H:i:s');
                 }
-                if (!isset($data['updated_at'])) {
+                if (!isset($record['updated_at'])) {
                     $records[$i]['updated_at'] = date('Y-m-d H:i:s');
                 }
             }
@@ -316,33 +308,33 @@ class ModelUtil
     /**
      * 更新表中全部数据，慎用
      * @param $model
-     * @param $data
+     * @param $record
      * @param string[] $where
      */
-    public static function updateAll($model, $data, $where = ['id', '>', '0'])
+    public static function updateAll($model, $record, $where = ['id', '>', '0'])
     {
-        self::model($model)->where($where[0], $where[1], $where[2])->update($data);
+        self::model($model)->where($where[0], $where[1], $where[2])->update($record);
     }
 
     /**
      * @Util更新数据表
      * @param $model string 数据库
      * @param $where int|array 更新条件
-     * @param $data array 更新的数据数组
+     * @param $record array 更新的数据数组
      * @return int|null 返回更新的数量，如果是0或null表示没有更新数据
      * @example
      * ModelUtil::update('user',1,['password'=>'123456']);
      * ModelUtil::update('user',['username'=>'xxx'],['password'=>'123456']);
      */
-    public static function update($model, $where, $data)
+    public static function update($model, $where, $record)
     {
-        if (empty($where) || empty($data)) {
+        if (empty($where) || empty($record)) {
             return 0;
         }
         if (is_string($where) || is_numeric($where)) {
             $where = ['id' => $where];
         }
-        return self::model($model)->where($where)->update($data);
+        return self::model($model)->where($where)->update($record);
     }
 
     public static function first($model, $where, $fields = ['*'], $order = null)
@@ -824,15 +816,15 @@ class ModelUtil
     }
 
 
-    public static function joinAll(&$data, $dataModelKey = 'userId', $dataMergedKey = '_user', $model = 'join_model', $modelPrimaryKey = 'id')
+    public static function joinAll(&$records, $dataModelKey = 'userId', $dataMergedKey = '_user', $model = 'join_model', $modelPrimaryKey = 'id')
     {
-        if (empty($data)) {
+        if (empty($records)) {
             return;
         }
 
         $ids = array_map(function ($item) use ($dataModelKey) {
             return $item[$dataModelKey];
-        }, $data);
+        }, $records);
 
         $joinData = self::model($model)->whereIn($modelPrimaryKey, $ids)->get()->toArray();
         $joinDataMap = [];
@@ -844,7 +836,7 @@ class ModelUtil
             }
         }
 
-        foreach ($data as &$item) {
+        foreach ($records as &$item) {
             $key = $item[$dataModelKey];
             if (isset($joinDataMap[$key])) {
                 $item[$dataMergedKey] = $joinDataMap[$key];
@@ -1376,182 +1368,6 @@ class ModelUtil
         }
     }
 
-//    public static function replaceRelationId($model, $where, $idKey, $ids)
-//    {
-//        ModelHelper::delete($model, $where);
-//        $inserts = [];
-//        foreach ($ids as $id) {
-//            $inserts[] = array_merge($where, [$idKey => $id]);
-//        }
-//        ModelHelper::addAll($model, $inserts);
-//    }
-//
-
-//
-//    public static function generateHash($model, $field, $hashLength = 16)
-//    {
-//        if (self::isModel($model)) {
-//            do {
-//                $hash = strtolower(Str::random($hashLength));
-//            } while ($model::where([$field => $hash])->exists());
-//            return $hash;
-//        } else {
-//            do {
-//                $hash = strtolower(Str::random($hashLength));
-//                $m = new DynamicModel();
-//                $m->timestamps = self::$timestampEnable;
-//                $m->setTable($model);
-//            } while ($m->where([$field => $hash])->exists());
-//            return $hash;
-//        }
-//    }
-//
-//
-//
-//    public static function map($model, $valueField = 'title', $keyField = 'id', $where = [], $order = null)
-//    {
-//        $items = self::find($model, $where, $order);
-//        $map = [];
-//        foreach ($items as $item) {
-//            $map[$item[$keyField]] = $item[$valueField];
-//        }
-//        return $map;
-//    }
-//
-//    public static function first($model, $where = [], $order = null)
-//    {
-//        $record = null;
-//        if (self::isModel($model)) {
-//            if ($order) {
-//                $record = $model::where($where)->orderBy($order[0], $order[1])->first();
-//            } else {
-//                $record = $model::where($where)->first();
-//            }
-//        } else {
-//            $m = new DynamicModel();
-//            $m->timestamps = self::$timestampEnable;
-//            $m->setTable($model);
-//            if ($order) {
-//                $record = $m->where($where)->orderBy($order[0], $order[1])->first();
-//            } else {
-//                $record = $m->where($where)->first();
-//            }
-//        }
-//        if (empty($record)) {
-//            return null;
-//        }
-//        return $record->toArray();
-//    }
-//
-
-//
-//    public static function addAll($model, $datas)
-//    {
-//        foreach ($datas as $data) {
-//            ModelHelper::add($model, $data);
-//        }
-//    }
-//
-//    public static function update($model, $where, $data)
-//    {
-//        if (empty($data)) {
-//            return null;
-//        }
-//        if (self::isModel($model)) {
-//            $m = $model::where($where)->get();
-//        } else {
-//            $m = new DynamicModel();
-//            $m->timestamps = self::$timestampEnable;
-//            $m->setTable($model);
-//            $m = $m->where($where)->get();
-//        }
-//
-//        if (empty($m)) {
-//            return null;
-//        }
-//        foreach ($m as $_m) {
-//            foreach ($data as $k => $v) {
-//                $_m->$k = $v;
-//            }
-//            $_m->save();
-//        }
-//        return $m->toArray();
-//    }
-//
-
-//
-//    public static function updateOne($model, $where, $data)
-//    {
-//        if (empty($data)) {
-//            return null;
-//        }
-//        if (is_string($where) || is_numeric($where)) {
-//            $where = ['id' => $where];
-//        }
-//        if (self::isModel($model)) {
-//            $m = $model::where($where)->first();
-//        } else {
-//            $m = new DynamicModel();
-//            $m->timestamps = self::$timestampEnable;
-//            $m->setTable($model);
-//            $m = $m->where($where)->first();
-//        }
-//
-//        if (empty($m)) {
-//            return null;
-//        }
-//        foreach ($data as $k => $v) {
-//            $m->$k = $v;
-//        }
-//        $m->save();
-//        return $m->toArray();
-//    }
-//
-//    public static function addOrUpdateOne($model, $where, $data)
-//    {
-//        if (is_string($where) || is_numeric($where)) {
-//            $where = ['id' => $where];
-//        }
-//        if (self::isModel($model)) {
-//            $m = $model::where($where)->first();
-//        } else {
-//            $m = new DynamicModel();
-//            $m->timestamps = self::$timestampEnable;
-//            $m->setTable($model);
-//            $m = $m->where($where)->first();
-//        }
-//        if (empty($m)) {
-//
-//            // insert
-//            if (self::isModel($model)) {
-//                $m = new $model();
-//            } else {
-//                $m = new DynamicModel();
-//                $m->timestamps = self::$timestampEnable;
-//                $m->setTable($model);
-//            }
-//            foreach ($data as $k => $v) {
-//                $m->$k = $v;
-//            }
-//            $m->save();
-//            return $m->toArray();
-//
-//        } else {
-//
-//            // update
-//            foreach ($data as $k => $v) {
-//                if (array_key_exists($k, $where)) {
-//                    continue;
-//                }
-//                $m->$k = $v;
-//            }
-//            $m->save();
-//            return $m->toArray();
-//
-//        }
-//    }
-//
-
     /**
      * 增加或减少数值，会考虑到NULL的情况
      * @param $model string
@@ -1587,12 +1403,6 @@ class ModelUtil
     {
         return self::model($model)->where($where)->max($field);
     }
-
-//    public static function truncate($model)
-//    {
-//        DB::table($model)->truncate();
-//    }
-//
 
     public static function traverse($model, $key, $default = null)
     {
@@ -1734,6 +1544,15 @@ class ModelUtil
         } else {
             return $item;
         }
+    }
+
+    public static function itemsToArray($items)
+    {
+        $records = [];
+        foreach ($items as $item) {
+            $records[] = self::toArray($item);
+        }
+        return $records;
     }
 
 }

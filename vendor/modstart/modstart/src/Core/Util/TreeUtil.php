@@ -278,6 +278,23 @@ class TreeUtil
         return $map;
     }
 
+    public static function treeMaxDepth(&$tree)
+    {
+        $maxDepth = 0;
+        $computeDepth = function ($nodes, $level) use (&$computeDepth, &$maxDepth) {
+            foreach ($nodes as $node) {
+                if ($level > $maxDepth) {
+                    $maxDepth = $level;
+                }
+                if (!empty($node[TreeUtil::$CHILD_KEY])) {
+                    $computeDepth($node[TreeUtil::$CHILD_KEY], $level + 1);
+                }
+            }
+        };
+        $computeDepth($tree, 1);
+        return $maxDepth;
+    }
+
     /**
      * 获取节点的所有子节点ID
      * @param $nodes array 节点
@@ -456,7 +473,7 @@ class TreeUtil
     }
 
     /**
-     * 根据id计算节点所有上级，同时附带每一级的可选元素，通常用于无线级的分类前端展示
+     * 根据id计算节点所有上级，同时附带每一级的可选元素，通常用于无限级的分类前端展示
      * @param $nodes array
      * @param $id integer
      * @param string $idName

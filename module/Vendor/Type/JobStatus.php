@@ -13,11 +13,14 @@ class JobStatus implements BaseType
     const SUCCESS = 3;
     const FAIL = 4;
 
+    const PROCESS_WAIT = 100;
+
     public static function getList()
     {
         return [
             self::QUEUE => '队列中',
             self::PROCESS => '处理中',
+            self::PROCESS_WAIT => '处理等待中',
             self::SUCCESS => '成功',
             self::FAIL => '失败',
         ];

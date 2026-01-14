@@ -31,6 +31,7 @@ class FieldManager
             'areaChina' => \ModStart\Field\AreaChina::class,
             'audio' => \ModStart\Field\Audio::class,
             'button' => \ModStart\Field\Button::class,
+            'cascader' => \ModStart\Field\Cascader::class,
             'captcha' => \ModStart\Field\Captcha::class,
             'cascadeGroup' => \ModStart\Field\CascadeGroup::class,
             'checkbox' => \ModStart\Field\Checkbox::class,

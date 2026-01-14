@@ -174,6 +174,7 @@ return [
     "PrevPage" => "上一页",
     "Price" => "价格",
     "Process Now" => "立即处理",
+    "View Now" => "立即查看",
     "Quick Operate" => "快捷操作",
     "Radio" => "单选",
     "Record Not Exists" => "记录不存在",
@@ -195,6 +196,7 @@ return [
     "Save Success" => "保存成功",
     "Search" => "搜索",
     "Second" => "秒",
+    "System Warning" => "系统警告",
     "Security Warning" => "安全警告",
     "Select %d item(s) at least" => "最少选择 %d 条",
     "Select %d item(s) at most" => "最多选择 %d 条",
@@ -247,4 +249,6 @@ return [
     "You are a demo user, ADD/EDIT/DELETE is forbidden." => "您正在以演示账号访问该系统，所有 增加/编辑/删除 操作将被禁止。",
     "Your password is weak, please change your password." => "您的正在使用弱密码，请及时修改密码。",
     "install.php script not deleted, may expose sensitive data" => "install.php 安装向导文件未删除，可能暴露敏感信息",
+    "Queue pending %s jobs, view the queue config manual." => "队列中有 %s 条待处理任务，查看队列配置手册。",
+    "Schedule tasks not run for a long time, view the schedule config manual." => "任务调度长时间未运行，查看任务调度配置手册。",
 ];

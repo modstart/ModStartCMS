@@ -1,3 +1,4 @@
+import UploadButton from '@ModStartAsset/svue/components/UploadButton'
 import ImagesSelector from "@ModStartAsset/svue/components/ImagesSelector.vue"
 import ImageSelector from "@ModStartAsset/svue/components/ImageSelector.vue"
 import VideoSelector from "@ModStartAsset/svue/components/VideoSelector.vue"
@@ -64,6 +65,7 @@ if (window.__selectorDialogServer) {
 }
 
 export default (Vue) => {
+    Vue.component("upload-button", UploadButton)
     Vue.component("images-selector", ImagesSelector)
     Vue.component("image-selector", ImageSelector)
     Vue.component("file-selector", FileSelector)

@@ -470,7 +470,7 @@ class DataManager
         $storage = self::storage($option);
         $data = $storage->repository()->getDataById($id);
         if (empty($data)) {
-            return;
+            return null;
         }
         if ($storage->driverName() != $data['driver']) {
             $driver = DataStorageType::toDriverName($data['driver']);
@@ -483,6 +483,7 @@ class DataManager
         }
         $storage->repository()->deleteDataById($id);
         DataDeletedEvent::fire($data);
+        return $data;
     }
 
     /**
@@ -504,7 +505,7 @@ class DataManager
         $storage = self::storage($option);
         $data = $storage->repository()->getDataByPath($path);
         if (empty($data)) {
-            return;
+            return null;
         }
         if ($storage->driverName() != $data['driver']) {
             $driver = DataStorageType::toDriverName($data['driver']);
@@ -517,6 +518,7 @@ class DataManager
         }
         $storage->repository()->deleteDataById($data['id']);
         DataDeletedEvent::fire($data);
+        return $data;
     }
 
     /**
