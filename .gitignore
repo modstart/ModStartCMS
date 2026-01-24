@@ -17,3 +17,7 @@ Homestead.json
 bootstrap/config.php
 deploy-*.txt
 _delete_.*
+/.modstart-agent
+/openspec
+/AGENTS.md
+/.github/

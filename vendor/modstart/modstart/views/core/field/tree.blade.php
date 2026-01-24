@@ -10,7 +10,7 @@
         <input type="hidden"
                name="{{$name}}"
                value='{{\ModStart\Core\Util\SerializeUtil::jsonEncode(null==$value?($defaultValue?$defaultValue:[]):$value)}}'/>
-        <div style="border:1px solid #DDD;border-radius:3px;padding:0 0 0.5rem 0;background:#FFF;">
+        <div style="border:1px solid #DDD;border-radius:3px;padding:0 0 0.625rem 0;background:#FFF;">
             <div id="{{$name}}Tree"></div>
         </div>
         @if(!empty($help))

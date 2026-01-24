@@ -21,7 +21,7 @@ class StatusText extends AbstractWidget
     public static function getAssets()
     {
         return [
-            'style' => '.ub-status-text{display:inline-block;margin-right:0.5rem;}',
+            'style' => '.ub-status-text{display:inline-block;margin-right:0.625rem;}',
         ];
     }
 

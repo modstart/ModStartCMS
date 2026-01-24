@@ -79,11 +79,11 @@ export default {
 <style lang="less" scoped>
 .pb-code-editor {
     border: 1px solid var(--color-body-line);
-    border-radius: 0.2rem;
+    border-radius: 0.25rem;
 
     /deep/ .ace_editor {
         border: none;
-        border-radius: 0.1rem;
+        border-radius: 0.125rem;
     }
 }
 </style>

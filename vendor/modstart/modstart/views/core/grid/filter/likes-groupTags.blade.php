@@ -2,7 +2,7 @@
     <div class="name">{{$label}}</div>
     <div class="input">
         <div class="inputs" style="display:inline-block;"></div>
-        <a href="javascript:;" class="ub-text-muted" data-like-edit style="line-height:1.5rem;">
+        <a href="javascript:;" class="ub-text-muted" data-like-edit style="line-height:1.875rem;">
             <i class="iconfont icon-edit"></i>
         </a>
     </div>
@@ -14,7 +14,7 @@
                 </div>
                 <div class="body">
                     <div class="content"
-                         style="max-height:100px;box-shadow:0 0 5px #CCC;padding:0.5rem;border-radius:0.2rem;overflow:auto;"></div>
+                         style="max-height:100px;box-shadow:0 0 5px #CCC;padding:0.625rem;border-radius:0.25rem;overflow:auto;"></div>
                 </div>
                 <div class="foot ub-text-center">
                     <div class="tw-px-3">
@@ -59,8 +59,8 @@
                 $field.find('.inputs').html('');
                 for (var i = 0; i < ids.length; i++) {
                     if (tagTitleMap[ids[i]]) {
-                        $field.find('.inputs').append('<div class="item" style="display:inline-block;margin-right:0.2rem;border:1px solid #c4cfdb;border-radius:0.2rem;padding:0 0.1rem;background:#FFF;" data-id="' + ids[i] + '">' + window.api.util.specialchars(tagTitleMap[ids[i]])
-                            + '<a class="ub-text-muted" href="javascript:;" data-input-close style="width:0.8rem;font-size:0.5rem;line-height:1.3rem;text-align:center;"><i class="iconfont icon-close"></i></a></div>');
+                        $field.find('.inputs').append('<div class="item" style="display:inline-block;margin-right:0.25rem;border:1px solid #c4cfdb;border-radius:0.25rem;padding:0 0.125rem;background:#FFF;" data-id="' + ids[i] + '">' + window.api.util.specialchars(tagTitleMap[ids[i]])
+                            + '<a class="ub-text-muted" href="javascript:;" data-input-close style="width:1rem;font-size:0.625rem;line-height:1.625rem;text-align:center;"><i class="iconfont icon-close"></i></a></div>');
                     }
                 }
             };

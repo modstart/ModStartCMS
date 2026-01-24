@@ -15,7 +15,7 @@
         </div>
         <div class="header-container-placeholder"></div>
     </div>
-    <div class="ub-mobile-container tw-py-2" style="min-height:calc( 100vh - 2.5rem );">
+    <div class="ub-mobile-container tw-py-2" style="min-height:calc( 100vh - 3.125rem );">
         {!! $content !!}
     </div>
 @endsection

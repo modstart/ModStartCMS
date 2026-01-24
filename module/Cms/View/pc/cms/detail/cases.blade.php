@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="content">
-                        <div class="ub-html lg" style="padding:1rem;">
+                        <div class="ub-html lg" style="padding:1.25rem;">
                             {!! \ModStart\Core\Util\HtmlUtil::replaceImageSrcToLazyLoad($record['_data']['content'],'data-src',true) !!}
                         </div>
                     </div>

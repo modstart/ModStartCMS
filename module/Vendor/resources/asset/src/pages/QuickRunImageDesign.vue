@@ -556,11 +556,11 @@ export default {
 
 .pb-block-field {
     display: flex;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
+    border-radius: 0.3125rem;
+    padding: 0.3125rem;
     justify-content: center;
     align-items: center;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.3125rem;
     background: #F2F5F9;
 
     .title {

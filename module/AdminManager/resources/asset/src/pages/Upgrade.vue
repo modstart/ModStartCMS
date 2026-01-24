@@ -10,14 +10,14 @@
         <div class="ub-panel">
             <div class="head">
                 <div class="more" v-if="memberUser.id">
-                    <el-button round style="padding:0.25rem 0.5rem;" :loading="memberUserLoading"
+                    <el-button round style="padding:0.3125rem 0.625rem;" :loading="memberUserLoading"
                                @click="doMemberLoginShow()">
                             <span v-if="memberUserLoading">
                                 登录中
                             </span>
                         <span v-else-if="memberUser.id>0">
                                 <div v-if="memberUser.avatar" class="ub-cover-1-1 tw-rounded-full"
-                                     style="width:0.8rem;display:inline-block;vertical-align:middle;"
+                                     style="width:1rem;display:inline-block;vertical-align:middle;"
                                      :style="{backgroundImage:`url(${memberUser.avatar})`}"></div>
                                 <i v-else class="iconfont icon-user"></i>
                                 {{memberUser.username}}
@@ -107,7 +107,7 @@
                 </a>
             </div>
             <div v-if="!memberUser.id">
-                <div style="padding:0 1.5rem;">
+                <div style="padding:0 1.875rem;">
                     <div class="tw-py-2 tw-text-center tw-text-lg">
                         请登录账号
                     </div>
@@ -472,7 +472,7 @@ export default {
 
 <style lang="less">
 .pb-member-info-dialog{
-  max-width:18rem;
+  max-width:22.5rem;
 }
 </style>
 

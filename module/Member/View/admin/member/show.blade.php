@@ -77,7 +77,7 @@
             <div class="name">状态</div>
             <div class="value">
                 @if($record['status']==\Module\Member\Type\MemberStatus::NORMAL)
-                    <span class="ub-text-success tw-inline-block" style="min-width:4rem;">
+                    <span class="ub-text-success tw-inline-block" style="min-width:5rem;">
                         {{\ModStart\Core\Type\TypeUtil::name(\Module\Member\Type\MemberStatus::class,$record['status'])}}
                     </span>
                     <a href="javascript:;" class="btn btn-sm btn-round" data-ajax-request="{{modstart_admin_url('member/update_status',['status'=>\Module\Member\Type\MemberStatus::FORBIDDEN,'_id'=>$record['id']])}}">
@@ -85,7 +85,7 @@
                         禁用
                     </a>
                 @elseif($record['status']==\Module\Member\Type\MemberStatus::FORBIDDEN)
-                    <span class="ub-text-danger tw-inline-block" style="min-width:4rem;">
+                    <span class="ub-text-danger tw-inline-block" style="min-width:5rem;">
                         {{\ModStart\Core\Type\TypeUtil::name(\Module\Member\Type\MemberStatus::class,$record['status'])}}
                     </span>
                     <a href="javascript:;" class="btn btn-sm btn-round" data-ajax-request="{{modstart_admin_url('member/update_status',['status'=>\Module\Member\Type\MemberStatus::NORMAL,'_id'=>$record['id']])}}">

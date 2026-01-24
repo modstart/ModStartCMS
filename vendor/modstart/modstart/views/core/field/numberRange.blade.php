@@ -10,9 +10,9 @@
         <div id="{{$id}}Input">
             <input type="hidden" name="{{$name}}" :value="jsonValue" />
             <div>
-                <el-input type="number" style="width:4rem;" placeholder="最小值" size="mini" v-model="value['min']"></el-input>
+                <el-input type="number" style="width:5rem;" placeholder="最小值" size="mini" v-model="value['min']"></el-input>
                 -
-                <el-input type="number" style="width:4rem;" placeholder="最大值" size="mini" v-model="value['max']"></el-input>
+                <el-input type="number" style="width:5rem;" placeholder="最大值" size="mini" v-model="value['max']"></el-input>
             </div>
         </div>
         @if(!empty($help))

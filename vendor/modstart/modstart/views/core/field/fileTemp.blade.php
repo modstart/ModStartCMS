@@ -14,11 +14,11 @@
                name="{{$name}}"
                placeholder="{{$placeholder}}"
                value="{{null===$value?$defaultValue:$value}}"/>
-        <div class="ub-file-selector" style="border:1px solid #EEE;position:relative;margin-bottom:0.5rem;border-radius:0.2rem;padding:0 2rem 0 0.5rem;display:inline-block;">
+        <div class="ub-file-selector" style="border:1px solid #EEE;position:relative;margin-bottom:0.625rem;border-radius:0.25rem;padding:0 2.5rem 0 0.625rem;display:inline-block;">
             <div data-value></div>
-            <a data-close href="javascript:;" style="position:absolute;right:0px;top:0px;display:inline-block;line-height:1.5rem;width:1rem;text-align:center;color:#999;"><i class="iconfont icon-close"></i></a>
+            <a data-close href="javascript:;" style="position:absolute;right:0px;top:0px;display:inline-block;line-height:1.875rem;width:1.25rem;text-align:center;color:#999;"><i class="iconfont icon-close"></i></a>
         </div>
-        <div id="{{$id}}Uploader" style="width:9.4rem;border:1px solid #EEE;border-radius:0.2rem;min-height:1.6rem;"></div>
+        <div id="{{$id}}Uploader" style="width:11.75rem;border:1px solid #EEE;border-radius:0.25rem;min-height:2rem;"></div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif
@@ -48,7 +48,7 @@
             return false;
         });
         MS.uploadButton('#{{$id}}Uploader', {
-            text: '<div style="width:100%;box-sizing:border-box;line-height:1.5rem;height:1.5rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.5rem;height:1.5rem;"></span> 上传</div>',
+            text: '<div style="width:100%;box-sizing:border-box;line-height:1.875rem;height:1.875rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.875rem;height:1.875rem;"></span> 上传</div>',
             server: "{{$server}}",
             extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.file.extensions'))) !!},
             sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.file.maxSize')) !!},

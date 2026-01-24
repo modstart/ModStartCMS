@@ -58,7 +58,7 @@
                     @endif
                     @if(config('modstart.admin.login.captcha',false))
                         @if($captchaProvider)
-                            <div style="padding:0.5rem;">
+                            <div style="padding:0.625rem;">
                                 {!! $captchaProvider->render() !!}
                             </div>
                         @else

@@ -22,6 +22,7 @@ class AigcChatController extends Controller
     {
         Response::textEventStreamed(function ($sendCallback, $param = []) use ($type) {
             $input = InputPackage::buildFromInput();
+            $systemPrompt = $input->getTrimString('systemPrompt');
             $prompt = $input->getTrimString('prompt');
             $driver = null;
             switch ($type) {
@@ -38,6 +39,7 @@ class AigcChatController extends Controller
                     BizException::throws('机器人没有配置');
                 } else {
                     $option = [];
+                    $option['systemPrompt'] = $systemPrompt;
                     $ret = $provider->chatStream(function ($payload, $param) use (&$sendCallback, &$send) {
                         call_user_func($sendCallback, $payload['type'], isset($payload['data']) ? $payload['data'] : null);
                     }, 'Admin_' . SessionUtil::id(), [

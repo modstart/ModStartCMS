@@ -28,7 +28,7 @@
                 </div>
                 @if(modstart_config('loginCaptchaEnable',false))
                     @if($provider = \Module\Member\Util\SecurityUtil::loginCaptchaProvider())
-                        <div style="padding:0.5rem;">
+                        <div style="padding:0.625rem;">
                             {!! $provider->render() !!}
                         </div>
                     @else

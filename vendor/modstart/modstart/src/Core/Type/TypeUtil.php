@@ -90,6 +90,7 @@ class TypeUtil
             'process' => 'warning',
             'process_wait' => 'warning',
             'wait_process' => 'warning',
+            'new_order' => 'warning',
 
             'fail' => 'danger',
             'error' => 'danger',

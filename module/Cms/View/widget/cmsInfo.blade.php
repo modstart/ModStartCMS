@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="body">
-                <div style="min-height:5.5rem;">
+                <div style="min-height:6.875rem;">
                     <div class="tw-mb-2">
                         当前正在使用
                         <b>ModStartCMS</b>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="body">
-                <div style="min-height:5.5rem;">
+                <div style="min-height:6.875rem;">
                     <div
                         class="tw-w-28 tw-pt-1 tw-mx-auto tw-mb-3 lg:tw--mt-8 lg:tw-float-right ub-border tw-rounded-lg tw-box-content">
                         <div class="tw-font-bold tw-text-center">

@@ -87,7 +87,7 @@
                         <div class="field">
                             @foreach(\Module\Cms\Util\CmsBackupUtil::listBackupConfigs() as $c)
                                 <label data-config-item class="tw-font-mono tw-inline-block tw-bg-white"
-                                       style="min-width:20rem;">
+                                       style="min-width:25rem;">
                                     <input type="checkbox" style="vertical-align:middle;" name="config[]"
                                            value="{{$c['key']}}"
                                     />

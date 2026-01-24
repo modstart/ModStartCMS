@@ -1,6 +1,6 @@
 /*!
  * UEditorPlus
- * version: 2.0.0
+ * version: 4.4.1
 */
 (function(){
 
@@ -17,7 +17,7 @@ window.UE = baidu.editor = {
     instants: {},
     I18N: {},
     _customizeUI: {},
-    version: "4.5.0-beta",
+    version: "4.5.0",
     plus: {
         fileExt: function (filename) {
             if (!filename) {
@@ -7657,6 +7657,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
                 for (var i in options.iframeCssUrlsAddition) {
                     additionCssHtml.push("<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrlsAddition[i]) + "'/>")
                 }
+                var additionStylesHtml = [];
+                for (var i in options.iframeCssStylesAddition) {
+                    additionStylesHtml.push("<style type='text/css'>" + options.iframeCssStylesAddition[i] + "</style>")
+                }
                 var html =
                     (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
                     "<html xmlns='http://www.w3.org/1999/xhtml' class='view' >" +
@@ -7678,6 +7682,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
                         ? "<style>" + options.initialStyle + "</style>"
                         : "") +
                     additionCssHtml.join("") +
+                    additionStylesHtml.join("") +
                     "</head>" +
                     "<body class='view' ></body>" +
                     "<script type='text/javascript' " +
@@ -9035,6 +9040,7 @@ UE.Editor.defaultOptions = function (editor) {
         autoClearinitialContent: false,
         iframeCssUrl: _url + "themes/iframe.css?c20ec247",
         iframeCssUrlsAddition: [],
+        iframeCssStylesAddition: [],
         textarea: '',
         focus: false,
         focusInEnd: true,
@@ -34954,18 +34960,18 @@ UE.ui = baidu.editor.ui = {};
 
     var dialogIframeUrlMap = {
         anchor: "~/dialogs/anchor/anchor.html?eb9739cc",
-        insertimage: "~/dialogs/image/image.html?afbedf05",
+        insertimage: "~/dialogs/image/image.html?81caf13d",
         link: "~/dialogs/link/link.html?fa72bcd7",
         spechars: "~/dialogs/spechars/spechars.html?3b88f009",
         searchreplace: "~/dialogs/searchreplace/searchreplace.html?3167e75a",
-        insertvideo: "~/dialogs/video/video.html?c2c9fa02",
-        insertaudio: "~/dialogs/audio/audio.html?47891a09",
+        insertvideo: "~/dialogs/video/video.html?f56e319b",
+        insertaudio: "~/dialogs/audio/audio.html?e0883464",
         help: "~/dialogs/help/help.html?4bb38d19",
-        preview: "~/dialogs/preview/preview.html?b533ff4e",
+        preview: "~/dialogs/preview/preview.html?c8f00815",
         emotion: "~/dialogs/emotion/emotion.html?c5e06473",
         wordimage: "~/dialogs/wordimage/wordimage.html?6c25c600",
         formula: "~/dialogs/formula/formula.html?a3bc14af",
-        attachment: "~/dialogs/attachment/attachment.html?8cf1bb27",
+        attachment: "~/dialogs/attachment/attachment.html?f0eac689",
         insertframe: "~/dialogs/insertframe/insertframe.html?9e457226",
         edittip: "~/dialogs/table/edittip.html?7f922949",
         edittable: "~/dialogs/table/edittable.html?c2a698ec",
@@ -34973,8 +34979,8 @@ UE.ui = baidu.editor.ui = {};
         scrawl: "~/dialogs/scrawl/scrawl.html?185f463e",
         template: "~/dialogs/template/template.html?4ec66ee4",
         background: "~/dialogs/background/background.html?63701ca2",
-        contentimport: "~/dialogs/contentimport/contentimport.html?09b2b445",
-        ai: "~/dialogs/ai/ai.html?26b4f9ca",
+        contentimport: "~/dialogs/contentimport/contentimport.html?062b1e01",
+        ai: "~/dialogs/ai/ai.html?170f5134",
     };
     var dialogBtns = {
         noOk: ["searchreplace", "help", "spechars", "preview"],

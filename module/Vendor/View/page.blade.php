@@ -6,7 +6,7 @@
 
 @section('body')
 
-    <div class="ub-container margin-top margin-bottom" style="max-width:40rem;">
+    <div class="ub-container margin-top margin-bottom" style="max-width:50rem;">
         <div class="ub-panel">
             <div class="head"></div>
             <div class="body">

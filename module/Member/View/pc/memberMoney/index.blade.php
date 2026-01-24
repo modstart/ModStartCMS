@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="ub-panel" style="margin-top:-0.5rem;">
+    <div class="ub-panel" style="margin-top:-0.625rem;">
         <div class="head">
             <div class="more">
                 @if(modstart_config('Member_MoneyChargeEnable',false))

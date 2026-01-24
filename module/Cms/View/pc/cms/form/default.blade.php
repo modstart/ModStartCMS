@@ -66,7 +66,7 @@
                                 内容：
                             </div>
                             <div class="field">
-                                <textarea class="form" style="height:3rem;" name="content"></textarea>
+                                <textarea class="form" style="height:3.75rem;" name="content"></textarea>
                             </div>
                         </div>
                         @if(!empty($cat['captchaProvider']))

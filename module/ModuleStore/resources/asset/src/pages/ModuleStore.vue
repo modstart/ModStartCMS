@@ -53,14 +53,14 @@
             </a>
             <div class="ub-padding">
                 <div class="tw-float-right">
-                    <el-button round style="padding:0.25rem 0.5rem;" :loading="memberUserLoading"
+                    <el-button round style="padding:0.3125rem 0.625rem;" :loading="memberUserLoading"
                                @click="doMemberLoginShow()">
                         <span v-if="memberUserLoading">
                             登录中
                         </span>
                         <span v-else-if="memberUser.id>0">
                             <div v-if="memberUser.avatar" class="ub-cover-1-1 tw-rounded-full"
-                                 style="width:0.8rem;display:inline-block;vertical-align:middle;"
+                                 style="width:1rem;display:inline-block;vertical-align:middle;"
                                  :style="{backgroundImage:`url(${memberUser.avatar})`}"></div>
                             <i v-else class="iconfont icon-user"></i>
                             {{ memberUser.username }}
@@ -79,7 +79,7 @@
                 <el-checkbox v-model="search.isRecommend" border v-if="search.tab!=='system'">推荐</el-checkbox>
                 <el-input prefix-icon="el-icon-search"
                           v-model="search.keywords"
-                          style="width:10rem;"
+                          style="width:12.5rem;"
                           placeholder="搜索模块"></el-input>
             </div>
             <div class="tw-px-2" v-if="categories.length>0 && search.tab!=='system'">
@@ -125,8 +125,8 @@
                     <div v-for="(module,moduleIndex) in filterModules" class="col-md-4">
                         <div
                             class="hover:tw-shadow-lg tw-bg-white tw-mb-2 tw-p-2 tw-rounded-lg tw-shadow ub-border">
-                            <div style="padding-left:6rem;">
-                                <div class="tw-w-28 tw-float-left" style="margin-left:-6rem;">
+                            <div style="padding-left:7.5rem;">
+                                <div class="tw-w-28 tw-float-left" style="margin-left:-7.5rem;">
                                     <a v-if="module.url"
                                        :href="module._isSystem?'javascript:;':module.url"
                                        :target="module._isSystem?'':'_blank'"
@@ -136,7 +136,7 @@
                                     <div v-else
                                          class="tw-shadow tw-w-24 tw-h-16 tw-rounded ub-text-center tw-text-white tw-bg-blue-300">
                                         <i class="iconfont icon-cube"
-                                           style="font-size:1.6rem;line-height:3.2rem;"></i>
+                                           style="font-size:2rem;line-height:4rem;"></i>
                                     </div>
                                 </div>
                                 <div>
@@ -156,7 +156,7 @@
                                         </div>
                                     </div>
                                     <div class="tw-text-gray-400 tw-text-sm tw-mt-2"
-                                         style="height:2rem;overflow:auto;"
+                                         style="height:2.5rem;overflow:auto;"
                                          v-html="$highlight(module.description,search.keywords)"></div>
                                 </div>
                             </div>
@@ -253,7 +253,7 @@
                 </a>
             </div>
             <div v-if="!memberUser.id">
-                <div style="padding:1.5rem;">
+                <div style="padding:1.875rem;">
                     <div class="margin-bottom tw-font-bold">
                         <i class="iconfont icon-code-alt"></i>
                         任意搭配市场的模块，让系统百变
@@ -910,6 +910,6 @@ export default {
 
 <style lang="less">
 .pb-member-info-dialog {
-    max-width: 18rem;
+    max-width: 22.5rem;
 }
 </style>

@@ -216,14 +216,14 @@ abstract class AbstractContentVerifyBiz
 
     public static function callVerifyPassProcess($param)
     {
-        $bizer = ContentVerifyBiz::getByName($param['name']);
+        $bizer = ContentVerifyBiz::getByName(static::NAME);
         BizException::throwsIfEmpty('数据异常', $bizer);
         $bizer->verifyPassProcess($param);
     }
 
     public static function callVerifyRejectProcess($param)
     {
-        $bizer = ContentVerifyBiz::getByName($param['name']);
+        $bizer = ContentVerifyBiz::getByName(static::NAME);
         BizException::throwsIfEmpty('数据异常', $bizer);
         $bizer->verifyRejectProcess($param);
     }

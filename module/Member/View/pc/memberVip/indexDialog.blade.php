@@ -105,7 +105,7 @@
                                 @foreach($memberVips as $memberVip)
                                     @if(!$memberVip['isDefault'])
                                         <div class="item tw-relative tw-invisible" data-vip-group="{{$memberVip['groupName']?$memberVip['groupName']:'VIP'}}" data-vip-id="{{$memberVip['id']}}"
-                                             style="padding:1rem 5px;">
+                                             style="padding:1.25rem 5px;">
                                             <div class="tw-text-xl tw-font-bold margin-bottom tw-pt-2">
                                                 {{$memberVip['title']}}
                                             </div>

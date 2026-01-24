@@ -29,7 +29,7 @@ class TextDialogRequest extends AbstractWidget
     public static function getAssets()
     {
         return [
-            'style' => '.ub-text-dialog-request{display:inline-block;margin-right:0.5rem;}',
+            'style' => '.ub-text-dialog-request{display:inline-block;margin-right:0.625rem;}',
         ];
     }
 

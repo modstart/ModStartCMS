@@ -135,7 +135,7 @@ export default {
                 </a>
             </div>
         </div>
-        <div class="ub-content-box margin-bottom" style="min-height:calc(100vh - 4.5rem);">
+        <div class="ub-content-box margin-bottom" style="min-height:calc(100vh - 5.625rem);">
             <div>
                 <i class="fa fa-bar-chart"></i> 访问统计
             </div>

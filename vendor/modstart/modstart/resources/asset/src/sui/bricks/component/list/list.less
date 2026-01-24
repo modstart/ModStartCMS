@@ -2,16 +2,16 @@
 @import "../../../base/theme";
 
 @list-item-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
-@list-item-box-shadow-lg: 0 0 1rem rgba(0, 0, 0, 5%);
+@list-item-box-shadow-lg: 0 0 1.25rem rgba(0, 0, 0, 5%);
 
 .ub-list-head-tools-placeholder {
-    height: 2.0rem;
+    height: 2.5rem;
 }
 
 .ub-list-head-tools {
     box-shadow: 0 0 2px #CCC;
     background: var(--color-content-bg);
-    height: 2.0rem;
+    height: 2.5rem;
     display: flex;
     position: fixed;
     top: 0;
@@ -36,7 +36,7 @@
 
         .item-drawer {
             .item-drawer-title {
-                line-height: 2.0rem;
+                line-height: 2.5rem;
                 text-align: center;
 
                 .text, .icon {
@@ -53,15 +53,15 @@
                 transition: all 0.3s ease-in-out;
                 display: none;
                 position: absolute;
-                top: 2.0rem;
+                top: 2.5rem;
                 left: 0;
                 right: 0;
-                height: calc(100vh - 2.0rem);
+                height: calc(100vh - 2.5rem);
                 background: rgba(0, 0, 0, 0.5);
 
                 .item-drawer-content {
                     position: relative;
-                    padding-bottom: 3.0rem;
+                    padding-bottom: 3.75rem;
                     background: var(--color-content-bg);
                     border-top: 1px solid var(--color-body-line);
 
@@ -69,12 +69,12 @@
                         padding-bottom: 0;
 
                         .item-drawer-content-body {
-                            max-height: calc(100vh - 2.0rem);
+                            max-height: calc(100vh - 2.5rem);
                         }
                     }
 
                     .item-drawer-content-body {
-                        max-height: calc(100vh - 2.0rem - 3.0rem);
+                        max-height: calc(100vh - 2.5rem - 3.75rem);
                         overflow: auto;
                         background: var(--color-content-bg);
                         padding: var(--size-margin);
@@ -84,8 +84,8 @@
                             .item-drawer-content-body-item {
                                 font-size: var(--font-size);
                                 text-align: left;
-                                line-height: 2rem;
-                                padding: 0 1rem;
+                                line-height: 2.5rem;
+                                padding: 0 1.25rem;
                                 display: flex;
 
                                 &.active {
@@ -100,7 +100,7 @@
                                     font-size: var(--font-size-large);
                                     overflow: hidden;
                                     visibility: hidden;
-                                    width: 1.5rem;
+                                    width: 1.875rem;
                                 }
 
                                 .text, .checked {
@@ -132,7 +132,7 @@
 
                         .btn {
                             flex: 1;
-                            margin: 0 0.5rem;
+                            margin: 0 0.625rem;
                         }
                     }
                 }
@@ -150,33 +150,33 @@
         background-color: transparent;
 
         .head {
-            padding: 0.5rem 0;
+            padding: 0.625rem 0;
         }
 
         .body {
-            margin-left: -0.5rem;
-            margin-right: -0.5rem;
+            margin-left: -0.625rem;
+            margin-right: -0.625rem;
         }
     }
 
     .head {
-        padding: 0.5rem;
+        padding: 0.625rem;
 
         .more {
             float: right;
-            line-height: 1.5rem;
+            line-height: 1.875rem;
         }
 
         .title {
             display: inline-block;
-            line-height: 1rem;
+            line-height: 1.25rem;
             font-size: var(--font-size);
         }
     }
 
     .body {
-        margin-top: -0.5rem;
-        padding: 0.5rem;
+        margin-top: -0.625rem;
+        padding: 0.625rem;
     }
 }
 
@@ -187,27 +187,27 @@
     }
 
     .item-a {
-        border-radius: 0.5rem;
-        padding: 0.5rem 0.5rem 0.5rem 3.5rem;
+        border-radius: 0.625rem;
+        padding: 0.625rem 0.625rem 0.625rem 4.375rem;
         overflow: hidden;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.625rem 0;
         box-shadow: @list-item-box-shadow-lg;
         background-color: var(--color-content-bg);
 
         .icon {
             float: left;
-            margin: 0.25rem 0 0 -2.75rem;
-            height: 2rem;
-            width: 2rem;
-            border-radius: 0.15rem;
+            margin: 0.3125rem 0 0 -3.4375rem;
+            height: 2.5rem;
+            width: 2.5rem;
+            border-radius: 0.1875rem;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
 
             img, .img {
-                height: 2rem;
-                width: 2rem;
-                border-radius: 0.15rem;
+                height: 2.5rem;
+                width: 2.5rem;
+                border-radius: 0.1875rem;
             }
 
             img {
@@ -219,8 +219,8 @@
             display: block;
             color: var(--color-text);
             font-size: var(--font-size-large);
-            line-height: 1.5rem;
-            height: 1.5rem;
+            line-height: 1.875rem;
+            height: 1.875rem;
 
             &:hover {
                 color: #111;
@@ -230,8 +230,8 @@
         .summary {
             color: #c4cfdb;
             font-size: var(--font-size);
-            height: 1rem;
-            line-height: 1rem;
+            height: 1.25rem;
+            line-height: 1.25rem;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -242,8 +242,8 @@
         line-height: 2em;
         text-align: center;
         display: block;
-        border-radius: 0.25rem;
-        margin: 0.25rem 0;
+        border-radius: 0.3125rem;
+        margin: 0.3125rem 0;
         color: var(--color-primary);
         box-shadow: @list-item-box-shadow-lg;
         color: var(--color-text);
@@ -256,7 +256,7 @@
     .item-c {
         line-height: 2em;
         display: block;
-        margin: 0.25rem 0;
+        margin: 0.3125rem 0;
         color: var(--color-text);
         height: 2em;
         overflow: hidden;
@@ -267,12 +267,12 @@
             content: "▪";
             color: var(--color-primary);
             display: inline-block;
-            margin-right: 0.2rem;
+            margin-right: 0.25rem;
         }
     }
 
     .item-d {
-        border-bottom: 0.05rem dashed var(--color-body-line);
+        border-bottom: 0.0625rem dashed var(--color-body-line);
         padding: var(--size-margin) 0;
 
         &:hover {
@@ -284,19 +284,19 @@
         .title {
             font-size: var(--font-size-large);
             color: var(--color-text);
-            line-height: 1.4rem;
+            line-height: 1.75rem;
             transition: color 0.2s ease-in-out;
         }
 
         .summary {
             color: var(--color-tertiary);
             font-size: var(--font-size);
-            padding: 0.25rem 0 0 0;
+            padding: 0.3125rem 0 0 0;
         }
 
         .action {
             display: flex;
-            padding-top: 0.25rem;
+            padding-top: 0.3125rem;
             color: var(--color-muted);
 
             a {
@@ -314,8 +314,8 @@
     }
 
     .item-e {
-        padding-bottom: 0.5rem;
-        border-radius: 0.25rem;
+        padding-bottom: 0.625rem;
+        border-radius: 0.3125rem;
         overflow: hidden;
         border: 1px solid var(--color-body-bg);
 
@@ -336,7 +336,7 @@
             overflow: hidden;
             background: no-repeat center;
             background-size: cover;
-            border-radius: 0.25rem 0.25rem 0 0;
+            border-radius: 0.3125rem 0.3125rem 0 0;
             transition: transform 0.3s ease-in-out;
 
             &:after {
@@ -347,12 +347,12 @@
         }
 
         .title {
-            line-height: 1rem;
-            height: 1rem;
+            line-height: 1.25rem;
+            height: 1.25rem;
             overflow: hidden;
             display: block;
-            margin-top: 0.5rem;
-            padding: 0 0.5rem;
+            margin-top: 0.625rem;
+            padding: 0 0.625rem;
             color: var(--color-text);
             overflow: hidden;
             white-space: nowrap;
@@ -361,28 +361,28 @@
         }
 
         .summary {
-            margin-top: 0.25rem;
-            line-height: 1rem;
-            height: 2rem;
+            margin-top: 0.3125rem;
+            line-height: 1.25rem;
+            height: 2.5rem;
             color: #c4cfdb;
             overflow: hidden;
-            padding: 0 0.5rem;
+            padding: 0 0.625rem;
         }
     }
 
     .item-f {
-        padding: 0 0 0 4rem;
-        margin: 0 0 0.75rem 0;
+        padding: 0 0 0 5rem;
+        margin: 0 0 0.9375rem 0;
 
         .date {
             float: left;
-            margin: 0 0 0 -4rem;
+            margin: 0 0 0 -5rem;
             display: block;
-            width: 3rem;
-            border: 0.05rem solid var(--color-primary);
-            border-radius: 0.15rem;
+            width: 3.75rem;
+            border: 0.0625rem solid var(--color-primary);
+            border-radius: 0.1875rem;
             text-align: center;
-            line-height: 1.25rem;
+            line-height: 1.5625rem;
 
             .day {
                 color: #FFF;
@@ -397,24 +397,24 @@
 
         .title {
             display: block;
-            line-height: 1rem;
-            height: 1rem;
+            line-height: 1.25rem;
+            height: 1.25rem;
             overflow: hidden;
         }
 
         .summary {
             color: #c4cfdb;
-            height: 2rem;
-            line-height: 1rem;
+            height: 2.5rem;
+            line-height: 1.25rem;
             overflow: hidden;
         }
     }
 
     .item-g {
-        border-radius: 0.25rem;
-        padding: 1rem;
+        border-radius: 0.3125rem;
+        padding: 1.25rem;
         overflow: hidden;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.625rem 0;
         text-align: center;
         display: block;
         background-color: var(--color-content-bg);
@@ -430,9 +430,9 @@
         .title {
             display: block;
             color: var(--color-text);
-            margin-top: 0.5rem;
-            height: 1rem;
-            line-height: 1rem;
+            margin-top: 0.625rem;
+            height: 1.25rem;
+            line-height: 1.25rem;
             overflow: hidden;
 
             &:hover {
@@ -442,11 +442,11 @@
     }
 
     .item-h {
-        border: 0.05rem solid #EEE;
-        border-radius: 0.15rem;
-        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+        border: 0.0625rem solid #EEE;
+        border-radius: 0.1875rem;
+        padding: 0.625rem 0.625rem 0.625rem 3.125rem;
         overflow: hidden;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.625rem 0;
         display: block;
 
         &:last-child {
@@ -459,18 +459,18 @@
 
         .icon {
             float: left;
-            margin: 0 0 0 -2rem;
+            margin: 0 0 0 -2.5rem;
 
             img {
-                height: 1.5rem;
-                width: 1.5rem;
+                height: 1.875rem;
+                width: 1.875rem;
                 border: none;
             }
 
             .cover {
                 display: block;
-                width: 1.5rem;
-                height: 1.5rem;
+                width: 1.875rem;
+                height: 1.875rem;
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: cover;
@@ -478,9 +478,9 @@
 
             i {
                 display: block;
-                width: 1.5rem;
-                height: 1.5rem;
-                line-height: 1.5rem;
+                width: 1.875rem;
+                height: 1.875rem;
+                line-height: 1.875rem;
                 text-align: center;
                 font-size: var(--font-size-large);
                 color: #c4cfdb;
@@ -491,8 +491,8 @@
             display: block;
             color: var(--color-text);
             font-size: var(--font-size);
-            line-height: 1.5rem;
-            height: 1.5rem;
+            line-height: 1.875rem;
+            height: 1.875rem;
 
             &:hover {
                 color: #111;
@@ -501,10 +501,10 @@
     }
 
     .item-i {
-        border-radius: 0.25rem;
-        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+        border-radius: 0.3125rem;
+        padding: 0.625rem 0.625rem 0.625rem 3.125rem;
         overflow: hidden;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.625rem 0;
         display: block;
         background-color: #FFF;
 
@@ -519,26 +519,26 @@
         .right {
             float: right;
             color: var(--color-muted);
-            padding-left: 1rem;
+            padding-left: 1.25rem;
         }
 
         .icon {
             float: left;
-            margin: 0.25rem 0 0 -2rem;
-            width: 1.5rem;
-            border-radius: 0.25rem;
+            margin: 0.3125rem 0 0 -2.5rem;
+            width: 1.875rem;
+            border-radius: 0.3125rem;
 
             img {
-                height: 1.5rem;
-                width: 1.5rem;
+                height: 1.875rem;
+                width: 1.875rem;
                 border: none;
             }
 
             i {
                 display: block;
-                width: 1.5rem;
-                height: 1.5rem;
-                line-height: 1.5rem;
+                width: 1.875rem;
+                height: 1.875rem;
+                line-height: 1.875rem;
                 text-align: center;
                 font-size: var(--font-size-large);
                 color: #c4cfdb;
@@ -549,8 +549,8 @@
             display: block;
             color: var(--color-text);
             font-size: var(--font-size);
-            line-height: 1rem;
-            height: 1rem;
+            line-height: 1.25rem;
+            height: 1.25rem;
             overflow: hidden;
             text-overflow: ellipsis;
             //white-space: nowrap;
@@ -562,9 +562,9 @@
 
         .desc {
             color: #c4cfdb;
-            font-size: 0.65rem;
-            line-height: 1rem;
-            height: 1rem;
+            font-size: 0.8125rem;
+            line-height: 1.25rem;
+            height: 1.25rem;
             overflow: hidden;
             display: block;
             text-overflow: ellipsis;
@@ -574,11 +574,11 @@
     }
 
     .item-j {
-        border: 0.05rem solid #EEE;
-        border-radius: 0.15rem;
-        padding: 0.5rem;
+        border: 0.0625rem solid #EEE;
+        border-radius: 0.1875rem;
+        padding: 0.625rem;
         overflow: hidden;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.625rem 0;
         display: block;
         color: #c4cfdb;
 
@@ -588,7 +588,7 @@
 
         .status {
             float: right;
-            line-height: 1rem;
+            line-height: 1.25rem;
             color: #c4cfdb;
         }
 
@@ -596,8 +596,8 @@
             display: block;
             color: var(--color-text);
             font-size: var(--font-size);
-            line-height: 1rem;
-            height: 1rem;
+            line-height: 1.25rem;
+            height: 1.25rem;
 
             &:hover {
                 color: #111;
@@ -605,27 +605,27 @@
         }
 
         .attr {
-            padding: 0.5rem 0 0 0;
+            padding: 0.625rem 0 0 0;
             font-size: var(--font-size);
 
             .line {
-                line-height: 0.975rem;
+                line-height: 1.2188rem;
             }
         }
     }
 
     .item-k {
-        padding: 0.5rem 0.5rem 0.5rem 10.5rem;
+        padding: 0.625rem 0.625rem 0.625rem 13.125rem;
         overflow: hidden;
-        border-radius: 0.25rem;
+        border-radius: 0.3125rem;
         background: var(--color-content-bg);
 
         &.item-k-a {
-            padding: 0.5rem 0.5rem 0.5rem 4rem;
+            padding: 0.625rem 0.625rem 0.625rem 5rem;
 
             .image {
-                width: 3rem;
-                margin-left: -3.5rem;
+                width: 3.75rem;
+                margin-left: -4.375rem;
                 border-radius: 50%;
 
                 .cover {
@@ -635,17 +635,17 @@
             }
 
             .info {
-                padding-top: 0.5rem;
+                padding-top: 0.625rem;
             }
         }
 
         &.item-k-b {
-            padding: 0.25rem 0.25rem 0.25rem 3rem;
+            padding: 0.3125rem 0.3125rem 0.3125rem 3.75rem;
 
             .image {
-                width: 2rem;
-                height: 2rem;
-                margin-left: -2.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
+                margin-left: -3.125rem;
 
                 .cover {
                     box-shadow: 0 0 1px #c4cfdb;
@@ -654,15 +654,15 @@
 
             .title {
                 font-size: var(--font-size);
-                padding: 0.25rem 0;
+                padding: 0.3125rem 0;
                 display: block;
-                padding: 0.5rem 0;
-                line-height: 1rem;
+                padding: 0.625rem 0;
+                line-height: 1.25rem;
             }
 
             .right {
-                padding: 0 0.25rem;
-                height: 2rem;
+                padding: 0 0.3125rem;
+                height: 2.5rem;
                 display: flex;
                 align-items: center;
             }
@@ -685,15 +685,15 @@
         }
 
         .image {
-            width: 9rem;
+            width: 11.25rem;
             float: left;
-            margin-left: -10rem;
+            margin-left: -12.5rem;
             display: block;
             overflow: hidden;
-            border-radius: 0.25rem;
+            border-radius: 0.3125rem;
 
             .cover {
-                border-radius: 0.25rem;
+                border-radius: 0.3125rem;
                 transition: transform 0.6s ease-in-out;
             }
         }
@@ -711,10 +711,10 @@
         .summary {
             color: var(--color-tertiary);
             font-size: var(--font-size);
-            padding: 0.5rem 0 0 0;
-            height: 3.425rem;
+            padding: 0.625rem 0 0 0;
+            height: 4.2813rem;
             overflow: hidden;
-            line-height: 0.975rem;
+            line-height: 1.2188rem;
             display: block;
             overflow: hidden;
             -webkit-line-clamp: 3;
@@ -725,7 +725,7 @@
         .info {
             color: var(--color-tertiary);
             font-size: var(--font-size);
-            padding: 1rem 0 0 0;
+            padding: 1.25rem 0 0 0;
             overflow: hidden;
             display: block;
 
@@ -752,21 +752,21 @@
         line-height: 2em;
         display: block;
         position: relative;
-        height: 1.5rem;
+        height: 1.875rem;
         overflow: hidden;
-        padding-left: 2rem;
+        padding-left: 2.5rem;
         padding-right: 7em;
         box-sizing: content-box;
 
         .seq {
             position: absolute;
-            width: 1rem;
-            height: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
             left: 0;
             top: 0.25em;
             background: #fbe6e6;
             cursor: pointer;
-            line-height: 1rem;
+            line-height: 1.25rem;
             text-align: center;
             color: #D22525;
             display: block;
@@ -787,7 +787,7 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             display: block;
-            height: 1rem;
+            height: 1.25rem;
             overflow: hidden;
         }
     }
@@ -795,15 +795,15 @@
     .item-m {
         color: #c4cfdb;
         background-color: #f6f6f6;
-        height: 1.5rem;
-        line-height: 1.5rem;
+        height: 1.875rem;
+        line-height: 1.875rem;
         overflow: hidden;
-        padding: 0 0.2rem;
+        padding: 0 0.25rem;
         display: -moz-box;
         white-space: nowrap;
         text-overflow: ellipsis;
         display: block;
-        margin: 0.10rem -0.15rem;
+        margin: 0.125rem -0.2344rem;
         border-radius: 3px;
 
         &:hover {
@@ -813,18 +813,18 @@
     }
 
     .item-n {
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
         transition: all 0.3s ease-in-out;
 
         &:hover {
-            transform: translateY(-0.25rem);
+            transform: translateY(-0.3125rem);
             background: var(--color-content-bg);
-            box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
         }
 
         .image {
             .cover {
-                border-radius: 0.1rem;
+                border-radius: 0.125rem;
             }
         }
 
@@ -833,12 +833,12 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border-radius: 0.1rem;
+                border-radius: 0.125rem;
 
                 .content {
                     color: #111;
                     text-shadow: 0 0 10px #EEE;
-                    font-size: 1rem;
+                    font-size: 1.25rem;
                 }
             }
         }
@@ -846,7 +846,7 @@
 
     .item-o {
         background: #FFF;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.625rem;
         border-radius: 3px;
 
         &:hover {
@@ -869,10 +869,10 @@
             font-size: var(--font-size-large);
             display: block;
             color: var(--color-primary);
-            border-top: 0.25rem solid var(--color-primary);
+            border-top: 0.3125rem solid var(--color-primary);
             background: #FFF;
-            line-height: 2rem;
-            padding: 0 1rem;
+            line-height: 2.5rem;
+            padding: 0 1.25rem;
             position: relative;
 
             &:after {
@@ -881,19 +881,19 @@
                 transform: scaleX(0.6);
                 font-weight: bold;
                 position: absolute;
-                right: 1rem;
+                right: 1.25rem;
                 top: 0;
-                height: 2rem;
+                height: 2.5rem;
                 font-size: var(--font-size-large);
             }
         }
     }
 
     .item-p {
-        border-radius: 0.25rem;
-        margin-bottom: 0.5rem;
+        border-radius: 0.3125rem;
+        margin-bottom: 0.625rem;
         background: #FFF;
-        padding: 0 0 1rem 0;
+        padding: 0 0 1.25rem 0;
         box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
 
         &:hover {
@@ -907,10 +907,10 @@
         .image {
             display: block;
             overflow: hidden;
-            border-radius: 0.25rem 0.25rem 0 0;
+            border-radius: 0.3125rem 0.3125rem 0 0;
 
             .cover {
-                border-radius: 0.2rem 0.2rem 0 0;
+                border-radius: 0.25rem 0.25rem 0 0;
                 transition: transform 0.6s;
             }
         }
@@ -918,10 +918,10 @@
         .title {
             font-size: var(--font-size);
             text-align: center;
-            padding: 0.5rem;
+            padding: 0.625rem;
             display: block;
             color: var(--color-text);
-            height: 2rem;
+            height: 2.5rem;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -935,16 +935,16 @@
             display: block;
             color: #c4cfdb;
             text-align: center;
-            height: 1rem;
-            line-height: 1rem;
+            height: 1.25rem;
+            line-height: 1.25rem;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            padding: 0 0.5rem;
+            padding: 0 0.625rem;
             cursor: default;
 
             &.line2 {
-                height: 2rem;
+                height: 2.5rem;
                 white-space: normal;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 2;
@@ -956,15 +956,15 @@
     .item-video {
         position: relative;
         display: block;
-        margin: 0.5rem;
-        border-radius: 0.15rem;
+        margin: 0.625rem;
+        border-radius: 0.1875rem;
 
         img {
             width: 100%;
         }
 
         .mask {
-            border-radius: 0.15rem;
+            border-radius: 0.1875rem;
             position: absolute;
             background: rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -973,7 +973,7 @@
             bottom: 0;
             top: 0;
             color: #FFF;
-            font-size: 3rem;
+            font-size: 3.75rem;
 
             .box {
                 display: table;
@@ -990,7 +990,7 @@
 
     .item-video-cover {
         background-color: var(--color-content-bg);
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.625rem 0;
         border-radius: var(--size-radius);
         overflow: hidden;
         transition: box-shadow 0.3s;
@@ -1040,7 +1040,7 @@
                 left: 0;
                 right: 0;
                 background: rgba(0, 0, 0, 0.1);
-                padding: 0.25rem;
+                padding: 0.3125rem;
                 color: #FFF;
                 text-align: center;
                 white-space: nowrap;
@@ -1052,19 +1052,19 @@
         }
 
         .title {
-            line-height: 1rem;
-            height: 1.5rem;
+            line-height: 1.25rem;
+            height: 1.875rem;
             overflow: hidden;
             display: block;
             color: var(--color-text);
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 100%;
-            padding: 0.25rem 0.5rem;
+            padding: 0.3125rem 0.625rem;
         }
 
         .category {
-            padding: 0.25rem 0.5rem;
+            padding: 0.3125rem 0.625rem;
 
             .stat {
                 float: right;
@@ -1092,7 +1092,7 @@
 
     .item-video-cover-a {
         padding: var(--size-margin);
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.625rem 0;
 
         &:hover {
             .cover {
@@ -1109,8 +1109,8 @@
             .time {
                 position: absolute;
                 display: block;
-                bottom: 0.5rem;
-                right: 1rem;
+                bottom: 0.625rem;
+                right: 1.25rem;
                 color: #FFF;
                 text-shadow: 0 0 2px #CCC;
                 font-size: var(--font-size-small);
@@ -1119,20 +1119,20 @@
 
         .user {
             display: block;
-            height: 2.2rem;
-            margin-top: -0.5rem;
-            margin-left: 1rem;
+            height: 2.75rem;
+            margin-top: -0.625rem;
+            margin-left: 1.25rem;
             position: relative;
 
             .avatar {
-                width: 1.8rem;
-                height: 1.8rem;
+                width: 2.25rem;
+                height: 2.25rem;
                 display: inline-block;
 
                 .image {
-                    width: 1.8rem;
-                    height: 1.8rem;
-                    border: 0.1rem solid #FFF;
+                    width: 2.25rem;
+                    height: 2.25rem;
+                    border: 0.125rem solid #FFF;
                     border-radius: 50%;
 
                 }
@@ -1146,8 +1146,8 @@
         }
 
         .title {
-            line-height: 1rem;
-            height: 2rem;
+            line-height: 1.25rem;
+            height: 2.5rem;
             overflow: hidden;
             display: block;
             color: #1d1d1d;
@@ -1158,35 +1158,35 @@
         .info {
             font-size: var(--font-size-small);
             color: #c4cfdb;
-            padding-top: 0.5rem;
+            padding-top: 0.625rem;
         }
     }
 }
 
-@media screen and (max-width: 40rem) {
+@media screen and (max-width: 50rem) {
     .ub-list .body, .ub-list-items {
         .item-k {
-            padding: 0.5rem 0.5rem 0.5rem 5rem;
+            padding: 0.625rem 0.625rem 0.625rem 6.25rem;
 
             .title {
                 font-size: var(--font-size);
             }
 
             .image {
-                width: 4rem;
-                margin-left: -4.5rem;
+                width: 5rem;
+                margin-left: -5.625rem;
             }
 
             .summary {
                 font-size: var(--font-size-small);
-                padding-top: 0.25rem;
-                height: 2rem;
+                padding-top: 0.3125rem;
+                height: 2.5rem;
             }
         }
     }
 }
 
-@media screen and (max-width: 40rem) {
+@media screen and (max-width: 50rem) {
     .ub-list .body, .ub-list-items {
         .item-video-cover {
             &:hover {
@@ -1202,7 +1202,7 @@
 
         &.no-bg {
             .head {
-                padding: 0.5rem;
+                padding: 0.625rem;
             }
 
             .body {
@@ -1224,28 +1224,28 @@
 
     &.inlined {
         background: #F8F8F8;
-        border-radius: 0.5rem;
-        padding: 0.5rem;
+        border-radius: 0.625rem;
+        padding: 0.625rem;
 
         .item {
             display: inline-block;
-            min-width: 8rem;
-            line-height: 1.5rem;
+            min-width: 10rem;
+            line-height: 1.875rem;
             cursor: default;
             border: 1px solid var(--color-body-line);
-            padding: 0.3rem 0.5rem;
+            padding: 0.375rem 0.625rem;
         }
     }
 
     .item {
-        line-height: 2.5rem;
+        line-height: 3.125rem;
         border: 2px solid #EEE;
         padding: 0 10px;
-        border-radius: 0.3rem;
+        border-radius: 0.375rem;
         text-align: left;
         color: var(--color-text);
         display: block;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.625rem;
 
         &.active {
             border-color: var(--color-primary);
@@ -1256,10 +1256,10 @@
         }
 
         .icon {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1.875rem;
+            height: 1.875rem;
             vertical-align: middle;
-            margin-right: 0.2rem;
+            margin-right: 0.25rem;
         }
     }
 }

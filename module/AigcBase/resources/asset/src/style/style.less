@@ -1,4 +1,4 @@
-@menu-width: 5rem;
+@menu-width: 6.25rem;
 
 @import "./iconfont-ai/iconfont.css";
 
@@ -25,23 +25,23 @@
 
         .aigc-type {
             flex: 1;
-            padding: 0.5rem;
+            padding: 0.625rem;
 
             .item {
-                margin-bottom: .5rem;
+                margin-bottom: 0.625rem;
                 display: block;
                 height: auto;
                 color: var(--color-text);
-                line-height: 1.8rem;
-                border-radius: 0.5rem;
-                padding: 0 0.7rem;
+                line-height: 2.25rem;
+                border-radius: 0.625rem;
+                padding: 0 0.875rem;
                 white-space: nowrap;
                 background-color: rgba(0, 0, 0, 0.05);
 
                 i, img {
                     display: inline-block;
-                    width: 0.8rem;
-                    height: 0.5rem;
+                    width: 1rem;
+                    height: 0.625rem;
                 }
 
                 &:hover {
@@ -58,7 +58,7 @@
         }
 
         .aigc-nav-menu {
-            padding: 0.5rem;
+            padding: 0.625rem;
 
             .item {
                 background-color: rgba(243, 244, 246, 1);
@@ -67,8 +67,8 @@
                 display: flex;
                 height: 40px;
                 line-height: 40px;
-                margin: 0.5rem 0;
-                padding: 0 1rem;
+                margin: 0.625rem 0;
+                padding: 0 1.25rem;
                 text-align: center;
                 color: var(--color-text);
 
@@ -90,10 +90,10 @@
             flex-grow: 1;
 
             .aigc-body-nav {
-                width: 10rem;
+                width: 12.5rem;
                 border-right: 1px solid var(--color-body-line);
                 background: var(--color-content-bg);
-                padding: 0.5rem;
+                padding: 0.625rem;
                 overflow-y: auto;
                 display: flex;
                 flex-direction: column;
@@ -123,7 +123,7 @@
 
             .aigc-body-main {
                 flex-grow: 1;
-                padding: 0.5rem;
+                padding: 0.625rem;
                 display: flex;
             }
         }
@@ -150,10 +150,10 @@
         --color: var(--color-text);
         background-color: var(--bg);
         color: var(--color);
-        border-radius: 0.5rem;
+        border-radius: 0.625rem;
         flex-grow: 1;
         flex-direction: column;
-        padding: 0.5rem;
+        padding: 0.625rem;
         width: 0;
 
         &.dark {
@@ -171,7 +171,7 @@
 
             .view-history {
                 text-align: center;
-                padding: 0.5rem;
+                padding: 0.625rem;
                 color: var(--color-muted);
             }
 
@@ -181,7 +181,7 @@
 
                 .message-item {
                     //border-bottom: 1px solid var(--color-border);
-                    padding: 1rem 0;
+                    padding: 1.25rem 0;
 
                     &.user {
 
@@ -195,7 +195,7 @@
 
                             .tool {
                                 left: auto;
-                                right: 3rem;
+                                right: 3.75rem;
                             }
                         }
                     }
@@ -207,14 +207,14 @@
                         align-items: flex-start;
 
                         .user {
-                            width: 3rem;
+                            width: 3.75rem;
                             text-align: center;
                             color: var(--color-muted);
                             flex-shrink: 0;
 
                             .avatar {
-                                width: 2rem;
-                                height: 2rem;
+                                width: 2.5rem;
+                                height: 2.5rem;
                                 border-radius: 50%;
                                 background: #EEE;
                                 background-size: cover;
@@ -222,20 +222,20 @@
                             }
 
                             .name {
-                                font-size: 0.5rem;
-                                line-height: 0.5rem;
+                                font-size: 0.625rem;
+                                line-height: 0.625rem;
                             }
                         }
 
                         .content {
                             background: #f7f7f7;
-                            padding: 0.5rem;
-                            border-radius: 0.5rem;
+                            padding: 0.625rem;
+                            border-radius: 0.625rem;
 
                             .msg-loading {
                                 color: var(--color);
-                                padding: 0.25rem 0;
-                                border-radius: 0.5rem;
+                                padding: 0.3125rem 0;
+                                border-radius: 0.625rem;
                             }
 
                             .ub-html {
@@ -246,7 +246,7 @@
 
                             .tool {
                                 color: var(--color-muted);
-                                margin-top: 0.5rem;
+                                margin-top: 0.625rem;
                             }
                         }
 
@@ -270,16 +270,16 @@
         align-items: end;
 
         .top {
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.625rem;
         }
 
         .bottom {
             border: 1px solid var(--color-primary);
-            border-radius: 0.5rem;
+            border-radius: 0.625rem;
 
             .input {
                 flex-grow: 1;
-                padding: 0.25rem 0.5rem;
+                padding: 0.3125rem 0.625rem;
                 position: relative;
 
                 .el-textarea__inner {
@@ -290,11 +290,11 @@
             }
 
             .el-input__inner {
-                border-radius: 1rem;
+                border-radius: 1.25rem;
             }
 
             .tools {
-                padding: 0.5rem;
+                padding: 0.625rem;
                 display: flex;
                 align-items: center;
 
@@ -318,7 +318,7 @@
                 &.aigc-nav-auto-shrink {
                     .aigc-body-nav {
                         position: fixed;
-                        left: -10rem;
+                        left: -12.5rem;
                         z-index: 100;
                         transition: left 0.3s;
                         top: 0;

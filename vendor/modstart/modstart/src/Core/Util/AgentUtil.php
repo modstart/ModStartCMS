@@ -117,7 +117,7 @@ class AgentUtil
         '/detector/i' => 'Other',
 
         // 其他一些库
-        '/(curl|python|java|node-fetch|http-client|msray-plus|guzzlehttp|wget|okhttp|scrapy|panelstart|node-superagent|go-camo|cpp-httplib|axios|fasthttp|https?:\\/\\/)/i' => 'Other',
+        '/(curl|python|java|node-fetch|http-client|msray-plus|guzzlehttp|wget|okhttp|scrapy|panelstart|node-superagent|go-camo|cpp-httplib|axios|fasthttp|fetcher|https?:\\/\\/)/i' => 'Other',
         '/^(node)$/i' => 'Other',
         // 其他一些爬虫
         '/(ows.eu|researchscan|github|LogStatistic|Dataprovider|facebook|YandexImages|Iframely|panscient|netcraft|yahoo|censys|Turnitin|Dormouse|Langchain|DeepSeek)/i' => 'Other',

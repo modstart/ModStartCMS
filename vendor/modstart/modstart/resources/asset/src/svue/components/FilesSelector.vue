@@ -51,7 +51,7 @@
 <style lang="less" scoped>
 .pb-files-selector {
     .item {
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.25rem;
     }
 }
 </style>

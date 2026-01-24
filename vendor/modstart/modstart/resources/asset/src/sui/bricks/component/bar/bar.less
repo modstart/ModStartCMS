@@ -1,17 +1,17 @@
-@barPageSize: 3rem;
+@barPageSize: 3.75rem;
 
 .ub-bar-page {
     position: fixed;
-    right: 1rem;
-    bottom: 2rem;
+    right: 1.25rem;
+    bottom: 2.5rem;
     z-index: 10000;
     background: #FFF;
-    border-radius: 0.5rem;
+    border-radius: 0.625rem;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, .08);
 
     &.close {
         right: 0px;
-        bottom: 1rem;
+        bottom: 1.25rem;
 
         .items {
             display: none;
@@ -62,25 +62,25 @@
 
     .items {
         .item {
-            width: @barPageSize + 0.5rem;
-            height: @barPageSize + 0.5rem;
+            width: @barPageSize + 0.625rem;
+            height: @barPageSize + 0.625rem;
             display: block;
             color: var(--color-primary);
             text-align: center;
-            padding: 0.5rem;
+            padding: 0.625rem;
             position: relative;
             cursor: pointer;
             transition: background-color 0.5s;
             background: #FFFFFF;
 
             &:first-child {
-                border-top-left-radius: 0.5rem;
-                border-top-right-radius: 0.5rem;
+                border-top-left-radius: 0.625rem;
+                border-top-right-radius: 0.625rem;
             }
 
             &:last-child {
-                border-bottom-left-radius: 0.5rem;
-                border-bottom-right-radius: 0.5rem;
+                border-bottom-left-radius: 0.625rem;
+                border-bottom-right-radius: 0.625rem;
             }
 
 
@@ -92,21 +92,21 @@
 
             .popup {
                 position: absolute;
-                right: @barPageSize + 0.5rem;
+                right: @barPageSize + 0.625rem;
                 bottom: 0;
                 background: #FFF;
-                border-radius: 0.5rem;
+                border-radius: 0.625rem;
                 box-shadow: 0 0 20px 0 rgba(0, 0, 0, .08);
-                width: 10rem;
-                min-height: 2rem;
-                padding: 0.5rem;
+                width: 12.5rem;
+                min-height: 2.5rem;
+                padding: 0.625rem;
                 display: none;
 
                 .content {
                     color: #333;
 
                     img {
-                        width: 9rem;
+                        width: 11.25rem;
                     }
                 }
             }
@@ -118,41 +118,41 @@
 
             &.item-icon {
                 .icon {
-                    line-height: 2rem;
-                    height: 2rem;
+                    line-height: 2.5rem;
+                    height: 2.5rem;
                 }
             }
 
             .icon {
-                height: 1.5rem;
-                line-height: 1.5rem;
-                font-size: 1.5rem;
+                height: 1.875rem;
+                line-height: 1.875rem;
+                font-size: 1.875rem;
                 display: block;
             }
 
             .text {
-                height: 0.5rem;
-                line-height: 0.5rem;
+                height: 0.625rem;
+                line-height: 0.625rem;
                 display: block;
-                font-size: 0.5rem;
+                font-size: 0.625rem;
             }
         }
     }
 
     .item-top {
-        width: @barPageSize + 0.5rem;
-        height: @barPageSize + 0.5rem;
+        width: @barPageSize + 0.625rem;
+        height: @barPageSize + 0.625rem;
         display: block;
         background: transparent;
         cursor: pointer;
-        border: 0.1rem solid var(--color-primary);
+        border: 0.125rem solid var(--color-primary);
         border-radius: 50%;
         position: absolute;
-        top: 0 - @barPageSize - 1rem;
+        top: 0 - @barPageSize - 1.25rem;
 
         .cover {
-            width: @barPageSize + 0.3rem;
-            height: @barPageSize + .3rem;
+            width: @barPageSize + 0.375rem;
+            height: @barPageSize + 0.375rem;
             border: 1px solid var(--color-primary);
             border-radius: 50%;
             animation: 3s ease-in-out 0s infinite avatarScaling;
@@ -173,21 +173,21 @@
 
         .popup {
             position: absolute;
-            right: @barPageSize + 0.5rem;
+            right: @barPageSize + 0.625rem;
             top: 0;
             background: #FFF;
-            border-radius: 0.5rem;
+            border-radius: 0.625rem;
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, .08);
-            width: 10rem;
-            min-height: 2rem;
-            padding: 0.5rem;
+            width: 12.5rem;
+            min-height: 2.5rem;
+            padding: 0.625rem;
             display: none;
 
             .content {
                 color: #333;
 
                 img {
-                    width: 9rem;
+                    width: 11.25rem;
                 }
             }
         }
@@ -227,10 +227,10 @@ html.body-scroll-far {
     }
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 50rem) {
     .ub-bar-page {
-        bottom: 2rem;
-        width: 2rem;
+        bottom: 2.5rem;
+        width: 2.5rem;
 
         &.close {
             width: auto;
@@ -242,22 +242,22 @@ html.body-scroll-far {
 
         .items {
             .item {
-                width: 2rem;
-                height: 2rem;
-                padding: 0.25rem 0;
+                width: 2.5rem;
+                height: 2.5rem;
+                padding: 0.3125rem 0;
 
                 .popup {
-                    right: 2.25rem;
+                    right: 2.8125rem;
                 }
 
                 .icon {
-                    font-size: 1rem;
-                    line-height: 1rem;
-                    height: 1rem;
+                    font-size: 1.25rem;
+                    line-height: 1.25rem;
+                    height: 1.25rem;
                 }
 
                 .text {
-                    font-size: 0.4rem;
+                    font-size: 0.5rem;
                 }
             }
 
@@ -267,18 +267,18 @@ html.body-scroll-far {
         }
 
         .item-top {
-            top: -2.5rem;
-            width: 2rem;
-            height: 2rem;
-            border-width: 0.1rem;
+            top: -3.125rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-width: 0.125rem;
 
             .cover {
-                width: 1.8rem;
-                height: 1.8rem;
+                width: 2.25rem;
+                height: 2.25rem;
             }
 
             .popup {
-                right: 2.25rem;
+                right: 2.8125rem;
                 top: initial;
                 bottom: 0;
             }

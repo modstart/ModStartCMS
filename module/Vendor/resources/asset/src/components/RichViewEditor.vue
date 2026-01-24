@@ -106,9 +106,9 @@ export default {
 .pb-rich-view-editor {
     border: 1px dashed #DDD;
     min-height: 1em;
-    border-radius: 0.25rem;
+    border-radius: 0.3125rem;
     cursor: pointer;
-    padding: 0.1rem;
+    padding: 0.125rem;
 
     &:hover, &.active {
         border-color: var(--color-primary);

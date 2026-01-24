@@ -1,4 +1,4 @@
-<div class="tw-shadow tw-rounded tw-p-1" style="width:10rem;overflow:auto;">
+<div class="tw-shadow tw-rounded tw-p-1" style="width:12.5rem;overflow:auto;">
     <table class="ub-table bord er mini tw-table-fixed">
         <tbody>
         @if($item->type===\Module\ContentBlock\Type\ContentBlockType::BASIC)
@@ -22,7 +22,7 @@
                         @foreach($item->images as $image)
                             <a href="javascript:;"
                                data-image-preview="{{\ModStart\Core\Assets\AssetsUtil::fix($image)}}">
-                                <img style="height:1.5rem;"
+                                <img style="height:1.875rem;"
                                      src="{{\ModStart\Core\Assets\AssetsUtil::fix($image)}}"/>
                             </a>
                         @endforeach
@@ -34,7 +34,7 @@
                 <td width="40">图片</td>
                 <td>
                     <a href="javascript:;" data-image-preview="{{\ModStart\Core\Assets\AssetsUtil::fix($item->image)}}">
-                        <img style="max-width:2rem;max-height:2rem;"
+                        <img style="max-width:2.5rem;max-height:2.5rem;"
                              src="{{\ModStart\Core\Assets\AssetsUtil::fix($item->image)}}"/>
                     </a>
                 </td>

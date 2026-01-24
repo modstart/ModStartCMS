@@ -84,7 +84,7 @@
                         <div class="field">
                             <el-checkbox-group v-model="checkedHeadTitles">
                                 @foreach($headTitles as $i=>$t)
-                                    <el-checkbox style="min-width:4rem;" :label="{{$i}}" key="{{$t}}">{{$t}}</el-checkbox>
+                                    <el-checkbox style="min-width:5rem;" :label="{{$i}}" key="{{$t}}">{{$t}}</el-checkbox>
                                 @endforeach
                             </el-checkbox-group>
                             <div>

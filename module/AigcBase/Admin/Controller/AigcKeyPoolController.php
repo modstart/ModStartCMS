@@ -95,7 +95,7 @@ class AigcKeyPoolController extends Controller
                         if ($provider) {
                             $html[] = "<table class='ub-table mini border tw-bg-white'>";
                             foreach ($provider->paramDisplay($item->toArray()) as $v) {
-                                $html[] = "<tr><td>$v[name]</td><td><div style='max-width:8rem;overflow:hidden;text-overflow:ellipsis;'>$v[value]</div></td></tr>";
+                                $html[] = "<tr><td>$v[name]</td><td><div style='max-width:10rem;overflow:hidden;text-overflow:ellipsis;'>$v[value]</div></td></tr>";
                             }
                             $html[] = "</table>";
                         }

@@ -53,6 +53,6 @@ export default {
 
 <style lang="less" scoped>
 .pb-values-editor {
-    min-width: 5rem;
+    min-width: 6.25rem;
 }
 </style>

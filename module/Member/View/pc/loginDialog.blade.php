@@ -23,7 +23,7 @@
         <div class="box" data-member-login-box>
 
             @if(modstart_config('Member_LoginDefault','default')=='other')
-                <div style="min-height:15rem;" data-member-login-other></div>
+                <div style="min-height:18.75rem;" data-member-login-other></div>
             @else
                 <div class="nav">
                     <a href="javascript:;" class="active">登录</a>
@@ -51,7 +51,7 @@
                         </div>
                         @if(modstart_config('loginCaptchaEnable',false))
                             @if($provider = \Module\Member\Util\SecurityUtil::loginCaptchaProvider())
-                                <div style="padding:0.5rem;">
+                                <div style="padding:0.625rem;">
                                     {!! $provider->render() !!}
                                 </div>
                             @else

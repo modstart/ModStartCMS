@@ -125,12 +125,12 @@
 <style lang="less">
     .pb-icon-input {
         .pb-icon-input-preview {
-            font-size: 1rem;
-            height: 1.5rem;
-            width: 1.5rem;
-            line-height: 1.5rem;
+            font-size: 1.25rem;
+            height: 1.875rem;
+            width: 1.875rem;
+            line-height: 1.875rem;
             text-align: center;
-            border-radius: 0.2rem;
+            border-radius: 0.25rem;
             display: inline-block;
             vertical-align: middle;
             cursor: pointer;
@@ -140,21 +140,21 @@
 
     .pb-icon-input-item-list {
         overflow: auto;
-        max-height: 17.5rem;
+        max-height: 21.875rem;
         border: 1px solid #EEE;
-        border-radius: 0.2rem;
-        padding: 0.5rem;
+        border-radius: 0.25rem;
+        padding: 0.625rem;
 
         .pb-icon-input-item {
             display: block;
             float: left;
-            width: 3rem;
-            height: 3rem;
+            width: 3.75rem;
+            height: 3.75rem;
             color: #666;
             border: 1px solid transparent;
             text-align: center;
-            border-radius: 0.2rem;
-            padding: 0 0.2rem;
+            border-radius: 0.25rem;
+            padding: 0 0.25rem;
             white-space: nowrap;
             text-overflow: ellipsis;
 
@@ -165,17 +165,17 @@
 
             i {
                 display: block;
-                font-size: 1rem;
-                height: 2rem;
-                line-height: 2rem;
+                font-size: 1.25rem;
+                height: 2.5rem;
+                line-height: 2.5rem;
             }
 
             .title {
                 display: block;
-                height: 1rem;
-                line-height: 1rem;
+                height: 1.25rem;
+                line-height: 1.25rem;
                 overflow: hidden;
-                font-size: 0.5rem;
+                font-size: 0.625rem;
             }
         }
     }

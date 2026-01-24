@@ -64,7 +64,7 @@
                 <form action="{{\ModStart\Core\Input\Request::currentPageUrl()}}" method="post" data-ajax-form>
                     <div class="line">
                         <div class="field ub-text-center">
-                            <img style="height:4rem;" src="{{empty($oauthUserInfo['avatar'])?\ModStart\Core\Assets\AssetsUtil::fix('asset/image/avatar.svg'):$oauthUserInfo['avatar']}}" />
+                            <img style="height:5rem;" src="{{empty($oauthUserInfo['avatar'])?\ModStart\Core\Assets\AssetsUtil::fix('asset/image/avatar.svg'):$oauthUserInfo['avatar']}}" />
                         </div>
                     </div>
                     <div class="line">

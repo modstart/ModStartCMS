@@ -40,24 +40,24 @@ include __DIR__ . '/function.php';
         .pb-installer-box{
             background-image:url("data:image/svg+xml;base64,<?php echo base64_encode('<?xml version="1.0" encoding="UTF-8"?><svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><text x="50%" y="50%" font-size="10" fill="#EEEEEE" style="transform:rotate(-45deg);transform-origin:center;" font-family="system-ui,sans-serif" text-anchor="middle" dominant-baseline="middle">'.INSTALL_APP_NAME.' V'.INSTALL_APP_VERSION.'</text></svg>'); ?>");
             background-color:#FFF;
-            border-radius:0.5rem;
+            border-radius:0.625rem;
         }
         .pb-installer-box .step-menu{
-            padding:0 0.5rem;
+            padding:0 0.625rem;
             text-align: center;
             border-bottom:1px solid #EEE;
         }
         .pb-installer-box .step-menu a{
             display:inline-block;
-            padding:0.8rem;
+            padding:1rem;
             color:var(--color-text);
             text-align:center;
             border-bottom:1px solid #EEE;
-            font-size:0.8rem;
+            font-size:1rem;
         }
         .pb-installer-box .step-menu > .iconfont{
             color:var(--color-muted);
-            font-size:0.8rem;
+            font-size:1rem;
         }
         .pb-installer-box .step-menu a.checked{
             color:var(--color-primary);
@@ -72,16 +72,16 @@ include __DIR__ . '/function.php';
             display:block;
         }
         .pb-installer-box .step-content .step-content-item .content-item-body{
-            padding:1rem;
+            padding:1.25rem;
         }
         .pb-installer-box .step-content .step-content-item .content-item-foot{
-            padding: 1rem 1rem 2rem 1rem;
+            padding: 1.25rem 1.25rem 2.5rem 1.25rem;
             text-align:center;
         }
         .pb-installer-box .step-content .step-content-item iframe{
             width:100%;
             border:1px solid #EEE;
-            border-radius:0.25rem;
+            border-radius:0.3125rem;
             height:calc( 100vh - 200px );
         }
     </style>
@@ -123,15 +123,15 @@ include __DIR__ . '/function.php';
                         </div>
                         <div class="content-item-foot">
                             <div>
-                                <div style="color:red;padding-bottom:1rem;">
+                                <div style="color:red;padding-bottom:1.25rem;">
                                     禁止使用本产品进行违法违规业务，我们将对违规使用者停止授权并永久封停账号
                                 </div>
                                 <label style="border:none;margin-top:-10px;margin-right:0;padding-right:0;">
-                                    <input type="checkbox" name="installLicense" style="vertical-align:middle;margin-right:0.2rem;" value="1"/>
+                                    <input type="checkbox" name="installLicense" style="vertical-align:middle;margin-right:0.25rem;" value="1"/>
                                     我已阅读协议并同意所有内容
                                 </label>
                             </div>
-                            <div style="margin-top:0.5rem;">
+                            <div style="margin-top:0.625rem;">
                                 <a href="javascript:;" class="btn btn-primary btn-lg btn-round" onclick="doStepEnv()">
                                     下一步
                                 </a>
@@ -205,7 +205,7 @@ include __DIR__ . '/function.php';
                         <?php } else if (!env_writable()) { ?>
                             <div class="ub-alert danger ub-text-center">/.env文件不可写，请手动配置安装</div>
                         <?php } else { ?>
-                            <div style="display:none;margin-top:0.5rem;" data-step-env-next>
+                            <div style="display:none;margin-top:0.625rem;" data-step-env-next>
                                 <?php if(defined('LICENSE_URL')) { ?>
                                     <a href="javascript:;" class="btn btn-lg btn-round" onclick="switch_step('license')">
                                         上一步
@@ -313,7 +313,7 @@ include __DIR__ . '/function.php';
                                 </label>
                             </div>
                         <?php } ?>
-                        <div style="margin-top:0.5rem;">
+                        <div style="margin-top:0.625rem;">
                             <input type="hidden" name="installLicense" value="1"/>
                             <input type="hidden" name="INSTALL_CONFIG" value="<?php echo htmlspecialchars(json_encode(isset($INSTALL_CONFIG)?$INSTALL_CONFIG:null)); ?>" />
                             <a href="javascript:;" onclick="switch_step('env')" class="btn btn-lg btn-round">

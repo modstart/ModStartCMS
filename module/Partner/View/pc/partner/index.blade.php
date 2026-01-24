@@ -29,7 +29,7 @@
                 <div class="text">暂无记录</div>
             </div>
         @else
-            <div class="ub-content-box" style="padding-top:1.5rem;">
+            <div class="ub-content-box" style="padding-top:1.875rem;">
                 <div class="ub-list-items">
                     <div class="row">
                         @foreach($records as $r)

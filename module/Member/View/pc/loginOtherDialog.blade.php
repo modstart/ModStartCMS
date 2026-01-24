@@ -18,7 +18,7 @@
 @section('body')
     <div class="ub-account pb-member-login-account">
         <div class="box" data-member-login-box>
-            <div style="min-height:15rem;" data-member-login-other></div>
+            <div style="min-height:18.75rem;" data-member-login-other></div>
         </div>
         @include('module::Member.View.pc.oauthButtons')
         @if(!modstart_config('retrieveDisable',false))

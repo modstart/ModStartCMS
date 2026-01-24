@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-md-9">
 
-                <div class="ub-panel" style="padding:1rem;">
+                <div class="ub-panel" style="padding:1.25rem;">
                     @if(!MCms::canVisitCat($cat))
                         <div class="ub-alert danger">
                             <i class="iconfont icon-warning"></i>

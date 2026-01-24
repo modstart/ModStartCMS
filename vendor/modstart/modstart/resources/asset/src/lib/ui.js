@@ -63,10 +63,10 @@ const Ui = {
      * @return string sm,md,lg,xl
      */
     size: function () {
-        // @width-sm-max: 40rem; // 0px    - 800px
-        // @width-md: 40rem; // 800px - 1199px
-        // @width-lg: 60rem; // 1200px - 1799px
-        // @width-xl: 90rem; // 1800px -
+        // @width-sm-max: 50rem; // 0px    - 800px
+        // @width-md: 50rem; // 800px - 1199px
+        // @width-lg: 75rem; // 1200px - 1799px
+        // @width-xl: 112.5rem; // 1800px -
         var w = window.innerWidth;
         if (w >= 1800) {
             return 'xl';

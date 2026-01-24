@@ -40,7 +40,7 @@
                         @foreach(MCms::listContentByCatUrl('product',1,4,['where'=>['isRecommend'=>true]]) as $record)
                             <div class="col-md-3 col-6">
                                 <div class="item-p" data-scroll-animate="animated fadeInUp">
-                                    <a class="image" href="{{$record['_url']}}" style="padding:0.25rem 0 0 0;">
+                                    <a class="image" href="{{$record['_url']}}" style="padding:0.3125rem 0 0 0;">
                                         <div class="cover contain ub-cover-1-1"
                                              style="width:90%;margin:0 auto;background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}});"></div>
                                     </a>

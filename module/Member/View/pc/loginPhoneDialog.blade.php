@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     @if($provider=\Module\Member\Util\SecurityUtil::loginCaptchaProvider())
-                        <div style="padding:0.5rem;" data-captcha-provider>
+                        <div style="padding:0.625rem;" data-captcha-provider>
                             <div>
                                 {!! $provider->render() !!}
                             </div>

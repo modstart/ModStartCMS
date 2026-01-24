@@ -81,10 +81,10 @@ export default {
 .pb-dialog-link-selector-item {
     display: block;
     background: #FFF;
-    margin: 0.2rem 0;
-    line-height: 1.3rem;
-    padding: 0 0.5rem;
-    border-radius: 0.2rem;
+    margin: 0.25rem 0;
+    line-height: 1.625rem;
+    padding: 0 0.625rem;
+    border-radius: 0.25rem;
     cursor: pointer;
     border: 1px solid #EEE;
 

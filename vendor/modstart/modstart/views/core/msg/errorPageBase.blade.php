@@ -10,11 +10,11 @@
         background: #4b4b62;
         color: #FFF;
         padding: 0 20px;
-        border-radius: 1rem;
+        border-radius: 1.25rem;
         line-height: 30px;
         text-decoration: none;
         display: inline-block;
-        margin: 0 0.2rem;
+        margin: 0 0.25rem;
     }
 
     .main-error-page {

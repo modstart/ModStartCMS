@@ -86,7 +86,7 @@
                             {{ L('Copy Link') }}
                         </a>
                     </div>
-                    <div class="records" style="min-height:5rem;" v-loading="listLoading">
+                    <div class="records" style="min-height:6.25rem;" v-loading="listLoading">
                         <div class="ub-empty" v-if="!listLoading && records.length===0">
                             {{ L('No Records') }}
                         </div>
@@ -649,8 +649,8 @@ export default {
 
     .pb-data-upload-button {
         position: absolute;
-        right: 0.5rem;
-        top: 1.9rem;
+        right: 0.625rem;
+        top: 2.375rem;
         z-index: 999;
     }
 }
@@ -708,14 +708,14 @@ export default {
 
     .pb-data-upload-button {
         position: absolute;
-        right: 0.5rem;
-        top: 0.5rem;
+        right: 0.625rem;
+        top: 0.625rem;
         z-index: 999;
     }
 }
 
 .pb-data-selector-list {
-    font-size: var(--font-size, 0.65rem);
+    font-size: var(--font-size, 0.8125rem);
 
     & > .action {
         border-bottom: 1px solid #EEE;
@@ -768,10 +768,10 @@ export default {
                     background: rgba(0, 0, 0, 0.5);
                     color: #FFF;
                     font-size: 10px;
-                    padding: 0 0.5rem;
-                    border-radius: 0.25rem;
-                    left: 0.25rem;
-                    bottom: 0.25rem;
+                    padding: 0 0.625rem;
+                    border-radius: 0.3125rem;
+                    left: 0.3125rem;
+                    bottom: 0.3125rem;
                 }
 
                 &:after {
@@ -818,7 +818,7 @@ export default {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 border-top: 1px solid #EEE;
-                padding: 0.25rem;
+                padding: 0.3125rem;
                 box-sizing: content-box;
                 white-space: nowrap;
             }
@@ -826,7 +826,7 @@ export default {
             .action {
                 text-align: center;
                 border-top: 1px dashed #EEE;
-                padding: 0.25rem;
+                padding: 0.3125rem;
                 text-decoration: none;
 
                 a {

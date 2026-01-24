@@ -12,7 +12,15 @@
             @foreach($value as $v)
                 <tr>
                     @foreach($fields as $f)
-                        <td>{{$v[$f['name']]}}</td>
+                        <td>
+                            @if(!isset($v[$f['name']]))
+                                -
+                            @elseif(is_array($v[$f['name']]))
+                                {{join(',',$v[$f['name']])}}
+                            @else
+                                {{$v[$f['name']]}}
+                            @endif
+                        </td>
                     @endforeach
                 </tr>
             @endforeach
@@ -20,7 +28,7 @@
             <tr>
                 <td colspan="{{count($fields)}}">
                     <pre
-                        style="margin:0;line-height:1rem;overflow:auto;width:{{$width}};">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty($value)}}</pre>
+                        style="margin:0;line-height:1.25rem;overflow:auto;width:{{$width}};">{{\ModStart\Core\Util\SerializeUtil::jsonEncodePretty($value)}}</pre>
                 </td>
             </tr>
         @endif

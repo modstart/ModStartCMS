@@ -1,5 +1,5 @@
 @if($provider=\Module\Member\Util\SecurityUtil::registerCaptchaProvider())
-    <div style="padding:0.5rem;">
+    <div style="padding:0.625rem;">
         <div>
             {!! $provider->render() !!}
         </div>

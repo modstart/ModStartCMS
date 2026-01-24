@@ -17,11 +17,11 @@
 <style>
     .pb-code-editor {
         border: 1px solid var(--color-body-line);
-        border-radius: 0.2rem;
+        border-radius: 0.25rem;
     }
     .pb-code-editor .ace_editor {
         border: none;
-        border-radius: 0.1rem;
+        border-radius: 0.125rem;
     }
 </style>
 {!! \ModStart\ModStart::js('asset/vendor/ace/ace.js') !!}

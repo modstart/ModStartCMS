@@ -27,7 +27,7 @@ class TextLink extends AbstractWidget
     public static function getAssets()
     {
         return [
-            'style' => '.ub-text-link{display:inline-block;margin-right:0.5rem;}',
+            'style' => '.ub-text-link{display:inline-block;margin-right:0.625rem;}',
         ];
     }
 

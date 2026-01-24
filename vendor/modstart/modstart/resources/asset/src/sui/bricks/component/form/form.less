@@ -5,8 +5,8 @@
     &.view {
         .line {
             .field {
-                border-bottom: 0.05rem solid #EEE;
-                min-height: 1.5rem;
+                border-bottom: 0.0625rem solid #EEE;
+                min-height: 1.875rem;
             }
         }
     }
@@ -29,28 +29,28 @@
 
     &.wide {
         .line {
-            padding-left: 8rem;
+            padding-left: 10rem;
 
             .label {
-                width: 7.5rem;
-                margin-left: -7.5rem;
+                width: 9.375rem;
+                margin-left: -9.375rem;
             }
         }
     }
 
     &.wide-lg {
         .line {
-            padding-left: 12rem;
+            padding-left: 15rem;
 
             .label {
-                width: 11.5rem;
-                margin-left: -11.5rem;
+                width: 14.375rem;
+                margin-left: -14.375rem;
             }
         }
     }
 
     .line {
-        padding: 0.25rem 1.5rem 0.25rem 5rem;
+        padding: 0.3125rem 1.875rem 0.3125rem 6.25rem;
         //overflow: hidden;
         position: relative;
 
@@ -59,11 +59,11 @@
         }
 
         &.wide {
-            padding-left: 8rem;
+            padding-left: 10rem;
 
             .label {
-                width: 7.5rem;
-                margin-left: -7.5rem;
+                width: 9.375rem;
+                margin-left: -9.375rem;
             }
         }
 
@@ -71,44 +71,44 @@
             display: block;
             float: left;
             text-align: right;
-            line-height: 0.7rem;
-            padding: 0.4rem 0.5rem 0.4rem 0;
-            margin: 0 0 0 -4.5rem;
-            width: 4.5rem;
+            line-height: 0.875rem;
+            padding: 0.5rem 0.625rem 0.5rem 0;
+            margin: 0 0 0 -5.625rem;
+            width: 5.625rem;
             overflow: hidden;
 
             &.label-lg {
-                line-height: 2rem;
+                line-height: 2.5rem;
             }
 
             span {
                 color: red;
                 display: inline-block;
-                line-height: 0.7rem;
-                font-size: 0.6rem;
+                line-height: 0.875rem;
+                font-size: 0.75rem;
             }
         }
 
         .field {
-            line-height: 1.5rem;
+            line-height: 1.875rem;
             margin-left: 0;
-            min-height: 1.5rem;
+            min-height: 1.875rem;
 
             input[type=text], input[type=password] {
                 width: 100%;
             }
 
             label {
-                border: 0.05rem solid #EEE;
-                border-radius: 0.15rem;
-                padding: 0 0.5rem;
+                border: 0.0625rem solid #EEE;
+                border-radius: 0.1875rem;
+                padding: 0 0.625rem;
             }
 
             .help {
                 color: var(--color-tertiary);
-                line-height: 0.9rem;
-                padding: 0.25rem 0;
-                font-size: 0.6rem;
+                line-height: 1.125rem;
+                padding: 0.3125rem 0;
+                font-size: 0.75rem;
 
                 p {
                     margin: 0;
@@ -135,27 +135,27 @@
             }
 
             .captcha {
-                height: 1.6rem;
+                height: 2rem;
                 width: 100%;
-                border: 0.05rem solid #DDD;
-                border-radius: 0.15rem;
+                border: 0.0625rem solid #DDD;
+                border-radius: 0.1875rem;
                 cursor: pointer;
 
                 &.captcha-lg {
-                    height: 2rem;
+                    height: 2.5rem;
                 }
             }
 
             .tag {
-                border: 0.05rem solid #EEE;
+                border: 0.0625rem solid #EEE;
                 display: inline-block;
-                line-height: 1rem;
-                border-radius: 0.15rem;
-                padding: 0 0.15rem;
+                line-height: 1.25rem;
+                border-radius: 0.1875rem;
+                padding: 0 0.1875rem;
                 background: #EEE;
                 color: #666;
-                margin-right: 0.15rem;
-                font-size: 0.6rem;
+                margin-right: 0.1875rem;
+                font-size: 0.75rem;
                 white-space: nowrap;
             }
         }
@@ -163,7 +163,7 @@
 
     &.flat {
         .line {
-            padding: 0.5rem;
+            padding: 0.625rem;
 
             .label {
                 float: none;
@@ -171,17 +171,17 @@
                 width: 100%;
                 text-align: left;
                 line-height: inherit !important;
-                padding-bottom: 0.25rem;
+                padding-bottom: 0.3125rem;
             }
         }
     }
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 50rem) {
     .ub-form {
         &.wide .line, &.wide-lg .line, .line {
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding-left: 0.625rem;
+            padding-right: 0.625rem;
             margin: 0;
 
             .label {

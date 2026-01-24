@@ -76,6 +76,8 @@ abstract class AbstractAigcChatProvider extends AbstractAigcProvider
             ];
         }
         $option = array_merge([
+            // 系统提示词
+            'systemPrompt' => null,
             // 是否是 Markdown 返回，默认为 false
             'markdown' => false,
         ], $option);;
@@ -90,10 +92,25 @@ abstract class AbstractAigcChatProvider extends AbstractAigcProvider
      * @param $sessionId string 会话ID
      * @param $msg string|array 消息
      * @param $option
-     * @return mixed
+     * @example
+     *  $option = [
+     *    'systemPrompt' => 'You are a helpful assistant.',
+     *  ]
      */
     abstract function chat($sessionId, $msg, $option = []);
 
+    /**
+     * @param $streamCallback
+     * @param $sessionId
+     * @param $msg
+     * @param $option
+     * @return void
+     * @throws BizException
+     * @example
+     * $option = [
+     *   'systemPrompt' => 'You are a helpful assistant.',
+     * ]
+     */
     public function chatStream($streamCallback, $sessionId, $msg, $option = [])
     {
         BizException::throws('未实现方法 AbstractAigcChatProvider.chatStream');

@@ -88,7 +88,7 @@
                     <a href="javascript:;" data-dialog-title="个人中心" data-dialog-request="{{modstart_web_url('member',['dialog'=>1])}}"
                        class="ub-block tw-text-gray-600 hover:tw-bg-gray-50 tw-rounded-lg tw-py-2 tw-text-center margin-bottom">
                         <div class="tw-w-8 tw-h-8 tw-bg-gray-100 tw-rounded-full tw-mx-auto">
-                            <i class="iconfont icon-user tw-w-5" style="font-size:1rem;"></i>
+                            <i class="iconfont icon-user tw-w-5" style="font-size:1.25rem;"></i>
                         </div>
                         <div class="ub-text-sm">
                             个人中心
@@ -99,7 +99,7 @@
                     <a href="{{modstart_web_url('member_credit')}}"
                        class="ub-block tw-text-gray-600 hover:tw-bg-gray-50 tw-rounded-lg tw-py-2 tw-text-center margin-bottom">
                         <div class="tw-w-8 tw-h-8 tw-bg-gray-100 tw-rounded-full tw-mx-auto">
-                            <i class="iconfont icon-credit tw-w-5" style="font-size:1rem;"></i>
+                            <i class="iconfont icon-credit tw-w-5" style="font-size:1.25rem;"></i>
                         </div>
                         <div class="ub-text-sm">
                             我的{{modstart_module_config('Member','creditName')}}
@@ -111,7 +111,7 @@
                         <a href="{{modstart_web_url('aigc/distribution')}}"
                            class="ub-block tw-text-gray-600 hover:tw-bg-gray-50 tw-rounded-lg tw-py-2 tw-text-center margin-bottom">
                             <div class="tw-w-8 tw-h-8 tw-bg-gray-100 tw-rounded-full tw-mx-auto">
-                                <i class="iconfont icon-share tw-w-5" style="font-size:1rem;"></i>
+                                <i class="iconfont icon-share tw-w-5" style="font-size:1.25rem;"></i>
                             </div>
                             <div class="ub-text-sm">
                                 分销推广
@@ -124,7 +124,7 @@
                        data-dialog-request="{{modstart_web_url('feedback/dialog')}}"
                        class="ub-block tw-text-gray-600 hover:tw-bg-gray-50 tw-rounded-lg tw-py-2 tw-text-center margin-bottom">
                         <div class="tw-w-8 tw-h-8 tw-bg-gray-100 tw-rounded-full tw-mx-auto">
-                            <i class="iconfont icon-comment tw-w-5" style="font-size:1rem;"></i>
+                            <i class="iconfont icon-comment tw-w-5" style="font-size:1.25rem;"></i>
                         </div>
                         <div class="ub-text-sm">
                             意见反馈
@@ -136,7 +136,7 @@
                        data-dialog-request="{{modstart_web_url('site/contact',['dialog'=>1])}}"
                        class="ub-block tw-text-gray-600 hover:tw-bg-gray-50 tw-rounded-lg tw-py-2 tw-text-center margin-bottom">
                         <div class="tw-w-8 tw-h-8 tw-bg-gray-100 tw-rounded-full tw-mx-auto">
-                            <i class="iconfont icon-customer tw-w-5" style="font-size:1rem;"></i>
+                            <i class="iconfont icon-customer tw-w-5" style="font-size:1.25rem;"></i>
                         </div>
                         <div class="ub-text-sm">
                             联系客服

@@ -28,7 +28,7 @@ class TextAjaxRequest extends AbstractWidget
     public static function getAssets()
     {
         return [
-            'style' => '.ub-text-ajax-request{display:inline-block;margin-right:0.5rem;}',
+            'style' => '.ub-text-ajax-request{display:inline-block;margin-right:0.625rem;}',
         ];
     }
 

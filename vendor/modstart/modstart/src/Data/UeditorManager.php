@@ -194,7 +194,7 @@ class UeditorManager
         }
         switch ($action) {
             case 'config':
-                return Response::jsonRaw($config);
+                return Response::jsonp($config);
             case 'image':
                 DataUploadingEvent::fire($uploadTable, $userId, 'image');
                 $editorRet = [

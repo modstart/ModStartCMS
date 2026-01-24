@@ -15,7 +15,7 @@
                value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode(null===$value?(null===$defaultValue?[]:$defaultValue):$value)}}"/>
         <div class="ub-images-selector">
         </div>
-        <div id="{{$id}}Uploader" style="width:9.4rem;border:1px solid #EEE;border-radius:0.2rem;min-height:1.6rem;"></div>
+        <div id="{{$id}}Uploader" style="width:11.75rem;border:1px solid #EEE;border-radius:0.25rem;min-height:2rem;"></div>
         @if(!empty($help))
             <div class="help">{!! $help !!}</div>
         @endif
@@ -61,7 +61,7 @@
             return false;
         });
         MS.uploadButton('#{{$id}}Uploader', {
-            text: '<div style="width:100%;box-sizing:border-box;line-height:1.5rem;height:1.5rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.5rem;height:1.5rem;"></span> 上传</div>',
+            text: '<div style="width:100%;box-sizing:border-box;line-height:1.875rem;height:1.875rem;padding:0;color:#666;background:#FFF;"><span class="iconfont icon-plus" style="display:inline;line-height:1.875rem;height:1.875rem;"></span> 上传</div>',
             server: "{{$server}}",
             extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.image.extensions'))) !!},
             sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.image.maxSize')) !!},

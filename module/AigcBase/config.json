@@ -32,7 +32,7 @@
         "AigcChatXunfei",
         "AigcChatZhipuAi"
     ],
-    "version": "1.4.4",
+    "version": "1.4.5",
     "modstartVersion": ">=4.1.0",
     "author": "ModStart",
     "description": "提供AI基础框架包，支持各种模型接入",

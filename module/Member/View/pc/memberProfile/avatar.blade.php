@@ -4,7 +4,7 @@
 @section('pageKeywords')修改头像@endsection
 @section('pageDescription')修改头像@endsection
 
-{!! \ModStart\ModStart::style('.pb-page-hidden{overflow:hidden;height:0;width:0;margin-bottom:0!important;}.cropper-bg,.cropper-crop{border-radius:0.5rem;}') !!}
+{!! \ModStart\ModStart::style('.pb-page-hidden{overflow:hidden;height:0;width:0;margin-bottom:0!important;}.cropper-bg,.cropper-crop{border-radius:0.625rem;}') !!}
 
 @section('bodyAppend')
     @parent

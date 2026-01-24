@@ -9,7 +9,7 @@
                             trigger="click">
                         <a href="javascript:;" slot="reference"
                            class="tw-text-gray-400 tw-px-2">
-                            <i class="iconfont icon-smile" style="font-size:0.8rem;"></i>
+                            <i class="iconfont icon-smile" style="font-size:1rem;"></i>
                         </a>
                         <div style="max-width:400px;">
                             <div v-for="(emotionItem,emotionIndex) in emotions">
@@ -30,7 +30,7 @@
                                :action="imageUploadUrl">
                         <a href="javascript:;"
                            class="tw-text-gray-400 tw-px-2">
-                            <i class="iconfont icon-image" style="font-size:0.8rem;"></i>
+                            <i class="iconfont icon-image" style="font-size:1rem;"></i>
                         </a>
                     </el-upload>
                 </div>

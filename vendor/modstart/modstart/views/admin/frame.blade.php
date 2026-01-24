@@ -25,7 +25,7 @@
     @endif
     @if(!empty($_isTab))
         <style type="text/css">
-            body{padding:0.5rem;}
+            body{padding:0.625rem;}
         </style>
     @endif
 @endsection

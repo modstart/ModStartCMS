@@ -47,7 +47,7 @@
                         <div class="text">暂无记录</div>
                     </div>
                 @else
-                    <div class="ub-list-items" style="padding:0.5rem;">
+                    <div class="ub-list-items" style="padding:0.625rem;">
                         @foreach($records as $record)
                             <div class="item-d">
                                 <a class="title" target="_blank" href="{{$record['_url']}}">{{$record['title']}}</a>

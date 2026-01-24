@@ -6,6 +6,6 @@
         {{$label}}
     </div>
     <div class="field">
-        <div class="ub-html" style="background:#FFF;border-radius:0.1rem;padding:0.2rem;">{!! $value !!}</div>
+        <div class="ub-html" style="background:#FFF;border-radius:0.125rem;padding:0.25rem;">{!! $value !!}</div>
     </div>
 </div>

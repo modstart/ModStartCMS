@@ -7,7 +7,7 @@
         {{$label}}
     </div>
     <div class="field">
-        <div style="position:relative;max-width:9.4rem;">
+        <div style="position:relative;max-width:11.75rem;">
             <input type="text"
                    {{$readonly?'readonly':''}}
                    class="form"

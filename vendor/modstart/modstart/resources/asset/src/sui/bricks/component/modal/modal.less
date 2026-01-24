@@ -35,26 +35,26 @@
 .ub-modal-dialog {
     position: relative;
     box-sizing: border-box;
-    margin: 2.5rem auto;
+    margin: 3.125rem auto;
     padding: 0;
-    width: 30rem;
+    width: 37.5rem;
     max-width: 100%;
-    max-width: calc(100% - 1rem);
+    max-width: calc(100% - 1.25rem);
     background: #fff;
     opacity: 0;
     -webkit-transform: translateY(-100px);
     transform: translateY(-100px);
     -webkit-transition: opacity 0.3s linear, -webkit-transform 0.3s ease-in-out;
     transition: opacity 0.3s linear, transform 0.3s ease-in-out;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+    border-radius: 0.625rem;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.3);
 }
 
 ///* Phone landscape and smaller */
-@media (max-width: 40rem) {
+@media (max-width: 50rem) {
     .ub-modal-dialog {
         width: auto;
-        margin: 0.5rem auto;
+        margin: 0.625rem auto;
     }
 }
 
@@ -67,11 +67,11 @@
 
 .ub-modal-dialog > .ub-modal-close {
     position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-    font-size: 0.7rem;
+    right: 0.9375rem;
+    top: 0.625rem;
+    font-size: 0.875rem;
     color: var(--color-tertiary);
-    line-height: 1.5rem;
+    line-height: 1.875rem;
 
     &:hover {
         color: var(--color-danger);
@@ -81,20 +81,20 @@
 .ub-modal-dialog {
     & > .ub-modal-head {
         border-bottom: 1px solid #EEE;
-        padding: 0.5rem;
+        padding: 0.625rem;
 
         & > .title {
-            line-height: 1.5rem;
-            height: 1.5rem;
+            line-height: 1.875rem;
+            height: 1.875rem;
         }
     }
 
     & > .ub-modal-body {
-        padding: 0.5rem;
+        padding: 0.625rem;
     }
 
     & > .ub-modal-foot {
-        padding: 0.5rem;
+        padding: 0.625rem;
         text-align: right;
         border-top: 1px solid #EEE;
     }

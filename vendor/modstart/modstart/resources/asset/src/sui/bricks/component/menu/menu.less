@@ -1,22 +1,22 @@
 .ub-menu-layout-shrink {
     .ub-menu-layout-container {
-        padding-left: 3rem;
+        padding-left: 3.75rem;
     }
 
     .ub-menu-layout {
         & > .body {
-            width: 3rem;
+            width: 3.75rem;
 
             .item {
                 color: #333;
-                padding: 0.4rem 0;
+                padding: 0.5rem 0;
                 text-align: center;
                 display: none;
 
                 .icon {
-                    line-height: 1.4rem;
+                    line-height: 1.75rem;
                     display: block;
-                    font-size: 1rem;
+                    font-size: 1.25rem;
                     text-align: center;
                     width: 100%;
                 }
@@ -25,7 +25,7 @@
                     font-size: var(--font-size-small);
                     display: block;
                     padding: 0;
-                    line-height: 1rem;
+                    line-height: 1.25rem;
                 }
 
                 &.item-main {
@@ -53,7 +53,7 @@
 }
 
 .ub-menu-layout-container {
-    padding-left: 10rem;
+    padding-left: 12.5rem;
 }
 
 .ub-menu-layout {
@@ -64,19 +64,19 @@
 
     .toggle {
         position: fixed;
-        width: 3rem;
-        height: 3rem;
+        width: 3.75rem;
+        height: 3.75rem;
         left: 0;
         top: 0;
-        line-height: 3rem;
+        line-height: 3.75rem;
         text-align: center;
         color: #333;
-        font-size: 1rem;
+        font-size: 1.25rem;
     }
 
     & > .body {
         position: fixed;
-        top: 3rem;
+        top: 3.75rem;
         left: 0;
         bottom: 0;
         overflow-y: auto;
@@ -87,8 +87,8 @@
         .item {
             color: #333;
             display: block;
-            padding: 0 1rem;
-            line-height: 1.8rem;
+            padding: 0 1.25rem;
+            line-height: 2.25rem;
 
             &.active {
                 color: var(--color-primary);
@@ -105,7 +105,7 @@
 
             .icon {
                 display: inline-block;
-                width: 1.2rem;
+                width: 1.5rem;
             }
 
             .text {
@@ -114,17 +114,17 @@
         }
 
         .item-title {
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
+            margin-top: 1.25rem;
+            padding: 0.625rem 1.25rem;
+            font-size: 1rem;
             font-weight: 500;
             color: #1d1d1d;
             border-top: 1px solid #f0f0f0;
         }
 
         .foot {
-            margin-top: 1rem;
-            padding: 1rem;
+            margin-top: 1.25rem;
+            padding: 1.25rem;
 
             .link {
                 overflow: hidden;
@@ -138,7 +138,7 @@
             }
 
             .copy {
-                padding-top: 0.5rem;
+                padding-top: 0.625rem;
 
                 a {
                     color: #c4cfdb;
@@ -149,20 +149,20 @@
 }
 
 .ub-menu {
-    border-radius: 0.25rem;
+    border-radius: 0.3125rem;
     background: #FFF;
-    padding: 0.5rem 0;
+    padding: 0.625rem 0;
 
     &.lg {
-        font-size: 0.7rem;
+        font-size: 0.875rem;
 
         .title {
-            line-height: 2.5rem;
+            line-height: 3.125rem;
         }
 
         .items {
             a {
-                line-height: 2.5rem;
+                line-height: 3.125rem;
             }
         }
     }
@@ -176,8 +176,8 @@
     }
 
     .title {
-        line-height: 2rem;
-        padding: 0 1rem;
+        line-height: 2.5rem;
+        padding: 0 1.25rem;
         display: block;
         color: #333;
         cursor: pointer;
@@ -203,9 +203,9 @@
             content: '';
             background: var(--icon-arrow) no-repeat center;
             background-size: contain;
-            width: 0.4rem;
-            height: 0.4rem;
-            margin-top: 0.8rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: 1rem;
             opacity: 0.3;
             display: block;
             color: #CCC;
@@ -242,8 +242,8 @@
         }
 
         a {
-            line-height: 2rem;
-            padding: 0 0.5rem 0 1.9rem;
+            line-height: 2.5rem;
+            padding: 0 0.625rem 0 2.375rem;
             display: block;
             color: var(--color-text);
             white-space: nowrap;
@@ -265,23 +265,23 @@
 
 
 .ub-menu.nav-menu {
-    padding: 0.25rem 0;
+    padding: 0.3125rem 0;
 }
 
-@media screen and (max-width: 40rem) {
+@media screen and (max-width: 50rem) {
 
     .ub-menu.simple {
         white-space: nowrap;
         overflow-x: auto;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-left: 0.625rem;
+        padding-right: 0.625rem;
         line-height: 0;
 
         .title {
             display: inline-block;
             min-width: 4em;
             border-right: none;
-            border-radius: 0.5rem;
+            border-radius: 0.625rem;
 
             &:before {
                 display: none;
@@ -292,30 +292,30 @@
     // nav-menu
     .ub-menu.nav-menu {
         display: flex;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.625rem;
         white-space: nowrap;
         overflow-x: auto;
         padding: 0;
 
         .title {
             display: inline-block;
-            padding: 0 0.2rem;
+            padding: 0 0.25rem;
             flex-grow: 1;
             text-align: center;
-            min-width: 5rem;
+            min-width: 6.25rem;
         }
 
         .items.open {
             display: block;
             background: #FFF;
             box-shadow: 0 0 5px #CCC;
-            border-radius: 0 0 0.4rem 0.4rem;
+            border-radius: 0 0 0.5rem 0.5rem;
             position: absolute;
             z-index: 1000;
-            top: 2rem;
+            top: 2.5rem;
 
             a {
-                padding: 0 0.15rem;
+                padding: 0 0.1875rem;
                 text-align: center;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -325,9 +325,9 @@
 }
 
 .ub-menu-tree {
-    border-radius: 0.25rem;
+    border-radius: 0.3125rem;
     background: #FFF;
-    padding: 0.5rem 0;
+    padding: 0.625rem 0;
 
     &.no-arrow {
         .item {
@@ -342,7 +342,7 @@
     }
 
     .page-menu-container > .item, & > .item {
-        padding: 0 0.5rem;
+        padding: 0 0.625rem;
     }
 
     .item {
@@ -354,10 +354,10 @@
             display: flex;
             line-height: 1.5;
             cursor: pointer;
-            padding-left: 0.7rem;
+            padding-left: 0.875rem;
             position: relative;
-            margin: 0.5rem 0;
-            border-radius: 0.25rem;
+            margin: 0.625rem 0;
+            border-radius: 0.3125rem;
 
             &.active {
                 background-color: var(--color-body-block-bg-hover);
@@ -377,34 +377,34 @@
                 content: '';
                 background: var(--icon-arrow) no-repeat center;
                 background-size: contain;
-                width: 0.4rem;
-                height: 0.4rem;
+                width: 0.5rem;
+                height: 0.5rem;
                 opacity: 0.3;
                 transform: rotate(0deg);
                 transition: all 0.3s;
                 position: absolute;
-                top: 0.5rem;
-                left: 0.25rem;
+                top: 0.625rem;
+                left: 0.3125rem;
             }
 
             .title-text {
                 flex-grow: 1;
                 width: 0;
-                padding: 0.25rem;
+                padding: 0.3125rem;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
 
             .title-action {
-                padding: 0.25rem 0;
+                padding: 0.3125rem 0;
 
                 .title-action-icon {
-                    line-height: 1rem;
+                    line-height: 1.25rem;
                     display: none;
-                    width: 1rem;
+                    width: 1.25rem;
                     text-align: center;
-                    border-radius: 0.25rem;
+                    border-radius: 0.3125rem;
 
                     &:hover {
                         background-color: var(--color-body-block-bg-hover);
@@ -442,7 +442,7 @@
         }
 
         .group {
-            padding-left: 0.5rem;
+            padding-left: 0.625rem;
             display: none;
         }
     }
@@ -462,7 +462,7 @@
     display: none;
 }
 
-@media screen and (max-width: 40rem) {
+@media screen and (max-width: 50rem) {
     .page-menu {
         position: fixed;
         z-index: 100;
@@ -474,19 +474,19 @@
 
         .page-menu-toggle {
             display: block;
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 3.125rem;
+            height: 3.125rem;
             position: absolute;
             background: #FFF;
-            bottom: 2.5rem;
-            right: -2.5rem;
+            bottom: 3.125rem;
+            right: -3.125rem;
             border-radius: 0 var(--size-radius) var(--size-radius) 0;
             border-left: none;
             font-size: var(--font-size-large);
-            line-height: 2.5rem;
+            line-height: 3.125rem;
             text-align: center;
             color: #c4cfdb;
-            box-shadow: 0.1rem 0 0.15rem #c4cfdb;
+            box-shadow: 0.125rem 0 0.1875rem #c4cfdb;
 
             i {
                 display: block;
@@ -500,7 +500,7 @@
         .page-menu {
             transition: left 0.3s;
             left: 0;
-            box-shadow: 0.1rem 0 0.15rem #c4cfdb;
+            box-shadow: 0.125rem 0 0.1875rem #c4cfdb;
         }
     }
 }
@@ -510,15 +510,15 @@
 // ub-menu-tree-simple
 
 .ub-menu-tree-simple {
-    border-radius: 0.25rem;
+    border-radius: 0.3125rem;
     background: #FFF;
-    padding: 0.5rem;
+    padding: 0.625rem;
     box-shadow: var(--box-shadow);
     transition: top 0.3s;
 
     &.close {
 
-        width: 2rem;
+        width: 2.5rem;
 
         .item {
             display: none;
@@ -537,7 +537,7 @@
 
     &.page {
         .item-container {
-            max-height: calc(100vh - 7rem);
+            max-height: calc(100vh - 8.75rem);
         }
     }
 
@@ -560,7 +560,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         width: 100%;
-        margin: 0.25rem 0;
+        margin: 0.3125rem 0;
 
         &.active {
             a {
@@ -573,19 +573,19 @@
         }
 
         &.level-2 {
-            padding-left: 0.5rem;
+            padding-left: 0.625rem;
         }
 
         &.level-3 {
-            padding-left: 1rem;
+            padding-left: 1.25rem;
         }
 
         &.level-4 {
-            padding-left: 1.5rem;
+            padding-left: 1.875rem;
         }
 
         &.level-5 {
-            padding-left: 2rem;
+            padding-left: 2.5rem;
         }
     }
 
@@ -594,7 +594,7 @@
 
         a {
             display: none;
-            border-radius: 0.25rem;
+            border-radius: 0.3125rem;
 
             &:hover {
                 background-color: var(--color-body-block-bg-hover);

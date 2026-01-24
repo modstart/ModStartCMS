@@ -50,7 +50,7 @@ $banners = \Module\Banner\Util\BannerUtil::listByPositionWithCache($position);
 
 <?php $bannerId = \ModStart\Core\Util\IdUtil::generate('BannerNav'); ?>
 @if(!empty($heightFull))
-    {!! \ModStart\ModStart::style('#'.$bannerId.',#'.$bannerId.' .swiper-slide{height:100vh;} @media screen and (max-width:40rem){ #'.$bannerId.',#'.$bannerId.' .swiper-slide{height:auto;} }') !!}
+    {!! \ModStart\ModStart::style('#'.$bannerId.',#'.$bannerId.' .swiper-slide{height:100vh;} @media screen and (max-width:50rem){ #'.$bannerId.',#'.$bannerId.' .swiper-slide{height:auto;} }') !!}
 @endif
 <div id="{{$bannerId}}" class="ub-banner ratio-{{$bannerRatio}}">
     <div class="swiper-container">
