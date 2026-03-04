@@ -22,23 +22,23 @@ class ProfileController extends Controller
     {
         $form = new Form(DynamicModel::class);
         $form->password('password', L('Password'))->rules('required');
-        $form->password('passwordNew', L('New Password'))->rules('required');
-        $form->password('passwordRepeat', L('Repeat Password'))->rules('required');
+        $form->password('passwordNew', L('NewPassword'))->rules('required');
+        $form->password('passwordRepeat', L('RepeatPassword'))->rules('required');
         if (Request::isPost()) {
             AdminPermission::demoCheck();
             return $form->formRequest(function (Form $form) {
                 $data = $form->dataForming();
-                ResultException::throwsIf(L('New Password Not Match'), $data['passwordNew'] != $data['passwordRepeat']);
+                ResultException::throwsIf(L('NewPasswordNotMatch'), $data['passwordNew'] != $data['passwordRepeat']);
                 $ret = Admin::changePassword(Admin::id(), $data['password'], $data['passwordNew']);
                 ResultException::throwsIfFail($ret);
-                Admin::addInfoLog(Admin::id(), L('Change password'));
-                return Response::json(0, L('Password change correct, please relogin'), null, modstart_admin_url('logout'));
+                Admin::addInfoLog(Admin::id(), L('ChangePassword'));
+                return Response::json(0, L('PasswordChangeCorrectPleaseRelogin'), null, modstart_admin_url('logout'));
             });
         }
         return $adminPage
-            ->pageTitle(L('Change Password'))
+            ->pageTitle(L('ChangePassword'))
             ->row(function (Row $row) use ($form) {
-                $row->column(6, new Box($form, L('Change Password')));
+                $row->column(6, new Box($form, L('ChangePassword')));
             });
     }
 }

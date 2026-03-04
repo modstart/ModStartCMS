@@ -4,6 +4,7 @@ namespace ModStart\Command;
 
 use Illuminate\Console\Command;
 use ModStart\Admin\Auth\Admin;
+use ModStart\Admin\Model\AdminUser;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
 use ModStart\ModStart;
@@ -50,7 +51,7 @@ class ModuleInstallAllCommand extends Command
             }, $initUsers);
             $initUsers = array_filter($initUsers);
             if (!empty($initUsers)) {
-                if (ModelUtil::count('admin_user') <= 0) {
+                if (ModelUtil::count(AdminUser::class) <= 0) {
                     foreach ($initUsers as $initUser) {
                         Admin::add($initUser['user'], $initUser['password']);
                         $this->warn(">>> Init User: {$initUser['user']}");

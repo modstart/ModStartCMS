@@ -203,7 +203,7 @@ var UploadButton = function (selector, option) {
                 $li.find('.status').html('<i class="iconfont icon-clues tw-cursor-pointer tw-animate-spin tw-inline-block"></i>');
             }
             if ('imageCompress' === type) {
-                $li.attr('title', window.lang && lang['CompressingImage'] || 'CompressingImage');
+                $li.attr('title', window.lang && lang['Compressing Image'] || 'Compressing Image');
                 $li.addClass('tw-animate-pulse');
             }
         });
@@ -268,7 +268,7 @@ var UploadButton = function (selector, option) {
             if (typeOrMsg) {
                 switch (typeOrMsg) {
                     case 'server':
-                        opt.tipError(MS.L('Upload Error : %s', MS.L('Server Error')));
+                        opt.tipError(MS.L('Upload Error : %s', MS.L('ServerError')));
                         break
                     default:
                         opt.tipError(MS.L('Upload Error : %s', typeOrMsg));

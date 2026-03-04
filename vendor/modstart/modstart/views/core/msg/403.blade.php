@@ -1,6 +1,6 @@
 @extends('modstart::core.msg.frame')
 
-@section('pageTitle',L('Page Not Found'))
+@section('pageTitle',L('PageNotFound'))
 
 @section('headAppend')
     @include('modstart::core.msg.errorPageBase')
@@ -347,11 +347,11 @@
             @if(!empty($msg))
                 {{ $msg }}
             @else
-                {{ L('No Permission') }} :(
+                {{ L('NoPermission') }} :(
             @endif
         </h1>
         <div class="error-subtitle">
-            <a href="{{modstart_web_url()}}">{{ L('Visit Home')  }}</a>
+            <a href="{{modstart_web_url()}}">{{ L('VisitHome')  }}</a>
         </div>
     </div>
 @endsection

@@ -44,7 +44,7 @@ class MemberMoneyCashController extends Controller
                 $builder->text('realname', '姓名');
                 $builder->text('account', '账号');
                 $builder->jsonKeyValue('param', '参数');
-                $builder->display('created_at', L('Created At'));
+                $builder->display('created_at', L('CreatedAt'));
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('status', '状态')->radio(MemberMoneyCashStatus::class);

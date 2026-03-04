@@ -6,9 +6,11 @@ namespace Module\Vendor\Provider\Schedule;
 
 use Illuminate\Console\Scheduling\Schedule;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\LogUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Core\Util\StrUtil;
 use ModStart\Core\Util\TimeUtil;
+use Module\Vendor\Model\ScheduleRun;
 
 /**
  * Class ScheduleProvider
@@ -69,38 +71,43 @@ class ScheduleProvider
         if (!isset($_SERVER['argv'][1]) || $_SERVER['argv'][1] != 'schedule:run') {
             return;
         }
-        $autoCleanHistory = true;
         foreach (ScheduleBiz::all() as $provider) {
-            // Log::info('ScheduleProvider.schedule - ' . $provider->title() . ' - ' . $provider->cron());
-            /** @var AbstractScheduleBiz $provider */
-            $schedule->call(function () use ($provider, &$autoCleanHistory) {
-                $data = [];
-                $data['name'] = get_class($provider);
-                $data['startTime'] = date('Y-m-d H:i:s');
-                $data['status'] = RunStatus::RUNNING;
-                $data = ModelUtil::insert('schedule_run', $data);
-                $dataId = $data['id'];
-                $data = [];
-                try {
-                    $result = call_user_func([$provider, 'run']);
-                    $data['result'] = StrUtil::mbLimit($result, 200);
-                    $data['status'] = RunStatus::SUCCESS;
-                } catch (\Exception $e) {
-                    $data['result'] = StrUtil::mbLimit($e->getMessage(), 200);
-                    $data['status'] = RunStatus::FAILED;
-                }
-                $data['endTime'] = date('Y-m-d H:i:s');
-                ModelUtil::update('schedule_run', $dataId, $data);
-                // 只保留最近7天的运行日志
-                if ($autoCleanHistory) {
-                    $autoCleanHistory = false;
-                    if (RandomUtil::percent(10)) {
-                        ModelUtil::model('schedule_run')
-                            ->where('created_at', '<', date('Y-m-d H:i:s', time() - TimeUtil::PERIOD_DAY * 7))
-                            ->delete();
-                    }
-                }
-            })->cron($provider->cron());
+            //LogUtil::info('ScheduleProvider.schedule - ' . $provider->title() . ' - ' . $provider->cron());
+            self::callOne($schedule, $provider);
+        }
+        self::cleanHistory();
+    }
+
+    private static function callOne(Schedule $schedule, AbstractScheduleBiz $provider)
+    {
+        $schedule->call(function () use ($provider) {
+            //LogUtil::info('ScheduleProvider.schedule.run - ' . $provider->title() . ' - ' . $provider->cron());
+            $data = [];
+            $data['name'] = get_class($provider);
+            $data['startTime'] = date('Y-m-d H:i:s');
+            $data['status'] = RunStatus::RUNNING;
+            $data = ModelUtil::insert(ScheduleRun::class, $data);
+            $dataId = $data['id'];
+            $data = [];
+            try {
+                $result = call_user_func([$provider, 'run']);
+                $data['result'] = StrUtil::mbLimit($result, 200);
+                $data['status'] = RunStatus::SUCCESS;
+            } catch (\Exception $e) {
+                $data['result'] = StrUtil::mbLimit($e->getMessage(), 200);
+                $data['status'] = RunStatus::FAILED;
+            }
+            $data['endTime'] = date('Y-m-d H:i:s');
+            ModelUtil::update(ScheduleRun::class, $dataId, $data);
+        })->cron($provider->cron());
+    }
+
+    private static function cleanHistory()
+    {
+        if (RandomUtil::percent(10)) {
+            ModelUtil::model(ScheduleRun::class)
+                ->where('created_at', '<', date('Y-m-d H:i:s', time() - TimeUtil::PERIOD_DAY * 7))
+                ->delete();
         }
     }
 }

@@ -548,7 +548,7 @@ class Form implements Renderable
                 $res = call_user_func($this->hookResponse(), $this);
             }
             if (empty($res)) {
-                return Response::jsonSuccess(L('Save Success'));
+                return Response::jsonSuccess(L('SaveSuccess'));
             }
             return $res;
         } catch (BizException $e) {
@@ -629,7 +629,7 @@ class Form implements Renderable
                 $res = call_user_func($this->hookResponse(), $this);
             }
             if (empty($res)) {
-                return Response::json(0, L('Add Success'), null, CRUDUtil::jsDialogClose('ijs'));
+                return Response::json(0, L('AddSuccess'), null, CRUDUtil::jsDialogClose('ijs'));
             }
             return $res;
         } catch (BizException $e) {
@@ -649,7 +649,7 @@ class Form implements Renderable
             $this->mode(FormMode::EDIT);
             $this->itemId($id);
             $this->item($this->repository()->editing($this));
-            BizException::throwsIfEmpty(L('Record Not Exists'), $this->item);
+            BizException::throwsIfEmpty(L('RecordNotExists'), $this->item);
             $this->build();
             $this->fillEditableFields();
             return $this;
@@ -733,7 +733,7 @@ class Form implements Renderable
                 $res = call_user_func($this->hookResponse(), $this);
             }
             if (empty($res)) {
-                return Response::json(0, L('Edit Success'), null, CRUDUtil::jsDialogClose('ijs'));
+                return Response::json(0, L('EditSuccess'), null, CRUDUtil::jsDialogClose('ijs'));
             }
             return $res;
         } catch (BizException $e) {
@@ -768,7 +768,7 @@ class Form implements Renderable
                 $res = call_user_func($this->hookResponse(), $this);
             }
             if (empty($res)) {
-                return Response::jsonSuccess(L('Delete Success'));
+                return Response::jsonSuccess(L('DeleteSuccess'));
             }
             return $res;
         } catch (BizException $e) {
@@ -789,7 +789,7 @@ class Form implements Renderable
         try {
             $result = $this->repository->sortEdit($this);
             ResultException::throwsIfFail($this->hookCall($this->hookChanged));
-            return Response::jsonSuccess(L('Operate Success'));
+            return Response::jsonSuccess(L('OperateSuccess'));
         } catch (BizException $e) {
             return Response::jsonError($e->getMessage());
         } catch (ResultException $e) {

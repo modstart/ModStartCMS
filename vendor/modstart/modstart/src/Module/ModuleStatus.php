@@ -15,7 +15,7 @@ class ModuleStatus implements BaseType
     {
         return [
             self::INSTALLED => L('Installed'),
-            self::NOT_INSTALLED => L('Not Installed'),
+            self::NOT_INSTALLED => L('NotInstalled'),
         ];
     }
 

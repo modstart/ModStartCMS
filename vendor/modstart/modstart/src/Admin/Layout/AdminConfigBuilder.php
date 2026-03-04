@@ -124,7 +124,7 @@ class AdminConfigBuilder implements Renderable
                         $config->set($k, $v);
                     }
                 }
-                return Response::jsonSuccess(L('Save Success'));
+                return Response::jsonSuccess(L('SaveSuccess'));
             });
         }
         if (null === $item) {

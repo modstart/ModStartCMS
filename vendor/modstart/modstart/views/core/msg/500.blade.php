@@ -347,12 +347,12 @@
             @if(!empty($msg))
                 {{ $msg }}
             @else
-                {{L('Internal Server Error')}} :(
+                {{L('InternalServerError')}} :(
             @endif
         </h1>
         <div class="error-subtitle">
-            <a href="javascript:;" onclick="window.location.reload();">{{L('Refresh Page')}}</a>
-            <a href="{{modstart_web_url('')}}">{{L('Visit Home')}}</a>
+            <a href="javascript:;" onclick="window.location.reload();">{{L('RefreshPage')}}</a>
+            <a href="{{modstart_web_url('')}}">{{L('VisitHome')}}</a>
         </div>
     </div>
 @endsection

@@ -1,3 +1,9 @@
+## [Unreleased]
+
+- 优化：`AbstractSiteUrlBiz`/SiteUrl 提供者增强，新增批量更新与删除辅助方法，便于站点链接管理
+
+---
+
 ## 5.0.0
 
 - 新增：

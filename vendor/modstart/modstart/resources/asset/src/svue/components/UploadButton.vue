@@ -131,7 +131,7 @@ export default {
                 // console.log('Wait dataUploadConfig')
                 return
             }
-            let uploadText = this.uploadText || this.L('Select Local File')
+            let uploadText = this.uploadText || this.L('SelectLocalFile')
             let text = '<div class="btn btn-block"><i class="iconfont icon-upload"></i> ' + uploadText + '</div>'
             if (this.size === 'lg') {
                 text = '<span class="btn btn-block btn-lg"><i class="iconfont icon-upload"></i> ' + uploadText + '</span>'

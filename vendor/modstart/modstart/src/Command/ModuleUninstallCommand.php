@@ -21,7 +21,7 @@ class ModuleUninstallCommand extends Command
         $isExists = ModuleManager::isExists($module);
         $installeds = ModuleManager::listAllInstalledModules();
         if ($isExists) {
-            BizException::throwsIf(L('Module not installed'), !isset($installeds[$module]));
+            BizException::throwsIf(L('ModuleNotInstalled'), !isset($installeds[$module]));
             foreach ($installeds as $one => $_) {
                 $basic = ModuleManager::getModuleBasic($one);
                 if (empty($basic)) {

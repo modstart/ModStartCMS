@@ -18,12 +18,12 @@ class ModuleServiceProvider extends ServiceProvider
         AdminMenu::register(function () {
             return [
                 [
-                    'title' => L('System Manage'),
+                    'title' => L('SystemManage'),
                     'icon' => 'code-alt',
                     'sort' => 700,
                     'children' => [
                         [
-                            'title' => L('Module Manage'),
+                            'title' => L('ModuleManage'),
                             'rule' => 'ModuleStoreManage',
                             'url' => '\Module\ModuleStore\Admin\Controller\ModuleStoreController@index',
                         ]

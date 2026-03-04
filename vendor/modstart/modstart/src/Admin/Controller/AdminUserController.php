@@ -42,7 +42,7 @@ class AdminUserController extends Controller
                 $item = $field->item();
                 /** @var \stdClass $item */
                 if (AdminPermission::isFounder($item->id)) {
-                    return [L('Admin Founder')];
+                    return [L('AdminFounder')];
                 }
                 return collect($value)->pluck('name')->toArray();
             });
@@ -53,8 +53,8 @@ class AdminUserController extends Controller
                     ]);
                 });
             }
-            $grid->text('lastLoginTime', L('Last Login Time'));
-            $grid->text('lastLoginIp', L('Last Login Ip'));
+            $grid->text('lastLoginTime', L('LastLoginTime'));
+            $grid->text('lastLoginIp', L('LastLoginIp'));
             $grid->gridFilter(function (GridFilter $filter) {
                 $filter->eq('id', L('ID'));
                 $filter->like('username', L('Username'));
@@ -68,7 +68,7 @@ class AdminUserController extends Controller
         if (AdminPermission::isNotPermit('AdminUserManage')) {
             $grid->canAdd(false)->canEdit(false)->canDelete(false);
         }
-        $grid->title(L('Admin User'));
+        $grid->title(L('AdminUser'));
         return $grid;
     }
 
@@ -77,7 +77,7 @@ class AdminUserController extends Controller
         $form = new Form(AdminUser::class, function (Form $form) {
             $form->text('username', L('Username'))->required()->rules('unique:admin_user,username,' . CRUDUtil::id());
             $form->text('password', L('Password'))->rules($form->isModeAdd() ? 'required' : '')
-                ->placeholder($form->isModeAdd() ? '' : L('Keep Old Password If Empty'))
+                ->placeholder($form->isModeAdd() ? '' : L('KeepOldPasswordIfEmpty'))
                 ->value($form->isModeAdd() ? RandomUtil::string(6) : '')
                 ->hookFormatValue(function ($value, AbstractField $field) {
                     return '';
@@ -110,7 +110,7 @@ class AdminUserController extends Controller
                     ]);
                 })->formShowOnly(true);
             }
-            $form->display('created_at', L('Created At'))->editable(true);
+            $form->display('created_at', L('CreatedAt'))->editable(true);
             $form->hookSaving(function (Form $form) {
                 if ($form->isModeAdd()) {
                     $data = $form->dataAdding();
@@ -143,7 +143,7 @@ class AdminUserController extends Controller
             $form->hookDeleting(function (Form $form) {
                 $form->item()->each(function ($item) {
                     if (AdminPermission::isFounder($item->id)) {
-                        BizException::throws(L('Admin Founder Delete Forbidden'));
+                        BizException::throws(L('AdminFounderDeleteForbidden'));
                     }
                 });
             });
@@ -164,7 +164,7 @@ class AdminUserController extends Controller
         if (AdminPermission::isNotPermit('AdminUserManage')) {
             $form->canAdd(false)->canEdit(false)->canDelete(false);
         }
-        $form->title(L('Admin User'));
+        $form->title(L('AdminUser'));
         return $form;
     }
 
@@ -183,7 +183,7 @@ class AdminUserController extends Controller
                 $item = $field->item();
                 /** @var \stdClass $item */
                 if (AdminPermission::isFounder($item->id)) {
-                    return [L('Admin Founder')];
+                    return [L('AdminFounder')];
                 }
                 return collect($value)->pluck('name')->toArray();
             });
@@ -194,10 +194,10 @@ class AdminUserController extends Controller
                     ]);
                 });
             }
-            $detail->display('created_at', L('Created At'));
-            $detail->display('updated_at', L('Updated At'));
+            $detail->display('created_at', L('CreatedAt'));
+            $detail->display('updated_at', L('UpdatedAt'));
         });
-        $detail->title(L('Admin User'));
+        $detail->title(L('AdminUser'));
         return $detail;
     }
 }

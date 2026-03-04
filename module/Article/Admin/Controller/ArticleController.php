@@ -47,8 +47,8 @@ class ArticleController extends Controller
                 $builder->text('alias', '别名')
                     ->help("默认留空，可通过链接 <code>$url</code> 访问，不能为纯数字");
                 $builder->richHtml('content', '内容')->listable(false);
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('position', '位置')->select(ArticlePosition::class);

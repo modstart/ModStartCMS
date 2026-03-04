@@ -80,6 +80,9 @@ const EventManager = {
         const event = new CustomEvent(name, {
             detail: detail
         });
+        if (typeof element === 'string') {
+            element = document.querySelector(element)
+        }
         if (element.dispatchEvent) {
             element.dispatchEvent(event)
         } else {

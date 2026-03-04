@@ -64,10 +64,10 @@ class AuthController extends Controller
                 $username = $input->getTrimString('username');
                 $password = $input->getTrimString('password');
                 if (empty($username)) {
-                    return Response::json(-1, L('Username Required'));
+                    return Response::json(-1, L('UsernameRequired'));
                 }
                 if (empty($password)) {
-                    return Response::json(-2, L('Password Required'));
+                    return Response::json(-2, L('PasswordRequired'));
                 }
             }
             if (config('modstart.admin.login.captcha', false)) {
@@ -78,7 +78,7 @@ class AuthController extends Controller
                     }
                 } else {
                     if (!CaptchaFacade::check($input->getTrimString('captcha'))) {
-                        return Response::json(-1, L('Captcha Incorrect'), null, "[ijs]$('[data-captcha]').click();");
+                        return Response::json(-1, L('CaptchaIncorrect'), null, "[ijs]$('[data-captcha]').click();");
                     }
                 }
             }
@@ -88,21 +88,21 @@ class AuthController extends Controller
                 $phone = $smsCaptchaProvider->getVerifiedPhone();
                 $ret = Admin::loginByPhone($phone);
                 if ($ret['code']) {
-                    Admin::addErrorLog(0, L('Login Error'), [
+                    Admin::addErrorLog(0, L('LoginError'), [
                         'IP' => Request::ip(),
                         L('Phone') => $phone,
                     ]);
-                    return Response::json(-1, L('Login Error'), null, "[ijs]$('[data-captcha]').click();");
+                    return Response::json(-1, L('LoginError'), null, "[ijs]$('[data-captcha]').click();");
                 }
             } else {
                 $ret = Admin::login($username, $password);
                 if ($ret['code']) {
-                    Admin::addErrorLog(0, L('Login Error'), [
+                    Admin::addErrorLog(0, L('LoginError'), [
                         'IP' => Request::ip(),
                         L('Username') => $username,
                         L('Password') => '******',
                     ]);
-                    return Response::json(-1, L('Username / Password Incorrect'), null, "[ijs]$('[data-captcha]').click();");
+                    return Response::json(-1, L('UsernamePasswordIncorrect'), null, "[ijs]$('[data-captcha]').click();");
                 }
             }
             $adminUser = $ret['data'];
@@ -115,7 +115,7 @@ class AuthController extends Controller
                     Session::put('_adminUserPasswordWeak', true);
                 }
             }
-            Admin::addInfoLog($adminUser['id'], L('Login Success'), [
+            Admin::addInfoLog($adminUser['id'], L('LoginSuccess'), [
                 'IP' => Request::ip(),
             ]);
             AdminUserLoginedEvent::fire($adminUser['id'], Request::ip(), AgentUtil::getUserAgent());
@@ -123,7 +123,7 @@ class AuthController extends Controller
             return Response::redirect($redirect);
         }
         return view('modstart::admin.login', [
-            'pageTitle' => L('Admin Login'),
+            'pageTitle' => L('AdminLogin'),
             'captchaProviderName' => $captchaProviderName,
             'captchaProvider' => $captchaProvider,
             'redirect' => $redirect,
@@ -142,7 +142,7 @@ class AuthController extends Controller
         $sign = md5($id . ':' . $ts . ':' . $adminUser['password'] . ':' . $adminUser['passwordSalt']);
         BizException::throwsIf('登录失败', $sign != $input->getTrimString('sign'));
         Session::put(Admin::ADMIN_USER_ID_SESSION_KEY, $adminUser['id']);
-        Admin::addInfoLog($adminUser['id'], L('Login Success'), [
+        Admin::addInfoLog($adminUser['id'], L('LoginSuccess'), [
             'IP' => Request::ip(),
         ]);
         $redirect = $input->getTrimString('redirect', modstart_admin_url());
@@ -159,7 +159,7 @@ class AuthController extends Controller
             if ($input->getTrimString('server', '') != 'true') {
                 $ssoServer = modstart_config('adminSSOServer');
                 if (empty($ssoServer)) {
-                    return Response::send(-1, L('Config adminSSOServer missing'));
+                    return Response::send(-1, L('ConfigAdminSSOServerMissing'));
                 }
                 $clientRedirect = $input->getTrimString('redirect', '/');
                 $clientLogout = Request::domainUrl() . '/logout?server=true&redirect=' . urlencode($clientRedirect);
@@ -173,16 +173,16 @@ class AuthController extends Controller
     public function ssoClient()
     {
         if (!modstart_config('adminSSOClientEnable', false)) {
-            return Response::send(-1, L('Config adminSSOClientEnable disabled'));
+            return Response::send(-1, L('ConfigAdminSSOClientEnableDisabled'));
         }
         $ssoServer = modstart_config('adminSSOServer', '');
         if (empty($ssoServer)) {
-            return Response::send(-1, L('Config adminSSOServer missing'));
+            return Response::send(-1, L('ConfigAdminSSOServerMissing'));
         }
 
         $ssoSecret = modstart_config('adminSSOClientSecret');
         if (empty($ssoSecret)) {
-            return Response::send(-1, L('Config adminSSOClientSecret missing'));
+            return Response::send(-1, L('ConfigAdminSSOClientSecretMissing'));
         }
 
         $input = InputPackage::buildFromInput();

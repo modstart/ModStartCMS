@@ -19,26 +19,26 @@ class AdminPermission
     public static function demoPostCheck()
     {
         if (self::isDemo() && Request::isPost()) {
-            Response::quit(-1, L('Operate Forbidden For Demo Account'));
+            Response::quit(-1, L('OperateForbiddenForDemoAccount'));
         }
     }
 
     public static function demoCheck()
     {
         if (self::isDemo()) {
-            Response::quit(-1, L('Operate Forbidden For Demo Account'));
+            Response::quit(-1, L('OperateForbiddenForDemoAccount'));
         }
     }
 
     public static function demoResponse()
     {
-        return Response::send(-1, L('Operate Forbidden For Demo Account'));
+        return Response::send(-1, L('OperateForbiddenForDemoAccount'));
     }
 
     public static function permitCheck($rule)
     {
         if (!self::permit($rule)) {
-            Response::quit(-1, L('No Permission'));
+            Response::quit(-1, L('NoPermission'));
         }
     }
 

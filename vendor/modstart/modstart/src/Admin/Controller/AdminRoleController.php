@@ -31,8 +31,8 @@ class AdminRoleController extends Controller
     {
         $grid = new Grid(AdminRole::class, function (Grid $grid) {
             $grid->display('id', L('ID'))->sortable(true)->width(80);
-            $grid->text('name', L('Role Name'))->width(200);
-            $grid->tree('rules', L('Role Permission'))
+            $grid->text('name', L('RoleName'))->width(200);
+            $grid->tree('rules', L('RolePermission'))
                 ->columnNameChildren('children')
                 ->columnNameId('rule')->spread(false)
                 ->tree(AdminPermission::menuAll(null, true))
@@ -55,7 +55,7 @@ class AdminRoleController extends Controller
         if (AdminPermission::isNotPermit('AdminRoleManage')) {
             $grid->canAdd(false)->canEdit(false)->canDelete(false);
         }
-        $grid->title(L('Admin Role'));
+        $grid->title(L('AdminRole'));
         return $grid;
     }
 
@@ -63,8 +63,8 @@ class AdminRoleController extends Controller
     {
         $form = new Form(AdminRole::class, function (Form $form) {
             $form->display('id', L('ID'))->editable(true);
-            $form->text('name', L('Role Name'))->required()->rules('unique:admin_role,name,' . CRUDUtil::id());
-            $form->tree('rules', L('Role Permission'))->rules('required')
+            $form->text('name', L('RoleName'))->required()->rules('unique:admin_role,name,' . CRUDUtil::id());
+            $form->tree('rules', L('RolePermission'))->rules('required')
                 ->columnNameChildren('children')
                 ->columnNameId('rule')->tree(AdminPermission::menuAll(null, true))
                 ->hookValueUnserialize(function ($value, AbstractField $field) {
@@ -83,8 +83,8 @@ class AdminRoleController extends Controller
                 })->formShowOnly(true);
             }
             $form->textarea('remark', L('Remark'));
-            $form->display('created_at', L('Created At'))->formShowOnly(true);
-            $form->display('updated_at', L('Updated At'));
+            $form->display('created_at', L('CreatedAt'))->formShowOnly(true);
+            $form->display('updated_at', L('UpdatedAt'));
             $form->hookSaving(function (Form $form) {
                 if (FormMode::EDIT == $form->mode()) {
                     $datSubmitted = $form->dataSubmitted();
@@ -125,7 +125,7 @@ class AdminRoleController extends Controller
         if (AdminPermission::isNotPermit('AdminRoleManage')) {
             $form->canAdd(false)->canEdit(false)->canDelete(false);
         }
-        $form->title(L('Admin Role'));
+        $form->title(L('AdminRole'));
         return $form;
     }
 
@@ -133,8 +133,8 @@ class AdminRoleController extends Controller
     {
         $detail = new Detail(AdminRole::class, function (Detail $detail) {
             $detail->display('id', L('ID'));
-            $detail->text('name', L('Role Name'));
-            $detail->tree('rules', L('Role Permission'))
+            $detail->text('name', L('RoleName'));
+            $detail->tree('rules', L('RolePermission'))
                 ->columnNameId('rule')
                 ->columnNameChildren('children')
                 ->tree(AdminPermission::menuAll(null, true))
@@ -151,10 +151,10 @@ class AdminRoleController extends Controller
                 });
             }
             $detail->display('remark', L('Remark'));
-            $detail->display('created_at', L('Created At'));
-            $detail->display('updated_at', L('Updated At'));
+            $detail->display('created_at', L('CreatedAt'));
+            $detail->display('updated_at', L('UpdatedAt'));
         });
-        $detail->title(L('Admin Role'));
+        $detail->title(L('AdminRole'));
         return $detail;
     }
 }

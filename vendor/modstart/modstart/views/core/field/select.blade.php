@@ -56,7 +56,7 @@
                 data = Object.assign({value:initValue},data);
                 MS.api.postSuccess('{{$optionRemote}}',data,function(res){
                     var html = [];
-                    html.push('<option value="">{{L('Please Select')}}</option>');
+                    html.push('<option value="">{{L('PleaseSelect')}}</option>');
                     res.data.records.forEach(function(item){
                         var current = ( item.value+''===initValue+'' );
                         html.push('<option value="'+item.value+'" '+(current?'selected':'')+'>'+MS.util.specialchars(item.label)+'</option>');

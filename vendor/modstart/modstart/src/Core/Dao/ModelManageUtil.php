@@ -386,8 +386,8 @@ class ModelManageUtil
     {
         $buildColumnComment = array_merge([
             'id' => 'ID',
-            'created_at' => L('Created At'),
-            'updated_at' => L('Updated At'),
+            'created_at' => L('CreatedAt'),
+            'updated_at' => L('UpdatedAt'),
         ], $buildColumnComment);
         $tables = self::query('SHOW TABLE STATUS;', $conn);
         $result = [];
@@ -414,8 +414,8 @@ class ModelManageUtil
                 if (empty($c['comment'])) {
                     $map = [
                         'id' => 'ID',
-                        'created_at' => L('Created At'),
-                        'updated_at' => L('Updated At'),
+                        'created_at' => L('CreatedAt'),
+                        'updated_at' => L('UpdatedAt'),
                     ];
                     $c['comment'] = isset($buildColumnComment[$c['name']]) ? $buildColumnComment[$c['name']] : '';
                 }

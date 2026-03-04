@@ -29,4 +29,18 @@ class UrlUtil
         }
         return $url;
     }
+
+    public static function catById($catId)
+    {
+        $cat = CmsCatUtil::get($catId);
+        return self::cat($cat);
+    }
+
+    public static function cat($cat)
+    {
+        if (!empty($cat['fullUrl'])) {
+            return modstart_web_url($cat['fullUrl']);
+        }
+        return modstart_web_url($cat['url']);
+    }
 }

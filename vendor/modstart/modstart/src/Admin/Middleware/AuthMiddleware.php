@@ -156,7 +156,7 @@ class AuthMiddleware
                             }
                         }
                     }
-                    return Response::send(-1, L('No Permission'));
+                    return Response::send(-1, L('NoPermission'));
                 }
             } else {
                 $controllerRuleMap = array_filter(array_build($rules, function ($k, $rule) {
@@ -170,7 +170,7 @@ class AuthMiddleware
                  */
                 if (isset($controllerRuleMap[$urlControllerMethod])) {
                     if (empty($rules[$controllerRuleMap[$urlControllerMethod]]['auth'])) {
-                        return Response::send(-1, L('No Permission'));
+                        return Response::send(-1, L('NoPermission'));
                     }
                 } else {
                     /*
@@ -204,15 +204,15 @@ class AuthMiddleware
                         }
                         if (isset($rules[$checkControllerMethod])) {
                             if (empty($rules[$checkControllerMethod]['auth'])) {
-                                return Response::send(-1, L('No Permission'));
+                                return Response::send(-1, L('NoPermission'));
                             }
                         } else {
                             if (isset($controllerRuleMap[$checkControllerMethod])) {
                                 if (empty($rules[$controllerRuleMap[$checkControllerMethod]]['auth'])) {
-                                    return Response::send(-1, L('No Permission'));
+                                    return Response::send(-1, L('NoPermission'));
                                 }
                             } else {
-                                return Response::send(-1, L('No Permission'));
+                                return Response::send(-1, L('NoPermission'));
                             }
                         }
                     }

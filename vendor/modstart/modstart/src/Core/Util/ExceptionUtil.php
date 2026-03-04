@@ -16,7 +16,7 @@ class ExceptionUtil
         $message = $e->getMessage();
         if (!empty($option['mysql'])) {
             if (Str::contains($message, 'Duplicate entry')) {
-                BizException::throws(L('Records Duplicated'));
+                BizException::throws(L('RecordsDuplicated'));
             }
             $formatErrorTemplates = [
                 ['Data too long for column', '/Data too long for column \'(.*)\' at row/', 'FieldTooLong'],

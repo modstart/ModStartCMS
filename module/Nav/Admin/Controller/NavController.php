@@ -72,8 +72,8 @@ class NavController extends Controller
                 $builder->link('link', '链接');
                 $builder->switch('enable', '启用')->optionsYesNo()->gridEditable(true)->defaultValue(true);
                 $builder->radio('openType', '打开方式')->optionType(NavOpenType::class)->defaultValue(NavOpenType::CURRENT_WINDOW);
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             });
         foreach (NavPosition::getList() as $key => $value) {
             $builder->scopeFilter($key, $value, function (ScopeFilter $filter) use ($key) {

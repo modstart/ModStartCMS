@@ -9,7 +9,8 @@ use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ArrayUtil;
 use ModStart\Core\Util\TreeUtil;
-use Module\Cms\Type\CatUrlMode;
+use Module\Cms\Model\CmsCat;
+use Module\Cms\Model\CmsModel;
 
 class CmsCatUtil
 {
@@ -22,7 +23,7 @@ class CmsCatUtil
     public static function all()
     {
         return Cache::rememberForever('CmsCatAll', function () {
-            $records = ModelUtil::all('cms_cat', [
+            $records = ModelUtil::all(CmsCat::class, [
                 'enable' => true,
             ]);
             ModelUtil::decodeRecordsNumberArray($records, [
@@ -31,7 +32,7 @@ class CmsCatUtil
             ]);
             foreach ($records as $k => $v) {
                 $records[$k]['_model'] = CmsModelUtil::get($v['modelId']);
-                $records[$k]['_url'] = CatUrlMode::url($v);
+                $records[$k]['_url'] = UrlUtil::cat($v);
             }
             AssetsUtil::recordsFixFullOrDefault($records, [
                 'cover',
@@ -189,7 +190,7 @@ class CmsCatUtil
 
     public static function build($modelName, $cat, $catParentUrl = null)
     {
-        $model = ModelUtil::get('cms_model', ['name' => $modelName]);
+        $model = ModelUtil::get(CmsModel::class, ['name' => $modelName]);
         if (!isset($cat['pid'])) {
             $cat['pid'] = 0;
         }
@@ -198,10 +199,10 @@ class CmsCatUtil
         }
         $cat['modelId'] = $model['id'];
         if ($catParentUrl) {
-            $parentCat = ModelUtil::get('cms_cat', ['url' => $catParentUrl]);
+            $parentCat = ModelUtil::get(CmsCat::class, ['url' => $catParentUrl]);
             $cat['pid'] = $parentCat['id'];
         }
-        ModelUtil::insert('cms_cat', $cat);
+        ModelUtil::insert(CmsCat::class, $cat);
     }
 
 }

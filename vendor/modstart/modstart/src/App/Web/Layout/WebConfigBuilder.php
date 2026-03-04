@@ -89,7 +89,7 @@ class WebConfigBuilder implements Renderable
                 if (null !== $ret) {
                     return $ret;
                 }
-                return Response::jsonSuccess(L('Save Success'));
+                return Response::jsonSuccess(L('SaveSuccess'));
             });
         }
         if (null === $item) {

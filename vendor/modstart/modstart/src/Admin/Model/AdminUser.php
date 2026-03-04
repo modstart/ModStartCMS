@@ -18,7 +18,7 @@ class AdminUser extends Model
 
     public static function getCached($adminUserId)
     {
-        return ModelUtil::get('admin_user', $adminUserId);
+        return ModelUtil::get(static::class, $adminUserId);
     }
 
     protected static function boot()

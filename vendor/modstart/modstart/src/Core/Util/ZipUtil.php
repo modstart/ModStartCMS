@@ -160,4 +160,39 @@ class ZipUtil
         }
         return self::fileTreeSort($tree);
     }
+
+    /**
+     * @param array $option
+     * @return string
+     * @throws \ModStart\Core\Exception\BizException
+     * @example
+     * ZipUtil::compress([
+     *     'contentFiles' => [
+     *         'file1.txt' => 'file1 content',
+     *         'file2.txt' => 'file2 content',
+     *     ],
+     *     'pathFiles' => [
+     *         'file3.txt'=>'/path/to/file3.txt',
+     *         'file4.txt'=>'/path/to/file4.txt',
+     *     ],
+     * ]);
+     */
+    public static function compress($option = [])
+    {
+        $option = array_merge([
+            'contentFiles' => [],
+            'pathFiles' => [],
+        ], $option);
+        $zipTemp = FileUtil::generateLocalTempPath('zip');
+        $zip = new \ZipArchive();
+        $zip->open($zipTemp, \ZipArchive::CREATE);
+        foreach ($option['contentFiles'] as $fileName => $content) {
+            $zip->addFromString($fileName, $content);
+        }
+        foreach ($option['pathFiles'] as $zipPath => $filePath) {
+            $zip->addFile($filePath, $zipPath);
+        }
+        $zip->close();
+        return $zipTemp;
+    }
 }

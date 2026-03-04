@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use ModStart\Admin\Auth\AdminPermission;
 use ModStart\Admin\Layout\AdminConfigBuilder;
 use ModStart\Admin\Layout\AdminDialogPage;
+use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
@@ -69,7 +70,8 @@ class ConfigController extends Controller
                 ->ruleRegex('/^https?:\\/\\/.+/');
             $builder->text('siteKeywords', '网站关键词');
             $builder->textarea('siteDescription', '网站描述');
-            $builder->image('siteFavIco', '网站ICO');
+            $builder->image('siteFavIco', '网站ICO')
+                ->help('<a href="javascript:;" onclick="MS.eventManager.fireElementEvent(\'[data-field=siteFavIco]\',\'set-value\',{path:\'' . AssetsUtil::fixFull('favicon.ico') . '\'});">使用 favicon.ico</a>');
         });
         $builder->layoutPanel('主题设置', function ($builder) {
             /** @var HasFields $builder */

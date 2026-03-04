@@ -105,4 +105,11 @@ class MemberUser
     {
         return MemberUtil::viewName(self::user());
     }
+
+    public static function init($memberUserId)
+    {
+        $memberUser = MemberUtil::get($memberUserId);
+        Session::put('memberUserId', $memberUserId);
+        Session::flash('_memberUser', $memberUser);
+    }
 }

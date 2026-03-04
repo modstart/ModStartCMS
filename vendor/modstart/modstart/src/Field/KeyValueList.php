@@ -26,8 +26,8 @@ class KeyValueList extends AbstractField
         $this->addVariables([
             'keyTitle' => L('Key'),
             'valueTitle' => L('Value'),
-            'keyPlaceholder' => L('Please Input'),
-            'valuePlaceholder' => L('Please Input'),
+            'keyPlaceholder' => L('PleaseInput'),
+            'valuePlaceholder' => L('PleaseInput'),
             'keyLabel' => 'k',
             'valueLabel' => 'v',
         ]);

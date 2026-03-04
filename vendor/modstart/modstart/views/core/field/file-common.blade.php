@@ -25,7 +25,7 @@
                     <div class="ub-file-selector__action">
                         <a href="javascript:;" class="btn" data-gallery>
                             <i class="iconfont icon-category"></i>
-                            {{L('File Gallery')}}
+                            {{L('FileGallery')}}
                         </a>
                     </div>
                 @endif
@@ -33,7 +33,7 @@
                     <div class="ub-file-selector__action">
                         <a href="javascript:;" class="btn" data-reset-default>
                             <i class="iconfont icon-undo"></i>
-                            {{L('Reset Default')}}
+                            {{L('ResetDefault')}}
                         </a>
                     </div>
                 @endif
@@ -49,6 +49,11 @@
                 var $field = $('#{{$id}}');
                 var $input = $field.find('[name="{{$name}}"]');
                 var $selector = $('#{{$name}}Selector');
+                $field.on('set-value', function (e) {
+                    if(e.originalEvent.detail && e.originalEvent.detail.path){
+                        setValue(e.originalEvent.detail.path);
+                    }
+                });
                 function setValue(path) {
                     path = path || '';
                     $input.val(path);
@@ -74,7 +79,7 @@
                 @endif
                 setValue($input.val());
                 MS.uploadButton('#{{$id}}Uploader', {
-                    text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
+                    text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("LocalUpload")}}</a>',
                     server: "{{$server}}",
                     extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.'.$category.'.extensions'))) !!},
                     sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.'.$category.'.maxSize')) !!},

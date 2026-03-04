@@ -32,8 +32,8 @@ class PartnerController extends Controller
                 $builder->image('logo', 'Logo');
                 $builder->text('link', '链接');
                 $builder->switch('enable', '启用')->gridEditable(true)->defaultValue(true);
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('position', '位置')->select(PartnerPosition::class);

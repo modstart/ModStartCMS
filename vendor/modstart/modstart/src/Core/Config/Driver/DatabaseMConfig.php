@@ -29,7 +29,7 @@ class DatabaseMConfig extends MConfig
             }
         }
         if (null === $value) {
-            $config = ModelUtil::get('config', ['key' => $key]);
+            $config = ModelUtil::get(Config::class, ['key' => $key]);
             if ($config) {
                 Cache::forever($cacheFlag, $config['value']);
                 if (null === $config['value'] || '' === $config['value']) {
@@ -45,11 +45,11 @@ class DatabaseMConfig extends MConfig
 
     public function set($key, $value)
     {
-        $config = ModelUtil::get('config', ['key' => $key]);
+        $config = ModelUtil::get(Config::class, ['key' => $key]);
         if ($config) {
-            ModelUtil::update('config', ['id' => $config['id']], ['value' => $value]);
+            ModelUtil::update(Config::class, ['id' => $config['id']], ['value' => $value]);
         } else {
-            ModelUtil::insert('config', ['key' => $key, 'value' => $value]);
+            ModelUtil::insert(Config::class, ['key' => $key, 'value' => $value]);
         }
         $cacheFlag = self::CACHE_PREFIX . $key;
         Cache::forget($cacheFlag);
@@ -57,9 +57,9 @@ class DatabaseMConfig extends MConfig
 
     public function remove($key)
     {
-        $config = ModelUtil::get('config', ['key' => $key]);
+        $config = ModelUtil::get(Config::class, ['key' => $key]);
         if ($config) {
-            ModelUtil::delete('config', ['id' => $config['id']]);
+            ModelUtil::delete(Config::class, ['id' => $config['id']]);
         }
         $cacheFlag = self::CACHE_PREFIX . $key;
         Cache::forget($cacheFlag);
@@ -67,7 +67,7 @@ class DatabaseMConfig extends MConfig
 
     public function has($key)
     {
-        $config = ModelUtil::get('config', ['key' => $key]);
+        $config = ModelUtil::get(Config::class, ['key' => $key]);
         return !!$config;
     }
 

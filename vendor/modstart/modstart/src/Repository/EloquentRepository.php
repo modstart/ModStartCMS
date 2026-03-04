@@ -435,7 +435,7 @@ class EloquentRepository extends Repository
                 }
                 if ($form->engine() == FormEngine::TREE || $form->engine() == FormEngine::TREE_MASS) {
                     if ($model->getAttribute($this->getTreePidColumn())) {
-                        BizException::throwsIf(L('Parent Item Not Exists'), !TreeUtil::modelItemAddAble($model, $model->getAttribute($this->getTreePidColumn()), $this->getKeyName()));
+                        BizException::throwsIf(L('ParentItemNotExists'), !TreeUtil::modelItemAddAble($model, $model->getAttribute($this->getTreePidColumn()), $this->getKeyName()));
                     }
                     $model->setAttribute($this->getTreeSortColumn(), $this->getNextSortValue($this->getTreeSortColumn(), $form));
                 }
@@ -495,7 +495,7 @@ class EloquentRepository extends Repository
                 }
                 if ($form->engine() == FormEngine::TREE || $form->engine() == FormEngine::TREE_MASS) {
                     $exists = $model->newQuery()->where([$this->getKeyName() => $form->itemId()])->first($this->getFormColumns());
-                    BizException::throwsIf(L('Parent Error'), !TreeUtil::modelItemChangeAble(
+                    BizException::throwsIf(L('ParentError'), !TreeUtil::modelItemChangeAble(
                         $model,
                         $form->itemId(),
                         $exists->getAttribute($this->getTreePidColumn()),
@@ -646,7 +646,7 @@ class EloquentRepository extends Repository
                 }
                 $data = $model->toArray();
                 if ($form->engine() == FormEngine::TREE || $form->engine() == FormEngine::TREE_MASS) {
-                    BizException::throwsIf(L('Delete Error (has children node)'),
+                    BizException::throwsIf(L('DeleteErrorHasChildrenNode'),
                         !TreeUtil::modelItemDeleteAble($model, $form->itemId(), $this->getTreePidColumn())
                     );
                 }

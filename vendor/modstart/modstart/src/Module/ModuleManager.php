@@ -110,7 +110,7 @@ class ModuleManager
             return Response::generateError($e->getMessage());
         } catch (\Exception $e) {
             $message = $e->getMessage();
-            return Response::generateError(L('Server Error') . ': ' . $message);
+            return Response::generateError(L('ServerError') . ': ' . $message);
         }
     }
 
@@ -481,9 +481,9 @@ class ModuleManager
                     }
                 }
                 if (!empty($errors)) {
-                    BizException::throws(L('Module Not Fully Installed') . ' ' . join('; ', $errors));
+                    BizException::throws(L('ModuleNotFullyInstalled') . ' ' . join('; ', $errors));
                 } else {
-                    BizException::throws(L('Module Not Fully Installed') . ' ' . L('Requires') . '  ' . SerializeUtil::jsonEncode($modules));
+                    BizException::throws(L('ModuleNotFullyInstalled') . ' ' . L('Requires') . '  ' . SerializeUtil::jsonEncode($modules));
                 }
             }
         }

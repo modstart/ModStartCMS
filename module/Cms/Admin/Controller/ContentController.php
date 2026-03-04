@@ -112,7 +112,7 @@ class ContentController extends Controller
             if (modstart_config('CmsMemberPost_Enable', false)) {
                 $grid->adminMemberInfo('memberUserId', '用户');
             }
-            $grid->text('title', '标题');
+            $grid->display('title', '标题');
             $grid->type('status', '状态')->type(CmsModelContentStatus::class, [
                 CmsModelContentStatus::SHOW => 'success',
                 CmsModelContentStatus::HIDE => 'muted',
@@ -160,7 +160,7 @@ class ContentController extends Controller
                 ]);
             })->width(500);
         }
-        $grid->display('updated_at', L('Updated At'));
+        $grid->display('updated_at', L('UpdatedAt'));
         if (modstart_config('CmsMemberPost_Enable', false)) {
             $grid->hookItemOperateRendering(function (ItemOperate $itemOperate) {
                 /** @var \stdClass $item */
@@ -339,9 +339,14 @@ class ContentController extends Controller
                         $form->tags('tags', '标签')->serializeType(Tags::SERIALIZE_TYPE_COLON_SEPARATED);
                         $form->text('author', '作者');
                         $form->text('source', '来源');
-                        $options = array_merge([
+                        $options = [
                             '' => '默认',
-                        ], CmsTemplateUtil::allDetailTemplateMap());
+                        ];
+                        if ($this->model['mode'] === CmsMode::PAGE) {
+                            $options = array_merge($options, CmsTemplateUtil::allPageTemplateMap());
+                        } else {
+                            $options = array_merge($options, CmsTemplateUtil::allDetailTemplateMap());
+                        }
                         $form->select('detailTemplate', '模板')->options($options);
                     });
                 }

@@ -4,6 +4,9 @@ namespace ModStart\Core\Util;
 
 use Illuminate\Support\Facades\Log;
 
+/**
+ * @Util 日志工具
+ */
 class LogUtil
 {
     private static function prepareLogData($data)
@@ -39,16 +42,34 @@ class LogUtil
         return join(' - ', $text);
     }
 
+    /**
+     * @Util 输出 info 级日志
+     * @param $label string 日志标签
+     * @param $data mixed|数据 附加数据，为 null 时不输出
+     * @return void
+     */
     public static function info($label, $data = null)
     {
         Log::info(self::buildString($label, $data));
     }
 
+    /**
+     * @Util 输出 error 级日志
+     * @param $label string 日志标签
+     * @param $data mixed 附加数据，为 null 时不输出
+     * @return void
+     */
     public static function error($label, $data = null)
     {
         Log::error(self::buildString($label, $data));
     }
 
+    /**
+     * @Util 直接将 info 级日志输出到控制台
+     * @param $label string 日志标签
+     * @param $data mixed 附加数据，为 null 时不输出
+     * @return void
+     */
     public static function echoInfo($label, $data = null)
     {
         echo self::buildString($label, $data) . PHP_EOL;

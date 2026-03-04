@@ -4,6 +4,8 @@ return [
     "ChangePassword" => "修改密码",
     "Credit" => "积分",
     "Login" => "登录",
+    "LogoutConfirm" => "确认退出登录？",
+    "MemberCenter" => "用户中心",
     "MenuAccount" => "账号资料",
     "MenuAddress" => "我的地址",
     "MenuLogout" => "退出登录",

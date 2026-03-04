@@ -70,8 +70,8 @@ class MemberVipSetController extends Controller
                         });
                     }
                 }
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->like('title', '名称');

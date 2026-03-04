@@ -39,8 +39,8 @@ class MemberVipRightController extends Controller
                 $builder->text('title', '标题')->required();
                 $builder->text('desc', '描述')->required();
                 $builder->image('image', '图标')->required();
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->like('title', '名称');

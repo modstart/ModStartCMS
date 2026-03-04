@@ -4,13 +4,29 @@ namespace ModStart\Core\Util;
 
 use Illuminate\Support\Str;
 
+/**
+ * @Util 编码工具
+ */
 class EncodeUtil
 {
+    /**
+     * @Util 对字符串进行永久有效的带签名编码（不过期）
+     * @param $string string 原始字符串
+     * @param $key string|路径 签名密钥，如果为 null 使用系统密钥
+     * @return string
+     */
     public static function expiredDataForever($string, $key = null)
     {
         return self::expiredData($string, $key, 0);
     }
 
+    /**
+     * @Util 对字符串进行带过期时间的签名编码
+     * @param $string string 原始字符串
+     * @param $key string|null 签名密钥，如果为 null 使用系统密钥
+     * @param $expireSeconds int 过期时间（秒），0 表示永不过期
+     * @return string
+     */
     public static function expiredData($string, $key = null, $expireSeconds = 3600)
     {
         if (is_null($key)) {
@@ -63,11 +79,23 @@ class EncodeUtil
         return hex2bin($stringHex);
     }
 
+    /**
+     * @Util 使用加密应用密码加 salt 进行 MD5 加密
+     * @param $password string 原始密码
+     * @param $passwordSalt string 盐值
+     * @return string
+     */
     public static function md5WithSalt($password, $passwordSalt)
     {
         return md5(md5($password) . md5($passwordSalt));
     }
 
+    /**
+     * @Util 检测内容的字符集编码
+     * @param $content string 内容
+     * @param $checks array 候选字符集列表
+     * @return string
+     */
     public static function detectCharset($content, $checks = ['gbk', 'utf-8'])
     {
         $encoding = strtolower(mb_detect_encoding($content, $checks));
@@ -81,22 +109,43 @@ class EncodeUtil
         }
     }
 
+    /**
+     * @Util 将内容转换为 UTF-8 编码
+     * @param $content string 原始内容
+     * @param $froms array 候选原始字符集列表
+     * @return string
+     */
     public static function toUTF8($content, $froms = ['gbk', 'utf-8'])
     {
         $encoding = mb_detect_encoding($content, $froms);
         return iconv($encoding, 'UTF-8', $content);
     }
 
+    /**
+     * @Util 对字符串执行 URL 安全的 Base64 编码（替换 +/= 符号）
+     * @param $str string 原始字符串
+     * @return string
+     */
     public static function base64UrlSafeEncode($str)
     {
         return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($str));
     }
 
+    /**
+     * @Util 对 URL 安全的 Base64 字符串进行解码
+     * @param $str string URL 安全的 Base64 字符串
+     * @return string
+     */
     public static function base64UrlSafeDecode($str)
     {
         return base64_decode(str_replace(['-', '_'], ['+', '/'], $str));
     }
 
+    /**
+     * @Util 将文件内容用 XOR 加密并封装为 .xzip 格式
+     * @param $pathname string 输入文件路径
+     * @return string 输出 .xzip 文件路径
+     */
     public static function fileXzipEncode($pathname)
     {
         if (!file_exists($pathname)) {
@@ -175,6 +224,11 @@ class EncodeUtil
         return $outputPath;
     }
 
+    /**
+     * @Util 将 .xzip 封装文件解密还原为原始文件
+     * @param $pathname string .xzip 文件路径，如果不是 .xzip 简单返回原路径
+     * @return string 解密后的文件路径
+     */
     public static function fileXzipDecode($pathname)
     {
         if (!file_exists($pathname)) {
@@ -258,6 +312,11 @@ class EncodeUtil
         return $outputPath;
     }
 
+    /**
+     * @Util 将数据进行 gzip 压缩并 Base64 编码
+     * @param $data mixed 原始数据（自动 JSON 序列化）
+     * @return string
+     */
     public static function compressEncode($data)
     {
         $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
@@ -265,6 +324,11 @@ class EncodeUtil
         return base64_encode($data);
     }
 
+    /**
+     * @Util 将 compressEncode 得到的字符串解密并返回原始数据
+     * @param $data string 经过 compressEncode 编码的字符串
+     * @return mixed|null
+     */
     public static function compressDecode($data)
     {
         $data = @base64_decode($data);

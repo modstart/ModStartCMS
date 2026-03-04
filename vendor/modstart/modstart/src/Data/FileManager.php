@@ -65,7 +65,7 @@ class FileManager
             "Image Gallery",
             "File Gallery",
             "Copy Links",
-            "CompressingImage",
+            "Compressing Image",
         ]);
     }
 
@@ -446,7 +446,7 @@ class FileManager
     {
         $id = $input->getInteger('id');
         $category = ModelUtil::get($uploadCategoryTable, ['id' => $id, 'userId' => $userId,]);
-        BizException::throwsIfEmpty(L('Category not exists'), $category);
+        BizException::throwsIfEmpty(L('CategoryNotExists'), $category);
         $uploadCategories = ModelUtil::all($uploadCategoryTable, ['userId' => $userId,]);
         $childIds = TreeUtil::nodesChildrenIds($uploadCategories, $id);
         $childIds[] = $id;
@@ -464,11 +464,11 @@ class FileManager
         $id = $input->getInteger('id');
         $pid = $input->getInteger('pid');
         $title = $input->getTrimString('title');
-        BizException::throwsIfEmpty(L('Title required'), $title);
+        BizException::throwsIfEmpty(L('TitleRequired'), $title);
         if ($id) {
             $category = ModelUtil::get($uploadCategoryTable, ['id' => $id, 'userId' => $userId,]);
-            BizException::throwsIfEmpty(L('Category not exists'), $category);
-            BizException::throwsIf(L('Category cannot changed'), !TreeUtil::modelNodeChangeAble($uploadCategoryTable, $id, $category['pid'], $pid));
+            BizException::throwsIfEmpty(L('CategoryNotExists'), $category);
+            BizException::throwsIf(L('CategoryCannotChanged'), !TreeUtil::modelNodeChangeAble($uploadCategoryTable, $id, $category['pid'], $pid));
             ModelUtil::update($uploadCategoryTable, ['id' => $id, 'userId' => $userId,], [
                 'pid' => $pid,
                 'sort' => null,

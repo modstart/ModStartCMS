@@ -10,7 +10,7 @@
         <div style="max-width:600px;">
             <div class="ub-panel">
                 <div class="head">
-                    <div class="title">{{L('Please Select')}}</div>
+                    <div class="title">{{L('PleaseSelect')}}</div>
                 </div>
                 <div class="body">
                     <div class="content"

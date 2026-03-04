@@ -163,7 +163,7 @@ class Detail implements Renderable
     {
         $this->itemId($id);
         $this->item($this->repository()->show($this));
-        BizException::throwsIfEmpty(L('Record Not Exists'), $this->item);
+        BizException::throwsIfEmpty(L('RecordNotExists'), $this->item);
         $this->build();
         $this->fillFields();
         return $this;

@@ -26,17 +26,17 @@ class SystemController extends Controller
     {
         AdminPermission::demoCheck();
         AdminPermission::permitCheck('SystemManage');
-        Admin::addInfoLog(Admin::id(), L('Clear Cache'));
+        Admin::addInfoLog(Admin::id(), L('ClearCache'));
         $exitCode = Artisan::call("cache:clear");
         if (0 != $exitCode) {
-            return Response::send(-1, L('Clear Cache') . ' ' . L('Error') . " cache:clear ExitCode($exitCode)");
+            return Response::send(-1, L('ClearCache') . ' ' . L('Error') . " cache:clear ExitCode($exitCode)");
         }
         $exitCode = Artisan::call("view:clear");
         if (0 != $exitCode) {
-            return Response::send(-1, L('Clear Cache') . ' ' . L('Error') . " view:clear ExitCode($exitCode)");
+            return Response::send(-1, L('ClearCache') . ' ' . L('Error') . " view:clear ExitCode($exitCode)");
         }
         ModStart::clearCache();
-        return Response::jsonSuccess(L('Operate Success'));
+        return Response::jsonSuccess(L('OperateSuccess'));
     }
 
     public function securityFix(AdminDialogPage $page)
@@ -52,9 +52,9 @@ class SystemController extends Controller
                 }
                 // check write failed
                 if (!file_exists(storage_path('install.lock'))) {
-                    return Response::json(-1, L('Operate Failed'));
+                    return Response::json(-1, L('OperateFailed'));
                 }
-                return Response::json(0, L('Operate Success'), null, '[reload]');
+                return Response::json(0, L('OperateSuccess'), null, '[reload]');
             case 'installScript':
                 AdminPermission::demoCheck();
                 if (file_exists(public_path('install.php'))) {
@@ -62,9 +62,9 @@ class SystemController extends Controller
                 }
                 // check delete failed
                 if (file_exists(public_path('install.php'))) {
-                    return Response::json(-1, L('Operate Failed'));
+                    return Response::json(-1, L('OperateFailed'));
                 }
-                return Response::json(0, L('Operate Success'), null, '[reload]');
+                return Response::json(0, L('OperateSuccess'), null, '[reload]');
             case 'appDebug':
                 AdminPermission::demoCheck();
                 $content = file_get_contents(base_path('.env'));
@@ -76,12 +76,12 @@ class SystemController extends Controller
                         'Permission denied' => L('FileWriteNoPermission') . '(.env)',
                     ]);
                 }
-                return Response::json(0, L('Operate Success'), null, '[reload]');
+                return Response::json(0, L('OperateSuccess'), null, '[reload]');
             case 'adminPath':
                 $form = new Form(DynamicModel::class);
-                $form->text('oldPath', L('Current Path'))->rules('required')
+                $form->text('oldPath', L('CurrentPath'))->rules('required')
                     ->value(config('env.ADMIN_PATH', '/admin/'))->readonly(true);
-                $form->text('newPath', L('New Path'))->rules('required')
+                $form->text('newPath', L('NewPath'))->rules('required')
                     ->value('/admin_' . RandomUtil::lowerReadableString(6) . '/');
                 $form->showSubmit(false)->showReset(false);
                 if (Request::isPost()) {
@@ -90,22 +90,22 @@ class SystemController extends Controller
                         $data = $form->dataForming();
                         $newPath = $data['newPath'];
                         if (!Str::startsWith($newPath, '/') || !Str::endsWith($newPath, '/')) {
-                            return Response::generateError(L('Url must start with / and end with /'));
+                            return Response::generateError(L('UrlMustStartWithSlash'));
                         }
                         if (!preg_match('/^\\/[a-zA-Z0-9_]+\\/$/', $newPath)) {
-                            return Response::generateError(L('Admin url only contains a-zA-Z0-9_'));
+                            return Response::generateError(L('AdminUrlOnlyContains'));
                         }
                         $content = file_get_contents(base_path('.env'));
                         $content = preg_replace('/ADMIN_PATH\\s*=\\s*.*?\\n/', "ADMIN_PATH=$newPath\n", $content);
                         try {
                             file_put_contents(base_path('.env'), $content);
-                            return Response::json(0, L('Operate Success'), null, '[js]parent.location.href="' . $newPath . '"');
+                            return Response::json(0, L('OperateSuccess'), null, '[js]parent.location.href="' . $newPath . '"');
                         } catch (\Exception $e) {
-                            return Response::jsonError(L('No Permission'));
+                            return Response::jsonError(L('NoPermission'));
                         }
                     });
                 }
-                return $page->pageTitle(L('Change Admin Url'))->body($form);
+                return $page->pageTitle(L('ChangeAdminUrl'))->body($form);
         }
         return Response::sendError('Unknown Type');
     }

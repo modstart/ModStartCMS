@@ -4,7 +4,7 @@
                    width="60%" @close="()=>{this.visible=false}"
                    append-to-body>
             <div slot="title">
-                <span>{{ L('Please Select') }}</span>
+                <span>{{ L('PleaseSelect') }}</span>
             </div>
             <div slot="footer">
                 <el-button type="primary" @click="doSubmit">
@@ -20,10 +20,10 @@
                     <i class="iconfont icon-list"></i>
                 </el-button>
                 <el-button :type="tab==='list'?'primary':'default'" @click="tab='list'">
-                    <i class="iconfont icon-category"></i> {{ L('File Gallery') }}
+                    <i class="iconfont icon-category"></i> {{ L('FileGallery') }}
                 </el-button>
                 <el-button :type="tab==='input'?'primary':'default'" @click="tab='input'">
-                    <i class="iconfont icon-edit"></i> {{ L('Custom Link') }}
+                    <i class="iconfont icon-edit"></i> {{ L('CustomLink') }}
                 </el-button>
             </div>
             <div class="pb-data-selector-gallery" :class="{'small-window':smallWindow,'menu-show':menuShow}"
@@ -31,19 +31,19 @@
                 <div class="pb-data-selector-category" v-loading="categoryLoading">
                     <div class="action">
                         <a v-if="permission['Add/Edit']"
-                           href="javascript:;" :title="L('Add Category')"
+                           href="javascript:;" :title="L('AddCategory')"
                            :class="{active:currentCategoryId>=0}"
                            @click="doCategoryAdd">
                             <i class="iconfont icon-plus"></i>
                         </a>
                         <a v-if="permission['Add/Edit']"
-                           href="javascript:;" :title="L('Edit Category')"
+                           href="javascript:;" :title="L('EditCategory')"
                            :class="{active:currentCategoryId>0}"
                            @click="doCategoryEdit">
                             <i class="iconfont icon-sign"></i>
                         </a>
                         <a v-if="permission['Delete']"
-                           href="javascript:;" :title="L('Delete Category')"
+                           href="javascript:;" :title="L('DeleteCategory')"
                            :class="{active:currentCategoryId>0}"
                            @click="doCategoryDelete">
                             <i class="iconfont icon-trash"></i>
@@ -78,17 +78,17 @@
                             <i class="iconfont icon-sign"></i>
                             {{ L('Edit') }}
                         </a>
-                        <a href="javascript:;" :title="L('Copy Link')"
+                        <a href="javascript:;" :title="L('CopyLink')"
                            :class="{active:listChecked.length>0}"
                            v-clipboard:copy='listChecked.map(o=>o.fullPath).join("\n")'
                            v-clipboard:success="$onCopySuccess">
                             <i class="iconfont icon-copy"></i>
-                            {{ L('Copy Link') }}
+                            {{ L('CopyLink') }}
                         </a>
                     </div>
                     <div class="records" style="min-height:6.25rem;" v-loading="listLoading">
                         <div class="ub-empty" v-if="!listLoading && records.length===0">
-                            {{ L('No Records') }}
+                            {{ L('NoRecords') }}
                         </div>
                         <el-row :gutter="10">
                             <el-col :xs="8" :sm="4" :md="4" :lg="3" v-for="(listItem,listIndex) in records"
@@ -113,7 +113,7 @@
                                             <i class="iconfont icon-link-alt"></i>
                                         </a>
                                         <a href="javascript:;" class="tw-mx-2"
-                                           :title="L('Copy Link')"
+                                           :title="L('CopyLink')"
                                            v-clipboard:copy="listItem.fullPath"
                                            v-clipboard:success="$onCopySuccess">
                                             <i class="iconfont icon-copy"></i>
@@ -146,13 +146,13 @@
             </div>
         </el-dialog>
         <el-dialog
-            :title="categoryEdit.id>0?L('Edit Category'):L('Add Category')"
+            :title="categoryEdit.id>0?L('EditCategory'):L('AddCategory')"
             :visible.sync="categoryVisible"
             append-to-body
             width="30%">
             <el-form label-width="80px">
                 <el-form-item :label="L('Parent')">
-                    <el-select v-model="categoryEdit.pid" :placeholder="L('Please Select')">
+                    <el-select v-model="categoryEdit.pid" :placeholder="L('PleaseSelect')">
                         <el-option
                             v-for="item in categoryListParent"
                             :key="item.id"
@@ -174,13 +174,13 @@
               </span>
         </el-dialog>
         <el-dialog
-            :title="L('Edit File')"
+            :title="L('EditFile')"
             :visible.sync="fileVisible"
             append-to-body
             width="30%">
             <el-form label-width="80px">
                 <el-form-item :label="L('Category')">
-                    <el-select v-model="fileEdit.categoryId" :placeholder="L('Please Select')">
+                    <el-select v-model="fileEdit.categoryId" :placeholder="L('PleaseSelect')">
                         <el-option
                             v-for="item in categoryListAll"
                             :key="item.id"
@@ -384,7 +384,7 @@ export default {
                 id: ids.join(','),
                 action: 'fileEdit'
             }), res => {
-                Dialog.tipSuccess(this.L('Edit Success'))
+                Dialog.tipSuccess(this.L('EditSuccess'))
                 this.fileEditLoading = false
                 this.fileVisible = false
                 this.doList()
@@ -396,11 +396,11 @@ export default {
             if (!this.activeFileOperate || !this.listCheckedIds.length) {
                 return;
             }
-            Dialog.confirm(this.L('Confirm Delete ?'), () => {
+            Dialog.confirm(this.L('ConfirmDelete'), () => {
                 Dialog.loadingOn()
                 this.$api.post(this.apiUrl, JsonUtil.extend({id: this.listCheckedIds.join(',')}, {action: 'fileDelete'}), res => {
                     Dialog.loadingOff()
-                    Dialog.tipSuccess(this.L('Delete Success'))
+                    Dialog.tipSuccess(this.L('DeleteSuccess'))
                     this.doList(1)
                 }, res => {
                     Dialog.loadingOff()
@@ -437,9 +437,9 @@ export default {
             if (this.currentCategoryId <= 0) {
                 return;
             }
-            Dialog.confirm(this.L('Confirm Delete ?'), () => {
+            Dialog.confirm(this.L('ConfirmDelete'), () => {
                 this.$api.post(this.apiUrl, JsonUtil.extend({id: this.currentCategoryId}, {action: 'categoryDelete'}), res => {
-                    Dialog.tipSuccess(this.L('Delete Success'))
+                    Dialog.tipSuccess(this.L('DeleteSuccess'))
                     this.currentCategoryId = 0
                     this.doCategoryList()
                 })
@@ -448,7 +448,7 @@ export default {
         doCategoryEditSubmit() {
             this.categoryEditLoading = true
             this.$api.post(this.apiUrl, JsonUtil.extend(this.categoryEdit, {action: 'categoryEdit'}), res => {
-                Dialog.tipSuccess(this.L('Add Success'))
+                Dialog.tipSuccess(this.L('AddSuccess'))
                 this.categoryEditLoading = false
                 this.categoryVisible = false
                 this.currentCategoryId = 0
@@ -516,7 +516,7 @@ export default {
         doSubmit() {
             if (this.tab === 'input') {
                 if (!this.input.path) {
-                    Dialog.tipError(this.L('Please Input'))
+                    Dialog.tipError(this.L('PleaseInput'))
                     return
                 }
                 const records = []

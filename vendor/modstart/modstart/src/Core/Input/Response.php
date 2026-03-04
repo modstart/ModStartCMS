@@ -258,7 +258,7 @@ class Response
         if (Request::isAjax()) {
             return self::json(-1, L('Api Not Found : %s', Request::basePath()));
         } else {
-            abort(404, L('Page Not Found'));
+            abort(404, L('PageNotFound'));
         }
     }
 
@@ -279,9 +279,9 @@ class Response
     public static function pagePermissionDenied($msg = null)
     {
         if (Request::isAjax()) {
-            return self::json(-1, $msg ? $msg : L('No Permission'));
+            return self::json(-1, $msg ? $msg : L('NoPermission'));
         } else {
-            abort(403, $msg ? $msg : L('No Permission'));
+            abort(403, $msg ? $msg : L('NoPermission'));
         }
     }
 
@@ -397,6 +397,7 @@ class Response
             $response->headers->set($k, $v);
         }
         $response->send();
+        return null;
     }
 
     public static function downloadFile($filename, $filepath, $headers = [], $filenameFallback = null, $param = [])
@@ -404,6 +405,9 @@ class Response
         $param = array_merge([
             'deleteAfterSent' => false,
         ], $param);
+        if (empty($filenameFallback)) {
+            $filenameFallback = 'file.' . FileUtil::extension($filename);
+        }
         $response = new StreamedResponse();
         $fileSize = filesize($filepath);
         $response->setCallback(function () use ($filepath, $fileSize, $param) {
@@ -420,7 +424,7 @@ class Response
                 flush();
                 $sentBytes += $bytesToRead;
             }
-            fclose($fileStream);
+            fclose($f);
             if ($param['deleteAfterSent']) {
                 unlink($filepath);
             }
@@ -441,6 +445,7 @@ class Response
             $response->headers->set($k, $v);
         }
         $response->send();
+        return null;
     }
 
     public static function download($filename, $content, $headers = [], $filenameFallback = null)

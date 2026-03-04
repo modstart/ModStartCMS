@@ -30,8 +30,26 @@ abstract class AbstractSiteUrlBiz
     //     ];
     // }
 
-    public static function update($url, $title = '', $param = [])
+    public static function update($urls, $title = '', $param = [])
     {
-        SiteUrlProvider::updateBiz(static::NAME, $url, $title, $param);
+        if (is_array($urls)) {
+            foreach ($urls as $v) {
+                self::update($v, $title, $param);
+            }
+            return;
+        }
+        SiteUrlProvider::updateBiz(static::NAME, $urls, $title, $param);
     }
+
+    public static function delete($urls)
+    {
+        if (is_array($urls)) {
+            foreach ($urls as $v) {
+                self::delete($v);
+            }
+            return;
+        }
+        SiteUrlProvider::delete($urls);
+    }
+
 }

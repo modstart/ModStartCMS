@@ -15,7 +15,7 @@ class Image extends AbstractField
 
     protected function setup()
     {
-        ModStart::lang(['CompressingImage']);
+        ModStart::lang(['Compressing Image']);
         $this->addVariables([
             'category' => 'image',
             'mode' => self::MODE_DEFAULT,

@@ -52,7 +52,7 @@ class MemberCreditLogController extends Controller
                         }
                         return AutoRenderedFieldValue::make(join('', $html));
                     });
-                $builder->display('created_at', L('Created At'));
+                $builder->display('created_at', L('CreatedAt'));
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('memberUserId', '用户ID');

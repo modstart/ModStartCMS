@@ -4,6 +4,9 @@
 namespace ModStart\Core\Util;
 
 
+/**
+ * @Util 平台工具
+ */
 class PlatformUtil
 {
     const WINDOWS = 'windows';
@@ -16,26 +19,47 @@ class PlatformUtil
         return strtoupper(PHP_OS);
     }
 
+    /**
+     * @Util 判断当前是否为 Windows 平台
+     * @return bool
+     */
     public static function isWindows()
     {
         return substr(self::name(), 0, 3) == "WIN";
     }
 
+    /**
+     * @Util 判断当前是否为 macOS 平台
+     * @return bool
+     */
     public static function isOsx()
     {
         return self::name() == 'DARWIN';
     }
 
+    /**
+     * @Util 判断当前是否为 Linux 平台
+     * @return bool
+     */
     public static function isLinux()
     {
         return self::name() == 'LINUX';
     }
 
+    /**
+     * @Util 判断当前平台是否属于指定类型
+     * @param $types array 平台类型数组，可选値 windows/linux/osx/unknown
+     * @return bool
+     */
     public static function isType($types)
     {
         return in_array(self::type(), $types);
     }
 
+    /**
+     * @Util 获取当前平台类型字符串
+     * @return string windows|linux|osx|unknown
+     */
     public static function type()
     {
         if (self::isOsx()) {
@@ -73,12 +97,20 @@ class PlatformUtil
         return $info;
     }
 
+    /**
+     * @Util 获取系统总内存大小（字节）
+     * @return int
+     */
     public static function memoryTotal()
     {
         $memoryInfo = self::memoryInfo();
         return $memoryInfo['total'];
     }
 
+    /**
+     * @Util 获取系统已使用内存大小（字节）
+     * @return int
+     */
     public static function memoryUsed()
     {
         $memoryInfo = self::memoryInfo();

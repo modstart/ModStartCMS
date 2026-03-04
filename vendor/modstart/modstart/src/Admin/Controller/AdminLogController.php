@@ -22,13 +22,13 @@ class AdminLogController extends Controller
     {
         $grid = new Grid(AdminLog::class, function (Grid $grid) {
             $grid->display('id', L('ID'))->width(80);
-            $grid->select('adminUserId', L('Admin User'))->optionModel('admin_user', 'id', 'username');
+            $grid->select('adminUserId', L('AdminUser'))->optionModel('admin_user', 'id', 'username');
             $grid->type('type', L('Type'))->type(AdminLogType::class)->width(100);
             $grid->display('summary', L('Title'));
             $grid->jsonKeyValue('data.content', L('Data'))->width(200);
-            $grid->display('created_at', L('Created At'))->width(160);
+            $grid->display('created_at', L('CreatedAt'))->width(160);
             $grid->gridFilter(function (GridFilter $filter) {
-                $filter->eq('adminUserId', L('Admin User'))->selectModel('admin_user', 'id', 'username');
+                $filter->eq('adminUserId', L('AdminUser'))->selectModel('admin_user', 'id', 'username');
                 $filter->like('summary', L('Title'));
                 $filter->eq('type', L('Type'))->radio(AdminLogType::class);
             });
@@ -36,7 +36,7 @@ class AdminLogController extends Controller
         $grid->canAdd(false)->canEdit(false);
         $grid->canDelete(AdminPermission::permit('AdminLogManage'));
         $grid->canMultiSelectItem(true)->canBatchDelete(true);
-        $grid->title(L('Admin Log'));
+        $grid->title(L('AdminLog'));
         return $grid;
     }
 
@@ -52,12 +52,12 @@ class AdminLogController extends Controller
     {
         $detail = new Detail(AdminLog::class, function (Detail $detail) {
             $detail->display('id', L('ID'));
-            $detail->display('created_at', L('Created At'));
+            $detail->display('created_at', L('CreatedAt'));
             $detail->type('type', L('Type'))->type(AdminLogType::class);
             $detail->display('summary', L('Title'));
             $detail->jsonKeyValue('data.content', L('Data'));
         });
-        $detail->title(L('Admin Log'));
+        $detail->title(L('AdminLog'));
         return $detail;
     }
 }

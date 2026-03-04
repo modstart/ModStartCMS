@@ -3,8 +3,18 @@
 namespace ModStart\Core\Util;
 
 
+/**
+ * @Util Socket 工具
+ */
 class SocketUtil
 {
+    /**
+     * @Util 判断指定 IP 和端口是否可达（TCP 连接测试）
+     * @param $ip string IP 地址
+     * @param $port int 端口
+     * @param $timeout int 超时时间（秒），默认 3
+     * @return bool
+     */
     public static function isTCPConnectable($ip, $port, $timeout = 3)
     {
         try {

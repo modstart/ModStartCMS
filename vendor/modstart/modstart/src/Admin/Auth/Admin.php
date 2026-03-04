@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use ModStart\Admin\Event\AdminUserLoginAttemptEvent;
 use ModStart\Admin\Event\AdminUserLoginFailedEvent;
+use ModStart\Admin\Model\AdminLog;
+use ModStart\Admin\Model\AdminLogData;
+use ModStart\Admin\Model\AdminRole;
+use ModStart\Admin\Model\AdminRoleRule;
 use ModStart\Admin\Model\AdminUser;
 use ModStart\Admin\Type\AdminLogType;
 use ModStart\Core\Dao\ModelUtil;
@@ -86,7 +90,7 @@ class Admin
         $adminUser = ModelUtil::get(AdminUser::class, ['phone' => $phone]);
         if (empty($adminUser)) {
             AdminUserLoginFailedEvent::fire(0, null, Request::ip(), AgentUtil::getUserAgent());
-            return Response::generate(-1, L('User Not Exists'));
+            return Response::generate(-1, L('UserNotExists'));
         }
         AdminUserLoginAttemptEvent::fire($adminUser['id'], Request::ip(), AgentUtil::getUserAgent());
         ModelUtil::update(AdminUser::class, $adminUser['id'], [
@@ -101,12 +105,12 @@ class Admin
         $adminUser = ModelUtil::get(AdminUser::class, ['username' => $username]);
         if (empty($adminUser)) {
             AdminUserLoginFailedEvent::fire(0, $username, Request::ip(), AgentUtil::getUserAgent());
-            return Response::generate(-1, L('User Not Exists'));
+            return Response::generate(-1, L('UserNotExists'));
         }
         AdminUserLoginAttemptEvent::fire($adminUser['id'], Request::ip(), AgentUtil::getUserAgent());
         if ($adminUser['password'] != self::passwordEncrypt($password, $adminUser['passwordSalt'])) {
             AdminUserLoginFailedEvent::fire($adminUser['id'], $username, Request::ip(), AgentUtil::getUserAgent());
-            return Response::generate(-2, L('Password Incorrect'));
+            return Response::generate(-2, L('PasswordIncorrect'));
         }
         ModelUtil::update(AdminUser::class, $adminUser['id'], [
             'lastLoginIp' => StrUtil::mbLimit(Request::ip(), 20),
@@ -124,14 +128,14 @@ class Admin
     {
         $adminUser = ModelUtil::get(AdminUser::class, $adminUserId);
         if (empty($adminUser)) {
-            return Response::generate(-1, L('User Not Exists'));
+            return Response::generate(-1, L('UserNotExists'));
         }
         $roles = ModelUtil::all('admin_user_role', ['userId' => $adminUserId], ['roleId']);
-        ModelUtil::join($roles, 'roleId', 'role', 'admin_role', 'id');
+        ModelUtil::join($roles, 'roleId', 'role', AdminRole::class, 'id');
         foreach ($roles as $k => $role) {
             $roles[$k]['name'] = $role['role']['name'];
         }
-        ModelUtil::joinAll($roles, 'roleId', 'rules', 'admin_role_rule', 'roleId');
+        ModelUtil::joinAll($roles, 'roleId', 'rules', AdminRoleRule::class, 'roleId');
         return Response::generate(0, null, $roles);
     }
 
@@ -139,11 +143,11 @@ class Admin
     {
         $adminUser = ModelUtil::get(AdminUser::class, ['id' => $id]);
         if (empty($adminUser)) {
-            return Response::generate(-1, L('Admin user not exists'));
+            return Response::generate(-1, L('AdminUserNotExists'));
         }
         if ($adminUser['password'] != self::passwordEncrypt($old, $adminUser['passwordSalt'])) {
             if (!$ignoreOld) {
-                return Response::generate(-1, L('Old Password Incorrect'));
+                return Response::generate(-1, L('OldPasswordIncorrect'));
             }
         }
         $passwordSalt = Str::random(16);
@@ -164,9 +168,9 @@ class Admin
         if (!$exists) {
             return;
         }
-        $adminLog = ModelUtil::insert('admin_log', ['adminUserId' => $adminUserId, 'type' => AdminLogType::INFO, 'summary' => $summary]);
+        $adminLog = ModelUtil::insert(AdminLog::class, ['adminUserId' => $adminUserId, 'type' => AdminLogType::INFO, 'summary' => $summary]);
         if (!empty($content)) {
-            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => SerializeUtil::jsonEncode($content)]);
+            ModelUtil::insert(AdminLogData::class, ['id' => $adminLog['id'], 'content' => SerializeUtil::jsonEncode($content)]);
         }
     }
 
@@ -179,9 +183,9 @@ class Admin
         if (!$exists) {
             return;
         }
-        $adminLog = ModelUtil::insert('admin_log', ['adminUserId' => $adminUserId, 'type' => AdminLogType::ERROR, 'summary' => $summary]);
+        $adminLog = ModelUtil::insert(AdminLog::class, ['adminUserId' => $adminUserId, 'type' => AdminLogType::ERROR, 'summary' => $summary]);
         if (!empty($content)) {
-            ModelUtil::insert('admin_log_data', ['id' => $adminLog['id'], 'content' => SerializeUtil::jsonEncode($content)]);
+            ModelUtil::insert(AdminLogData::class, ['id' => $adminLog['id'], 'content' => SerializeUtil::jsonEncode($content)]);
         }
     }
 

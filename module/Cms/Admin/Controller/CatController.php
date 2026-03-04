@@ -13,11 +13,11 @@ use ModStart\Field\Type\FieldRenderMode;
 use ModStart\Form\Form;
 use ModStart\Grid\GridFilter;
 use ModStart\Support\Concern\HasFields;
-use Module\Cms\Type\CatUrlMode;
 use Module\Cms\Type\CmsMode;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsModelUtil;
 use Module\Cms\Util\CmsTemplateUtil;
+use Module\Cms\Util\UrlUtil;
 use Module\Vendor\Provider\Captcha\CaptchaProvider;
 
 class CatController extends Controller
@@ -37,7 +37,7 @@ class CatController extends Controller
                 $builder->text('url', 'URL')->required()
                     ->hookRendering(function (AbstractField $field, $item, $index) {
                         if ($field->renderMode() == FieldRenderMode::GRID) {
-                            $url = CatUrlMode::url($item->toArray());
+                            $url = UrlUtil::cat($item->toArray());
                             return "<a href='$url' target='blank'>$url</a>";
                         }
                         return null;
@@ -99,8 +99,8 @@ class CatController extends Controller
                         });
                 }
                 $builder->number('pageSize', '默认分页大小')->help('默认为10')->listable(false);
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             });
         if ('list' == modstart_config('Cms_CatAdminTreeMode', 'tree')) {
             $builder->asTreeMass($pid);
@@ -117,6 +117,7 @@ class CatController extends Controller
                 CmsCatUtil::clearCache();
             })
             ->formClass('wide')
+            ->canCopy(true)
             ->title('栏目管理');
     }
 }

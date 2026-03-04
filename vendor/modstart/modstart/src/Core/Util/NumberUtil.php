@@ -3,8 +3,16 @@
 namespace ModStart\Core\Util;
 
 
+/**
+ * @Util 数字工具
+ */
 class NumberUtil
 {
+    /**
+     * @Util 十进制数字转换为 62 进制字符串
+     * @param $num int|string 十进制整数
+     * @return string
+     */
     public static function decToD62($num)
     {
         $to = 62;
@@ -17,6 +25,11 @@ class NumberUtil
         return $ret;
     }
 
+    /**
+     * @Util 将62 进制字符串转换为十进制数字
+     * @param $num string 62 进制字符串
+     * @return string
+     */
     public static function d62ToDec($num)
     {
         $from = 62;
@@ -31,6 +44,12 @@ class NumberUtil
         return $dec;
     }
 
+    /**
+     * @Util 生成指定范围内的随机整数
+     * @param $min int 最小值
+     * @param $max int 最大值
+     * @return int
+     */
     public static function randomInt($min, $max)
     {
         if ($min == $max) {
@@ -39,6 +58,12 @@ class NumberUtil
         return rand($min, $max);
     }
 
+    /**
+     * @Util 生成指定范围内的随机小数（保留两位小数）
+     * @param $min float 最小值
+     * @param $max float 最大值
+     * @return string
+     */
     public static function randomDecimal($min, $max)
     {
         if ($min == $max) {
@@ -48,6 +73,11 @@ class NumberUtil
         return bcdiv($value, 100, 2);
     }
 
+    /**
+     * @Util 将数字转换为中文数字（如一、二三...)
+     * @param $number int 数字
+     * @return string
+     */
     public static function numToZH($number)
     {
         $chineseNumber = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
@@ -83,6 +113,12 @@ class NumberUtil
         return $result;
     }
 
+    /**
+     * @Util 对小数按指定折扣比进行计算
+     * @param $decimal float 原始小数 （如价格）
+     * @param $discount int 折扣比例（0~100，如 80 表示 8 折）
+     * @return string
+     */
     public static function discountDecimal($decimal, $discount)
     {
         if ($decimal < 0.01) {
@@ -98,6 +134,12 @@ class NumberUtil
         return $decimal;
     }
 
+    /**
+     * @Util 对整数按指定折扣比进行计算
+     * @param $number int 原始数量
+     * @param $discount int 折扣比例（0~100，如 80 表示 80%）
+     * @return int
+     */
     public static function discountNumber($number, $discount)
     {
         if ($number < 1) {

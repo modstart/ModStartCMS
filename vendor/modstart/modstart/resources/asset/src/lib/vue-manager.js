@@ -22,10 +22,10 @@ Vue.use(vueTimeago, {
 })
 Vue.use(VueClipboard)
 Vue.prototype.$doCopyText = function (text, tips) {
-    tips = tips || this.L('Copy Success')
+    tips = tips || this.L('CopySuccess')
     this.$copyText(text).then(
         () => Dialog.tipSuccess(tips),
-        () => Dialog.tipError(this.L('Copy Fail'))
+        () => Dialog.tipError(this.L('CopyFail'))
     );
 }
 Vue.prototype.$onCopySuccess = () => {

@@ -5,6 +5,9 @@ namespace ModStart\Core\Util;
 use Illuminate\Support\Str;
 use ModStart\Core\Exception\BizException;
 
+/**
+ * @Util HTTP 请求工具
+ */
 class CurlUtil
 {
     private static function JSONResult($code, $msg = '', $data = null)
@@ -29,6 +32,13 @@ class CurlUtil
         return $str;
     }
 
+    /**
+     * @Util 发送 GET 请求并返回 JSON 中的 data 字段
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return mixed|null
+     */
     public static function getJSONData($url, $param = [], $option = [])
     {
         $ret = self::getJSON($url, $param, $option);
@@ -38,6 +48,13 @@ class CurlUtil
         return null;
     }
 
+    /**
+     * @Util 发送 GET 请求并解析 JSON 响应体
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array code/msg/data
+     */
     public static function getJSON($url, $param = [], $option = [])
     {
         $result = self::get($url, $param, $option);
@@ -52,6 +69,13 @@ class CurlUtil
         return self::JSONResult(0, '', $json);
     }
 
+    /**
+     * @Util 发送 POST 请求并返回响应内容字符串
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return string|null
+     */
     public static function postContent($url, $param = [], $option = [])
     {
         $result = self::post($url, $param, $option);
@@ -61,6 +85,13 @@ class CurlUtil
         return $result['body'];
     }
 
+    /**
+     * @Util 发送 POST 请求并返回 JSON 中的 data 字段（失败返回包含 code/msg 的数组）
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return mixed
+     */
     public static function postJSONBody($url, $param = [], $option = [])
     {
         $ret = self::postJSON($url, $param, $option);
@@ -70,6 +101,13 @@ class CurlUtil
         return $ret['data'];
     }
 
+    /**
+     * @Util 发送 POST 请求并解析 JSON 响应体
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array code/msg/data
+     */
     public static function postJSON($url, $param = [], $option = [])
     {
         $result = self::post($url, $param, $option);
@@ -85,6 +123,13 @@ class CurlUtil
         return self::JSONResult(0, '', $json);
     }
 
+    /**
+     * @Util 发送 PUT 请求并解析 JSON 响应体
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array code/msg/data
+     */
     public static function putJSON($url, $param = [], $option = [])
     {
         $result = self::put($url, $param, $option);
@@ -99,6 +144,13 @@ class CurlUtil
         return self::JSONResult(0, '', $json);
     }
 
+    /**
+     * @Util 发送 DELETE 请求并解析 JSON 响应体
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array code/msg/data
+     */
     public static function deleteJSON($url, $param = [], $option = [])
     {
         $result = self::delete($url, $param, $option);
@@ -113,24 +165,52 @@ class CurlUtil
         return self::JSONResult(0, '', $json);
     }
 
+    /**
+     * @Util 发送 GET 请求并返回原始结果
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array
+     */
     public static function get($url, $param = [], $option = [])
     {
         $option['method'] = 'get';
         return self::request($url, $param, $option);
     }
 
+    /**
+     * @Util 发送 POST 请求并返回原始结果
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array
+     */
     public static function post($url, $param = [], $option = [])
     {
         $option['method'] = 'post';
         return self::request($url, $param, $option);
     }
 
+    /**
+     * @Util 发送 PUT 请求并返回原始结果
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array
+     */
     public static function put($url, $param = [], $option = [])
     {
         $option['method'] = 'put';
         return self::request($url, $param, $option);
     }
 
+    /**
+     * @Util 发送 DELETE 请求并返回原始结果
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array
+     */
     public static function delete($url, $param = [], $option = [])
     {
         $option['method'] = 'delete';
@@ -140,6 +220,13 @@ class CurlUtil
     private static $requestEnd = null;
     private static $requestParam = [];
 
+    /**
+     * @Util 通用 HTTP 请求入口，支持 GET/POST/PUT/DELETE 、请求头、代理、超时等
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return array
+     */
     public static function request($url, $param, $option = [])
     {
         $sendHeaders = [];
@@ -280,9 +367,20 @@ class CurlUtil
             $result['error'] = curl_error($ch);
         }
         curl_close($ch);
+        if ($result['body'] && bin2hex(substr($result['body'], 0, 2)) === '1f8b') {
+            $result['body'] = gzdecode($result['body']);
+        }
         return $result;
     }
 
+    /**
+     * @Util 通过中转代理发送请求
+     * @param $proxy string 代理 URL
+     * @param $url string 目标 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return mixed
+     */
     public static function proxyRequest($proxy, $url, $param = [], $option = [])
     {
         $package = $option;
@@ -295,6 +393,12 @@ class CurlUtil
         return $content;
     }
 
+    /**
+     * @Util 通过中转代理发送自定义数据包
+     * @param $proxy string 代理 URL
+     * @param $package array 请求数据包
+     * @return mixed
+     */
     public static function proxyCommon($proxy, $package)
     {
         $url = "$proxy?package=" . urlencode(base64_encode(SerializeUtil::jsonEncode($package)));
@@ -304,6 +408,13 @@ class CurlUtil
         return $content;
     }
 
+    /**
+     * @Util 发送 POST 请求并返回响应内容字符串（简化版）
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项
+     * @return string|null
+     */
     public static function postRaw($url, $param = [], $option = [])
     {
         if (empty($option['timeout'])) {
@@ -346,6 +457,13 @@ class CurlUtil
         return $temp;
     }
 
+    /**
+     * @Util 发送 GET 请求并返回响应内容字符串（简化版）
+     * @param $url string 请求 URL
+     * @param $param array 请求参数
+     * @param $option array 选项（returnRaw=true 时返回原始信息数组）
+     * @return string|null|array
+     */
     public static function getRaw($url, $param = [], $option = [])
     {
         if (empty($option['timeout'])) {
@@ -379,7 +497,11 @@ class CurlUtil
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         }
         if (!isset($option['userAgent'])) {
-            $option['userAgent'] = self::defaultUserAgent();
+            if (!empty($option['mockUserAgent'])) {
+                $option['userAgent'] = self::mockUserAgent();
+            } else {
+                $option['userAgent'] = self::defaultUserAgent();
+            }
         }
         if (!empty($option['userAgent'])) {
             curl_setopt($ch, CURLOPT_USERAGENT, $option['userAgent']);
@@ -405,6 +527,10 @@ class CurlUtil
         return $temp;
     }
 
+    /**
+     * @Util 获取默认 User-Agent 字符串
+     * @return string
+     */
     public static function defaultUserAgent()
     {
         $userAgent = 'MSCore/' . modstart_version() . ' PHP/' . PHP_VERSION . ' OS/' . PHP_OS;
@@ -423,6 +549,10 @@ class CurlUtil
         return $userAgent;
     }
 
+    /**
+     * @Util 获取模拟浏览器的 User-Agent 字符串
+     * @return string
+     */
     public static function mockUserAgent()
     {
         return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36';

@@ -3,69 +3,69 @@
     @if($queueDelaySize>0)
         <div class="ub-alert danger">
             <i class="iconfont icon-warning"></i>
-            {{L('System Warning')}}: {{ L('Queue pending %s jobs, view the queue config manual.',$queueDelaySize) }}
-            <a href="https://modstart.com/doc" target="_blank" rel="noreferrer">{{L('View Now')}}</a>
+            {{L('SystemWarning')}}: {{ L('Queue pending %s jobs, view the queue config manual.',$queueDelaySize) }}
+            <a href="https://modstart.com/doc" target="_blank" rel="noreferrer">{{L('ViewNow')}}</a>
         </div>
     @endif
     @if($scheduleRunLastRun < time() - 24*3600)
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('System Warning')}}: {{ L('Schedule tasks not run for a long time, view the schedule config manual.') }}
+            {{L('SystemWarning')}}: {{ L('ScheduleTasksNotRun') }}
             ( {{date('Y-m-d H:i:s',$scheduleRunLastRun)}} )
-            <a href="https://modstart.com/doc" target="_blank" rel="noreferrer">{{L('View Now')}}</a>
+            <a href="https://modstart.com/doc" target="_blank" rel="noreferrer">{{L('ViewNow')}}</a>
         </div>
     @endif
     @if (\ModStart\Admin\Auth\AdminPermission::isDemo())
         <div class="ub-alert danger">
             <i class="iconfont icon-warning"></i>
-            {{ L('You are a demo user, ADD/EDIT/DELETE is forbidden.') }}
+            {{ L('DemoUserForbidden') }}
         </div>
     @endif
     @if(!file_exists(storage_path('install.lock')))
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('Security Warning')}}: {{ L('System has been installed, bug storage/install.lock is missing.') }}
-            <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'installLock'])}}">{{L('Process Now')}}</a>
+            {{L('SecurityWarning')}}: {{ L('SystemInstallLockMissing') }}
+            <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'installLock'])}}">{{L('ProcessNow')}}</a>
         </div>
     @endif
     @if(file_exists(public_path('install.php')))
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('Security Warning')}}: {{ L('install.php script not deleted, may expose sensitive data') }}
-            <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'installScript'])}}">{{L('Process Now')}}</a>
+            {{L('SecurityWarning')}}: {{ L('InstallPhpNotDeleted') }}
+            <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'installScript'])}}">{{L('ProcessNow')}}</a>
         </div>
     @endif
     @if(config('env.APP_DEBUG',false))
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('Security Warning')}}: {{L('System in debug mode ( APP_DEBUG=true ), error messages may expose sensitive data.')}}
-            <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'appDebug'])}}">{{L('Process Now')}}</a>
+            {{L('SecurityWarning')}}: {{L('SystemInDebugMode')}}
+            <a href="javascript:;" data-ajax-request-loading data-ajax-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'appDebug'])}}">{{L('ProcessNow')}}</a>
         </div>
     @endif
     @if(in_array(config('env.ADMIN_PATH'),['/admin/']))
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('Security Warning')}}: {{L('Admin url is /admin, it is easy to be attacked by hackers, please change to complex one.')}}
-            <a href="javascript:;" data-dialog-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'adminPath'])}}">{{L('Process Now')}}</a>
+            {{L('SecurityWarning')}}: {{L('AdminUrlEasyToAttack')}}
+            <a href="javascript:;" data-dialog-request="{{action('\ModStart\Admin\Controller\SystemController@securityFix',['type'=>'adminPath'])}}">{{L('ProcessNow')}}</a>
         </div>
     @endif
     @if(\Illuminate\Support\Facades\Session::get('_adminUserPasswordWeak',false))
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('Security Warning')}}: {{L('Your password is weak, please change your password.')}}
-            <a href="{{action('\ModStart\Admin\Controller\ProfileController@changePassword')}}">{{L('Process Now')}}</a>
+            {{L('SecurityWarning')}}: {{L('PasswordIsWeak')}}
+            <a href="{{action('\ModStart\Admin\Controller\ProfileController@changePassword')}}">{{L('ProcessNow')}}</a>
         </div>
     @endif
     @if(config('env.APP_KEY')=='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('Security Warning')}}: {{L('%s is default, please change it','APP_KEY')}}
+            {{L('SecurityWarning')}}: {{L('%s is default, please change it','APP_KEY')}}
         </div>
     @endif
     @if(config('env.ENCRYPT_KEY')=='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('Security Warning')}}: {{L('%s is default, please change it','ENCRYPT_KEY')}}
+            {{L('SecurityWarning')}}: {{L('%s is default, please change it','ENCRYPT_KEY')}}
         </div>
     @endif
 </div>

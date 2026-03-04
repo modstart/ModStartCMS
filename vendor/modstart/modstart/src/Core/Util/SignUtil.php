@@ -2,8 +2,18 @@
 
 namespace ModStart\Core\Util;
 
+/**
+ * @Util 接口签名工具
+ */
 class SignUtil
 {
+    /**
+     * @Util 验证签名是否正确（响应多种编码方式）
+     * @param $sign string 需要验证的签名
+     * @param $params array 参数列表
+     * @param $appSecret string 应用密钥
+     * @return bool
+     */
     public static function check($sign, $params, $appSecret)
     {
         if ($sign == self::common($params, $appSecret)) {
@@ -20,6 +30,14 @@ class SignUtil
         return false;
     }
 
+    /**
+     * @Util 生成接口签名（将参数按 key 排序后拼接 app_secret 进行 MD5）
+     * @param $params array 参数列表
+     * @param $appSecret string 应用密钥
+     * @param $function string|封装函数 参数处理方式（trim/urlencode/rawurlencode）
+     * @param $appSecretName string app_secret 参数名称
+     * @return string
+     */
     public static function common($params, $appSecret, $function = 'trim', $appSecretName = 'app_secret')
     {
         ksort($params, SORT_STRING);
@@ -40,6 +58,13 @@ class SignUtil
         return $sign;
     }
 
+    /**
+     * @Util 不使用 appSecret 的签名验证
+     * @param $sign string 需要验证的签名
+     * @param $params array 参数列表
+     * @param $prefix string|null 字符串前缀
+     * @return bool
+     */
     public static function checkWithoutSecret($sign, $params, $prefix = null)
     {
         // rawurlencode 遵守是94年国际标准备忘录RFC 1738，
@@ -53,6 +78,13 @@ class SignUtil
         return false;
     }
 
+    /**
+     * @Util 不使用 appSecret 的签名生成
+     * @param $params array 参数列表
+     * @param $prefix string|null 字符串前缀
+     * @param $function string 参数处理方式（urlencode/rawurlencode）
+     * @return string
+     */
     public static function commonWithoutSecret($params, $prefix = null, $function = 'urlencode')
     {
         ksort($params, SORT_STRING);

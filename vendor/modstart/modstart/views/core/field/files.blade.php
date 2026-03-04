@@ -22,7 +22,7 @@
                 <div class="ub-file-selector__action">
                     <a href="javascript:;" class="btn" data-gallery>
                         <i class="iconfont icon-category"></i>
-                        {{L('File Gallery')}}
+                        {{L('FileGallery')}}
                     </a>
                 </div>
             @endif
@@ -69,7 +69,7 @@
         });
         render();
         MS.uploadButton('#{{$id}}Uploader', {
-            text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("Local Upload")}}</a>',
+            text: '<a href="javascript:;" class="btn"><i class="iconfont icon-upload"></i> {{L("LocalUpload")}}</a>',
             server: "{{$server}}",
             extensions: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(join(',',config('data.upload.file.extensions'))) !!},
             sizeLimit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(config('data.upload.file.maxSize')) !!},

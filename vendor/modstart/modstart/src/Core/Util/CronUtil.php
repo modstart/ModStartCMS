@@ -4,8 +4,16 @@ namespace ModStart\Core\Util;
 
 use Cron\CronExpression;
 
+/**
+ * @Util Cron 表达式工具
+ */
 class CronUtil
 {
+    /**
+     * @Util 将 Cron 表达式转换为可读字符串
+     * @param $cron string Cron 表达式，如 * * * * *
+     * @return string
+     */
     public static function toString($cron)
     {
         $cron = trim($cron);
@@ -71,6 +79,11 @@ class CronUtil
         return "{$part}{$unit}";
     }
 
+    /**
+     * @Util 验证 Cron 表达式是否合法
+     * @param $cron string Cron 表达式
+     * @return bool
+     */
     public static function isValid($cron)
     {
         $cron = trim($cron);
@@ -157,6 +170,11 @@ class CronUtil
         return true;
     }
 
+    /**
+     * @Util 获取下次执行的 Unix 时间戳
+     * @param $cron string|array Cron 表达式或表达式数组（多个取最近一次）
+     * @return int
+     */
     public static function getNextRunTimestamp($cron)
     {
         if (is_array($cron)) {
@@ -172,6 +190,11 @@ class CronUtil
         return CronExpression::factory($cron)->getNextRunDate()->getTimestamp();
     }
 
+    /**
+     * @Util 获取下次执行的日期时间字符串
+     * @param $cron string|array Cron 表达式或表达式数组
+     * @return string 格式 Y-m-d H:i:s
+     */
     public static function getNextRunDatetime($cron)
     {
         return date('Y-m-d H:i:s', self::getNextRunTimestamp($cron));

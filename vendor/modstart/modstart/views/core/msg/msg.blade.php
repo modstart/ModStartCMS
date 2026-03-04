@@ -109,7 +109,7 @@
                 },0);
             </script>
             @if (!empty($redirect))
-                <div class="redirect">{{ L('Page Redirect Soon') }} <b id="wait">3</b> {{ L('Second') }} <a id="href" class="am-link-muted" href="{{$redirect}}">{{ L('Redirect Now') }}</a> ...</div>
+                <div class="redirect">{{ L('PageRedirectSoon') }} <b id="wait">3</b> {{ L('Second') }} <a id="href" class="am-link-muted" href="{{$redirect}}">{{ L('RedirectNow') }}</a> ...</div>
                 <script type="text/javascript">
                     (function(){
                         var wait = document.getElementById('wait'), href = document.getElementById('href').href;

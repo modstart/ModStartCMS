@@ -108,10 +108,10 @@
                                 </a>
                             @endif
                             @if(in_array('sort',$itemActions))
-                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('Move Up')}}" @click="doUp(value,vIndex)">
+                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('MoveUp')}}" @click="doUp(value,vIndex)">
                                     <i class="iconfont icon-direction-up"></i>
                                 </a>
-                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('Move Down')}}" @click="doDown(value,vIndex)">
+                                <a class="ub-lister-action ub-text-tertiary" href="javascript:;" data-tip-popover="{{L('MoveDown')}}" @click="doDown(value,vIndex)">
                                     <i class="iconfont icon-direction-down"></i>
                                 </a>
                             @endif

@@ -423,7 +423,7 @@ class DataManager
         $storage = self::storage($option);
         $dataTemp = $storage->repository()->getTemp($category, $dataTempPath);
         if (empty($dataTemp)) {
-            return Response::generate(-1, L('TempPath Not Exists, Please Upload Again'));
+            return Response::generate(-1, L('TempPathNotExists'));
         }
         $extension = FileUtil::extension($dataTemp['filename']);
         $updateTimestamp = time();
@@ -435,7 +435,7 @@ class DataManager
 
         if (!$storage->has($from)) {
             $storage->repository()->deleteTempById($dataTemp['id']);
-            return Response::generate(-3, L('TempPath Not Exists, Please Upload Again'));
+            return Response::generate(-3, L('TempPathNotExists'));
         }
 
         $storage->move($from, $to);
@@ -638,7 +638,7 @@ class DataManager
         $fileFullPath = $storage->getDriverFullPath($path);
         $localFile = FileUtil::savePathToLocalTemp($fileFullPath, '.' . FileUtil::extension($path));
         if (!file_exists($localFile)) {
-            return Response::generate(-1, L('Save File Error') . ' - ' . $path);
+            return Response::generate(-1, L('SaveFileError') . ' - ' . $path);
         }
         $base = public_path('');
         return Response::generate(0, null, [
@@ -667,7 +667,7 @@ class DataManager
         $fileFullPath = $storage->getDriverFullPathInternal($path);
         $localFile = FileUtil::savePathToLocalTemp($fileFullPath, '.' . FileUtil::extension($path));
         if (!file_exists($localFile)) {
-            return Response::generate(-1, L('Save File Error') . ' - ' . $path);
+            return Response::generate(-1, L('SaveFileError') . ' - ' . $path);
         }
         $base = public_path('');
         return Response::generate(0, null, [

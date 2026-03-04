@@ -118,6 +118,12 @@ class FileUtil
         return null;
     }
 
+    /**
+     * @Util 将文本转换为合法文件名（只保留中文、英文、数字）
+     * @param $text string 原始文本
+     * @param $limit int 最大字符数，默认为10
+     * @return string
+     */
     public static function textToFilename($text, $limit = 10)
     {
         // 只保留中文、英文、数字
@@ -127,7 +133,8 @@ class FileUtil
     }
 
     /**
-     * @param UploadedFile $file
+     * @Util 获取上传文件的文件名（含后缀），自动处理 blob 类型文件
+     * @param UploadedFile $file 上传文件对象
      * @return string
      */
     public static function getUploadFileNameWithExt($file)
@@ -144,6 +151,11 @@ class FileUtil
         return $filename;
     }
 
+    /**
+     * @Util 检查文件路径列表所在目录是否可写
+     * @param $paths array 文件路径数组
+     * @return array
+     */
     public static function filePathWritableCheck($paths)
     {
         if (empty($paths)) {
@@ -216,12 +228,23 @@ class FileUtil
         return $ext;
     }
 
+    /**
+     * @Util 判断文件路径是否属于指定分类（根据后缀名匹配配置）
+     * @param $pathname string 文件路径
+     * @param $category string 分类名称，如 image、video 等
+     * @return bool
+     */
     public static function isPathCategory($pathname, $category)
     {
         $ext = self::extension($pathname);
         return in_array($ext, config('data.upload.' . $category . '.extensions'));
     }
 
+    /**
+     * @Util 将二维数组转换为 CSV 格式字符串（UTF-8 BOM，适配 Excel）
+     * @param $list array 二维数组
+     * @return string
+     */
     public static function arrayToCSVString($list)
     {
         $lines = [];
@@ -319,6 +342,11 @@ class FileUtil
         return $dir;
     }
 
+    /**
+     * @Util 获取文件名（不含后缀）
+     * @param $pathname string 文件路径
+     * @return string
+     */
     public static function nameWithoutExtension($pathname)
     {
         $pathname = self::name($pathname);
@@ -329,6 +357,11 @@ class FileUtil
         return $pathname;
     }
 
+    /**
+     * @Util 获取文件名（含后缀）
+     * @param $pathname string 文件路径
+     * @return string
+     */
     public static function name($pathname)
     {
         return pathinfo($pathname, PATHINFO_BASENAME);
@@ -393,6 +426,11 @@ class FileUtil
         return intval($value * pow(1024, $exponent));
     }
 
+    /**
+     * @Util 获取文件所在目录路径，并确保目录存在
+     * @param $pathname string 文件路径
+     * @return string 以 / 结尾的目录路径
+     */
     public static function getAndEnsurePathnameFolder($pathname)
     {
         $base = dirname($pathname);
@@ -402,12 +440,23 @@ class FileUtil
         return trim($base, '/') . '/';
     }
 
+    /**
+     * @Util 获取文件路径中的文件名
+     * @param $pathname string 文件路径
+     * @param $extension bool 是否包含后缀名，默认为 true
+     * @return string
+     */
     public static function getPathnameFilename($pathname, $extension = true)
     {
         $pathInfo = pathinfo($pathname);
         return ($extension ? $pathInfo['basename'] : $pathInfo['filename']);
     }
 
+    /**
+     * @Util 确保目录存在，不存在则递归创建
+     * @param $dir string 目录路径
+     * @return void
+     */
     public static function ensureDir($dir)
     {
         if (!file_exists($dir)) {
@@ -415,6 +464,11 @@ class FileUtil
         }
     }
 
+    /**
+     * @Util 确保文件所在目录存在，不存在则递归创建
+     * @param $pathname string 文件路径
+     * @return void
+     */
     public static function ensureFilepathDir($pathname)
     {
         $dir = dirname($pathname);
@@ -423,6 +477,12 @@ class FileUtil
         }
     }
 
+    /**
+     * @Util 将数字 ID 转换为多级目录路径（用于分散文件存储）
+     * @param $id int 数字 ID
+     * @param $depth int 目录层级深度，默认为 3
+     * @return string 如 001/002/003
+     */
     public static function number2dir($id, $depth = 3)
     {
         $width = $depth * 3;
@@ -531,6 +591,11 @@ class FileUtil
         return true;
     }
 
+    /**
+     * @Util 判断路径是否允许安全清理（必须在 public/temp 目录下）
+     * @param $path string 文件路径
+     * @return bool
+     */
     public static function canSafeCleanTemp($path)
     {
         $tempPath = public_path('temp');
@@ -599,6 +664,10 @@ class FileUtil
         return file_get_contents($path);
     }
 
+    /**
+     * @Util 获取用于 fopen 的 stream context（禁用 SSL 验证，设置 User-Agent）
+     * @return resource
+     */
     public static function fopenGetContext()
     {
         return stream_context_create([

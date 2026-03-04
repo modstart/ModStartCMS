@@ -31,7 +31,7 @@ class JsonKeyValue extends AbstractField
     public function prepareInput($value, $model)
     {
         $json = @json_decode($value, true);
-        BizException::throwsIf($this->label . ' ' . L('Json Format Error'), $value && null === $json);
+        BizException::throwsIf($this->label . ' ' . L('JsonFormatError'), $value && null === $json);
         return $json;
     }
 }

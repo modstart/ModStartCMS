@@ -130,6 +130,11 @@ class InputPackage
         return $defaultValue;
     }
 
+    public function has($key)
+    {
+        return array_key_exists($key, $this->data);
+    }
+
     public function getInteger($key, $defaultValue = 0)
     {
         if (isset($this->data[$key])) {

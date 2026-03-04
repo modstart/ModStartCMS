@@ -46,8 +46,8 @@ class BannerController extends Controller
                     ->required();
                 $builder->color('backgroundColor', '背景色');
                 $builder->link('link', '链接');
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->eq('position', '位置')->select(BannerPosition::class);

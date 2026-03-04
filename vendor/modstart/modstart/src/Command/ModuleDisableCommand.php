@@ -16,7 +16,7 @@ class ModuleDisableCommand extends Command
     public function handle()
     {
         $module = $this->argument('module');
-        BizException::throwsIf(L('Module Invalid'), !ModuleManager::isExists($module));
+        BizException::throwsIf(L('ModuleInvalid'), !ModuleManager::isExists($module));
         $installeds = ModuleManager::listAllInstalledModules();
         $basic = ModuleManager::getModuleBasic($module);
         BizException::throwsIf('Module basic empty', !$basic);

@@ -24,13 +24,13 @@ $router->group([
     $router->match(['get', 'post'], 'register/phone', 'AuthController@registerPhone');
     $router->match(['get', 'post'], 'register/captcha', 'AuthController@registerCaptcha');
     $router->match(['get', 'post'], 'register/captcha_verify', 'AuthController@registerCaptchaVerify');
-    $router->match(['get', 'post'], 'register/phone_verify', 'AuthController@registerPhoneVerify');
-    $router->match(['get', 'post'], 'register/email_verify', 'AuthController@registerEmailVerify');
+    $router->match(['post'], 'register/phone_verify', 'AuthController@registerPhoneVerify');
+    $router->match(['post'], 'register/email_verify', 'AuthController@registerEmailVerify');
     $router->match(['get', 'post'], 'retrieve', 'AuthController@retrieve');
     $router->match(['get', 'post'], 'retrieve/email', 'AuthController@retrieveEmail');
-    $router->match(['get', 'post'], 'retrieve/email_verify', 'AuthController@retrieveEmailVerify');
+    $router->match(['post'], 'retrieve/email_verify', 'AuthController@retrieveEmailVerify');
     $router->match(['get', 'post'], 'retrieve/phone', 'AuthController@retrievePhone');
-    $router->match(['get', 'post'], 'retrieve/phone_verify', 'AuthController@retrievePhoneVerify');
+    $router->match(['post'], 'retrieve/phone_verify', 'AuthController@retrievePhoneVerify');
     $router->match(['get', 'post'], 'retrieve/captcha', 'AuthController@retrieveCaptcha');
     $router->match(['get', 'post'], 'retrieve/reset', 'AuthController@retrieveReset');
 

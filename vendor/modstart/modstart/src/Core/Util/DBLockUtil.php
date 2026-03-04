@@ -31,6 +31,12 @@ class DBLockUtil
         return self::$instance;
     }
 
+    /**
+     * @Util 申请一个数据库互斥锁
+     * @param $name string 锁名称
+     * @param $timeout int 超时时间（秒）
+     * @return bool 是否成功
+     */
     public static function acquire($name, $timeout = null)
     {
         if (self::instance()->get($name)->acquireLock($timeout)) {
@@ -39,6 +45,11 @@ class DBLockUtil
         return false;
     }
 
+    /**
+     * @Util 释放一个数据库互斥锁
+     * @param $name string 锁名称
+     * @return void
+     */
     public static function release($name)
     {
         self::instance()->get($name)->releaseLock();

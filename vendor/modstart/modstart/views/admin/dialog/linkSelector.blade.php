@@ -1,6 +1,6 @@
 @extends('modstart::admin.dialogFrame')
 
-@section('pageTitle'){{L('Please Select')}}@endsection
+@section('pageTitle'){{L('PleaseSelect')}}@endsection
 
 @section('bodyAppend')
     <script src="@asset('asset/vendor/vue.js')"></script>

@@ -95,7 +95,7 @@
         <div class="layui-btn-container">
             {!! $batchOperatePrepend !!}
             @if($canDelete && $canBatchDelete)
-                <button class="btn" data-batch-delete><i class="iconfont icon-trash"></i> {{L('Batch Delete')}}</button>
+                <button class="btn" data-batch-delete><i class="iconfont icon-trash"></i> {{L('BatchDelete')}}</button>
             @endif
         </div>
     </script>
@@ -147,14 +147,14 @@
             gridRowCols: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode($gridRowCols) !!},
             lang: {
                 loading: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Loading')) !!},
-                noRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('No Records')) !!},
+                noRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('NoRecords')) !!},
                 add: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Add')) !!},
                 edit: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Edit')) !!},
                 show: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Show')) !!},
                 import: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Import')) !!},
-                confirmDelete: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Confirm Delete ?')) !!},
-                pleaseSelectRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Please Select Records')) !!},
-                confirmDeleteRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('Confirm Delete %d records ?')) !!},
+                confirmDelete: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('ConfirmDelete')) !!},
+                pleaseSelectRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('PleaseSelectRecords')) !!},
+                confirmDeleteRecords: {!! \ModStart\Core\Util\SerializeUtil::jsonEncode(L('ConfirmDeleteRecords')) !!},
             },
         });
     })();

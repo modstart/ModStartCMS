@@ -4,13 +4,16 @@ namespace ModStart\Core\Util;
 
 use Symfony\Component\HttpFoundation\IpUtils;
 
+/**
+ * @Util IP 工具
+ */
 class IpUtil
 {
     /**
-     * 检查IP是否在指定的IP范围内
-     * @param $ip string IP地址 例如：x.x.x.x
-     * @param $ipRange string IP范围 例如：单个(x.x.x.x)掩码(x.x.x.x/x)范围(x.x.x.x-x.x.x.x)
-     * @return void
+     * @Util 判断 IP 是否在指定的 IP 范围内
+     * @param $ip string IP 地址 例如：x.x.x.x
+     * @param $ipRange string IP 范围 例如：单个(x.x.x.x)掩码(x.x.x.x/x)范围(x.x.x.x-x.x.x.x)
+     * @return bool
      */
     public static function match4($ip, $ipRange)
     {

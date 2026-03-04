@@ -388,7 +388,7 @@ class ModelUtil
     {
         $one = self::get($model, $where, $fields, $order);
         if (empty($one)) {
-            abort(404, L('Page Not Found'));
+            abort(404, L('PageNotFound'));
         }
         return $one;
     }

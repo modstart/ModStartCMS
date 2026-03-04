@@ -27,8 +27,8 @@ class MemberGroupController extends Controller
                 $builder->text('description', '描述');
                 $builder->switch('isDefault', '默认')->optionsYesNo()->help('');
                 //$builder->switch('showFront', '前台显示')->optionsYesNo()->help('');
-                $builder->display('created_at', L('Created At'))->listable(false);
-                $builder->display('updated_at', L('Updated At'))->listable(false);
+                $builder->display('created_at', L('CreatedAt'))->listable(false);
+                $builder->display('updated_at', L('UpdatedAt'))->listable(false);
             })
             ->gridFilter(function (GridFilter $filter) {
                 $filter->like('title', '名称');

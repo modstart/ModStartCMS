@@ -19,78 +19,78 @@ class ModuleServiceProvider extends ServiceProvider
         AdminMenu::register(function () {
             return [
                 [
-                    'title' => L('Admin Manage'),
+                    'title' => L('AdminManage'),
                     'icon' => 'user-o',
                     'sort' => 500,
                     'children' => [
                         [
-                            'title' => L('Admin User'),
+                            'title' => L('AdminUser'),
                             'url' => '\ModStart\Admin\Controller\AdminUserController@index',
                         ],
                         [
-                            'title' => L('Admin User Manage'),
+                            'title' => L('AdminUserManage'),
                             'rule' => 'AdminUserManage',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('Admin Role'),
+                            'title' => L('AdminRole'),
                             'url' => '\ModStart\Admin\Controller\AdminRoleController@index',
                         ],
                         [
-                            'title' => L('Admin Role Manage'),
+                            'title' => L('AdminRoleManage'),
                             'rule' => 'AdminRoleManage',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('Admin Log'),
+                            'title' => L('AdminLog'),
                             'url' => '\ModStart\Admin\Controller\AdminLogController@index',
                         ],
                         [
-                            'title' => L('Admin Log Manage'),
+                            'title' => L('AdminLogManage'),
                             'rule' => 'AdminLogManage',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('Change password'),
+                            'title' => L('ChangePassword'),
                             'url' => '\ModStart\Admin\Controller\ProfileController@changePassword',
                             'hide' => true,
                         ],
                     ]
                 ],
                 [
-                    'title' => L('System Manage'),
+                    'title' => L('SystemManage'),
                     'icon' => 'code-alt',
                     'sort' => 700,
                     'children' => [
                         [
-                            'title' => L('System Manage'),
+                            'title' => L('SystemManage'),
                             'rule' => 'SystemManage',
                             'url' => '\ModStart\Admin\Controller\SystemController@index',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('Data File Manager View'),
+                            'title' => L('DataFileManagerView'),
                             'rule' => 'DataFileManagerView',
                             'url' => '\ModStart\Admin\Controller\DataController@index',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('Data File Manager Upload'),
+                            'title' => L('DataFileManagerUpload'),
                             'rule' => 'DataFileManagerUpload',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('Data File Manager Delete'),
+                            'title' => L('DataFileManagerDelete'),
                             'rule' => 'DataFileManagerDelete',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('Data File Manager Add/Edit'),
+                            'title' => L('DataFileManagerAddEdit'),
                             'rule' => 'DataFileManagerAdd/Edit',
                             'hide' => true,
                         ],
                         [
-                            'title' => L('System Upgrade'),
+                            'title' => L('SystemUpgrade'),
                             'rule' => 'SystemUpgrade',
                             'hide' => true,
                         ]

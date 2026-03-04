@@ -7,8 +7,18 @@ use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Misc\Html\Purifier;
 
 
+/**
+ * @Util HTML 内容工具
+ */
 class HtmlUtil
 {
+    /**
+     * @Util 将内容中的 img src 替换为懒加载属性
+     * @param $content string HTML 内容
+     * @param $dataAttr string 懒加载属性名，默认 data-src
+     * @param $useAssets bool 是否使用 Assets CDN
+     * @return string
+     */
     public static function replaceImageSrcToLazyLoad($content, $dataAttr = 'data-src', $useAssets = false)
     {
         preg_match_all('/(<img.*?)src="(.*?)"(.*?>)/i', $content, $mat);
@@ -24,6 +34,13 @@ class HtmlUtil
         return $content;
     }
 
+    /**
+     * @Util 将内容中的 img src 替换为完整 URL
+     * @param $content string HTML 内容
+     * @param $useAssets bool 是否使用 Assets CDN
+     * @param $useUrl string|null 自定义 URL 前缀
+     * @return string
+     */
     public static function replaceImageSrcToFull($content, $useAssets = false, $useUrl = null)
     {
         preg_match_all('/(<img.*?)src="(.*?)"(.*?>)/i', $content, $mat);
@@ -39,6 +56,14 @@ class HtmlUtil
         return $content;
     }
 
+    /**
+     * @Util 批量将记录集中指定字段的图片 src 替换为完整 URL
+     * @param &$records array 记录集（引用传入）
+     * @param $key string 字段名
+     * @param $useAssets bool 是否使用 Assets CDN
+     * @param $useUrl string|null 自定义 URL 前缀
+     * @return void
+     */
     public static function recordsReplaceImageSrcToFull(&$records, $key, $useAssets = false, $useUrl = null)
     {
         foreach ($records as $k => $v) {
@@ -46,6 +71,12 @@ class HtmlUtil
         }
     }
 
+    /**
+     * @Util 从 HTML 内容中提取文本和图片列表
+     * @param $content string HTML 内容
+     * @param $option array 选项（textBreakToSpace: 换行转空格）
+     * @return array [text, images]
+     */
     public static function extractTextAndImages($content, $option = [])
     {
         $option = array_merge([
@@ -74,6 +105,11 @@ class HtmlUtil
         return $summary;
     }
 
+    /**
+     * @Util 获取 HTML 内容中第一张图片 src
+     * @param $content string HTML 内容
+     * @return string|null
+     */
     public static function cover($content)
     {
         preg_match_all('/<img.*?src="(.*?)".*?>/i', $content, $mat);
@@ -83,6 +119,12 @@ class HtmlUtil
         return null;
     }
 
+    /**
+     * @Util 提取 HTML 内容中的纯文本
+     * @param $content string HTML 内容
+     * @param $limit int|null 最大字符数限制
+     * @return string
+     */
     public static function text($content, $limit = null)
     {
         $text = preg_replace('/<[^>]+>/', '', $content);
@@ -129,6 +171,12 @@ class HtmlUtil
      * @param boolean $htmlspecialchars
      * @return string
      */
+    /**
+     * @Util 将纯文本转换为带段落多行的 HTML 内容
+     * @param $text string 原始文本
+     * @param $htmlspecialchars bool 是否对文本进行 HTML 转义
+     * @return string
+     */
     public static function text2html($text, $htmlspecialchars = true)
     {
         if (empty($text)) {
@@ -150,6 +198,12 @@ class HtmlUtil
      * @param bool $htmlspecialchars
      * @return string
      */
+    /**
+     * @Util 将纯文本转换为 HTML，并自动解析网址/邮箋为超链接
+     * @param $text string 原始文本
+     * @param $htmlspecialchars bool 是否对文本进行 HTML 转义
+     * @return string
+     */
     public static function text2htmlSimpleRich($text, $htmlspecialchars = true)
     {
         $content = self::text2html($text, $htmlspecialchars);
@@ -159,6 +213,11 @@ class HtmlUtil
     /**
      * @param $html
      * @return array|string|string[]|null
+     */
+    /**
+     * @Util 将 HTML 中的 http/https URL 自动转换为超链接（保留已有 HTML 标签）
+     * @param $html string HTML 内容
+     * @return string
      */
     public static function htmlSimpleRich($html)
     {
@@ -186,6 +245,11 @@ class HtmlUtil
      * @param string $text
      * @return string
      */
+    /**
+     * @Util 将 text2html 格式化的 HTML 还原为纯文本
+     * @param $text string HTML 内容
+     * @return string
+     */
     public static function html2text($text)
     {
         return str_replace(array(
@@ -197,6 +261,11 @@ class HtmlUtil
         ), $text);
     }
 
+    /**
+     * @Util 统计 HTML 内容中的字数（中文字符 + 英文小词个数）
+     * @param $content string HTML 内容
+     * @return int
+     */
     public static function workCount($content)
     {
         $content = preg_replace('/<[^>]+>/', '^', $content);
