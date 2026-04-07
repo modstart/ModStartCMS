@@ -226,6 +226,12 @@ class DynamicFields extends AbstractField
 
     public static function renderAllDetailTableTr($fields, $valueObject, $param = [])
     {
+        $param = array_merge([
+            // file display type: url|name
+            'fileTitle' => 'url',
+            // files display type: url|name
+            'filesTitle' => 'url',
+        ], $param);
         return View::make('modstart::core.field.dynamicFields.detailTableTr', [
             'fields' => $fields,
             'valueObject' => $valueObject,
@@ -248,7 +254,7 @@ class DynamicFields extends AbstractField
         ])->render();
     }
 
-    public static function renderAllDetailTableFromValues($fields,$values,$param = [])
+    public static function renderAllDetailTableFromValues($fields, $values, $param = [])
     {
         $valueObject = self::fetchValueObject($fields, $values, $param);
         return self::renderAllDetailTable($fields, $valueObject, $param);

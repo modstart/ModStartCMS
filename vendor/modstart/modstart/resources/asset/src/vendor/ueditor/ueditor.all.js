@@ -1,6 +1,6 @@
 /*!
  * UEditorPlus
- * version: 4.4.1
+ * version: 4.5.0
 */
 (function(){
 
@@ -23180,6 +23180,7 @@ UE.plugins["autofloat"] = function () {
         getPosition,
         flag = true; //ie7模式下需要偏移
     function setFloating() {
+        placeHolder.style.height = toolbarBox.offsetHeight + "px";
         var toobarBoxPos = domUtils.getXY(toolbarBox),
             origalFloat = domUtils.getComputedStyle(toolbarBox, "position"),
             origalLeft = domUtils.getComputedStyle(toolbarBox, "left");
@@ -34967,7 +34968,7 @@ UE.ui = baidu.editor.ui = {};
         insertvideo: "~/dialogs/video/video.html?f56e319b",
         insertaudio: "~/dialogs/audio/audio.html?e0883464",
         help: "~/dialogs/help/help.html?4bb38d19",
-        preview: "~/dialogs/preview/preview.html?c8f00815",
+        preview: "~/dialogs/preview/preview.html?66b02828",
         emotion: "~/dialogs/emotion/emotion.html?c5e06473",
         wordimage: "~/dialogs/wordimage/wordimage.html?6c25c600",
         formula: "~/dialogs/formula/formula.html?a3bc14af",

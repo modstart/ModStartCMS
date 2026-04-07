@@ -489,11 +489,11 @@ select {
 .ub-html table tr th {
   font-weight: bold;
   background-color: #f0f0f0;
-  padding: 0.15rem 0.375rem;
+  padding: 0.15rem 0.3rem;
   border: 0.05rem solid #ddd;
 }
 .ub-html table tr td {
-  padding: 0.15rem 0.375rem;
+  padding: 0.15rem 0.3rem;
   border: 0.05rem solid #ddd;
 }
 .ub-html > p svg,

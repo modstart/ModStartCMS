@@ -56,6 +56,9 @@ return [
         'AigcBase' => [
             'enable' => true,
         ],
+        'SiteCounter' => [
+            'enable' => true,
+        ],
         //'AigcChatTecmz' => [
         //    'enable' => true,
         //],

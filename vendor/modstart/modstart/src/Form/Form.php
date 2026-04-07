@@ -846,6 +846,7 @@ class Form implements Renderable
             case 'addBlankPage':
             case 'editBlankPage':
             case 'disableCUD':
+            case 'footOperate':
             case 'hookItemOperateRendering':
             case 'addDialogSize':
             case 'editDialogSize':

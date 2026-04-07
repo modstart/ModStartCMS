@@ -3,7 +3,7 @@
     @if($queueDelaySize>0)
         <div class="ub-alert danger">
             <i class="iconfont icon-warning"></i>
-            {{L('SystemWarning')}}: {{ L('Queue pending %s jobs, view the queue config manual.',$queueDelaySize) }}
+            {{L('SystemWarning')}}: {{ L('QueuePendingJobs',$queueDelaySize) }}
             <a href="https://modstart.com/doc" target="_blank" rel="noreferrer">{{L('ViewNow')}}</a>
         </div>
     @endif
@@ -59,13 +59,13 @@
     @if(config('env.APP_KEY')=='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('SecurityWarning')}}: {{L('%s is default, please change it','APP_KEY')}}
+            {{L('SecurityWarning')}}: {{L('IsDefault','APP_KEY')}}
         </div>
     @endif
     @if(config('env.ENCRYPT_KEY')=='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
         <div class="ub-alert warning">
             <i class="iconfont icon-warning"></i>
-            {{L('SecurityWarning')}}: {{L('%s is default, please change it','ENCRYPT_KEY')}}
+            {{L('SecurityWarning')}}: {{L('IsDefault','ENCRYPT_KEY')}}
         </div>
     @endif
 </div>

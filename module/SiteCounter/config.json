@@ -1,0 +1,19 @@
+{
+    "name": "SiteCounter",
+    "title": "网站统计设置",
+    "require": [
+        "Vendor"
+    ],
+    "env": [
+        "laravel5",
+        "laravel9"
+    ],
+    "tags": [
+    ],
+    "version": "1.4.0",
+    "author": "ModStart",
+    "description": "提供基于head和body的统计代码配置",
+    "providers": [],
+    "config": {},
+    "modstartVersion": ">=3.9.0"
+}
