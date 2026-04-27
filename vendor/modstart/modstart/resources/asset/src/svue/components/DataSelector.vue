@@ -365,7 +365,7 @@ export default {
                 this.updateRecordsCheckedNumber()
                 return
             }
-            Dialog.tipError(this.L('Select %d item(s) at most', this.max))
+            Dialog.tipError(this.L('SelectItemsAtMost', this.max))
         },
         doFileEdit() {
             if (!this.activeFileOperate) {
@@ -542,10 +542,10 @@ export default {
                 }
             )
             if (records.length < this.min) {
-                Dialog.tipError(this.L('Select %d item(s) at least', this.min))
+                Dialog.tipError(this.L('SelectItemsAtLeast', this.min))
                 return
             } else if (records.length > this.max) {
-                Dialog.tipError(this.L('Select %d item(s) at most', this.max))
+                Dialog.tipError(this.L('SelectItemsAtMost', this.max))
                 return
             }
             this.$emit('on-select', records)

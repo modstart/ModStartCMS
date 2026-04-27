@@ -239,10 +239,10 @@ export const UploadButtonUploader = function (selector, option) {
             if (typeOrMsg) {
                 switch (typeOrMsg) {
                     case 'server':
-                        opt.tipError(MS.L('Upload Error : %s', MS.L('ServerError')));
+                        opt.tipError(MS.L('UploadError', MS.L('ServerError')));
                         break
                     default:
-                        opt.tipError(MS.L('Upload Error : %s', typeOrMsg));
+                        opt.tipError(MS.L('UploadError', typeOrMsg));
                         break
                 }
             }

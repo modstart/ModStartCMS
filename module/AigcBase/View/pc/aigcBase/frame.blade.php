@@ -34,7 +34,7 @@
                 $profileDialog.removeClass('tw-hidden');
             });
         });
-        {!! \ModStart\ModStart::lang(['Copy Success','Select Local File',]) !!}
+        {!! \ModStart\ModStart::lang(['CopySuccess','SelectLocalFile']) !!}
     </script>
 @endsection
 

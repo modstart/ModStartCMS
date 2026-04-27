@@ -17,7 +17,7 @@ class ImagesTemp extends AbstractField
 
     protected function setup()
     {
-        ModStart::lang(['Compressing Image']);
+        ModStart::lang(['CompressingImage']);
         $this->addVariables([
             'server' => modstart_admin_url('data/file_manager/image'),
         ]);

@@ -142,8 +142,11 @@ module.exports = function (dirname, buildOption) {
                                 return;
                             }
                             const compressResult = UglifyJS.minify(data, {
+                                compress: true,
+                                mangle: false,
                                 output: {
-                                    comments: /^SOME_NONE_COMMENTS/
+                                    comments: false,
+                                    beautify: false
                                 }
                             })
                             console.log(`end ${fileFullPath}`)

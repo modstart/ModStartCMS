@@ -5,7 +5,7 @@
     <input type="hidden" name="{{$param['name']}}" :value="jsonValue" />
 </div>
 <script>
-    {!! \ModStart\ModStart::lang([ "Select Local File" ]) !!}
+    {!! \ModStart\ModStart::lang(['SelectLocalFile']) !!}
     window.__selectorDialogServer = "{{modstart_web_url('member_data/file_manager')}}";
     $(function () {
         new Vue({

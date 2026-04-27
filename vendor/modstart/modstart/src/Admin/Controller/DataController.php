@@ -77,7 +77,7 @@ class DataController extends Controller
         FileManager::prepareLang();
         return view('modstart::admin.data.fileManager', [
             'category' => $category,
-            'pageTitle' => L('Select ' . ucfirst($category)),
+            'pageTitle' => L('Select' . ucfirst($category)),
         ]);
     }
 

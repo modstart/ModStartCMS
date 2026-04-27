@@ -37,6 +37,9 @@ const webpackConfig = {
         filename: '[name].js',
         publicPath: config.cdn
     },
+    optimization: {
+        minimize: false,
+    },
     performance: {
         hints: false
     },
@@ -74,11 +77,15 @@ const webpackConfig = {
                             console.error(err);
                             return;
                         }
-                        const codeCompress = UglifyJS.minify(data, {
+                        const compressResult = UglifyJS.minify(data, {
+                            compress: true,
+                            mangle: false,
                             output: {
-                                comments: /^SOME_NONE_COMMENTS/
+                                comments: false,
+                                beautify: false
                             }
-                        }).code
+                        })
+                        const codeCompress = compressResult.code
                         if (codeCompress) {
                             console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
                             fs.writeFile(fileFullPath, codeCompress, () => {
@@ -89,6 +96,9 @@ const webpackConfig = {
         })
     ],
     module: {
+        noParse: [
+            /webuploader\.js$/,
+        ],
         rules: [
             {
                 test: /\.css$/,

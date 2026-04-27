@@ -3918,6 +3918,10 @@
     
         function getDataUrlFromFile(e) {
             return new Promise((function (t, r) {
+                // 参数类型检查：确保 e 是 Blob 或 File 对象
+                if (!e || !(e instanceof Blob || e instanceof File || (typeof File !== 'undefined' && e instanceof File))) {
+                    return r(new Error('getDataUrlFromFile: parameter is not a Blob or File object, got: ' + typeof e));
+                }
                 var i = new CustomFileReader;
                 i.onload = function () {
                     return t(i.result);

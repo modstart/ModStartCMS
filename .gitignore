@@ -21,3 +21,4 @@ _delete_.*
 /openspec
 /AGENTS.md
 /.github/
+/.agents
