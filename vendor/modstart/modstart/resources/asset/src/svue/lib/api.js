@@ -34,7 +34,8 @@ const init = (store) => {
     }
     apiStore = store
     apiRequest = axios.create({
-        baseURL: apiStore ? apiStore.state.api.baseUrl : '', timeout: 60 * 1000
+        baseURL: apiStore ? apiStore.state.api.baseUrl : '', timeout: 60 * 1000,
+        withCredentials: true
     })
     apiRequest.interceptors.request.use(config => {
         if (apiStore) {

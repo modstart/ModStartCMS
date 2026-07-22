@@ -5,7 +5,7 @@ namespace Module\Vendor\Provider\Schedule;
 
 
 /**
- * Class ScheduleProvider
+ * Class ScheduleBiz
  * @package Module\Vendor\Provider\Schedule
  * @since 1.5.0
  */

@@ -146,6 +146,7 @@ return [
     "No" => "No",
     "NoPermission" => "No Permission",
     "FileWriteNoPermission" => "File Write No Permission",
+    "FileWriteNoPermissionDotEnv" => "Program has no permission to modify the .env file, please modify it manually",
     "NoRecords" => "No Records",
     "None" => "None",
     "NotInstalled" => "Not Installed",

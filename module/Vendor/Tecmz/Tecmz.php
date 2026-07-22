@@ -263,7 +263,7 @@ class Tecmz
     }
 
     /**
-     * IP地址查询
+     * IP 地址查询
      *
      * @param $ip string
      * @return array|mixed
@@ -295,7 +295,7 @@ class Tecmz
     }
 
     /**
-     * 文档转图片Queue
+     * 文档转图片 Queue
      *
      * @param $docPath string
      * @param $pageLimit int
@@ -452,7 +452,7 @@ class Tecmz
     }
 
     /**
-     * 实名认证-姓名身份证号
+     * 实名认证 - 姓名身份证号
      *
      * @param $name string
      * @param $idCardNumber string
@@ -492,7 +492,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function aiToImageQueue($url, $name = null, $param = [])
     {
@@ -515,7 +515,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function amrConvertQueue($url, $name = null, $param = [])
     {
@@ -538,7 +538,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function docToPdfQueue($url, $name = null, $param = [])
     {
@@ -561,7 +561,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function epsToImageQueue($url, $name = null, $param = [])
     {
@@ -584,7 +584,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function mp3ConvertQueue($url, $name = null, $param = [])
     {
@@ -607,7 +607,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function wavConvertQueue($url, $name = null, $param = [])
     {
@@ -630,7 +630,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfCollectQueue($url, $name = null, $param = [])
     {
@@ -653,7 +653,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfDecryptQueue($url, $name = null, $param = [])
     {
@@ -676,7 +676,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfEncryptQueue($url, $name = null, $param = [])
     {
@@ -699,7 +699,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfOptimizeQueue($url, $name = null, $param = [])
     {
@@ -722,7 +722,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfToImageQueue($url, $name = null, $param = [])
     {
@@ -745,7 +745,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfWatermarkQueue($url, $name = null, $param = [])
     {
@@ -768,7 +768,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function psdToImageQueue($url, $name = null, $param = [])
     {
@@ -791,7 +791,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfToWordQueue($url, $name = null, $param = [])
     {
@@ -814,7 +814,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfToExcelQueue($url, $name = null, $param = [])
     {
@@ -842,7 +842,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function imageToWordQueue($url, $name = null, $param = [])
     {
@@ -870,7 +870,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function imageToExcelQueue($url, $name = null, $param = [])
     {
@@ -893,7 +893,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function imageThumbQueue($url, $name = null, $param = [])
     {
@@ -918,7 +918,7 @@ class Tecmz
      * @paramExample
      * param.limit 转换页数
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function docToHtmlQueue($url, $name = null, $param = [])
     {
@@ -941,7 +941,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function pdfToTextQueue($url, $name = null, $param = [])
     {
@@ -964,7 +964,7 @@ class Tecmz
      * @param $param array
      * @return array
      * @returnExample
-     * data.jobId 转化任务ID
+     * data.jobId 转化任务 ID
      */
     public function docSmartPreviewQueue($url, $name = null, $param = [])
     {

@@ -20,5 +20,5 @@
     ],
     "providers": [],
     "config": {},
-    "modstartVersion": ">=4.0.0"
+    "modstartVersion": ">=5.0.0"
 }

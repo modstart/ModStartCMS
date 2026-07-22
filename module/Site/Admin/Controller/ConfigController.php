@@ -61,7 +61,10 @@ class ConfigController extends Controller
 
         $builder->layoutPanel('网站信息', function ($builder) {
             /** @var HasFields $builder */
-            $builder->image('siteLogo', '网站Logo');
+            $siteLogoField = $builder->image('siteLogo', '网站Logo');
+            if (file_exists(public_path('theme/logo.svg'))) {
+                $siteLogoField->help('<a href="javascript:;" onclick="MS.eventManager.fireElementEvent(\'[data-field=siteLogo]\',\'set-value\',{path:\'' . AssetsUtil::fixFull('theme/logo.svg') . '\'})">恢复默认</a>');
+            }
             $builder->text('siteName', '网站名称');
             $builder->text('siteSlogan', '网站副标题');
             $builder->text('siteDomain', '网站域名')->help('如 example.com');

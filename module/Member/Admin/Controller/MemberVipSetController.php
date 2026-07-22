@@ -42,7 +42,13 @@ class MemberVipSetController extends Controller
                     $builder->text('groupName', '分组')->help('如 VIP、SVIP 等，前台可按照分组显示');
                     $builder->switch('visible', '可见')->gridEditable(true)->tip('开启后前台用户VIP开通页面可见');
                     $builder->switch('isDefault', '默认')->optionsYesNo()->help('会员是否默认为该等级')->required();
-                    $builder->image('icon', '图标');
+                    $builder->image('icon', '图标')
+                        ->help(implode(' ', array_map(function ($i) {
+                            $url = modstart_web_url('vendor/Member/image/vip' . $i . '.svg');
+                            return '<a href="javascript:;" class="btn btn-sm btn-default" onclick="MS.eventManager.fireElementEvent(\'[data-field=icon]\',\'set-value\',{path:\'' . $url . '\'})">' .
+                                '<img src="' . $url . '" style="height:20px;vertical-align:middle;margin-right:4px;"/>' .
+                                '</a>';
+                        }, range(1, 10))));
                     $builder->currency('price', '价格')->required();
                     $builder->currency('priceMarket', '划线价格')->required();
                     $builder->number('vipDays', '时间')->required()->help('单位为天，365表示1年');

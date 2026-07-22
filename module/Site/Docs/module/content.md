@@ -36,4 +36,9 @@
 继承 `AbstractSiteTemplateProvider` 实现网站多模板功能 
 
 
+
+## 模块入口
+
+- `/site/contact` 联系方式
+
 {ADMIN_MENUS}

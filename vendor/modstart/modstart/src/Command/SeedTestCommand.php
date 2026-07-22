@@ -8,24 +8,15 @@ use ModStart\Test\TestContext;
 
 class SeedTestCommand extends Command
 {
+    use SeedTestTrait;
+
     protected $signature = 'modstart:seed-test';
     protected $description = '执行系统自动化测试（Seed 填充 + API 测试 + Biz 测试）';
 
     public function handle()
     {
-        // 安全校验：仅允许在指定测试数据库配置下执行，防止误操作生产环境
-        $requiredEnv = [
-            'DB_HOST'     => 'docker-master',
-            'DB_USERNAME' => 'root',
-            'DB_PASSWORD' => '123456',
-        ];
-        foreach ($requiredEnv as $key => $expected) {
-            $actual = env($key);
-            if ($actual !== $expected) {
-                $this->error('  安全校验失败：' . $key . ' 期望值为 "' . $expected . '"，实际值为 "' . $actual . '"');
-                $this->error('  请确认当前环境为测试环境后再执行此命令。');
-                return 1;
-            }
+        if (!$this->checkTestEnvironment()) {
+            return 1;
         }
 
         TestContext::reset();
@@ -36,34 +27,23 @@ class SeedTestCommand extends Command
 
         // Step 1: 删除所有数据库表
         $this->comment('[ Step 1 ] 删除所有数据库表');
-        try {
-            \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0');
-            $tables = \Illuminate\Support\Facades\DB::select('SHOW TABLES');
-            foreach ($tables as $table) {
-                $tableName = array_values((array)$table)[0];
-                \Illuminate\Support\Facades\Schema::dropIfExists($tableName);
-                $this->line('  > 删除表: ' . $tableName);
-            }
-            \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1');
-            $this->info('  所有表已删除');
-        } catch (\Exception $e) {
-            $this->error('  删除表失败: ' . $e->getMessage());
+        if (!$this->dropAllTables()) {
             return 1;
         }
 
         // Step 2: 运行数据库迁移
         $this->comment('[ Step 2 ] 运行 migrate');
-        if ($this->runArtisanProcess('migrate --force') !== 0) {
-            $this->error('  migrate 失败，终止执行');
+        if (!$this->runMigrate()) {
             return 1;
         }
 
         // Step 3: 安装所有模块（部分模块可能有非致命错误，不中断）
         $this->comment('[ Step 3 ] 运行 modstart:module-install-all');
-        $exitCode = $this->runArtisanProcess('modstart:module-install-all');
-        if ($exitCode !== 0) {
-            $this->warn('  module-install-all 返回非零退出码（' . $exitCode . '），存在部分模块错误，继续执行');
-        }
+        $this->installAllModules();
+
+        // Step 4: 初始化默认超级管理员（admin / 123456）
+        $this->comment('[ Step 4 ] 初始化默认超级管理员');
+        $this->initDefaultAdmin();
 
         // 获取所有已启用的模块名列表
         $enabledModules = array_keys(ModuleManager::listAllEnabledModules());
@@ -161,28 +141,4 @@ class SeedTestCommand extends Command
         }
     }
 
-    /**
-     * 在独立子进程中运行 artisan 命令，实时输出结果
-     *
-     * @param string $artisanArgs  artisan 命令及参数，如 "migrate --force"
-     * @return int 退出码
-     */
-    private function runArtisanProcess($artisanArgs)
-    {
-        $php = PHP_BINARY;
-        $artisan = base_path('artisan');
-        $cmd = escapeshellarg($php) . ' ' . escapeshellarg($artisan) . ' ' . $artisanArgs . ' 2>&1';
-        $handle = popen($cmd, 'r');
-        if ($handle === false) {
-            $this->error('  无法启动子进程');
-            return 1;
-        }
-        while (!feof($handle)) {
-            $line = fgets($handle);
-            if ($line !== false && trim($line) !== '') {
-                $this->line('  ' . rtrim($line));
-            }
-        }
-        return pclose($handle);
-    }
 }

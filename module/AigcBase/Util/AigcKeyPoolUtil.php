@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Util\ArrayUtil;
 use Module\AigcBase\Model\AigcKeyPool;
+use Module\AigcBase\Provider\AigcChatProvider;
+use Module\AigcBase\Provider\AigcProvider;
 use Module\AigcBase\Type\AigcKeyPoolStatus;
 use Module\Vendor\Util\CacheUtil;
 
@@ -79,6 +81,34 @@ class AigcKeyPoolUtil
     public static function markFail($keyPool)
     {
         self::markEnd($keyPool, false);
+    }
+
+    public static function configuredChatModelMap()
+    {
+        $records = self::all();
+        $result = [];
+        foreach ($records as $record) {
+            $model = !empty($record['param']['model']) ? $record['param']['model'] : 'default';
+            $key = $record['type'] . ':' . $model;
+            
+            try {
+                $provider = AigcProvider::getByName($record['type']);
+                if ($provider) {
+                    $models = $provider->models();
+                    if (isset($models[$model])) {
+                        // 使用 provider 的 models() 中的显示名
+                        $result[$key] = $provider->title() . '-' . $models[$model];
+                    } else {
+                        // model 不在列表中（可能是动态输入的值），直接使用 model 名
+                        $result[$key] = $model;
+                    }
+                }
+            } catch (\Exception $e) {
+                // 异常情况，使用 model 作为显示名
+                $result[$key] = $model;
+            }
+        }
+        return $result;
     }
 
 }

@@ -15,5 +15,5 @@
     "description": "提供基于head和body的统计代码配置",
     "providers": [],
     "config": {},
-    "modstartVersion": ">=3.9.0"
+    "modstartVersion": ">=5.0.0"
 }

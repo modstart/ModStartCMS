@@ -66,6 +66,19 @@ var UrlWatcher = function (option) {
                 },
                 jsonp: 'callback',
             });
+        } else if (opt.headers) {
+            $.ajax({
+                url: opt.url,
+                type: 'POST',
+                data: opt.data,
+                headers: opt.headers,
+                success: (res) => {
+                    opt.requestFinish.call(me, res);
+                },
+                error: () => {
+                    opt.requestFinish.call(me, {code: -1, msg: '请求出现错误'});
+                },
+            });
         } else {
             $.post(opt.url, opt.data, function (res) {
                 opt.requestFinish.call(me, res);

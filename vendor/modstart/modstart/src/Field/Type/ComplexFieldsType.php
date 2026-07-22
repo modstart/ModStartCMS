@@ -20,6 +20,7 @@ class ComplexFieldsType implements BaseType
     const TYPE_SLIDER = 'slider';
     const TYPE_LINK = 'link';
     const TYPE_SELECT = 'select';
+    const TYPE_SELECT_INPUT = 'selectInput';
     const TYPE_RADIO = 'radio';
     const TYPE_COLOR = 'color';
     const TYPE_RICH_HTML = 'richHtml';
@@ -39,6 +40,7 @@ class ComplexFieldsType implements BaseType
             self::TYPE_SLIDER => '滑动数字',
             self::TYPE_LINK => '链接',
             self::TYPE_SELECT => '下拉选择',
+            self::TYPE_SELECT_INPUT => '下拉选择+输入',
             self::TYPE_RADIO => '单选按钮',
             self::TYPE_COLOR => '颜色选择',
             self::TYPE_RICH_HTML => '富文本',

@@ -44,10 +44,13 @@ class SignUtil
 
         $str = [];
         foreach ($params as $k => $v) {
+            if (is_array($v)) {
+                $v = json_encode($v, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+            }
             if ($function) {
                 $v = $function($v);
             }
-            $str [] = $k . '=' . $v;
+            $str[] = $k . '=' . $v;
         }
 
         $str[] = $appSecretName . '=' . $appSecret;
@@ -91,7 +94,10 @@ class SignUtil
 
         $str = [];
         foreach ($params as $k => $v) {
-            $str [] = $k . '=' . $function($v);
+            if (is_array($v)) {
+                $v = json_encode($v, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+            }
+            $str[] = $k . '=' . $function($v);
         }
         $str = join('&', $str);
 

@@ -40,6 +40,7 @@ class ModStartServiceProvider extends ServiceProvider
         \ModStart\Command\ModuleRefreshAllCommand::class,
         \ModStart\Command\ModuleLinkAssetCommand::class,
         \ModStart\Command\SeedTestCommand::class,
+        \ModStart\Command\SeedCleanCommand::class,
     ];
 
     protected $routeMiddleware = [

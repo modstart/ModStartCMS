@@ -542,7 +542,7 @@ class FileManager
 
     public static function uploadToCategory($category,
                                             $uploadTable, $uploadCategoryTable,
-                                            $uploadCategoryTitles = [],
+                                            $uploadCategoryTitles,
                                             $userId,
                                             $filename, $content,
                                             $option = null, $param = [])

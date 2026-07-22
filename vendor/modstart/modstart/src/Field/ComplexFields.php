@@ -35,6 +35,7 @@ class ComplexFields extends AbstractField
                 // ['name' => 'xxx', 'title' => '滑动数字', 'type' => ComplexFieldsType::TYPE_SLIDER, 'min' => 1, 'max' => 5, 'step' => 1, 'defaultValue' => 0, 'placeholder'=>'', 'tip'=>'', ],
                 // ['name' => 'xxx', 'title' => '链接', 'type' => ComplexFieldsType::TYPE_LINK, 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
                 // ['name' => 'xxx', 'title' => '单选', 'type' => ComplexFieldsType::TYPE_SELECT, 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
+                // ['name' => 'xxx', 'title' => '下拉选择+输入', 'type' => ComplexFieldsType::TYPE_SELECT_INPUT, 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
                 // ['name' => 'xxx', 'title' => '单选按钮', 'type' => ComplexFieldsType::TYPE_RADIO, 'option' => ['a'=>'aa','b'=>'bb'], 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
                 // ['name' => 'xxx', 'title' => '颜色', 'type' => ComplexFieldsType::TYPE_COLOR, 'defaultValue' => '', 'placeholder' => '', 'tip' => '',],
                 // ['name' => 'xxx', 'title' => '富文本', 'type' => ComplexFieldsType::TYPE_RICH_HTML, 'defaultValue' => '', 'placeholder'=>'', 'tip'=>'', ],

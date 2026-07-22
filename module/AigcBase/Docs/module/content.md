@@ -21,4 +21,9 @@
 
 > 以上AI驱动需要在后台模块进行自定义安装
 
+
+## 模块入口
+
+- `/aigc/distribution` AI分发
+
 {ADMIN_MENUS}

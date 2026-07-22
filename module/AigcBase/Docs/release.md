@@ -1,3 +1,19 @@
+## [Unreleased]
+
+- 优化：将中间件检查方式从 class_exists 改为 file_exists，提升系统兼容性
+
+---
+
+## 1.5.0 新增 AigcChatUtil 工具类与模型配置优化
+
+- 新增：AigcChatUtil 工具类，支持通过系统配置调用 AI 对话，提供 chat() 和 chatText() 方法
+- 新增：AigcKeyPoolUtil 新增 configuredChatModelMap() 方法，仅返回已配置的 AI 模型选项
+- 优化：后台 AI 驱动下拉选项改为仅显示已配置的模型
+- 优化：chatText() 方法增加 markdown 选项并自动去除 AI 返回内容中的 HTML 标签
+
+- 优化：多语言管理菜单显示优化
+---
+
 ## 1.4.5 新增支持 systemPrompt 配置，支持系统级提示词设置
 
 - 新增：支持 systemPrompt 配置，支持系统级提示词设置

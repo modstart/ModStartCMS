@@ -5,17 +5,21 @@
 @section('headAppend')
     @parent
     <script>
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?e3403438a2b250ca086ee44c2c5ebf72";
+        var __grow = __grow || [];
+        (function() {
+            var g = document.createElement("script");
+            g.src = "https://g.tecmz.com/grow/page.js?modstart";
             var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
+            s.parentNode.insertBefore(g, s);
         })();
         $(function () {
             $(document).on('click', '[data-tk-event]', function () {
                 var pcs = $(this).attr('data-tk-event').split(',')
-                _hmt && _hmt.push(['_trackEvent', pcs[0], pcs[1], pcs[2] || '', pcs[3] || '']);
+                if(__grow.trackEvent){
+                    __grow.trackEvent(pcs[0]+'.'+pcs[1],{
+                        module: pcs[2] || ''
+                    });
+                }
             });
         });
     </script>

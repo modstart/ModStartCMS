@@ -34,5 +34,17 @@
 
 - `ScheduleBiz` 计划任务
 
+
+## 模块入口
+
+- `/install/ping` 安装检测
+- `/install/prepare` 安装准备
+- `/install/execute` 执行安装
+- `/install/lock` 安装锁定
+- `/captcha/image` 验证码
+- `/session` 会话管理
+- `/placeholder/{width}x{height}` 占位图
+- `/content_verify/{name}` 内容审核
+
 {ADMIN_MENUS}
 

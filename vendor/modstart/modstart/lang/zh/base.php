@@ -146,6 +146,7 @@ return [
     "No" => "否",
     "NoPermission" => "没有权限",
     "FileWriteNoPermission" => "文件没有写入权限",
+    "FileWriteNoPermissionDotEnv" => "程序无权限修改文件/.env文件，请手动修改",
     "NoRecords" => "没有记录",
     "None" => "空",
     "NotInstalled" => "未安装",

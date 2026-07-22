@@ -51,4 +51,17 @@
 \Module\Member\Auth\MemberUser::get()
 ```
 
+
+## 模块入口
+
+- `/login` 用户登录
+- `/register` 用户注册
+- `/member` 会员中心
+- `/member_profile/profile` 个人资料
+- `/member_message` 站内消息
+- `/member_vip` 会员VIP
+- `/member_money` 我的钱包
+- `/member_credit` 我的积分
+- `/member_address` 收货地址
+
 {ADMIN_MENUS}

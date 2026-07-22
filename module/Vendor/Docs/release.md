@@ -1,12 +1,14 @@
 ## [Unreleased]
 
-- 优化：`AbstractSiteUrlBiz`/SiteUrl 提供者增强，新增批量更新与删除辅助方法，便于站点链接管理
+- 优化：多语言管理菜单显示优化
+- 优化：将中间件检查方式从 class_exists 改为 file_exists，提升系统兼容性
+- 优化：邮件模板间距和字体大小优化，整体布局更紧凑
 
 ---
 
-## 5.0.0
+## 5.0.0 AbstractSiteUrlBiz 增强，批量操作支持
 
-- 新增：
+- 优化：`AbstractSiteUrlBiz`/SiteUrl 提供者增强，新增批量更新与删除辅助方法，便于站点链接管理
 
 ---
 

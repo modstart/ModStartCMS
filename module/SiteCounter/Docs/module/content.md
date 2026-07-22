@@ -8,4 +8,11 @@
 - 支持Head配置
 
 
+
+## 使用场景
+
+- 网站统计代码配置
+- Google Analytics/百度统计等集成
+- 网站流量监测
+
 {ADMIN_MENUS}

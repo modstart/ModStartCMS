@@ -51,4 +51,48 @@ class TestSeed
         ModelUtil::insertIfNotExists($table, $where, $data);
         return true;
     }
+
+    /**
+     * 检查数据库表是否存在，不存在时直接跳过（输出提示）
+     * 用于 Seed 文件开头，省去重复的 if + return 样板代码
+     *
+     * @param string $table 表名
+     * @param string $name  描述（可选，默认用表名）
+     * @return bool 表存在返回 true，不存在返回 false
+     */
+    public static function ensureTable($table, $name = '')
+    {
+        if (empty($name)) {
+            $name = $table;
+        }
+        if (!\Illuminate\Support\Facades\Schema::hasTable($table)) {
+            \ModStart\Test\TestCase::assertTrue(true, $name . ' Seed: 跳过（' . $table . ' 表未迁移）');
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 获取当前时间字符串，格式 Y-m-d H:i:s
+     * 用于 Seed 文件中替代 $now = date('Y-m-d H:i:s')
+     *
+     * @return string
+     */
+    public static function now()
+    {
+        return date('Y-m-d H:i:s');
+    }
+
+    /**
+     * 统计数据库中满足条件的记录数
+     * 用于 Seed 文件中替代 ModelUtil::count(...)
+     *
+     * @param string $table 表名或 Model 类名
+     * @param array  $where 查询条件
+     * @return int
+     */
+    public static function count($table, $where = [])
+    {
+        return \ModStart\Core\Dao\ModelUtil::count($table, $where);
+    }
 }

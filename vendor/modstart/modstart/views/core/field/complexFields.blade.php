@@ -70,6 +70,18 @@
                                                    :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
                                     @endforeach
                                 </el-select>
+                            @elseif($f['type']=='selectInput')
+                                <el-select v-model="value['{{$f['name']}}']"
+                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
+                                           filterable
+                                           allow-create
+                                           default-first-option>
+                                    @foreach($f['option'] as $k=>$v)
+                                        <el-option :key="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"
+                                                   :label="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($v)}}"
+                                                   :value="{{\ModStart\Core\Util\SerializeUtil::jsonEncode($k)}}"></el-option>
+                                    @endforeach
+                                </el-select>
                             @elseif($f['type']=='radio')
                                 <el-radio-group v-model="value['{{$f['name']}}']">
                                     @foreach($f['option'] as $k=>$v)

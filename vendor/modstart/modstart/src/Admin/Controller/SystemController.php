@@ -101,6 +101,9 @@ class SystemController extends Controller
                             file_put_contents(base_path('.env'), $content);
                             return Response::json(0, L('OperateSuccess'), null, '[js]parent.location.href="' . $newPath . '"');
                         } catch (\Exception $e) {
+                            if (str_contains($e->getMessage(), 'Permission denied')) {
+                                return Response::jsonError(L('FileWriteNoPermissionDotEnv'));
+                            }
                             return Response::jsonError(L('NoPermission'));
                         }
                     });

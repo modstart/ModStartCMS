@@ -61,6 +61,12 @@ class ModuleUninstallCommand extends Command
             return;
         }
         $to = public_path("vendor/$module/");
+        $toPath = rtrim($to, '/');
+        if (is_link($toPath)) {
+            unlink($toPath);
+            $this->info("Module Asset UnPublish (symlink) : $to");
+            return;
+        }
         if (!file_exists($to)) {
             return;
         }

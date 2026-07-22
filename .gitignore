@@ -22,3 +22,7 @@ _delete_.*
 /AGENTS.md
 /.github/
 /.agents
+
+# OpenCode
+_temp/
+DEV_*.md

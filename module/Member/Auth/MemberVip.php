@@ -22,7 +22,7 @@ class MemberVip
 
     public static function isDefault()
     {
-        return self::get('isDefault', false);
+        return (bool)self::get('isDefault', false);
     }
 
     public static function id()
