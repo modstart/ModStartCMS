@@ -14,8 +14,26 @@ use Module\Member\Support\MemberLoginCheck;
 use Module\PayCenter\Support\PayCenterPerform;
 use Module\Vendor\Type\OrderStatus;
 
+/**
+ * Class MemberMoneyChargeController
+ * @package Module\Member\Api\Controller
+ * @Api 用户信息
+ */
 class MemberMoneyChargeController extends Controller implements MemberLoginCheck
 {
+    /**
+     * @Api 钱包充值提交
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 提交钱包充值订单并返回支付参数
+     * @ApiBodyParam money float required 充值金额
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "payOrder": {}
+     *   }
+     * }
+     */
     public function submit()
     {
         BizException::throwsIf('钱包充值未开启',!modstart_config('Member_MoneyChargeEnable',false));

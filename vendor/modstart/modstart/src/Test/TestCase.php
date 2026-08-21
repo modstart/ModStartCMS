@@ -51,6 +51,21 @@ class TestCase
     }
 
     /**
+     * 断言严格相等（===）
+     * @param mixed $expected
+     * @param mixed $actual
+     * @param string $name
+     */
+    public static function assertSame($expected, $actual, $name = 'assertSame')
+    {
+        if ($expected === $actual) {
+            TestContext::pass($name);
+        } else {
+            TestContext::fail($name, "Expected " . json_encode($expected) . ", got " . json_encode($actual));
+        }
+    }
+
+    /**
      * 断言不为空
      * @param mixed $value
      * @param string $name
@@ -90,6 +105,21 @@ class TestCase
         } else {
             $msg = isset($ret['msg']) ? $ret['msg'] : json_encode($ret);
             TestContext::fail($name, 'Expected success response, got: ' . $msg);
+        }
+    }
+
+    /**
+     * 断言接口返回错误
+     * @param array $ret
+     * @param string $name
+     */
+    public static function assertError($ret, $name = 'assertError')
+    {
+        if (!isset($ret['code']) || $ret['code'] !== 0) {
+            TestContext::pass($name);
+        } else {
+            $msg = isset($ret['msg']) ? $ret['msg'] : json_encode($ret);
+            TestContext::fail($name, 'Expected error response, got success: ' . $msg);
         }
     }
 

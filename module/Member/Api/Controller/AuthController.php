@@ -144,6 +144,18 @@ class AuthController extends ModuleBaseController
         BizException::throws("登录跳转路径异常");
     }
 
+    /**
+     * @Api 授权登录-尝试登录
+     * @ApiMethod post
+     * @ApiDesc 使用已获取的授权用户信息尝试自动登录或绑定
+     * @ApiBodyParam type string required 授权登录类型
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "memberUserId": 1
+     *   }
+     * }
+     */
     public function oauthTryLogin($oauthType = null)
     {
         $oauthUserInfo = Session::get('oauthUserInfo', []);
@@ -225,6 +237,17 @@ class AuthController extends ModuleBaseController
         return Response::generateSuccessData($resultData);
     }
 
+    /**
+     * @Api 授权登录-获取绑定信息
+     * @ApiMethod post
+     * @ApiDesc 获取当前授权登录流程中的用户信息
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "oauthUserInfo": {}
+     *   }
+     * }
+     */
     public function oauthBindInfo()
     {
         $oauthUserInfo = Session::get('oauthUserInfo', []);
@@ -238,6 +261,25 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @Api 授权登录-绑定账号
+     * @ApiMethod post
+     * @ApiDesc 将授权用户信息绑定到当前账号或注册新账号
+     * @ApiBodyParam type string required 授权登录类型
+     * @ApiBodyParam username string 用户名
+     * @ApiBodyParam phone string 手机号
+     * @ApiBodyParam phoneVerify string 手机验证码
+     * @ApiBodyParam email string 邮箱
+     * @ApiBodyParam emailVerify string 邮箱验证码
+     * @ApiBodyParam captcha string 验证码
+     * @ApiBodyParam redirect string 绑定成功跳转地址
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "memberUserId": 1
+     *   }
+     * }
+     */
     public function oauthBind($oauthType = null)
     {
         $input = InputPackage::buildFromInput();
@@ -404,6 +446,24 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, null);
     }
 
+    /**
+     * @Api 授权登录-授权回调
+     * @ApiMethod post
+     * @ApiDesc 处理第三方授权登录回调结果
+     * @ApiBodyParam type string required 授权登录类型
+     * @ApiBodyParam code string 授权码
+     * @ApiBodyParam auth_code string 授权码（部分渠道）
+     * @ApiBodyParam callback string 授权回调地址
+     * @ApiBodyParam callbackMode string 回调模式
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "user": {
+     *       "username": "用户名"
+     *     }
+     *   }
+     * }
+     */
     public function oauthCallback($oauthType = null, $callback = null)
     {
         $input = InputPackage::buildFromInput();
@@ -475,6 +535,20 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @Api 授权登录-发起授权登录
+     * @ApiMethod post
+     * @ApiDesc 发起第三方授权登录，返回授权跳转地址
+     * @ApiBodyParam type string required 授权登录类型
+     * @ApiBodyParam callback string 授权回调地址
+     * @ApiBodyParam silence boolean 是否静默授权
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "redirect": "授权跳转地址"
+     *   }
+     * }
+     */
     public function oauthLogin($oauthType = null, $callback = null)
     {
         if ($disableText = modstart_config()->getWithEnv('oauthDisableText')) {
@@ -502,6 +576,18 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @Api SSO-客户端退出准备
+     * @ApiMethod post
+     * @ApiDesc 生成同步登录客户端的退出跳转地址
+     * @ApiBodyParam domainUrl string required 客户端域名地址
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "redirect": "服务端退出跳转地址"
+     *   }
+     * }
+     */
     public function ssoClientLogoutPrepare()
     {
         if (!modstart_config('ssoClientEnable', false)) {
@@ -521,6 +607,14 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @Api SSO-客户端退出
+     * @ApiMethod post
+     * @ApiDesc 同步登录客户端退出登录
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function ssoClientLogout()
     {
         if (!modstart_config('ssoClientEnable', false)) {
@@ -530,6 +624,14 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, 'ok');
     }
 
+    /**
+     * @Api SSO-服务端退出
+     * @ApiMethod post
+     * @ApiDesc 同步登录服务端退出登录
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function ssoServerLogout()
     {
         if (!modstart_config('ssoServerEnable', false)) {
@@ -539,6 +641,19 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, 'ok');
     }
 
+    /**
+     * @Api SSO-服务端登录成功回调
+     * @ApiMethod post
+     * @ApiDesc 同步登录服务端登录成功后生成跳转到客户端的地址
+     * @ApiBodyParam client string required 客户端地址
+     * @ApiBodyParam domainUrl string required 服务端域名地址
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "redirect": "客户端登录回调地址"
+     *   }
+     * }
+     */
     public function ssoServerSuccess()
     {
         if (!modstart_config('ssoServerEnable', false)) {
@@ -587,6 +702,20 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @Api SSO-服务端验证登录状态
+     * @ApiMethod post
+     * @ApiDesc 验证同步登录请求参数并返回服务端登录状态
+     * @ApiBodyParam client string required 客户端地址
+     * @ApiBodyParam timestamp int required 时间戳
+     * @ApiBodyParam sign string required 签名
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "isLogin": true
+     *   }
+     * }
+     */
     public function ssoServer()
     {
         if (!modstart_config('ssoServerEnable', false)) {
@@ -635,6 +764,18 @@ class AuthController extends ModuleBaseController
         ]);
     }
 
+    /**
+     * @Api SSO-客户端验证并登录
+     * @ApiMethod post
+     * @ApiDesc 验证同步登录服务端返回参数并完成登录
+     * @ApiBodyParam server string required 服务端地址
+     * @ApiBodyParam timestamp int required 时间戳
+     * @ApiBodyParam sign string required 签名
+     * @ApiBodyParam username string required 用户名（base64编码）
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function ssoClient()
     {
         if (!modstart_config('ssoClientEnable', false)) {
@@ -689,6 +830,18 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, 'ok');
     }
 
+    /**
+     * @Api SSO-客户端登录准备
+     * @ApiMethod post
+     * @ApiDesc 生成同步登录客户端的登录跳转地址
+     * @ApiBodyParam client string required 客户端回调地址
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "redirect": "服务端登录跳转地址"
+     *   }
+     * }
+     */
     public function ssoClientPrepare()
     {
         if (!modstart_config('ssoClientEnable', false)) {
@@ -710,9 +863,12 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 登录-退出登录
+     * @ApiMethod post
+     * @ApiDesc 退出当前用户登录状态
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function logout()
     {
@@ -725,13 +881,15 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     * @throws BizException
-     *
      * @Api 登录-用户登录
+     * @ApiMethod post
+     * @ApiDesc 使用用户名、手机号或邮箱加密码登录
      * @ApiBodyParam username string required 用户名
      * @ApiBodyParam password string required 密码
      * @ApiBodyParam captcha string 验证码（如果验证码开启需要传递）
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function login()
     {
@@ -789,11 +947,27 @@ class AuthController extends ModuleBaseController
         return Response::generateSuccess();
     }
 
+    /**
+     * @Api 登录-图片验证码
+     * @ApiMethod get
+     * @ApiDesc 获取登录流程的图片验证码
+     * @ApiResponseData {
+     *   "image": "验证码图片"
+     * }
+     */
     public function loginCaptchaRaw()
     {
         return CaptchaFacade::create('default');
     }
 
+    /**
+     * @Api 短信验证登录-图片验证码
+     * @ApiMethod get
+     * @ApiDesc 获取短信验证登录流程的图片验证码
+     * @ApiResponseData {
+     *   "image": "验证码图片"
+     * }
+     */
     public function loginPhoneCaptchaRaw()
     {
         return CaptchaFacade::create('default');
@@ -801,8 +975,13 @@ class AuthController extends ModuleBaseController
 
     /**
      * @Api 短信验证登录-登录提交
-     * @ApiBodyParam phone string 手机号
-     * @ApiBodyParam verify string 手机验证码
+     * @ApiMethod post
+     * @ApiDesc 使用手机验证码登录，未注册手机号可自动注册
+     * @ApiBodyParam phone string required 手机号
+     * @ApiBodyParam verify string required 手机验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function loginPhone()
     {
@@ -870,10 +1049,14 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
      * @Api 短信验证登录-获取手机验证码
-     * @ApiBodyParam target string 手机号
+     * @ApiMethod post
+     * @ApiDesc 发送短信验证码用于短信验证登录
+     * @ApiBodyParam target string required 手机号
      * @ApiBodyParam captcha string 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function loginPhoneVerify()
     {
@@ -922,9 +1105,9 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 短信验证登录-图片验证码
+     * @ApiMethod post
+     * @ApiDesc 获取短信验证登录的图片验证码
      * @ApiResponseData {
      *   "image":"图片Base64"
      * }
@@ -938,9 +1121,9 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 登录-图片验证码
+     * @ApiMethod post
+     * @ApiDesc 获取登录的图片验证码
      * @ApiResponseData {
      *   "image":"图片Base64"
      * }
@@ -955,9 +1138,18 @@ class AuthController extends ModuleBaseController
 
     /**
      * @Api 注册-短信验证注册
-     * @ApiBodyParam phone string 手机号
-     * @ApiBodyParam phoneVerify string 手机验证码
+     * @ApiMethod post
+     * @ApiDesc 使用手机验证码注册并自动登录
+     * @ApiBodyParam phone string required 手机号
+     * @ApiBodyParam phoneVerify string required 手机验证码
+     * @ApiBodyParam password string 密码（开启密码注册时需要传递）
      * @ApiBodyParam agreement boolean 是否同意协议
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "id": 1
+     *   }
+     * }
      */
     public function registerPhone()
     {
@@ -1031,15 +1223,23 @@ class AuthController extends ModuleBaseController
 
     /**
      * @Api 注册-用户注册
-     * @ApiBodyParam username string 用户名
-     * @ApiBodyParam password string 密码
-     * @ApiBodyParam passwordRepeat string 重复密码
+     * @ApiMethod post
+     * @ApiDesc 使用用户名注册，可选绑定手机号或邮箱
+     * @ApiBodyParam username string required 用户名
+     * @ApiBodyParam password string required 密码
+     * @ApiBodyParam passwordRepeat string required 重复密码
      * @ApiBodyParam phone string 手机号（如果开启手机注册需要传递）
      * @ApiBodyParam phoneVerify string 手机验证码（如果开启手机注册需要传递）
      * @ApiBodyParam email string 邮箱（如果开启邮箱注册需要传递）
      * @ApiBodyParam emailVerify string 邮箱验证码（如果开启邮箱注册需要传递）
      * @ApiBodyParam captcha string 验证码
      * @ApiBodyParam agreement boolean 是否同意协议
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "id": 1
+     *   }
+     * }
      */
     public function register()
     {
@@ -1161,9 +1361,13 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
      * @Api 注册-获取注册邮箱验证码
-     * @ApiBodyParam target string 邮箱地址
+     * @ApiMethod post
+     * @ApiDesc 发送邮箱验证码用于邮箱注册
+     * @ApiBodyParam target string required 邮箱地址
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function registerEmailVerify()
     {
@@ -1211,9 +1415,13 @@ class AuthController extends ModuleBaseController
 
 
     /**
-     * @return array
      * @Api 注册-获取注册手机验证码
-     * @ApiBodyParam target string 手机号
+     * @ApiMethod post
+     * @ApiDesc 发送短信验证码用于手机注册
+     * @ApiBodyParam target string required 手机号
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function registerPhoneVerify()
     {
@@ -1260,10 +1468,13 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 注册-图片验证码验证
-     * @ApiBodyParam captcha string 图片验证码
+     * @ApiMethod post
+     * @ApiDesc 校验图片验证码，通过后注册流程无需再次输入验证码
+     * @ApiBodyParam captcha string required 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function registerCaptchaVerify()
     {
@@ -1293,6 +1504,15 @@ class AuthController extends ModuleBaseController
         return Response::generateSuccess();
     }
 
+    /**
+     * @Api 授权登录-绑定验证码校验
+     * @ApiMethod post
+     * @ApiDesc 校验授权绑定流程的图片验证码
+     * @ApiBodyParam captcha string required 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function oauthBindCaptchaVerify()
     {
         $input = InputPackage::buildFromInput();
@@ -1313,11 +1533,30 @@ class AuthController extends ModuleBaseController
         return Response::generateSuccess();
     }
 
+    /**
+     * @Api 授权登录-绑定图片验证码
+     * @ApiMethod get
+     * @ApiDesc 获取授权登录绑定流程的图片验证码
+     * @ApiResponseData {
+     *   "image": "验证码图片"
+     * }
+     */
     public function oauthBindCaptchaRaw()
     {
         return CaptchaFacade::create('default');
     }
 
+    /**
+     * @Api 授权登录-绑定图片验证码
+     * @ApiMethod post
+     * @ApiDesc 获取授权绑定流程的图片验证码
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "image": "图片Base64"
+     *   }
+     * }
+     */
     public function oauthBindCaptcha()
     {
         Session::forget('oauthBindCaptchaPass');
@@ -1328,9 +1567,13 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     * @Api 授权登录-获取注册邮箱验证码
-     * @ApiBodyParam target string 邮箱地址
+     * @Api 授权登录-获取绑定邮箱验证码
+     * @ApiMethod post
+     * @ApiDesc 发送邮箱验证码用于授权绑定
+     * @ApiBodyParam target string required 邮箱地址
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function oauthBindEmailVerify()
     {
@@ -1376,9 +1619,13 @@ class AuthController extends ModuleBaseController
 
 
     /**
-     * @return array
-     * @Api 授权登录-获取注册手机验证码
-     * @ApiBodyParam target string 手机号
+     * @Api 授权登录-获取绑定手机验证码
+     * @ApiMethod post
+     * @ApiDesc 发送短信验证码用于授权绑定
+     * @ApiBodyParam target string required 手机号
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function oauthBindPhoneVerify()
     {
@@ -1422,6 +1669,14 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, '验证码发送成功');
     }
 
+    /**
+     * @Api 注册-图片验证码
+     * @ApiMethod get
+     * @ApiDesc 获取注册流程的图片验证码
+     * @ApiResponseData {
+     *   "image": "验证码图片"
+     * }
+     */
     public function registerCaptchaRaw()
     {
         return CaptchaFacade::create('default');
@@ -1429,9 +1684,9 @@ class AuthController extends ModuleBaseController
 
 
     /**
-     * @return array
-     *
      * @Api 注册-获取注册验证码图片
+     * @ApiMethod post
+     * @ApiDesc 获取注册流程的图片验证码
      * @ApiResponseData {
      *   "image":"图片Base64"
      * }
@@ -1446,11 +1701,14 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 找回密码-根据手机号找回
-     * @ApiBodyParam phone string 手机号
-     * @ApiBodyParam verify string 手机验证码
+     * @ApiMethod post
+     * @ApiDesc 使用手机验证码验证找回密码身份
+     * @ApiBodyParam phone string required 手机号
+     * @ApiBodyParam verify string required 手机验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function retrievePhone()
     {
@@ -1492,11 +1750,14 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 找回密码-发送手机验证码
-     * @ApiBodyParam target string 手机号
+     * @ApiMethod post
+     * @ApiDesc 发送短信验证码用于找回密码
+     * @ApiBodyParam target string required 手机号
      * @ApiBodyParam captcha string 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function retrievePhoneVerify()
     {
@@ -1537,11 +1798,14 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 找回密码-根据邮箱找回
-     * @ApiBodyParam email string 邮箱
-     * @ApiBodyParam verify string 邮箱验证码
+     * @ApiMethod post
+     * @ApiDesc 使用邮箱验证码验证找回密码身份
+     * @ApiBodyParam email string required 邮箱
+     * @ApiBodyParam verify string required 邮箱验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function retrieveEmail()
     {
@@ -1591,11 +1855,14 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 找回密码-发送邮箱验证码
-     * @ApiBodyParam target string 邮箱地址
+     * @ApiMethod post
+     * @ApiDesc 发送邮箱验证码用于找回密码
+     * @ApiBodyParam target string required 邮箱地址
      * @ApiBodyParam captcha string 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function retrieveEmailVerify()
     {
@@ -1638,12 +1905,15 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 找回密码-获取已验证账户信息
+     * @ApiMethod post
+     * @ApiDesc 获取找回密码流程中已验证的账户信息
      * @ApiResponseData {
-     *   "memberUser":{
-     *     "username": "用户名"
+     *   "code": 0,
+     *   "data": {
+     *     "memberUser": {
+     *       "username": "用户名"
+     *     }
      *   }
      * }
      */
@@ -1669,11 +1939,14 @@ class AuthController extends ModuleBaseController
     }
 
     /**
-     * @return array
-     *
      * @Api 找回密码-重置密码
-     * @ApiBodyParam password string 新密码
-     * @ApiBodyParam passwordRepeat string 重复新密码
+     * @ApiMethod post
+     * @ApiDesc 为已验证身份的账户重置密码
+     * @ApiBodyParam password string required 新密码
+     * @ApiBodyParam passwordRepeat string required 重复新密码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function retrieveReset()
     {
@@ -1708,15 +1981,23 @@ class AuthController extends ModuleBaseController
         return Response::generate(0, '成功设置新密码,请您登录');
     }
 
+    /**
+     * @Api 找回密码-图片验证码
+     * @ApiMethod get
+     * @ApiDesc 获取找回密码流程的图片验证码
+     * @ApiResponseData {
+     *   "image": "验证码图片"
+     * }
+     */
     public function retrieveCaptchaRaw()
     {
         return CaptchaFacade::create('default');
     }
 
     /**
-     * @return array
-     *
      * @Api 找回密码-图片验证码
+     * @ApiMethod post
+     * @ApiDesc 获取找回密码流程的图片验证码
      * @ApiResponseData {
      *   "image":"验证码图片Base64"
      * }

@@ -65,4 +65,18 @@ TestCase::assertTrue(isset($ret['code']), 'Member API: member_credit/get 返回�
 $ret = TestHttp::post('/api/member_credit/log');
 TestCase::assertSuccess($ret, 'Member API: member_credit/log');
 
+// 头像 SSRF 防护：内网/保留地址应被拒绝（type 可任意伪造进入 default 分支）
+$ret = TestHttp::post('/api/member_profile/avatar', ['type' => 'ssrf', 'avatar' => 'http://127.0.0.1/x.jpg']);
+TestCase::assertError($ret, 'Member API: avatar 拒绝内网 127.0.0.1');
+$ret = TestHttp::post('/api/member_profile/avatar', ['type' => 'ssrf', 'avatar' => 'http://169.254.169.254/latest/meta-data/']);
+TestCase::assertError($ret, 'Member API: avatar 拒绝云元数据 169.254.169.254');
+$ret = TestHttp::post('/api/member_profile/avatar', ['type' => 'ssrf', 'avatar' => 'http://10.0.0.1/x.jpg']);
+TestCase::assertError($ret, 'Member API: avatar 拒绝内网 10.x');
+$ret = TestHttp::post('/api/member_profile/avatar', ['type' => 'ssrf', 'avatar' => 'http://172.16.0.1/x.jpg']);
+TestCase::assertError($ret, 'Member API: avatar 拒绝内网 172.16.x');
+$ret = TestHttp::post('/api/member_profile/avatar', ['type' => 'ssrf', 'avatar' => 'http://192.168.1.1/x.jpg']);
+TestCase::assertError($ret, 'Member API: avatar 拒绝内网 192.168.x');
+$ret = TestHttp::post('/api/member_profile/avatar', ['type' => 'ssrf', 'avatar' => 'http://localhost/x.jpg']);
+TestCase::assertError($ret, 'Member API: avatar 拒绝 localhost');
+
 TestHttp::clearToken();

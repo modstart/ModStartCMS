@@ -31,6 +31,12 @@ class SeedTestCommand extends Command
             return 1;
         }
 
+        // Step 1.5: 校验修改过的迁移文件类名（类名错误会在 migrate 时崩溃，需前置校验）
+        $this->comment('[ Step 1.5 ] 校验迁移文件类名');
+        if (!$this->checkMigrationClassNames()) {
+            return 1;
+        }
+
         // Step 2: 运行数据库迁移
         $this->comment('[ Step 2 ] 运行 migrate');
         if (!$this->runMigrate()) {
@@ -139,6 +145,99 @@ class SeedTestCommand extends Command
             TestContext::fail($relativePath, $e->getMessage());
             $this->error('    [ERROR] ' . $e->getMessage());
         }
+    }
+
+    /**
+     * 校验 git 修改过的迁移文件类名是否与文件名推导一致
+     *
+     * Laravel 的 Migrator::resolve() 根据迁移文件名推导类名：
+     *   $file = implode('_', array_slice(explode('_', $file), 4));
+     *   $class = Str::studly($file);
+     * 若类名与推导结果不一致，migrate 时会报 "Class not found"。
+     * 只校验未提交（git 修改/新增）的迁移文件，避免影响历史已发布文件。
+     *
+     * @return bool 校验通过返回 true
+     */
+    private function checkMigrationClassNames()
+    {
+        $files = $this->getChangedMigrationFiles();
+        if (empty($files)) {
+            $this->info('  没有修改过的迁移文件，或 git 不可用，跳过类名校验');
+            return true;
+        }
+        $fail = false;
+        foreach ($files as $file) {
+            // 模拟 Laravel Migrator::resolve() 的类名推导
+            $filename = basename($file, '.php');
+            $parts = explode('_', $filename);
+            $namePart = implode('_', array_slice($parts, 4));
+            $expectedClass = \Illuminate\Support\Str::studly($namePart);
+
+            $content = @file_get_contents($file);
+            if ($content === false) {
+                $this->error('  无法读取迁移文件: ' . $file);
+                $fail = true;
+                continue;
+            }
+            if (!preg_match('/class\s+(\w+)\s+extends\s+Migration/', $content, $m)) {
+                $this->error('  ' . $filename . ' 未找到 "class Xxx extends Migration" 声明');
+                $fail = true;
+                continue;
+            }
+            $actualClass = $m[1];
+            if ($actualClass !== $expectedClass) {
+                $this->error('  ' . $filename . ' 类名为 ' . $actualClass . '，但 Laravel 按文件名推导应为 ' . $expectedClass . '（迁移类名必须与文件名保持一致）');
+                $fail = true;
+            }
+        }
+        if ($fail) {
+            return false;
+        }
+        $this->info('  迁移文件类名校验通过（共 ' . count($files) . ' 个修改的迁移文件）');
+        return true;
+    }
+
+    /**
+     * 获取 git 修改/新增的迁移文件列表
+     *
+     * 覆盖系统迁移目录（database/migrations/）与所有模块迁移目录（module 下各模块的 Migrate/ 目录）
+     *
+     * @return array 迁移文件绝对路径列表；git 不可用或非 git 仓库时返回空数组（跳过校验）
+     */
+    private function getChangedMigrationFiles()
+    {
+        $gitRoot = base_path();
+        $files = [];
+        // 不带路径过滤获取全部变更，避免 git pathspec glob 不可靠的问题
+        $cmd = 'git -C ' . escapeshellarg($gitRoot) . ' status --porcelain --untracked-files=all';
+        $output = [];
+        exec($cmd, $output, $exitCode);
+        if ($exitCode !== 0) {
+            // git 不可用或非 git 仓库时无法判断哪些文件是本次修改的，跳过校验
+            return $files;
+        }
+        foreach ($output as $line) {
+            $relPath = trim(substr($line, 3)); // porcelain 格式: "XY path"，去掉前3个字符(状态2位+空格)
+            if ($relPath === '') {
+                continue;
+            }
+            // 处理 rename 情况： "old -> new"
+            if (strpos($relPath, ' -> ') !== false) {
+                $relPath = trim(substr($relPath, strpos($relPath, ' -> ') + 4));
+            }
+            // 仅保留迁移目录下的 PHP 文件：系统迁移 或 模块迁移
+            if (!preg_match('/(^|\/)database\/migrations\/.+\.php$/', $relPath)
+                && !preg_match('/(^|\/)Migrate\/.+\.php$/', $relPath)) {
+                continue;
+            }
+            $absPath = $gitRoot . '/' . $relPath;
+            if (is_file($absPath)) {
+                $files[] = $absPath;
+            }
+        }
+        $files = array_unique($files);
+        sort($files);
+        return $files;
     }
 
 }

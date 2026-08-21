@@ -19,6 +19,8 @@ class AigcChatUtil
      * @param array $option 选项
      *   - driver: 直接指定驱动全名（优先级最高）
      *   - driverKey: 从配置读取驱动的 config key，默认 AigcBase_AdminDefaultChatDriver
+     *   - reasoning: 是否推理，默认 false（非推理模式）
+     *   - reasoning_effort: 推理强度（none|low|medium|high），显式指定时优先于 reasoning
      * @return array Response格式
      * @throws BizException
      */

@@ -23,8 +23,24 @@ use Module\Member\Util\MemberMoneyUtil;
 class MemberMoneyCashController extends Controller implements MemberLoginCheck
 {
     /**
-     * @return array
      * @Api 获取提现配置
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 获取当前用户的余额提现配置信息
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "total": "100.00",
+     *     "desc": "提现说明",
+     *     "min": "100.00",
+     *     "rate": 0,
+     *     "types": {
+     *       "1": "支付宝"
+     *     },
+     *     "canCash": true,
+     *     "defaultType": 1
+     *   }
+     * }
      */
     public function get()
     {
@@ -42,9 +58,17 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
     }
 
     /**
-     * @return array
      * @Api 计算提现金额
-     * @ApiBodyParam money float 提现金额
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 计算提现扣除手续费后的实际到账金额
+     * @ApiBodyParam money float required 提现金额
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "value": "100.00"
+     *   }
+     * }
      */
     public function calc()
     {
@@ -66,13 +90,22 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
     }
 
     /**
-     * @return array
-     * @throws \Exception
      * @Api 提现提交
-     * @ApiBodyParam money float 提现金额
-     * @ApiBodyParam type string 提现方式 1支付宝
-     * @ApiBodyParam alipayRealname string 支付宝真实姓名
-     * @ApiBodyParam alipayAccount string 支付宝账号
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 提交余额提现申请
+     * @ApiBodyParam money float required 提现金额
+     * @ApiBodyParam type string required 提现方式 1支付宝 2微信 3银行
+     * @ApiBodyParam alipayRealname string 支付宝真实姓名（支付宝提现必填）
+     * @ApiBodyParam alipayAccount string 支付宝账号（支付宝提现必填）
+     * @ApiBodyParam wechatRealname string 微信真实姓名（微信提现必填）
+     * @ApiBodyParam wechatAccount string 微信账号（微信提现必填）
+     * @ApiBodyParam bankRealname string 银行真实姓名（银行提现必填）
+     * @ApiBodyParam bankAccount string 银行账号（银行提现必填）
+     * @ApiBodyParam bankName string 银行名称（银行提现必填）
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function submit()
     {
@@ -135,6 +168,29 @@ class MemberMoneyCashController extends Controller implements MemberLoginCheck
         return Response::generate(0, '提交成功', null, modstart_web_url('member_money/cash/log'));
     }
 
+    /**
+     * @Api 提现记录
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 分页获取当前用户的提现记录
+     * @ApiBodyParam page int 页码
+     * @ApiBodyParam pageSize int 每页数量
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "page": 1,
+     *     "pageSize": 10,
+     *     "records": [
+     *       {
+     *         "id": 1,
+     *         "money": "100.00"
+     *       }
+     *     ],
+     *     "total": 1,
+     *     "maxRecords": -1
+     *   }
+     * }
+     */
     public function log()
     {
         $input = InputPackage::buildFromInput();

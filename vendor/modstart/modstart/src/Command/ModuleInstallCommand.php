@@ -80,8 +80,11 @@ class ModuleInstallCommand extends Command
         if (!file_exists($path)) {
             return;
         }
+        $exitCode = $this->call('migrate', ['--path' => ModuleManager::relativePath($module, 'Migrate'), '--force' => true]);
+        if (0 !== $exitCode) {
+            BizException::throws('Module ' . $module . ' migrate failed with exit code ' . $exitCode);
+        }
         $this->info('Module Migrate Success');
-        $this->call('migrate', ['--path' => ModuleManager::relativePath($module, 'Migrate'), '--force' => true]);
     }
 
     private function publishRoot($module)
@@ -142,7 +145,7 @@ class ModuleInstallCommand extends Command
         } else {
             $fs->deleteDirectory($to);
             $fs->copyDirectory($from, $to);
-            $this->info("Module Asset Publish : $from -> $to");
+            $this->info("Module Asset Publish : " . ModuleManager::relativePath($module, 'Asset') . " -> public/vendor/$module");
         }
     }
 

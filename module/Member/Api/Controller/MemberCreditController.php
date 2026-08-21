@@ -11,8 +11,26 @@ use Module\Member\Auth\MemberUser;
 use Module\Member\Support\MemberLoginCheck;
 use Module\Member\Util\MemberCreditUtil;
 
+/**
+ * Class MemberCreditController
+ * @package Module\Member\Api\Controller
+ * @Api 用户信息
+ */
 class MemberCreditController extends ModuleBaseController implements MemberLoginCheck
 {
+    /**
+     * @Api 获取用户积分
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 获取当前用户的积分余额
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "total": 100,
+     *     "freezeTotal": 0
+     *   }
+     * }
+     */
     public function get()
     {
         $credit = MemberCreditUtil::get(MemberUser::id());
@@ -23,6 +41,30 @@ class MemberCreditController extends ModuleBaseController implements MemberLogin
     }
 
 
+    /**
+     * @Api 用户积分明细
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 分页获取当前用户的积分变动记录
+     * @ApiBodyParam search.type string 类型：income收入|payout支出
+     * @ApiBodyParam page int 页码
+     * @ApiBodyParam pageSize int 每页数量
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "page": 1,
+     *     "pageSize": 10,
+     *     "records": [
+     *       {
+     *         "id": 1,
+     *         "change": 10
+     *       }
+     *     ],
+     *     "total": 1,
+     *     "maxRecords": -1
+     *   }
+     * }
+     */
     public function log()
     {
         $input = InputPackage::buildFromInput();

@@ -54,7 +54,7 @@ class MemberMoneyChargePayCenterBiz extends AbstractPayCenterBiz
         MemberMoneyUtil::change($order['memberUserId'], $order['money'], '钱包充值');
         ModelUtil::transactionCommit();
         $memberUser = MemberUtil::get($order['memberUserId']);
-        NotifierProvider::notify('MemberMoneyCharge', '用户钱包充值成功', [
+        NotifierProvider::notify('MemberMoneyCharge', '💰 用户钱包充值成功', [
             '用户ID' => $memberUser['id'],
             '用户昵称' => $memberUser['nickname'],
             '用户名' => $memberUser['username'],

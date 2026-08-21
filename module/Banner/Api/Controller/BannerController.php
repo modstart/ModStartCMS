@@ -17,10 +17,22 @@ use Module\Banner\Util\BannerUtil;
 class BannerController extends Controller
 {
     /**
-     * @return array
-     *
      * @Api 获取轮播信息
-     * @ApiBodyParam position string 位置信息
+     * @ApiDesc 根据位置获取轮播图列表
+     * @ApiMethod post
+     * @ApiBodyParam position string required 轮播图位置
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "msg": "",
+     *   "data": [
+     *     {
+     *       "id": 1,
+     *       "image": "https://...",
+     *       "link": "",
+     *       "title": ""
+     *     }
+     *   ]
+     * }
      */
     public function get()
     {

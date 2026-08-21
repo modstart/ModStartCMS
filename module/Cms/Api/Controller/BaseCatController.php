@@ -10,6 +10,9 @@ use ModStart\Module\ModuleBaseController;
 use Module\Cms\Util\CmsCatUtil;
 use Module\Cms\Util\CmsModelUtil;
 
+/**
+ * @Api 通用CMS
+ */
 class BaseCatController extends ModuleBaseController
 {
     protected function setup($name = 0)

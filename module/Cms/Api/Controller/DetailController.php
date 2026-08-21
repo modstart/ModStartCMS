@@ -24,7 +24,25 @@ class DetailController extends ModuleBaseController
 {
     /**
      * @Api 内容-获取详情
-     * @ApiBodyParam id integer 内容ID
+     * @ApiDesc 根据ID或别名获取内容详情
+     * @ApiMethod post
+     * @ApiBodyParam id string required 内容ID或别名
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "msg": "ok",
+     *   "data": {
+     *     "view": "模板",
+     *     "record": {
+     *       "id": 1,
+     *       "title": "标题"
+     *     },
+     *     "cat": {
+     *       "id": 1,
+     *       "title": "栏目名称"
+     *     },
+     *     "model": {}
+     *   }
+     * }
      */
     public function index()
     {

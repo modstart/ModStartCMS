@@ -19,6 +19,15 @@ class MemberMoneyController extends ModuleBaseController implements MemberLoginC
 {
     /**
      * @Api 获取用户资金
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 获取当前用户的资金余额
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "total": "100.00"
+     *   }
+     * }
      */
     public function get()
     {
@@ -29,7 +38,27 @@ class MemberMoneyController extends ModuleBaseController implements MemberLoginC
 
     /**
      * @Api 获取用户资金明细
-     * @ApiBodyParam search.type string required 类型：income|expense
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 分页获取当前用户的资金变动记录
+     * @ApiBodyParam search.type string 类型：income收入|payout支出
+     * @ApiBodyParam page int 页码
+     * @ApiBodyParam pageSize int 每页数量
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "page": 1,
+     *     "pageSize": 10,
+     *     "records": [
+     *       {
+     *         "id": 1,
+     *         "change": "10.00"
+     *       }
+     *     ],
+     *     "total": 1,
+     *     "maxRecords": -1
+     *   }
+     * }
      */
     public function log()
     {

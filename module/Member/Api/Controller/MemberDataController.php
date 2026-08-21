@@ -17,12 +17,19 @@ use Module\Member\Support\MemberLoginCheck;
 class MemberDataController extends Controller implements MemberLoginCheck
 {
     /**
-     * @param $category
-     * @return mixed
      * @Api 用户文件管理
-     * @ApiQueryParam category string 类别
-     * @ApiBodyParam action string 动作，uploadDirect表示文件上传
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 用户文件上传与管理
+     * @ApiQueryParam category string required 类别
+     * @ApiBodyParam action string required 动作，uploadDirect表示文件上传
      * @ApiBodyParam file File 文件对象
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "path": "上传文件路径"
+     *   }
+     * }
      */
     public function fileManager($category, $storageTypeConfig = null)
     {

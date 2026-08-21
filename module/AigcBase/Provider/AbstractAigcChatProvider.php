@@ -80,12 +80,30 @@ abstract class AbstractAigcChatProvider extends AbstractAigcProvider
             'systemPrompt' => null,
             // 是否是 Markdown 返回，默认为 false
             'markdown' => false,
-        ], $option);;
+            // 是否推理，默认为非推理模式
+            'reasoning' => false,
+            // 推理强度（none|low|medium|high），显式指定时优先于 reasoning 使用
+            'reasoning_effort' => null,
+        ], $option);
         return [
             $sessionId,
             $msg,
             $option,
         ];
+    }
+
+    /**
+     * 计算模型推理强度参数值（供 LLMPX 等支持推理的 API 使用）
+     * 显式指定 reasoning_effort 时直接返回；否则根据是否推理（reasoning）返回 none / high
+     * @param array $option chatPrepare 处理后的 option
+     * @return string none|low|medium|high
+     */
+    protected function chatReasoningEffort($option)
+    {
+        if (!empty($option['reasoning_effort'])) {
+            return $option['reasoning_effort'];
+        }
+        return empty($option['reasoning']) ? 'none' : 'high';
     }
 
     /**

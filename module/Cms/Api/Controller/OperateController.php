@@ -17,7 +17,19 @@ class OperateController extends ModuleBaseController
 {
     /**
      * @Api 操作-匿名点赞/取消点赞
-     * @ApiBodyParam id integer 内容ID
+     * @ApiDesc 对指定内容进行匿名点赞或取消点赞
+     * @ApiMethod post
+     * @ApiBodyParam id integer required 内容ID
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "msg": "ok",
+     *   "data": {
+     *     "action": "like",
+     *     "update": {
+     *       "like-count": 1
+     *     }
+     *   }
+     * }
      */
     public function like()
     {

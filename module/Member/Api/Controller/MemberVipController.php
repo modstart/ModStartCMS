@@ -30,8 +30,22 @@ class MemberVipController extends Controller implements MemberLoginCheck
     ];
 
     /**
-     * @return array
      * @Api 用户VIP-会员文案信息
+     * @ApiMethod post
+     * @ApiDesc 获取 VIP 会员文案、权益与开通信息
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "title": "会员协议",
+     *     "content": "会员协议内容",
+     *     "countDown": 1800,
+     *     "vips": [],
+     *     "rights": [],
+     *     "openUsers": [],
+     *     "groupNames": [],
+     *     "vipFunctions": []
+     *   }
+     * }
      */
     public function info()
     {
@@ -48,8 +62,14 @@ class MemberVipController extends Controller implements MemberLoginCheck
     }
 
     /**
-     * @return array
      * @Api 用户VIP-所有可见VIP
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 获取所有可见的 VIP 会员类型
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": []
+     * }
      */
     public function all()
     {
@@ -57,9 +77,18 @@ class MemberVipController extends Controller implements MemberLoginCheck
     }
 
     /**
-     * @return array
      * @Api 用户VIP-购买VIP
-     * @ApiBodyParam vipId int 会员ID
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 提交 VIP 购买订单并返回支付参数
+     * @ApiBodyParam vipId int required 会员ID
+     * @ApiBodyParam voucherId int 优惠券ID
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "payOrder": {}
+     *   }
+     * }
      */
     public function buy()
     {
@@ -124,9 +153,19 @@ class MemberVipController extends Controller implements MemberLoginCheck
     }
 
     /**
-     * @return array
      * @Api 用户VIP-计算价格
-     * @ApiBodyParam vipId int 会员ID
+     * @ApiMethod post
+     * @ApiDesc 计算 VIP 购买价格与有效期
+     * @ApiBodyParam vipId int required 会员ID
+     * @ApiBodyParam voucherId int 优惠券ID
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "price": "99.00",
+     *     "expire": "2099-12-31 00:00:00",
+     *     "type": "month"
+     *   }
+     * }
      */
     public function calc()
     {

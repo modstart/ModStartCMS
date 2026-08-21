@@ -20,7 +20,20 @@ class FormController extends BaseCatController
 {
     /**
      * @Api 表单-获取详情
-     * @ApiBodyParam cat string 栏目标识（ID、名称）
+     * @ApiDesc 获取表单栏目的配置详情
+     * @ApiMethod post
+     * @ApiBodyParam cat string required 栏目标识（ID、名称）
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "msg": "ok",
+     *   "data": {
+     *     "cat": {
+     *       "id": 1,
+     *       "title": "栏目名称"
+     *     },
+     *     "model": {}
+     *   }
+     * }
      */
     public function index()
     {
@@ -34,9 +47,15 @@ class FormController extends BaseCatController
 
     /**
      * @Api 表单-内容提交
-     * @ApiBodyParam cat string 栏目标识（ID、名称）
+     * @ApiDesc 提交表单栏目内容
+     * @ApiMethod post
+     * @ApiBodyParam cat string required 栏目标识（ID、名称）
      * @ApiBodyParam content string 内容
-     * @ApiBodyParam xxx string 其他信息
+     * @ApiBodyParam f_xxx string 模型自定义字段
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "msg": "提交成功"
+     * }
      */
     public function submit()
     {

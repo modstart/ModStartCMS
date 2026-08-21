@@ -90,7 +90,7 @@ class MemberVipPayCenterBiz extends AbstractPayCenterBiz
 
         NotifierProvider::notify(
             'Member_VipPayed',
-            '会员VIP已支付',
+            '💰 会员VIP已支付',
             [
                 '用户ID' => $memberUser['id'],
                 '用户' => $memberUser['username'],

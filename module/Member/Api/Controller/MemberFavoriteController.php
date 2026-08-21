@@ -20,11 +20,16 @@ use Module\Member\Util\MemberFavoriteUtil;
 class MemberFavoriteController extends Controller implements MemberLoginCheck
 {
     /**
-     * @return array
-     * @throws BizException
      * @Api 收藏提交
-     * @ApiBodyParam category string 类别
-     * @ApiBodyParam categoryId int 类别ID
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 收藏指定内容
+     * @ApiBodyParam category string required 类别
+     * @ApiBodyParam categoryId int required 类别ID
+     * @ApiBodyParam redirect string 收藏成功跳转地址
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function favorite()
     {
@@ -44,11 +49,16 @@ class MemberFavoriteController extends Controller implements MemberLoginCheck
     }
 
     /**
-     * @return array
-     * @throws BizException
      * @Api 收藏取消
-     * @ApiBodyParam category string 类别
-     * @ApiBodyParam categoryId int 类别ID
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 取消收藏指定内容
+     * @ApiBodyParam category string required 类别
+     * @ApiBodyParam categoryId int required 类别ID
+     * @ApiBodyParam redirect string 取消收藏跳转地址
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function unfavorite()
     {

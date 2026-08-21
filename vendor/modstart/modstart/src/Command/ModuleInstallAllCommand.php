@@ -7,6 +7,7 @@ use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Model\AdminUser;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\FileUtil;
 use ModStart\ModStart;
 use ModStart\Module\ModuleManager;
 
@@ -16,8 +17,26 @@ class ModuleInstallAllCommand extends Command
 
     public function handle()
     {
+        $failed = false;
         $linkAsset = $this->option('link-asset');
         $this->info("ModuleInstallAll\n");
+
+        $assetDir = public_path('asset');
+        $assetCount = 0;
+        if (is_dir($assetDir)) {
+            $files = FileUtil::listAllFiles($assetDir);
+            foreach ($files as $file) {
+                if ($file['isFile']) {
+                    $assetCount++;
+                }
+            }
+        }
+        if ($assetCount <= 0) {
+            $this->error('vendor:publish published nothing to public/asset');
+            return 1;
+        }
+        $this->info('public/asset files: ' . $assetCount);
+
         foreach (ModuleManager::listAllInstalledModulesInRequiredOrder() as $module) {
             if (!ModuleManager::isExists($module)) {
                 continue;
@@ -30,6 +49,7 @@ class ModuleInstallAllCommand extends Command
                 $this->info($ret['data']['output']);
             } else {
                 $this->error($ret['msg']);
+                $failed = true;
             }
             $this->info("");
         }
@@ -62,8 +82,14 @@ class ModuleInstallAllCommand extends Command
 
         $this->publishHotfixFiles();
 
+        if ($failed) {
+            $this->error("ModuleInstallAll Run Finished With Errors");
+            return 1;
+        }
+
         $this->warn("ModuleInstallAll Run Finished");
 
+        return 0;
     }
 
     private function publishHotfixFiles()

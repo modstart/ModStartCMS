@@ -81,7 +81,7 @@ class FileManager
         switch ($action) {
             case 'init':
             case 'upload':
-                $func = "${action}Execute";
+                $func = "{$action}Execute";
                 return self::$func($input, $category, null, null, 0, $option, $param);
         }
         return Response::jsonError('Unknown action');
@@ -114,7 +114,7 @@ class FileManager
             case 'uploadAndSaveBase64':
             case 'list':
             case 'category':
-                $func = "${action}Execute";
+                $func = "{$action}Execute";
                 return self::$func($input, $category, $uploadTable, $uploadCategoryTable, $userId, $option, $param);
         }
         return Response::jsonError('Unknown action');
@@ -195,7 +195,11 @@ class FileManager
             return Response::jsonError('file empty');
         }
         $filename = $file->getClientOriginalName();
-        $content = file_get_contents($file->getRealPath());
+        $realPath = $file->getRealPath();
+        if (empty($realPath)) {
+            $realPath = $file->getPathname();
+        }
+        $content = file_get_contents($realPath);
         $ret = DataManager::upload($category, $filename, $content, $option, $param);
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
@@ -243,7 +247,11 @@ class FileManager
             return Response::jsonError('file empty');
         }
         $filename = $file->getClientOriginalName();
-        $content = file_get_contents($file->getRealPath());
+        $realPath = $file->getRealPath();
+        if (empty($realPath)) {
+            $realPath = $file->getPathname();
+        }
+        $content = file_get_contents($realPath);
         $ret = DataManager::upload($category, $filename, $content, $option);
         if ($ret['code']) {
             return Response::jsonError($ret['msg']);
@@ -433,8 +441,8 @@ class FileManager
                 $item['path'] = $record['_data']['domain'] . $item['path'];
             }
             $item['fullPath'] = AssetsUtil::fixFull($item['path'], false);
-            $item['filename'] = htmlspecialchars($record['_data']['filename']);
-            $item['type'] = FileUtil::extension($record['_data']['path']);
+            $item['filename'] = htmlspecialchars((string)$record['_data']['filename']);
+            $item['type'] = FileUtil::extension((string)$record['_data']['path']);
             $item['category'] = $category;
             $records[] = $item;
         }

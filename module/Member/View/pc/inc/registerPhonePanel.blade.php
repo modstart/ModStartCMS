@@ -3,7 +3,7 @@
     <div class="box">
 
         <div class="nav">
-            <a href="{{$__msRoot}}login?redirect={{!empty($redirect)?urlencode($redirect):''}}">登录</a>
+            <a href="{{$__msRoot}}login?{{(!empty($dialog)?'dialog=1&':'')}}redirect={{!empty($redirect)?urlencode($redirect):''}}">登录</a>
 
             ·
             <a href="javascript:;" class="active">注册</a>

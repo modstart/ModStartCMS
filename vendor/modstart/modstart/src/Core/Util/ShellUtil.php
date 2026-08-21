@@ -68,7 +68,29 @@ class ShellUtil
         if ($log) {
             Log::info("ShellUtil.RunInNewProcess -> " . $command);
         }
-        $process = new Process($command);
+        // 隔离父进程环境变量，避免污染子进程：
+        // ScheduleRunAllCommand 会批量运行其他站点的 schedule:run，
+        // 若子进程继承父进程（当前站点）的 .env 环境变量（SESSION_DRIVER、APP_NAME、DB_* 等），
+        // 会导致子进程配置错乱（如 "Driver [smart_redis] not supported"）。
+        // 这里通过 Process 的 env 参数完全替换子进程环境，仅保留必要变量（PATH / HOME），
+        // 兼容 Windows（Path / USERPROFILE）、Linux、macOS。
+        $env = array();
+        $path = getenv('PATH');
+        if ($path === false) {
+            $path = getenv('Path');
+        }
+        if ($path === false) {
+            $path = '/usr/local/bin:/usr/bin:/bin';
+        }
+        $env['PATH'] = (string)$path;
+        $home = getenv('HOME');
+        if ($home === false) {
+            $home = getenv('USERPROFILE');
+        }
+        if ($home !== false && $home !== '') {
+            $env['HOME'] = (string)$home;
+        }
+        $process = new Process($command, null, $env, null, null, array());
         $process->start();
         $process->wait();
         $ret = $process->getOutput();

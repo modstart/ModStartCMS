@@ -16,9 +16,17 @@ use Module\Article\Util\ArticleUtil;
 class ArticleController extends ModuleBaseController
 {
     /**
-     * @return array
      * @Api 获取通用文章
-     * @ApiBodyParam id int 文章ID
+     * @ApiDesc 根据 ID 或别名获取文章内容
+     * @ApiMethod post
+     * @ApiBodyParam id string 文章ID或别名
+     * @ApiResponseData {
+     *   "article": {
+     *     "id": 1,
+     *     "title": "标题",
+     *     "content": "内容"
+     *   }
+     * }
      */
     public function get()
     {

@@ -17,11 +17,15 @@ class MemberDocController extends Controller
 {
     /**
      * @Api 用户协议
-     * @ApiBodyParam type string 协议类型 agreement用户使用协议, privacy用户隐私协议, appeal账号申诉
-     * @ApiResponseData
-     * {
-     *  "title": "协议标题",
-     *  "content": "<p>协议内容富文本</p>"
+     * @ApiMethod post
+     * @ApiDesc 获取用户协议、隐私协议或账号申诉内容
+     * @ApiBodyParam type string required 协议类型 agreement用户使用协议, privacy用户隐私协议, appeal账号申诉
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "title": "协议标题",
+     *     "content": "<p>协议内容富文本</p>"
+     *   }
      * }
      */
     public function get()

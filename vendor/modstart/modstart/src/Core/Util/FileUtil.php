@@ -698,7 +698,20 @@ class FileUtil
                 'logMatched' => false,
                 'logUnmatched' => false,
             ],
+            'ssrfConfig' => [
+                'enable' => false,
+                'blackRules' => ['<local>'],
+                'whiteRules' => [],
+            ],
         ], $option);
+        // Deep merge ssrfConfig: caller can override partial fields (e.g. enable=true)
+        if (isset($option['ssrfConfig']) && is_array($option['ssrfConfig'])) {
+            $option['ssrfConfig'] = array_merge([
+                'enable' => false,
+                'blackRules' => ['<local>'],
+                'whiteRules' => [],
+            ], $option['ssrfConfig']);
+        }
         $checkPath = strtolower($path);
         BizException::throwsIf('Invalid Path', StrUtil::startWith($checkPath, 'phar:/'));
         if (@file_exists($path)) {
@@ -721,6 +734,7 @@ class FileUtil
             if (StrUtil::startWith($path, '//')) {
                 $path = 'http://' . $path;
             }
+            self::assertSsrfSafe($path, $option['ssrfConfig']);
             if (!file_exists(public_path('temp'))) {
                 @mkdir(public_path('temp'));
             }
@@ -761,6 +775,181 @@ class FileUtil
             return null;
         }
         return $tempPath;
+    }
+
+    /**
+     * @Util SSRF 防护校验：校验 HTTP(S) URL 是否允许抓取
+     * @param $url string URL
+     * @param $ssrfConfig array 配置
+     *      [
+     *          'enable' => bool,        // true 时启用校验（默认 false）
+     *          'blackRules' => array,   // 黑名单规则，默认 ['<local>']
+     *          'whiteRules' => array,   // 白名单规则，默认 []（为空时使用黑名单模式）
+     *      ]
+     *      规则说明：内置规则 <local> 表示内网/保留地址/localhost；
+     *      自定义规则为正则表达式模式（使用 # 作为定界符），用于匹配 URL 的 host。
+     *      当 whiteRules 不为空时，URL 必须命中至少一条白名单规则才允许，否则拒绝；
+     *      当 whiteRules 为空时，URL 命中任意一条黑名单规则即拒绝。
+     */
+    public static function assertSsrfSafe($url, $ssrfConfig = [])
+    {
+        $ssrfConfig = array_merge([
+            'enable' => false,
+            'blackRules' => ['<local>'],
+            'whiteRules' => [],
+        ], $ssrfConfig);
+        if (empty($ssrfConfig['enable'])) {
+            return;
+        }
+        $info = parse_url($url);
+        $host = isset($info['host']) ? strtolower(trim($info['host'])) : '';
+        // parse_url returns IPv6 literal host with brackets (e.g. [::1]), strip them
+        if (strlen($host) > 2 && $host[0] === '[' && substr($host, -1) === ']') {
+            $host = substr($host, 1, -1);
+        }
+        BizException::throwsIfEmpty('URL Host Invalid', $host);
+        $whiteRules = $ssrfConfig['whiteRules'];
+        $blackRules = $ssrfConfig['blackRules'];
+        if (!empty($whiteRules)) {
+            // Whitelist mode: url must match at least one whitelist rule
+            foreach ($whiteRules as $rule) {
+                if (self::matchSsrfRule($rule, $host)) {
+                    return;
+                }
+            }
+            BizException::throws('URL Not Allowed');
+        }
+        // Blacklist mode: url is rejected when matched by any blacklist rule
+        foreach ($blackRules as $rule) {
+            if (self::matchSsrfRule($rule, $host)) {
+                BizException::throws('URL Not Allowed');
+            }
+        }
+    }
+
+    private static function matchSsrfRule($rule, $host)
+    {
+        if ($rule === '<local>') {
+            return self::isLocalHost($host);
+        }
+        if (empty($rule)) {
+            return false;
+        }
+        return (bool)preg_match('#' . $rule . '#i', $host);
+    }
+
+    private static function isLocalHost($host)
+    {
+        if (empty($host)) {
+            return true;
+        }
+        // localhost and *.localhost
+        if ($host === 'localhost' || substr($host, -10) === '.localhost') {
+            return true;
+        }
+        $ips = [];
+        if (filter_var($host, FILTER_VALIDATE_IP)) {
+            $ips[] = $host;
+        } else {
+            $ip = @gethostbyname($host);
+            if (!empty($ip) && $ip !== $host && filter_var($ip, FILTER_VALIDATE_IP)) {
+                $ips[] = $ip;
+            }
+            $records = @dns_get_record($host, DNS_A);
+            if (!empty($records)) {
+                foreach ($records as $record) {
+                    if (!empty($record['ip']) && filter_var($record['ip'], FILTER_VALIDATE_IP)) {
+                        $ips[] = $record['ip'];
+                    }
+                }
+            }
+            $records6 = @dns_get_record($host, DNS_AAAA);
+            if (!empty($records6)) {
+                foreach ($records6 as $record) {
+                    if (!empty($record['ipv6']) && filter_var($record['ipv6'], FILTER_VALIDATE_IP)) {
+                        $ips[] = $record['ipv6'];
+                    }
+                }
+            }
+        }
+        if (empty($ips)) {
+            // Domain cannot be resolved, reject conservatively
+            return true;
+        }
+        foreach ($ips as $ip) {
+            if (self::isInternalIp($ip)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static function isInternalIp($ip)
+    {
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            // 0.0.0.0/8 本机
+            if (preg_match('/^0\./', $ip)) {
+                return true;
+            }
+            // 10.0.0.0/8 私有
+            if (preg_match('/^10\./', $ip)) {
+                return true;
+            }
+            // 127.0.0.0/8 回环
+            if (preg_match('/^127\./', $ip)) {
+                return true;
+            }
+            // 169.254.0.0/16 链路本地（云元数据 169.254.169.254）
+            if (preg_match('/^169\.254\./', $ip)) {
+                return true;
+            }
+            // 172.16.0.0/12 私有
+            if (preg_match('/^172\.(1[6-9]|2[0-9]|3[01])\./', $ip)) {
+                return true;
+            }
+            // 192.168.0.0/16 私有
+            if (preg_match('/^192\.168\./', $ip)) {
+                return true;
+            }
+            // 100.64.0.0/10 运营商级 NAT
+            if (preg_match('/^100\.(6[4-9]|[7-9][0-9])\./', $ip)) {
+                return true;
+            }
+            // 224.0.0.0/4 组播
+            if (preg_match('/^(22[4-9]|23[0-9])\./', $ip)) {
+                return true;
+            }
+            // 240.0.0.0/4 保留
+            if (preg_match('/^(24[0-9]|25[0-5])\./', $ip)) {
+                return true;
+            }
+            return false;
+        }
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            $ip = strtolower($ip);
+            // ::1 回环
+            if ($ip === '::1') {
+                return true;
+            }
+            // ::ffff:x.x.x.x IPv4 映射地址
+            if (strpos($ip, '::ffff:') === 0) {
+                return self::isInternalIp(substr($ip, 7));
+            }
+            $bin = @inet_pton($ip);
+            if (false === $bin) {
+                return true;
+            }
+            // fc00::/7 唯一本地地址（ULA）
+            if ((ord($bin[0]) & 0xFE) === 0xFC) {
+                return true;
+            }
+            // fe80::/10 链路本地
+            if (ord($bin[0]) === 0xFE && (ord($bin[1]) & 0xC0) === 0x80) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
     /**

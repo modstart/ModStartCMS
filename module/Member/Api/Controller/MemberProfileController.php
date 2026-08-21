@@ -33,6 +33,17 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class MemberProfileController extends ModuleBaseController implements MemberLoginCheck
 {
+    /**
+     * @Api 修改昵称
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 修改当前用户的昵称
+     * @ApiBodyParam nickname string required 昵称
+     * @ApiBodyParam captcha string required 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function nickname()
     {
         $input = InputPackage::buildFromInput();
@@ -49,9 +60,15 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     /**
      * @Api 修改密码
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 修改当前用户的登录密码
      * @ApiBodyParam passwordOld string required 原密码
      * @ApiBodyParam passwordNew string required 新密码
      * @ApiBodyParam passwordRepeat string required 重复新密码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function password()
     {
@@ -77,8 +94,14 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     /**
      * @Api 修改用户头像
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 修改当前用户的头像
      * @ApiBodyParam avatar string required base64头像 Example: data:image/jpeg;base64,xxx
-     * @ApiBodyParam type string required 类型，固定为 cropper Example: cropper
+     * @ApiBodyParam type string required 类型，cropper为base64裁剪, file为文件上传
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function avatar()
     {
@@ -122,7 +145,11 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
                 EventUtil::fire(new MemberUserUpdatedEvent(MemberUser::id(), 'avatar'));
                 return Response::generate(0, '保存成功', null, '[reload]');
             default:
-                $avatar = FileUtil::savePathToLocalTemp($avatar);
+                $avatar = FileUtil::savePathToLocalTemp($avatar, null, false, [
+                    'ssrfConfig' => [
+                        'enable' => true,
+                    ],
+                ]);
                 if (empty($avatar)) {
                     return Response::generate(-1, '读取头像文件失败:-1');
                 }
@@ -149,7 +176,16 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
     }
 
     /**
-     * @Api 获取图片验证码（修改手机、修改邮箱）
+     * @Api 获取图片验证码
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 获取修改手机、修改邮箱流程的图片验证码
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "image": "图片Base64"
+     *   }
+     * }
      */
     public function captcha()
     {
@@ -159,6 +195,17 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         ]);
     }
 
+    /**
+     * @Api 修改邮箱
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 绑定新的邮箱地址
+     * @ApiBodyParam email string required 邮箱
+     * @ApiBodyParam verify string required 邮箱验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function email()
     {
         $input = InputPackage::buildFromInput();
@@ -205,6 +252,17 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return Response::generate(0, '修改成功', null, '[reload]');
     }
 
+    /**
+     * @Api 发送邮箱验证码
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 发送邮箱验证码用于绑定新邮箱
+     * @ApiBodyParam target string required 邮箱地址
+     * @ApiBodyParam captcha string 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function emailVerify()
     {
         $email = Input::get('target');
@@ -245,8 +303,14 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     /**
      * @Api 修改手机号码
-     * @ApiBodyParam phone string 手机号码
-     * @ApiBodyParam verify string 手机验证码
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 绑定新的手机号码
+     * @ApiBodyParam phone string required 手机号码
+     * @ApiBodyParam verify string required 手机验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function phone()
     {
@@ -295,8 +359,14 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     /**
      * @Api 发送手机验证码
-     * @ApiBodyParam target string 手机号码
-     * @ApiBodyParam captcha string 图片验证码
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 发送手机验证码用于绑定新手机号
+     * @ApiBodyParam target string required 手机号码
+     * @ApiBodyParam captcha string required 图片验证码
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function phoneVerify()
     {
@@ -336,6 +406,16 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     }
 
+    /**
+     * @Api 解绑授权登录
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 解绑当前用户的第三方授权登录方式
+     * @ApiBodyParam type string required 授权类型
+     * @ApiResponseData {
+     *   "code": 0
+     * }
+     */
     public function oauthUnbind()
     {
         $input = InputPackage::buildFromInput();
@@ -349,6 +429,19 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return Response::generate(0, '解绑成功', null, '[reload]');
     }
 
+    /**
+     * @Api 账号注销信息
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 获取当前用户账号注销相关信息
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "data": {
+     *     "deleteAtTime": "2026-08-30 00:00:00",
+     *     "registerTime": "2020-01-01 00:00:00"
+     *   }
+     * }
+     */
     public function deleteInfo()
     {
         if (!modstart_config('Member_DeleteEnable', false)) {
@@ -366,7 +459,13 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     /**
      * @Api 账号注销申请
-     * @ApiBodyParam agree string 同意协议选项，固定yes
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 提交当前用户的账号注销申请
+     * @ApiBodyParam agree string required 同意协议选项，固定yes
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function delete()
     {
@@ -388,6 +487,12 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
 
     /**
      * @Api 账号注销申请撤销
+     * @ApiMethod post
+     * @ApiHeadParam api-token string required 登录凭证
+     * @ApiDesc 撤销当前用户的账号注销申请
+     * @ApiResponseData {
+     *   "code": 0
+     * }
      */
     public function deleteRevert()
     {

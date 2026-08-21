@@ -15,7 +15,21 @@ class PageController extends BaseCatController
 {
     /**
      * @Api 单页-获取信息
-     * @ApiBodyParam cat string 栏目标识（ID、名称）
+     * @ApiDesc 获取单页栏目的信息
+     * @ApiMethod post
+     * @ApiBodyParam cat string required 栏目标识（ID、名称）
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "msg": "ok",
+     *   "data": {
+     *     "view": "模板",
+     *     "record": {
+     *       "id": 1,
+     *       "title": "标题"
+     *     },
+     *     "records": []
+     *   }
+     * }
      */
     public function index()
     {

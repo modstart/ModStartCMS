@@ -17,8 +17,31 @@ class ListController extends BaseCatController
 {
     /**
      * @Api 栏目-获取内容列表
-     * @ApiBodyParam cat string 栏目标识（ID、名称）
+     * @ApiDesc 分页获取指定栏目的内容列表
+     * @ApiMethod post
+     * @ApiBodyParam cat string required 栏目标识（ID、名称）
+     * @ApiBodyParam page int 页码
+     * @ApiBodyParam pageSize int 每页数量
      * @ApiBodyParam search.isRecommend boolean 搜索条件，是否推荐
+     * @ApiResponseData {
+     *   "code": 0,
+     *   "msg": "ok",
+     *   "data": {
+     *     "total": 1,
+     *     "cat": {
+     *       "id": 1,
+     *       "title": "栏目名称"
+     *     },
+     *     "page": 1,
+     *     "pageSize": 12,
+     *     "records": [
+     *       {
+     *         "id": 1,
+     *         "title": "标题"
+     *       }
+     *     ]
+     *   }
+     * }
      */
     public function index()
     {
