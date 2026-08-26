@@ -11,7 +11,7 @@
         "Vendor"
     ],
     "title": "管理员基础框架",
-    "version": "1.8.0",
+    "version": "1.9.0",
     "author": "ModStart",
     "modstartVersion": ">=5.0.0",
     "description": "提供基于管理员角色、管理员、管理日志基础功能"

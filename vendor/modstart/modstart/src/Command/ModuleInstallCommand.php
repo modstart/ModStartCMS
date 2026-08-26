@@ -50,7 +50,8 @@ class ModuleInstallCommand extends Command
         $this->publishAsset($module);
         $this->publishRoot($module);
 
-        if (!isset($installeds[$module])) {
+        $isUpgrade = isset($installeds[$module]);
+        if (!$isUpgrade) {
             $installeds[$module] = [
                 'isSystem' => ModuleManager::isSystemModule($module),
                 'enable' => false,
@@ -62,6 +63,10 @@ class ModuleInstallCommand extends Command
         ModStart::clearCache();
 
         ModuleManager::callHook($module, 'hookInstalled');
+
+        if ($isUpgrade) {
+            ModuleManager::callHook($module, 'hookUpgraded', [$basic['version']]);
+        }
 
         $event = new ModuleInstalledEvent();
         $event->name = $module;

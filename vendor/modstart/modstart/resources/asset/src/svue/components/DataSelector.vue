@@ -167,7 +167,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button :loading="categoryEditLoading"
-                           size="mini" type="primary"
+                           size="small" type="primary"
                            @click="doCategoryEditSubmit">
                     {{ L('Confirm') }}
                 </el-button>
@@ -192,7 +192,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button :loading="fileEditLoading"
-                           size="mini" type="primary"
+                           size="small" type="primary"
                            @click="doFileEditSubmit">{{ L('Confirm') }}</el-button>
               </span>
         </el-dialog>

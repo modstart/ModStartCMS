@@ -27,12 +27,12 @@
                             @elseif($f['type']=='switch')
                                 <el-switch v-model="value['{{$f['name']}}']"></el-switch>
                             @elseif($f['type']=='text')
-                                <el-input v-model="value['{{$f['name']}}']" size="mini"></el-input>
+                                <el-input v-model="value['{{$f['name']}}']" size="small"></el-input>
                             @elseif($f['type']=='textarea')
                                 <el-input v-model="value['{{$f['name']}}']"
                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
                                           type="textarea"
-                                          size="mini"></el-input>
+                                          size="small"></el-input>
                             @elseif($f['type']=='icon')
                                 <icon-input v-model="value['{{$f['name']}}']" :icons="icons"
                                             :inline="true"></icon-input>
@@ -41,13 +41,13 @@
                             @elseif($f['type']=='values')
                                 <values-editor v-model="value['{{$f['name']}}']"></values-editor>
                             @elseif($f['type']=='number')
-                                <el-input-number v-model="value['{{$f['name']}}']" size="mini"></el-input-number>
+                                <el-input-number v-model="value['{{$f['name']}}']" size="small"></el-input-number>
                             @elseif($f['type']=='numberText')
                                 <el-input v-model="value['{{$f['name']}}']"
                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
-                                          size="mini"></el-input>
+                                          size="small"></el-input>
                             @elseif($f['type']=='slider')
-                                <el-slider v-model="value['{{$f['name']}}']" size="mini"
+                                <el-slider v-model="value['{{$f['name']}}']" size="small"
                                            :min="{{$f['min']}}" :max="{{$f['max']}}" :step="{{$f['step']}}"
                                 ></el-slider>
                             @elseif($f['type']=='link')
@@ -55,10 +55,10 @@
                                     <div class="tw-flex-grow">
                                         <el-input v-model="value['{{$f['name']}}']"
                                                   placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
-                                                  size="mini"></el-input>
+                                                  size="small"></el-input>
                                     </div>
                                     <div>
-                                        <el-button size="mini" @click="doSelectLink('{{$f['name']}}')">选择</el-button>
+                                        <el-button size="small" @click="doSelectLink('{{$f['name']}}')">选择</el-button>
                                     </div>
                                 </div>
                             @elseif($f['type']=='select')
@@ -90,7 +90,7 @@
                                     @endforeach
                                 </el-radio-group>
                             @elseif($f['type']=='color')
-                                <el-color-picker v-model="value['{{$f['name']}}']" size="mini"></el-color-picker>
+                                <el-color-picker v-model="value['{{$f['name']}}']" size="small"></el-color-picker>
                             @elseif($f['type']=='richHtml')
                                 <rich-editor v-model="value['{{$f['name']}}']"
                                              server="{{empty($f['server'])?modstart_admin_url('data/ueditor'):$server}}"

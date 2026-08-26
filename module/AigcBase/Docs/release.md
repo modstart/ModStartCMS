@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+- 新增：模块资源目录增加 .nvmrc（Node 14）规范构建环境
+
+---
+
+## 1.6.0 AI对话支持推理参数配置
+
 - 新增：AI对话支持是否推理参数（reasoning），默认非推理模式
 - 新增：对话 Provider 新增 chatReasoningEffort() 辅助方法，支持推理强度（none/low/medium/high）配置
 - 优化：将中间件检查方式从 class_exists 改为 file_exists，提升系统兼容性

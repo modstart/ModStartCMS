@@ -5,13 +5,13 @@
             <tr>
                 <td width="100">请求地址</td>
                 <td>
-                    <el-input size="mini" v-model="value.url" placeholder="请输入请求地址"></el-input>
+                    <el-input size="small" v-model="value.url" placeholder="请输入请求地址"></el-input>
                 </td>
             </tr>
             <tr>
                 <td>请求方式</td>
                 <td>
-                    <el-radio-group size="mini" v-model="value.method">
+                    <el-radio-group size="small" v-model="value.method">
                         <el-radio label="GET">GET</el-radio>
                         <el-radio label="POST">POST</el-radio>
                     </el-radio-group>
@@ -20,15 +20,15 @@
             <tr>
                 <td>请求头</td>
                 <td>
-                    <el-table v-if="value.headers.length>0" size="mini" :data="value.headers" border>
+                    <el-table v-if="value.headers.length>0" size="small" :data="value.headers" border>
                         <el-table-column prop="key" label="Key" width="200">
                             <template slot-scope="scope">
-                                <el-input size="mini" v-model="scope.row.key" placeholder="请输入Key"></el-input>
+                                <el-input size="small" v-model="scope.row.key" placeholder="请输入Key"></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column prop="value" label="Value">
                             <template slot-scope="scope">
-                                <el-input size="mini" v-model="scope.row.value" placeholder="请输入Value"></el-input>
+                                <el-input size="small" v-model="scope.row.value" placeholder="请输入Value"></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="100">
@@ -49,15 +49,15 @@
             <tr>
                 <td>请求参数</td>
                 <td>
-                    <el-table v-if="value.query.length>0" size="mini" :data="value.query" border>
+                    <el-table v-if="value.query.length>0" size="small" :data="value.query" border>
                         <el-table-column prop="key" label="Key" width="200">
                             <template slot-scope="scope">
-                                <el-input size="mini" v-model="scope.row.key" placeholder="请输入Key"></el-input>
+                                <el-input size="small" v-model="scope.row.key" placeholder="请输入Key"></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column prop="value" label="Value">
                             <template slot-scope="scope">
-                                <el-input size="mini" v-model="scope.row.value" placeholder="请输入Value"></el-input>
+                                <el-input size="small" v-model="scope.row.value" placeholder="请输入Value"></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="100">
@@ -78,7 +78,7 @@
             <tr v-if="['POST'].includes(value.method)">
                 <td>请求类型</td>
                 <td>
-                    <el-radio-group size="mini" v-model="value.enctype">
+                    <el-radio-group size="small" v-model="value.enctype">
                         <el-radio label="Json">json</el-radio>
                         <el-radio label="FormData">form-data</el-radio>
                         <el-radio label="UrlEncoded">x-www-form-urlencoded</el-radio>
@@ -88,15 +88,15 @@
             <tr v-if="['POST'].includes(value.method) && ['FormData','UrlEncoded'].includes(value.enctype)">
                 <td>请求内容</td>
                 <td>
-                    <el-table v-if="value.bodyParam.length>0" size="mini" :data="value.bodyParam" border>
+                    <el-table v-if="value.bodyParam.length>0" size="small" :data="value.bodyParam" border>
                         <el-table-column prop="key" label="Key" width="200">
                             <template slot-scope="scope">
-                                <el-input size="mini" v-model="scope.row.key" placeholder="请输入Key"></el-input>
+                                <el-input size="small" v-model="scope.row.key" placeholder="请输入Key"></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column prop="value" label="Value">
                             <template slot-scope="scope">
-                                <el-input size="mini" v-model="scope.row.value" placeholder="请输入Value"></el-input>
+                                <el-input size="small" v-model="scope.row.value" placeholder="请输入Value"></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="100">
@@ -131,7 +131,7 @@
             <tr v-if="value.responseEnable">
                 <td>响应类型</td>
                 <td>
-                    <el-radio-group size="mini" v-model="value.responseType">
+                    <el-radio-group size="small" v-model="value.responseType">
                         <el-radio label="json">json</el-radio>
                     </el-radio-group>
                 </td>
@@ -139,7 +139,7 @@
             <tr v-if="value.responseEnable && value.responseType=='json'">
                 <td>消息字段</td>
                 <td>
-                    <el-input size="mini" v-model="value.responseJsonMsgPath" placeholder="请输入消息字段"></el-input>
+                    <el-input size="small" v-model="value.responseJsonMsgPath" placeholder="请输入消息字段"></el-input>
                     <div class="ub-text-muted">
                         当消息字段不为空时，会将消息字段的值显示给用户。
                     </div>
@@ -148,13 +148,13 @@
             <tr v-if="value.responseEnable && value.responseType=='json'">
                 <td>状态字段</td>
                 <td>
-                    <el-input size="mini" v-model="value.responseJsonStatusPath" placeholder="请输入状态字段"></el-input>
+                    <el-input size="small" v-model="value.responseJsonStatusPath" placeholder="请输入状态字段"></el-input>
                 </td>
             </tr>
             <tr v-if="value.responseEnable && value.responseType=='json'">
                 <td>成功状态值</td>
                 <td>
-                    <el-input size="mini" v-model="value.responseJsonStatusValue" placeholder="请输入状态值"></el-input>
+                    <el-input size="small" v-model="value.responseJsonStatusValue" placeholder="请输入状态值"></el-input>
                     <div class="ub-text-muted">
                         当状态字段的值等于成功状态值时，才会认为请求成功。
                     </div>
@@ -163,7 +163,7 @@
             <tr v-if="value.responseEnable && value.responseType=='json'">
                 <td>结果字段</td>
                 <td>
-                    <el-input size="mini" v-model="value.responseValuePath" placeholder="请输入数据字段"></el-input>
+                    <el-input size="small" v-model="value.responseValuePath" placeholder="请输入数据字段"></el-input>
                     <div class="ub-text-muted">
                         当请求成功时，会返回该字段的值给调用方。<br />
                         例：<code>data.value</code> 表示取 <code>{"code":0,"data":{"value":"xxx"}}</code> 中的 <code>xxx</code> 内容。

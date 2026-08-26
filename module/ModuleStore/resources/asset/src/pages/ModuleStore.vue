@@ -404,6 +404,42 @@
                 </table>
             </div>
         </el-dialog>
+        <el-dialog :visible.sync="localUninstallChoiceShow"
+                   :close-on-press-escape="false"
+                   :close-on-click-modal="false"
+                   append-to-body>
+            <div slot="title">
+                <div class="ub-text-bold ub-text-primary" v-if="localUninstallChoiceModule">
+                    <i class="iconfont icon-code"></i>
+                    安装 {{ localUninstallChoiceModule.title }}（{{ localUninstallChoiceModule.name }}）
+                </div>
+            </div>
+            <div v-if="localUninstallChoiceModule" class="tw-p-4">
+                <div class="ub-alert warning tw-mb-3">
+                    <i class="iconfont icon-warning"></i>
+                    检测到本地存在同名模块（V{{ localUninstallChoiceModule._localUninstalledVersion }}，尚未安装），
+                    请选择安装方式：
+                </div>
+                <div class="tw-flex tw-flex-col tw-gap-3">
+                    <div class="ub-border tw-rounded tw-p-3 tw-flex tw-items-center tw-gap-3">
+                        <div class="tw-flex-1">
+                            <div class="tw-font-bold tw-text-gray-700">安装本地模块</div>
+                            <div class="tw-text-gray-400 tw-text-sm">直接安装本地的 module/{{ localUninstallChoiceModule.name }} 目录，不下载市场版本</div>
+                        </div>
+                        <el-button type="primary" @click="doInstallLocal(localUninstallChoiceModule)">安装本地</el-button>
+                    </div>
+                    <div class="ub-border tw-rounded tw-p-3 tw-flex tw-items-center tw-gap-3">
+                        <div class="tw-flex-1">
+                            <div class="tw-font-bold tw-text-gray-700">从市场下载强制覆盖</div>
+                            <div class="tw-text-gray-400 tw-text-sm">
+                                备份本地同名目录后，下载市场 V{{ localUninstallChoiceModule.latestVersion }} 强制覆盖本地
+                            </div>
+                        </div>
+                        <el-button @click="doInstallRemote(localUninstallChoiceModule)">市场覆盖</el-button>
+                    </div>
+                </div>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -457,6 +493,8 @@ export default {
             installVersionDialogShow: false,
             installVersionReleases: [],
             installVersionModule: null,
+            localUninstallChoiceShow: false,
+            localUninstallChoiceModule: null,
             payWatcher: null,
         }
     },
@@ -806,15 +844,37 @@ export default {
                 this.doMemberLoginShow()
                 return
             }
+            if (module._hasLocalUninstalled) {
+                this.localUninstallChoiceModule = module
+                this.localUninstallChoiceShow = true
+                return
+            }
+            this.doInstallRemote(module)
+        },
+        doInstallLocal(module) {
+            this.localUninstallChoiceShow = false
+            this.doCommand('install', {
+                module: module.name,
+                version: module._localUninstalledVersion,
+                isLocal: true
+            }, null, `安装本地模块 ${module.title}（${module.name}） V${module._localUninstalledVersion}`)
+        },
+        doInstallRemote(module) {
+            this.localUninstallChoiceShow = false
             this.doCommand('install', {
                 module: module.name,
                 version: module.latestVersion,
-                isLocal: module._isLocal
+                isLocal: false
             }, null, `安装模块 ${module.title}（${module.name}） V${module.latestVersion}`)
         },
         doInstallVersionSubmit(module, version) {
             if (!this.memberUser.id) {
                 this.doMemberLoginShow()
+                return
+            }
+            if (module._hasLocalUninstalled) {
+                this.localUninstallChoiceModule = module
+                this.localUninstallChoiceShow = true
                 return
             }
             this.doCommand('install', {

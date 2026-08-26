@@ -11,8 +11,15 @@ trait SeedTestTrait
      */
     private function checkTestEnvironment()
     {
+        // DB_HOST 允许 docker-master（Docker 测试环境）或 127.0.0.1（本地环境）
+        $allowedDbHosts = ['docker-master', '127.0.0.1'];
+        $dbHost = env('DB_HOST');
+        if (!in_array($dbHost, $allowedDbHosts)) {
+            $this->error('  安全校验失败：DB_HOST 期望值为 "' . implode('" 或 "', $allowedDbHosts) . '"，实际值为 "' . $dbHost . '"');
+            $this->error('  请确认当前环境为测试环境后再执行此命令。');
+            return false;
+        }
         $requiredEnv = [
-            'DB_HOST'     => 'docker-master',
             'DB_USERNAME' => 'root',
             'DB_PASSWORD' => '123456',
         ];

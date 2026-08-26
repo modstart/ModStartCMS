@@ -2,7 +2,7 @@
     <div class="name">{{$label}}</div>
     <div class="input">
         <div id="{{$id}}App">
-            <el-cascader v-model="value" size="mini" :options="optionTree"
+            <el-cascader v-model="value" :options="optionTree"
                          :props="{children:'_child',label:'title',value:'id',checkStrictly:true}"></el-cascader>
         </div>
     </div>

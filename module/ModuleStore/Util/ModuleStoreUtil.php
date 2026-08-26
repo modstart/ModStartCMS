@@ -64,6 +64,8 @@ class ModuleStoreUtil
                 $remote['_localVersion'] = null;
                 $remote['_isSystem'] = false;
                 $remote['_hasConfig'] = false;
+                $remote['_hasLocalUninstalled'] = false;
+                $remote['_localUninstalledVersion'] = null;
                 $modules[$remote['name']] = $remote;
             }
         }
@@ -75,6 +77,9 @@ class ModuleStoreUtil
                 $modules[$m]['_localVersion'] = $info['version'];
                 $modules[$m]['_isSystem'] = $config['isSystem'];
                 $modules[$m]['_hasConfig'] = !empty($info['config']);
+                // local module directory exists but not installed, while same name module exists in remote store
+                $modules[$m]['_hasLocalUninstalled'] = !$config['isInstalled'];
+                $modules[$m]['_localUninstalledVersion'] = $info['version'];
             } else {
                 $modules[$m] = [
                     'id' => 0,

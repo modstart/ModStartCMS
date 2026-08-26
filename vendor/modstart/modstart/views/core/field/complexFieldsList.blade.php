@@ -37,12 +37,12 @@
                             @elseif($f['type']=='text')
                                 <el-input v-model="value[vIndex]['{{$f['name']}}']"
                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
-                                          size="mini"></el-input>
+                                          size="small"></el-input>
                             @elseif($f['type']=='textarea')
                                 <el-input v-model="value[vIndex]['{{$f['name']}}']"
                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
                                           type="textarea"
-                                          size="mini"></el-input>
+                                          size="small"></el-input>
                             @elseif($f['type']=='icon')
                                 <icon-input v-model="value[vIndex]['{{$f['name']}}']" :icons="iconsFilter"
                                             :inline="true"></icon-input>
@@ -53,13 +53,13 @@
                             @elseif($f['type']=='number')
                                 <el-input-number v-model="value[vIndex]['{{$f['name']}}']"
                                                  placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
-                                                 size="mini"></el-input-number>
+                                                 size="small"></el-input-number>
                             @elseif($f['type']=='numberText')
                                 <el-input v-model="value[vIndex]['{{$f['name']}}']"
                                           placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
-                                          size="mini"></el-input>
+                                          size="small"></el-input>
                             @elseif($f['type']=='slider')
-                                <el-slider v-model="value[vIndex]['{{$f['name']}}']" size="mini"
+                                <el-slider v-model="value[vIndex]['{{$f['name']}}']" size="small"
                                            :min="{{$f['min']}}" :max="{{$f['max']}}" :step="{{$f['step']}}"
                                 ></el-slider>
                             @elseif($f['type']=='link')
@@ -67,10 +67,10 @@
                                     <div class="tw-flex-grow">
                                         <el-input v-model="value[vIndex]['{{$f['name']}}']"
                                                   placeholder="{{empty($f['placeholder'])?'':$f['placeholder']}}"
-                                                  size="mini"></el-input>
+                                                  size="small"></el-input>
                                     </div>
                                     <div>
-                                        <el-button size="mini" @click="doSelectLink(vIndex,'{{$f['name']}}')">选择</el-button>
+                                        <el-button size="small" @click="doSelectLink(vIndex,'{{$f['name']}}')">选择</el-button>
                                     </div>
                                 </div>
                             @elseif($f['type']=='select')

@@ -104,7 +104,7 @@
                         <i class="el-icon-warning-outline"></i>
                         {{ '未检测到录音设备' }}
                     </div>
-                    <el-select v-else v-model="recordInputDeviceSelect" size="mini" style="width: 100%">
+                    <el-select v-else v-model="recordInputDeviceSelect" size="small" style="width: 100%">
                         <el-option v-for="device in recordInputDevices" :key="device.id" :value="device.id">
                             {{ device.name }}
                         </el-option>

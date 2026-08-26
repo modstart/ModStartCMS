@@ -15,7 +15,6 @@
                     remote
                     clearable
                     @if($readonly) disabled @endif
-                    size="mini"
                     reserve-keyword
                     placeholder="{{$placeholder}}"
                     :remote-method="doRemoteSearch"

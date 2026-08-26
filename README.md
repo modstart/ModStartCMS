@@ -324,11 +324,11 @@ AdminMenu::register(function () {
         <tr>
             <td>
                 <img style="width:100%;" 
-                     src="https://modstart.com/code_dynamic/modstart_wx" />
+                     src="https://open.tecmz.com/code_dynamic/wx" />
             </td>
             <td>
                 <img style="width:100%;"
-                     src="https://modstart.com/code_dynamic/modstart_qq" />
+                     src="https://open.tecmz.com/code_dynamic/qq" />
             </td>
         </tr>
     </tbody>

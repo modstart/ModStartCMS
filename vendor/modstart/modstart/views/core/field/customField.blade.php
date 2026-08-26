@@ -16,7 +16,7 @@
                     </td>
                     <td>
                         <div>
-                            <el-select v-model="value.type" size="mini" style="width:auto;">
+                            <el-select v-model="value.type" size="small" style="width:auto;">
                                 <el-option label="{{L('None')}}" value=""></el-option>
                                 <el-option label="{{L('Text')}}" value="Text"></el-option>
                                 <el-option label="{{L('Radio')}}" value="Radio"></el-option>

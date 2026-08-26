@@ -4,7 +4,7 @@
             <tbody>
             <tr v-for="(c,cIndex) in currentData">
                 <td>
-                    <el-input size="mini" v-model="currentData[cIndex]"/>
+                    <el-input size="small" v-model="currentData[cIndex]"/>
                 </td>
                 <td width="60">
                     <a href="javascript:;" class="ub-text-muted" v-if="cIndex>0" @click="doUp(currentData,cIndex)">
