@@ -66,6 +66,10 @@ class SeedTestCommand extends Command
         $this->comment('[ Phase 3 ] Biz Tests');
         $this->runPhase('biz', $enabledModules, 'Biz');
 
+        // Phase 4: 执行 UI 测试（先系统，再模块）
+        $this->comment('[ Phase 4 ] UI Tests');
+        $this->runUiPhase($enabledModules);
+
         // 输出汇总
         $this->info('');
         $this->info('=== 测试汇总 ===');
@@ -108,6 +112,81 @@ class SeedTestCommand extends Command
             $modulePath = ModuleManager::path($module, 'Test/' . $moduleDir);
             $this->runFilesInDir($modulePath);
         }
+    }
+
+    /**
+     * 运行 UI 测试阶段
+     *
+     * UI 测试依赖真实 HTTP Server（php artisan serve）。
+     * 有 UI 测试文件时才启动 server，并统一：
+     *   1. 启动 server
+     *   2. 清理 storage/logs
+     *   3. 执行各 UI 测试文件
+     *   4. 关闭 server（避免内存泄露 / 端口占用）
+     *
+     * @param array $modules 已启用模块名列表
+     */
+    private function runUiPhase($modules)
+    {
+        if (!$this->hasUiTestFiles($modules)) {
+            $this->line('  没有 UI 测试文件，跳过');
+            return;
+        }
+        $this->line('  启动 php artisan serve ...');
+        $serverStarted = \ModStart\Test\TestServer::start();
+        if ($serverStarted) {
+            $this->line('  Server: ' . \ModStart\Test\TestServer::baseUrl());
+        } else {
+            $this->warn('  php artisan serve 启动失败，UI 页面断言将使用内部 HTTP Kernel（同进程）');
+        }
+        // 启动真实浏览器（Node + playwright-core + Chrome headless），供 UI 测试使用
+        $browserStarted = false;
+        if ($serverStarted && \ModStart\Test\TestBrowser::available()) {
+            $this->line('  启动真实浏览器（Chrome headless）...');
+            $browserStarted = \ModStart\Test\TestBrowser::start();
+            if (!$browserStarted) {
+                $this->warn('  浏览器启动失败，UI 测试将降级为内部 HTTP Kernel');
+            }
+        }
+        // 清理日志，确保只统计本次 UI 测试产生的错误
+        \ModStart\Test\TestUi::clearLog();
+        try {
+            // 先运行系统测试目录
+            $this->runFilesInDir(base_path('test/ui'));
+            // 再运行各模块测试目录
+            foreach ($modules as $module) {
+                $modulePath = ModuleManager::path($module, 'Test/UI');
+                $this->runFilesInDir($modulePath);
+            }
+        } finally {
+            if ($browserStarted) {
+                $this->line('  关闭真实浏览器 ...');
+                \ModStart\Test\TestBrowser::stop();
+            }
+            if ($serverStarted) {
+                $this->line('  关闭 php artisan serve ...');
+                \ModStart\Test\TestServer::stop();
+            }
+        }
+    }
+
+    /**
+     * 判断系统或任一启用模块是否存在 UI 测试文件
+     * @param array $modules
+     * @return bool
+     */
+    private function hasUiTestFiles($modules)
+    {
+        if (is_dir(base_path('test/ui')) && count(glob(base_path('test/ui/*.php'))) > 0) {
+            return true;
+        }
+        foreach ($modules as $module) {
+            $path = ModuleManager::path($module, 'Test/UI');
+            if (is_dir($path) && count(glob($path . '/*.php')) > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

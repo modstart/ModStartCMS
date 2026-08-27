@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 - 新增：模块资源目录增加 .nvmrc（Node 14）规范构建环境
+- 新增：支持接收 AI 自动文章投递（AiAutoArticle）并写入 CMS 内容
 
 - 优化：多语言管理菜单显示优化
 

@@ -6,6 +6,7 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 use ModStart\Admin\Config\AdminMenu;
 use ModStart\Core\Dao\ModelUtil;
+use Module\AiAutoArticle\Provider\AiAutoArticlePostBiz;
 use Module\Vendor\Admin\Widget\AdminWidgetLink;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -40,6 +41,10 @@ class ModuleServiceProvider extends ServiceProvider
                 ];
             }, ModelUtil::all('article')));
         });
+
+        if (modstart_module_enabled('AiAutoArticle')) {
+            AiAutoArticlePostBiz::register(ArticlePostBiz::class);
+        }
     }
 
     /**

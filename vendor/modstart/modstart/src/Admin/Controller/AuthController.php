@@ -49,11 +49,19 @@ class AuthController extends Controller
                 $captchaProvider->setParam('biz', 'admin');
             }
         }
+        /**
+         * 登录验证码开关
+         * 环境变量 MS_AUTO_TEST=1 时忽略验证码（仅本地测试使用，生产环境请勿开启）
+         */
+        $captchaEnabled = config('modstart.admin.login.captcha', false);
+        if (config('env.MS_AUTO_TEST', false)) {
+            $captchaEnabled = false;
+        }
         if (Request::isPost()) {
             $input = InputPackage::buildFromInput();
 
             $isSmsCaptchaQuickLogin = (
-                config('modstart.admin.login.captcha', false)
+                $captchaEnabled
                 && $captchaProvider
                 && $captchaProvider->name() == 'sms'
                 && modstart_config('AdminManagerEnhance_SmsCaptchaQuick', false)
@@ -70,7 +78,7 @@ class AuthController extends Controller
                     return Response::json(-2, L('PasswordRequired'));
                 }
             }
-            if (config('modstart.admin.login.captcha', false)) {
+            if ($captchaEnabled) {
                 if ($captchaProvider) {
                     $ret = $captchaProvider->validate();
                     if (Response::isError($ret)) {

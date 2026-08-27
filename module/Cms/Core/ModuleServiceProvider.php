@@ -11,6 +11,7 @@ use ModStart\Core\Util\TreeUtil;
 use ModStart\Layout\Row;
 use ModStart\Module\ModuleClassLoader;
 use Module\Banner\Biz\BannerPositionBiz;
+use Module\AiAutoArticle\Provider\AiAutoArticlePostBiz;
 use Module\Cms\Model\CmsCat;
 use Module\Cms\Model\CmsContent;
 use Module\Cms\Model\CmsModel;
@@ -166,6 +167,10 @@ class ModuleServiceProvider extends ServiceProvider
 
         if (modstart_module_enabled('TagManager')) {
             TagManagerBiz::register(CmsTagManagerBiz::class);
+        }
+
+        if (modstart_module_enabled('AiAutoArticle')) {
+            AiAutoArticlePostBiz::register(CmsPostBiz::class);
         }
 
     }
