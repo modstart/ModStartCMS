@@ -5,13 +5,12 @@ namespace Module\Vendor\Web\Controller;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Core\Dao\ModelUtil;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Response;
+use ModStart\Core\Util\InstallUtil;
 use ModStart\Core\Util\RandomUtil;
 use ModStart\Module\ModuleManager;
 use PDO;
@@ -184,17 +183,7 @@ class InstallController extends Controller
 
         // 初始化数据
         if ($installDemo && file_exists($file = public_path('data_demo/data.php'))) {
-            $data = include($file);
-            if (!empty($data['inserts'])) {
-                foreach ($data['inserts'] as $table => $records) {
-                    ModelUtil::insertAll($table, $records);
-                }
-            }
-            if (!empty($data['updates'])) {
-                foreach ($data['updates'] as $record) {
-                    DB::table($record['table'])->where($record['where'])->update($record['update']);
-                }
-            }
+            InstallUtil::installDemoData();
         }
 
         file_put_contents(storage_path('install.lock'), 'lock');

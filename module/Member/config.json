@@ -18,6 +18,9 @@
     "require": [
         "Vendor:>=4.8.0"
     ],
+    "requireOptional": [
+        "PayCenter"
+    ],
     "suggest": [
         "MemberApi",
         "MemberAuthDialog",

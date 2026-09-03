@@ -2,5 +2,8 @@
 use ModStart\Test\TestCase;
 use ModStart\Test\TestHttp;
 
-// AdminManager: 无 API routes.php，跳过 HTTP 测试
-TestCase::assertTrue(true, 'AdminManager API HTTP: 无路由');
+TestCase::describe('AdminManager Api', function () {
+    TestCase::test('无 API 路由跳过 HTTP 测试', function () {
+        TestCase::assertTrue(true, 'AdminManager API HTTP: 无路由');
+    });
+});

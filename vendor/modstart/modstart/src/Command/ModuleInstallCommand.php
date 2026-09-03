@@ -34,6 +34,20 @@ class ModuleInstallCommand extends Command
             $mBasic = ModuleManager::getModuleBasic($m);
             BizException::throwsIf(L('Module %s:%s depend on %s:%s, install fail', $module, $basic['version'], $m, $v), !VersionUtil::match($mBasic['version'], $v));
         }
+        // 可选依赖：被依赖模块已安装时校验版本，未安装则忽略（不影响安装）
+        if (!empty($basic['requireOptional'])) {
+            foreach ($basic['requireOptional'] as $requireOptional) {
+                list($m, $v) = VersionUtil::parse($requireOptional);
+                if (!isset($installeds[$m])) {
+                    continue;
+                }
+                $mBasic = ModuleManager::getModuleBasic($m);
+                if (empty($mBasic)) {
+                    continue;
+                }
+                BizException::throwsIf(L('Module %s:%s optional depend on %s:%s, install fail', $module, $basic['version'], $m, $v), !VersionUtil::match($mBasic['version'], $v));
+            }
+        }
         if (!empty($basic['conflicts'])) {
             foreach ($basic['conflicts'] as $conflict) {
                 list($m, $v) = VersionUtil::parse($conflict);

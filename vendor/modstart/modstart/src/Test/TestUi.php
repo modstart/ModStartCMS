@@ -405,11 +405,25 @@ class TestUi
     /**
      * 浏览器截图
      * @param string $path 保存路径
+     * @param bool $fullPage 是否整页截图（true 时截取整个可滚动页面）
      * @return bool
      */
-    public static function browserScreenshot($path)
+    public static function browserScreenshot($path, $fullPage = false)
     {
-        return TestBrowser::screenshot($path);
+        return TestBrowser::screenshot($path, $fullPage);
+    }
+
+    /**
+     * 浏览器截图并自动压缩
+     * 截图后自动等比缩放 + 质量优化（默认最长边 1000px），适用于生成模块预览图等场景
+     * @param string $path 保存路径
+     * @param bool $fullPage 是否整页截图
+     * @param array $option 压缩选项，见 ImageUtil::compress（maxWidth/maxHeight/quality）
+     * @return bool
+     */
+    public static function browserScreenshotCompressed($path, $fullPage = false, $option = [])
+    {
+        return TestBrowser::screenshotCompressed($path, $fullPage, $option);
     }
 
     /**

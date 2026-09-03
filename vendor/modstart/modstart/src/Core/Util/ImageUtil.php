@@ -233,6 +233,100 @@ class ImageUtil
     }
 
     /**
+     * 压缩图片（等比缩放 + 质量优化）
+     * 用于截图压缩等场景，自动按 maxWidth / maxHeight 等比缩放并优化压缩质量。
+     * 优先使用系统级图像库 Imagick（ImageMagick，效率更高），不可用时回退 Intervention Image（GD）。
+     * @param string $path 图片绝对路径（jpg/jpeg/png/gif）
+     * @param array $option [ 'maxWidth'=>1100, 'maxHeight'=>800, 'quality'=>80 ]
+     * @return bool 压缩成功返回 true，文件不存在/格式不支持/失败返回 false
+     */
+    public static function compress($path, $option = [])
+    {
+        $option = array_merge([
+            'maxWidth' => 1100,
+            'maxHeight' => 800,
+            'quality' => 80,
+        ], $option);
+        $extensionPermit = [
+            'jpg', 'jpeg', 'png', 'gif',
+        ];
+        $ext = FileUtil::extension($path);
+        if (!in_array($ext, $extensionPermit)) {
+            return false;
+        }
+        if (!file_exists($path)) {
+            return false;
+        }
+        // 优先使用系统级图像库 Imagick（ImageMagick），压缩效率更高
+        if (class_exists('Imagick')) {
+            try {
+                return self::compressImagick($path, $ext, $option);
+            } catch (\Exception $e) {
+                // 失败回退到 Intervention Image
+            }
+        }
+        try {
+            return self::compressIntervention($path, $ext, $option);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * 使用 Imagick（ImageMagick 系统库）压缩图片
+     */
+    private static function compressImagick($path, $ext, $option)
+    {
+        $image = new \Imagick($path);
+        $width = $image->getImageWidth();
+        $height = $image->getImageHeight();
+        // 等比缩放（最长边不超过 maxWidth / maxHeight）
+        if ($width > $option['maxWidth'] || $height > $option['maxHeight']) {
+            $image->resizeImage($option['maxWidth'], $option['maxHeight'], \Imagick::FILTER_LANCZOS, 1, true);
+        }
+        $image->setImageCompressionQuality(intval($option['quality']));
+        $image->stripImage();
+        // 透明通道 PNG 保留，JPEG 转 RGB 避免黑色背景
+        if (in_array($ext, ['jpg', 'jpeg'])) {
+            $image->setImageFormat('JPEG');
+            $image->setImageBackgroundColor('white');
+            $image->mergeImageLayers(\Imagick::LAYERMERGE_FLATTEN);
+        } else if ('png' == $ext) {
+            $image->setImageFormat('PNG');
+            $image->setImageCompression(\Imagick::COMPRESSION_ZIP);
+        }
+        $image->writeImage($path);
+        $image->clear();
+        $image->destroy();
+        return true;
+    }
+
+    /**
+     * 使用 Intervention Image 压缩图片（回退方案）
+     */
+    private static function compressIntervention($path, $ext, $option)
+    {
+        $image = Image::make($path);
+        $width = $image->width();
+        $height = $image->height();
+        if ($width > $option['maxWidth']) {
+            $image->resize($option['maxWidth'], intval($option['maxWidth'] * $height / $width));
+        }
+        $width = $image->width();
+        $height = $image->height();
+        if ($height > $option['maxHeight']) {
+            $image->resize(intval($option['maxHeight'] * $width / $height), $option['maxHeight']);
+        }
+        if (in_array($ext, ['jpg', 'jpeg'])) {
+            $image->save($path, intval($option['quality']));
+        } else {
+            $image->save($path);
+        }
+        $image->destroy();
+        return true;
+    }
+
+    /**
      * @param $width integer 图片宽度
      * @param $height integer 图片高度
      * @param $option array 水印参数

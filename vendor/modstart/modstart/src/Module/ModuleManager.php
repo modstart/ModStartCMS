@@ -59,7 +59,17 @@ class ModuleManager
                 ],
                 'types' => [],
                 'tags' => [],
-                'require' => [
+'require' => [
+                    // 'Xxx:*'
+                    // 'Xxx:>=*'
+                    // 'Xxx:==*'
+                    // 'Xxx:<=*'
+                    // 'Xxx:*'
+                    // 'Xxx:>*'
+                    // 'Xxx:<*'
+                ],
+                'requireOptional' => [
+                    // 可选依赖：仅当被依赖模块已安装时，才按依赖顺序安装当前模块
                     // 'Xxx:*'
                     // 'Xxx:>=*'
                     // 'Xxx:==*'
@@ -443,7 +453,22 @@ class ModuleManager
             if (empty($basic)) {
                 continue;
             }
-            $moduleInfoMap[$module] = $basic['require'];
+            // 硬依赖：必须已安装且先于当前模块
+            $requireList = $basic['require'];
+            // 可选依赖：仅当被依赖模块已安装时，才要求先于当前模块（未安装则忽略）
+            $requireOptionalList = [];
+            if (!empty($basic['requireOptional'])) {
+                foreach ($basic['requireOptional'] as $requireOptional) {
+                    list($optModule, $optVersion) = VersionUtil::parse($requireOptional);
+                    if (in_array($optModule, $modules)) {
+                        $requireOptionalList[] = $requireOptional;
+                    }
+                }
+            }
+            $moduleInfoMap[$module] = [
+                'require' => $requireList,
+                'requireOptional' => $requireOptionalList,
+            ];
         }
         $orderedModules = [];
         for ($i = 0; $i < 100; $i++) {
@@ -453,8 +478,14 @@ class ModuleManager
                 }
                 $allPassed = true;
                 if (!empty($moduleInfoMap[$module])) {
-                    foreach ($moduleInfoMap[$module] as $requireModule) {
+                    foreach ($moduleInfoMap[$module]['require'] as $requireModule) {
                         list($m, $v) = VersionUtil::parse($requireModule);
+                        if (!in_array($m, $orderedModules)) {
+                            $allPassed = false;
+                        }
+                    }
+                    foreach ($moduleInfoMap[$module]['requireOptional'] as $requireOptionalModule) {
+                        list($m, $v) = VersionUtil::parse($requireOptionalModule);
                         if (!in_array($m, $orderedModules)) {
                             $allPassed = false;
                         }
@@ -473,7 +504,7 @@ class ModuleManager
                 list($inserts, $deletes) = ArrayUtil::diff($orderedModules, $modules);
                 $errors = [];
                 foreach ($inserts as $insert) {
-                    $requires = $moduleInfoMap[$insert];
+                    $requires = $moduleInfoMap[$insert]['require'];
                     foreach ($requires as $one) {
                         if (!in_array($one, $orderedModules)) {
                             $errors[] = L('Module %s Depends On %s', $insert, $one);

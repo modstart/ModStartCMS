@@ -1,4 +1,8 @@
 <?php
 use ModStart\Test\TestCase;
 
-TestCase::assertTrue(true, 'SmsTecmz Biz: 完成');
+TestCase::describe('SmsTecmz Biz', function () {
+    TestCase::test('完成', function () {
+        TestCase::assertTrue(true, 'SmsTecmz Biz: 完成');
+    });
+});

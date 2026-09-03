@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- 新增：config.json 增加 requireOptional 可选依赖 PayCenter，保证已启用支付时 PayCenter 优先安装
+
+- 新增：余额充值/VIP 开通订单历史数据自动回填 memberUserId（pay_order 统一付费事实源）
+
 - 新增：模块资源目录增加 .nvmrc（Node 14）规范构建环境
 
 ---

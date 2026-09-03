@@ -1,4 +1,4 @@
-## [Unreleased]
+## 1.6.0 支持接收 AI 自动文章投递
 
 - 新增：支持接收 AI 自动文章投递（AiAutoArticle）并发布通用文章
 

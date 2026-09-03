@@ -258,4 +258,19 @@ class TestCase
     {
         return self::$currentGroup;
     }
+
+    /**
+     * 截图（便捷方法，委托 TestScreenShot::capturePage）
+     * 自动启动 server + 浏览器并登录后台，CDP 截图 + 自动压缩，
+     * 存储到 module/<Module>/Temp/ScreenShot/<name>.png（默认 1100x800）
+     * @param string $module 模块标识，如 AiAutoArticle
+     * @param string $path 后台路由路径，如 /admin/ai_auto_article/task
+     * @param string $name 截图文件名（不含扩展名），如 task
+     * @param array $option [ 'fullPage'=>true, 'maxWidth'=>1100, 'maxHeight'=>800, 'quality'=>80 ]
+     * @return string|bool 截图文件绝对路径，失败返回 false
+     */
+    public static function screenshot($module, $path, $name, $option = [])
+    {
+        return TestScreenShot::capturePage($module, $path, $name, $option);
+    }
 }

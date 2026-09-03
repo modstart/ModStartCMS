@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Artisan;
 use ModStart\Admin\Auth\Admin;
 use ModStart\Admin\Model\AdminUser;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Util\InstallUtil;
 
 class InitCommand extends Command
 {
-    protected $signature = 'modstart:init {--username=} {--password=}';
+    protected $signature = 'modstart:init {--username=} {--password=} {--demo}';
 
     public function handle()
     {
@@ -36,6 +37,18 @@ class InitCommand extends Command
             $this->info('ModStart.Init - init user - id:' . $admin['id'] . ', username:' . $username . ', password: ' . $password);
         } else {
             $this->info('ModStart.Init - init user - ignore');
+        }
+
+        if ($this->option('demo')) {
+            $this->info('ModStart.Init - demo data - start');
+            $ret = InstallUtil::installDemoData(function ($msg) {
+                $this->info('ModStart.Init - demo data - ' . $msg);
+            });
+            if (empty($ret['success'])) {
+                $this->error('ModStart.Init - demo data - error:' . $ret['msg']);
+            } else {
+                $this->info('ModStart.Init - demo data - end - insert:' . $ret['insertCount'] . ', msg:' . $ret['msg']);
+            }
         }
 
         $lockFile = storage_path('install.lock');

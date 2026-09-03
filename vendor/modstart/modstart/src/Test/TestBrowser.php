@@ -2,6 +2,8 @@
 
 namespace ModStart\Test;
 
+use ModStart\Core\Util\ImageUtil;
+
 /**
  * 真实浏览器测试驱动 — 通过 Node + Playwright(playwright-core) 驱动系统 Chrome(headless)
  *
@@ -321,11 +323,31 @@ class TestBrowser
     /**
      * 截图
      * @param string $path 保存路径
+     * @param bool $fullPage 是否整页截图（true 时截取整个可滚动页面）
      * @return bool
      */
-    public static function screenshot($path)
+    public static function screenshot($path, $fullPage = false)
     {
-        $ret = self::command('screenshot', ['path' => $path]);
+        $ret = self::command('screenshot', ['path' => $path, 'fullPage' => $fullPage]);
         return !empty($ret) && !empty($ret['ok']);
+    }
+
+    /**
+     * 截图并自动压缩
+     * 截图后通过 ImageUtil::compress 自动等比缩放 + 质量优化，避免图片过大
+     * @param string $path 保存路径
+     * @param bool $fullPage 是否整页截图
+     * @param array $option 压缩选项，见 ImageUtil::compress（maxWidth/maxHeight/quality）
+     * @return bool
+     */
+    public static function screenshotCompressed($path, $fullPage = false, $option = [])
+    {
+        if (!self::screenshot($path, $fullPage)) {
+            return false;
+        }
+        if (!file_exists($path)) {
+            return false;
+        }
+        return ImageUtil::compress($path, $option);
     }
 }

@@ -35,7 +35,11 @@ const CHROME_CANDIDATES = [
 let browser = null;
 let context = null;
 let page = null;
+let cdpSession = null;
 let busy = false;
+
+// 默认浏览器 / 截图尺寸（1100x800）
+const DEFAULT_VIEWPORT = { width: 1100, height: 800 };
 
 function findChrome() {
     for (const c of CHROME_CANDIDATES) {
@@ -57,10 +61,11 @@ async function ensurePage() {
         return page;
     }
     context = await browser.newContext({
-        viewport: { width: 1440, height: 900 },
+        viewport: DEFAULT_VIEWPORT,
         ignoreHTTPSErrors: true,
     });
     page = await context.newPage();
+    cdpSession = null;
     return page;
 }
 
@@ -134,7 +139,18 @@ async function handleHtml() {
 
 async function handleScreenshot(params) {
     await ensurePage();
-    await page.screenshot({ path: params.path, fullPage: !!params.fullPage });
+    // 通过 CDP（Chrome DevTools Protocol）原生截图，比 page.screenshot 更高效
+    if (!cdpSession) {
+        cdpSession = await context.newCDPSession(page);
+    }
+    const result = await cdpSession.send('Page.captureScreenshot', {
+        format: 'png',
+        captureBeyondViewport: !!params.fullPage,
+    });
+    if (!result || !result.data) {
+        return { ok: false, error: 'CDP screenshot failed' };
+    }
+    require('fs').writeFileSync(params.path, Buffer.from(result.data, 'base64'));
     return { ok: true, path: params.path };
 }
 
