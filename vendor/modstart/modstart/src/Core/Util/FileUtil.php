@@ -220,10 +220,19 @@ class FileUtil
      */
     public static function extension($pathname)
     {
+        // Use parse_url to extract the path part, avoiding query parameters contaminating the extension
+        $parsed = parse_url($pathname);
+        if (isset($parsed['path'])) {
+            $pathname = $parsed['path'];
+        }
         $ext = strtolower(pathinfo($pathname, PATHINFO_EXTENSION));
-        $i = strpos($ext, '?');
-        if (false !== $i) {
-            return substr($ext, 0, $i);
+        // Limit extension length to prevent excessively long paths (e.g., OSS signed URL without ?)
+        if (strlen($ext) > 20) {
+            $ext = substr($ext, 0, 20);
+        }
+        // Only allow standard alphanumeric extensions, reject anything with special characters
+        if (!preg_match('/^[a-z0-9]+$/', $ext)) {
+            return '';
         }
         return $ext;
     }

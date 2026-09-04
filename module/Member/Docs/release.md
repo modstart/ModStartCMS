@@ -1,6 +1,6 @@
 ## [Unreleased]
 
-- 新增：config.json 增加 requireOptional 可选依赖 PayCenter，保证已启用支付时 PayCenter 优先安装
+- 新增：实现 MemberStatProvider，向 Analysis 分析统计接口提供用户注册与留存数据
 
 - 新增：余额充值/VIP 开通订单历史数据自动回填 memberUserId（pay_order 统一付费事实源）
 

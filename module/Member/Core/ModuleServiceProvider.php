@@ -22,7 +22,9 @@ use Module\Member\Events\MemberUserRegisteredEvent;
 use Module\Member\Model\MemberUpload;
 use Module\Member\Provider\MemberAdminShowPanel\MemberAdminShowPanelProvider;
 use Module\Member\Provider\MemberDeleteScheduleProvider;
+use Module\Member\Provider\MemberStatProvider;
 use Module\Member\Provider\VerifySmsTemplateProvider;
+use Module\Analysis\Provider\StatProvider;
 use Module\Member\Util\MemberCreditUtil;
 use Module\Member\Util\MemberDataStatisticUtil;
 use Module\Member\Util\MemberMessageUtil;
@@ -105,6 +107,10 @@ class ModuleServiceProvider extends ServiceProvider
 
         SmsTemplateProvider::register(VerifySmsTemplateProvider::class);
         ScheduleBiz::register(MemberDeleteScheduleProvider::class);
+
+        if (modstart_module_enabled('Analysis')) {
+            StatProvider::register(MemberStatProvider::class);
+        }
 
         MemberHomeIcon::register(function () {
             $moneyEnable = ModuleManager::getModuleConfig('Member', 'moneyEnable', false);

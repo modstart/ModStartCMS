@@ -21,9 +21,13 @@ class ResponsiveView
         static $templateName = 'default';
         $msSiteTemplate = Input::get('msSiteTemplate', null);
         if (!empty($msSiteTemplate)) {
-            $provider = SiteTemplateProvider::get($msSiteTemplate);
-            if (!empty($provider)) {
-                Session::put('msSiteTemplate', $msSiteTemplate);
+            if ('_reset_' === $msSiteTemplate) {
+                Session::forget('msSiteTemplate');
+            } else {
+                $provider = SiteTemplateProvider::get($msSiteTemplate);
+                if (!empty($provider)) {
+                    Session::put('msSiteTemplate', $msSiteTemplate);
+                }
             }
         }
         if (empty($provider)) {

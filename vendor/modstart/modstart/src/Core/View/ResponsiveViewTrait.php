@@ -64,9 +64,13 @@ trait ResponsiveViewTrait
         $provider = null;
         $t = Input::get('msSiteTemplate', null);
         if (!empty($t)) {
-            $provider = SiteTemplateProvider::get($t);
-            if (!empty($provider)) {
-                Session::flash('msSiteTemplate', $t);
+            if ('_reset_' === $t) {
+                Session::forget('msSiteTemplate');
+            } else {
+                $provider = SiteTemplateProvider::get($t);
+                if (!empty($provider)) {
+                    Session::put('msSiteTemplate', $t);
+                }
             }
         }
         if (empty($provider)) {
