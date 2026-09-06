@@ -93,3 +93,14 @@ $router->group([
     $router->match(['post'], 'member_doc/get', 'MemberDocController@get');
 
 });
+
+if (file_exists(base_path('module/AdminApi/Api/Middleware/AdminApiCheckMiddleware.php'))) {
+    $router->group([
+        'middleware' => [
+            \Module\AdminApi\Api\Middleware\AdminApiCheckMiddleware::class,
+        ],
+    ], function () use ($router) {
+        $router->match(['post'], 'admin/member/search_by_nickname', 'AdminMemberController@searchByNickname');
+        $router->match(['post'], 'admin/member/random_by', 'AdminMemberController@randomBy');
+    });
+}

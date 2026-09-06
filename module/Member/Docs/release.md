@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- 新增：AdminApi 会员昵称搜索接口
+- 新增：AdminApi 会员 random_by 接口（支持 bizGroup、username、nickname 字段查询）
 - 新增：实现 MemberStatProvider，向 Analysis 分析统计接口提供用户注册与留存数据
 
 - 新增：余额充值/VIP 开通订单历史数据自动回填 memberUserId（pay_order 统一付费事实源）
