@@ -3,7 +3,6 @@
 .ub-cover-1-3, .ub-cover-1-4, .ub-cover-3-4, .ub-cover-2-3, .ub-cover-1-2, .ub-cover-3-5 {
     display: block;
     overflow: hidden;
-    background-color: var(--color-body-block-bg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -17,6 +16,10 @@
 
     &.contain {
         background-size: contain;
+    }
+
+    &.bg {
+        background-color: var(--color-body-block-bg);
     }
 
     &.circle {

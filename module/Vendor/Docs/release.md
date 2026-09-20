@@ -1,8 +1,7 @@
-## [Unreleased]
+## 5.1.0 Vendor:BladeTailwindInject命令，安装与邮件模板优化
 
 - 新增：模块资源目录增加 .nvmrc（Node 14）规范构建环境
 - 新增：新增命令行命令 Vendor:BladeTailwindInject，扫描 Blade 中使用的 TailwindCSS 类并编译为独立 CSS 文件
-
 - 优化：多语言管理菜单显示优化
 - 优化：将中间件检查方式从 class_exists 改为 file_exists，提升系统兼容性
 - 优化：邮件模板间距和字体大小优化，整体布局更紧凑

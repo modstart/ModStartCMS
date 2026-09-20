@@ -2,9 +2,40 @@
 
 「ModStart基础包」提供公共的基础服务，几乎所有的模块都需要依赖该模块的方法和类。
 
+## 功能特性
+
+- 统一的提供者（Provider）机制：人机验证、内容审核、通知、短信、邮件、搜索、直播、LBS 等抽象服务
+- 统一的使用者（Biz）机制：计划任务等常用应用服务
+- 安装引导：安装检测、安装准备、执行安装、安装锁定
+- 基础能力：验证码、会话管理、占位图、内容审核接口
+
+```mind
+功能特性
+    提供者 Provider
+        人机验证 CaptchaProvider
+        内容审核 ContentVerify/CensorImage/CensorText
+        消息通知 MailSender/Notifier
+        短信 SmsSender/SmsTemplate
+        搜索 SearchBox/SuperSearch
+        多媒体 LiveStream/VideoStream
+        位置与识别 LBS/Ocr
+        其他能力 RandomImage/RichContent/SiteUrl
+    使用者 Biz
+        计划任务 ScheduleBiz
+    基础入口
+        安装引导
+        验证码
+        会话管理
+```
+
+## 使用场景
+
+- 作为其他业务模块的基础依赖，为其提供统一的能力抽象
+- 通过实现对应的 Provider，无缝替换系统的验证码、短信、邮件、搜索、存储等能力
+
 ## 提供者 Provider
 
-提供者（Provider）提供了抽象的服务，可以在模块中实现具体的业务支持。一个简单的例子，系统提供一周抽象的人机验证方式，如果你提供了一个具体的人机验证方式，那么你就可以实现一个人机验证提供者。
+提供者（Provider）提供了抽象的服务，可以在模块中实现具体的业务支持。一个简单的例子，系统提供了一周抽象的人机验证方式，如果你提供了一个具体的人机验证方式，那么你就可以实现一个人机验证提供者。
 
 - `CaptchaProvider` 人机验证
 - `CensorImageProvider` 图片智能审核
@@ -34,7 +65,6 @@
 
 - `ScheduleBiz` 计划任务
 
-
 ## 模块入口
 
 - `/install/ping` 安装检测
@@ -47,4 +77,3 @@
 - `/content_verify/{name}` 内容审核
 
 {ADMIN_MENUS}
-
