@@ -91,9 +91,9 @@ class ColorUtil
         $b = max(0, min(255, $b + $steps));
 
         return '#' . strtoupper(join('', [
-                str_pad(dechex($r), 2, '0'),
-                str_pad(dechex($g), 2, '0'),
-                str_pad(dechex($b), 2, '0'),
+                str_pad(dechex($r), 2, '0', STR_PAD_LEFT),
+                str_pad(dechex($g), 2, '0', STR_PAD_LEFT),
+                str_pad(dechex($b), 2, '0', STR_PAD_LEFT),
             ]));
 
     }
@@ -146,6 +146,60 @@ class ColorUtil
             $result['a'] = round(hexdec($mat[4]) / 255, 2);
         }
         return $result;
+    }
+
+    /**
+     * 由主色生成 CSS 变量块（可直接注入 <style>，主题自定义主色时使用）
+     *
+     * 输出旧变量 --theme-color-*（老主题 CSS 直接使用，新设计系统 base/theme.less 也会
+     * 读取它们做桥接），并补齐新设计系统遗漏的派生值：
+     * 浅色底 --theme-color-primary-light-bg、半透明色 --theme-color-primary-soft/-glow、
+     * 焦点环 --theme-color-focus-ring，以及供 CSS 计算透明度变体的 --theme-color-primary-rgb。
+     *
+     * @param $hexColor string 主色，如 #2F6BFF
+     * @return string ':root { ... }'，颜色非法时仅返回基础三个变量（保持与旧行为一致）
+     */
+    public static function primaryColorCss($hexColor)
+    {
+        $hexColor = strtoupper($hexColor);
+        $variables = [
+            '--theme-color-primary: ' . $hexColor . ';',
+            '--theme-color-primary-light: ' . self::adjust($hexColor, 20) . ';',
+            '--theme-color-primary-dark: ' . self::adjust($hexColor, -20) . ';',
+        ];
+        if (preg_match('/^#[A-F0-9]{6}$/', $hexColor)) {
+            $rgb = self::hexToRgbaArray($hexColor);
+            $rgbText = $rgb['r'] . ',' . $rgb['g'] . ',' . $rgb['b'];
+            $variables[] = '--theme-color-primary-rgb: ' . $rgbText . ';';
+            // 浅色底：默认主色 #2F6BFF 对应的 #EDF3FF 约等于 8.5% 主色 + 白色
+            $variables[] = '--theme-color-primary-light-bg: ' . self::mixWithWhite($hexColor, 0.085) . ';';
+            // 透明度与 base/theme.less 里的默认值保持一致
+            $alphaVariables = [
+                '--theme-color-primary-soft' => 0.1,
+                '--theme-color-primary-glow' => 0.24,
+                '--theme-color-focus-ring' => 0.16,
+            ];
+            foreach ($alphaVariables as $name => $alpha) {
+                $variables[] = $name . ': rgba(' . $rgbText . ',' . $alpha . ');';
+            }
+        }
+        return ":root {\n    " . join("\n    ", $variables) . "\n}";
+    }
+
+    /**
+     * 将颜色按比例与白色混合（得到更浅的底色）
+     * @param $hexColor string 颜色值，如 #2F6BFF
+     * @param $ratio float 颜色占比 0~1，越小白越接近纯白
+     * @return string 混合后的颜色，如 #EDF2FF
+     */
+    private static function mixWithWhite($hexColor, $ratio)
+    {
+        $rgb = self::hexToRgbaArray($hexColor);
+        $mixed = [];
+        foreach (['r', 'g', 'b'] as $key) {
+            $mixed[$key] = (int)round($rgb[$key] * $ratio + 255 * (1 - $ratio));
+        }
+        return sprintf('#%02X%02X%02X', $mixed['r'], $mixed['g'], $mixed['b']);
     }
 
     /**

@@ -1,16 +1,19 @@
 
 .ub-nav-header {
     font-size: 1.875rem;
-    font-weight: bold;
+    font-weight: 600;
     padding: 2.5rem 0;
     text-align: center;
+    color: var(--color-heading);
+    letter-spacing: -0.01em;
     opacity: 0.9;
 }
 
 .ub-nav-header-sub {
-    opacity: 0.5;
+    opacity: 0.6;
     text-align: center;
     font-size: 1.25rem;
+    color: var(--color-tertiary);
     margin-top: -3.75rem;
     padding: 2.5rem 0;
 }
@@ -34,11 +37,33 @@
     cursor: pointer;
 
     .ub-dropdown-title {
+        // 下拉指示箭头：组件原本没有，用户反馈"这个下拉菜单怎么没箭头了"。
+        // 画法用"正方形 + 右/下边框 + 旋转 45°"：箭头的几何中心和元素盒中心重合，
+        // 展开时再转 180° 只改变指向，位置不动。
+        // （原来用 border 三角形：三角形只占元素盒的上半部分，
+        //   旋转 180° 后视觉上会整体下移约半个边长，看起来像"箭头跑掉了"）
+        &:after {
+            content: '';
+            display: inline-block;
+            width: 0.3125rem;
+            height: 0.3125rem;
+            margin-left: 0.4375rem;
+            border-right: 0.09375rem solid var(--color-muted);
+            border-bottom: 0.09375rem solid var(--color-muted);
+            vertical-align: 0.1875rem;
+            transform: rotate(45deg);
+            transition: var(--transition);
+        }
     }
 
     &:hover {
         .ub-dropdown-list {
             display: block;
+        }
+
+        .ub-dropdown-title:after {
+            border-color: var(--color-primary);
+            transform: rotate(225deg);
         }
     }
 
@@ -47,10 +72,11 @@
         position: absolute;
         left: 0;
         top: 100%;
-        background: #FFF;
-        box-shadow: 0 0 1px #c4cfdb;
-        border-radius: 0.25rem;
+        background: var(--color-content-bg);
+        box-shadow: var(--box-shadow-pop);
+        border-radius: var(--size-radius);
         z-index: 1000;
+        overflow: hidden;
 
         .ub-dropdown-list-item {
             display: block;
@@ -59,10 +85,11 @@
             line-height: 1.875rem;
             margin: 0;
             white-space: nowrap;
+            transition: var(--transition);
 
             &:hover {
                 color: var(--color-primary);
-                background: #EEE;
+                background: var(--color-primary-light-bg);
             }
         }
     }
@@ -87,6 +114,7 @@
         display: inline-block;
         padding-right: 0.625rem;
         line-height: 1.25rem;
+        transition: var(--transition);
 
         &:after {
             content: '';
@@ -107,6 +135,10 @@
             }
         }
 
+        &:hover {
+            color: var(--color-primary);
+        }
+
         &.active {
             color: var(--color-primary);
         }
@@ -115,7 +147,7 @@
 
 .ub-nav {
     padding: var(--size-margin);
-    background: #FFF;
+    background: var(--color-content-bg);
     border-radius: var(--size-radius);
     position: relative;
 
@@ -135,14 +167,17 @@
         .tag-item {
             display: inline-block;
             position: relative;
-            border: 1px solid #EEE;
+            border: 0.0625rem solid var(--color-body-line);
             border-radius: 1rem;
             line-height: 1.25rem;
             padding: 0.125rem 0.625rem;
             margin: 0 0.3125rem 0 0;
             cursor: default;
+            transition: var(--transition);
 
             &:hover {
+                border-color: var(--color-primary);
+
                 .close {
                     display: block;
                 }
@@ -159,8 +194,8 @@
                 line-height: 0.875rem;
                 top: -0.375rem;
                 right: -0.375rem;
-                background: rgba(0, 0, 0, 0.5);
-                color: #FFF;
+                background: var(--color-mask);
+                color: #fff;
                 border-radius: 50%;
                 display: none;
             }
@@ -174,7 +209,7 @@
             margin-right: 0;
 
             &.active {
-                background: transparent;
+                background: var(--color-primary-light-bg);
                 color: var(--color-primary);
             }
         }
@@ -183,18 +218,44 @@
     a, .item {
         display: inline-block;
         color: var(--color-text);
-        border-radius: 1rem;
+        border-radius: 999px;
         line-height: 1.25rem;
         padding: 0.3281rem 0.625rem;
         margin: 0 0.3125rem 0 0;
+        transition: var(--transition);
 
         &:hover {
             color: var(--color-primary);
+            background: var(--color-body-block-bg);
         }
 
         &.active {
-            background: var(--color-primary);
-            color: #FFF;
+            background: var(--color-primary-light-bg);
+            color: var(--color-primary);
+        }
+    }
+}
+
+@media screen and (max-width: 50rem) {
+    // 窄屏：右侧操作组取消右浮动并左对齐。
+    // 原来 float:right 会独占首行的右半段，主体条目被迫绕到下一行，
+    // 两行之间只差一个行高，看起来"排序这一堆和下面的菜单在垂直方向上贴在一起"。
+    // 改为普通块级独占一行，再跟主体条目，并留出一点间距。
+    .ub-nav {
+        .nav-right {
+            float: none;
+            display: block;
+            text-align: left;
+            margin-bottom: 0.375rem;
+
+            .item {
+                // 恢复条目之间的水平间距（桌面端为右浮动贴边，故设为 0）
+                margin-right: 0.3125rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
         }
     }
 }
@@ -242,7 +303,7 @@
 
         .label {
             width: 5rem;
-            background: #FFF;
+            background: var(--color-content-bg);
             position: absolute;
             top: 0;
             left: 0;
@@ -258,12 +319,13 @@
                 height: 1.25rem;
                 margin-top: -0.625rem;
                 font-size: var(--font-size, 0.8125rem);
+                color: var(--color-tertiary);
             }
         }
 
         .items {
             padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
-            border-bottom: 1px solid var(--color-body-bg);
+            border-bottom: 0.0625rem solid var(--color-body-line);
 
             a, .item {
                 display: inline-block;
@@ -271,17 +333,19 @@
                 line-height: 1.25rem;
                 padding: 0.3125rem 0.5rem;
                 margin: 0 0.1875rem 0.1875rem 0;
-                border-radius: 1rem;
+                border-radius: 999px;
                 text-align: center;
-                background: #F8F8F8;
+                background: var(--color-body-block-bg);
+                transition: var(--transition);
 
                 &:hover {
                     color: var(--color-primary);
+                    background: var(--color-body-block-bg-hover);
                 }
 
                 &.active {
-                    background: var(--color-primary);
-                    color: #FFF;
+                    background: var(--color-primary-light-bg);
+                    color: var(--color-primary);
                 }
             }
         }
@@ -315,9 +379,9 @@
 }
 
 .ub-nav-tab {
-    background: #FFF;
+    background: var(--color-content-bg);
     border-radius: var(--size-radius) var(--size-radius) 0 0;
-    border-bottom: 0.0625rem solid #EEE;
+    border-bottom: 0.0625rem solid var(--color-body-line);
 
     &.mini {
         a, .item {
@@ -331,18 +395,26 @@
         line-height: 1.75rem;
         padding: var(--size-margin);
         margin: 0 0.3125rem 0 0;
-        border-bottom: 0.125rem solid #FFF;
-        fong-weight: 700;
+        border-bottom: 0.125rem solid transparent;
+        border-radius: var(--size-radius-sm) var(--size-radius-sm) 0 0;
+        font-weight: 600;
+        transition: var(--transition);
+
+        &:hover {
+            color: var(--color-primary);
+            background: var(--color-body-block-bg);
+        }
 
         &.active {
             color: var(--color-primary);
             border-bottom: 0.125rem solid var(--color-primary);
+            background: var(--color-primary-light-bg);
         }
     }
 }
 
 .ub-nav-tab-body {
-    background: #FFF;
+    background: var(--color-content-bg);
     border-radius: 0 0 var(--size-radius) var(--size-radius);
     padding: 0.625rem;
 
@@ -380,9 +452,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
-    border-top: 0.0625rem solid #e7e7e7;
-    border-bottom: 0.0625rem solid #f8f8f8;
+    background-color: var(--color-content-bg);
+    border-top: 0.0625rem solid var(--color-body-line);
     -webkit-box-pack: justify;
     z-index: 1001;
     padding: 0.3125rem 1.25rem;
@@ -391,10 +462,11 @@
     .item {
         text-align: center;
         display: block;
-        color: #5d656b;
+        color: var(--color-tertiary);
         text-decoration: none;
         flex: 1;
         position: relative;
+        transition: var(--transition);
 
         &.active {
             color: var(--color-primary);
@@ -412,13 +484,13 @@
             font-size: 1.375rem;
             height: 1.375rem;
             line-height: 1.375rem;
-            color: #5D656B;
+            color: var(--color-tertiary);
 
             .img {
                 font-size: 1.375rem;
                 height: 1.375rem;
                 line-height: 1.375rem;
-                color: #5D656B;
+                color: var(--color-tertiary);
             }
         }
 
@@ -437,7 +509,7 @@
             position: absolute;
             top: 0;
             left: 60%;
-            background: red;
+            background: var(--color-danger);
             color: #fff;
             height: 1rem;
             line-height: 1rem;
@@ -463,9 +535,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #e7e7e7;
-    border-top: 0.0625rem solid #e7e7e7;
-    border-bottom: 0.0625rem solid #f8f8f8;
+    background-color: var(--color-body-block-bg);
+    border-top: 0.0625rem solid var(--color-body-line);
     z-index: 1001;
     height: 2.5rem;
     padding: 0.0625rem 0 0 0;
@@ -473,21 +544,27 @@
     .item {
         text-align: center;
         display: block;
-        color: #5d656b;
+        color: var(--color-tertiary);
         text-decoration: none;
         flex-grow: 1;
         margin: 0 0.0625rem;
-        background: #FFF;
+        background: var(--color-content-bg);
+        transition: var(--transition);
+
+        &:hover {
+            color: var(--color-primary);
+            background: var(--color-primary-light-bg);
+        }
 
         &.disabled {
             .icon {
                 .img {
-                    color: #c4cfdb;
+                    color: var(--color-tertiary-light);
                 }
             }
 
             .name {
-                color: #c4cfdb;
+                color: var(--color-tertiary-light);
             }
         }
 
@@ -517,16 +594,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 0.0625rem solid #e7e7e7;
-    border-bottom: 0.0625rem solid #f8f8f8;
+    border-top: 0.0625rem solid var(--color-body-line);
     -webkit-box-pack: justify;
     margin: 0;
     padding: 0;
-    border-top: 0.0625rem solid #eee;
-    border-left: 0.0625rem solid #eee;
-    background-color: #f2f2f2;
+    border-left: 0.0625rem solid var(--color-body-line);
+    background-color: var(--color-body-block-bg);
     width: 100%;
     flex-wrap: wrap;
+    border-radius: var(--size-radius);
+    overflow: hidden;
 
     &.g3 {
         &:after {
@@ -542,27 +619,38 @@
     .item {
         text-align: center;
         display: block;
-        color: #5d656b;
+        color: var(--color-tertiary);
         text-decoration: none;
         vertical-align: top;
-        border-right: 0.0625rem solid #eee;
-        border-bottom: 0.0625rem solid #eee;
+        border-right: 0.0625rem solid var(--color-body-line);
+        border-bottom: 0.0625rem solid var(--color-body-line);
         padding: 1.25rem 0.625rem;
         width: 50%;
-        background: #FFF;
+        background: var(--color-content-bg);
         flex-shrink: 0;
+        transition: var(--transition);
+
+        &:hover {
+            color: var(--color-primary);
+            background: var(--color-body-block-bg);
+        }
+
+        &.active {
+            color: var(--color-primary);
+            background: var(--color-primary-light-bg);
+        }
 
         .icon {
             font-size: 1.375rem;
             height: 1.375rem;
             line-height: 1.375rem;
-            color: #5D656B;
+            color: inherit;
 
             .img {
                 font-size: 1.375rem;
                 height: 1.375rem;
                 line-height: 1.375rem;
-                color: #5D656B;
+                color: inherit;
             }
         }
 
@@ -579,7 +667,8 @@
     .group-title {
         font-size: 1rem;
         display: block;
-        color: var(--color-text);
+        color: var(--color-heading);
+        font-weight: 600;
         margin-bottom: 0.3125rem;
         margin-top: 0.3125rem;
     }
@@ -591,6 +680,7 @@
             display: inline-block;
             margin: 0 0.1875rem 0.1875rem 0;
             line-height: 1.5rem;
+            transition: var(--transition);
 
             &.active, &:hover {
                 color: var(--color-primary);

@@ -1,31 +1,26 @@
 
 .ub-search-block {
-    background-color: var(--color-primary);
+    // 默认＝浅色"编辑高级感"：近白纸面 + 主色光晕点缀。
+    // 主色只出现在按钮/激活项等小面积处，避免大面积饱和色块带来的廉价感。
+    background-color: var(--color-content-bg);
+    background-image:
+        radial-gradient(52rem 18rem at 50% -8rem, var(--color-primary-glow), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(34rem 14rem at 6% 0%, var(--color-primary-soft), rgba(255, 255, 255, 0) 72%);
+    background-repeat: no-repeat;
     padding: 2.5rem 0.625rem 3.75rem 0.625rem;
     text-align: center;
     position: relative;
     background-size: cover;
 
-    &.light {
-        background-color: #FFF;
-
-        .title {
-            color: var(--color-text-default);
-        }
-
-        .form {
-            .box {
-                input {
-                    border-color: var(--color-primary);
-                    outline: 1px solid var(--color-primary);
-                }
-
-                button {
-                    background-color: var(--color-primary);
-                    color: #FFF;
-                }
-            }
-        }
+    // 底边发丝线，与下方内容分隔（替代过去的整块实色）
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 0.0625rem;
+        background-color: var(--color-body-line);
     }
 
     .video-background {
@@ -45,14 +40,17 @@
     }
 
     .title {
+        font-family: var(--font-family-serif);
         font-size: 1.875rem;
         padding: 0 0 0 0;
-        color: #FFF;
+        color: var(--color-heading);
+        font-weight: 600;
+        letter-spacing: -0.01em;
     }
 
     .sub-title {
         font-size: var(--font-size-large, 1.25rem);
-        color: #FFF;
+        color: var(--color-tertiary);
     }
 
     .form {
@@ -60,22 +58,28 @@
 
         .tab {
             .tab-item {
-                color: #FFF;
+                color: var(--color-body-block);
                 display: inline-block;
                 line-height: 2.25rem;
                 padding: 0 1.25rem;
-                border-radius: 0.625rem 0.625rem 0 0;
+                border-radius: var(--size-radius-sm) var(--size-radius-sm) 0 0;
+                transition: var(--transition);
+
+                &:hover {
+                    background-color: var(--color-body-block-bg);
+                }
 
                 &.active {
                     background-color: var(--color-content-bg);
                     color: var(--color-primary);
+                    box-shadow: var(--box-shadow-xs);
                 }
             }
         }
 
         .keywords {
             line-height: 1.875rem;
-            color: var(--color-content-bg);
+            color: var(--color-muted);
             margin-top: 1.875rem;
 
             .keywords-label {
@@ -86,14 +90,15 @@
             .keywords-item {
                 display: inline-block;
                 line-height: 1.875rem;
-                background-color: rgba(0, 0, 0, 0.1);
-                border-radius: 0.375rem;
-                color: #FFF;
+                background-color: var(--color-body-block-bg);
+                border-radius: var(--size-radius-full);
+                color: var(--color-body-block);
                 padding: 0 0.625rem;
+                transition: var(--transition);
 
                 &:hover {
-                    background-color: var(--color-content-bg);
-                    color: var(--color-text);
+                    background-color: var(--color-primary-light-bg);
+                    color: var(--color-primary);
                 }
             }
         }
@@ -106,11 +111,11 @@
 
             &.rect {
                 input {
-                    border-radius: 0.625rem;
+                    border-radius: var(--size-radius-sm);
                 }
 
                 button {
-                    border-radius: 0.625rem;
+                    border-radius: var(--size-radius-sm);
                 }
             }
 
@@ -121,7 +126,7 @@
                     position: absolute;
                     right: 6.25rem;
                     top: 0.0625rem;
-                    border-radius: 0.3125rem;
+                    border-radius: var(--size-radius-xs);
                     cursor: pointer;
                 }
             }
@@ -133,20 +138,122 @@
                 height: 3.125rem;
                 padding: 0 1.25rem;
                 outline: none;
+                background: var(--color-content-bg);
+                color: var(--color-text);
+                border: 0.0625rem solid var(--color-body-line);
+                box-shadow: var(--box-shadow-xs);
+                transition: var(--transition);
+                box-sizing: border-box;
+
+                &:hover {
+                    border-color: var(--color-tertiary-light);
+                }
+
+                &:focus {
+                    border-color: var(--color-primary);
+                    box-shadow: 0 0 0 3px var(--color-focus-ring);
+                }
             }
 
             button {
                 position: absolute;
                 right: 0.0625rem;
                 top: 0.0625rem;
-                background-color: #FFF;
+                background-color: var(--color-primary);
                 border: none;
                 border-radius: 1.5625rem;
-                color: var(--color-primary, #419488);
+                color: var(--color-text-reverse);
                 height: 3rem;
                 line-height: 3rem;
                 padding: 0 1.25rem;
                 margin: 0;
+                box-shadow: var(--box-shadow-xs);
+                transition: var(--transition);
+
+                &:hover {
+                    background-color: var(--color-primary-dark);
+                }
+            }
+        }
+    }
+
+    // 高级深色 hero：需要大面积深色时显式加 .primary，再启用反白文字。
+    // 深色底统一使用"墨色"令牌 --color-ink-bg（可通过主题变量 --theme-color-ink-bg 定制），
+    // 不再铺大面积饱和主色；主色只作为光晕/强调色出现。
+    &.primary {
+        background-color: var(--color-ink-bg);
+        background-image:
+            radial-gradient(56rem 20rem at 50% -10rem, var(--color-primary-glow), rgba(255, 255, 255, 0) 68%),
+            radial-gradient(40rem 16rem at 8% 0%, var(--color-primary-soft), rgba(255, 255, 255, 0) 72%),
+            linear-gradient(125deg, var(--color-ink-bg) 0%, var(--color-ink-bg) 58%, var(--color-primary-dark) 145%);
+
+        &::after {
+            display: none;
+        }
+
+        .title,
+        .sub-title {
+            color: var(--color-ink-heading);
+        }
+
+        .sub-title {
+            color: var(--color-ink-text);
+            opacity: 1;
+        }
+
+        .form {
+            .tab .tab-item {
+                color: var(--color-ink-text);
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.10);
+                    color: var(--color-ink-heading);
+                }
+
+                &.active {
+                    background-color: var(--color-content-bg);
+                    color: var(--color-primary);
+                    box-shadow: none;
+                }
+            }
+
+            .keywords {
+                color: var(--color-ink-text);
+                opacity: 1;
+
+                .keywords-item {
+                    background-color: rgba(255, 255, 255, 0.10);
+                    color: var(--color-ink-heading);
+
+                    &:hover {
+                        background-color: var(--color-content-bg);
+                        color: var(--color-primary);
+                    }
+                }
+            }
+        }
+    }
+
+    // 兼容旧写法：.light 等价于默认的浅色形态
+    &.light {
+        background-color: var(--color-content-bg);
+        background-image: none;
+
+        .form {
+            .box {
+                input {
+                    border-color: var(--color-primary);
+                    outline: none;
+
+                    &:focus {
+                        box-shadow: 0 0 0 3px var(--color-focus-ring);
+                    }
+                }
+
+                button {
+                    background-color: var(--color-primary);
+                    color: var(--color-text-reverse);
+                }
             }
         }
     }
@@ -186,7 +293,12 @@
             min-width: 2.5rem;
             line-height: 2.5rem;
             text-align: center;
-            color: #666;
+            color: var(--color-body-block);
+            transition: var(--transition);
+
+            &:hover {
+                color: var(--color-primary);
+            }
 
             .icon {
                 display: inline-block;
@@ -205,6 +317,12 @@
             height: 1.75rem;
             background-color: var(--color-input-bg);
             border-radius: 0.875rem;
+            transition: var(--transition);
+
+            &:focus-within {
+                background-color: var(--color-content-bg);
+                box-shadow: 0 0 0 3px var(--color-focus-ring);
+            }
 
             .icon {
                 position: absolute;
@@ -238,35 +356,41 @@
 .ub-search-history {
     .item {
         display: flex;
+        border-radius: var(--size-radius-sm);
+        transition: var(--transition);
+
+        &:hover {
+            background-color: var(--color-body-block-bg);
+        }
 
         .time, .text, .remove {
             display: inline-block;
             min-width: 1.875rem;
             text-align: center;
             line-height: 1.875rem;
-            color: #c4cfdb;
+            color: var(--color-muted);
         }
 
         .text {
             flex: 1;
             text-align: left;
-            color: #333;
+            color: var(--color-text);
         }
     }
 }
 
 .ub-search-result {
-    background-color: #FFF;
+    background-color: var(--color-content-bg);
     padding: var(--size-margin, 0.625rem);
 
     .keyword {
-        color: var(--color-primary, #419488);
-        font-weight: bold;
+        color: var(--color-primary);
+        font-weight: 600;
     }
 
     .count {
-        color: var(--color-primary, #419488);
-        font-weight: bold;
+        color: var(--color-primary);
+        font-weight: 600;
     }
 }
 
@@ -281,6 +405,19 @@
     border: var(--border-size) solid var(--color-primary);
     border-radius: var(--radius);
     padding: 0;
+    background-color: var(--color-content-bg);
+    box-shadow: var(--box-shadow-xs);
+    transition: var(--transition);
+
+    &:hover {
+        border-color: var(--color-primary-dark);
+        box-shadow: var(--box-shadow);
+    }
+
+    &:focus-within {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px var(--color-focus-ring);
+    }
 
     &.lg {
         --radius: 1.5625rem;
@@ -307,6 +444,8 @@
         font-size: var(--font-size);
         box-sizing: border-box;
         border-radius: var(--radius);
+        background-color: var(--color-content-bg);
+        color: var(--color-text);
     }
 
     .search-btn {
@@ -314,16 +453,18 @@
         height: var(--height);
         padding: 0 1.25rem;
         line-height: var(--height);
-        background-color: var(--color-primary, #419488);
-        color: #FFF;
+        background-color: var(--color-primary);
+        color: var(--color-text-reverse);
         position: absolute;
         right: 0px;
         top: 0px;
         font-size: var(--font-size-btn);
         border-radius: calc(var(--radius) - 2px);
+        transition: var(--transition);
 
         &:hover {
-            color: #FFF;
+            color: var(--color-text-reverse);
+            background-color: var(--color-primary-dark);
         }
     }
 }

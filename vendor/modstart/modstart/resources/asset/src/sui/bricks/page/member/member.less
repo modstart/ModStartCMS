@@ -11,7 +11,9 @@
             img {
                 width: 12.5rem;
                 height: 12.5rem;
-                border-radius: 0.3125rem;
+                border-radius: var(--size-radius);
+                border: 0.0625rem solid var(--color-body-line);
+                box-shadow: var(--box-shadow-xs);
             }
         }
 
@@ -22,7 +24,8 @@
             img {
                 width: 3.125rem;
                 height: 3.125rem;
-                border-radius: 0.1875rem;
+                border-radius: var(--size-radius-sm);
+                border: 0.0625rem solid var(--color-body-line);
             }
         }
 
@@ -33,7 +36,10 @@
             img {
                 width: 3.125rem;
                 height: 3.125rem;
-                border-radius: 0.1875rem;
+                // 类名叫 round，原来却给了和 .avatar-small 完全相同的方角半径，
+                // 圆头像显示成圆角方块；改为正圆
+                border-radius: 50%;
+                border: 0.0625rem solid var(--color-body-line);
             }
         }
     }
@@ -48,15 +54,30 @@
     margin: 0;
 
     .body {
-        padding: 2.5rem 0;
-        background: linear-gradient(var(--color-primary), var(--color-primary-dark));
         position: relative;
+        padding: 2.5rem 1.25rem;
+        margin: 0.625rem 0;
+        border-radius: var(--size-radius);
+        overflow: hidden;
+        // 墨色底 + 主色极光光晕：大面积保持低饱和，高饱和只留在小面积光晕上，
+        // 避免整块纯色（原 saturate 蓝色渐变大色块）。
+        background-color: var(--color-ink-bg);
+        background-image:
+            radial-gradient(100% 130% at 50% -15%, var(--color-primary-glow) 0%, transparent 68%),
+            radial-gradient(70% 90% at 88% -10%, var(--color-primary-soft) 0%, transparent 70%),
+            radial-gradient(70% 90% at 110% 110%, var(--color-primary-soft) 0%, transparent 70%);
+        box-shadow: var(--box-shadow);
 
         .logout {
             position: absolute;
-            right: 0.625rem;
-            top: 0.625rem;
-            color: #FFF;
+            right: 0.875rem;
+            top: 0.875rem;
+            color: var(--color-ink-text);
+            transition: var(--transition);
+
+            &:hover {
+                color: var(--color-ink-heading);
+            }
         }
 
         .avatar {
@@ -64,20 +85,26 @@
             display: block;
 
             img {
-                background: #EEE;
+                background: var(--color-body-block-bg);
                 width: 3.75rem;
                 height: 3.75rem;
                 border-radius: 50%;
-                border: 0.125rem solid #FFF;
-                border-color: rgba(255, 255, 255, 0.5);
+                box-shadow: 0 0 0 0.1875rem var(--color-primary-soft), 0 0 0 0.375rem rgba(255, 255, 255, 0.06), var(--box-shadow);
+                transition: var(--transition-slow);
+            }
+
+            &:hover img {
+                transform: translateY(-0.125rem) scale(1.03);
             }
         }
 
         .user {
             .name {
                 text-align: center;
-                color: #FFF;
-                padding-top: 0.625rem;
+                color: var(--color-ink-heading);
+                padding-top: 0.75rem;
+                font-weight: 600;
+                letter-spacing: -0.01em;
             }
 
             .vip {
@@ -85,10 +112,16 @@
                 padding-top: 0.625rem;
 
                 .link {
-                    padding: 0 0.3125rem;
-                    border-radius: 0.625rem;
-                    line-height: 1.25rem;
+                    padding: 0 0.5rem;
+                    border-radius: 999px;
+                    line-height: 1.5rem;
                     display: inline-block;
+                    transition: var(--transition);
+
+                    &:hover {
+                        filter: brightness(1.06);
+                        transform: translateY(-0.0625rem);
+                    }
                 }
             }
         }
@@ -96,11 +129,21 @@
 }
 
 .ub-member-home-header-a {
-    background: #FFF;
+    background: var(--color-content-bg);
+    border: 0.0625rem solid var(--color-body-line);
+    border-radius: var(--size-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+
+    &:hover {
+        box-shadow: var(--box-shadow-hover);
+    }
 
     .body {
         padding: 1.25rem var(--size-margin);
         display: flex;
+        // 头像 / 文字块 / 右侧箭头三者垂直居中
+        align-items: center;
 
         .avatar {
             margin-right: 0.625rem;
@@ -109,6 +152,8 @@
                 width: 3.75rem;
                 height: 3.75rem;
                 border-radius: 50%;
+                border: 0.0625rem solid var(--color-body-line);
+                background: var(--color-body-block-bg);
             }
         }
 
@@ -116,10 +161,10 @@
             flex: 1;
 
             .name {
-                color: #111;
+                color: var(--color-heading);
                 font-size: 0.8938rem;
+                font-weight: 600;
                 display: block;
-                margin-top: 0.375rem;
             }
 
             .labels {
@@ -127,32 +172,58 @@
                 padding-top: 0.375rem;
 
                 .label {
-                    background: #EEE;
+                    background: var(--color-primary-light-bg);
                     color: var(--color-primary);
                     line-height: 1.25rem;
                     display: inline-block;
                     padding: 0 0.625rem;
-                    border-radius: 0.625rem;
+                    border-radius: 999px;
                     font-size: var(--font-size-small);
+                    transition: var(--transition);
+
+                    &:hover {
+                        background: var(--color-primary-soft);
+                    }
                 }
             }
         }
 
         .profile {
+            display: flex;
+            align-items: center;
+            align-self: stretch;
+
             .arraw {
                 font-size: var(--font-size-large);
-                color: #c4cfdb;
-                margin-top: 0.625rem;
+                color: var(--color-tertiary);
                 display: inline-block;
+                transition: var(--transition);
+
+                &:hover {
+                    color: var(--color-primary);
+                }
             }
         }
     }
 }
 
 .ub-member-vip-info {
-    background: #F7E9D9;
+    // 平铺淡色底（不用对角渐变，避免出现半深半浅的"色块"观感）
+    background: var(--color-warning-light);
+    border: 0.0625rem solid var(--color-warning-light);
     border-radius: var(--size-radius);
+    box-shadow: var(--box-shadow-xs), var(--shadow-highlight);
     padding: var(--size-margin);
+    transition: var(--transition);
+    // flow-root：让内部的浮动（.icon / .action）参与高度计算。
+    // 原来是默认的 visible，只有文字行撑高，按钮行数少时浮动会压出卡片底边。
+    display: flow-root;
+
+    &:hover {
+        border-color: var(--color-warning);
+        box-shadow: var(--box-shadow-hover), var(--shadow-highlight);
+        transform: translateY(-0.0625rem);
+    }
 
     .icon {
         float: left;
@@ -168,22 +239,77 @@
 
     .action {
         float: right;
+        // 固定右侧操作列宽度，让左侧文案能按同一宽度预留空间（见下方 .title/.desc）
+        width: 9rem;
+        text-align: right;
 
         .btn {
-            border-radius: 1.25rem;
+            border-radius: 999px;
             margin-top: 0.375rem;
-            background: #EED8AE;
-            color: #6D4E2B;
+            background: var(--color-warning-light);
+            color: var(--color-warning-dark);
+            border: 0.0625rem solid transparent;
+            transition: var(--transition);
+
+            &:hover {
+                background: var(--color-warning);
+                color: #fff;
+            }
         }
     }
 
+    .title, .desc {
+        // 给右侧浮动操作列让出空间：否则长文案会滑到按钮底下
+        padding-right: 9.5rem;
+    }
+
     .title {
-        font-weight: bold;
-        color: #685127;
+        font-weight: 600;
+        color: var(--color-warning-dark);
         font-size: 0.8938rem;
     }
 
     .desc {
-        color: #BC9E73;
+        color: var(--color-muted);
+    }
+}
+
+.ub-menu {
+    border-radius: var(--size-radius);
+    background: var(--color-content-bg);
+    border: 0.0625rem solid var(--color-body-line);
+    box-shadow: var(--box-shadow);
+    padding: 0.625rem 0;
+
+    .title {
+        color: var(--color-text);
+        transition: var(--transition);
+
+        &:hover {
+            color: var(--color-primary);
+            background: var(--color-body-block-bg);
+        }
+    }
+
+    .items {
+        a {
+            border-radius: var(--size-radius-sm);
+            margin: 0 0.3125rem;
+            padding-left: 1.875rem;
+            color: var(--color-text);
+            transition: var(--transition);
+
+            &:hover {
+                color: var(--color-primary);
+                background: var(--color-body-block-bg);
+            }
+
+            &.active {
+                color: var(--color-primary);
+                background: var(--color-primary-light-bg);
+                border-right: none;
+                font-weight: 600;
+            }
+        }
     }
 }

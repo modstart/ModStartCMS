@@ -71,15 +71,20 @@
 
 .ub-load-more {
     text-align: center;
-    color: #c4cfdb;
+    color: var(--color-muted);
     padding: 0.625rem 0;
     cursor: pointer;
     font-size: var(--font-size);
+    transition: var(--transition);
+
+    &:hover {
+        color: var(--color-primary);
+    }
 }
 
 .ub-no-more {
     text-align: center;
-    color: #c4cfdb;
+    color: var(--color-muted);
     padding: 0.625rem 0;
     font-size: var(--font-size);
 }
@@ -90,7 +95,7 @@
 
         &:after {
             content: '/';
-            color: #CCC;
+            color: var(--color-tertiary-light);
             display: inline-block;
             margin: 0 0.125rem;
         }
@@ -104,12 +109,12 @@
 }
 
 .ub-placeholder {
-    background: #EEE;
-    border-radius: 0.1875rem;
+    background: var(--color-body-block-bg);
+    border-radius: var(--size-radius-sm);
     width: 100%;
     min-height: 1em;
     text-align: center;
-    color: #c4cfdb;
+    color: var(--color-muted);
 }
 
 .ub-pair {
@@ -119,7 +124,7 @@
     .name {
         float: left;
         margin-left: -5em;
-        color: #c4cfdb;
+        color: var(--color-muted);
     }
 
     .value {
@@ -149,7 +154,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: #333;
+        color: var(--color-text);
     }
 }
 
@@ -159,13 +164,15 @@
     .item {
         display: inline-block;
         width: 3.75rem;
-        color: #c4cfdb;
+        color: var(--color-muted);
         border-radius: var(--size-radius);
         text-align: center;
         padding: 0.25rem 0;
+        transition: var(--transition);
 
         &:hover {
-            background: #F8F8F8;
+            background: var(--color-body-block-bg-hover);
+            color: var(--color-body-block-hover);
         }
 
         &.active {
@@ -186,7 +193,7 @@
 
 .ub-line {
     height: 1px;
-    background: #EEE;
+    background: var(--color-body-line);
     margin-top: var(--size-margin);
     margin-bottom: var(--size-margin);
 }
@@ -221,12 +228,18 @@
             position: relative;
             width: 3.75rem;
             height: 3.75rem;
-            box-shadow: 0 0 1px #CCC;
-            border-radius: 0.125rem;
+            box-shadow: var(--box-shadow-xs);
+            border: 0.0625rem solid var(--color-body-line);
+            border-radius: var(--size-radius-sm);
+            overflow: hidden;
             display: inline-block;
             vertical-align: middle;
+            transition: var(--transition);
 
             &.has-value:hover {
+                border-color: var(--color-primary-light);
+                box-shadow: var(--box-shadow-hover);
+
                 .tools {
                     display: block;
                 }
@@ -242,15 +255,15 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background: rgba(0, 0, 0, 0.5);
-                color: #FFF;
-                border-radius: 0.125rem;
+                background: var(--color-mask);
+                color: var(--color-text-reverse);
+                border-radius: var(--size-radius-sm);
                 text-align: center;
                 padding: 1.25rem 0 0 0;
                 display: none;
 
                 .action {
-                    color: #FFF;
+                    color: var(--color-text-reverse);
                     line-height: 1.25rem;
                     width: 1.25rem;
                     height: 1.25rem;
@@ -272,9 +285,10 @@
     }
 
     .ub-file-selector__value {
-        border: 0.0625rem solid #eee;
+        border: 0.0625rem solid var(--color-body-line);
+        border-radius: var(--size-radius-sm);
         padding: 0 0.625rem;
-        background: #FFF;
+        background: var(--color-content-bg);
         white-space: nowrap;
         // max-width: calc( 100% - 2.5rem);
         overflow: hidden;

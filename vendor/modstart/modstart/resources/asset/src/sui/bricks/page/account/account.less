@@ -3,13 +3,20 @@
 .ub-account {
     min-height: calc(100vh - 240px);
     padding: 2.5rem;
+    // 编辑高级感：近白纸面 + 主色极光光晕，替代整片饱和渐变
+    background-color: var(--color-body-bg);
+    background-image:
+        radial-gradient(40rem 24rem at 50% -6rem, var(--color-primary-glow), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(30rem 20rem at 92% 108%, var(--color-primary-soft), rgba(255, 255, 255, 0) 72%);
+    background-repeat: no-repeat;
 
     .box {
-        background: #FFF;
+        background: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
         max-width: 21.25rem;
-        box-shadow: 0 0 0.375rem rgba(0, 0, 0, 0.1);
+        box-shadow: var(--box-shadow-lg), var(--shadow-highlight);
         box-sizing: border-box;
-        border-radius: var(--size-radius);
+        border-radius: var(--size-radius-lg);
         padding: 1.25rem 0;
         margin: 0 auto;
         text-align: center;
@@ -36,16 +43,22 @@
 
         .nav {
             font-size: var(--font-size-large);
-            color: #c4cfdb;
+            color: var(--color-tertiary);
             margin-top: 1.25rem;
 
             a {
-                color: #c4cfdb;
+                color: var(--color-tertiary);
                 text-decoration: none;
                 font-size: var(--font-size-large);
+                transition: var(--transition);
+
+                &:hover {
+                    color: var(--color-primary);
+                }
 
                 &.active {
                     color: var(--color-primary);
+                    font-weight: 600;
                 }
             }
         }
@@ -58,6 +71,16 @@
                     .help {
                         text-align: left;
                     }
+
+                    input[type=text], input[type=password] {
+                        transition: var(--transition);
+                        box-shadow: var(--box-shadow-xs);
+
+                        &:focus {
+                            border-color: var(--color-primary);
+                            box-shadow: 0 0 0 0.1875rem var(--color-focus-ring);
+                        }
+                    }
                 }
             }
         }
@@ -66,21 +89,24 @@
     .oauth {
         padding-top: 1.25rem;
         text-align: center;
-        color: #c4cfdb;
+        color: var(--color-tertiary);
 
         a {
             display: inline-block;
             width: 2.5rem;
             height: 2.5rem;
-            background: #c4cfdb;
-            color: #FFF;
+            background: var(--color-body-block-bg);
+            color: var(--color-body-block);
             border-radius: 50%;
             text-align: center;
             margin: 0.125rem;
             text-decoration: none;
+            transition: var(--transition);
 
             &:hover {
-                box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+                background: var(--color-body-block-bg-hover);
+                box-shadow: var(--box-shadow-xs);
+                transform: translateY(-0.0625rem);
             }
 
             i {
@@ -89,26 +115,31 @@
             }
 
             &.qq {
-                background: #498ad5;
+                background: var(--color-primary-soft);
+                color: var(--color-primary);
 
                 &:hover {
-                    background: darken(#498ad5, 10%);
+                    background: var(--color-primary-light-bg);
                 }
             }
 
             &.weibo {
-                background: #e05244;
+                background: var(--color-danger-light);
+                color: var(--color-danger-dark);
 
                 &:hover {
-                    background: darken(#e05244, 10%);
+                    background: var(--color-danger-light);
+                    color: var(--color-danger);
                 }
             }
 
             &.wechat {
-                background: #00bb29;
+                background: var(--color-success-light);
+                color: var(--color-success-dark);
 
                 &:hover {
-                    background: darken(#00bb29, 10%);
+                    background: var(--color-success-light);
+                    color: var(--color-success);
                 }
             }
         }
@@ -116,8 +147,17 @@
 
     .retrieve {
         text-align: center;
-        color: #c4cfdb;
+        color: var(--color-tertiary);
         margin-top: 1.25rem;
+
+        a {
+            color: var(--color-link);
+            transition: var(--transition);
+
+            &:hover {
+                color: var(--color-link-hover);
+            }
+        }
     }
 }
 
@@ -129,7 +169,8 @@
         .box {
             margin: 0 auto;
             max-width: 25rem;
-            box-shadow: none;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--size-radius-lg);
 
             &.wide {
                 width: auto;

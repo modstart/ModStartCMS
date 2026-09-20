@@ -1057,7 +1057,10 @@ setDocument = Sizzle.setDocument = function( node ) {
 	if ( parent && parent !== parent.top ) {
 		// IE11 does not have attachEvent, so all must suffer
 		if ( parent.addEventListener ) {
-			parent.addEventListener( "unload", function() {
+			// "unload" is deprecated and blocked by Chrome's Permissions Policy
+			// (Permissions policy violation: unload is not allowed). "pagehide"
+			// covers the same iframe lifecycle without triggering the violation.
+			parent.addEventListener( "pagehide", function() {
 				setDocument();
 			}, false );
 		} else if ( parent.attachEvent ) {

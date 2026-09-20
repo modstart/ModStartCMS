@@ -281,7 +281,7 @@ class MemberController extends Controller
                 'status',
                 'vipId', 'vipExpire',
             ]);
-            $ret = MemberUtil::register($username, $phone, $email, $data['password']);
+            $ret = MemberUtil::register($username, $phone, $email, $data['password'], false, [], ['ignorePolicy' => true]);
             BizException::throwsIfResponseError($ret);
             if (!empty($profile)) {
                 if (isset($profile['vipExpire']) && TimeUtil::isDatetimeEmpty($profile['vipExpire'])) {
@@ -406,7 +406,7 @@ class MemberController extends Controller
             return $builder->formRequest(function (Form $form) use ($memberUser) {
                 AdminPermission::demoCheck();
                 $data = $form->dataForming();
-                $ret = MemberUtil::changePassword($memberUser['id'], $data['passwordNew'], null, true);
+                $ret = MemberUtil::changePassword($memberUser['id'], $data['passwordNew'], null, true, ['ignorePolicy' => true]);
                 BizException::throwsIfResponseError($ret);
                 return Response::redirect(CRUDUtil::jsDialogClose());
             });

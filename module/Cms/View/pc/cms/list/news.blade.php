@@ -56,7 +56,7 @@
                             {{$cat['title']}}
                         </div>
                     </div>
-                    <div class="body" style="padding:0;">
+                    <div class="body">
                         @if(empty($records))
                             <div class="ub-empty tw-my-20">
                                 <div class="icon">
@@ -67,7 +67,7 @@
                         @else
                             <div class="ub-list-items">
                                 @foreach($records as $record)
-                                    <div class="item-k">
+                                    <div class="item-k margin-bottom">
                                         <a class="image" href="{{$record['_url']}}">
                                             <div class="cover ub-cover-4-3"
                                                  style="background-image:url({{\ModStart\Core\Assets\AssetsUtil::fix($record['cover'])}})"></div>

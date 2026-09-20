@@ -223,6 +223,7 @@ class DataManager
         if (!in_array($extension, $config['extensions'])) {
             return Response::generate(-4, L('File extension %s not permit', $extension));
         }
+        $content = self::sanitizeDataContent($extension, $content);
         $size = strlen($content);
         if ($size == 0) {
             return Response::generate(-5, 'File content empty');
@@ -285,6 +286,20 @@ class DataManager
     }
 
     /**
+     * 按扩展名清洗文件内容（目前仅处理 SVG 存储型 XSS）
+     * @param $extension string
+     * @param $content string
+     * @return string
+     */
+    private static function sanitizeDataContent($extension, $content)
+    {
+        if ('svg' === strtolower($extension)) {
+            return FileUtil::sanitizeSvg($content);
+        }
+        return $content;
+    }
+
+    /**
      * 上传文件内容
      * @param string $category 上传分类，image｜file｜video｜audio
      * @param string $filename 包含后缀名的文件
@@ -332,6 +347,7 @@ class DataManager
         if (!in_array($extension, $config['extensions'])) {
             return Response::generate(-4, L('File extension %s not permit', $extension));
         }
+        $content = self::sanitizeDataContent($extension, $content);
         $size = strlen($content);
         if ($size == 0) {
             return Response::generate(-5, 'File content empty');
@@ -436,6 +452,19 @@ class DataManager
         if (!$storage->has($from)) {
             $storage->repository()->deleteTempById($dataTemp['id']);
             return Response::generate(-3, L('TempPathNotExists'));
+        }
+
+        // 临时文件转正式存储前清洗 SVG 内容，避免分片上传绕过清洗
+        if ('svg' === strtolower($extension)) {
+            $rawContent = $storage->get($from);
+            if (null !== $rawContent && false !== $rawContent) {
+                $cleanContent = self::sanitizeDataContent($extension, $rawContent);
+                if ($cleanContent !== $rawContent) {
+                    $storage->put($from, $cleanContent);
+                    $dataTemp['size'] = strlen($cleanContent);
+                    $dataTemp['md5'] = md5($cleanContent);
+                }
+            }
         }
 
         $storage->move($from, $to);

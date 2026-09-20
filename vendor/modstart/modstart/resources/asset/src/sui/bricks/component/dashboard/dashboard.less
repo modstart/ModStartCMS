@@ -1,87 +1,178 @@
+// =============================================================================
+// Dashboard 数据块
+//   .ub-dashboard-item     最简：标题 + 数字（无外观）
+//   .ub-dashboard-item-a   图标 + 文字（标题/描述 或 数字/标题）
+//   .ub-dashboard-item-b   强调数据卡（淡主色底 + 实色图标底）
+//   .ub-dashboard-item-c   极简数据卡（顶部主色细线 + 渐变数字）
+// 设计原则：用小面积高饱和（图标/细线/数字）做重点，避免大面积纯色块。
+// =============================================================================
+
 .ub-dashboard-item {
     .title-gray {
-        color: var(--color-tertiary);
+        color: var(--color-muted);
     }
 
     .value-primary {
         .number {
             color: var(--color-primary);
             font-size: var(--font-size-large);
+            font-weight: 600;
         }
     }
 }
 
-
-.ub-dashboard-item-a, .ub-dashboard-item-b {
-    background: rgba(255, 255, 255, 1);
-    border-radius: var(--size-radius, 0.3125rem);
-    padding: 0.625rem 1.25rem 0.625rem 4.375rem;
-    transition: all 200ms;
-    box-shadow: 0px 4px 8px 2px rgba(132, 163, 246, 0.08);
+.ub-dashboard-item-a,
+.ub-dashboard-item-b,
+.ub-dashboard-item-c {
+    position: relative;
     display: block;
     margin-bottom: 0.625rem;
+    background: var(--color-content-bg);
+    border: 0.0625rem solid var(--color-body-line);
+    border-radius: var(--size-radius);
+    box-shadow: var(--box-shadow-xs), var(--shadow-highlight);
+    transition: var(--transition);
 
     &:hover {
-        box-shadow: 0px 4px 8px 2px rgba(132, 163, 246, 0.2);
+        border-color: var(--color-primary-light);
+        box-shadow: var(--box-shadow-hover), var(--shadow-highlight);
+        transform: translateY(-0.125rem);
     }
 
+    // 图标底座：柔和主色底 + 主色图标，hover 反色
     .icon {
-        float: left;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 2.5rem;
-        margin-left: -3.125rem;
-        margin-top: 0.625rem;
-        text-align: center;
         height: 2.5rem;
-        line-height: 2.5rem;
+        border-radius: var(--size-radius-sm);
+        background: var(--color-primary-light-bg);
         color: var(--color-primary);
+        transition: var(--transition);
 
         .font {
-            font-size: 2.5rem;
+            font-size: 1.375rem;
+            line-height: 1;
         }
+    }
+
+    &:hover .icon {
+        background: var(--color-primary);
+        color: var(--color-text-reverse);
     }
 
     .title {
         font-size: var(--font-size, 0.8125rem);
-        font-weight: 500;
-        color: var(--color-primary);
+        font-weight: 600;
+        color: var(--color-heading);
+        letter-spacing: -0.01em;
     }
 
     .desc {
-        padding: 0.3125rem 0 0 0;
-        color: var(--color-tertiary);
+        color: var(--color-muted);
         font-size: var(--font-size-small, 0.75rem);
+        line-height: 1.5;
+    }
+
+    .number-value {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: var(--color-heading);
+        letter-spacing: -0.02em;
+    }
+
+    .number-title {
+        font-size: var(--font-size-small, 0.75rem);
+        color: var(--color-tertiary);
+    }
+}
+
+// 图标居左、内容居右（图标绝对定位以兼容历史扁平 DOM 结构）
+.ub-dashboard-item-a {
+    padding: 0.875rem 1rem 0.875rem 4rem;
+    min-height: 4rem;
+
+    .icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .desc {
+        padding-top: 0.25rem;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
 
-    .number-title {
-        font-size: var(--font-size, 0.8125rem);
-        font-weight: 500;
-        color: var(--color-tertiary);
+    .number-value {
+        line-height: 1.75rem;
     }
 
-    .number-value {
-        color: var(--color-text);
-        font-size: 1.5rem;
-        line-height: 2.5rem;
+    .number-title {
+        padding-top: 0.125rem;
     }
 }
 
+// 强调数据卡：淡主色渐变底（低饱和大面积）+ 实色图标底（高饱和小面积）
 .ub-dashboard-item-b {
-    text-align: right;
-    background: var(--color-primary);
+    padding: 1rem 1.25rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--color-primary-light-bg), var(--color-content-bg));
+    border-color: var(--color-primary-light);
+
+    &:hover {
+        border-color: var(--color-primary);
+    }
 
     .icon {
-        color: #FFF;
+        margin: 0 auto 0.625rem auto;
+        background: var(--color-primary);
+        color: var(--color-text-reverse);
+    }
+
+    &:hover .icon {
+        background: var(--color-primary-dark);
     }
 
     .number-value {
-        color: #FFF;
+        color: var(--color-primary);
     }
 
     .number-title {
-        color: #EEE;
+        padding-top: 0.125rem;
+    }
+}
+
+// 极简数据卡：顶部一条主色渐变细线 + 渐变数字
+.ub-dashboard-item-c {
+    padding: 1.125rem 1.25rem 1.25rem 1.25rem;
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0.125rem;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+    }
+
+    .number-value {
+        font-size: 1.75rem;
+        line-height: 2.25rem;
+        background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary-light));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .number-title {
+        padding-top: 0.25rem;
     }
 }

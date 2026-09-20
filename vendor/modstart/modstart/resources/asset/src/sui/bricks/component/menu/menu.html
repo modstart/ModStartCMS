@@ -77,7 +77,7 @@
 <div class="ub-menu-layout-container">
     <div style="padding:1.25rem;">
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div>
                     .ub-menu
                     <a href="./page.html?url=component/menu/menu-page-menu" target="_blank">
@@ -109,14 +109,14 @@
                     });
                 </script>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div>.ub-menu.simple 简单水平滚动菜单</div>
                 <div class="ub-menu simple">
                     <a class="title active" href="javascript:;">菜单</a>
                     <a class="title" href="javascript:;" data-repeat="5">{ZH,4,100}</a>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div>
                     <div>
                         .ub-menu.nav-menu
@@ -168,7 +168,7 @@
                     </script>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div>
                     .ub-menu-tree
                     <a href="javascript:;" onclick="$('[data-menu-tree]').toggleClass('no-arrow')">
@@ -242,16 +242,20 @@
                         $('[data-menu-tree]').on('click','.title-action-icon',function(){
                             $(this).closest('.title').toggleClass('open');
                         });
+                        // 与生产（I18nDocument）保持一致：点击标题文字也会展开当前分组
+                        $('[data-menu-tree]').on('click','.title-text',function(){
+                            $(this).closest('.title').addClass('open');
+                        });
                     });
                 </script>
             </div>
 
 
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div>
                     .ub-menu-tree-simple
                 </div>
-                <div class="ub-menu-tree-simple">
+                <div class="ub-menu-tree-simple page">
                     <div class="item-container">
                         <div data-repeat="2" class="item level-1">
                             <a href="javascript:;">{ZH,2,100}</a>

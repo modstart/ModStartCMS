@@ -1,15 +1,18 @@
 @import "../../../base/component/animate";
 @import "../../../base/theme";
+// .ub-list is built from .ub-panel (see below), so the panel must be available
+// even when this file is compiled on its own.
+@import "../panel/panel";
 
-@list-item-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
-@list-item-box-shadow-lg: 0 0 1.25rem rgba(0, 0, 0, 5%);
+@list-item-box-shadow: var(--box-shadow-xs);
+@list-item-box-shadow-lg: var(--box-shadow);
 
 .ub-list-head-tools-placeholder {
     height: 2.5rem;
 }
 
 .ub-list-head-tools {
-    box-shadow: 0 0 2px #CCC;
+    box-shadow: var(--box-shadow-xs);
     background: var(--color-content-bg);
     height: 2.5rem;
     display: flex;
@@ -44,7 +47,7 @@
                 }
 
                 .icon {
-                    color: #CCC;
+                    color: var(--color-muted);
                     transition: all 0.3s ease-in-out;
                 }
             }
@@ -63,7 +66,7 @@
                     position: relative;
                     padding-bottom: 3.75rem;
                     background: var(--color-content-bg);
-                    border-top: 1px solid var(--color-body-line);
+                    border-top: 0.0625rem solid var(--color-body-line);
 
                     &.no-foot {
                         padding-bottom: 0;
@@ -87,9 +90,16 @@
                                 line-height: 2.5rem;
                                 padding: 0 1.25rem;
                                 display: flex;
+                                border-radius: var(--size-radius-sm);
+                                transition: var(--transition);
+
+                                &:hover {
+                                    background: var(--color-body-block-bg);
+                                }
 
                                 &.active {
                                     color: var(--color-primary);
+                                    background: var(--color-primary-light-bg);
 
                                     .checked {
                                         visibility: visible;
@@ -109,7 +119,7 @@
                                 }
 
                                 .text {
-                                    border-bottom: 1px solid #F8F8F8;
+                                    border-bottom: 0.0625rem solid var(--color-body-line);
                                     flex: 1;
 
                                     &:last-child {
@@ -128,7 +138,7 @@
                         left: 0;
                         right: 0;
                         background: var(--color-content-bg);
-                        border-top: 1px solid var(--color-body-line);
+                        border-top: 0.0625rem solid var(--color-body-line);
 
                         .btn {
                             flex: 1;
@@ -142,64 +152,64 @@
     }
 }
 
+// .ub-list is the same card as .ub-panel, so it is built from the panel itself:
+// a list used on its own must look identical to one wrapped in a panel, and any
+// change to .ub-panel is inherited here automatically (never restate the panel
+// chrome or the head/body padding in this file).
 .ub-list {
-    background: var(--color-content-bg);
-    border-radius: var(--size-radius);
+    .ub-panel();
 
     &.no-bg {
         background-color: transparent;
+        border: none;
+        box-shadow: none;
+        margin-bottom: 0;
 
         .head {
             padding: 0.625rem 0;
         }
 
         .body {
-            margin-left: -0.625rem;
-            margin-right: -0.625rem;
+            margin-left: -1.25rem;
+            margin-right: -1.25rem;
         }
-    }
-
-    .head {
-        padding: 0.625rem;
-
-        .more {
-            float: right;
-            line-height: 1.875rem;
-        }
-
-        .title {
-            display: inline-block;
-            line-height: 1.25rem;
-            font-size: var(--font-size);
-        }
-    }
-
-    .body {
-        margin-top: -0.625rem;
-        padding: 0.625rem;
     }
 }
 
 .ub-list .body, .ub-list-items {
     mark {
-        color: red;
+        color: var(--color-danger);
         background: none;
     }
 
+    // 键盘可达性：列表内链接统一焦点环（鼠标点击不触发，避免与 hover 视觉冲突）
+    a:focus-visible {
+        outline: 0.125rem solid var(--color-primary);
+        outline-offset: 0.125rem;
+        border-radius: var(--size-radius-xs);
+    }
+
     .item-a {
-        border-radius: 0.625rem;
+        border-radius: var(--size-radius-sm);
         padding: 0.625rem 0.625rem 0.625rem 4.375rem;
         overflow: hidden;
         margin: 0 0 0.625rem 0;
-        box-shadow: @list-item-box-shadow-lg;
+        box-shadow: var(--box-shadow-xs);
         background-color: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        transition: var(--transition);
+
+        &:hover {
+            box-shadow: var(--box-shadow-hover);
+            transform: translateY(-0.0625rem);
+        }
 
         .icon {
             float: left;
             margin: 0.3125rem 0 0 -3.4375rem;
             height: 2.5rem;
             width: 2.5rem;
-            border-radius: 0.1875rem;
+            border-radius: var(--size-radius-sm);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -207,7 +217,7 @@
             img, .img {
                 height: 2.5rem;
                 width: 2.5rem;
-                border-radius: 0.1875rem;
+                border-radius: var(--size-radius-sm);
             }
 
             img {
@@ -217,18 +227,19 @@
 
         .title {
             display: block;
-            color: var(--color-text);
+            color: var(--color-heading);
             font-size: var(--font-size-large);
             line-height: 1.875rem;
             height: 1.875rem;
+            transition: var(--transition);
 
             &:hover {
-                color: #111;
+                color: var(--color-primary);
             }
         }
 
         .summary {
-            color: #c4cfdb;
+            color: var(--color-muted);
             font-size: var(--font-size);
             height: 1.25rem;
             line-height: 1.25rem;
@@ -242,14 +253,18 @@
         line-height: 2em;
         text-align: center;
         display: block;
-        border-radius: 0.3125rem;
+        border-radius: var(--size-radius-sm);
         margin: 0.3125rem 0;
-        color: var(--color-primary);
-        box-shadow: @list-item-box-shadow-lg;
         color: var(--color-text);
+        background-color: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        box-shadow: var(--box-shadow-xs);
+        transition: var(--transition);
 
         &:hover {
-            background-color: #EEE;
+            background-color: var(--color-body-block-bg-hover);
+            border-color: var(--color-primary-light);
+            box-shadow: var(--box-shadow-hover);
         }
     }
 
@@ -262,12 +277,23 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        transition: var(--transition);
 
         &:before {
-            content: "▪";
-            color: var(--color-primary);
+            // 用纯 CSS 圆点替代 "▪" 字符：不同字体下这个字符的大小/基线不一致，观感脏
+            content: '';
             display: inline-block;
-            margin-right: 0.25rem;
+            vertical-align: middle;
+            width: 0.375rem;
+            height: 0.375rem;
+            margin-right: 0.5rem;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            opacity: 0.85;
+        }
+
+        &:hover {
+            color: var(--color-primary);
         }
     }
 
@@ -283,13 +309,13 @@
 
         .title {
             font-size: var(--font-size-large);
-            color: var(--color-text);
+            color: var(--color-heading);
             line-height: 1.75rem;
             transition: color 0.2s ease-in-out;
         }
 
         .summary {
-            color: var(--color-tertiary);
+            color: var(--color-muted);
             font-size: var(--font-size);
             padding: 0.3125rem 0 0 0;
         }
@@ -315,12 +341,15 @@
 
     .item-e {
         padding-bottom: 0.625rem;
-        border-radius: 0.3125rem;
+        border-radius: var(--size-radius-sm);
         overflow: hidden;
-        border: 1px solid var(--color-body-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        background: var(--color-content-bg);
+        transition: var(--transition);
 
         &:hover {
-            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
+            box-shadow: var(--box-shadow-hover);
+            transform: translateY(-0.0625rem);
 
             .cover {
                 transform: scale(1.05);
@@ -336,7 +365,7 @@
             overflow: hidden;
             background: no-repeat center;
             background-size: cover;
-            border-radius: 0.3125rem 0.3125rem 0 0;
+            border-radius: var(--size-radius-sm) var(--size-radius-sm) 0 0;
             transition: transform 0.3s ease-in-out;
 
             &:after {
@@ -353,7 +382,7 @@
             display: block;
             margin-top: 0.625rem;
             padding: 0 0.625rem;
-            color: var(--color-text);
+            color: var(--color-heading);
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -364,7 +393,7 @@
             margin-top: 0.3125rem;
             line-height: 1.25rem;
             height: 2.5rem;
-            color: #c4cfdb;
+            color: var(--color-muted);
             overflow: hidden;
             padding: 0 0.625rem;
         }
@@ -380,9 +409,10 @@
             display: block;
             width: 3.75rem;
             border: 0.0625rem solid var(--color-primary);
-            border-radius: 0.1875rem;
+            border-radius: var(--size-radius-sm);
             text-align: center;
             line-height: 1.5625rem;
+            overflow: hidden;
 
             .day {
                 color: #FFF;
@@ -391,7 +421,7 @@
             }
 
             .month {
-                color: var(--color-text);
+                color: var(--color-muted);
             }
         }
 
@@ -400,10 +430,11 @@
             line-height: 1.25rem;
             height: 1.25rem;
             overflow: hidden;
+            color: var(--color-heading);
         }
 
         .summary {
-            color: #c4cfdb;
+            color: var(--color-muted);
             height: 2.5rem;
             line-height: 1.25rem;
             overflow: hidden;
@@ -411,16 +442,19 @@
     }
 
     .item-g {
-        border-radius: 0.3125rem;
+        border-radius: var(--size-radius-sm);
         padding: 1.25rem;
         overflow: hidden;
         margin: 0 0 0.625rem 0;
         text-align: center;
         display: block;
         background-color: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        transition: var(--transition);
 
         &:hover {
-            box-shadow: @list-item-box-shadow-lg;
+            box-shadow: var(--box-shadow-hover);
+            transform: translateY(-0.0625rem);
         }
 
         .icon {
@@ -429,32 +463,34 @@
 
         .title {
             display: block;
-            color: var(--color-text);
+            color: var(--color-heading);
             margin-top: 0.625rem;
             height: 1.25rem;
             line-height: 1.25rem;
             overflow: hidden;
 
             &:hover {
-                color: #111;
+                color: var(--color-primary);
             }
         }
     }
 
     .item-h {
-        border: 0.0625rem solid #EEE;
-        border-radius: 0.1875rem;
+        border: 0.0625rem solid var(--color-body-line);
+        border-radius: var(--size-radius-sm);
         padding: 0.625rem 0.625rem 0.625rem 3.125rem;
         overflow: hidden;
         margin: 0 0 0.625rem 0;
         display: block;
+        background: var(--color-content-bg);
+        transition: var(--transition);
 
         &:last-child {
             margin-bottom: 0;
         }
 
         &:hover {
-            border-color: #CCC;
+            border-color: var(--color-primary-light);
         }
 
         .icon {
@@ -465,6 +501,7 @@
                 height: 1.875rem;
                 width: 1.875rem;
                 border: none;
+                border-radius: var(--size-radius-sm);
             }
 
             .cover {
@@ -474,6 +511,7 @@
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: cover;
+                border-radius: var(--size-radius-sm);
             }
 
             i {
@@ -483,33 +521,36 @@
                 line-height: 1.875rem;
                 text-align: center;
                 font-size: var(--font-size-large);
-                color: #c4cfdb;
+                color: var(--color-muted);
             }
         }
 
         .title {
             display: block;
-            color: var(--color-text);
+            color: var(--color-heading);
             font-size: var(--font-size);
             line-height: 1.875rem;
             height: 1.875rem;
 
             &:hover {
-                color: #111;
+                color: var(--color-primary);
             }
         }
     }
 
     .item-i {
-        border-radius: 0.3125rem;
+        border-radius: var(--size-radius-sm);
         padding: 0.625rem 0.625rem 0.625rem 3.125rem;
         overflow: hidden;
         margin: 0 0 0.625rem 0;
         display: block;
-        background-color: #FFF;
+        background-color: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        transition: var(--transition);
 
         &:hover {
-            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
+            box-shadow: var(--box-shadow-hover);
+            transform: translateY(-0.0625rem);
 
             .title {
                 color: var(--color-primary);
@@ -526,12 +567,13 @@
             float: left;
             margin: 0.3125rem 0 0 -2.5rem;
             width: 1.875rem;
-            border-radius: 0.3125rem;
+            border-radius: var(--size-radius-sm);
 
             img {
                 height: 1.875rem;
                 width: 1.875rem;
                 border: none;
+                border-radius: var(--size-radius-sm);
             }
 
             i {
@@ -541,13 +583,13 @@
                 line-height: 1.875rem;
                 text-align: center;
                 font-size: var(--font-size-large);
-                color: #c4cfdb;
+                color: var(--color-muted);
             }
         }
 
         .title {
             display: block;
-            color: var(--color-text);
+            color: var(--color-heading);
             font-size: var(--font-size);
             line-height: 1.25rem;
             height: 1.25rem;
@@ -556,12 +598,12 @@
             //white-space: nowrap;
 
             &:hover {
-                color: #111;
+                color: var(--color-primary);
             }
         }
 
         .desc {
-            color: #c4cfdb;
+            color: var(--color-muted);
             font-size: 0.8125rem;
             line-height: 1.25rem;
             height: 1.25rem;
@@ -574,33 +616,35 @@
     }
 
     .item-j {
-        border: 0.0625rem solid #EEE;
-        border-radius: 0.1875rem;
+        border: 0.0625rem solid var(--color-body-line);
+        border-radius: var(--size-radius-sm);
         padding: 0.625rem;
         overflow: hidden;
         margin: 0 0 0.625rem 0;
         display: block;
-        color: #c4cfdb;
+        color: var(--color-muted);
+        background: var(--color-content-bg);
+        transition: var(--transition);
 
         &:hover {
-            border-color: #CCC;
+            border-color: var(--color-primary-light);
         }
 
         .status {
             float: right;
             line-height: 1.25rem;
-            color: #c4cfdb;
+            color: var(--color-muted);
         }
 
         .title {
             display: block;
-            color: var(--color-text);
+            color: var(--color-heading);
             font-size: var(--font-size);
             line-height: 1.25rem;
             height: 1.25rem;
 
             &:hover {
-                color: #111;
+                color: var(--color-primary);
             }
         }
 
@@ -617,25 +661,46 @@
     .item-k {
         padding: 0.625rem 0.625rem 0.625rem 13.125rem;
         overflow: hidden;
-        border-radius: 0.3125rem;
+        border-radius: var(--size-radius-sm);
         background: var(--color-content-bg);
+        // 白底卡片压在浅色页面上时看不出边界、相邻条目会连成一片，
+        // 用 1px 内嵌发丝线把每张卡片圈出来（不占布局、不产生位移）
+        box-shadow: var(--shadow-inset);
+        transition: var(--transition);
 
         &.item-k-a {
-            padding: 0.625rem 0.625rem 0.625rem 5rem;
+            // 头像行：改成"头像 + 标题/信息"两列网格，头像跨两行并与文字块垂直居中。
+            // 原来靠 float + 负 margin 把头像塞进左侧 padding 里，标题在文字块顶部、
+            // 信息行在底部，文字比头像矮，整行看起来上重下轻、中间一大段空白。
+            display: grid;
+            grid-template-columns: auto 1fr;
+            column-gap: 0.875rem;
+            align-items: center;
+            padding: 0.75rem;
 
             .image {
+                grid-row: 1 / span 2;
                 width: 3.75rem;
-                margin-left: -4.375rem;
-                border-radius: 50%;
+                height: 3.75rem;
+                // 清掉桌面端 float + 负 margin 的"塞进 padding"定位
+                float: none;
+                margin-left: 0;
 
                 .cover {
                     border-radius: 50%;
-                    box-shadow: 0 0 1px #c4cfdb;
+                    box-shadow: var(--box-shadow-xs);
                 }
             }
 
+            .title {
+                grid-column: 2;
+                align-self: end;
+            }
+
             .info {
-                padding-top: 0.625rem;
+                grid-column: 2;
+                align-self: start;
+                padding-top: 0.5rem;
             }
         }
 
@@ -648,7 +713,7 @@
                 margin-left: -3.125rem;
 
                 .cover {
-                    box-shadow: 0 0 1px #c4cfdb;
+                    box-shadow: var(--box-shadow-xs);
                 }
             }
 
@@ -669,6 +734,8 @@
         }
 
         &:hover {
+            box-shadow: var(--shadow-inset), var(--box-shadow-xs);
+
             .image {
                 .cover {
                     transform: scale(1.05);
@@ -690,17 +757,19 @@
             margin-left: -12.5rem;
             display: block;
             overflow: hidden;
-            border-radius: 0.3125rem;
+            border-radius: var(--size-radius-sm);
 
             .cover {
-                border-radius: 0.3125rem;
+                border-radius: var(--size-radius-sm);
                 transition: transform 0.6s ease-in-out;
             }
         }
 
         .title {
             font-size: var(--font-size-large);
-            color: var(--color-text);
+            color: var(--color-heading);
+            // 大字号标题用常规字重在中文里显得发散，加半粗更聚焦
+            font-weight: 600;
             line-height: 1.2;
             display: block;
             text-overflow: ellipsis;
@@ -709,10 +778,11 @@
         }
 
         .summary {
+            // 正文摘要用二级文字色（--color-muted 过浅，三行摘要在浅底上几乎读不清）
             color: var(--color-tertiary);
             font-size: var(--font-size);
-            padding: 0.625rem 0 0 0;
-            height: 4.2813rem;
+            padding: 0.5rem 0 0 0;
+            height: 4.1563rem;
             overflow: hidden;
             line-height: 1.2188rem;
             display: block;
@@ -723,9 +793,10 @@
         }
 
         .info {
-            color: var(--color-tertiary);
+            color: var(--color-muted);
             font-size: var(--font-size);
-            padding: 1.25rem 0 0 0;
+            // 原来是 1.25rem，摘要与信息行之间会空出一大段
+            padding: 0.75rem 0 0 0;
             overflow: hidden;
             display: block;
 
@@ -742,6 +813,7 @@
 
                 &:hover {
                     text-decoration: underline;
+                    color: var(--color-primary);
                 }
             }
         }
@@ -764,12 +836,13 @@
             height: 1.25rem;
             left: 0;
             top: 0.25em;
-            background: #fbe6e6;
+            background: var(--color-danger-light);
             cursor: pointer;
             line-height: 1.25rem;
             text-align: center;
-            color: #D22525;
+            color: var(--color-danger);
             display: block;
+            border-radius: var(--size-radius-sm);
         }
 
         .right {
@@ -779,7 +852,8 @@
             color: var(--color-text);
             width: 6em;
             text-align: center;
-            background: #F9F9F9;
+            background: var(--color-body-block-bg);
+            border-radius: var(--size-radius-sm);
         }
 
         .title {
@@ -793,8 +867,8 @@
     }
 
     .item-m {
-        color: #c4cfdb;
-        background-color: #f6f6f6;
+        color: var(--color-muted);
+        background-color: var(--color-body-block-bg);
         height: 1.875rem;
         line-height: 1.875rem;
         overflow: hidden;
@@ -804,7 +878,8 @@
         text-overflow: ellipsis;
         display: block;
         margin: 0.125rem -0.2344rem;
-        border-radius: 3px;
+        border-radius: var(--size-radius-sm);
+        transition: var(--transition);
 
         &:hover {
             background: var(--color-primary);
@@ -819,12 +894,12 @@
         &:hover {
             transform: translateY(-0.3125rem);
             background: var(--color-content-bg);
-            box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+            box-shadow: var(--box-shadow-hover);
         }
 
         .image {
             .cover {
-                border-radius: 0.125rem;
+                border-radius: var(--size-radius-sm);
             }
         }
 
@@ -833,11 +908,11 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border-radius: 0.125rem;
+                border-radius: var(--size-radius-sm);
 
                 .content {
-                    color: #111;
-                    text-shadow: 0 0 10px #EEE;
+                    color: var(--color-heading);
+                    text-shadow: 0 0 10px var(--color-body-block-bg);
                     font-size: 1.25rem;
                 }
             }
@@ -845,9 +920,10 @@
     }
 
     .item-o {
-        background: #FFF;
+        background: var(--color-content-bg);
         margin-bottom: 0.625rem;
-        border-radius: 3px;
+        border-radius: var(--size-radius-sm);
+        overflow: hidden;
 
         &:hover {
             .image {
@@ -860,7 +936,7 @@
 
         .image {
             display: block;
-            background: #FFF;
+            background: var(--color-content-bg);
             overflow: hidden;
         }
 
@@ -870,7 +946,7 @@
             display: block;
             color: var(--color-primary);
             border-top: 0.3125rem solid var(--color-primary);
-            background: #FFF;
+            background: var(--color-content-bg);
             line-height: 2.5rem;
             padding: 0 1.25rem;
             position: relative;
@@ -890,13 +966,18 @@
     }
 
     .item-p {
-        border-radius: 0.3125rem;
+        border-radius: var(--size-radius-sm);
         margin-bottom: 0.625rem;
-        background: #FFF;
+        background: var(--color-content-bg);
         padding: 0 0 1.25rem 0;
-        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 5%);
+        box-shadow: var(--box-shadow-xs);
+        border: 0.0625rem solid var(--color-body-line);
+        transition: var(--transition);
 
         &:hover {
+            box-shadow: var(--box-shadow-hover);
+            transform: translateY(-0.0625rem);
+
             .image {
                 .cover {
                     transform: scale(1.1);
@@ -907,10 +988,10 @@
         .image {
             display: block;
             overflow: hidden;
-            border-radius: 0.3125rem 0.3125rem 0 0;
+            border-radius: var(--size-radius-sm) var(--size-radius-sm) 0 0;
 
             .cover {
-                border-radius: 0.25rem 0.25rem 0 0;
+                border-radius: var(--size-radius-sm) var(--size-radius-sm) 0 0;
                 transition: transform 0.6s;
             }
         }
@@ -920,7 +1001,7 @@
             text-align: center;
             padding: 0.625rem;
             display: block;
-            color: var(--color-text);
+            color: var(--color-heading);
             height: 2.5rem;
             overflow: hidden;
             white-space: nowrap;
@@ -933,7 +1014,7 @@
 
         .summary {
             display: block;
-            color: #c4cfdb;
+            color: var(--color-muted);
             text-align: center;
             height: 1.25rem;
             line-height: 1.25rem;
@@ -957,14 +1038,14 @@
         position: relative;
         display: block;
         margin: 0.625rem;
-        border-radius: 0.1875rem;
+        border-radius: var(--size-radius-sm);
 
         img {
             width: 100%;
         }
 
         .mask {
-            border-radius: 0.1875rem;
+            border-radius: var(--size-radius-sm);
             position: absolute;
             background: rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -1004,7 +1085,7 @@
         }
 
         &:hover {
-            box-shadow: @list-item-box-shadow;
+            box-shadow: var(--box-shadow-hover);
 
             .cover {
                 transform: scale(1.05);
@@ -1056,7 +1137,7 @@
             height: 1.875rem;
             overflow: hidden;
             display: block;
-            color: var(--color-text);
+            color: var(--color-heading);
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 100%;
@@ -1075,7 +1156,7 @@
             }
 
             a {
-                color: var(--color-tertiary);
+                color: var(--color-muted);
 
                 i {
                     display: inline-block;
@@ -1084,7 +1165,7 @@
                 }
 
                 &:hover {
-                    color: var(--color-text);
+                    color: var(--color-primary);
                 }
             }
         }
@@ -1112,7 +1193,7 @@
                 bottom: 0.625rem;
                 right: 1.25rem;
                 color: #FFF;
-                text-shadow: 0 0 2px #CCC;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
                 font-size: var(--font-size-small);
             }
         }
@@ -1141,7 +1222,7 @@
             .name {
                 display: inline-block;
                 vertical-align: bottom;
-                color: #1d1d1d;
+                color: var(--color-heading);
             }
         }
 
@@ -1150,14 +1231,14 @@
             height: 2.5rem;
             overflow: hidden;
             display: block;
-            color: #1d1d1d;
+            color: var(--color-heading);
             text-overflow: ellipsis;
             width: 100%;
         }
 
         .info {
             font-size: var(--font-size-small);
-            color: #c4cfdb;
+            color: var(--color-muted);
             padding-top: 0.625rem;
         }
     }
@@ -1217,14 +1298,14 @@
     &.disabled {
         .item {
             &:hover {
-                border-color: #EEE;
+                border-color: var(--color-body-line);
             }
         }
     }
 
     &.inlined {
-        background: #F8F8F8;
-        border-radius: 0.625rem;
+        background: var(--color-body-block-bg);
+        border-radius: var(--size-radius-sm);
         padding: 0.625rem;
 
         .item {
@@ -1232,27 +1313,33 @@
             min-width: 10rem;
             line-height: 1.875rem;
             cursor: default;
-            border: 1px solid var(--color-body-line);
+            border: 0.0625rem solid var(--color-body-line);
             padding: 0.375rem 0.625rem;
+            background: var(--color-content-bg);
+            border-radius: var(--size-radius-sm);
         }
     }
 
     .item {
         line-height: 3.125rem;
-        border: 2px solid #EEE;
+        border: 0.0625rem solid var(--color-body-line);
         padding: 0 10px;
-        border-radius: 0.375rem;
+        border-radius: var(--size-radius-sm);
         text-align: left;
         color: var(--color-text);
         display: block;
         margin-bottom: 0.625rem;
+        background: var(--color-content-bg);
+        transition: var(--transition);
 
         &.active {
             border-color: var(--color-primary);
+            background: var(--color-primary-light-bg);
         }
 
         &:hover {
             border-color: var(--color-primary);
+            box-shadow: var(--box-shadow-xs);
         }
 
         .icon {

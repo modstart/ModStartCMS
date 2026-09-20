@@ -21,11 +21,12 @@
                 <span class="text">微信</span>
                 <div class="popup">
                     <div class="content">
+                        <p>微信扫一扫联系</p>
                         <img data-src="placeholder/400x400" />
                     </div>
                 </div>
             </a>
-            <a class="item item-icon" href="javascript:;" onclick="$('body,html').animate({scrollTop:0},500);">
+            <a class="item item-icon item-back" href="javascript:;" onclick="$('body,html').animate({scrollTop:0},500);">
                 <i class="icon iconfont icon-angle-up"></i>
             </a>
         </div>
@@ -39,6 +40,13 @@
                 </div>
             </div>
         </a>
+        <div class="bar-page-close" onclick="$(this).parent().addClass('close');">
+            <i class="iconfont icon-close"></i>
+        </div>
+        <div class="bar-page-show" onclick="$(this).parent().removeClass('close');">
+            <i class="iconfont icon-customer"></i>
+            客服
+        </div>
     </div>
 
     <p>{EN,1000,2000}</p>
@@ -52,3 +60,12 @@
     <p>{EN,1000,2000}</p>
 
 </div>
+
+<script>
+    // Mimic the production scroll watcher that unlocks the back-to-top item.
+    $(function () {
+        $(window).on('scroll', function () {
+            $('html').toggleClass('body-scroll-far', $(window).scrollTop() > 400);
+        });
+    });
+</script>

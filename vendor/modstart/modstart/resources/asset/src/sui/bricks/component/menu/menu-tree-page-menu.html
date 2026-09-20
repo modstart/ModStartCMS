@@ -76,6 +76,10 @@
                     $menu.on('click','.title-action-icon',function(){
                         $(this).closest('.title').toggleClass('open');
                     });
+                    // 与生产（I18nDocument）保持一致：点击标题文字也会展开当前分组
+                    $menu.on('click','.title-text',function(){
+                        $(this).closest('.title').addClass('open');
+                    });
                 });
             </script>
         </div>

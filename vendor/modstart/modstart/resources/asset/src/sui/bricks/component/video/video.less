@@ -21,6 +21,7 @@
             position: relative;
             display: block;
             overflow: hidden;
+            border-radius: var(--size-radius);
 
             &:after {
                 content: '';
@@ -32,14 +33,15 @@
             .player-info {
                 position: absolute;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.5);
-                color: #FFF;
+                background: var(--color-mask);
+                color: var(--color-text-reverse);
                 display: flex;
                 justify-content: center;
                 item-align: center;
                 flex-direction: column;
                 text-align: center;
                 z-index: 1000;
+                border-radius: var(--size-radius);
 
                 .player-info-body {
                 }
@@ -76,11 +78,17 @@
             height: 2.5rem;
 
             .item {
-                color: #999;
+                color: var(--color-tertiary-light);
                 display: inline-block;
                 line-height: 1.25rem;
                 margin-right: 0.625rem;
                 height: 1.25rem;
+                transition: var(--transition);
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--color-text-reverse);
+                }
             }
         }
     }

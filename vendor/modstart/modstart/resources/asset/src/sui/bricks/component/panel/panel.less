@@ -2,13 +2,31 @@
 .ub-panel {
   background: var(--color-content-bg);
   border-radius: var(--size-radius);
+  border: 0.0625rem solid var(--color-body-line);
+  box-shadow: var(--box-shadow);
   margin-bottom: var(--size-margin);
 
-  &.border-top {
-    border-top: 2px solid var(--color-primary);
+  // The body carries a 1.25rem inset on all four sides, and its top padding is
+  // the only thing that should separate the title from the content. When the
+  // head is followed by a body, drop the head's bottom padding, otherwise the
+  // two paddings stack up and leave an oversized title-to-content gap.
+  // Must stay before the modifiers below: the bordered and transparent heads
+  // keep their own bottom padding on purpose (there the head is a distinct bar,
+  // and the transparent body has no inset of its own).
+  > .head:has(+ .body) {
+    padding-bottom: 0;
+  }
 
-    .head {
-      border-bottom: 1px solid #EEE;
+  &.border-top {
+    border-top: 0.1875rem solid var(--color-primary);
+
+    > .head {
+      border-bottom: 0.0625rem solid var(--color-body-line);
+      // This head is a bordered bar: it keeps its own bottom padding so the
+      // title never sits on the border line (the body's inset is the gap here).
+      padding-bottom: 0.875rem;
+      // Inner radius = outer radius - top border width, so the head lines up with the panel
+      border-radius: calc(var(--size-radius) - 0.1875rem) calc(var(--size-radius) - 0.1875rem) 0 0;
 
       .title {
         border-left: none;
@@ -21,47 +39,69 @@
     margin-top: 1.25rem;
   }
 
+  &.pure {
+    border: none;
+    box-shadow: none;
+  }
+
   &.transparent {
     background: transparent;
+    border: none;
+    box-shadow: none;
 
-    .head {
-      padding: 0 0 0.3125rem 0;
+    > .head {
+      padding: 0 0 0.625rem 0;
+      border-bottom: none;
+      background: transparent;
+      border-radius: 0;
     }
 
-    .body {
-      padding: 0.9375rem 0 0 0;
+    > .body {
+      padding: 0;
+      border-radius: 0;
     }
   }
 
-  .head {
-    padding: 0.9375rem;
+  > .head {
+    padding: 0.875rem 1.25rem;
+    background: var(--color-content-bg);
+    // The head paints an opaque background; without its own radius it would
+    // cover the panel's rounded border corners and the top would look square.
+    border-radius: var(--size-radius) var(--size-radius) 0 0;
+
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
 
     .more {
       float: right;
+      font-size: 0.75rem;
+      line-height: 1.25rem;
+      padding-top: 0.125rem;
+
+      a {
+        transition: var(--transition);
+
+        &:hover {
+          color: var(--color-primary-dark);
+          text-decoration: underline;
+          text-underline-offset: 0.2em;
+        }
+      }
     }
 
     .title {
-      //border-left: 0.25rem solid var(--color-primary);
       display: inline-block;
+      vertical-align: middle;
       line-height: 1.25rem;
       font-size: var(--font-size-medium);
-      //padding: 0 0 0 0.625rem;
-      //&:before {
-      //  content: '';
-      //  display: block;
-      //  float: left;
-      //  width: 1.25rem;
-      //  height: 0.3125rem;
-      //  border-radius: 0.25rem;
-      //  background-image: -webkit-gradient(linear, left top, right top, from(var(--color-primary)), color-stop(var(--color-primary-light)), color-stop(#8068ff), to(var(--color-primary)));
-      //  background-image: -o-linear-gradient(left, var(--color-primary), var(--color-primary-light), var(--color-primary-light), var(--color-primary));
-      //  background-image: linear-gradient(to right, var(--color-primary), var(--color-primary-light), var(--color-primary-light), var(--color-primary));
-      //  background-size: 300% 100%;
-      //  -webkit-transition: all .4s ease-in-out;
-      //  -o-transition: all .4s ease-in-out;
-      //  transition: all .4s ease-in-out;
-      //  margin: 0.4688rem 0.375rem 0 0;
-      //}
+      font-weight: 600;
+      color: var(--color-heading);
+      letter-spacing: -0.01em;
+      border-left: 0.1875rem solid var(--color-primary);
+      padding-left: 0.6875rem;
 
       .ub-breadcrumb {
         height: 1.25rem;
@@ -73,8 +113,11 @@
     }
   }
 
-  .body {
-    margin-top: -0.9375rem;
-    padding: 0.9375rem;
+  > .body {
+    padding: 1.25rem;
+
+    &:last-child {
+      border-radius: 0 0 var(--size-radius) var(--size-radius);
+    }
   }
 }

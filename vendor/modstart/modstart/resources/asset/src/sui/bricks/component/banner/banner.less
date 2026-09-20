@@ -9,6 +9,7 @@
             .cover {
                 max-width: var(--container-width);
                 margin: 0 auto;
+                border-radius: var(--size-radius);
             }
         }
     }
@@ -48,21 +49,21 @@
 
                     &.reverse {
                         .title {
-                            color: #FFF;
+                            color: var(--color-text-reverse);
                         }
 
                         .slogan {
-                            color: #FFF;
+                            color: var(--color-text-reverse);
                         }
 
                         .link {
-                            border-color: #FFF;
-                            color: #FFF;
+                            border-color: var(--color-text-reverse);
+                            color: var(--color-text-reverse);
                             background: transparent;
                         }
 
                         .text {
-                            color: #FFF;
+                            color: var(--color-text-reverse);
                         }
                     }
 
@@ -91,7 +92,7 @@
                         border-radius: 2.5rem;
                         background: var(--color-primary);
                         font-size: var(--font-size);
-                        color: #FFF;
+                        color: var(--color-text-reverse);
                         border: 0.125rem solid var(--color-primary);
                         letter-spacing: 0.125rem;
                         margin-top: 1.25rem;
@@ -103,7 +104,7 @@
                             border-width: 1px;
                             letter-spacing: 0;
                             padding: 0 0.625rem;
-                            background: #FFF;
+                            background: var(--color-content-bg);
                             color: var(--color-primary);
                         }
                     }
@@ -156,7 +157,7 @@
                                 border-radius: 2.5rem;
                                 background: var(--color-primary);
                                 font-size: var(--font-size);
-                                color: #FFF;
+                                color: var(--color-text-reverse);
                                 border: 0.125rem solid var(--color-primary);
                                 letter-spacing: 0.125rem;
                                 margin-bottom: 0.625rem;
@@ -167,7 +168,7 @@
                                     border-width: 1px;
                                     letter-spacing: 0;
                                     padding: 0 0.625rem;
-                                    background: #FFF;
+                                    background: var(--color-content-bg);
                                     color: var(--color-primary);
                                 }
                             }
@@ -191,6 +192,7 @@
                             background-position: center;
                             width: 80%;
                             margin: 0 auto;
+                            border-radius: var(--size-radius);
 
                             &:after {
                                 content: '';
@@ -217,29 +219,78 @@
         }
     }
 
-    &:hover {
-        .swiper-button-white {
-            opacity: 0.5;
+    // 左右切换按钮：始终可见、颜色跟随主题。
+    // 说明：swiper.less 里按钮的箭头是"白色 SVG 背景图"，而本组件把按钮做成了浅色圆底，
+    // 白箭头落在白底上完全看不见；再加上 background 简写会清掉 background-image，
+    // 导致箭头彻底消失。因此这里改为用 CSS 画 chevron，并通过 --color-text 跟随主题。
+    .swiper-button-white {
+        opacity: 1;
+        // 覆盖 swiper.less 的白色 SVG 箭头（浅色圆底上不可见）
+        background-color: var(--color-content-bg);
+        background-image: none;
+        background-size: auto;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-top: -1.375rem;
+        border-radius: 50%;
+        border: 0.0625rem solid var(--color-body-line);
+        box-shadow: var(--box-shadow);
+        transition: var(--transition), opacity 0.3s ease-in-out;
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-style: solid;
+            border-color: var(--color-text);
+            // 只保留右 + 下两条边，旋转后即为 chevron
+            border-width: 0 0.125rem 0.125rem 0;
+            transition: var(--transition);
+        }
+
+        &:hover {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+            box-shadow: var(--box-shadow-hover);
+
+            &:after {
+                border-color: #FFF;
+            }
+        }
+
+        // swiper 的禁用态（首/末张）已经自带 pointer-events: none
+        &.swiper-button-disabled {
+            opacity: 0.35;
         }
     }
 
-    .swiper-button-white {
-        opacity: 0;
-        background: #FFF;
-        color: var(--color-text);
-        font-size: 10px;
-        width: 3.125rem;
-        height: 3.125rem;
-        border-radius: 50%;
-        margin-top: -1.5625rem;
-        transition: opacity 0.3s ease-in-out;
+    .swiper-button-prev {
+        &:after {
+            transform: translate(-65%, -50%) rotate(135deg);
+        }
+    }
+
+    .swiper-button-next {
+        &:after {
+            transform: translate(-35%, -50%) rotate(-45deg);
+        }
     }
 
     .swiper-pagination-bullet {
-        box-shadow: #666 0 0 0.3125rem;
+        background: var(--color-tertiary-light);
+        box-shadow: var(--box-shadow-xs);
         width: 16px;
         height: 4px;
-        border-radius: 4px;
+        border-radius: 999px;
+        opacity: 0.85;
+        transition: var(--transition);
+
+        &:hover {
+            opacity: 1;
+        }
 
         &.swiper-pagination-bullet-active {
             box-shadow: none;
@@ -249,6 +300,7 @@
     .swiper-pagination {
         .swiper-pagination-bullet-active {
             background: var(--color-primary);
+            opacity: 1;
         }
     }
 

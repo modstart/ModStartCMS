@@ -9,16 +9,18 @@
         padding: 0.625rem 0;
 
         .title {
+            font-family: var(--font-family-serif);
             font-size: 1.875rem;
-            font-weight: 500;
-            color: var(--color-text);
+            font-weight: 700;
+            color: var(--color-heading);
+            letter-spacing: -0.01em;
             text-align: center;
         }
 
         .sub-title {
             font-size: 1rem;
             text-align: center;
-            color: var(--color-text);
+            color: var(--color-tertiary);
             margin-top: 1.25rem;
         }
     }
@@ -75,8 +77,16 @@
         text-decoration: none;
         width: 100%;
         margin-bottom: 0.625rem;
+        background: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        border-radius: var(--size-radius);
+        box-shadow: var(--box-shadow-xs);
+        transition: var(--transition);
 
         &:hover {
+            box-shadow: var(--box-shadow-hover);
+            border-color: var(--color-primary-light);
+
             .icon, .image {
                 transform: scale(1.1);
             }
@@ -107,11 +117,11 @@
             white-space: nowrap;
             font-size: 1.125rem;
             font-weight: 500;
-            color: var(--color-text);
+            color: var(--color-heading);
         }
 
         .slogan {
-            color: #c4cfdb;
+            color: var(--color-muted);
             line-height: 1.25rem;
             height: 2.5rem;
             padding-top: 1.25rem;
@@ -122,11 +132,12 @@
     }
 
     .item-b {
-        border-radius: 0.3125rem;
-        background: #FFF;
+        border-radius: var(--size-radius);
+        background: var(--color-content-bg);
         width: 100%;
         overflow: hidden;
-        box-shadow: 0 0 0.625rem #EEE;
+        border: 0.0625rem solid var(--color-body-line);
+        box-shadow: var(--box-shadow-xs);
         text-align: center;
         padding: 1.25rem;
         margin-bottom: 0.625rem;
@@ -139,7 +150,7 @@
             white-space: nowrap;
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--color-text);
+            color: var(--color-heading);
             padding: 1.25rem 0 0 0;
         }
 
@@ -155,7 +166,7 @@
 
         .desc {
             font-size: 0.875rem;
-            color: #8A889A;
+            color: var(--color-muted);
             line-height: 1.5625rem;
             text-align: center;
             display: block;
@@ -165,7 +176,7 @@
         }
 
         .image {
-            border-top: 0.0625rem dashed #EEE;
+            border-top: 0.0625rem dashed var(--color-body-line);
             margin: 0 -1.25rem 0 -1.25rem;
             padding: 1.25rem 1.25rem 0 1.25rem;
             margin-top: 1.25rem;
@@ -177,9 +188,18 @@
         display: block;
         padding: 1.25rem;
         line-height: 1.5;
-        border-radius: 0.25rem;
         text-decoration: none;
         width: 100%;
+        background: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        border-radius: var(--size-radius);
+        box-shadow: var(--box-shadow-xs);
+        transition: var(--transition);
+
+        &:hover {
+            box-shadow: var(--box-shadow-hover);
+            border-color: var(--color-primary-light);
+        }
 
         .image {
             width: 60%;
@@ -201,16 +221,17 @@
             white-space: nowrap;
             font-size: 1.125rem;
             font-weight: 500;
-            color: var(--color-text);
+            color: var(--color-heading);
         }
     }
 
     .item-d {
-        border-radius: 0.3125rem;
-        background: #FFF;
+        border-radius: var(--size-radius);
+        background: var(--color-content-bg);
         width: 100%;
         overflow: hidden;
-        box-shadow: 0 0 0.625rem #EEE;
+        border: 0.0625rem solid var(--color-body-line);
+        box-shadow: var(--box-shadow-xs);
         padding: 1.25rem;
         margin-bottom: 0.625rem;
 
@@ -230,14 +251,14 @@
             padding: 0.625rem 0 0 0;
             font-size: 1.125rem;
             font-weight: 500;
-            color: #1E2844;
+            color: var(--color-heading);
         }
 
         .desc {
-            border-top: 0.0625rem dashed #EEE;
+            border-top: 0.0625rem dashed var(--color-body-line);
             margin: 1.25rem 0 0 0;
             font-size: 0.875rem;
-            color: #8A889A;
+            color: var(--color-muted);
             line-height: 1.5625rem;
             display: block;
             padding: 1.25rem 0 0 0;
@@ -248,7 +269,7 @@
                 content: "“";
                 font-size: 3.125rem;
                 line-height: 1.875rem;
-                color: #1F2841;
+                color: var(--color-tertiary-light);
                 display: block;
                 text-align: left;
             }
@@ -257,7 +278,7 @@
                 content: "”";
                 font-size: 3.125rem;
                 line-height: 1.875rem;
-                color: #1F2841;
+                color: var(--color-tertiary-light);
                 display: block;
                 text-align: right;
             }
@@ -299,7 +320,7 @@
             padding: 1.25rem 3.75rem;
 
             .title {
-                color: #12263C;
+                color: var(--color-heading);
                 font-weight: bold;
                 font-size: 1.25rem;
             }
@@ -313,7 +334,7 @@
 
             .desc {
                 font-size: 0.875rem;
-                color: #00133B;
+                color: var(--color-text);
                 line-height: 1.25rem;
                 margin-top: 1.25rem;
 
@@ -321,7 +342,7 @@
                     margin: 0;
                     padding: 0;
                     line-height: 1.5rem;
-                    color: #c4cfdb;
+                    color: var(--color-muted);
                 }
             }
         }
@@ -349,36 +370,80 @@
 }
 
 .ub-content {
+    // 浅色首屏（panel-a / panel-b）专用令牌。
+    // 说明：这两个面板是"故意"在明暗模式下都保持浅色的品牌首屏，
+    // 因此文字必须恒定深色，不能跟随 --color-heading / --color-text
+    // （深色模式下它们会变成白色，落在浅色底上完全不可读）。
+    --panel-heading: #0F172A;
+    --panel-text: #475467;
+    --panel-line: rgba(15, 23, 42, 0.10);
+
     .panel-a {
-        color: #FFF;
-        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        padding: 3.25rem 2.5rem;
         text-align: left;
+        // 通栏首屏（不放在 .ub-container 内），保持直角不加圆角/阴影
+        // 浅色系：浅纸面 + 主色极光；即使站点配置了深色背景图，
+        // 也会被下面的高不透明白色遮罩统一"洗"成浅色，保证深色文字始终可读。
+        color: var(--panel-heading);
+        background-color: var(--color-content-bg);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
 
+        // 浅色遮罩 + 主色极光（第一层负责"洗白"，后两层负责氛围）
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.88) 100%),
+                radial-gradient(70% 130% at 10% 0%, var(--color-primary-soft) 0%, transparent 58%),
+                radial-gradient(60% 120% at 100% 100%, var(--color-primary-glow) 0%, transparent 62%);
+            pointer-events: none;
+        }
+
+        // 顶部不再画 1px 主色细线（用户反馈"不要这一根线"）
+
         .box {
+            position: relative;
+            z-index: 1;
             max-width: var(--container-width);
             margin: 0 auto;
 
             .title {
+                font-family: var(--font-family-serif);
                 font-size: 2.25rem;
-                line-height: 2.5rem;
+                line-height: 1.2;
+                letter-spacing: -0.02em;
+                color: var(--panel-heading);
+
+                .iconfont, i {
+                    color: var(--color-primary);
+                }
             }
 
             .sub-title {
                 margin-top: 1rem;
                 font-size: var(--font-size-medium);
+                line-height: 1.7;
+                color: var(--panel-text);
             }
         }
     }
 
     .panel-b {
-        color: #FFF;
-        padding: 1.875rem;
+        color: var(--panel-heading);
+        padding: 2rem;
         text-align: left;
         position: relative;
         overflow: hidden;
+        background-color: var(--color-content-bg);
+        // 通栏图片band，保持直角不加圆角/阴影
 
         .bg, .mask {
             position: absolute;
@@ -392,14 +457,29 @@
 
         .bg {
             filter: blur(1.25rem);
+            // 放大以消除 blur 带来的透明边缘
+            transform: scale(1.15);
         }
 
+        // 方向性浅色遮罩：左实右透，保留背景图的一点层次，同时把整体压成浅色
         .mask {
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.90) 52%, rgba(255, 255, 255, 0.80) 100%);
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 0.125rem;
+            background-image: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-light) 45%, transparent 100%);
+            pointer-events: none;
         }
 
         .box {
             position: relative;
+            z-index: 1;
             text-align: left;
             max-width: var(--container-width);
             margin: 0 auto;
@@ -414,26 +494,35 @@
 
                     .cover {
                         margin-bottom: 0;
-                        border-radius: 0.625rem;
+                        border-radius: var(--size-radius-sm);
+                        box-shadow: 0 0 0 0.0625rem var(--panel-line), var(--box-shadow-lg);
                     }
                 }
 
                 .c2 {
-                    padding-left: 1.25rem;
+                    padding-left: 1.5rem;
                 }
             }
         }
 
         .title {
+            font-family: var(--font-family-serif);
             font-size: 1.5rem;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            color: var(--panel-heading);
         }
 
         .sub-title {
-            margin-top: 1rem;
+            margin-top: 0.75rem;
             font-size: var(--font-size-medium);
+            line-height: 1.6;
+            color: var(--panel-text);
 
             a {
-                color: #FFF;
+                color: var(--color-primary);
+                text-decoration: underline;
+                text-underline-offset: 0.2em;
             }
         }
     }

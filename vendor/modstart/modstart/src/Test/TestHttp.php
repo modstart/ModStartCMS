@@ -61,13 +61,29 @@ class TestHttp
     }
 
     /**
-     * 执行请求并返回解析后的响应数据
+     * 发起带文件的 POST 请求（multipart/form-data）
+     * @param string $path      完整路径
+     * @param array  $params    表单参数
+     * @param string $fileField 文件字段名
+     * @param string $filePath  本地文件绝对路径
+     * @return array
+     */
+    public static function postFile($path, $params = [], $fileField = 'file', $filePath = '')
+    {
+        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($filePath, basename($filePath), null, null, null, true);
+        return self::request('POST', $path, $params, [$fileField => $file]);
+    }
+
+    /**
+     * 执行请求并返回原始响应对象（用于校验状态码、响应头等）
      * @param string $method
      * @param string $path
      * @param array  $params
-     * @return array
+     * @param array  $files
+     * @param bool   $ajax   是否带 X-Requested-With 头（默认 true，设为 false 可用于测试跳转等非 ajax 响应）
+     * @return \Illuminate\Http\Response
      */
-    private static function request($method, $path, $params = [])
+    public static function response($method, $path, $params = [], $files = [], $ajax = true)
     {
         // 将 api-token 注入请求参数，SessionMiddleware 会根据它恢复 Session
         if (self::$apiToken) {
@@ -75,15 +91,30 @@ class TestHttp
         }
 
         $server = [
-            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
-            'CONTENT_TYPE'          => 'application/x-www-form-urlencoded',
+            'CONTENT_TYPE' => empty($files) ? 'application/x-www-form-urlencoded' : 'multipart/form-data',
         ];
+        if ($ajax) {
+            $server['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        }
 
-        $request = \Illuminate\Http\Request::create($path, $method, $params, [], [], $server);
+        $request = \Illuminate\Http\Request::create($path, $method, $params, [], $files, $server);
 
         /** @var \Illuminate\Foundation\Http\Kernel $kernel */
         $kernel = app('Illuminate\Contracts\Http\Kernel');
-        $response = $kernel->handle($request);
+        return $kernel->handle($request);
+    }
+
+    /**
+     * 执行请求并返回解析后的响应数据
+     * @param string $method
+     * @param string $path
+     * @param array  $params
+     * @param array  $files
+     * @return array
+     */
+    private static function request($method, $path, $params = [], $files = [])
+    {
+        $response = self::response($method, $path, $params, $files);
 
         $statusCode = $response->getStatusCode();
         $content    = $response->getContent();

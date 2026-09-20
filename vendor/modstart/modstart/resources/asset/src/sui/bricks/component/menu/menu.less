@@ -8,10 +8,11 @@
             width: 3.75rem;
 
             .item {
-                color: #333;
+                color: var(--color-text);
                 padding: 0.5rem 0;
                 text-align: center;
                 display: none;
+                transition: var(--transition);
 
                 .icon {
                     line-height: 1.75rem;
@@ -70,7 +71,7 @@
         top: 0;
         line-height: 3.75rem;
         text-align: center;
-        color: #333;
+        color: var(--color-text);
         font-size: 1.25rem;
     }
 
@@ -81,26 +82,29 @@
         bottom: 0;
         overflow-y: auto;
         background: var(--color-content-bg);
-        border-right: 1px solid #EEE;
+        border-right: 0.0625rem solid var(--color-body-line);
         width: 16em;
 
         .item {
-            color: #333;
+            color: var(--color-text);
             display: block;
             padding: 0 1.25rem;
             line-height: 2.25rem;
+            border-radius: var(--size-radius-sm);
+            transition: var(--transition);
 
             &.active {
                 color: var(--color-primary);
+                background: var(--color-primary-light-bg);
 
                 &:hover {
                     color: var(--color-primary);
-                    background: var(--color-content-bg);
+                    background: var(--color-primary-light-bg);
                 }
             }
 
             &:hover {
-                background: var(--color-body-bg);
+                background: var(--color-body-block-bg);
             }
 
             .icon {
@@ -117,9 +121,10 @@
             margin-top: 1.25rem;
             padding: 0.625rem 1.25rem;
             font-size: 1rem;
-            font-weight: 500;
-            color: #1d1d1d;
-            border-top: 1px solid #f0f0f0;
+            font-weight: 600;
+            color: var(--color-heading);
+            letter-spacing: -0.01em;
+            border-top: 0.0625rem solid var(--color-body-line);
         }
 
         .foot {
@@ -130,10 +135,15 @@
                 overflow: hidden;
 
                 a {
-                    color: #c4cfdb;
+                    color: var(--color-tertiary-light);
                     display: block;
                     width: 50%;
                     float: left;
+                    transition: var(--transition);
+
+                    &:hover {
+                        color: var(--color-primary);
+                    }
                 }
             }
 
@@ -141,7 +151,12 @@
                 padding-top: 0.625rem;
 
                 a {
-                    color: #c4cfdb;
+                    color: var(--color-tertiary-light);
+                    transition: var(--transition);
+
+                    &:hover {
+                        color: var(--color-primary);
+                    }
                 }
             }
         }
@@ -149,9 +164,12 @@
 }
 
 .ub-menu {
-    border-radius: 0.3125rem;
-    background: #FFF;
-    padding: 0.625rem 0;
+    border-radius: var(--size-radius);
+    background: var(--color-content-bg);
+    // 左右留出 0.625rem：`.title` 的 active / hover 是高亮的圆角药丸（border-radius: --size-radius-sm），
+    // 容器左右若为 0，药丸会顶到容器左右边缘、圆角被"切"在边上（产品中心 / 资讯列表左侧菜单即此形态）。
+    // 上下维持原有的 0.625rem，四个方向一致。
+    padding: 0.625rem;
 
     &.lg {
         font-size: 0.875rem;
@@ -179,11 +197,13 @@
         line-height: 2.5rem;
         padding: 0 1.25rem;
         display: block;
-        color: #333;
+        color: var(--color-text);
         cursor: pointer;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        border-radius: var(--size-radius-sm);
+        transition: var(--transition);
 
         &:has(+ .open) {
             &:before {
@@ -208,7 +228,7 @@
             margin-top: 1rem;
             opacity: 0.3;
             display: block;
-            color: #CCC;
+            color: var(--color-tertiary-light);
             float: right;
             transform: rotate(0deg);
             transition: all 0.3s;
@@ -216,7 +236,6 @@
 
         &.active {
             color: var(--color-primary);
-            border-right: 4px solid var(--color-primary);
             background-color: var(--color-primary-light-bg);
 
             a {
@@ -226,6 +245,7 @@
 
         &:hover {
             color: var(--color-primary);
+            background-color: var(--color-body-block-bg);
         }
 
         .icon {
@@ -249,15 +269,17 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            border-radius: var(--size-radius-sm);
+            transition: var(--transition);
 
             &.active {
                 color: var(--color-primary);
                 background-color: var(--color-primary-light-bg);
-                border-right: 4px solid var(--color-primary);
             }
 
             &:hover {
                 color: var(--color-primary);
+                background-color: var(--color-body-block-bg);
             }
         }
     }
@@ -265,7 +287,8 @@
 
 
 .ub-menu.nav-menu {
-    padding: 0.3125rem 0;
+    // 竖向更紧凑，但左右仍需与 .ub-menu 一致的 0.625rem 药丸留白
+    padding: 0.3125rem 0.625rem;
 }
 
 @media screen and (max-width: 50rem) {
@@ -307,9 +330,9 @@
 
         .items.open {
             display: block;
-            background: #FFF;
-            box-shadow: 0 0 5px #CCC;
-            border-radius: 0 0 0.5rem 0.5rem;
+            background: var(--color-content-bg);
+            box-shadow: var(--box-shadow-pop);
+            border-radius: 0 0 var(--size-radius) var(--size-radius);
             position: absolute;
             z-index: 1000;
             top: 2.5rem;
@@ -325,8 +348,8 @@
 }
 
 .ub-menu-tree {
-    border-radius: 0.3125rem;
-    background: #FFF;
+    border-radius: var(--size-radius);
+    background: var(--color-content-bg);
     padding: 0.625rem 0;
 
     &.no-arrow {
@@ -357,10 +380,11 @@
             padding-left: 0.875rem;
             position: relative;
             margin: 0.625rem 0;
-            border-radius: 0.3125rem;
+            border-radius: var(--size-radius-sm);
+            transition: var(--transition);
 
             &.active {
-                background-color: var(--color-body-block-bg-hover);
+                background-color: var(--color-primary-light-bg);
 
                 .title-text {
                     color: var(--color-primary);
@@ -368,6 +392,8 @@
             }
 
             &.group-active, &:hover {
+                background-color: var(--color-body-block-bg);
+
                 .title-text {
                     color: var(--color-primary);
                 }
@@ -385,29 +411,60 @@
                 position: absolute;
                 top: 0.625rem;
                 left: 0.3125rem;
+                // 左侧装饰箭头与右侧的 .title-action-icon（真正的展开/收起按钮）功能重复，
+                // 同时出现就是"左右各一个箭头"，用户反馈这里很困惑。
+                // 统一只保留右侧箭头；.no-arrow 作为兼容别名保留。
+                display: none;
             }
 
             .title-text {
-                flex-grow: 1;
-                width: 0;
+                // 不再 flex-grow:1：否则文字链接会铺满整行、盖住整行的展开热区，
+                // 用户点行的任何位置都只命中链接，看起来就像"点击没反应"。
+                // 改为按内容宽度并可收缩（长标题仍能省略号）。
+                flex: 0 1 auto;
+                min-width: 0;
+                max-width: 100%;
                 padding: 0.3125rem;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                // 抬到展开热区之上，保证点击文字仍是"点链接"（生产用于加载文档）
+                position: relative;
+                z-index: 1;
             }
 
             .title-action {
                 padding: 0.3125rem 0;
+                // 防止在窄列（移动端）下被标题挤压到 0 宽，导致展开箭头消失/点不中
+                flex-shrink: 0;
 
                 .title-action-icon {
-                    line-height: 1.25rem;
+                    // 24px 触控热区：展开箭头是无箭头(.no-arrow)模式下最明确的展开入口
+                    line-height: 1.5rem;
                     display: none;
-                    width: 1.25rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
                     text-align: center;
-                    border-radius: 0.3125rem;
+                    border-radius: var(--size-radius-sm);
+                    color: var(--color-tertiary-light);
+                    transition: var(--transition);
+
+                    // 展开/收起的 JS 只绑在 .title-action-icon 上。
+                    // 用铺满整行的透明伪元素把"整行空白区"都变成展开热区，
+                    // 解决"点击条目没反应"；文字区由 .title-text 的 z-index 保持可点。
+                    // 注意：这里不能给 .title-action-icon 加 transform/filter，
+                    // 否则它自身会成为包含块，伪元素热区会瞬间缩回 24px，导致点击丢失。
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        top: 0;
+                        bottom: 0;
+                    }
 
                     &:hover {
-                        background-color: var(--color-body-block-bg-hover);
+                        color: var(--color-primary);
                     }
                 }
             }
@@ -477,7 +534,7 @@
             width: 3.125rem;
             height: 3.125rem;
             position: absolute;
-            background: #FFF;
+            background: var(--color-content-bg);
             bottom: 3.125rem;
             right: -3.125rem;
             border-radius: 0 var(--size-radius) var(--size-radius) 0;
@@ -485,8 +542,8 @@
             font-size: var(--font-size-large);
             line-height: 3.125rem;
             text-align: center;
-            color: #c4cfdb;
-            box-shadow: 0.125rem 0 0.1875rem #c4cfdb;
+            color: var(--color-tertiary-light);
+            box-shadow: var(--box-shadow-lg);
 
             i {
                 display: block;
@@ -500,7 +557,7 @@
         .page-menu {
             transition: left 0.3s;
             left: 0;
-            box-shadow: 0.125rem 0 0.1875rem #c4cfdb;
+            box-shadow: var(--box-shadow-lg);
         }
     }
 }
@@ -510,8 +567,8 @@
 // ub-menu-tree-simple
 
 .ub-menu-tree-simple {
-    border-radius: 0.3125rem;
-    background: #FFF;
+    border-radius: var(--size-radius);
+    background: var(--color-content-bg);
     padding: 0.625rem;
     box-shadow: var(--box-shadow);
     transition: top 0.3s;
@@ -519,18 +576,37 @@
     &.close {
 
         width: 2.5rem;
+        // 生产端 Ui.htmlNav 会给根元素写内联 width（option.width），内联样式优先级高于
+        // 这里的 width，所以必须再加 max-width 才能把面板真正收窄；
+        // 同时把内边距收小，让面板整体收成正方形——原来宽度虽有 2.5rem，
+        // 高度却被"底部分隔条 + 上下间距 + 34px 高的长条按钮"撑到约 4rem，是竖长方形。
+        max-width: 2.5rem;
+        padding: 0.3125rem;
 
         .item {
             display: none;
         }
 
         .tool {
+            // 去掉展开态的底部分隔条与上下间距，按钮独占面板
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+
             .tool-open {
                 display: block;
             }
 
             .tool-close {
                 display: none;
+            }
+
+            a {
+                // 2.5rem - 2 × 0.3125rem = 1.875rem，宽高相等 → 正方形热区
+                width: 1.875rem;
+                height: 1.875rem;
+                padding: 0;
+                line-height: 1.875rem;
             }
         }
     }
@@ -591,18 +667,87 @@
 
     .tool {
         text-align: center;
+        // 收起/展开是唯一入口，做成一条清晰的底部条，避免"看不见箭头"
+        margin-top: 0.3125rem;
+        padding-top: 0.3125rem;
+        border-top: 0.0625rem solid var(--color-body-line);
 
         a {
             display: none;
-            border-radius: 0.3125rem;
+            // 加大点击热区，避免"收起/展开"按钮难点中
+            padding: 0.4375rem 0;
+            line-height: 1.25rem;
+            border-radius: var(--size-radius-sm);
+            transition: var(--transition);
+            cursor: pointer;
 
             &:hover {
-                background-color: var(--color-body-block-bg-hover);
+                background-color: var(--color-primary-light-bg);
+                color: var(--color-primary);
             }
         }
 
         .tool-close {
             display: block;
+        }
+    }
+}
+
+@media screen and (max-width: 50rem) {
+    // 窄屏（预览页 / 小窗口）下左侧导航改为覆盖式抽屉：
+    // 1) 内容区不再被 padding-left: 12.5rem 挤压（生产环境手机端由 AgentUtil::isMobile()
+    //    直接不输出 .ub-menu-layout-container 与侧栏，这里只影响预览页与窄窗口的桌面页面）；
+    // 2) 抽屉默认收起在屏幕外，点击左上角按钮（为 body 添加 .ub-menu-layout-shrink）后滑出。
+    // 注意：窄屏下 .ub-menu-layout-shrink 的语义与桌面端相反（桌面端为"收起为图标栏"）。
+    .ub-menu-layout-container {
+        padding-left: 0;
+    }
+
+    .ub-menu-layout {
+        & > .body {
+            width: 14rem;
+            transform: translateX(-100%);
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+            box-shadow: var(--box-shadow-lg);
+        }
+    }
+
+    .ub-menu-layout-shrink {
+        .ub-menu-layout {
+            & > .body {
+                width: 14rem;
+                transform: translateX(0);
+
+                // 还原桌面端"收起"状态隐藏掉的分组标题/标签/页脚
+                .item {
+                    display: block;
+                    padding: 0 1.25rem;
+                    text-align: left;
+
+                    .icon {
+                        display: inline-block;
+                        width: 1.5rem;
+                        line-height: inherit;
+                        font-size: inherit;
+                        text-align: inherit;
+                    }
+
+                    .text {
+                        display: inline-block;
+                        padding: 0;
+                        font-size: inherit;
+                        line-height: inherit;
+                    }
+                }
+
+                .item-title {
+                    display: block;
+                }
+
+                .foot {
+                    display: block;
+                }
+            }
         }
     }
 }

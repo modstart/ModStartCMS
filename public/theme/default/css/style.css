@@ -1,5 +1,10 @@
 :root {
   --theme-color-primary: #656DE6;
+  --theme-color-primary-rgb: 101, 109, 230;
   --theme-color-primary-dark: #3943df;
   --theme-color-primary-light: #9197ed;
+  --theme-color-primary-light-bg: #f2f3fd;
+  --theme-color-primary-soft: rgba(101, 109, 230, 0.1);
+  --theme-color-primary-glow: rgba(101, 109, 230, 0.24);
+  --theme-color-focus-ring: rgba(101, 109, 230, 0.16);
 }

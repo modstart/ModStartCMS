@@ -1,9 +1,17 @@
 
 .ub-comment-list {
     .comment-item {
-        padding-left: 2.8125rem;
+        padding: 0.9375rem 0.9375rem 0.9375rem 2.8125rem;
+        margin-bottom: 0.625rem;
+        background: var(--color-content-bg);
+        border: 0.0625rem solid var(--color-body-line);
+        border-radius: var(--size-radius);
+        transition: var(--transition);
 
         &:hover {
+            border-color: var(--color-primary-light);
+            box-shadow: var(--box-shadow-xs);
+
             & > .comment-foot {
                 .action {
                     display: block;
@@ -25,19 +33,20 @@
                 .image {
                     width: 2.25rem;
                     height: 2.25rem;
-                    border: 1px solid #FFF;
+                    border: 0.0625rem solid var(--color-content-bg);
                     border-radius: 50%;
                 }
             }
 
             .user-name {
                 display: inline-block;
-                color: var(--color-text);
+                color: var(--color-heading);
+                font-weight: 600;
             }
 
             .time {
                 display: inline-block;
-                color: #c4cfdb;
+                color: var(--color-muted);
                 margin-left: 1.25rem;
             }
         }
@@ -53,9 +62,9 @@
         .comment-foot {
             padding-top: 0.9375rem;
             overflow: hidden;
-            border-bottom: 1px solid #e8e8e8;
-            margin-bottom: 1.25rem;
-            padding-bottom: 1.25rem;
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
 
             .action {
                 float: right;
@@ -67,9 +76,34 @@
             }
 
             .item {
-                color: #c4cfdb;
+                color: var(--color-muted);
                 display: inline-block;
                 margin: 0 1.25rem 0 0;
+                transition: var(--transition);
+
+                &:hover {
+                    color: var(--color-primary);
+                }
+            }
+        }
+    }
+
+    .replies {
+        background: var(--color-body-block-bg);
+        border-radius: var(--size-radius);
+        padding: 0.9375rem;
+
+        .comment-item {
+            padding: 0.9375rem 0 0 2.8125rem;
+            margin-bottom: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+
+            &:hover {
+                border-color: transparent;
+                box-shadow: none;
             }
         }
     }
@@ -91,7 +125,7 @@
         .image {
             width: 2.25rem;
             height: 2.25rem;
-            border: 1px solid #FFF;
+            border: 0.0625rem solid var(--color-content-bg);
             border-radius: 50%;
         }
     }
@@ -105,15 +139,90 @@
 }
 
 @media screen and (max-width: 50rem) {
+    // 窄屏：底部操作行改用 flex 排布。
+    // 原来 .action 用 float:right，一行里"回复"和"删除"之间会空出一大段，
+    // 看起来内容散落在两端；改成"元信息在左、操作在右、编辑框独占一行"。
     .ub-comment-list {
         .comment-item {
             padding-left: 2.8125rem;
 
             & > .comment-foot {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                column-gap: 1rem;
+                row-gap: 0.25rem;
+
+                & > .item {
+                    order: 0;
+                    margin: 0;
+                    cursor: pointer;
+                }
+
                 .action {
-                    display: block;
+                    order: 1;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    column-gap: 1rem;
+                    margin-left: auto;
+
+                    .item {
+                        margin: 0;
+                        cursor: pointer;
+                    }
+                }
+
+                .ub-comment-editor-box {
+                    order: 2;
+                    flex: 0 0 100%;
+                    width: 100%;
                 }
             }
         }
+
+        // 回复区：头像不再占用左侧 padding。
+        // 原来回复项沿用了"头像绝对定位进左侧 padding"的桌面结构，嵌套在 .replies 里时
+        // 左侧一共缩进 0.75rem + 2.8125rem ≈ 57px，窄屏下正文可用宽度只剩一半左右。
+        // 改为头像与昵称同行内联展示，正文/操作行吃满整行宽度。
+        .replies {
+            padding: 0.75rem;
+
+            .comment-item {
+                padding-left: 0;
+
+                .comment-head {
+                    display: flex;
+                    align-items: center;
+                    column-gap: 0.5rem;
+
+                    .user-avatar {
+                        position: static;
+                        order: -1;
+                        flex-shrink: 0;
+                        width: 1.75rem;
+                        height: 1.75rem;
+
+                        .image {
+                            width: 1.75rem;
+                            height: 1.75rem;
+                        }
+                    }
+
+                    .user-name {
+                        flex-shrink: 0;
+                    }
+
+                    .time {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    // 编辑器头像栏与评论卡片左缩进保持一致（桌面端为 3.125rem）
+    .ub-comment-editor-box {
+        padding-left: 2.8125rem;
     }
 }

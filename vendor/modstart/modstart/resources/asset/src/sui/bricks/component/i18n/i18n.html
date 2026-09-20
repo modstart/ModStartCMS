@@ -10,23 +10,28 @@
             </div>
         </div>
         <div class="body">
-            <div class="ub-i18n-switch">
-                <div class="dialog">
-                    <a class="close" href="javascript:;">
-                        <i class="icon iconfont icon-close"></i>
-                    </a>
-                    <div class="head">语言切换</div>
-                    <div class="body">
-                        <div class="languages">
-                            <div class="row">
-                                <div class="col-md-3" data-repeat="20">
-                                    <a class="item" href="javascript:;">
-                                        <span class="icon" data-background-url="placeholder/100x100"></span>
-                                        <span class="text">中国</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+            <a class="btn btn-primary" href="javascript:;" onclick="$('.ub-i18n-switch').fadeIn();">
+                <i class="iconfont icon-language"></i>
+                切换语言
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="ub-i18n-switch">
+    <div class="dialog">
+        <a class="close" href="javascript:;" onclick="$('.ub-i18n-switch').fadeOut();">
+            <i class="icon iconfont icon-close"></i>
+        </a>
+        <div class="head">语言切换</div>
+        <div class="body">
+            <div class="languages">
+                <div class="row">
+                    <div class="col-md-3" data-repeat="20">
+                        <a class="item" href="javascript:;">
+                            <span class="icon" data-background-url="placeholder/100x100"></span>
+                            <span class="text">中国</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -34,3 +39,12 @@
     </div>
 </div>
 
+<script>
+    // The switch is a modal that production opens with $().fadeIn(); auto-open it
+    // here so the preview page actually shows the component.
+    $(function () {
+        setTimeout(function () {
+            $('.ub-i18n-switch').fadeIn();
+        }, 300);
+    });
+</script>

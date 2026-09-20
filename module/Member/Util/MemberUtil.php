@@ -418,10 +418,15 @@ class MemberUtil
      * @param $password string 密码
      * @param $ignorePassword bool 是否忽略密码
      * @param $param array 参数
+     * @param $option array 扩展选项
      * @return array ['code'=>'0','msg'=>'ok','data'=>'member_user array']
      */
-    public static function register($username = '', $phone = '', $email = '', $password = '', $ignorePassword = false, $param = [])
+    public static function register($username = '', $phone = '', $email = '', $password = '', $ignorePassword = false, $param = [], $option = [])
     {
+        $option = array_merge([
+            'ignorePolicy' => false,
+        ], $option);
+
         $param = array_merge([
             'nickname' => $username,
         ], $param);
@@ -458,9 +463,11 @@ class MemberUtil
             if ($ret['code']) {
                 return $ret;
             }
-            $minLength = modstart_config('Member_UsernameMinLength', 3);
-            if (strlen($username) < $minLength) {
-                return Response::generate(-1, '用户名至少' . $minLength . '个字符');
+            if (!$option['ignorePolicy']) {
+                $minLength = modstart_config('Member_UsernameMinLength', 3);
+                if (strlen($username) < $minLength) {
+                    return Response::generate(-1, '用户名至少' . $minLength . '个字符');
+                }
             }
             // 为了统一登录时区分邮箱
             if (Str::contains($username, '@')) {
@@ -477,9 +484,11 @@ class MemberUtil
             if (empty($password)) {
                 return Response::generate(-3, '密码不合法');
             }
-            $ret = self::passwordStrengthCheck($password);
-            if (Response::isError($ret)) {
-                return Response::generate(-1, $ret['msg']);
+            if (!$option['ignorePolicy']) {
+                $ret = self::passwordStrengthCheck($password);
+                if (Response::isError($ret)) {
+                    return Response::generate(-1, $ret['msg']);
+                }
             }
         }
         $passwordSalt = Str::random(16);
@@ -582,10 +591,15 @@ class MemberUtil
      * @param $newPassword string 新密码
      * @param $oldPassword string 旧密码
      * @param $ignoreOldPassword bool 是否忽略旧密码
+     * @param $option array 扩展选项
      * @return array
      */
-    public static function changePassword($memberUserId, $newPassword, $oldPassword = null, $ignoreOldPassword = false)
+    public static function changePassword($memberUserId, $newPassword, $oldPassword = null, $ignoreOldPassword = false, $option = [])
     {
+        $option = array_merge([
+            'ignorePolicy' => false,
+        ], $option);
+
         if (!$ignoreOldPassword && empty($oldPassword)) {
             return Response::generate(-1, '旧密码不能为空');
         }
@@ -597,9 +611,11 @@ class MemberUtil
         if (empty ($newPassword)) {
             return Response::generate(-1, '新密码为空');
         }
-        $ret = self::passwordStrengthCheck($newPassword);
-        if (Response::isError($ret)) {
-            return Response::generate(-1, $ret['msg']);
+        if (!$option['ignorePolicy']) {
+            $ret = self::passwordStrengthCheck($newPassword);
+            if (Response::isError($ret)) {
+                return Response::generate(-1, $ret['msg']);
+            }
         }
         if (!$ignoreOldPassword && EncodeUtil::md5WithSalt($oldPassword, $memberUser['passwordSalt']) != $memberUser['password']) {
             return Response::generate(-1, '旧密码不正确');

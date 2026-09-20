@@ -1,51 +1,104 @@
 
 .ub-article {
-    border-radius: var(--size-radius, 0.3125rem);
+    border-radius: var(--size-radius);
 
     &.white {
-        background: #FFF;
+        background: var(--color-content-bg);
         padding: 1.25rem;
     }
 
+    // 编辑高级感：文章主标题使用衬线字体
     h1 {
+        font-family: var(--font-family-serif);
         font-size: 1.875rem;
         padding: 0;
         margin: 0;
-        line-height: 2.5rem;
+        line-height: 1.35;
+        color: var(--color-heading);
+        font-weight: 700;
+        letter-spacing: -0.01em;
     }
 
     .attr {
-        color: #c4cfdb;
+        color: var(--color-muted);
         padding: 0.625rem 0;
-        border-bottom: 0.0625rem solid #EEE;
+        border-bottom: 0.0625rem solid var(--color-body-line);
     }
 
     .cover {
         img {
             width: 100%;
+            border-radius: var(--size-radius-sm);
         }
     }
 
     .content {
         padding: 0.625rem 0;
+        color: var(--color-text);
+        line-height: 1.75;
+
+        h1, h2, h3, h4 {
+            color: var(--color-heading);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.4;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-family-serif);
+            font-weight: 700;
+        }
+
+        blockquote {
+            margin: 0.625rem 0;
+            padding: 0.625rem 1.25rem;
+            border-left: 0.1875rem solid var(--color-primary);
+            border-radius: 0 var(--size-radius-sm) var(--size-radius-sm) 0;
+            background: var(--color-primary-light-bg);
+            color: var(--color-text);
+        }
+
+        img {
+            border-radius: var(--size-radius-sm);
+            transition: transform 0.4s var(--ease-out);
+        }
+
+        // 正文链接：颜色过渡 + 下划线缓入
+        a {
+            color: var(--color-link);
+            text-decoration: none;
+            transition: var(--transition);
+
+            &:hover {
+                color: var(--color-link-hover);
+                text-decoration: underline;
+                text-underline-offset: 0.2em;
+            }
+        }
+
+        // 图片被链接包裹时，hover 轻微放大
+        a:hover > img {
+            transform: scale(1.02);
+        }
     }
 }
 
 .ub-article-a {
-    background: #FFF;
+    background: var(--color-content-bg);
     padding: 1.25rem;
-    border-radius: var(--size-radius, 0.3125rem);
+    border-radius: var(--size-radius);
 
     .image {
-        border: #eeeeee 1px solid;
+        border: 0.0625rem solid var(--color-body-line);
         padding: 0.625rem;
         overflow: hidden;
+        border-radius: var(--size-radius-sm);
 
         .cover {
         }
 
         .text {
-            color: #666;
+            color: var(--color-muted);
             padding: 0.3125rem 0;
 
             .left {
@@ -62,9 +115,11 @@
         padding-left: 1.25rem;
 
         h1 {
-            color: #000;
+            font-family: var(--font-family-serif);
+            color: var(--color-heading);
             font-size: var(--font-size-large, 1.25rem);
-            line-height: 1.875rem;
+            line-height: 1.5;
+            font-weight: 700;
         }
 
         .info {
@@ -81,4 +136,32 @@
     }
 
 
+}
+
+@media screen and (max-width: 50rem) {
+    // 窄屏：图文左右分栏改为上下堆叠，避免左侧封面被压成窄条、
+    // 右侧信息项被挤到"一字一行"
+    .ub-article-a {
+        .col-3,
+        .col-9 {
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .image {
+            margin-bottom: 1rem;
+        }
+
+        .content {
+            padding-left: 0;
+        }
+
+        // 信息项每行一个（桌面端为 3 列）
+        .info .col-4 {
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
 }

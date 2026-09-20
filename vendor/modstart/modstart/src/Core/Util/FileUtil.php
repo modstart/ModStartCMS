@@ -962,6 +962,86 @@ class FileUtil
     }
 
     /**
+     * @Util 清洗 SVG 内容，移除脚本/事件/危险外链等可执行内容，避免存储型 XSS
+     * @param $content string SVG 原始内容
+     * @return string 清洗后的 SVG 内容
+     * @throws BizException 当内容不是合法 SVG 或包含 XXE 实体声明时抛出
+     */
+    public static function sanitizeSvg($content)
+    {
+        if (!class_exists('\\DOMDocument')) {
+            BizException::throws('SVG not supported');
+        }
+        // 拒绝 XXE 实体声明，防止 XML 外部实体注入
+        if (preg_match('/<!\s*ENTITY/i', $content)) {
+            BizException::throws('Invalid SVG');
+        }
+        $doc = new \DOMDocument();
+        $previous = libxml_use_internal_errors(true);
+        $loaded = $doc->loadXML($content, LIBXML_NONET);
+        $errors = libxml_get_errors();
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+        if (!$loaded || !empty($errors) || empty($doc->documentElement)) {
+            BizException::throws('Invalid SVG');
+        }
+        // 确保根节点为 svg，防止把 HTML 等当作 SVG 保存
+        if ('svg' !== strtolower($doc->documentElement->localName ? $doc->documentElement->localName : $doc->documentElement->nodeName)) {
+            BizException::throws('Invalid SVG');
+        }
+        self::sanitizeSvgNode($doc->documentElement);
+        return $doc->saveXML();
+    }
+
+    /**
+     * 递归清洗 SVG 节点：移除危险元素、事件属性以及 javascript:/vbscript:/data:text/html 链接
+     * @param \DOMNode $node
+     */
+    private static function sanitizeSvgNode($node)
+    {
+        if ($node instanceof \DOMElement) {
+            $tag = strtolower($node->localName ? $node->localName : $node->nodeName);
+            if (in_array($tag, ['script', 'foreignobject', 'iframe', 'embed', 'object', 'handler', 'listener', 'meta', 'base'])) {
+                if ($node->parentNode) {
+                    $node->parentNode->removeChild($node);
+                }
+                return;
+            }
+            if ($node->hasAttributes()) {
+                $remove = [];
+                foreach ($node->attributes as $attr) {
+                    $name = strtolower($attr->localName ? $attr->localName : $attr->nodeName);
+                    // 事件属性（onclick/onload/onbegin 等）
+                    if (strpos($name, 'on') === 0) {
+                        $remove[] = $attr;
+                        continue;
+                    }
+                    // 危险协议链接
+                    if (in_array($name, ['href', 'src', 'action', 'formaction', 'xlink:href'])) {
+                        $value = strtolower(trim($attr->value));
+                        $value = preg_replace('/[\x00-\x20]+/', '', $value);
+                        if (strpos($value, 'javascript:') === 0 || strpos($value, 'vbscript:') === 0 || strpos($value, 'data:text/html') === 0) {
+                            $remove[] = $attr;
+                        }
+                    }
+                }
+                foreach ($remove as $attr) {
+                    $node->removeAttributeNode($attr);
+                }
+            }
+        }
+        if ($node->hasChildNodes()) {
+            $children = [];
+            foreach ($node->childNodes as $child) {
+                $children[] = $child;
+            }
+            foreach ($children as $child) {
+                self::sanitizeSvgNode($child);
+            }
+        }
+    }
+
+    /**
      * 保存本地临时路径
      * @param $content string 文件内容
      * @param $ext string 文件后缀

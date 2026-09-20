@@ -84,17 +84,17 @@
 
         .connector, .unit {
             display: inline-block;
-            color: #c4cfdb;
+            color: var(--color-muted);
         }
 
         label {
-            border: 0.0625rem solid #EEE;
-            border-radius: 0.1875rem;
+            border: 0.0625rem solid var(--color-body-line);
+            border-radius: var(--size-radius-sm);
             padding: 0 0.625rem;
             line-height: 1.875rem;
             height: 2rem;
             vertical-align: middle;
-            background: #FFF;
+            background: var(--color-content-bg);
             margin-bottom: 0;
 
             input {
@@ -138,14 +138,16 @@
 }
 
 .ub-lister-table, .ub-table {
-    --table-border-color: #EEE;
+    --table-border-color: var(--color-body-line);
 
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     text-align: left;
     font-size: var(--font-size, 0.8125rem);
-    border-radius: 0.3125rem;
+    border-radius: var(--size-radius);
+    background: var(--color-content-bg);
+    box-shadow: var(--box-shadow-xs);
 
     &.mini {
         font-size: 12px;
@@ -174,7 +176,7 @@
     }
 
     &.border {
-        border: 1px solid var(--table-border-color);
+        border: 0.0625rem solid var(--table-border-color);
 
         & > *:last-child > tr:last-child > td {
             border-bottom: none;
@@ -182,11 +184,11 @@
     }
 
     &.border-all {
-        border: 1px solid var(--table-border-color);
+        border: 0.0625rem solid var(--table-border-color);
 
         & > thead > tr > th, & > tbody > tr > td {
-            border-bottom: 1px solid var(--table-border-color);
-            border-right: 1px solid var(--table-border-color);
+            border-bottom: 0.0625rem solid var(--table-border-color);
+            border-right: 0.0625rem solid var(--table-border-color);
         }
 
         & > *:last-child > tr:last-child > td {
@@ -202,13 +204,13 @@
 
     //&.record-border {
     //    tr {
-    //        border-bottom: 1px solid #EEE;
+    //        border-bottom: 0.0625rem solid var(--color-body-line);
     //    }
     //}
 
     &.head-dark {
         & > thead > tr > th {
-            background: #F5F7FA;
+            background: var(--color-body-block-bg);
         }
     }
 
@@ -216,7 +218,7 @@
     //    tfoot {
     //        tr {
     //            th {
-    //                background: #EEE;
+    //                background: var(--color-body-block-bg);
     //            }
     //        }
     //    }
@@ -226,7 +228,7 @@
         & > tbody {
             & > tr:hover {
                 & > td:not(.no-hover) {
-                    background: #F4F8FB;
+                    background: var(--color-body-block-bg-hover);
                 }
             }
         }
@@ -242,9 +244,31 @@
             display: table-row;
 
             & > th {
-                border-bottom: 2px solid var(--table-border-color);
-                color: var(--color-text);
+                border-bottom: 0.0625rem solid var(--color-body-line);
+                color: var(--color-heading);
+                font-weight: 600;
+                background: var(--color-body-block-bg);
+
+                // 表头底色跟随容器圆角，否则首行会呈现直角
+                &:first-child {
+                    border-top-left-radius: var(--size-radius);
+                }
+
+                &:last-child {
+                    border-top-right-radius: var(--size-radius);
+                }
             }
+        }
+    }
+
+    // 末行单元格同样跟随容器圆角（选中态等带底色时不会溢出直角）
+    & > tbody > tr:last-child > td {
+        &:first-child {
+            border-bottom-left-radius: var(--size-radius);
+        }
+
+        &:last-child {
+            border-bottom-right-radius: var(--size-radius);
         }
     }
 
@@ -261,20 +285,20 @@
 
             &.checked {
                 & > td {
-                    background: #FED493;
+                    background: var(--color-primary-light-bg);
                 }
             }
 
             &.focus {
                 & > td {
-                    background: #F4F8FB;
+                    background: var(--color-body-block-bg-hover);
                 }
             }
 
             &.empty {
                 & > td {
                     text-align: center;
-                    color: #c4cfdb;
+                    color: var(--color-muted);
                     line-height: 100px;
                 }
             }
@@ -284,7 +308,7 @@
             }
 
             & > td {
-                border-bottom: 1px solid var(--table-border-color);
+                border-bottom: 0.0625rem solid var(--table-border-color);
                 font-size: var(--font-size, 0.8125rem);
             }
         }
@@ -305,13 +329,13 @@
     }
 
     .tag {
-        border: 1px solid #EEE;
+        border: 0.0625rem solid var(--color-body-line);
         display: inline-block;
         line-height: 20px;
-        border-radius: 3px;
+        border-radius: var(--size-radius-sm);
         padding: 0 3px;
-        background: #EEE;
-        color: #666;
+        background: var(--color-body-block-bg);
+        color: var(--color-body-block);
         margin-right: 3px;
         font-size: 12px;
         white-space: nowrap;
@@ -322,6 +346,21 @@
 
         .el-pagination {
             margin-top: 0.625rem;
+
+            button, .el-pager li {
+                border-radius: var(--size-radius-sm);
+                transition: var(--transition);
+
+                &:hover {
+                    color: var(--color-primary);
+                    background: var(--color-primary-light-bg);
+                }
+            }
+
+            .el-pager li.active {
+                color: var(--color-primary);
+                background: var(--color-primary-light-bg);
+            }
         }
     }
 
@@ -339,13 +378,15 @@
 
     .el-header-cell {
         padding: 0;
-        background: #F8F8F8;
+        background: var(--color-body-block-bg);
 
         .cell {
             padding: 5px 0.625rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-weight: 600;
+            color: var(--color-heading);
         }
     }
 
@@ -374,19 +415,19 @@
     }
 
     &.danger {
-        color: #f5222d;
+        color: var(--color-danger);
 
         &.clicked {
-            color: lighten(#f5222d, 30%);
+            color: var(--color-danger-light);
         }
 
         &:hover {
-            color: darken(#f5222d, 30%);
+            color: var(--color-danger-dark);
         }
     }
 
     &.disabled {
-        color: #c4cfdb;
+        color: var(--color-muted);
     }
 }
 
@@ -399,8 +440,9 @@
     bottom: 0;
     left: 0;
     right: 0;
-    border-top: 1px solid #EEE;
-    background: #FFF;
+    border-top: 0.0625rem solid var(--color-body-line);
+    background: var(--color-content-bg);
+    box-shadow: var(--box-shadow-pop);
     padding: 0.625rem;
     z-index: 1000;
     overflow: hidden;

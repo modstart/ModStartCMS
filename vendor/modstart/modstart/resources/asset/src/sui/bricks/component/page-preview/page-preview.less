@@ -4,7 +4,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: #CCC;
+  background: var(--color-body-block-bg);
   .iframe {
     position: absolute;
     top: 0;
@@ -22,10 +22,32 @@
       top: 0.625rem;
       height: 96%;
       margin-left: -10rem - 0.625rem;
-      border: 0.625rem solid #AAA;
-      border-radius: 0.625rem;
+      border: 0.625rem solid var(--color-tertiary-light);
+      border-radius: var(--size-radius-lg);
+      box-shadow: var(--box-shadow-lg);
+      background: var(--color-content-bg);
+      // 不加 `both`：避免动画的 fill 覆盖 :hover 的 transform
+      animation: pagePreviewIn 0.4s var(--ease-out);
+      transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+
+      &:hover {
+        transform: translateY(-0.25rem);
+        box-shadow: var(--box-shadow-pop);
+      }
+
       iframe {
       }
     }
+  }
+}
+
+@keyframes pagePreviewIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

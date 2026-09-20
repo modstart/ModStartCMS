@@ -1,8 +1,16 @@
+// 主题自定义主色：除了 --theme-color-primary，还必须给出由它派生的令牌，
+// 否则新设计系统的派生值会回落到默认蓝色（浅色底、光晕、焦点环、深色模式半透明底都会是蓝的）。
+// --theme-color-primary-rgb 供 CSS 用 rgba(var(--theme-color-primary-rgb), a) 计算透明度变体，
+// 深色模式（data-theme=dark / auto）下的 light-bg / soft / glow / focus-ring 会自动跟随它。
 @color-primary: #656DE6;
 
 :root {
   --theme-color-primary: @color-primary;
+  --theme-color-primary-rgb: red(@color-primary), green(@color-primary), blue(@color-primary);
   --theme-color-primary-dark: darken(@color-primary, 10%);
   --theme-color-primary-light: lighten(@color-primary, 10%);
+  --theme-color-primary-light-bg: mix(@color-primary, #FFFFFF, 8.5%);
+  --theme-color-primary-soft: fade(@color-primary, 10%);
+  --theme-color-primary-glow: fade(@color-primary, 24%);
+  --theme-color-focus-ring: fade(@color-primary, 16%);
 }
-

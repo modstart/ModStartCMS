@@ -8,14 +8,6 @@ body {
 
 [data-theme="light"] {
 
-    #adminTabPage {
-        background-image: linear-gradient(0deg, #eee 0, #eee 50%, #fff 50%, #fff 100%);
-        background-size: 90% 2.5rem;
-        background-repeat: repeat-y;
-        background-position: top;
-        background-color: #FFF;
-    }
-
     .ub-panel-frame {
         &.left-toggle {
 
@@ -29,10 +21,6 @@ body {
                 .left:not(:hover) .menu {
                     & > .menu-item:not(:has(.children)) > .title {
                         padding-left: 0.9375rem;
-                    }
-
-                    & > .menu-item.active:not(:has(.children)) > .title {
-                        padding-left: 0.625rem;
                     }
                 }
             }
@@ -63,37 +51,77 @@ body {
                         }
 
                         &.active {
+                            // 高亮只由内层药丸承担：行本身不铺色、不加右侧 3px 饱和蓝条与主色光晕。
+                            // 注意 panel.less 的 `.menu-item.active:not(:has(.children))` 比本文件同段规则更具体，
+                            // 会把整行铺成淡蓝（药丸同色被吃掉）并在最右侧贴一条亮蓝，所以这里必须显式覆盖。
+                            background-color: transparent;
+                            border-right: none;
+                            box-shadow: none;
+
                             & > .title {
-                                background: var(--color-primary-gradient-bg);
-                                color: #FFF;
-                                border-radius: 0.3125rem;
-                                line-height: 2.5rem;
-                                margin-top: 0.1875rem;
-                                margin-bottom: 0.1875rem;
-                                //margin: 0.1875rem 0.3125rem;
-                                box-shadow: 0 0 0.3125rem #CCC;
-                                text-shadow: 0 0 0.125rem #000;
+                                // 用面板菜单自己的激活态令牌（浅色主题 = --color-primary-light-bg + 主色文字）。
+                                // 不要用 --color-primary-gradient-bg：那是首屏 hero 的"墨色深端"渐变（§6.18），
+                                // 放在侧栏菜单项上会变成"深蓝 → 亮蓝"的刺眼实色条，与设计系统 §6.3 / §6.9 冲突。
+                                // 药丸背景改由下方 .title:before 承担，这里只负责文字颜色。
+                                background: transparent;
+                                color: var(--panel-menu-active-color);
+                                // 这里不要写 transition：本文件里 `.menu-item > .title { transition: color 0s }`
+                                // 就是刻意关掉 panel.less 的 `transition: var(--transition)`，避免点击菜单切换
+                                // active 时药丸"闪烁回弹"一下。若在此处声明 transition，选择器更具体会把那条覆盖掉。
+                                transition: none;
                             }
                         }
                     }
                 }
 
-                & > .menu-item.active:not(:has(.children)) > .title {
-                    margin-left: 0.3125rem;
-                    margin-right: 0.3125rem;
-                    padding-left: 0.625rem;
+                // ---------------------------------------------------------------------
+                // 内缩圆角"药丸"：hover 与 active 共用同一个盒子（左右内缩 0.625rem、
+                // 上下各留 0.1875rem、圆角 --size-radius-sm）。
+                // 用绝对定位的 ::before 画在标题下层，而不是给标题加 margin —— 这样标题始终占满整行：
+                //   ① 文字与右侧展开箭头在任何状态下都不会发生位移（不跳动）；
+                //   ② hover 与 active 的盒子完全一致，不再出现"hover 整行、active 内缩"的割裂感。
+                // ---------------------------------------------------------------------
+                .title {
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        left: 0.625rem;
+                        right: 0.625rem;
+                        top: 0.1875rem;
+                        bottom: 0.1875rem;
+                        border-radius: var(--size-radius-sm);
+                        background: transparent;
+                        // 不要给药丸加 transition：本文件 `.menu-item > .title { transition: color 0s }`
+                        // 就是刻意关掉切换动画的。加了之后点击菜单切换 active 时，
+                        // 药丸背景（透明 ↔ 激活色）会补间播放，表现为"闪烁回弹"。
+                        transition: none;
+                        pointer-events: none;
+                    }
+
+                    // 文字 / 图标 / 箭头浮在药丸之上
+                    > .icon,
+                    > .text {
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    > .arrow {
+                        z-index: 1;
+                    }
+
+                    // 覆盖 panel.less 的整行 hover 底色，改用内缩药丸
+                    &:hover {
+                        background: transparent;
+
+                        &:before {
+                            background: var(--panel-menu-hover-background);
+                        }
+                    }
                 }
 
-                & > .menu-item > .children > .menu-item.active > .title {
-                    margin-left: 0.3125rem;
-                    margin-right: 0.3125rem;
-                    padding-left: 1.9375rem;
-                }
-
-                & > .menu-item > .children > .menu-item > .children > .menu-item.active > .title {
-                    margin-left: 0.3125rem;
-                    margin-right: 0.3125rem;
-                    padding-left: 2.625rem;
+                .menu-item.active:not(:has(.children)) > .title:before {
+                    // 激活态药丸：叶子菜单项（各层级）统一使用；父级（含子菜单）只高亮文字、不铺药丸
+                    background: var(--panel-menu-active-background);
                 }
             }
         }
@@ -257,11 +285,42 @@ body {
     top: 0;
     right: 0;
     bottom: 0;
-    background: url(./../../image/loading.svg) no-repeat center;
-    background-size: 50%;
+    background-color: var(--color-body-bg);
 
     &.hidden {
         display: none;
+    }
+
+    // 标签页 iframe 未渲染完成时的加载态（SPA 后台「精密极简」风）
+    .tab-page-loading {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.875rem;
+        // 主色氛围光晕：替代大面积实色块，与设计系统一致（克制的 soft 级）
+        background: radial-gradient(circle at 50% 46%, var(--color-primary-soft), transparent 34%);
+        pointer-events: none;
+
+        .spinner {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            border: 0.1875rem solid var(--color-tertiary-light);
+            border-top-color: var(--color-primary);
+            animation: adminTabLoadingSpin 0.9s linear infinite;
+        }
+
+        .text {
+            color: var(--color-muted);
+            font-size: var(--font-size);
+            letter-spacing: 0.08em;
+        }
     }
 
     iframe {
@@ -275,5 +334,11 @@ body {
             left: -200%;
             top: -200%;
         }
+    }
+}
+
+@keyframes adminTabLoadingSpin {
+    to {
+        transform: rotate(360deg);
     }
 }

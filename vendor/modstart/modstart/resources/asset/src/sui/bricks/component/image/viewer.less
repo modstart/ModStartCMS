@@ -174,7 +174,7 @@
 }
 
 .viewer-navbar {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-mask);
   overflow: hidden;
 }
 
@@ -196,6 +196,7 @@
   line-height: 0;
   opacity: 0.5;
   overflow: hidden;
+  border-radius: var(--size-radius-sm);
   -webkit-transition: opacity 0.15s;
   transition: opacity 0.15s;
   width: 30px;
@@ -233,7 +234,7 @@
 }
 
 .viewer-player {
-  background-color: #000;
+  background-color: var(--color-mask);
   bottom: 0;
   cursor: none;
   display: none;
@@ -258,20 +259,24 @@
 }
 
 .viewer-toolbar > ul > li {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-mask);
   border-radius: 50%;
   cursor: pointer;
   float: left;
   height: 24px;
   overflow: hidden;
-  -webkit-transition: background-color 0.15s;
-  transition: background-color 0.15s;
+  -webkit-transition: background-color 0.15s, -webkit-transform 0.15s;
+  transition: background-color 0.15s, transform 0.15s;
   width: 24px;
 }
 
 .viewer-toolbar > ul > li:focus,
 .viewer-toolbar > ul > li:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--color-mask);
+  -webkit-filter: brightness(0.78);
+  filter: brightness(0.78);
+  -webkit-transform: translateY(-0.0625rem);
+  transform: translateY(-0.0625rem);
 }
 
 .viewer-toolbar > ul > li:focus {
@@ -313,9 +318,9 @@
 }
 
 .viewer-tooltip {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
-  color: #fff;
+  background-color: var(--color-mask);
+  border-radius: var(--size-radius-sm);
+  color: var(--color-text-reverse);
   display: none;
   font-size: 12px;
   height: 20px;
@@ -330,7 +335,7 @@
 }
 
 .viewer-title {
-  color: #ccc;
+  color: var(--color-text-reverse);
   display: inline-block;
   font-size: 12px;
   line-height: 1;
@@ -349,7 +354,7 @@
 }
 
 .viewer-button {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-mask);
   border-radius: 50%;
   cursor: pointer;
   height: 80px;
@@ -357,14 +362,16 @@
   position: absolute;
   right: -40px;
   top: -40px;
-  -webkit-transition: background-color 0.15s;
-  transition: background-color 0.15s;
+  -webkit-transition: background-color 0.15s, -webkit-filter 0.15s;
+  transition: background-color 0.15s, filter 0.15s;
   width: 80px;
 }
 
 .viewer-button:focus,
 .viewer-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--color-mask);
+  -webkit-filter: brightness(0.78);
+  filter: brightness(0.78);
 }
 
 .viewer-button:focus {
@@ -396,7 +403,7 @@
 }
 
 .viewer-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-mask);
 }
 
 .viewer-invisible {

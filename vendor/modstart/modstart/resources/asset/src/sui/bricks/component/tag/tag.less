@@ -5,13 +5,41 @@
     font-size: 0.8125rem;
     height: 1.5rem;
     line-height: 1rem;
-    color: var(--color-text);
+    color: var(--color-body-block);
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
+    border: none;
     border-radius: 62.5rem;
     cursor: default;
-    background-color: rgba(0, 0, 0, 0.04);
+    font-weight: 500;
+    background-color: var(--color-body-block-bg);
+    transition: var(--transition);
+
+    // 可交互标签（链接、可点击筛选）
+    &[href],
+    &.hover,
+    &.clickable {
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-0.0625rem);
+            box-shadow: var(--box-shadow-xs);
+            filter: brightness(0.97);
+        }
+
+        &:active {
+            transform: translateY(0) scale(0.96);
+            box-shadow: none;
+        }
+    }
+
+    // 选中态
+    &.active {
+        color: #FFF;
+        background-color: var(--color-primary);
+        box-shadow: 0 0.125rem 0.5rem -0.125rem var(--color-primary-glow);
+    }
 
     &.sm {
         font-size: 0.625rem;
@@ -28,26 +56,26 @@
 
     &.danger {
         color: var(--color-danger);
-        background-color: #fff2f0;
+        background-color: var(--color-danger-light);
     }
 
     &.warning {
         color: var(--color-warning);
-        background-color: #fff2f0
+        background-color: var(--color-warning-light);
     }
 
     &.success {
         color: var(--color-success);
-        background-color: #f6ffed;
+        background-color: var(--color-success-light);
     }
 
     &.primary {
         color: var(--color-primary);
+        background-color: var(--color-primary-light-bg);
     }
 
     &.info {
-        background-color: #e6f4ff;
-        color: #1677ff;
+        color: var(--color-primary);
+        background-color: var(--color-primary-light-bg);
     }
 }
-

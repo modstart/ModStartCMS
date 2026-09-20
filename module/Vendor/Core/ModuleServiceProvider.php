@@ -4,6 +4,7 @@ namespace Module\Vendor\Core;
 
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
+use Module\Vendor\Command\BladeTailwindInjectCommand;
 use Module\Vendor\Command\CompressDirImage;
 use Module\Vendor\Command\ScheduleRunAllCommand;
 use Module\Vendor\Command\ScheduleRunnerCommand;
@@ -24,6 +25,7 @@ class ModuleServiceProvider extends ServiceProvider
             ScheduleRunnerCommand::class,
             ScheduleRunAllCommand::class,
             CompressDirImage::class,
+            BladeTailwindInjectCommand::class,
         ]);
         if (class_exists(DataTempCleanScheduleBiz::class)) {
             ScheduleBiz::register(DataTempCleanScheduleBiz::class);

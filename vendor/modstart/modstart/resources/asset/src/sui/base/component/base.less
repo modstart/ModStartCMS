@@ -1,36 +1,80 @@
 
 html {
     font-size: var(--font-size-root);
-    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", FontAwesome, sans-serif;
+    font-family: var(--font-family);
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     background-color: var(--color-body-bg);
     color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 body {
     font-size: 0.8125rem;
     font-weight: 400;
+    line-height: 1.6;
 
     &.scroll-lock {
         overflow: hidden;
     }
 }
 
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-heading);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+::selection {
+    background: var(--color-primary);
+    color: #FFF;
+}
+
+// Refined, unobtrusive scrollbars across the UI.
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-thumb) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-scrollbar-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar-thumb);
+    border-radius: 0.5rem;
+    border: 0.125rem solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-tertiary-light);
+    background-clip: content-box;
+}
+
 pre, code {
     padding: 0.3125rem;
     font-size: 0.75rem;
-    -webkit-border-radius: var(--size-radius, 0.3125rem);
-    -moz-border-radius: var(--size-radius, 0.3125rem);
-    border-radius: var(--size-radius, 0.3125rem);
+    -webkit-border-radius: var(--size-radius-sm, 0.375rem);
+    -moz-border-radius: var(--size-radius-sm, 0.375rem);
+    border-radius: var(--size-radius-sm, 0.375rem);
+    background: var(--color-body-block-bg);
 }
 
 pre {
-    border: 1px solid var(--color-body-line);
+    border: 0.0625rem solid var(--color-body-line);
+    padding: 0.75rem 0.875rem;
 }
 
 a.ub-text {
-    color: #333;
+    color: var(--color-text);
 
     &:hover {
         text-decoration: underline;
@@ -112,36 +156,39 @@ a.ub-text {
 
 .ub-mobile-container {
     max-width: 37.5rem;
-    box-shadow: 0 0 5px #CCC;
+    box-shadow: var(--box-shadow-lg);
 }
 
+// Curated accent palette used for tags, labels and menu markers.
+// Kept as a full a-z map so existing content colors keep working, but tuned to
+// a modern, evenly-weighted hue set.
 @colors: {
-    a: #FF7F50;
-    b: #DC143C;
-    c: #9932CC;
-    d: #B22222;
-    e: #DAA520;
-    f: #FF69B4;
-    g: #20B2AA;
-    h: #9370DB;
-    i: #3CB371;
-    j: #7B68EE;
-    k: #C71585;
-    l: #191970;
-    m: #FF8C00;
-    n: #DB7093;
-    o: #CD853F;
-    p: #BC8F8F;
-    q: #EE82EE;
-    r: #8B4513;
-    s: #FA8072;
-    t: #2E8B57;
-    u: #6B8E23;
-    v: #FF6347;
-    w: #ED3F14;
-    x: #4F7FF3;
-    y: #6A46BD;
-    z: #E9BD6C;
+    a: #F97316;
+    b: #EF4444;
+    c: #A855F7;
+    d: #E11D48;
+    e: #F59E0B;
+    f: #EC4899;
+    g: #14B8A6;
+    h: #8B5CF6;
+    i: #22C55E;
+    j: #6366F1;
+    k: #D946EF;
+    l: #1D4ED8;
+    m: #FB923C;
+    n: #F472B6;
+    o: #D97706;
+    p: #CA8A04;
+    q: #C084FC;
+    r: #92400E;
+    s: #FB7185;
+    t: #059669;
+    u: #65A30D;
+    v: #F43F5E;
+    w: #EA580C;
+    x: #3B82F6;
+    y: #7C3AED;
+    z: #EAB308;
 };
 
 each(@colors, {
@@ -207,6 +254,10 @@ each(@colors, {
     color: var(--color-text) !important;
 }
 
+.ub-text-heading {
+    color: var(--color-heading) !important;
+}
+
 .ub-text-success {
     color: var(--color-success) !important;
 }
@@ -264,7 +315,19 @@ each(@colors, {
 }
 
 .ub-box-shadow {
-    box-shadow: 0 0.25rem 1.125rem #2f536d1f;
+    box-shadow: var(--box-shadow);
+}
+
+.ub-shadow-sm {
+    box-shadow: var(--box-shadow-xs) !important;
+}
+
+.ub-shadow {
+    box-shadow: var(--box-shadow) !important;
+}
+
+.ub-shadow-lg {
+    box-shadow: var(--box-shadow-lg) !important;
 }
 
 .ub-content-bg {
@@ -275,11 +338,13 @@ each(@colors, {
     background-color: var(--color-content-bg);
     border-radius: var(--size-radius);
     padding: var(--size-padding);
+    box-shadow: var(--box-shadow);
 }
 
 .ub-content-block {
     background-color: var(--color-body-block-bg);
     color: var(--color-body-block);
+    transition: var(--transition);
 
     &:hover {
         background-color: var(--color-body-block-bg-hover);
@@ -340,3 +405,45 @@ c-page-header-search + .ub-h-full {
     }
 }
 
+
+// ---------------------------------------------------------------------------
+// 响应式安全网
+// 目标：真实内容（长 URL、长英文串、多列数据表）在窄屏下不撑破布局。
+// 只做"防守"，不改变任何组件的 DOM 用法与类名。
+// ---------------------------------------------------------------------------
+
+// 图片默认不超过容器宽度（组件里显式设置尺寸的地方优先级更高，不受影响）
+img {
+    max-width: 100%;
+}
+
+// 长 URL / 长英文串允许在必要时断行（CJK 文本不受影响）
+.ub-list .title,
+.ub-list .summary,
+.ub-lister-table td,
+.ub-table td,
+.ub-comment-list .content,
+.ub-panel .body,
+.ub-empty .text {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+// 数据表在窄屏下改为横向滚动，而不是把每一列挤成不可读的窄条。
+// 关键：必须同时让单元格不换行，否则 width:100% 的表格会把列压缩到刚好不溢出的宽度，
+// 表面上"没有溢出"，实际每一列都窄到不可读，也不会出现横向滚动条。
+@media screen and (max-width: 50rem) {
+    .ub-lister-table,
+    .ub-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        & > thead > tr > th,
+        & > tbody > tr > td,
+        & > tfoot > tr > td,
+        & > tr > td {
+            white-space: nowrap;
+        }
+    }
+}

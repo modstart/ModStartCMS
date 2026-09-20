@@ -10,6 +10,7 @@ use ModStart\Admin\Type\UploadType;
 use ModStart\App\Core\CurrentApp;
 use ModStart\Core\Assets\AssetsUtil;
 use ModStart\Core\Dao\ModelUtil;
+use ModStart\Core\Exception\BizException;
 use ModStart\Core\Input\InputPackage;
 use ModStart\Core\Input\Request;
 use ModStart\Core\Input\Response;
@@ -242,6 +243,20 @@ class UeditorManager
                         }
                     }
                     if (!$ignoreCatch && preg_match('/^(http|ftp|https):\\/\\//i', $f)) {
+                        // 防止 SSRF：拒绝抓取内网/保留地址
+                        try {
+                            FileUtil::assertSsrfSafe($f, ['enable' => true]);
+                        } catch (BizException $e) {
+                            $saveList [] = array(
+                                'state' => 'not remote image',
+                                'url' => '',
+                                'size' => '',
+                                'title' => '',
+                                'original' => '',
+                                'source' => htmlspecialchars($f)
+                            );
+                            continue;
+                        }
                         $imageRet = CurlUtil::getRaw($f, [], [
                             'header' => [
                                 'referer' => $f,

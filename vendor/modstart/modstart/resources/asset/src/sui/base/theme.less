@@ -1,36 +1,54 @@
-@color-primary: #3555CC;
-@color-primary-dark: darken(@color-primary, 5%);
-@color-primary-light: lighten(@color-primary, 30%);
-@color-primary-light-bg: lighten(@color-primary, 45%);
-@color-success: rgb(59, 179, 70);
-@color-success-dark: rgb(48, 149, 59);
-@color-success-light: rgb(236, 247, 236);
-@color-danger: rgb(249, 57, 32);
-@color-danger-dark: rgb(213, 37, 21);
-@color-danger-light: rgb(254, 242, 237);
-@color-warning: rgb(252, 136, 0);
-@color-warning-dark: rgb(210, 103, 0);
-@color-warning-light: rgb(255, 248, 234);
-@color-link: rgb(0, 100, 250);
-@color-link-dark: rgb(0, 76, 165);
-@color-link-light: rgb(107, 167, 245);
-@color-link-hover: rgb(0, 76, 165);
-@color-tertiary: rgb(107, 112, 117);
-@color-tertiary-dark: rgb(85, 91, 97);
-@color-tertiary-light: rgb(198, 202, 205);
-@color-text: #34495e;
+// ---------------------------------------------------------------------------
+// SUI Theme Tokens
+// A refined neutral palette built on a single blue accent. All components should
+// consume these tokens (CSS variables) instead of hard-coded colors so themes
+// and dark mode keep working.
+// ---------------------------------------------------------------------------
+
+// Brand / accent
+@color-primary: #2F6BFF;
+@color-primary-dark: darken(@color-primary, 8%);
+@color-primary-light: lighten(@color-primary, 18%);
+@color-primary-light-bg: #EDF3FF;
+// 主色的 r,g,b 分量：供下面用 rgba(var(--theme-color-primary-rgb, @color-primary-rgb), a) 计算透明度变体，
+// 这样主题自定义主色（--theme-color-primary-rgb）时，soft / glow / focus-ring 等半透明色也会跟随变化
+@color-primary-rgb: red(@color-primary), green(@color-primary), blue(@color-primary);
+
+// Semantic
+@color-success: #12B76A;
+@color-success-dark: darken(@color-success, 8%);
+@color-success-light: #ECFDF3;
+@color-danger: #F04438;
+@color-danger-dark: darken(@color-danger, 8%);
+@color-danger-light: #FEF3F2;
+@color-warning: #F79009;
+@color-warning-dark: darken(@color-warning, 8%);
+@color-warning-light: #FFFAEB;
+
+// Links
+@color-link: #2F6BFF;
+@color-link-dark: darken(@color-link, 10%);
+@color-link-light: lighten(@color-link, 18%);
+@color-link-hover: #1D51E0;
+
+// Neutral
+@color-tertiary: #667085;
+@color-tertiary-dark: #475467;
+@color-tertiary-light: #D0D5DD;
+@color-text: #344054;
+@color-heading: #101828;
 @color-text-reverse: #FFFFFF;
-@color-muted: #C4CFDB;
-@color-body-bg: #F4F6F8;
+@color-muted: #98A2B3;
+@color-body-bg: #F5F7FB;
 @color-content-bg: #FFFFFF;
-@color-body-line: #E5E9EE;
-@color-input-bg: #F4F4F4;
+@color-body-line: #EAECF0;
+@color-input-bg: #F2F4F7;
 @color-input-light-bg: #FFFFFF;
-@color-body-block-bg: #F7F7F7;
-@color-body-block-bg-hover: darken(@color-body-block-bg, 5%);
-@color-body-block: #666666;
-@color-body-block-hover: darken(@color-body-block, 5%);
-@color-mark: rgba(0, 0, 0, 0.5);
+@color-body-block-bg: #F2F4F7;
+@color-body-block-bg-hover: #E4E7EC;
+@color-body-block: #475467;
+@color-body-block-hover: #344054;
+@color-mark: rgba(16, 24, 40, 0.5);
 
 :root, page {
     // 主色调
@@ -38,26 +56,36 @@
     --color-primary-light: var(--theme-color-primary-light, @color-primary-light);
     --color-primary-light-bg: var(--theme-color-primary-light-bg, @color-primary-light-bg);
     --color-primary-dark: var(--theme-color-primary-dark, @color-primary-dark);
-    // 成功、警告、危险、链接 颜色
-    --color-success: @color-success;
-    --color-success-dark: @color-success-dark;
-    --color-success-light: @color-success-light;
-    --color-warning: @color-warning;
-    --color-warning-dark: @color-warning-dark;
-    --color-warning-light: @color-warning-light;
-    --color-danger: @color-danger;
-    --color-danger-dark: @color-danger-dark;
-    --color-danger-light: @color-danger-light;
-    --color-link: @color-link;
-    --color-link-light: @color-link-light;
-    --color-link-dark: @color-link-dark;
-    --color-link-hover: @color-link-hover;
+    --color-primary-soft: var(--theme-color-primary-soft, rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.10));
+    // 主色光晕：用于背景氛围点缀（替代大面积实色块）
+    --color-primary-glow: var(--theme-color-primary-glow, rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.24));
+    // 深色"墨"表面：前台大面积深色区域（导航、页脚、hero），替代饱和主色铺底
+    --color-ink-bg: var(--theme-color-ink-bg, #0F172A);
+    --color-ink-line: var(--theme-color-ink-line, rgba(255, 255, 255, 0.10));
+    --color-ink-text: var(--theme-color-ink-text, rgba(255, 255, 255, 0.72));
+    --color-ink-heading: var(--theme-color-ink-heading, #FFFFFF);
+    // 成功、警告、危险、链接 颜色（均可通过 --theme-color-* 覆盖）
+    --color-success: var(--theme-color-success, @color-success);
+    --color-success-dark: var(--theme-color-success-dark, @color-success-dark);
+    --color-success-light: var(--theme-color-success-light, @color-success-light);
+    --color-warning: var(--theme-color-warning, @color-warning);
+    --color-warning-dark: var(--theme-color-warning-dark, @color-warning-dark);
+    --color-warning-light: var(--theme-color-warning-light, @color-warning-light);
+    --color-danger: var(--theme-color-danger, @color-danger);
+    --color-danger-dark: var(--theme-color-danger-dark, @color-danger-dark);
+    --color-danger-light: var(--theme-color-danger-light, @color-danger-light);
+    // 链接色默认跟随主色，换主色时链接不会残留蓝色
+    --color-link: var(--theme-color-link, var(--color-primary));
+    --color-link-light: var(--theme-color-link-light, var(--color-primary-light));
+    --color-link-dark: var(--theme-color-link-dark, var(--color-primary-dark));
+    --color-link-hover: var(--theme-color-link-hover, var(--color-primary-dark));
     --color-tertiary: @color-tertiary;
     --color-tertiary-dark: @color-tertiary-dark;
     --color-tertiary-light: @color-tertiary-light;
     // 输入框
     --color-input-placeholder: @color-muted;
     // 文字颜色
+    --color-heading: var(--theme-color-heading, @color-heading);
     --color-text: var(--theme-color-text, @color-text);
     --color-text-reverse: var(--theme-color-text-reverse, @color-text-reverse);
     --color-muted: @color-muted;
@@ -76,65 +104,121 @@
     // 遮罩层
     --color-mask: @color-mark;
     // 滚动条
-    --color-scrollbar-bg: #FFFFFF;
-    --scolor-scrollbar-thumb: #B3B3B3;
-    // 渐变色背景
-    --color-primary-gradient-bg: linear-gradient(45deg, var(--color-primary) 0%, var(--color-primary-light) 150%);
+    --color-scrollbar-bg: transparent;
+    --color-scrollbar-thumb: #D0D5DD;
+    --scolor-scrollbar-thumb: #D0D5DD;
+    // 渐变色背景（首屏大色块通用）：加入墨色深端，避免整片高饱和平涂显得单调
+    --color-primary-gradient-bg: linear-gradient(125deg, var(--color-ink-bg) 0%, var(--color-primary-dark) 55%, var(--color-primary) 100%);
     // 图标
     --icon-arrow: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 256 256"><g><g><polygon points="79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>');
-    --box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .05);
 
-    --size-radius: var(--theme-size-radius, 0.5rem);
+    // 阴影层级：统一双层（近处紧阴影 + 远处扩散阴影），比单层更有立体感
+    --box-shadow-xs: 0 1px 1px rgba(16, 24, 40, 0.04), 0 1px 2px rgba(16, 24, 40, 0.06);
+    --box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px -8px rgba(16, 24, 40, 0.12);
+    --box-shadow-hover: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 32px -8px rgba(16, 24, 40, 0.16);
+    --box-shadow-lg: 0 4px 8px -2px rgba(16, 24, 40, 0.07), 0 24px 48px -12px rgba(16, 24, 40, 0.18);
+    --box-shadow-pop: 0 4px 8px -2px rgba(16, 24, 40, 0.07), 0 16px 40px -8px rgba(16, 24, 40, 0.20);
+    --shadow-inset: inset 0 0 0 1px var(--color-body-line);
+    // 亮边高光：卡片顶部 1px 内高光，模拟受光边缘（精致度关键）
+    --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    // 发丝描边：后台"精密极简"风用 1px 描边替代阴影来做层级
+    --shadow-hairline: inset 0 0 0 1px rgba(16, 24, 40, 0.07);
+    // 焦点环
+    --color-focus-ring: var(--theme-color-focus-ring, rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.16));
+
+    // 圆角：控件小圆角、卡片大圆角，形成层次节奏（不要所有元素共用一套圆角）
+    --size-radius-xs: var(--theme-size-radius-xs, 0.375rem);   // 6px  标签内元素、代码块
+    --size-radius-sm: var(--theme-size-radius-sm, 0.5rem);     // 8px  按钮、输入框等控件
+    --size-radius: var(--theme-size-radius, 1rem);             // 16px 卡片、面板
+    --size-radius-lg: var(--theme-size-radius-lg, 1.25rem);    // 20px 弹窗、大浮层
+    --size-radius-full: 62.5rem;                               // 胶囊
     --size-margin: var(--theme-size-margin, 0.625rem);
     --size-margin-lg: var(--theme-size-margin-lg, 2.5rem);
     --size-padding: var(--theme-size-padding, 0.625rem);
 
+    // 字体（字号体系保持现状，本次未调整）
+    --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    // 衬线字体：前台"编辑高级感"用于标题（CMS 文章、专题、门户首屏）
+    --font-family-serif: var(--theme-font-family-serif, "Songti SC", "Noto Serif SC", "Source Han Serif SC", "SimSun", Georgia, "Times New Roman", serif);
+    // 等宽字体：代码块、行内代码、数字
+    --font-family-mono: var(--theme-font-family-mono, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace);
     --font-size-root: var(--theme-font-size-root, 16px);
     --font-size: var(--theme-font-size, 0.8125rem);
     --font-size-lh: var(--theme-font-size, 0.8125rem * 1.1);
-    --font-size-medium: var(--theme-font-size, 1rem);
+    --font-size-medium: var(--theme-font-size-medium, 1rem);
     --font-size-large: var(--theme-font-size-large, 1.25rem);
     --font-size-small: var(--theme-font-size-small, 0.75rem);
 
     --container-width: var(--theme-container-width, 75rem);
 
+    // 过渡（--transition 为历史默认值，保持兼容）
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);      // 出场/悬浮：先快后缓，有"弹性"
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);    // 通用
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); // 回弹，用于强调
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s var(--ease-out);
+    --transition-slow: all 0.32s var(--ease-out);
 }
 
 [data-theme="dark"] {
     &:root, page, & {
-        --color-link: #a3a7bb;
-        --color-link-hover: #cacdda;
-        --color-body-bg: #151728;
-        --color-content-bg: #1b1e32;
-        --color-body-line: #424554;
-        --color-text: #a3a7bb;
-        --color-input-placeholder: #80859f;
-        --color-input-bg: #1b1e32;
-        --color-input-light-bg: #1b1e32;
-        --color-muted: #80859f;
-        --color-body-block-bg: #545767;
-        --color-body-block-bg-hover: #9396a8;
-        --color-body-block: #F8F8F8;
+        --color-primary-light-bg: rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.18);
+        --color-primary-soft: rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.22);
+        // 深色模式下链接跟随主色的浅色变体，hover 用白色保证反馈与对比度
+        --color-link: var(--theme-color-link, var(--color-primary-light));
+        --color-link-hover: #FFFFFF;
+        --color-body-bg: #0E1117;
+        --color-content-bg: #171A22;
+        --color-body-line: #2A2E3A;
+        --color-heading: #F2F4F7;
+        --color-text: #B4BAC6;
+        --color-input-placeholder: #6C7284;
+        --color-input-bg: #1D212B;
+        --color-input-light-bg: #1D212B;
+        --color-muted: #6C7284;
+        --color-body-block-bg: #262A35;
+        --color-body-block-bg-hover: #333845;
+        --color-body-block: #E4E7EC;
         --color-body-block-hover: #FFFFFF;
-        --color-mask: rgba(240, 240, 240, 0.5);
+        --color-mask: rgba(0, 0, 0, 0.6);
+        --color-scrollbar-thumb: #3A3F4D;
+        --scolor-scrollbar-thumb: #3A3F4D;
+        --color-focus-ring: rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.30);
+        --color-primary-glow: rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.30);
+        --box-shadow-xs: 0 1px 1px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+        --box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+        --box-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 32px -8px rgba(0, 0, 0, 0.7);
+        --box-shadow-lg: 0 8px 16px -4px rgba(0, 0, 0, 0.5), 0 28px 48px -12px rgba(0, 0, 0, 0.8);
+        --box-shadow-pop: 0 8px 16px -4px rgba(0, 0, 0, 0.5), 0 20px 48px -8px rgba(0, 0, 0, 0.8);
+        --shadow-inset: inset 0 0 0 1px var(--color-body-line);
+        --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        --shadow-hairline: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     }
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] {
         &:root, page, & {
-            --color-body-bg: #151728 !important;
-            --color-content-bg: #1b1e32 !important;
-            --color-body-line: #424554 !important;
-            --color-text: #a3a7bb !important;
-            --color-input-placeholder: #80859f !important;
-            --color-input-bg: #1b1e32 !important;
-            --color-input-light-bg: #1b1e32 !important;
-            --color-muted: #80859f !important;
-            --color-body-block-bg: #545767 !important;
-            --color-body-block-bg-hover: #9396a8 !important;
-            --color-body-block: #F8F8F8 !important;
+            --color-primary-light-bg: rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.18) !important;
+            --color-primary-soft: rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.22) !important;
+            --color-primary-glow: rgba(var(--theme-color-primary-rgb, @color-primary-rgb), 0.30) !important;
+            --color-link: var(--theme-color-link, var(--color-primary-light)) !important;
+            --color-link-hover: #FFFFFF !important;
+            --color-body-bg: #0E1117 !important;
+            --color-content-bg: #171A22 !important;
+            --color-body-line: #2A2E3A !important;
+            --color-heading: #F2F4F7 !important;
+            --color-text: #B4BAC6 !important;
+            --color-input-placeholder: #6C7284 !important;
+            --color-input-bg: #1D212B !important;
+            --color-input-light-bg: #1D212B !important;
+            --color-muted: #6C7284 !important;
+            --color-body-block-bg: #262A35 !important;
+            --color-body-block-bg-hover: #333845 !important;
+            --color-body-block: #E4E7EC !important;
             --color-body-block-hover: #FFFFFF !important;
+            --color-scrollbar-thumb: #3A3F4D !important;
+            --scolor-scrollbar-thumb: #3A3F4D !important;
         }
     }
 }

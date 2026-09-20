@@ -5,7 +5,7 @@
     &.view {
         .line {
             .field {
-                border-bottom: 0.0625rem solid #EEE;
+                border-bottom: 0.0625rem solid var(--color-body-line);
                 min-height: 1.875rem;
             }
         }
@@ -50,7 +50,7 @@
     }
 
     .line {
-        padding: 0.3125rem 1.875rem 0.3125rem 6.25rem;
+        padding: 0.4375rem 1.875rem 0.4375rem 6.25rem;
         //overflow: hidden;
         position: relative;
 
@@ -71,8 +71,8 @@
             display: block;
             float: left;
             text-align: right;
-            line-height: 0.875rem;
-            padding: 0.5rem 0.625rem 0.5rem 0;
+            line-height: 1rem;
+            padding: 0.5rem 0.75rem 0.5rem 0;
             margin: 0 0 0 -5.625rem;
             width: 5.625rem;
             overflow: hidden;
@@ -82,7 +82,7 @@
             }
 
             span {
-                color: red;
+                color: var(--color-danger);
                 display: inline-block;
                 line-height: 0.875rem;
                 font-size: 0.75rem;
@@ -99,9 +99,33 @@
             }
 
             label {
-                border: 0.0625rem solid #EEE;
-                border-radius: 0.1875rem;
-                padding: 0 0.625rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.375rem;
+                border: 0.0625rem solid var(--color-body-line);
+                border-radius: var(--size-radius-sm);
+                background: var(--color-input-light-bg);
+                padding: 0.25rem 0.75rem;
+                margin-right: 0.375rem;
+                cursor: pointer;
+                transition: var(--transition);
+
+                &:hover {
+                    border-color: var(--color-primary-light);
+                    background: var(--color-primary-light-bg);
+                }
+
+                &:has(input:checked) {
+                    border-color: var(--color-primary);
+                    background: var(--color-primary-light-bg);
+                    color: var(--color-primary);
+                }
+
+                & > input[type=radio],
+                & > input[type=checkbox] {
+                    margin: 0 0.0625rem 0 0;
+                    accent-color: var(--color-primary);
+                }
             }
 
             .help {
@@ -137,8 +161,8 @@
             .captcha {
                 height: 2rem;
                 width: 100%;
-                border: 0.0625rem solid #DDD;
-                border-radius: 0.1875rem;
+                border: 0.0625rem solid var(--color-body-line);
+                border-radius: var(--size-radius-sm);
                 cursor: pointer;
 
                 &.captcha-lg {
@@ -147,13 +171,13 @@
             }
 
             .tag {
-                border: 0.0625rem solid #EEE;
+                border: 0.0625rem solid transparent;
                 display: inline-block;
                 line-height: 1.25rem;
-                border-radius: 0.1875rem;
-                padding: 0 0.1875rem;
-                background: #EEE;
-                color: #666;
+                border-radius: var(--size-radius-sm);
+                padding: 0 0.375rem;
+                background: var(--color-body-block-bg);
+                color: var(--color-body-block);
                 margin-right: 0.1875rem;
                 font-size: 0.75rem;
                 white-space: nowrap;
@@ -194,6 +218,3 @@
         }
     }
 }
-
-
-

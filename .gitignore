@@ -26,3 +26,4 @@ _delete_.*
 # OpenCode
 _temp/
 DEV_*.md
+/DESIGN.md

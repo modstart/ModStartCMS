@@ -40,12 +40,18 @@
   position: relative;
   width: 3.75rem;
   height: 3.75rem;
-  box-shadow: 0 0 1px #CCC;
-  border-radius: 0.125rem;
+  box-shadow: var(--box-shadow-xs);
+  border: 0.0625rem solid var(--color-body-line);
+  border-radius: var(--size-radius-sm);
+  overflow: hidden;
   display: inline-block;
   vertical-align: middle;
+  transition: var(--transition);
 
   &:hover {
+    border-color: var(--color-primary-light);
+    box-shadow: var(--box-shadow-hover);
+
     .tools {
       display: block;
     }
@@ -77,15 +83,15 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    color: #FFF;
-    border-radius: 0.125rem;
+    background: var(--color-mask);
+    color: var(--color-text-reverse);
+    border-radius: var(--size-radius-sm);
     text-align: center;
     padding: 1.25rem 0 0 0;
     display: none;
 
     .action {
-      color: #FFF;
+      color: var(--color-text-reverse);
       display: none;
       line-height: 1.25rem;
       width: 1.25rem;
@@ -117,23 +123,29 @@
     position: relative;
     width: 3.75rem;
     height: 3.75rem;
-    box-shadow: 0 0 1px #CCC;
-    border-radius: 0.125rem;
+    box-shadow: var(--box-shadow-xs);
+    border: 0.0625rem solid var(--color-body-line);
+    border-radius: var(--size-radius-sm);
+    overflow: hidden;
     display: inline-block;
     vertical-align: middle;
     margin: 0.0625rem 0.125rem 0.125rem 0.0625rem;
+    transition: var(--transition);
 
     &.add {
       line-height: 3.75rem;
       text-align: center;
 
       .action {
-        color: #c4cfdb;
+        color: var(--color-muted);
         font-size: 1.25rem;
       }
     }
 
     &:hover {
+      border-color: var(--color-primary-light);
+      box-shadow: var(--box-shadow-hover);
+
       .tools {
         display: block;
 

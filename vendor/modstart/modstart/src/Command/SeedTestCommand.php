@@ -15,6 +15,25 @@ class SeedTestCommand extends Command
 
     public function handle()
     {
+        // 同一时间只允许一个 seed-test 运行，避免并发操作数据库互相干扰
+        if (!$this->acquireRunLock()) {
+            return 1;
+        }
+        try {
+            return $this->runTests();
+        } finally {
+            // 无论正常结束还是异常抛出，均在此释放锁（进程崩溃时由系统自动释放）
+            $this->releaseRunLock();
+        }
+    }
+
+    /**
+     * 执行测试主体流程
+     *
+     * @return int 退出码
+     */
+    private function runTests()
+    {
         if (!$this->checkTestEnvironment()) {
             return 1;
         }

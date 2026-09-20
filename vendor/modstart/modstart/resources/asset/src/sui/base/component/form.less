@@ -159,13 +159,26 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"] {
-    line-height: 1;
+    line-height: 1.4;
     max-width: 100%;
-    padding: 0.25rem 0.375rem;
+    padding: 0.3125rem 0.5625rem;
     border: 0.0625rem solid var(--color-body-line);
+    border-radius: var(--size-radius-sm);
     background: var(--color-input-light-bg);
     color: var(--color-text);
-    //transition: border-color .2s, background .2s;
+    transition: var(--transition);
+}
+
+select:hover:not(:disabled):not([disabled]),
+textarea:hover:not(:disabled):not([readonly]),
+input:not([type]):hover:not(:disabled),
+input[type="text"]:hover:not(:disabled):not([readonly]),
+input[type="password"]:hover:not(:disabled),
+input[type="number"]:hover:not(:disabled),
+input[type="email"]:hover:not(:disabled):not([readonly]),
+input[type="search"]:hover:not(:disabled):not([readonly]),
+input[type="tel"]:hover:not(:disabled) {
+    border-color: var(--color-tertiary-light);
 }
 
 select:focus,
@@ -185,9 +198,10 @@ input[type="url"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus {
-    border-color: var(--color-primary-light);
+    border-color: var(--color-primary);
     outline: 0;
     color: var(--color-text);
+    box-shadow: 0 0 0 0.1875rem var(--color-focus-ring);
 }
 
 select:disabled,
@@ -208,8 +222,8 @@ input[type="search"]:disabled,
 input[type="tel"]:disabled,
 input[type="color"]:disabled {
     border-color: var(--color-body-line);
-    background-color: #F5F7FA;
-    color: #C4CFDB;
+    background-color: var(--color-input-bg);
+    color: var(--color-muted);
 }
 
 textarea:read-only,
@@ -227,36 +241,36 @@ input[type="url"]:read-only,
 input[type="search"]:read-only,
 input[type="tel"]:read-only,
 input[type="color"]:read-only {
-    border-color: #DDDDDD;
-    background-color: #F5F7FA;
-    color: #666666;
+    border-color: var(--color-body-line);
+    background-color: var(--color-input-bg);
+    color: var(--color-tertiary);
 }
 
 /*
  * Placeholder
  */
 :-ms-input-placeholder {
-    color: #C4CFDB !important;
+    color: var(--color-input-placeholder) !important;
 }
 
 ::-moz-placeholder {
-    color: #C4CFDB;
+    color: var(--color-input-placeholder);
 }
 
 ::-webkit-input-placeholder {
-    color: #C4CFDB;
+    color: var(--color-input-placeholder);
 }
 
 :disabled:-ms-input-placeholder {
-    color: #C4CFDB !important;
+    color: var(--color-input-placeholder) !important;
 }
 
 :disabled::-moz-placeholder {
-    color: #C4CFDB;
+    color: var(--color-input-placeholder);
 }
 
 :disabled::-webkit-input-placeholder {
-    color: #C4CFDB;
+    color: var(--color-input-placeholder);
 }
 
 /*
@@ -288,7 +302,7 @@ legend {
 legend:after {
     content: "";
     display: block;
-    border-bottom: 0.0625rem solid #dddddd;
+    border-bottom: 0.0625rem solid var(--color-body-line);
     width: 100%;
 }
 
@@ -317,7 +331,6 @@ textarea.form,
 input[type].form,
 input:not([type]).form {
     height: 2rem;
-    // padding: 0.1875rem 0.1875rem;
     font-size: 0.8125rem;
 }
 
@@ -325,14 +338,15 @@ textarea.form-lg,
 input[type].form-lg,
 input:not([type]).form-lg {
     height: 2.5rem;
-    padding: 0.75rem 0.375rem;
-    font-size: 1rem;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.9375rem;
 }
 
 
-select.form-lg{
+select.form-lg {
     height: 2.5rem;
-    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9375rem;
 }
 
 select.form-sm,
@@ -340,8 +354,8 @@ textarea.form-sm,
 input[type].form-sm,
 input:not([type]).form-sm {
     height: 1.75rem;
-    padding: 0.1875rem 0.1875rem;
-    font-size: 0.625rem;
+    padding: 0.1875rem 0.5rem;
+    font-size: 0.75rem;
 }
 
 /* Reset height

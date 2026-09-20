@@ -189,7 +189,12 @@
                 <div id="adminMainPage">
                     @section('bodyContent')@show
                 </div>
-                <div id="adminTabPage" class="hidden"></div>
+                <div id="adminTabPage" class="hidden">
+                    <div class="tab-page-loading">
+                        <div class="spinner"></div>
+                        <div class="text">{{L('Loading')}}</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

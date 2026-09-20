@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -19,29 +19,279 @@
     <script src="js/less.js"></script>
     <script src="bricks/component/page-preview/page-preview.js"></script>
     <style type="text/css">
-        #demoPanel .left .menu .items {
-            overflow: hidden;
-            padding-left: 0px;
-        }
-        #demoPanel .left .menu .items a {
-            width: 50%;
-            min-width: fit-content;
-            min-width: -webkit-fit-content;
-            min-width: -moz-fit-content;
-            display: block;
-            float: left;
-            font-size: 12px;
-            line-height: 25px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            padding: 0 5px;
-            font-family: Consolas, monospace, serif;
-            color:#EEE;
+        /* ------------------------------------------------------------------
+         * Brick UI preview console — light theme skin.
+         * All colors come from the SUI tokens (var(--color-*)) so the console
+         * follows the theme instead of hard-coding dark values.
+         * ------------------------------------------------------------------ */
+        #demoPanel {
+            --panel-menu-width: 13rem;
+            background: var(--color-body-bg);
         }
 
-        #demoPanel .left .menu .items a.active {
-            color: #e4e40b;
+        /* Sidebar */
+        #demoPanel .left {
+            background: var(--color-content-bg);
+            border-right: 0.0625rem solid var(--color-body-line);
+        }
+
+        #demoPanel .left .logo {
+            display: flex;
+            align-items: center;
+            height: 3.5rem;
+            line-height: 1;
+            padding: 0 1rem;
+            color: var(--color-heading);
+            font-size: 1.0625rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            border-bottom: 0.0625rem solid var(--color-body-line);
+        }
+
+        #demoPanel .left .logo .brand {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.75rem;
+            height: 1.75rem;
+            margin-right: 0.5rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0.375rem 0.75rem -0.25rem var(--color-primary-glow);
+        }
+
+        #demoPanel .left .menu {
+            top: 3.5rem;
+            background: var(--color-content-bg);
+        }
+
+        #demoPanel .left .menu .group {
+            padding: 0.75rem 0.625rem 0.25rem;
+        }
+
+        #demoPanel .left .menu .group-title {
+            padding: 0 0.625rem;
+            height: 1.75rem;
+            line-height: 1.75rem;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+        }
+
+        #demoPanel .left .menu .items {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #demoPanel .left .menu .items .item {
+            position: relative;
+            display: block;
+            height: 2.125rem;
+            line-height: 2.125rem;
+            padding: 0 0.625rem;
+            border-radius: var(--size-radius-sm);
+            font-size: 0.8125rem;
+            color: var(--color-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: var(--transition);
+        }
+
+        #demoPanel .left .menu .items .item:hover {
+            color: var(--color-primary);
+            background: var(--color-body-block-bg);
+        }
+
+        #demoPanel .left .menu .items .item.active {
+            color: var(--color-primary);
+            background: var(--color-primary-light-bg);
+            font-weight: 600;
+        }
+
+        #demoPanel .left .menu .items .item.active:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 0.1875rem;
+            height: 1.125rem;
+            margin-top: -0.5625rem;
+            border-radius: 0 0.125rem 0.125rem 0;
+            background: var(--color-primary);
+        }
+
+        /* Top bar */
+        #demoPanel .right .top {
+            height: 3.5rem;
+            align-items: center;
+            background: var(--color-content-bg);
+            border-bottom: 0.0625rem solid var(--color-body-line);
+        }
+
+        #demoPanel .right .top .page-title {
+            order: 1;
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            min-width: 0;
+            padding-left: 1.25rem;
+            color: var(--color-heading);
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        #demoPanel .right .top .page-title .dot {
+            flex-shrink: 0;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-right: 0.5rem;
+            border-radius: 50%;
+            background: var(--color-primary);
+            box-shadow: 0 0 0 0.25rem var(--color-primary-soft);
+        }
+
+        #demoPanel .right .top .page-title #ubPageTitle {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* Copyable preview link chip, sits right next to the page title */
+        #demoPanel .right .top .page-title .page-link {
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 1;
+            min-width: 0;
+            max-width: 26rem;
+            margin-left: 0.75rem;
+            padding: 0 0.625rem;
+            height: 1.75rem;
+            border-radius: var(--size-radius-full);
+            background: var(--color-body-block-bg);
+            color: var(--color-muted);
+            font-size: 0.75rem;
+            font-weight: 400;
+            transition: var(--transition);
+        }
+
+        #demoPanel .right .top .page-title .page-link .iconfont {
+            flex-shrink: 0;
+            margin-right: 0.3125rem;
+            font-size: 0.75rem;
+        }
+
+        #demoPanel .right .top .page-title .page-link .text {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        #demoPanel .right .top .page-title .page-link:hover {
+            color: var(--color-primary);
+            background: var(--color-primary-light-bg);
+        }
+
+        #demoPanel .right .top .page-title .page-link.copied {
+            color: var(--color-success);
+            background: var(--color-success-light);
+        }
+
+        /* Copy feedback toast */
+        #ubPageLinkToast {
+            position: fixed;
+            left: 50%;
+            bottom: 2rem;
+            z-index: 9999;
+            padding: 0.5rem 1rem;
+            border-radius: var(--size-radius-full);
+            background: var(--color-ink-bg);
+            color: #fff;
+            font-size: 0.8125rem;
+            box-shadow: var(--box-shadow-lg);
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 0.5rem);
+            transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+        }
+
+        #ubPageLinkToast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        #demoPanel .right .top .menu-right {
+            order: 2;
+            display: flex;
+            align-items: center;
+            padding-right: 1rem;
+        }
+
+        #demoPanel .device-switch {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.1875rem;
+            background: var(--color-body-block-bg);
+            border-radius: var(--size-radius-full);
+        }
+
+        #demoPanel .device-switch a {
+            display: inline-flex;
+            align-items: center;
+            height: 1.875rem;
+            padding: 0 0.75rem;
+            border-radius: var(--size-radius-full);
+            font-size: 0.8125rem;
+            color: var(--color-text);
+            transition: var(--transition);
+        }
+
+        #demoPanel .device-switch a + a {
+            margin-left: 0.125rem;
+        }
+
+        #demoPanel .device-switch a .iconfont {
+            margin-right: 0.3125rem;
+            font-size: 0.875rem;
+        }
+
+        #demoPanel .device-switch a:hover {
+            color: var(--color-primary);
+        }
+
+        #demoPanel .device-switch a.active {
+            color: var(--color-primary);
+            background: var(--color-content-bg);
+            font-weight: 600;
+            box-shadow: var(--box-shadow-xs);
+        }
+
+        /* Preview stage */
+        #demoPanel .right .content.fixed {
+            top: 3.5rem;
+            padding: 0;
+            background: var(--color-body-bg);
+        }
+
+        #demoPanel .ub-page-preview {
+            background: var(--color-body-bg);
+        }
+
+        #demoPanel .ub-page-preview .iframe:not(.mobile) {
+            top: 0.75rem;
+            right: 0.75rem;
+            bottom: 0.75rem;
+            left: 0.75rem;
+            border-radius: var(--size-radius);
+            border: 0.0625rem solid var(--color-body-line);
+            background: var(--color-content-bg);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
         }
     </style>
 </head>
@@ -49,72 +299,85 @@
 <div class="ub-panel-frame" id="demoPanel">
     <div class="left">
         <div class="logo">
-            Brick UI
+            <span class="brand">B</span>
+            <span class="text">Brick UI</span>
         </div>
         <div class="menu">
-            <div class="menu-item">
-                <a href="javascript:;" class="title">通用组件</a>
+            <div class="group">
+                <div class="group-title">通用组件</div>
                 <div class="items">
-                    <a href="page.html?url=component/header/header" target="main">Header</a>
-                    <a href="page.html?url=component/footer/footer" target="main">Footer</a>
-                    <a href="page.html?url=component/nav/nav" target="main">Nav</a>
-                    <a href="page.html?url=component/menu/menu" target="main">Menu</a>
-                    <a href="page.html?url=component/list/list" target="main">List</a>
-                    <a href="page.html?url=component/content/content" target="main">Content</a>
-                    <a href="page.html?url=component/search/search" target="main">Search</a>
-                    <a href="page.html?url=component/article/article" target="main">Article</a>
-                    <a href="page.html?url=component/page/page" target="main">Paginate</a>
-                    <a href="page.html?url=component/banner/banner" target="main">Banner</a>
-                    <a href="page.html?url=component/panel/panel" target="main">Panel</a>
-                    <a href="page.html?url=component/video/video" target="main">Video</a>
-                    <a href="page.html?url=component/form/form" target="main">Form</a>
-                    <a href="page.html?url=component/lister/lister" target="main">Lister</a>
-                    <a href="page.html?url=component/tag/tag" target="main">Tag</a>
-                    <a href="page.html?url=component/bar/bar" target="main">Bar</a>
-                    <a href="page.html?url=component/image/image" target="main">Image</a>
-                    <a href="page.html?url=component/comment/comment" target="main">Comment</a>
-                    <a href="page.html?url=component/html/html" target="main">Html</a>
-                    <a href="page.html?url=component/dashboard/dashboard" target="main">Dashboard</a>
-                    <a href="page.html?url=component/chart/chart" target="main">Chart</a>
-                    <a href="page.html?url=component/i18n/i18n" target="main">I18N</a>
-                    <a href="page.html?url=component/misc/misc" target="main">Misc</a>
-                    <a href="page.html?url=component/modal/modal" target="main">Modal</a>
+                    <a class="item" href="page.html?url=component/header/header-default" target="main" data-page-url="component/header/header-default">Header Default</a>
+                    <a class="item" href="page.html?url=component/header/header-a" target="main" data-page-url="component/header/header-a">Header A</a>
+                    <a class="item" href="page.html?url=component/header/header-b" target="main" data-page-url="component/header/header-b">Header B</a>
+                    <a class="item" href="page.html?url=component/header/header-c" target="main" data-page-url="component/header/header-c">Header C</a>
+                    <a class="item" href="page.html?url=component/header/header-d" target="main" data-page-url="component/header/header-d">Header D</a>
+                    <a class="item" href="page.html?url=component/header/header-mobile" target="main" data-page-url="component/header/header-mobile">Header Mobile</a>
+                    <a class="item" href="page.html?url=component/footer/footer" target="main" data-page-url="component/footer/footer">Footer</a>
+                    <a class="item" href="page.html?url=component/nav/nav" target="main" data-page-url="component/nav/nav">Nav</a>
+                    <a class="item" href="page.html?url=component/menu/menu" target="main" data-page-url="component/menu/menu">Menu</a>
+                    <a class="item" href="page.html?url=component/list/list" target="main" data-page-url="component/list/list">List</a>
+                    <a class="item" href="page.html?url=component/content/content" target="main" data-page-url="component/content/content">Content</a>
+                    <a class="item" href="page.html?url=component/search/search" target="main" data-page-url="component/search/search">Search</a>
+                    <a class="item" href="page.html?url=component/article/article" target="main" data-page-url="component/article/article">Article</a>
+                    <a class="item" href="page.html?url=component/page/page" target="main" data-page-url="component/page/page">Paginate</a>
+                    <a class="item" href="page.html?url=component/banner/banner" target="main" data-page-url="component/banner/banner">Banner</a>
+                    <a class="item" href="page.html?url=component/panel/panel" target="main" data-page-url="component/panel/panel">Panel</a>
+                    <a class="item" href="page.html?url=component/video/video" target="main" data-page-url="component/video/video">Video</a>
+                    <a class="item" href="page.html?url=component/form/form" target="main" data-page-url="component/form/form">Form</a>
+                    <a class="item" href="page.html?url=component/lister/lister" target="main" data-page-url="component/lister/lister">Lister</a>
+                    <a class="item" href="page.html?url=component/tag/tag" target="main" data-page-url="component/tag/tag">Tag</a>
+                    <a class="item" href="page.html?url=component/bar/bar" target="main" data-page-url="component/bar/bar">Bar</a>
+                    <a class="item" href="page.html?url=component/image/image" target="main" data-page-url="component/image/image">Image</a>
+                    <a class="item" href="page.html?url=component/comment/comment" target="main" data-page-url="component/comment/comment">Comment</a>
+                    <a class="item" href="page.html?url=component/html/html" target="main" data-page-url="component/html/html">Html</a>
+                    <a class="item" href="page.html?url=component/dashboard/dashboard" target="main" data-page-url="component/dashboard/dashboard">Dashboard</a>
+                    <a class="item" href="page.html?url=component/chart/chart" target="main" data-page-url="component/chart/chart">Chart</a>
+                    <a class="item" href="page.html?url=component/i18n/i18n" target="main" data-page-url="component/i18n/i18n">I18N</a>
+                    <a class="item" href="page.html?url=component/misc/misc" target="main" data-page-url="component/misc/misc">Misc</a>
+                    <a class="item" href="page.html?url=component/modal/modal" target="main" data-page-url="component/modal/modal">Modal</a>
                 </div>
             </div>
-            <div class="menu-item">
-                <a href="javascript:;" class="title">业务组件</a>
+            <div class="group">
+                <div class="group-title">业务组件</div>
                 <div class="items">
-                    <a href="page.html?url=page/account/login" target="main">Account/Login</a>
-                    <a href="page.html?url=page/panel/framePC" target="main">Panel/FramePC</a>
-                    <a href="page.html?url=page/panel/frameDialog" target="main">Panel/FrameDialog</a>
-                    <a href="page.html?url=page/member/memberPC" target="main">Member/MemberPC</a>
-                    <a href="page.html?url=page/member/memberM" target="main">Member/MemberM</a>
+                    <a class="item" href="page.html?url=page/account/login" target="main" data-page-url="page/account/login">Account/Login</a>
+                    <a class="item" href="page.html?url=page/panel/framePC" target="main" data-page-url="page/panel/framePC">Panel/FramePC</a>
+                    <a class="item" href="page.html?url=page/panel/frameDialog" target="main" data-page-url="page/panel/frameDialog">Panel/FrameDialog</a>
+                    <a class="item" href="page.html?url=page/member/memberPC" target="main" data-page-url="page/member/memberPC">Member/MemberPC</a>
+                    <a class="item" href="page.html?url=page/member/memberM" target="main" data-page-url="page/member/memberM">Member/MemberM</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="right">
         <div class="top">
-            <div class="menu" id="ubPreviewSwitch">
-                <a data-page-preview-type="pc" class="active" href="javascript:;">
-                    <i class="iconfont icon-pc"></i>
-                    PC版
-                </a>
-                <a data-page-preview-type="mobile" href="javascript:;">
-                    <i class="iconfont icon-phone"></i>
-                    手机版
-                </a>
-                <a data-page-preview-type="window" href="javascript:;">
+            <div class="page-title">
+                <span class="dot"></span>
+                <span id="ubPageTitle">Header</span>
+                <a class="page-link" id="ubPageLink" href="javascript:;" title="点击复制页面链接">
                     <i class="iconfont icon-link-alt"></i>
-                    新窗口打开
+                    <span class="text" id="ubPageLinkText">page.html</span>
                 </a>
+            </div>
+            <div class="menu-right">
+                <div class="device-switch" id="ubPreviewSwitch">
+                    <a data-page-preview-type="pc" class="active" href="javascript:;">
+                        <i class="iconfont icon-pc"></i>PC 版
+                    </a>
+                    <a data-page-preview-type="mobile" href="javascript:;">
+                        <i class="iconfont icon-phone"></i>手机版
+                    </a>
+                    <a data-page-preview-type="window" href="javascript:;">
+                        <i class="iconfont icon-link-alt"></i>新窗口
+                    </a>
+                </div>
             </div>
         </div>
         <div class="content fixed">
 
             <div class="ub-page-preview" data-ub-page-preview>
                 <div class="iframe">
-                    <iframe id="main" name="main" src="page.html?url=component/base/base" frameborder="0"></iframe>
+                    <iframe id="main" name="main" frameborder="0"></iframe>
                 </div>
             </div>
 
@@ -124,39 +387,190 @@
 <script src="bricks/component/page-preview/page-preview-starter.js"></script>
 <script>
     $(function () {
-        var $types = $('[data-page-preview-type]');
-        var $iframe = $('[data-ub-page-preview] .iframe');
+        // The preview console keeps the last viewed brick and the device mode in
+        // localStorage so a page refresh (which would otherwise reset the iframe
+        // to the default and show a blank frame) restores the previous preview.
+        var STORAGE_KEY = 'brick-ui-last-page';
+        var DEVICE_KEY = 'brick-ui-preview-type';
+        var DEFAULT_PAGE = 'component/header/header-default';
+        var DEFAULT_DEVICE = 'pc';
+
+        var storageGet = function (key) {
+            try {
+                return window.localStorage.getItem(key);
+            } catch (e) {
+                return null;
+            }
+        };
+        var storageSet = function (key, value) {
+            try {
+                window.localStorage.setItem(key, value);
+            } catch (e) {
+            }
+        };
+        var normalizePage = function (page) {
+            if (!page) {
+                return '';
+            }
+            return String(page).replace(/^\s+|\s+$/g, '').replace(/^\?+/, '').replace(/^url=/, '');
+        };
+
+        var $iframe = $('#main');
+        var $items = $('#demoPanel .menu .items a[data-page-url]');
+        var $title = $('#ubPageTitle');
+
+        var labelOf = function (page) {
+            var $item = $items.filter('[data-page-url="' + page + '"]');
+            return $item.length ? $.trim($item.text()) : page;
+        };
+
+        var markActive = function (page) {
+            $items.removeClass('active');
+            $items.filter('[data-page-url="' + page + '"]').addClass('active');
+            var label = labelOf(page);
+            $title.text(label);
+            if (label) {
+                document.title = label + ' · Brick UI';
+            }
+        };
+
+        // The chip next to the title shows the standalone preview URL of the
+        // current brick; clicking it copies the absolute URL to the clipboard.
+        var $pageLink = $('#ubPageLink');
+        var $pageLinkText = $('#ubPageLinkText');
+        var pageLabelOf = function (page) {
+            return 'page.html?url=' + (normalizePage(page) || DEFAULT_PAGE);
+        };
+        var pageHrefOf = function (page) {
+            // Resolve page.html against the console directory so the copied link
+            // is absolute and works from any standalone preview tab.
+            var base = (window.location.href || '').replace(/[?#].*$/, '').replace(/[^/]*$/, '');
+            return base + pageLabelOf(page);
+        };
+        var updatePageLink = function (page) {
+            var href = pageHrefOf(page);
+            $pageLink.attr('href', href).attr('title', '点击复制链接：' + href);
+            $pageLinkText.text(pageLabelOf(page));
+        };
+
+        var showPage = function (page) {
+            page = normalizePage(page) || DEFAULT_PAGE;
+            // Ignore a stale value in localStorage (e.g. a page that has been
+            // removed) so the console never loads a missing preview.
+            if ($items.filter('[data-page-url="' + page + '"]').length === 0) {
+                page = DEFAULT_PAGE;
+            }
+            markActive(page);
+            updatePageLink(page);
+            storageSet(STORAGE_KEY, page);
+            var url = 'page.html?url=' + page;
+            if ($iframe.attr('src') !== url) {
+                $iframe.attr('src', url);
+            }
+        };
+
+        // Click the chip to copy the preview link (with a clipboard fallback for
+        // non-secure contexts such as opening index.html via file://).
+        var toastTimer = null;
+        var copiedTimer = null;
+        var copyToClipboard = function (text) {
+            var fallback = function () {
+                var el = document.createElement('textarea');
+                el.value = text;
+                el.setAttribute('readonly', 'readonly');
+                el.style.position = 'fixed';
+                el.style.top = '-1000px';
+                el.style.opacity = '0';
+                document.body.appendChild(el);
+                el.select();
+                try {
+                    document.execCommand('copy');
+                } catch (e) {
+                }
+                document.body.removeChild(el);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(fallback);
+            } else {
+                fallback();
+            }
+        };
+        var showCopyToast = function (message) {
+            var $toast = $('#ubPageLinkToast');
+            if ($toast.length === 0) {
+                $toast = $('<div id="ubPageLinkToast"></div>').appendTo('body');
+            }
+            $toast.text(message).addClass('show');
+            if (toastTimer) {
+                clearTimeout(toastTimer);
+            }
+            toastTimer = setTimeout(function () {
+                $toast.removeClass('show');
+            }, 1600);
+        };
+        $pageLink.on('click', function () {
+            copyToClipboard($pageLink.attr('href'));
+            $pageLink.addClass('copied');
+            if (copiedTimer) {
+                clearTimeout(copiedTimer);
+            }
+            copiedTimer = setTimeout(function () {
+                $pageLink.removeClass('copied');
+            }, 1200);
+            showCopyToast('页面链接已复制');
+            return false;
+        });
+
+        // Restore the last page before loading so the frame is never blank.
+        showPage(storageGet(STORAGE_KEY) || DEFAULT_PAGE);
+
+        // Menu links: keep the click handling in JS so the state stays in sync,
+        // but keep the href/target so the link still works without JS.
+        $items.on('click', function () {
+            showPage($(this).attr('data-page-url'));
+            return false;
+        });
+
+        // Device preview switch (PC / mobile is a state and is remembered)
+        var $types = $('#ubPreviewSwitch [data-page-preview-type]');
+        var $frame = $('[data-ub-page-preview] .iframe');
+        var normalizeDevice = function (type) {
+            return ('mobile' === type) ? 'mobile' : DEFAULT_DEVICE;
+        };
+        var applyDevice = function (type) {
+            type = normalizeDevice(type);
+            $types.removeClass('active');
+            $types.filter('[data-page-preview-type="' + type + '"]').addClass('active');
+            $frame.removeClass('pc').removeClass('mobile').addClass(type);
+            storageSet(DEVICE_KEY, type);
+        };
+        // Restore the last device mode.
+        applyDevice(storageGet(DEVICE_KEY));
+
         $types.on('click', function () {
             var type = $(this).attr('data-page-preview-type');
             if ('window' === type) {
-                var url = $('#main').get(0).contentWindow.location.href;
-                var a = document.createElement("a");
-                a.setAttribute("href", url);
-                a.setAttribute("target", "_blank");
+                var url = '';
+                try {
+                    url = $iframe.get(0).contentWindow.location.href;
+                } catch (e) {
+                    url = '';
+                }
+                if (!url || url === 'about:blank') {
+                    url = 'page.html?url=' + (normalizePage(storageGet(STORAGE_KEY)) || DEFAULT_PAGE);
+                }
+                var a = document.createElement('a');
+                a.setAttribute('href', url);
+                a.setAttribute('target', '_blank');
+                a.setAttribute('rel', 'noopener');
                 document.body.appendChild(a);
                 a.click();
                 a.parentNode.removeChild(a);
                 return false;
             }
-            $types.removeClass('active');
-            $(this).addClass('active');
-            $iframe.removeClass('pc').removeClass('mobile').addClass(type);
+            applyDevice(type);
             return false;
         });
-        setTimeout(function () {
-            const menuWidth = $('#demoPanel .left .menu .items:first').width()
-            const $menuItemList = $('#demoPanel .left .menu .items a')
-            $menuItemList.on('click', function () {
-                $menuItemList.removeClass('active')
-                $(this).addClass('active')
-            })
-            $menuItemList.each(function (i, o) {
-                // console.log(o, menuWidth, $(o).width())
-                if ($(o).width() > menuWidth / 2) {
-                    $(o).css('width', '100%')
-                }
-            })
-        }, 1000)
     });
 </script>
 </body>

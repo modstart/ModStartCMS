@@ -1,0 +1,158 @@
+// ---------------------------------------------------------------------------
+// SUI Theme Customization (template)
+// ---------------------------------------------------------------------------
+// This file is imported at the END of src/theme/default/style.less, so values
+// defined here win over the defaults in sui/base/theme.less (same :root
+// specificity + later in source order).
+//
+// Override priority for a site, low -> high:
+//   1. sui/base/theme.less defaults          (compiled into style.css)
+//   2. THIS FILE                             (compiled into style.css, later)
+//   3. public/theme/default/css/style.css    (site file, loaded after)
+//   4. Admin "sitePrimaryColor" setting      (inline <style>, highest)
+//
+// Nothing below is active until you uncomment it.
+// ---------------------------------------------------------------------------
+
+
+// === 1. Brand color - the minimum set ======================================
+// Declare ONE source color and let LESS derive the whole family. If you only
+// override the primary, remember the derived tokens: --theme-color-primary-light-bg
+// is a solid tint and must be given explicitly, while soft / glow / focus-ring
+// (and the dark-mode variants) are computed in CSS from --theme-color-primary-rgb.
+// 只覆盖主色时：--theme-color-primary-light-bg（实色浅底）必须显式给出，
+// 半透明的 soft / glow / focus-ring 及深色模式变体则通过 --theme-color-primary-rgb 在 CSS 里计算。
+//
+// @brand: #2F6BFF;
+//
+// :root {
+//     --theme-color-primary: @brand;
+//     --theme-color-primary-rgb: red(@brand), green(@brand), blue(@brand); // 供 CSS 计算透明度变体（深色模式半透明底跟随它）
+//     --theme-color-primary-dark: darken(@brand, 8%);      // hover / 渐变深端
+//     --theme-color-primary-light: lighten(@brand, 18%);   // 渐变浅端 / 指示条
+//     --theme-color-primary-light-bg: mix(@brand, #FFFFFF, 8.5%);   // 选中项浅底
+//     --theme-color-primary-soft: fade(@brand, 10%);       // 半透明底
+//     --theme-color-primary-glow: fade(@brand, 24%);       // 背景氛围光晕
+//     --theme-color-focus-ring: fade(@brand, 16%);         // 焦点环
+// }
+//
+// NOTE: use mix() for the light background, NOT lighten(...,45%) - lighten
+// clamps to pure #ffffff on saturated brands.
+
+
+// === 2. Link color ========================================================
+// Defaults to the primary color, so normally nothing to do here. Override
+// only when links must differ from the brand color.
+//
+// :root {
+//     --theme-color-link: @brand;
+//     --theme-color-link-hover: darken(@brand, 10%);
+//     --theme-color-link-dark: darken(@brand, 10%);
+//     --theme-color-link-light: lighten(@brand, 18%);
+// }
+
+
+// === 3. Neutral surfaces ==================================================
+// :root {
+//     --theme-color-heading: #101828;        // 标题（最深）
+//     --theme-color-text: #344054;           // 正文
+//     --theme-color-text-reverse: #FFFFFF;   // 深色底上的文字
+//     --theme-color-body-bg: #F5F7FB;        // 页面底色
+//     --theme-color-content-bg: #FFFFFF;     // 卡片/内容底
+//     --theme-color-body-line: #EAECF0;      // 全局描边/分隔线
+//     --theme-color-input-bg: #F2F4F7;       // 输入框/灰块底
+// }
+
+
+// === 4. Ink surfaces (front-end nav / footer / hero) ======================
+// :root {
+//     --theme-color-ink-bg: #0F172A;
+//     --theme-color-ink-line: rgba(255, 255, 255, 0.10);
+//     --theme-color-ink-text: rgba(255, 255, 255, 0.72);
+//     --theme-color-ink-heading: #FFFFFF;
+// }
+
+
+// === 5. Semantic colors ===================================================
+// :root {
+//     --theme-color-success: #12B76A;
+//     --theme-color-success-dark: darken(#12B76A, 8%);
+//     --theme-color-success-light: #ECFDF3;
+//     --theme-color-warning: #F79009;
+//     --theme-color-warning-dark: darken(#F79009, 8%);
+//     --theme-color-warning-light: #FFFAEB;
+//     --theme-color-danger: #F04438;
+//     --theme-color-danger-dark: darken(#F04438, 8%);
+//     --theme-color-danger-light: #FEF3F2;
+// }
+
+
+// === 6. Radius / typography / container ===================================
+// Radius is intentionally tiered: control < card < overlay. Keep the tiers.
+//
+// :root {
+//     --theme-size-radius-xs: 0.375rem;      // 6px  code / 行内小元素
+//     --theme-size-radius-sm: 0.5rem;        // 8px  按钮、输入框等控件
+//     --theme-size-radius: 1rem;             // 16px 卡片、面板
+//     --theme-size-radius-lg: 1.25rem;       // 20px 弹窗、浮层
+//     --theme-size-margin: 0.625rem;
+//     --theme-size-margin-lg: 2.5rem;
+//     --theme-size-padding: 0.625rem;
+//     --theme-font-size-root: 16px;          // rem 基准，慎改
+//     --theme-font-size: 0.8125rem;          // 正文
+//     --theme-font-size-medium: 1rem;
+//     --theme-font-size-large: 1.25rem;
+//     --theme-font-size-small: 0.75rem;
+//     --theme-font-family-serif: "Songti SC", "Noto Serif SC", Georgia, serif;
+//     --theme-font-family-mono: "SF Mono", Menlo, Consolas, monospace;
+//     --theme-container-width: 75rem;
+// }
+
+
+// === 7. Admin sidebar =====================================================
+// The dark sidebar is the default. Overriding these in :root only affects the
+// dark variant; the light variant comes from [data-theme="light"].
+//
+// :root {
+//     --panel-menu-background: #0F172A;
+//     --panel-menu-text-color: rgba(255, 255, 255, 0.72);
+//     --panel-menu-text-color-hover: #FFFFFF;
+//     --panel-menu-hover-background: rgba(255, 255, 255, 0.06);
+//     --panel-menu-active-background: var(--color-primary);
+//     --panel-menu-active-color: #FFFFFF;
+//     --panel-menu-active-border-color: var(--color-primary-light);
+//     --panel-menu-logo-color: #FFFFFF;
+//     --panel-menu-search-background: rgba(255, 255, 255, 0.10);
+//     --panel-menu-search-color: #FFFFFF;
+//     --panel-menu-search-tip-color: rgba(255, 255, 255, 0.42);
+//     --panel-menu-arrow-color: rgba(255, 255, 255, 0.42);
+//     --panel-menu-scrollbar-background: rgba(255, 255, 255, 0.18);
+//     --panel-menu-width: 13.75rem;
+//     --panel-menu-font-size: 0.875rem;
+// }
+
+
+// === Example preset: switch the whole system to a violet brand ============
+// Copy this block out of the comments to see the full effect.
+//
+// @brand: #656DE6;
+//
+// :root {
+//     --theme-color-primary: @brand;
+//     --theme-color-primary-rgb: red(@brand), green(@brand), blue(@brand);
+//     --theme-color-primary-dark: darken(@brand, 8%);
+//     --theme-color-primary-light: lighten(@brand, 18%);
+//     --theme-color-primary-light-bg: mix(@brand, #FFFFFF, 8.5%);
+//     --theme-color-primary-soft: fade(@brand, 10%);
+//     --theme-color-primary-glow: fade(@brand, 24%);
+//     --theme-color-focus-ring: fade(@brand, 16%);
+// }
+//
+// Produces:
+//   --theme-color-primary:          #656DE6
+//   --theme-color-primary-dark:     #424CE0
+//   --theme-color-primary-light:    #B4B8F3
+//   --theme-color-primary-light-bg: #F3F3FD
+//   --theme-color-primary-soft:     rgba(101, 109, 230, .10)
+//   --theme-color-primary-glow:     rgba(101, 109, 230, .24)
+//   --theme-color-focus-ring:       rgba(101, 109, 230, .16)

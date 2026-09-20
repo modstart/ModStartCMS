@@ -1,7 +1,10 @@
 
 .btn {
-    display: inline-block;
-    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    font-weight: 500;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
@@ -14,10 +17,16 @@
     height: 2rem;
     line-height: 1.25rem;
     font-size: 0.8125rem;
-    border-radius: 0.25rem;
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    border-radius: 0.5rem;
+    transition: var(--transition);
     -webkit-appearance: none;
     box-sizing: border-box;
+    position: relative;
+
+    & > i {
+        font-size: 1em;
+        line-height: 1;
+    }
 }
 
 .btn-group {
@@ -28,31 +37,31 @@
         margin: 0;
 
         &:first-child {
-            border-top-left-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
         }
 
         &:last-child {
-            border-top-right-radius: 0.25rem;
-            border-bottom-right-radius: 0.25rem;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
         }
     }
 }
 
 
 .btn-lg {
-    padding: 0.625rem 1.0625rem;
-    font-size: 1rem;
+    padding: 0.625rem 1.125rem;
+    font-size: 0.9375rem;
     line-height: 1.25rem;
-    border-radius: 0.3rem;
+    border-radius: 0.625rem;
     height: 2.5rem;
 }
 
 .btn-sm {
-    padding: 0.1875rem 0.4375rem;
-    font-size: 0.625rem;
+    padding: 0.1875rem 0.5rem;
+    font-size: 0.6875rem;
     height: 1.75rem;
-    border-radius: 0.2rem;
+    border-radius: 0.375rem;
     line-height: 1.25rem;
 }
 
@@ -66,21 +75,28 @@
     text-decoration: none;
 }
 
-.btn:focus, .btn.focus {
-
+.btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.1875rem var(--color-focus-ring);
 }
 
 .btn.btn-border-none, .btn[class*="ub-bg-"] {
     border: none;
+    box-shadow: var(--box-shadow-xs);
 
     &:hover, &:hover:not(.disabled) {
         border: none;
+        box-shadow: var(--box-shadow-xs);
+        filter: brightness(0.96);
+        transform: translateY(-0.0625rem);
     }
 }
 
 .btn.disabled, .btn:disabled {
-    opacity: 0.65;
+    opacity: 0.55;
     cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
 .btn:not(:disabled):not(.disabled) {
@@ -89,6 +105,7 @@
 
 .btn:not(:disabled):not(.disabled):active, .btn:not(:disabled):not(.disabled).active {
     background-image: none;
+    transform: translateY(0);
 }
 
 a.btn.disabled,
@@ -96,14 +113,25 @@ fieldset:disabled a.btn {
     pointer-events: none;
 }
 
+// Default (secondary) button
 .btn {
     color: var(--color-body-block);
     background-color: var(--color-content-bg);
     border: 0.0625rem solid var(--color-body-line);
+    box-shadow: var(--box-shadow-xs);
 
     &:hover:not(.disabled) {
         color: var(--color-primary);
-        border: 0.0625rem solid var(--color-primary);
+        border-color: var(--color-primary);
+        background-color: var(--color-content-bg);
+        box-shadow: 0 0 0 0.1875rem var(--color-focus-ring);
+    }
+
+    &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
+        background-color: var(--color-primary-light-bg);
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        box-shadow: none;
     }
 }
 
@@ -119,31 +147,55 @@ fieldset:disabled a.btn {
     border-radius: 0.875rem;
 }
 
-.btn-primary {
+// Colored solid buttons share the same depth / hover treatment.
+.btn-primary,
+.btn-success,
+.btn-warning,
+.btn-danger {
     color: #fff;
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
 
     &:hover:not(.disabled) {
         color: #fff;
-        background-color: var(--color-primary-dark);
-        border-color: var(--color-primary-dark);
-    }
-
-    &.disabled, &:disabled {
-        color: #fff;
-        background-color: var(--color-primary);
+        transform: translateY(-0.0625rem);
     }
 
     &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
         color: #fff;
+        transform: translateY(0);
+    }
+
+    &.disabled, &:disabled {
+        color: #fff;
+    }
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    box-shadow: 0 0.0625rem 0.125rem rgba(16, 24, 40, 0.08), 0 0.25rem 0.75rem -0.125rem fade(@color-primary, 45%);
+
+    &:hover:not(.disabled) {
         background-color: var(--color-primary-dark);
+        border-color: var(--color-primary-dark);
+        box-shadow: 0 0.375rem 1rem -0.25rem fade(@color-primary, 55%);
+    }
+
+    &.disabled, &:disabled {
+        background-color: var(--color-primary);
+    }
+
+    &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
+        background-color: var(--color-primary-dark);
+        box-shadow: none;
+    }
+
+    &[class*="ub-bg-"] {
+        box-shadow: var(--box-shadow-xs);
     }
 
     &.gradient {
-        background-image: linear-gradient(45deg, var(--color-primary-dark), var(--color-primary-light));
+        background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 130%);
     }
-
 }
 
 
@@ -151,115 +203,120 @@ fieldset:disabled a.btn {
     color: var(--color-primary);
     border: 0.0625rem solid var(--color-primary);
     background: transparent;
+    box-shadow: none;
 
     &:hover:not(.disabled) {
         color: #FFF;
         background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        box-shadow: 0 0.25rem 0.75rem -0.125rem fade(@color-primary, 45%);
     }
 
     &.disabled, &:disabled {
-        background-color: #F8F8F8;
+        background-color: transparent;
+        opacity: 0.5;
     }
 
     &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
-        background-color: var(--color-primary);
+        background-color: var(--color-primary-dark);
+        border-color: var(--color-primary-dark);
     }
 }
 
 
 .btn-success {
-    color: #fff;
     background-color: var(--color-success);
     border-color: var(--color-success);
+    box-shadow: 0 0.0625rem 0.125rem rgba(16, 24, 40, 0.08), 0 0.25rem 0.75rem -0.125rem fade(@color-success, 45%);
 
     &:hover:not(.disabled) {
-        color: #fff;
         background-color: var(--color-success-dark);
         border-color: var(--color-success-dark);
+        box-shadow: 0 0.375rem 1rem -0.25rem fade(@color-success, 55%);
     }
 
     &.disabled, &:disabled {
-        color: #fff;
         background-color: var(--color-success);
     }
 
     &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
-        color: #fff;
         background-color: var(--color-success-dark);
+        box-shadow: none;
     }
 
     &.gradient {
-        background-image: linear-gradient(45deg, var(--color-success-dark), var(--color-success));
+        background-image: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 130%);
     }
 }
 
 .btn-warning {
-    color: #FFF;
     background-color: var(--color-warning);
     border-color: var(--color-warning);
+    box-shadow: 0 0.0625rem 0.125rem rgba(16, 24, 40, 0.08), 0 0.25rem 0.75rem -0.125rem fade(@color-warning, 45%);
 
     &:hover:not(.disabled) {
-        color: #fff;
         background-color: var(--color-warning-dark);
         border-color: var(--color-warning-dark);
+        box-shadow: 0 0.375rem 1rem -0.25rem fade(@color-warning, 55%);
     }
 
     &.disabled, &:disabled {
-        color: #fff;
         background-color: var(--color-warning);
     }
 
     &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
-        color: #fff;
         background-color: var(--color-warning-dark);
+        box-shadow: none;
     }
 
     &.gradient {
-        background-image: linear-gradient(45deg, var(--color-warning-dark), var(--color-warning));
+        background-image: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-dark) 130%);
     }
 }
 
 
 .btn-danger {
-    color: #fff;
     background-color: var(--color-danger);
     border-color: var(--color-danger);
+    box-shadow: 0 0.0625rem 0.125rem rgba(16, 24, 40, 0.08), 0 0.25rem 0.75rem -0.125rem fade(@color-danger, 45%);
 
     &:hover:not(.disabled) {
-        color: #fff;
         background-color: var(--color-danger-dark);
         border-color: var(--color-danger-dark);
+        box-shadow: 0 0.375rem 1rem -0.25rem fade(@color-danger, 55%);
     }
 
     &.disabled, &:disabled {
-        color: #fff;
         background-color: var(--color-danger);
     }
 
     &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
-        color: #fff;
         background-color: var(--color-danger-dark);
+        box-shadow: none;
     }
 
     &.gradient {
-        background-image: linear-gradient(45deg, var(--color-danger-dark), var(--color-danger));
+        background-image: linear-gradient(135deg, var(--color-danger) 0%, var(--color-danger-dark) 130%);
     }
 }
 
 .btn-vip {
-    background-image: linear-gradient(90deg, #EDD3B0 0%, #DDB888 100%);
-    color: #805D2D;
-    border-color: #EDD3B0;
+    background-image: linear-gradient(135deg, #F5DDBE 0%, #E3BE8C 100%);
+    color: #7A5423;
+    border-color: transparent;
+    font-weight: 600;
+    box-shadow: 0 0.0625rem 0.125rem rgba(16, 24, 40, 0.08), 0 0.25rem 0.75rem -0.125rem rgba(227, 190, 140, 0.6);
 
     &:hover, &:active, &:not(:disabled):not(.disabled):active {
-        background-image: linear-gradient(90deg, #DDB888 100%, #EDD3B0 0%);
-        color: #805D2D !important;
-        border-color: #EDD3B0 !important;
+        background-image: linear-gradient(135deg, #E3BE8C 0%, #D6AC72 100%);
+        color: #6B4817 !important;
+        border-color: transparent !important;
+        box-shadow: 0 0.375rem 1rem -0.25rem rgba(227, 190, 140, 0.75);
     }
 }
 
 .btn-block {
-    display: block;
+    display: flex;
     width: 100%;
     box-sizing: border-box;
 }
@@ -272,4 +329,9 @@ input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
     width: 100%;
+}
+
+// 按压反馈：轻微下压，交互更"实"（放在最后以覆盖各变体的 translateY(0)）
+.btn:not(:disabled):not(.disabled):active {
+    transform: translateY(0) scale(0.975);
 }

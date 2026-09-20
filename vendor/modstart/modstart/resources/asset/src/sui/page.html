@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://ms-cdn.modstart.com/asset/theme/default/base.css">
     <link rel="stylesheet/less" type="text/css" href="./base/style.less"/>
     <link rel="stylesheet/less" type="text/css" href="./bricks/component/panel/panel.less"/>
-    <script src="https://ms-cdn.modstart.com/asset/vendor/jquery.js"></script>
+    <script src="js/jquery.js"></script>
     <script src="https://ms-cdn.modstart.com/asset/common/base.js"></script>
     <script src="https://ms-cdn.modstart.com/asset/vendor/echarts/echarts.all.js"></script>
     <style type="text/css">
@@ -22,71 +22,46 @@
         }
 
         .block-breaker {
-            height: 20px;
-            overflow: hidden;
-            margin: 20px 0;
-            border: 1px dashed #CCC;
+            height: 0;
+            margin: 1.25rem 0;
+            border: none;
+            border-top: 0.0625rem dashed var(--color-body-line);
         }
 
         .block-selector {
-            display: block;
-            background: #FFF;
-            margin: 10px;
-            line-height: 50px;
-            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-content-bg);
+            margin: 0.625rem 0;
+            line-height: 2.75rem;
+            color: var(--color-text);
+            font-weight: 500;
             text-align: center;
-            border-radius: 3px;
+            border-radius: var(--size-radius);
+            border: 0.0625rem solid var(--color-body-line);
+            box-shadow: var(--box-shadow-xs);
+            transition: var(--transition);
+        }
+
+        .block-selector:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            box-shadow: var(--box-shadow);
         }
 
         .block-placeholder {
-            background: #EEE;
-            border-radius: 3px;
-            margin: 10px 0;
-            padding: 10px;
-            color: #c4cfdb;
-        }
-
-        #page-dom-tool {
-            border: 1px solid red;
-            position: absolute;
-            left: 100px;
-            top: 100px;
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 0, 0, 0.2);
-            display: none;
-        }
-
-        #page-dom-tool .btn-box {
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-
-        #page-dom-tool .btn-box .btn {
-            line-height: 20px;
-            height: 20px;
-            display: block;
-            padding: 0 5px;
-            font-size: 12px;
-            border-radius: 3px;
-            border: 1px solid red;
-        }
-
-        #page-dom-tool .btn-box .btn i {
-            font-size: 12px;
+            background: var(--color-body-block-bg);
+            border-radius: var(--size-radius);
+            margin: 0.625rem 0;
+            padding: 0.875rem 1rem;
+            color: var(--color-muted);
         }
     </style>
 </head>
 <body>
 <div id="page-container">
 </div>
-<div id="page-dom-tool">
-    <div class="btn-box">
-        <a class="btn" data-copy-html href="javascript:;"><i class="iconfont icon-copy"></i></a>
-    </div>
-</div>
-<script src="js/jquery.js"></script>
 <script>
     less = {
         env: 'development',
@@ -96,13 +71,43 @@
 </script>
 <script src="js/less.js"></script>
 <script src="js/holder.js"></script>
-<script src="js/clipboard.min.js"></script>
-<script src="js/notify.min.js"></script>
 <script src="js/baiduTemplate.js"></script>
 <script src="js/randomEn.js"></script>
 <script>
     $(function () {
-        var page = window.location.search.substring(5);
+        // Resolve the preview target: the `url` query param wins, otherwise fall
+        // back to the last page kept in localStorage (shared with index.html) so
+        // reloading a preview without the param never lands on a blank frame.
+        var page = (function () {
+            var STORAGE_KEY = 'brick-ui-last-page';
+            var search = window.location.search || '';
+            var value = '';
+            if (search.indexOf('?url=') === 0) {
+                value = search.substring(5);
+            } else if (search.charAt(0) === '?') {
+                value = search.substring(1);
+            }
+            value = (value || '').replace(/^\s+|\s+$/g, '');
+            if (!value) {
+                try {
+                    value = window.localStorage.getItem(STORAGE_KEY) || '';
+                } catch (e) {
+                    value = '';
+                }
+            }
+            if (value && window.self === window.top) {
+                // Only persist when opened standalone; embedded frames (console
+                // iframe / nested variant frames) must not clobber the value.
+                try {
+                    window.localStorage.setItem(STORAGE_KEY, value);
+                } catch (e) {
+                }
+            }
+            return value;
+        })();
+        if (!page) {
+            page = 'component/header/header-default';
+        }
         baidu.template.LEFT_DELIMITER = '<?'
         baidu.template.RIGHT_DELIMITER = '?>'
         const randomZH = function (len) {
@@ -224,64 +229,6 @@
                 cb()
             }, delay);
         }
-
-        let toolHtmlSelector = '#page-dom-tool'
-        let toolHtmlHideTimer = null
-        let $toolHtml = $(toolHtmlSelector)
-        let toolLastElement = null
-        let clipboard = new ClipboardJS($toolHtml.find('[data-copy-html]')[0], {
-            text: function (trigger) {
-                if (!toolLastElement) {
-                    return '[ERROR]'
-                }
-                return toolLastElement.outerHTML
-            }
-        })
-        $.notify.defaults({
-            showDuration: 10,
-            hideDuration: 10
-        })
-        clipboard.on('success', function (e) {
-            $toolHtml.find('[data-copy-html]').notify("复制成功", 'success')
-        })
-        $toolHtml.on('click', function () {
-            setTimeout(function () {
-                $toolHtml.hide()
-            }, 3000)
-        })
-        $(document).on('mousemove', function (e) {
-            if (!e.metaKey) {
-                return
-            }
-            let elements = document.elementsFromPoint(e.clientX, e.clientY)
-            let element = null, isTool = false
-            for (let one of elements) {
-                let $one = $(one)
-                if ($one.closest(toolHtmlSelector).length > 0) {
-                    isTool = true
-                    continue
-                }
-                element = one
-                break
-            }
-            if (!element || toolLastElement === element && isTool) {
-                return
-            }
-            toolLastElement = element
-            let pos = element.getBoundingClientRect()
-            $toolHtml.css({
-                top: (pos.y + window.scrollY) + 'px',
-                left: pos.x + 'px',
-                width: pos.width + 'px',
-                height: pos.height + 'px',
-            }).show()
-            if (toolHtmlHideTimer) {
-                clearTimeout(toolHtmlHideTimer)
-            }
-            toolHtmlHideTimer = setTimeout(() => {
-                $toolHtml.hide()
-            }, 5000)
-        })
 
     });
 </script>

@@ -3,35 +3,40 @@
     --panel-menu-font-size: 0.875rem;
     --panel-menu-logo-font-size: 1.25rem;
 
-    --panel-menu-logo-color: var(--color-primary);
-    --panel-menu-background: #00101C;
-    --panel-menu-text-color: #FFF;
-    --panel-menu-text-color-hover: #FFF;
+    // Default (dark) admin sidebar — deep slate with a bright accent
+    --panel-menu-logo-color: #FFFFFF;
+    // 复用"墨色"令牌，保证全站深色底纹统一、且可通过 --theme-color-ink-bg 定制
+    --panel-menu-background: var(--color-ink-bg, #0F172A);
+    --panel-menu-text-color: rgba(255, 255, 255, 0.72);
+    --panel-menu-text-color-hover: #FFFFFF;
+    --panel-menu-hover-background: rgba(255, 255, 255, 0.06);
+    // 激活态：实色主色（保证密集菜单下的辨识度）+ 主色辉光提升质感
     --panel-menu-active-background: var(--color-primary);
-    --panel-menu-active-color: #FFF;
-    --panel-menu-active-border-color: var(--color-primary);
-    --panel-menu-search-background: #444;
-    --panel-menu-search-color: #EEE;
-    --panel-menu-search-color: #EEE;
-    --panel-menu-scrollbar-background: #111;
+    --panel-menu-active-color: #FFFFFF;
+    --panel-menu-active-border-color: var(--color-primary-light);
+    --panel-menu-search-background: rgba(255, 255, 255, 0.10);
+    --panel-menu-search-color: #FFFFFF;
+    --panel-menu-search-tip-color: rgba(255, 255, 255, 0.42);
+    --panel-menu-scrollbar-background: rgba(255, 255, 255, 0.18);
     --panel-menu-page-tab-scrollbar-background: var(--color-primary);
-    --panel-menu-arrow-color: #999;
+    --panel-menu-arrow-color: rgba(255, 255, 255, 0.42);
 }
 
 [data-theme="light"] {
     --panel-menu-logo-color: var(--color-primary);
-    --panel-menu-background: #FFF;
-    --panel-menu-text-color: #333;
+    --panel-menu-background: var(--color-content-bg);
+    --panel-menu-text-color: var(--color-text);
     --panel-menu-text-color-hover: var(--color-primary);
+    --panel-menu-hover-background: var(--color-body-block-bg);
     --panel-menu-active-background: var(--color-primary-light-bg);
     --panel-menu-active-color: var(--color-primary);
     --panel-menu-active-border-color: var(--color-primary);
-    --panel-menu-search-background: #EEE;
-    --panel-menu-search-color: #111;
-    --panel-menu-search-tip-color: #999;
-    --panel-menu-scrollbar-background: #CCC;
+    --panel-menu-search-background: var(--color-input-bg);
+    --panel-menu-search-color: var(--color-text);
+    --panel-menu-search-tip-color: var(--color-muted);
+    --panel-menu-scrollbar-background: var(--color-body-block-bg-hover);
     --panel-menu-page-tab-scrollbar-background: var(--color-primary);
-    --panel-menu-arrow-color: #999;
+    --panel-menu-arrow-color: var(--color-tertiary);
 }
 
 .ub-panel-frame {
@@ -52,7 +57,7 @@
         overflow: hidden;
         z-index: 2000;
         transition: all 0.2s linear;
-        outline: 1px solid #EEE;
+        border-right: 0.0625rem solid var(--color-body-line);
 
         .logo {
             height: 2.8125rem;
@@ -102,7 +107,7 @@
             }
 
             mark {
-                color: red;
+                color: var(--color-danger);
                 background: none;
             }
 
@@ -206,6 +211,7 @@
                         background: var(--panel-menu-active-background);
                         color: var(--panel-menu-active-color);
                         border-right: 3px solid var(--panel-menu-active-border-color);
+                        box-shadow: 0 0.25rem 0.875rem -0.375rem var(--color-primary-glow);
                     }
                 }
 
@@ -225,9 +231,12 @@
                     text-overflow: ellipsis;
                     font-size: var(--panel-menu-font-size);
                     color: var(--panel-menu-text-color);
+                    border-radius: 0 var(--size-radius-sm) var(--size-radius-sm) 0;
+                    transition: var(--transition);
 
                     &:hover {
                         color: var(--panel-menu-text-color-hover);
+                        background: var(--panel-menu-hover-background);
                     }
 
                     .icon {
@@ -281,24 +290,30 @@
 
         .top {
             height: 2.8125rem;
-            background: #FFF;
-            border-bottom: 0.0625rem solid #eee;
+            background: var(--color-content-bg);
+            border-bottom: 0.0625rem solid var(--color-body-line);
             transition: .5s;
             text-align: left;
             display: flex;
 
+            // DOM order is: trigger / menu-right / left-trigger / menu, but the
+            // visual order must be: left-trigger / tabs / right cluster.
+            // `order` fixes this without touching the markup (the mobile
+            // `.right-menu-trigger:hover + .menu-right` sibling selector still works).
             .right-menu-trigger {
                 display: none;
+                order: 4;
             }
 
             .left-trigger, .left-action {
+                order: 1;
                 display: inline-block;
                 line-height: 2.8125rem;
                 padding: 0 0.625rem;
-                color: #c4cfdb;
+                color: var(--color-tertiary);
                 font-size: var(--font-size-large);
                 vertical-align: middle;
-                transition: all 0.2s linear;
+                transition: var(--transition);
 
                 &:hover {
                     color: var(--color-primary);
@@ -306,6 +321,7 @@
             }
 
             .menu {
+                order: 2;
                 vertical-align: middle;
                 flex-grow: 1;
                 overflow-y: hidden;
@@ -335,27 +351,28 @@
 
                 a {
                     line-height: 2.625rem;
-                    color: #333;
+                    color: var(--color-text);
                     padding: 0 0.625rem;
                     display: inline-block;
-                    border-top: 0.125rem solid #FFF;
+                    border-top: 0.125rem solid transparent;
                     text-decoration: none;
-                    transition: none;
+                    border-radius: var(--size-radius-sm) var(--size-radius-sm) 0 0;
+                    transition: var(--transition);
 
                     .close {
                         color: var(--color-tertiary);
 
                         &:hover {
-                            background-color: red;
+                            background-color: var(--color-danger);
                             border-radius: 50%;
-                            color: #FFF;
+                            color: #fff;
                         }
                     }
 
                     &.active {
                         border-color: var(--color-primary);
                         color: var(--color-primary);
-                        background-color: rgb(237, 239, 255);
+                        background-color: var(--color-primary-light-bg);
 
                         &:before {
                             content: '';
@@ -377,6 +394,7 @@
             }
 
             .menu-right {
+                order: 3;
                 padding-right: 1.25rem;
                 flex-shrink: 0;
 
@@ -384,45 +402,151 @@
                     display: inline-block;
                     position: relative;
 
-                    .title {
-                        line-height: 2.8125rem;
-                        color: #111;
-                        padding: 0 0.625rem;
-                        display: inline-block;
+                    // 图标操作（首页/全屏/清缓存）：统一成"圆角色块按钮"，
+                    // hover 走"浅底 + 主色"，与顶栏其它交互态一致。
+                    // 用户区 .admin-user 单独处理（头像胶囊），故用 :not 区分。
+                    .title:not(.admin-user) {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 2rem;
+                        height: 2rem;
+                        // (2.8125 - 2) / 2，让按钮在顶栏里垂直居中
+                        margin: 0.40625rem 0;
+                        color: var(--color-tertiary);
+                        border-radius: var(--size-radius-sm);
+                        transition: var(--transition-fast);
 
                         &:hover {
                             color: var(--color-primary);
+                            background: var(--color-primary-light-bg);
+                        }
+                    }
+
+                    // 图标操作组 与 用户区 之间加一条发丝竖线做分组
+                    & + .menu-item:last-child {
+                        margin-left: 0.5rem;
+                        padding-left: 0.625rem;
+
+                        &:before {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            top: 50%;
+                            width: 0.0625rem;
+                            height: 1.125rem;
+                            background: var(--color-body-line);
+                            transform: translateY(-50%);
+                        }
+                    }
+
+                    // 用户区：内嵌圆形头像 + 用户名 + 下拉 chevron 的胶囊
+                    .title.admin-user {
+                        display: inline-flex;
+                        align-items: center;
+                        height: 2rem;
+                        margin: 0.40625rem 0;
+                        padding: 0 0.5rem 0 0.25rem;
+                        color: var(--color-text);
+                        font-weight: 500;
+                        border-radius: var(--size-radius-full);
+                        transition: var(--transition-fast);
+
+                        .iconfont.icon-user {
+                            width: 1.75rem;
+                            height: 1.75rem;
+                            margin-right: 0.375rem;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 50%;
+                            background: var(--color-primary-light-bg);
+                            color: var(--color-primary);
+                            font-size: var(--font-size);
+                        }
+
+                        // 下拉指示箭头（沿用 .ub-dropdown-title 的"正方形旋转"画法）
+                        &:after {
+                            content: '';
+                            width: 0.3125rem;
+                            height: 0.3125rem;
+                            margin-left: 0.4375rem;
+                            margin-bottom: 0.125rem;
+                            border-right: 0.09375rem solid var(--color-muted);
+                            border-bottom: 0.09375rem solid var(--color-muted);
+                            transform: rotate(45deg);
+                            transition: var(--transition);
+                        }
+
+                        &:hover {
+                            background: var(--color-body-block-bg);
+                        }
+                    }
+
+                    &:hover {
+                        .title.admin-user {
+                            background: var(--color-body-block-bg);
+
+                            &:after {
+                                border-color: var(--color-primary);
+                                transform: rotate(225deg);
+                            }
+                        }
+
+                        .dropdown {
+                            display: block;
+                            animation: msPanelMenuDropdownIn 0.16s var(--ease-out);
                         }
                     }
 
                     .dropdown {
                         display: none;
                         position: absolute;
-                        background: #FFF;
-                        padding: 0 0.3125rem;
-                        box-shadow: 0 0 5px #ccc;
-                        border-radius: 3px;
-                        z-index: 1000;
                         right: 0;
                         top: 2.8125rem;
+                        min-width: 9rem;
+                        padding: 0.375rem;
+                        background: var(--color-content-bg);
+                        box-shadow: var(--box-shadow-pop), var(--shadow-highlight);
+                        border: 0.0625rem solid var(--color-body-line);
+                        border-radius: var(--size-radius);
+                        z-index: 1000;
 
                         .dropdown-item {
                             display: block;
                             white-space: nowrap;
-                            height: 2.5rem;
-                            line-height: 2.5rem;
+                            height: 2.25rem;
+                            line-height: 2.25rem;
                             padding: 0 0.625rem;
-                            color: #111;
+                            color: var(--color-text);
+                            border-radius: var(--size-radius-sm);
+                            transition: var(--transition-fast);
 
                             &:hover {
                                 color: var(--color-primary);
+                                background: var(--color-primary-light-bg);
                             }
                         }
-                    }
 
-                    &:hover {
-                        .dropdown {
-                            display: block;
+                        // 注销：与上方项之间加发丝分隔线，hover 用危险色
+                        .dropdown-item[href*="logout"] {
+                            position: relative;
+                            margin-top: 0.375rem;
+
+                            &:before {
+                                content: '';
+                                position: absolute;
+                                left: 0.375rem;
+                                right: 0.375rem;
+                                top: -0.1875rem;
+                                height: 0.0625rem;
+                                background: var(--color-body-line);
+                            }
+
+                            &:hover {
+                                color: var(--color-danger);
+                                background: var(--color-danger-light);
+                            }
                         }
                     }
                 }
@@ -438,7 +562,7 @@
                 right: 0;
                 overflow: auto;
                 transition: all 0.2s linear;
-                //background: #F4F4F4;
+                background: var(--color-body-bg);
                 padding: 0.625rem;
             }
         }
@@ -448,9 +572,10 @@
             bottom: 0;
             right: 0;
             left: var(--panel-menu-width);
-            background: #FFF;
+            background: var(--color-content-bg);
+            border-top: 0.0625rem solid var(--color-body-line);
             padding: 0.625rem;
-            box-shadow: 0 0 4px #ccc;
+            box-shadow: var(--box-shadow-pop);
             z-index: 1000;
             transition: all 0.2s linear;
         }
@@ -471,9 +596,10 @@
         bottom: 0;
         right: 0;
         left: 0;
-        background: #FFF;
+        background: var(--color-content-bg);
+        border-top: 0.0625rem solid var(--color-body-line);
         padding: 0.625rem;
-        box-shadow: 0 0 4px #ccc;
+        box-shadow: var(--box-shadow-pop);
         z-index: 1000;
         transition: all 0.2s linear;
     }
@@ -482,6 +608,24 @@
         height: 2.5rem;
         clear: both;
         overflow: hidden;
+    }
+}
+
+// 顶栏用户下拉的入场动画：只用「透明度 + 位移」，不开 max-height（见设计规范 §6.14）
+@keyframes msPanelMenuDropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-0.375rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ub-panel-frame .right .top .menu-right .dropdown {
+        animation: none !important;
     }
 }
 
@@ -588,7 +732,7 @@
         .left-menu-shrink {
             display: none;
             position: fixed;
-            background: rgba(0, 0, 0, 0.5);
+            background: var(--color-mask);
             top: 0;
             left: 0;
             right: 0;
@@ -616,7 +760,7 @@
                     width: 2.8125rem;
                     line-height: 2.8125rem;
                     text-align: center;
-                    color: #c4cfdb;
+                    color: var(--color-tertiary);
                     font-size: var(--font-size-large);
                     transition: all 0.2s linear;
 
@@ -630,40 +774,76 @@
                 }
 
                 .menu-right {
-                    width: 6.25rem;
-                    background: #FFF;
+                    display: none;
                     position: fixed;
                     top: 2.8125rem;
                     right: 0;
-                    border: #FFF;
-                    z-index: 1000;
-                    border-radius: 0 0 0.25rem 0.25rem;
-                    box-shadow: 0 0 3px #eee;
-                    padding-right: 0;
-                    display: none;
+                    width: auto;
+                    min-width: 9rem;
+                    padding: 0.5rem;
+                    flex-direction: row;
                     flex-wrap: wrap;
+                    align-items: center;
+                    background: var(--color-content-bg);
+                    border: none;
+                    border-radius: 0 0 var(--size-radius) var(--size-radius);
+                    box-shadow: var(--box-shadow-pop), var(--shadow-highlight);
+                    z-index: 1000;
 
                     &:hover {
                         display: flex;
                     }
 
                     .menu-item {
-                        flex-grow: 1;
+                        flex: 0 0 auto;
 
-                        .title {
-                            color: #111;
-                            display: block;
+                        // 用户区独占一行，与上方图标操作组用横向发丝线分隔
+                        & + .menu-item:last-child {
+                            flex: 0 0 100%;
+                            margin-left: 0;
+                            margin-top: 0.5rem;
+                            padding-left: 0;
+                            padding-top: 0.5rem;
+
+                            &:before {
+                                left: 0.25rem;
+                                right: 0.25rem;
+                                top: 0;
+                                width: auto;
+                                height: 0.0625rem;
+                                transform: none;
+                            }
+                        }
+
+                        .title:not(.admin-user) {
+                            width: 2.25rem;
+                            height: 2.25rem;
+                            margin: 0.125rem;
+                        }
+
+                        .title.admin-user {
+                            width: 100%;
+                            margin: 0;
+                            padding: 0 0.5rem 0 0.25rem;
                         }
 
                         .dropdown {
                             display: block;
                             position: static;
+                            min-width: 0;
+                            margin-top: 0.25rem;
+                            padding: 0;
                             box-shadow: none;
-                            border-radius: 0;
+                            border: none;
 
                             .dropdown-item {
-                                padding: 0 0.3125rem;
+                                padding: 0 0.625rem;
                             }
+                        }
+
+                        // 移动端下拉常显，去掉桌面端的 hover 入场动画
+                        &:hover .dropdown {
+                            animation: none;
                         }
                     }
                 }
@@ -699,6 +879,7 @@
         bottom: 3.125rem;
         padding: 0.625rem;
         overflow: auto;
+        background: var(--color-body-bg);
     }
 
     .panel-dialog-foot {
@@ -710,9 +891,10 @@
         padding: 0.625rem;
         height: 3.125rem;
         box-sizing: border-box;
-        background: #FFF;
+        background: var(--color-content-bg);
+        border-top: 0.0625rem solid var(--color-body-line);
         z-index: 1000;
-        box-shadow: 0 0 10px #EEE;
+        box-shadow: var(--box-shadow-lg);
         animation: fadein 1s ease 0s normal forwards 1;
         -webkit-animation: fadein 1s ease 0s normal forwards 1;
         opacity: 0;
