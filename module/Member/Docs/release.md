@@ -1,5 +1,6 @@
-## [Unreleased]
+## 5.3.0 新增会员资料接口与后台会员管理能力
 
+- 新增：Api 接口 `/api/member/current`（此前控制器存在但路由未注册导致 404），并在返回中补充会员基础字段 id/username/nickname/avatar/email/phone（移动端登录后获取用户资料）
 - 新增：AdminApi 会员昵称搜索接口
 - 新增：AdminApi 会员 random_by 接口（支持 bizGroup、username、nickname 字段查询）
 - 新增：实现 MemberStatProvider，向 Analysis 分析统计接口提供用户注册与留存数据
@@ -8,8 +9,10 @@
 
 - 新增：模块资源目录增加 .nvmrc（Node 14）规范构建环境
 
+- 优化：第三方授权登录入口超过 5 个时折叠为“…”，点击可展开更多（展开内容另起一行）
 - 优化：后台创建用户和重置密码不再受用户名最小长度和密码强度限制
 - 修复：会员数据访客上传接口（ueditor_guest）增加 SSRF 与 SVG 存储型 XSS 防护
+- 修复：会员中心「基本资料」入口（member_profile）在应用未定义路由时出现 404，模块内置兜底跳转到修改头像页
 
 ---
 

@@ -20,7 +20,39 @@
  *   {"ok":false,"error":"..."}
  */
 
-const { chromium } = require('playwright-core');
+const { chromium } = require(resolvePlaywrightCore());
+
+/**
+ * 解析 playwright-core 加载路径：
+ *  1. 环境变量 MODSTART_PLAYWRIGHT_CORE_PATH 指定路径
+ *  2. 用户目录共享位置 ~/.modstart/auto-test/node-modules/playwright-core
+ *  3. 本目录 node_modules/playwright-core
+ *  4. 退回 Node 默认解析（require('playwright-core')）
+ */
+function resolvePlaywrightCore() {
+    const fs = require('fs');
+    const os = require('os');
+    const path = require('path');
+    const candidates = [];
+    if (process.env.MODSTART_PLAYWRIGHT_CORE_PATH) {
+        candidates.push(process.env.MODSTART_PLAYWRIGHT_CORE_PATH);
+    }
+    const home = process.env.MODSTART_AUTO_TEST_HOME
+        ? path.resolve(process.env.MODSTART_AUTO_TEST_HOME)
+        : path.join(os.homedir(), '.modstart', 'auto-test', 'node-modules');
+    candidates.push(path.join(home, 'playwright-core'));
+    candidates.push(path.join(__dirname, 'node_modules', 'playwright-core'));
+    for (let i = 0; i < candidates.length; i++) {
+        try {
+            if (fs.existsSync(path.join(candidates[i], 'package.json'))) {
+                return candidates[i];
+            }
+        } catch (e) {
+            // ignore
+        }
+    }
+    return 'playwright-core';
+}
 
 const CHROME_CANDIDATES = [
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',

@@ -240,6 +240,11 @@ class TestCase
     public static function test($name, $callback)
     {
         $fullName = self::$currentGroup ? (self::$currentGroup . ' -> ' . $name) : $name;
+        // 定向测试：未匹配过滤关键字的用例直接跳过
+        if (!TestContext::matchTestFilter($fullName)) {
+            TestContext::skip($fullName);
+            return;
+        }
         try {
             foreach (self::$beforeEach as $hook) {
                 call_user_func($hook, new static());

@@ -869,6 +869,9 @@ class ModelUtil
             }
         }
 
+        // SECURITY (CWE-89): 字符串形式的 where 会原样进入 whereRaw（无参数绑定）。
+        // 只允许由代码内部构造的受控表达式（常量 / 时间 / 已 intval 的值），严禁传入用户输入；
+        // 优先使用数组形式 $option['where'] = ['field' => $value] 走参数绑定。
         if (!empty($option['where'])) {
             if (is_array($option['where'])) {
                 $o = $o->where($option['where']);
@@ -877,6 +880,8 @@ class ModelUtil
             }
         }
 
+        // SECURITY (CWE-89): whereRaw 建议使用参数化数组形式 ['expression', $bindings]，
+        // 字符串形式无绑定，严禁拼接用户输入，用户数据必须通过 $bindings 传入。
         if (!empty($option['whereRaw'])) {
             if (is_array($option['whereRaw'])) {
                 $o = $o->whereRaw($option['whereRaw'][0], $option['whereRaw'][1]);
@@ -1019,12 +1024,26 @@ class ModelUtil
                                         exit('TODO');
                                     }
                                     break;
-                                case 'raw':
+                                case 'binding':
+                                    // SECURITY (CWE-89): 'binding' 只接受参数化数组形式 ['binding' => [$expression, $bindings]]。
+                                    // 单个值可简写为 ['binding' => [$expression, $value]]（会自动包装为 bindings）。
+                                    // $expression 必须由代码内部构造（用户不可控），用户数据一律放入 $bindings 作为绑定值。
+                                    if (!is_array($v)) {
+                                        BizException::throws('search binding expression must be [expression, bindings]');
+                                    }
+                                    $bindingExpression = isset($v[0]) ? $v[0] : null;
+                                    $bindingValues = isset($v[1]) ? $v[1] : [];
+                                    if (!is_string($bindingExpression) || '' === $bindingExpression) {
+                                        BizException::throws('search binding expression must be [expression, bindings]');
+                                    }
+                                    if (!is_array($bindingValues)) {
+                                        $bindingValues = [$bindingValues];
+                                    }
                                     if ($first || $searchInfo['exp'] == 'and') {
                                         $first = false;
-                                        $query->whereRaw($v);
+                                        $query->whereRaw($bindingExpression, $bindingValues);
                                     } else {
-                                        $query->orWhereRaw($v);
+                                        $query->orWhereRaw($bindingExpression, $bindingValues);
                                     }
                                     break;
                                 case 'exp':

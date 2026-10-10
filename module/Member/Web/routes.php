@@ -52,6 +52,10 @@ $router->group([
 
     $router->match(['get', 'post'], 'member', 'MemberController@index');
 
+    // Fallback so the menu link `member_profile` never 404s; apps can override it
+    // by registering their own `member_profile` route in app/Web/routes.php.
+    $router->match(['get'], 'member_profile', 'MemberProfileController@index');
+
     $router->match(['get', 'post'], 'member_profile/captcha', 'MemberProfileController@captcha');
     $router->match(['get', 'post'], 'member_profile/security', 'MemberProfileController@security');
     $router->match(['get', 'post'], 'member_profile/password', 'MemberProfileController@password');

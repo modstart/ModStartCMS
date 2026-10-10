@@ -209,7 +209,8 @@ class AuthController extends Controller
                 return Response::send(-1, 'Sign required');
             }
             $signCalc = md5(md5($ssoSecret) . md5($timestamp . '') . md5($server) . md5($username));
-            if ($sign != $signCalc) {
+            // Use timing-safe strict comparison to prevent type-juggling (magic hash) bypass
+            if (!hash_equals($signCalc, (string)$sign)) {
                 return Response::send(-1, 'Sign error');
             }
             if (abs(time() - $timestamp) > 2400 * 2600) {
@@ -267,7 +268,8 @@ class AuthController extends Controller
             return Response::send(-1, 'adminSSOServerSecret missing');
         }
         $signCalc = md5(md5($ssoSecret) . md5($timestamp . '') . md5($client));
-        if ($sign != $signCalc) {
+        // Use timing-safe strict comparison to prevent type-juggling (magic hash) bypass
+        if (!hash_equals($signCalc, (string)$sign)) {
             return Response::send(-1, 'sign error');
         }
         if (abs(time() - $timestamp) > 2400 * 2600) {

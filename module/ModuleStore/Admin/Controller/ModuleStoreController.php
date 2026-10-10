@@ -34,6 +34,7 @@ class ModuleStoreController extends Controller
 
     private function moduleOperateCheck($module)
     {
+        BizException::throwsIf('模块标识不合法', !ModuleManager::isValidModuleName($module));
         $disabled = config('env.MS_MODULE_STORE_DISABLE', false);
 
         $whitelist = config('env.MS_MODULE_WHITELIST', '');
@@ -356,6 +357,7 @@ class ModuleStoreController extends Controller
     public function config(AdminConfigBuilder $builder, $module)
     {
         AdminPermission::permitCheck('ModuleStoreManage');
+        BizException::throwsIf('模块标识不合法', !ModuleManager::isValidModuleName($module));
         $basic = ModuleManager::getModuleBasic($module);
         $builder->useDialog();
         $builder->pageTitle(htmlspecialchars($basic['title']) . ' ' . L('ModuleConfig'));

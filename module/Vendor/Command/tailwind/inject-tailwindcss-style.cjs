@@ -64,6 +64,16 @@ function resolveOutputPath(bladeFile) {
         };
     }
 
+    // resources/views/theme/default/pc/<dir...>/<file>.blade.php (多级分组，如 apps/<code>/index)
+    m = rel.match(/^resources\/views\/theme\/default\/pc\/(.+)\.blade\.php$/);
+    if (m) {
+        const name = m[1].split('/').join('-');
+        return {
+            cssFile: path.join(projectRoot, 'public', 'theme', 'default', 'page', `${name}.css`),
+            assetHref: `theme/default/page/${name}.css`
+        };
+    }
+
     // module/<Module>/View/pc/<file>.blade.php
     m = rel.match(/^module\/([^/]+)\/View\/pc\/([^/]+)\.blade\.php$/);
     if (m) {

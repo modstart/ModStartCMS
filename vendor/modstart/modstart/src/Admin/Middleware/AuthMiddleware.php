@@ -83,7 +83,8 @@ class AuthMiddleware
                 }
                 $md5String = "$authAdminTimestamp:$authAdminRequestId:$authAdminUserId:$authAdminUser[username]:$authAdminUser[password]:$authAdminUser[passwordSalt]";
                 $signCalc = md5($md5String);
-                if ($signCalc != $authAdminSign) {
+                // Use timing-safe strict comparison to prevent MD5 type-juggling bypass (magic hash: 0e[0-9]+)
+                if (!hash_equals($signCalc, (string)$authAdminSign)) {
                     return Response::json(-1, 'admin user sign error');
                 }
                 $adminUserId = $authAdminUser['id'];

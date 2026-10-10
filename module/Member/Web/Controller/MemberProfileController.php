@@ -66,6 +66,13 @@ class MemberProfileController extends ModuleBaseController implements MemberLogi
         return $this->api->captchaRaw();
     }
 
+    public function index()
+    {
+        // Fallback for the bare `member_profile` page: apps may register their own
+        // `member_profile` route (loaded after module routes) to override this one.
+        return Response::redirect(modstart_web_url('member_profile/avatar'));
+    }
+
     public function bind()
     {
         return Response::redirect(modstart_web_url('member_profile/email'));

@@ -16,15 +16,16 @@ class SignUtil
      */
     public static function check($sign, $params, $appSecret)
     {
-        if ($sign == self::common($params, $appSecret)) {
+        // Use timing-safe strict comparison to prevent type-juggling (magic hash) bypass
+        if (self::secureEquals(self::common($params, $appSecret), $sign)) {
             return true;
         }
         // rawurlencode 遵守是94年国际标准备忘录RFC 1738，
         // urlencode 实现的是传统做法，和上者的主要区别是对空格的转义是'+'而不是'%20'
-        if ($sign == self::common($params, $appSecret, 'urlencode')) {
+        if (self::secureEquals(self::common($params, $appSecret, 'urlencode'), $sign)) {
             return true;
         }
-        if ($sign == self::common($params, $appSecret, 'rawurlencode')) {
+        if (self::secureEquals(self::common($params, $appSecret, 'rawurlencode'), $sign)) {
             return true;
         }
         return false;
@@ -72,13 +73,31 @@ class SignUtil
     {
         // rawurlencode 遵守是94年国际标准备忘录RFC 1738，
         // urlencode 实现的是传统做法，和上者的主要区别是对空格的转义是'+'而不是'%20'
-        if ($sign == self::commonWithoutSecret($params, $prefix)) {
+        if (self::secureEquals(self::commonWithoutSecret($params, $prefix), $sign)) {
             return true;
         }
-        if ($sign == self::commonWithoutSecret($params, $prefix, 'rawurlencode')) {
+        if (self::secureEquals(self::commonWithoutSecret($params, $prefix, 'rawurlencode'), $sign)) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Constant-time strict string comparison.
+     * Prevents MD5 type-juggling (magic hash 0e[0-9]+) and timing side-channel leaks.
+     * hash_equals() is native on PHP >= 5.6 and polyfilled by symfony/polyfill-php56.
+     *
+     * @param $expected string 服务端计算的签名
+     * @param $actual mixed 客户端提交的签名
+     * @return bool
+     */
+    private static function secureEquals($expected, $actual)
+    {
+        // Only scalar values are comparable; arrays/objects are always rejected.
+        if (!is_scalar($actual)) {
+            return false;
+        }
+        return hash_equals((string)$expected, (string)$actual);
     }
 
     /**

@@ -1,13 +1,12 @@
 const path = require('path');
-const webpack = require('webpack');
-const WebpackOnBuildPlugin = require('on-build-webpack');
 const fs = require('fs');
-const UglifyJS = require("uglify-js");
+const webpack = require('webpack');
 const jquery = require('jquery');
 const file = require('./src/lib/file.js');
 let config = require('./config.js');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const ts = function () {
     return (new Date()).getTime();
@@ -29,6 +28,55 @@ const listEntries = function () {
     return entries;
 }
 
+// Copies every emitted asset to the second output directory, so the bundle is
+// only compiled/minified once instead of running two identical webpack configs.
+const CopyAssetsPlugin = function (from, to) {
+    this.from = from;
+    this.to = to;
+};
+CopyAssetsPlugin.prototype.apply = function (compiler) {
+    const from = path.resolve(this.from);
+    const to = path.resolve(this.to);
+    compiler.hooks.afterEmit.tapAsync('ModStartCopyAssetsPlugin', function (compilation, callback) {
+        try {
+            Object.keys(compilation.assets).forEach(function (name) {
+                const src = path.join(from, name);
+                if (!fs.existsSync(src)) {
+                    return;
+                }
+                const dest = path.join(to, name);
+                fs.mkdirSync(path.dirname(dest), { recursive: true });
+                fs.copyFileSync(src, dest);
+            });
+        } catch (e) {
+            return callback(e);
+        }
+        callback();
+    });
+};
+
+// Fresh minimizer per config: TerserPlugin (terser) runs in parallel across CPU cores.
+// A new instance is created for every webpack config to keep the plugin state isolated.
+const createOptimization = function (minimize) {
+    return {
+        minimize: minimize,
+        minimizer: [
+            new TerserPlugin({
+                parallel: true,
+                cache: true,
+                terserOptions: {
+                    compress: true,
+                    mangle: false,
+                    output: {
+                        comments: false,
+                        beautify: false
+                    }
+                }
+            })
+        ]
+    };
+}
+
 const webpackConfig = {
     mode: 'production',
     entry: listEntries(),
@@ -37,9 +85,7 @@ const webpackConfig = {
         filename: '[name].js',
         publicPath: config.cdn
     },
-    optimization: {
-        minimize: false,
-    },
+    optimization: createOptimization(true),
     performance: {
         hints: false
     },
@@ -54,45 +100,6 @@ const webpackConfig = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
             'window.$': 'jquery',
-        }),
-        new WebpackOnBuildPlugin(function (stats) {
-            if (stats.compilation.options.mode === 'development') {
-                return
-            }
-            const assets = stats.compilation.getAssets()
-            assets
-                .filter(f => /.js$/.test(f.name))
-                .forEach(f => {
-                    const fileFullPath = f.source.existsAt
-                    if (!fileFullPath) {
-                        console.log('process ignore', f.name)
-                        return;
-                    }
-                    console.log("process", fileFullPath)
-                    fs.readFile(fileFullPath, {
-                        flag: 'r+',
-                        encoding: 'utf8'
-                    }, function (err, data) {
-                        if (err) {
-                            console.error(err);
-                            return;
-                        }
-                        const compressResult = UglifyJS.minify(data, {
-                            compress: true,
-                            mangle: false,
-                            output: {
-                                comments: false,
-                                beautify: false
-                            }
-                        })
-                        const codeCompress = compressResult.code
-                        if (codeCompress) {
-                            console.log(`saved ${fileFullPath} (${data.length} -> ${codeCompress.length})`);
-                            fs.writeFile(fileFullPath, codeCompress, () => {
-                            });
-                        }
-                    });
-                })
         })
     ],
     module: {
@@ -195,25 +202,18 @@ const webpackConfig = {
 }
 
 module.exports = (env) => {
+    const isDev = !!(env && env.dev)
+    const mode = isDev ? 'development' : 'production'
     console.log('webpack env  -> ', env)
-    let mode = 'production'
-    if (env.dev) {
-        mode = 'development'
-    }
     console.log('webpack mode -> ', mode)
-    let results = []
-    results.push(Object.assign({}, webpackConfig, {
-        mode
-    }))
-    if (mode === 'production') {
-        results.push(Object.assign({}, webpackConfig, {
-            mode,
-            output: {
-                path: path.resolve(config.distAsset),
-                filename: '[name].js',
-                publicPath: config.cdn + '/'
-            },
-        }))
-    }
-    return results
+    const plugins = isDev
+        ? webpackConfig.plugins
+        : webpackConfig.plugins.concat([
+            new CopyAssetsPlugin(path.resolve(config.dist), path.resolve(config.distAsset))
+        ])
+    return [Object.assign({}, webpackConfig, {
+        mode,
+        optimization: createOptimization(!isDev),
+        plugins
+    })]
 }

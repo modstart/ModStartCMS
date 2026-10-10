@@ -1148,6 +1148,115 @@
     }
 }
 
+// 桌面端：header-b 由 float 布局改为 flex 三段式（logo / nav / menu），
+// 导航区单行不换行；放不下的条目由 base.js 折叠进末尾的"更多"下拉（.nav-more）。
+// 只在 >=50rem 生效，移动端（<=50rem）的 fixed 抽屉布局保持不变。
+@media screen and (min-width: 50rem) {
+    .ub-header-b {
+        > .ub-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            float: none;
+            flex: 0 0 auto;
+            order: 1;
+        }
+
+        .nav {
+            float: none;
+            flex: 1 1 auto;
+            min-width: 0;
+            order: 2;
+            display: flex;
+            align-items: center;
+            // 条目永远单行：溢出的部分交给 JS 折叠，绝不换行压住页面内容
+            flex-wrap: nowrap;
+        }
+
+        // 导航条目保持原始宽度（不参与收缩）
+        .nav > a,
+        .nav > .nav-item {
+            flex: 0 0 auto;
+        }
+
+        // 搜索框靠右：DOM 中排在最前，用 order 移到末尾，再用 auto 外边距推到右侧
+        .nav > .search {
+            float: none;
+            flex: 0 0 auto;
+            order: 10;
+            margin-left: auto;
+        }
+
+        .menu {
+            float: none;
+            flex: 0 0 auto;
+            order: 3;
+        }
+
+        // 桌面端隐藏移动端专用的遮罩与汉堡按钮
+        .nav-mask,
+        .nav-toggle {
+            display: none;
+        }
+
+        // 溢出折叠入口（由 base.js 生成）
+        .nav-more {
+            order: 9;
+
+            // "更多"下拉贴着右边缘向左展开
+            > .sub-nav {
+                left: auto;
+                right: 0;
+            }
+
+            // 被折叠的二级菜单项：在"更多"下拉里渲染成"分组 + 左向飞出层"
+            > .sub-nav > .nav-item {
+                display: block;
+                position: relative;
+                white-space: nowrap;
+                line-height: 2.5rem;
+                padding: 0 0.75rem;
+                border-radius: var(--size-radius-sm);
+                transition: var(--transition);
+
+                &:hover {
+                    color: var(--color-primary);
+                    background: var(--color-primary-light-bg);
+                }
+
+                > .sub-title {
+                    display: block;
+                    line-height: 2.5rem;
+
+                    a {
+                        display: block;
+                        padding: 0;
+                        margin: 0;
+                        color: inherit;
+                    }
+                }
+
+                // 飞出层改为向左展开，避免超出屏幕右侧。
+                // 必须显式 display:none：外层 .nav-more:hover 会命中
+                // `.nav .nav-item:hover .sub-nav`（所有后代），不覆盖的话
+                // 悬停"更多"就会把这里的二级飞出层一起展开。
+                > .sub-nav {
+                    display: none;
+                    left: auto;
+                    right: 100%;
+                    top: 0;
+                }
+
+                &:hover > .sub-nav {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (min-width: 50rem) {
 
     [data-header-sticky-disable] {

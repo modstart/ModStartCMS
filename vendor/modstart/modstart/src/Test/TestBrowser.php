@@ -63,6 +63,79 @@ class TestBrowser
     }
 
     /**
+     * 自动化测试依赖共享目录（默认 ~/.modstart/auto-test/node-modules）
+     * 可通过环境变量 MODSTART_AUTO_TEST_HOME 覆盖
+     *
+     * @return string 无法确定用户目录时返回空字符串
+     */
+    public static function autoTestHome()
+    {
+        $env = getenv('MODSTART_AUTO_TEST_HOME');
+        if (!empty($env)) {
+            return rtrim($env, '/\\');
+        }
+        $home = getenv('HOME');
+        if (empty($home)) {
+            $home = getenv('USERPROFILE');
+        }
+        if (empty($home) && isset($_SERVER['HOME'])) {
+            $home = $_SERVER['HOME'];
+        }
+        if (empty($home) && isset($_SERVER['USERPROFILE'])) {
+            $home = $_SERVER['USERPROFILE'];
+        }
+        if (empty($home)) {
+            return '';
+        }
+        return rtrim($home, '/\\') . '/.modstart/auto-test/node-modules';
+    }
+
+    /**
+     * playwright-core 是否已安装（共享目录 / 项目根 node_modules / 本目录 node_modules）
+     * @return bool
+     */
+    public static function driverInstalled()
+    {
+        $home = self::autoTestHome();
+        $candidates = [];
+        if (!empty($home)) {
+            $candidates[] = $home . '/playwright-core/package.json';
+        }
+        $candidates[] = base_path('node_modules/playwright-core/package.json');
+        $candidates[] = __DIR__ . '/browser/node_modules/playwright-core/package.json';
+        foreach ($candidates as $file) {
+            if (file_exists($file)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 确保 playwright-core 已安装，未安装时自动执行 init.js 初始化（安装到共享目录）
+     * @return bool
+     */
+    public static function ensureDriver()
+    {
+        if (self::driverInstalled()) {
+            return true;
+        }
+        $initScript = __DIR__ . '/browser/init.js';
+        if (!file_exists($initScript)) {
+            return false;
+        }
+        $nodeBin = trim(shell_exec('command -v node 2>/dev/null'));
+        if (empty($nodeBin)) {
+            return false;
+        }
+        $cmd = escapeshellarg($nodeBin) . ' ' . escapeshellarg($initScript) . ' 2>&1';
+        $output = [];
+        $exitCode = 0;
+        exec($cmd, $output, $exitCode);
+        return $exitCode === 0 && self::driverInstalled();
+    }
+
+    /**
      * 是否已启动
      * @return bool
      */
@@ -85,6 +158,10 @@ class TestBrowser
             return true;
         }
         if (!self::available()) {
+            return false;
+        }
+        // 确保 playwright-core 已安装（自动初始化到共享目录）
+        if (!self::ensureDriver()) {
             return false;
         }
         // SHOW_BROWSER=1 时显示浏览器界面（headed），默认 headless 不显示

@@ -7,6 +7,10 @@
                 <a href="javascript:;" @click="doMemberLoginShow()"><i class="iconfont icon-user"></i>立即登录</a>
             </div>
         </div>
+        <div class="ub-alert warning">
+            <i class="iconfont icon-warning"></i>
+            升级前请关闭宝塔防篡改等安全软件/插件，升级过程中会更新程序文件，防篡改等安全软件会阻止程序自更新，可能导致升级失败
+        </div>
         <div class="ub-panel">
             <div class="head">
                 <div class="more" v-if="memberUser.id">

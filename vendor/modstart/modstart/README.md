@@ -26,7 +26,7 @@ ModStart 是一个基于 Laravel 的全栈 Web 快速开发框架，采用 **模
 - **官网**: [https://modstart.com](https://modstart.com)
 - **开发文档**: [https://modstart.com/doc](https://modstart.com/doc)
 - **模块市场**: [https://modstart.com/store](https://modstart.com/store)
-- **GitHub**: [https://github.com/modstart/modstart](https://github.com/modstart/modstart)
+- **GitHub**: [https://github.com/modstart-lib/modstart](https://github.com/modstart-lib/modstart)
 - **演示站**: [https://demo.modstart.com](https://demo.modstart.com)
 
 ## 技术栈

@@ -1,3 +1,9 @@
+## [Unreleased]
+
+- 优化：`Vendor:BladeTailwindInject` 支持多级分组的 Blade 路径（如 `resources/views/theme/default/pc/apps/<code>/index.blade.php`），自动将路径各段以 `-` 连接推导 CSS 输出文件
+
+---
+
 ## 5.1.0 Vendor:BladeTailwindInject命令，安装与邮件模板优化
 
 - 新增：模块资源目录增加 .nvmrc（Node 14）规范构建环境

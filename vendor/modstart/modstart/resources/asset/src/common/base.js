@@ -71,6 +71,84 @@ const Header = {
         $header.removeClass(showClass)
         $('html').removeClass('body-scroll-lock')
     },
+
+    // 桌面端导航溢出折叠：把 .ub-header-b 导航区放不下的条目收进末尾的"更多"下拉。
+    // 移动端（<50rem）不做折叠，并会把上一次的折叠还原（.nav 是 fixed 抽屉）。
+    _overflowTimer: null,
+    overflowRefresh: function () {
+        if (Header._overflowTimer) {
+            clearTimeout(Header._overflowTimer)
+        }
+        Header._overflowTimer = setTimeout(function () {
+            Header._overflowTimer = null
+            Header.overflow()
+        }, 120)
+    },
+    overflow: function () {
+        var $ = jquery
+        var minWidth = 800 // 50rem，与 header.less 的断点保持一致
+        $('.ub-header-b .nav').each(function () {
+            var nav = this
+            var $nav = $(nav)
+            // 先还原上一次的折叠，保证每次从原始结构重新计算
+            var $more = $nav.children('.nav-more')
+            if ($more.length) {
+                $more.children('.sub-nav').children().each(function () {
+                    var $el = $(this)
+                    if ($el.is('.nav-item')) {
+                        $el.removeClass('nav-item-in-more')
+                    } else {
+                        $el.removeClass('sub-nav-item')
+                    }
+                    $el.insertBefore($more)
+                })
+                $more.remove()
+            }
+            // 移动端不做折叠
+            if (window.innerWidth < minWidth) {
+                return
+            }
+            var navItems = function () {
+                return $nav.children('a, .nav-item').not('.nav-more')
+            }
+            var neededWidth = function () {
+                var w = 0
+                $nav.children().each(function () {
+                    w += $(this).outerWidth(true)
+                })
+                return w
+            }
+            var availableWidth = function () {
+                var style = window.getComputedStyle(nav)
+                return nav.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+            }
+            var fits = function () {
+                return neededWidth() <= availableWidth() + 2
+            }
+            if (fits()) {
+                return
+            }
+            // 追加"更多"入口，再从末尾逐项折叠，直到放得下
+            var $moreNew = $(
+                '<div class="nav-item nav-more">' +
+                '<div class="sub-title"><a href="javascript:;">更多</a></div>' +
+                '<div class="sub-nav"></div>' +
+                '</div>'
+            )
+            $nav.append($moreNew)
+            var $subNav = $moreNew.children('.sub-nav')
+            while (!fits() && navItems().length) {
+                var $last = navItems().last()
+                if ($last.is('.nav-item')) {
+                    $last.addClass('nav-item-in-more')
+                    $subNav.prepend($last)
+                } else {
+                    $last.addClass('sub-nav-item')
+                    $subNav.prepend($last)
+                }
+            }
+        })
+    },
 }
 
 const Dom = {
@@ -300,6 +378,16 @@ function init() {
         }
     });
     Widget.init();
+    // 桌面端导航溢出折叠：DOM 就绪、字体/图片加载完成后各计算一次，resize 时防抖重算
+    $(function () {
+        Header.overflow()
+        $(window).on('load', function () {
+            Header.overflow()
+        })
+        $(window).on('resize', function () {
+            Header.overflowRefresh()
+        })
+    })
 }
 
 window.api = window.api || {}

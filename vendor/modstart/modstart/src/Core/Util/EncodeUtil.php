@@ -66,7 +66,8 @@ class EncodeUtil
         $expireSecondsHex = $p[3];
         $sign = $p[4];
         $signCalc = substr(md5($key . $stringHex . $nonce . $timestampHex . $expireSecondsHex), 0, 6);
-        if ($sign != $signCalc) {
+        // Use timing-safe strict comparison to prevent type-juggling (magic hash) bypass
+        if (!hash_equals($signCalc, (string)$sign)) {
             return null;
         }
         $expireSeconds = hexdec($expireSecondsHex);

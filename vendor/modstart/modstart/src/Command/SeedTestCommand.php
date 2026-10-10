@@ -10,8 +10,27 @@ class SeedTestCommand extends Command
 {
     use SeedTestTrait;
 
-    protected $signature = 'modstart:seed-test';
-    protected $description = '执行系统自动化测试（Seed 填充 + API 测试 + Biz 测试）';
+    protected $signature = 'modstart:seed-test
+        {--module= : 只测试指定模块（逗号分隔，如 Question,Problem），默认全部模块}
+        {--phase= : 只测试指定阶段（逗号分隔，可选 seed,api,biz,ui），默认全部阶段}
+        {--file= : 只运行文件名（相对路径）包含该关键字的测试脚本}
+        {--test= : 只运行测试用例名称包含该关键字的用例}
+        {--reset : 强制重建测试数据库（删除全部表 + 迁移 + 安装全部模块）}
+        {--no-reset : 跳过数据库重建，直接运行测试}';
+
+    protected $description = '执行系统自动化测试（支持定向测试：--module / --phase / --file / --test）';
+
+    /**
+     * 文件名关键字过滤器
+     * @var string
+     */
+    private $fileFilter = '';
+
+    /**
+     * 是否运行系统测试目录（test/seed 等）
+     * @var bool
+     */
+    private $runSystemTests = true;
 
     public function handle()
     {
@@ -38,61 +57,90 @@ class SeedTestCommand extends Command
             return 1;
         }
 
+        $modules = $this->resolveTargetModules();
+        $phases = $this->resolvePhases();
+        $this->fileFilter = trim((string)$this->option('file'));
+        $testFilter = trim((string)$this->option('test'));
+        // 指定了 module / file / test 即视为定向测试
+        $targeted = ($this->option('module') !== null && trim((string)$this->option('module')) !== '')
+            || '' !== $this->fileFilter
+            || '' !== $testFilter;
+        // 定向测试默认不重建数据库；全量测试默认重建
+        $doReset = $this->option('reset') || (!$this->option('no-reset') && !$targeted);
+        // 指定模块时只跑该模块的测试目录，不跑系统测试目录
+        $this->runSystemTests = (null === $this->option('module') || trim((string)$this->option('module')) === '');
+
         TestContext::reset();
+        TestContext::setTestFilter($testFilter);
 
         $this->info('');
         $this->info('=== modstart:seed-test ===');
+        $this->info('  测试模块: ' . (empty($modules) ? '(无)' : implode(', ', $modules)) . ($this->runSystemTests ? ' + 系统' : ''));
+        $this->info('  测试阶段: ' . implode(', ', $phases));
+        if ('' !== $this->fileFilter) {
+            $this->info('  文件过滤: ' . $this->fileFilter);
+        }
+        if ('' !== $testFilter) {
+            $this->info('  用例过滤: ' . $testFilter);
+        }
+        $this->info('  数据库重建: ' . ($doReset ? '是' : '否（定向测试）'));
         $this->info('');
 
-        // Step 1: 删除所有数据库表
-        $this->comment('[ Step 1 ] 删除所有数据库表');
-        if (!$this->dropAllTables()) {
-            return 1;
+        if ($doReset) {
+            // Step 1: 删除所有数据库表
+            $this->comment('[ Step 1 ] 删除所有数据库表');
+            if (!$this->dropAllTables()) {
+                return 1;
+            }
+
+            // Step 2: 运行数据库迁移
+            $this->comment('[ Step 2 ] 运行 migrate');
+            if (!$this->runMigrate()) {
+                return 1;
+            }
+
+            // Step 3: 安装所有模块（部分模块可能有非致命错误，不中断）
+            $this->comment('[ Step 3 ] 运行 modstart:module-install-all');
+            $this->installAllModules();
+        } else {
+            $this->comment('[ 跳过 ] 数据库重建（定向测试模式，如需重建请加 --reset）');
         }
 
-        // Step 1.5: 校验修改过的迁移文件类名（类名错误会在 migrate 时崩溃，需前置校验）
-        $this->comment('[ Step 1.5 ] 校验迁移文件类名');
+        // 校验修改过的迁移文件类名（类名错误会在 migrate 时崩溃，需前置校验）
+        $this->comment('[ 校验 ] 迁移文件类名');
         if (!$this->checkMigrationClassNames()) {
             return 1;
         }
 
-        // Step 2: 运行数据库迁移
-        $this->comment('[ Step 2 ] 运行 migrate');
-        if (!$this->runMigrate()) {
-            return 1;
-        }
-
-        // Step 3: 安装所有模块（部分模块可能有非致命错误，不中断）
-        $this->comment('[ Step 3 ] 运行 modstart:module-install-all');
-        $this->installAllModules();
-
-        // Step 4: 初始化默认超级管理员（admin / 123456）
-        $this->comment('[ Step 4 ] 初始化默认超级管理员');
+        // 初始化默认超级管理员（admin / 123456）
+        $this->comment('[ 初始化 ] 默认超级管理员');
         $this->initDefaultAdmin();
 
-        // 获取所有已启用的模块名列表
-        $enabledModules = array_keys(ModuleManager::listAllEnabledModules());
-
-        // Phase 1: 执行 Seed 填充（先系统，再模块）
-        $this->comment('[ Phase 1 ] Seed');
-        $this->runPhase('seed', $enabledModules, 'Seed');
-
-        // Phase 2: 执行 API 测试（先系统，再模块）
-        $this->comment('[ Phase 2 ] API Tests');
-        $this->runPhase('api', $enabledModules, 'Api');
-
-        // Phase 3: 执行 Biz 测试（先系统，再模块）
-        $this->comment('[ Phase 3 ] Biz Tests');
-        $this->runPhase('biz', $enabledModules, 'Biz');
-
-        // Phase 4: 执行 UI 测试（先系统，再模块）
-        $this->comment('[ Phase 4 ] UI Tests');
-        $this->runUiPhase($enabledModules);
+        // 按选择的阶段依次执行
+        if (in_array('seed', $phases)) {
+            $this->comment('[ Phase 1 ] Seed');
+            $this->runPhase('seed', $modules, 'Seed');
+        }
+        if (in_array('api', $phases)) {
+            $this->comment('[ Phase 2 ] API Tests');
+            $this->runPhase('api', $modules, 'Api');
+        }
+        if (in_array('biz', $phases)) {
+            $this->comment('[ Phase 3 ] Biz Tests');
+            $this->runPhase('biz', $modules, 'Biz');
+        }
+        if (in_array('ui', $phases)) {
+            $this->comment('[ Phase 4 ] UI Tests');
+            $this->runUiPhase($modules);
+        }
 
         // 输出汇总
         $this->info('');
         $this->info('=== 测试汇总 ===');
         $this->info('通过: ' . TestContext::getPassed());
+        if (TestContext::getSkipped() > 0) {
+            $this->info('跳过: ' . TestContext::getSkipped());
+        }
         if (TestContext::hasFailure()) {
             $this->error('失败: ' . TestContext::getFailed());
             foreach (TestContext::getFailures() as $failure) {
@@ -114,18 +162,67 @@ class SeedTestCommand extends Command
     }
 
     /**
+     * 解析目标模块列表（--module）
+     *
+     * @return array 已启用的模块名列表
+     */
+    private function resolveTargetModules()
+    {
+        $enabled = array_keys(ModuleManager::listAllEnabledModules());
+        $option = trim((string)$this->option('module'));
+        if ('' === $option) {
+            return $enabled;
+        }
+        $wanted = array_filter(array_map('trim', explode(',', $option)), function ($m) {
+            return '' !== $m;
+        });
+        $result = [];
+        foreach ($wanted as $module) {
+            if (in_array($module, $enabled)) {
+                $result[] = $module;
+            } else {
+                $this->warn('  模块 ' . $module . ' 未启用或不存在，已忽略');
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 解析目标阶段（--phase）
+     *
+     * @return array
+     */
+    private function resolvePhases()
+    {
+        $allow = ['seed', 'api', 'biz', 'ui'];
+        $option = trim((string)$this->option('phase'));
+        if ('' === $option) {
+            return $allow;
+        }
+        $phases = [];
+        foreach (array_map('trim', explode(',', $option)) as $phase) {
+            if (in_array($phase, $allow) && !in_array($phase, $phases)) {
+                $phases[] = $phase;
+            } elseif ('' !== $phase) {
+                $this->warn('  未知阶段 ' . $phase . '（可选 ' . implode(',', $allow) . '），已忽略');
+            }
+        }
+        return $phases;
+    }
+
+    /**
      * 运行一个阶段的所有脚本文件
      *
      * @param string $systemDir  /test/ 下的子目录名，如 seed / api / biz
-     * @param array  $modules    已启用模块名列表
+     * @param array  $modules    模块名列表
      * @param string $moduleDir  模块 Test/ 下的子目录名，如 Seed / Api / Biz
      */
     private function runPhase($systemDir, $modules, $moduleDir)
     {
         // 先运行系统测试目录
-        $systemPath = base_path('test/' . $systemDir);
-        $this->runFilesInDir($systemPath);
-
+        if ($this->runSystemTests) {
+            $this->runFilesInDir(base_path('test/' . $systemDir));
+        }
         // 再运行各模块测试目录
         foreach ($modules as $module) {
             $modulePath = ModuleManager::path($module, 'Test/' . $moduleDir);
@@ -143,12 +240,12 @@ class SeedTestCommand extends Command
      *   3. 执行各 UI 测试文件
      *   4. 关闭 server（避免内存泄露 / 端口占用）
      *
-     * @param array $modules 已启用模块名列表
+     * @param array $modules 模块名列表
      */
     private function runUiPhase($modules)
     {
         if (!$this->hasUiTestFiles($modules)) {
-            $this->line('  没有 UI 测试文件，跳过');
+            $this->line('  没有匹配的 UI 测试文件，跳过');
             return;
         }
         $this->line('  启动 php artisan serve ...');
@@ -170,9 +267,9 @@ class SeedTestCommand extends Command
         // 清理日志，确保只统计本次 UI 测试产生的错误
         \ModStart\Test\TestUi::clearLog();
         try {
-            // 先运行系统测试目录
-            $this->runFilesInDir(base_path('test/ui'));
-            // 再运行各模块测试目录
+            if ($this->runSystemTests) {
+                $this->runFilesInDir(base_path('test/ui'));
+            }
             foreach ($modules as $module) {
                 $modulePath = ModuleManager::path($module, 'Test/UI');
                 $this->runFilesInDir($modulePath);
@@ -190,18 +287,21 @@ class SeedTestCommand extends Command
     }
 
     /**
-     * 判断系统或任一启用模块是否存在 UI 测试文件
+     * 判断系统或任一目标模块是否存在（匹配过滤条件后的）UI 测试文件
      * @param array $modules
      * @return bool
      */
     private function hasUiTestFiles($modules)
     {
-        if (is_dir(base_path('test/ui')) && count(glob(base_path('test/ui/*.php'))) > 0) {
-            return true;
+        if ($this->runSystemTests) {
+            $files = $this->matchFiles(base_path('test/ui'));
+            if (!empty($files)) {
+                return true;
+            }
         }
         foreach ($modules as $module) {
             $path = ModuleManager::path($module, 'Test/UI');
-            if (is_dir($path) && count(glob($path . '/*.php')) > 0) {
+            if (!empty($this->matchFiles($path))) {
                 return true;
             }
         }
@@ -209,20 +309,41 @@ class SeedTestCommand extends Command
     }
 
     /**
-     * 运行目录下的所有 .php 文件
+     * 返回目录下匹配文件名过滤条件的 .php 文件
+     *
+     * @param string $dir
+     * @return array
+     */
+    private function matchFiles($dir)
+    {
+        if (!is_dir($dir)) {
+            return [];
+        }
+        $files = glob($dir . '/*.php');
+        if (empty($files)) {
+            return [];
+        }
+        if ('' === $this->fileFilter) {
+            return $files;
+        }
+        $result = [];
+        foreach ($files as $file) {
+            $relativePath = str_replace(base_path('/'), '', $file);
+            if (stripos($relativePath, $this->fileFilter) !== false || stripos(basename($file), $this->fileFilter) !== false) {
+                $result[] = $file;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 运行目录下匹配过滤条件的所有 .php 文件
      *
      * @param string $dir
      */
     private function runFilesInDir($dir)
     {
-        if (!is_dir($dir)) {
-            return;
-        }
-        $files = glob($dir . '/*.php');
-        if (empty($files)) {
-            return;
-        }
-        foreach ($files as $file) {
+        foreach ($this->matchFiles($dir) as $file) {
             $this->runFile($file);
         }
     }

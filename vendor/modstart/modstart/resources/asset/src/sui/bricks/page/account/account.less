@@ -91,6 +91,8 @@
         text-align: center;
         color: var(--color-tertiary);
 
+        // 通用样式：所有第三方登录入口统一为「浅色圆底 + 品牌色图标」，
+        // 品牌色由各登录方式（MemberOauth/Oauth/*.php）内联设置，此处只保留默认样式。
         a {
             display: inline-block;
             width: 2.5rem;
@@ -109,37 +111,46 @@
                 transform: translateY(-0.0625rem);
             }
 
+            &:focus-visible {
+                outline: 0;
+                box-shadow: 0 0 0 0.1875rem var(--color-focus-ring);
+            }
+
             i {
                 font-size: 1.25rem;
                 line-height: 2.5rem;
             }
+        }
 
-            &.qq {
-                background: var(--color-primary-soft);
-                color: var(--color-primary);
+        // 超量授权入口默认折叠为“…”，点击展开（.oauth-more 与普通入口同为 a，继承上方圆底样式）
+        // 展开按钮与首行图标同排，展开出的入口另起一行，避免首行图标过多
+        .oauth-rest-line {
+            display: block;
+            width: 100%;
+        }
 
-                &:hover {
-                    background: var(--color-primary-light-bg);
-                }
+        .oauth-rest {
+            display: none;
+        }
+
+        .oauth-more {
+            .oauth-more-collapse {
+                display: none;
+            }
+        }
+
+        &.expanded {
+            .oauth-rest {
+                display: inline;
             }
 
-            &.weibo {
-                background: var(--color-danger-light);
-                color: var(--color-danger-dark);
-
-                &:hover {
-                    background: var(--color-danger-light);
-                    color: var(--color-danger);
+            .oauth-more {
+                .oauth-more-expand {
+                    display: none;
                 }
-            }
 
-            &.wechat {
-                background: var(--color-success-light);
-                color: var(--color-success-dark);
-
-                &:hover {
-                    background: var(--color-success-light);
-                    color: var(--color-success);
+                .oauth-more-collapse {
+                    display: inline;
                 }
             }
         }

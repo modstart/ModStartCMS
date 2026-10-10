@@ -125,6 +125,7 @@ class ModuleStoreUtil
 
     public static function checkPackage($token, $module, $version)
     {
+        BizException::throwsIf('模块标识不合法', !ModuleManager::isValidModuleName($module));
         $ret = self::baseRequest('/api/store/module_info', [
             'module' => $module,
             'version' => $version,
@@ -193,6 +194,7 @@ class ModuleStoreUtil
 
     public static function downloadPackage($token, $module, $version)
     {
+        BizException::throwsIf('模块标识不合法', !ModuleManager::isValidModuleName($module));
         $ret = self::baseRequest('/api/store/module_package', [
             'module' => $module,
             'version' => $version,
@@ -230,6 +232,7 @@ class ModuleStoreUtil
 
     public static function unpackModule($module, $package, $licenseKey)
     {
+        BizException::throwsIf('模块标识不合法', !ModuleManager::isValidModuleName($module));
         $results = [];
         BizException::throwsIf('文件不存在 ' . $package, empty($package) || !file_exists($package));
         $ret = FileUtil::filePathWritableCheck(['module/._write_check_']);
@@ -266,6 +269,7 @@ class ModuleStoreUtil
 
     public static function removeModule($module, $version)
     {
+        BizException::throwsIf('模块标识不合法', !ModuleManager::isValidModuleName($module));
         $moduleDir = base_path('module/' . $module);
         BizException::throwsIf('模块目录不存在 ', !file_exists($moduleDir));
         BizException::throwsIf('模块目录 module/' . $module . ' 不正常，请手动删除', !is_dir($moduleDir));

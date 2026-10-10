@@ -92,6 +92,10 @@ $router->group([
 
     $router->match(['post'], 'member_doc/get', 'MemberDocController@get');
 
+    // [T-android-member-auth] 当前登录会员信息（控制器已存在但此前未注册路由，
+    // App 端 /api/member/current 404）
+    $router->match(['post'], 'member/current', 'MemberController@current');
+
 });
 
 if (file_exists(base_path('module/AdminApi/Api/Middleware/AdminApiCheckMiddleware.php'))) {

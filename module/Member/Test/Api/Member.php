@@ -40,6 +40,18 @@ TestCase::describe('Member Api', function () {
         $ret = TestHttp::post('/api/member_message');
         TestCase::assertSuccess($ret, 'Member API: member_message paginate');
 
+        // [T-android-member-auth] 当前用户信息：登录态应返回会员 id 与基础字段
+        $ret = TestHttp::post('/api/member/current');
+        TestCase::assertSuccess($ret, 'Member API: member/current 返回成功');
+        TestCase::assertTrue(isset($ret['data']['id']) && $ret['data']['id'] > 0, 'Member API: member/current 返回会员 id');
+        TestCase::assertTrue(isset($ret['data']['username']), 'Member API: member/current 返回 username');
+
+        // 未登录（无 token）应被拒绝而非 500
+        TestHttp::clearToken();
+        $ret = TestHttp::post('/api/member/current');
+        TestCase::assertError($ret, 'Member API: member/current 未登录拒绝');
+        TestHttp::useToken($token);
+
         $ret = TestHttp::post('/api/member_vip/get');
         TestCase::assertTrue(isset($ret['code']), 'Member API: member_vip/get 返回合法响应');
 

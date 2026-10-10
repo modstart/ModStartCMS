@@ -45,6 +45,10 @@ class ModuleManager
         if (array_key_exists($name, $basic)) {
             return $basic[$name];
         }
+        if (!self::isValidModuleName($name)) {
+            $basic[$name] = null;
+            return $basic[$name];
+        }
         if (file_exists($path = self::path($name, 'config.json'))) {
             $config = json_decode(file_get_contents($path), true);
             if (empty($config)) {
@@ -124,8 +128,19 @@ class ModuleManager
         }
     }
 
+    /**
+     * 检测模块名称是否合法（仅允许大小写字母和数字，防止目录穿越）
+     * @param $name
+     * @return bool
+     */
+    public static function isValidModuleName($name)
+    {
+        return (bool)preg_match('/^[a-zA-Z0-9]+\z/', $name);
+    }
+
     public static function clean($module)
     {
+        BizException::throwsIf('模块标识不合法', !self::isValidModuleName($module));
         $path = self::path($module);
         if (file_exists($path)) {
             FileUtil::rm($path, true);
@@ -142,6 +157,7 @@ class ModuleManager
      */
     public static function install($module, $force = false, $option = [])
     {
+        BizException::throwsIf('模块标识不合法', !self::isValidModuleName($module));
         $param = ['module' => $module];
         if ($force) {
             $param['--force'] = true;
@@ -159,6 +175,7 @@ class ModuleManager
      */
     public static function uninstall($module)
     {
+        BizException::throwsIf('模块标识不合法', !self::isValidModuleName($module));
         return self::callCommand('modstart:module-uninstall', ['module' => $module]);
     }
 
@@ -169,6 +186,7 @@ class ModuleManager
      */
     public static function enable($module)
     {
+        BizException::throwsIf('模块标识不合法', !self::isValidModuleName($module));
         return self::callCommand('modstart:module-enable', ['module' => $module]);
     }
 
@@ -179,6 +197,7 @@ class ModuleManager
      */
     public static function disable($module)
     {
+        BizException::throwsIf('模块标识不合法', !self::isValidModuleName($module));
         return self::callCommand('modstart:module-disable', ['module' => $module]);
     }
 
@@ -189,6 +208,9 @@ class ModuleManager
      */
     public static function isExists($name)
     {
+        if (!self::isValidModuleName($name)) {
+            return false;
+        }
         return file_exists(self::path($name, 'config.json'));
     }
 
@@ -211,6 +233,7 @@ class ModuleManager
      */
     public static function relativePath($module, $path = '')
     {
+        BizException::throwsIf('模块标识不合法', !self::isValidModuleName($module));
         return "module/$module" . ($path ? "/" . trim($path, '/') : '');
     }
 
@@ -282,7 +305,7 @@ class ModuleManager
         $files = FileUtil::listFiles(base_path('module'));
         $modules = [];
         foreach ($files as $v) {
-            if (!$v['isDir'] || !preg_match('/^[a-zA-Z0-9_]+$/', $v['filename'])) {
+            if (!$v['isDir'] || !self::isValidModuleName($v['filename'])) {
                 continue;
             }
             if (starts_with($v['filename'], '_delete_.') || starts_with($v['filename'], '_')

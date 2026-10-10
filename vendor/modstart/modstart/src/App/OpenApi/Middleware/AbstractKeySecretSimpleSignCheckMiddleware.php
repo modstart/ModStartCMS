@@ -54,7 +54,8 @@ abstract class AbstractKeySecretSimpleSignCheckMiddleware
             'key' => $key,
         ];
         $signCalc = SignUtil::common($params, $secret);
-        if ($sign != $signCalc) {
+        // Use timing-safe strict comparison to prevent type-juggling (magic hash) bypass
+        if (!is_scalar($sign) || !hash_equals($signCalc, (string)$sign)) {
             Log::info('MS.SignNotMatch : ' . $signCalc);
             $ret = $this->signNotMatch();
             if ($ret['code']) {
